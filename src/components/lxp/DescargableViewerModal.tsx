@@ -227,19 +227,25 @@ function generarPDF(d: DescargableLXP) {
         doc.setTextColor(30, 30, 30)
         doc.setFontSize(isA5 ? 7 : 9)
         doc.setFont('helvetica', 'normal')
-        doc.text('☐  ' + campo.etiqueta, margin + 2, y)
-        y += lineH + 1
+        const chkLines = doc.splitTextToSize('[ ]  ' + campo.etiqueta, pageWidth - margin * 2 - 4)
+        checkY(chkLines.length * lineH + 2)
+        doc.text(chkLines, margin + 2, y)
+        y += chkLines.length * lineH + 1
         // línea divisora tenue
         doc.setDrawColor(230, 230, 230)
         doc.line(margin, y, pageWidth - margin, y)
         y += 1
       } else if (campo.tipo === 'firma') {
         y += 2
+        checkY(lineH + 8)
         doc.setTextColor(30, 30, 30)
         doc.setFontSize(isA5 ? 7 : 9)
         doc.setFont('helvetica', 'normal')
-        doc.text(campo.etiqueta + ':  _______________________________', margin + 2, y)
-        y += lineH + 3
+        doc.text(campo.etiqueta + ':', margin + 2, y)
+        y += lineH + 1
+        doc.setDrawColor(180, 180, 180)
+        doc.line(margin + 2, y, pageWidth - margin - 2, y)
+        y += lineH + 2
       } else if (campo.tipo === 'area') {
         doc.setTextColor(30, 30, 30)
         doc.setFontSize(isA5 ? 7 : 9)
@@ -263,13 +269,16 @@ function generarPDF(d: DescargableLXP) {
         doc.setTextColor(30, 30, 30)
         doc.setFontSize(isA5 ? 7 : 9)
         doc.setFont('helvetica', 'bold')
-        doc.text(campo.etiqueta + ':', margin + 2, y)
-        y += lineH + 1
+        const lblLines = doc.splitTextToSize(campo.etiqueta + ':', pageWidth - margin * 2 - 4)
+        checkY(lblLines.length * lineH + 2)
+        doc.text(lblLines, margin + 2, y)
+        y += lblLines.length * lineH + 1
         doc.setFont('helvetica', 'normal')
         for (const op of campo.opciones ?? []) {
-          checkY(6)
-          doc.text('○  ' + op, margin + 6, y)
-          y += isA5 ? 3.5 : 4.5
+          const opLines = doc.splitTextToSize('○  ' + op, pageWidth - margin * 2 - 8)
+          checkY(opLines.length * (isA5 ? 3.5 : 4.5) + 1)
+          doc.text(opLines, margin + 6, y)
+          y += opLines.length * (isA5 ? 3.5 : 4.5) + 0.5
         }
         y += 2
       } else {
