@@ -1,6 +1,6 @@
 // src/components/lxp/RepositorioCard.tsx
 import { useNavigate, useParams } from 'react-router-dom'
-import { FileText, Video, Shield, Package, Wrench, Sofa, BookOpen, HardHat, Factory } from 'lucide-react'
+import { FileText, Video, Shield, Package, Wrench, Sofa, BookOpen, HardHat, Factory, ArrowUpRight } from 'lucide-react'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Bien = Record<string, any>
@@ -9,23 +9,38 @@ interface RepositorioCardProps {
   bien: Bien
 }
 
-const TIPO_CONFIG: Record<string, { icon: React.ElementType; color: string; label: string }> = {
-  EQUIPOS:      { icon: Package,  color: '#00c16e', label: 'Equipo' },
-  HERRAMIENTAS: { icon: Wrench,   color: '#0891b2', label: 'Herramienta' },
-  MOBILIARIO:   { icon: Sofa,     color: '#8b5cf6', label: 'Mobiliario' },
-  PEDAGOGICO:   { icon: BookOpen, color: '#f59e0b', label: 'Pedagógico' },
-  'PRODUCCIÓN': { icon: Factory,  color: '#06b6d4', label: 'Producción' },
-  SEGURIDAD:    { icon: HardHat,  color: '#ef4444', label: 'Seguridad' },
-  '':           { icon: Package,  color: '#6b7280', label: 'Bien' },
+const TIPO_CONFIG: Record<string, {
+  icon: React.ElementType
+  color: string
+  bg: string
+  label: string
+  accent: string
+}> = {
+  EQUIPOS:      { icon: Package,  color: '#059669', bg: '#d1fae5', label: 'Equipo',       accent: '#059669' },
+  HERRAMIENTAS: { icon: Wrench,   color: '#0284c7', bg: '#e0f2fe', label: 'Herramienta',  accent: '#0284c7' },
+  MOBILIARIO:   { icon: Sofa,     color: '#7c3aed', bg: '#ede9fe', label: 'Mobiliario',   accent: '#7c3aed' },
+  PEDAGOGICO:   { icon: BookOpen, color: '#b45309', bg: '#fef3c7', label: 'Pedagógico',   accent: '#d97706' },
+  'PRODUCCIÓN': { icon: Factory,  color: '#0891b2', bg: '#cffafe', label: 'Producción',   accent: '#0891b2' },
+  SEGURIDAD:    { icon: HardHat,  color: '#dc2626', bg: '#fee2e2', label: 'Seguridad',    accent: '#dc2626' },
+  '':           { icon: Package,  color: '#475569', bg: '#f1f5f9', label: 'Bien',         accent: '#475569' },
 }
 
-function zonaColor(zona: string): string {
-  const z = zona.toUpperCase()
+function zonaAccent(zona: string): string {
+  const z = zona?.toUpperCase() ?? ''
   if (z.includes('INVESTIGAC')) return '#0891b2'
-  if (z.includes('INNOVAC'))    return '#00c16e'
-  if (z.includes('DEPÓSITO') || z.includes('ALMAC')) return '#f59e0b'
-  if (z.includes('SEGURIDAD')) return '#ef4444'
-  return '#045f6c'
+  if (z.includes('INNOVAC'))    return '#059669'
+  if (z.includes('ALMAC') || z.includes('DEPÓSITO')) return '#d97706'
+  if (z.includes('SEGURIDAD'))  return '#dc2626'
+  return '#475569'
+}
+
+function zonaBreadcrumb(zona: string): string {
+  if (!zona) return ''
+  return zona
+    .replace('ZONA DE ', '')
+    .replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'DEPÓSITO')
+    .split(',')[0]
+    .trim()
 }
 
 export function RepositorioCard({ bien }: RepositorioCardProps) {
@@ -33,81 +48,137 @@ export function RepositorioCard({ bien }: RepositorioCardProps) {
   const navigate = useNavigate()
   const tipoConf = TIPO_CONFIG[bien.tipo] ?? TIPO_CONFIG['']
   const TypeIcon = tipoConf.icon
-  const color = zonaColor(bien.zona ?? '')
+  const accent = zonaAccent(bien.zona ?? '')
 
-  // Breadcrumb: zona > area > subarea (solo los que tienen valor)
   const breadcrumb = [bien.zona, bien.area, bien.subarea].filter(Boolean)
 
   return (
     <button
       onClick={() => navigate(`/taller/${slug}/repositorio/bien/${bien.n}`)}
-      className="w-full text-left rounded-xl border-2 p-4 transition-all hover:-translate-y-0.5 hover:shadow-md group"
-      style={{ borderColor: '#e3f8fb', background: '#ffffff' }}
+      className="w-full text-left group relative overflow-hidden transition-all duration-200"
+      style={{
+        background: '#ffffff',
+        borderRadius: '1rem',
+        border: '1.5px solid #e2e8f0',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+      }}
+      onMouseEnter={e => {
+        (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 24px rgba(0,0,0,0.10), 0 0 0 2px ${accent}40`
+        ;(e.currentTarget as HTMLElement).style.borderColor = accent + '60'
+        ;(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'
+      }}
+      onMouseLeave={e => {
+        (e.currentTarget as HTMLElement).style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'
+        ;(e.currentTarget as HTMLElement).style.borderColor = '#e2e8f0'
+        ;(e.currentTarget as HTMLElement).style.transform = 'translateY(0)'
+      }}
     >
-      {/* Top row */}
-      <div className="flex items-start gap-3 mb-3">
-        <div className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: '#e3f8fb' }}>
-          <TypeIcon size={18} style={{ color: tipoConf.color }} />
-        </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-sm leading-tight line-clamp-2 group-hover:underline" style={{ color: '#043941' }}>
-            {bien.nombre}
-          </h3>
-          {(bien.marca || bien.modelo) && (
-            <p className="text-xs mt-0.5" style={{ color: '#045f6c' }}>
-              {[bien.marca, bien.modelo].filter(Boolean).join(' · ')}
-            </p>
-          )}
-        </div>
-        <span className="text-xs font-semibold px-2 py-0.5 rounded-full shrink-0" style={{ background: '#e3f8fb', color: '#043941' }}>
-          ×{bien.cantidad}
-        </span>
-      </div>
+      {/* Accent bar top */}
+      <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${accent}, ${tipoConf.color})` }} />
 
-      {/* Jerarquía zona → area → subarea */}
-      <div className="flex flex-wrap gap-1 mb-3">
-        {breadcrumb.map((seg, i) => (
-          <span key={i} className="flex items-center gap-1">
-            {i > 0 && <span style={{ color: '#94a3b8', fontSize: 10 }}>›</span>}
-            <span
-              className="text-xs px-2 py-0.5 rounded-full font-semibold"
-              style={{
-                background: i === 0 ? color + '20' : '#f1f5f9',
-                color: i === 0 ? color : '#64748b',
-              }}
-            >
-              {seg}
-            </span>
+      <div className="p-4">
+        {/* Row 1: icon + title + quantity */}
+        <div className="flex items-start gap-3 mb-3">
+          {/* Icon pill */}
+          <div
+            className="h-11 w-11 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105"
+            style={{ background: tipoConf.bg }}
+          >
+            <TypeIcon size={19} style={{ color: tipoConf.color }} />
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <h3 className="font-bold text-sm leading-snug line-clamp-2 transition-colors"
+              style={{ color: '#0f172a' }}>
+              {bien.nombre}
+            </h3>
+            {(bien.marca || bien.modelo) && (
+              <p className="text-xs mt-0.5 truncate" style={{ color: '#64748b' }}>
+                {[bien.marca, bien.modelo].filter(Boolean).join(' · ')}
+              </p>
+            )}
+          </div>
+
+          {/* Quantity badge */}
+          <span
+            className="shrink-0 text-xs font-black px-2 py-1 rounded-lg min-w-[2rem] text-center"
+            style={{ background: accent + '12', color: accent }}
+          >
+            ×{bien.cantidad}
           </span>
-        ))}
+        </div>
+
+        {/* Row 2: breadcrumb zona › area › subarea */}
+        {breadcrumb.length > 0 && (
+          <div className="flex flex-wrap items-center gap-1 mb-3">
+            {breadcrumb.map((seg, i) => (
+              <span key={i} className="flex items-center gap-1">
+                {i > 0 && <span className="text-[10px]" style={{ color: '#cbd5e1' }}>›</span>}
+                <span
+                  className="text-[11px] font-semibold px-2 py-0.5 rounded-md"
+                  style={
+                    i === 0
+                      ? { background: accent + '12', color: accent }
+                      : { background: '#f1f5f9', color: '#64748b' }
+                  }
+                >
+                  {i === 0 ? zonaBreadcrumb(seg) : seg}
+                </span>
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Row 3: tipo badge */}
+        <div className="flex items-center justify-between">
+          <span
+            className="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg"
+            style={{ background: tipoConf.bg, color: tipoConf.color }}
+          >
+            <TypeIcon size={10} />
+            {tipoConf.label}
+          </span>
+
+          {/* Recurso icons */}
+          <div className="flex gap-1">
+            <ResourceDot icon={FileText} color="#475569" title="Manual" />
+            <ResourceDot icon={Video}    color="#059669" title="Video" />
+            <ResourceDot icon={Shield}   color="#dc2626" title="IPERC" />
+          </div>
+        </div>
+
+        {/* Footer: código + arrow */}
+        <div className="flex items-center justify-between mt-3 pt-3 border-t" style={{ borderColor: '#f1f5f9' }}>
+          <span className="text-[10px] font-mono font-medium" style={{ color: '#94a3b8' }}>
+            {bien.codigoEntidad || bien.codigoInterno || `#${bien.n}`}
+          </span>
+          <ArrowUpRight
+            size={14}
+            className="transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            style={{ color: accent, opacity: 0 }}
+            ref={(el) => {
+              if (el) el.style.opacity = '0'
+            }}
+          />
+        </div>
       </div>
 
-      {/* Tipo */}
-      <span
-        className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold mb-3"
-        style={{ background: tipoConf.color + '18', color: tipoConf.color }}
-      >
-        <TypeIcon size={10} />
-        {tipoConf.label}
-      </span>
-
-      {/* Recursos disponibles */}
-      <div className="flex gap-2 mt-1">
-        <ResourceBadge icon={FileText} label="Manual" color="#043941" />
-        <ResourceBadge icon={Video}    label="Video"  color="#00c16e" />
-        <ResourceBadge icon={Shield}   label="IPERC"  color="#ef4444" />
+      {/* Hover overlay arrow */}
+      <div className="absolute bottom-3.5 right-3.5 transition-all duration-200 opacity-0 group-hover:opacity-100">
+        <ArrowUpRight size={13} style={{ color: accent }} />
       </div>
-
-      <p className="text-xs mt-2" style={{ color: '#94a3b8' }}>{bien.codigoEntidad}</p>
     </button>
   )
 }
 
-function ResourceBadge({ icon: Icon, label, color }: { icon: React.ElementType; label: string; color: string }) {
+function ResourceDot({ icon: Icon, color, title }: { icon: React.ElementType; color: string; title: string }) {
   return (
-    <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded" style={{ background: color + '15', color }}>
+    <span
+      title={title}
+      className="w-6 h-6 rounded-lg flex items-center justify-center transition-colors"
+      style={{ background: color + '12', color }}
+    >
       <Icon size={10} />
-      {label}
     </span>
   )
 }
