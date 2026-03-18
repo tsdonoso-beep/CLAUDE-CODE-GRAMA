@@ -3,7 +3,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import { Home, BookOpen, Package, ChevronLeft } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { mockProgreso } from '@/mock/mockEstados'
-import logoGrama from '@/assets/logo-grama.png'
+import logoGrama from '@/assets/logo-grama-full.png'
 
 interface SidebarProps {
   onCollapse?: () => void
@@ -25,13 +25,12 @@ export function Sidebar({ onCollapse }: SidebarProps) {
       style={{ background: '#043941' }}
     >
       {/* Logo */}
-      <div className="flex items-center gap-2 px-5 py-4 border-b border-white/10">
-        <img src={logoGrama} alt="GRAMA" className="h-8 w-8 object-contain" />
-        <span className="font-bold text-white text-sm tracking-wide">GRAMA</span>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+        <img src={logoGrama} alt="GRAMA Proyectos Educativos" className="h-9 object-contain" />
         {onCollapse && (
           <button
             onClick={onCollapse}
-            className="ml-auto text-white/40 hover:text-white transition-colors"
+            className="text-white/40 hover:text-white transition-colors shrink-0"
             aria-label="Colapsar sidebar"
           >
             <ChevronLeft size={16} />
