@@ -58,14 +58,21 @@ export function Sidebar({ onCollapse }: SidebarProps) {
 
       {/* ── Logo ── */}
       <div
-        className="relative z-10 flex items-center justify-between px-4 py-3.5 border-b"
+        className="relative z-10 flex items-center justify-between px-4 py-3 border-b"
         style={{ borderColor: 'rgba(255,255,255,0.07)' }}
       >
-        <GramaLogo variant="light" size="sm" />
+        <button
+          onClick={() => navigate('/')}
+          className="transition-opacity hover:opacity-80 active:opacity-60"
+          title="Ver todos los talleres"
+          style={{ display: 'flex', alignItems: 'center' }}
+        >
+          <GramaLogo variant="light" size="sm" />
+        </button>
         {onCollapse && (
           <button
             onClick={onCollapse}
-            className="text-white/30 hover:text-white/70 transition-colors"
+            className="text-white/30 hover:text-white/70 transition-colors ml-2"
             aria-label="Colapsar sidebar"
           >
             <ChevronLeft size={15} />

@@ -16,7 +16,7 @@ export function GramaLogo({ variant = 'light', size = 'md', className = '' }: Gr
   const subColor      = variant === 'light' ? 'rgba(255,255,255,0.4)' : 'rgba(4,57,65,0.45)'
 
   return (
-    <div className={`flex items-center gap-2 select-none ${className}`}>
+    <div className={`flex items-center gap-2.5 select-none ${className}`} style={{ lineHeight: 1 }}>
       {/* ── Marca geométrica ── */}
       <svg
         width={s.mark}
@@ -24,30 +24,25 @@ export function GramaLogo({ variant = 'light', size = 'md', className = '' }: Gr
         viewBox="0 0 24 24"
         fill="none"
         aria-hidden
+        style={{ display: 'block', flexShrink: 0 }}
       >
-        {/* Tangram simplificado: 3 piezas */}
-        {/* Triángulo grande superior-izq */}
-        <polygon points="2,22 12,2 12,22" fill={accentColor} opacity="1" />
-        {/* Triángulo superior-der */}
+        <polygon points="2,22 12,2 12,22" fill={accentColor} />
         <polygon points="12,2 22,12 12,12" fill={textColor} opacity="0.85" />
-        {/* Cuadrado inferior-der */}
         <rect x="12" y="12" width="10" height="10" fill={textColor} opacity="0.5" />
       </svg>
 
       {/* ── Wordmark ── */}
-      <div style={{ lineHeight: 1 }}>
-        <div
-          className="font-black tracking-[0.06em]"
-          style={{ fontSize: s.text, color: textColor, letterSpacing: '0.08em' }}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <span
+          style={{ fontSize: s.text, fontWeight: 900, color: textColor, letterSpacing: '0.08em', lineHeight: 1 }}
         >
           GRAMA
-        </div>
-        <div
-          className="font-medium tracking-wide"
-          style={{ fontSize: s.sub, color: subColor, marginTop: 1, letterSpacing: '0.04em' }}
+        </span>
+        <span
+          style={{ fontSize: s.sub, fontWeight: 500, color: subColor, letterSpacing: '0.04em', lineHeight: 1 }}
         >
           Proyectos Educativos
-        </div>
+        </span>
       </div>
     </div>
   )
