@@ -16,13 +16,13 @@ export interface EstadoModuloItem {
 // M2 → disponible (disponible pero no iniciado)
 // M3–M6 → bloqueado (esperando aprobación de M1 quiz)
 export const mockEstadosModulos: EstadoModuloItem[] = [
-  { moduloId: 'm0', estado: 'completado',  porcentaje: 100 },
-  { moduloId: 'm1', estado: 'en_curso',    porcentaje: 65  },
-  { moduloId: 'm2', estado: 'disponible',  porcentaje: 0   },
-  { moduloId: 'm3', estado: 'bloqueado',   porcentaje: 0   },
-  { moduloId: 'm4', estado: 'bloqueado',   porcentaje: 0   },
-  { moduloId: 'm5', estado: 'bloqueado',   porcentaje: 0   },
-  { moduloId: 'm6', estado: 'bloqueado',   porcentaje: 0   },
+  { moduloId: 'm0', estado: 'disponible', porcentaje: 0 },
+  { moduloId: 'm1', estado: 'disponible', porcentaje: 0 },
+  { moduloId: 'm2', estado: 'disponible', porcentaje: 0 },
+  { moduloId: 'm3', estado: 'disponible', porcentaje: 0 },
+  { moduloId: 'm4', estado: 'disponible', porcentaje: 0 },
+  { moduloId: 'm5', estado: 'disponible', porcentaje: 0 },
+  { moduloId: 'm6', estado: 'disponible', porcentaje: 0 },
 ]
 
 // Resumen de progreso hardcodeado (ProgressRing)

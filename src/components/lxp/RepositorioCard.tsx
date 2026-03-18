@@ -2,50 +2,41 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { FileText, Video, Shield, Package, Wrench, Sofa, BookOpen, HardHat, Factory } from 'lucide-react'
 
-interface BienData {
-  n: number
-  nombre: string
-  cantidad: number
-  zona: string
-  descripcion: string
-  usoPedagogico: string
-  marca?: string
-  modelo?: string
-  codigoEntidad: string
-  codigoInterno: string
-  tipo: string
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Bien = Record<string, any>
 
 interface RepositorioCardProps {
-  bien: BienData
+  bien: Bien
 }
 
 const TIPO_CONFIG: Record<string, { icon: React.ElementType; color: string; label: string }> = {
-  EQUIPOS:     { icon: Package,  color: '#00c16e', label: 'Equipo' },
-  HERRAMIENTAS:{ icon: Wrench,   color: '#0891b2', label: 'Herramienta' },
-  MOBILIARIO:  { icon: Sofa,     color: '#8b5cf6', label: 'Mobiliario' },
-  PEDAGOGICO:  { icon: BookOpen, color: '#f59e0b', label: 'Material Pedagógico' },
-  'PRODUCCIÓN':{ icon: Factory,  color: '#06b6d4', label: 'Producción' },
-  SEGURIDAD:   { icon: HardHat,  color: '#ef4444', label: 'Seguridad' },
-  '':          { icon: Package,  color: '#6b7280', label: 'Bien' },
+  EQUIPOS:      { icon: Package,  color: '#00c16e', label: 'Equipo' },
+  HERRAMIENTAS: { icon: Wrench,   color: '#0891b2', label: 'Herramienta' },
+  MOBILIARIO:   { icon: Sofa,     color: '#8b5cf6', label: 'Mobiliario' },
+  PEDAGOGICO:   { icon: BookOpen, color: '#f59e0b', label: 'Pedagógico' },
+  'PRODUCCIÓN': { icon: Factory,  color: '#06b6d4', label: 'Producción' },
+  SEGURIDAD:    { icon: HardHat,  color: '#ef4444', label: 'Seguridad' },
+  '':           { icon: Package,  color: '#6b7280', label: 'Bien' },
 }
 
-function getZonaLabel(zona: string): { label: string; color: string } {
+function zonaColor(zona: string): string {
   const z = zona.toUpperCase()
-  if (z.includes('INVESTIGAC')) return { label: 'Investigación', color: '#0891b2' }
-  if (z.includes('INNOVAC')) return { label: 'Innovación', color: '#00c16e' }
-  if (z.includes('ACABADO')) return { label: 'Acabados', color: '#8b5cf6' }
-  if (z.includes('ALMAC')) return { label: 'Almacén', color: '#f59e0b' }
-  if (z.includes('SEGURIDAD')) return { label: 'Seguridad', color: '#ef4444' }
-  return { label: zona.split(',')[0].trim(), color: '#045f6c' }
+  if (z.includes('INVESTIGAC')) return '#0891b2'
+  if (z.includes('INNOVAC'))    return '#00c16e'
+  if (z.includes('DEPÓSITO') || z.includes('ALMAC')) return '#f59e0b'
+  if (z.includes('SEGURIDAD')) return '#ef4444'
+  return '#045f6c'
 }
 
 export function RepositorioCard({ bien }: RepositorioCardProps) {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
-  const tipoConf = TIPO_CONFIG[bien.tipo] ?? TIPO_CONFIG.EQUIPOS
+  const tipoConf = TIPO_CONFIG[bien.tipo] ?? TIPO_CONFIG['']
   const TypeIcon = tipoConf.icon
-  const zona = getZonaLabel(bien.zona)
+  const color = zonaColor(bien.zona ?? '')
+
+  // Breadcrumb: zona > area > subarea (solo los que tienen valor)
+  const breadcrumb = [bien.zona, bien.area, bien.subarea].filter(Boolean)
 
   return (
     <button
@@ -55,17 +46,11 @@ export function RepositorioCard({ bien }: RepositorioCardProps) {
     >
       {/* Top row */}
       <div className="flex items-start gap-3 mb-3">
-        <div
-          className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
-          style={{ background: '#e3f8fb' }}
-        >
+        <div className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: '#e3f8fb' }}>
           <TypeIcon size={18} style={{ color: tipoConf.color }} />
         </div>
         <div className="flex-1 min-w-0">
-          <h3
-            className="font-bold text-sm leading-tight line-clamp-2 group-hover:underline"
-            style={{ color: '#043941' }}
-          >
+          <h3 className="font-bold text-sm leading-tight line-clamp-2 group-hover:underline" style={{ color: '#043941' }}>
             {bien.nombre}
           </h3>
           {(bien.marca || bien.modelo) && (
@@ -74,59 +59,53 @@ export function RepositorioCard({ bien }: RepositorioCardProps) {
             </p>
           )}
         </div>
-        <span
-          className="text-xs font-semibold px-2 py-0.5 rounded-full shrink-0"
-          style={{ background: '#e3f8fb', color: '#043941' }}
-        >
+        <span className="text-xs font-semibold px-2 py-0.5 rounded-full shrink-0" style={{ background: '#e3f8fb', color: '#043941' }}>
           ×{bien.cantidad}
         </span>
       </div>
 
-      {/* Zone + type badges */}
-      <div className="flex flex-wrap gap-1.5 mb-3">
-        <span
-          className="text-xs px-2 py-0.5 rounded-full font-semibold"
-          style={{ background: zona.color + '20', color: zona.color }}
-        >
-          {zona.label}
-        </span>
-        <span
-          className="text-xs px-2 py-0.5 rounded-full font-semibold"
-          style={{ background: tipoConf.color + '20', color: tipoConf.color }}
-        >
-          {tipoConf.label}
-        </span>
+      {/* Jerarquía zona → area → subarea */}
+      <div className="flex flex-wrap gap-1 mb-3">
+        {breadcrumb.map((seg, i) => (
+          <span key={i} className="flex items-center gap-1">
+            {i > 0 && <span style={{ color: '#94a3b8', fontSize: 10 }}>›</span>}
+            <span
+              className="text-xs px-2 py-0.5 rounded-full font-semibold"
+              style={{
+                background: i === 0 ? color + '20' : '#f1f5f9',
+                color: i === 0 ? color : '#64748b',
+              }}
+            >
+              {seg}
+            </span>
+          </span>
+        ))}
       </div>
 
-      {/* Resources available */}
-      <div className="flex gap-2">
+      {/* Tipo */}
+      <span
+        className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold mb-3"
+        style={{ background: tipoConf.color + '18', color: tipoConf.color }}
+      >
+        <TypeIcon size={10} />
+        {tipoConf.label}
+      </span>
+
+      {/* Recursos disponibles */}
+      <div className="flex gap-2 mt-1">
         <ResourceBadge icon={FileText} label="Manual" color="#043941" />
-        <ResourceBadge icon={Video} label="Video" color="#00c16e" />
-        <ResourceBadge icon={Shield} label="IPERC" color="#ef4444" />
+        <ResourceBadge icon={Video}    label="Video"  color="#00c16e" />
+        <ResourceBadge icon={Shield}   label="IPERC"  color="#ef4444" />
       </div>
 
-      {/* Code */}
-      <p className="text-xs mt-2" style={{ color: '#94a3b8' }}>
-        {bien.codigoEntidad}
-      </p>
+      <p className="text-xs mt-2" style={{ color: '#94a3b8' }}>{bien.codigoEntidad}</p>
     </button>
   )
 }
 
-function ResourceBadge({
-  icon: Icon,
-  label,
-  color,
-}: {
-  icon: React.ElementType
-  label: string
-  color: string
-}) {
+function ResourceBadge({ icon: Icon, label, color }: { icon: React.ElementType; label: string; color: string }) {
   return (
-    <span
-      className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded"
-      style={{ background: color + '15', color }}
-    >
+    <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded" style={{ background: color + '15', color }}>
       <Icon size={10} />
       {label}
     </span>
