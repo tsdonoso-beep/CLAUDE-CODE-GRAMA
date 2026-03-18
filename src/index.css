@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Brand Primary Colors ── */
+    --g: 152 100% 38%;              /* Verde Claro #00c16e */
+    --g-dark: 187 89% 14%;          /* Verde Oscuro #043941 */
+    --g-deep: 188 93% 22%;          /* Verde Cerceta #045f6c */
+    --g-light: 140 100% 91%;        /* Verde Claro 1 #d2ffe1 */
+    --g-pale: 188 75% 94%;          /* Verde Claro 2 #e3f8fb */
+    --g-mint: 155 98% 42%;          /* Verde Menta #02d47e (secundario) */
+
+    /* ── Accent / Acompañamiento ── */
+    --acc-lila: 257 90% 88%;        /* Lila #d4c4fc */
+    --acc-lila-light: 259 93% 92%;  /* Lila Claro #e3d8fe */
+    --acc-yellow: 54 89% 77%;       /* Amarillo #f8ee91 */
+    --acc-yellow-light: 51 92% 92%; /* Amarillo Claro #fdf8da */
+
+    /* ── Dark surfaces (sidebar, hero) ── */
+    --dk-base: 187 89% 14%;         /* Verde Oscuro #043941 */
+    --dk-surface: 188 85% 16%;
+    --dk-card: 188 80% 19%;
+    --dk-border: 188 60% 24%;
+    --dk-text: 140 100% 91%;        /* Verde Claro 1 for text on dark */
+    --dk-muted: 188 30% 50%;
+
+    /* ── Light surfaces (content) ── */
+    --lt-bg: 188 75% 97%;
+    --lt-surface: 0 0% 100%;
+    --lt-border: 188 30% 90%;
+    --lt-border2: 188 20% 83%;
+    --lt-text: 187 89% 14%;         /* Verde Oscuro */
+    --lt-muted: 188 20% 46%;
+    --lt-subtle: 188 30% 96%;
+
+    /* ── Tag colors ── */
+    --tag-pdf-bg: 0 86% 97%;
+    --tag-pdf-text: 0 72% 51%;
+    --tag-vid-bg: 54 89% 93%;
+    --tag-vid-text: 54 70% 40%;
+    --tag-3d-bg: 259 93% 92%;
+    --tag-3d-text: 257 70% 50%;
+
+    /* ── Shadcn semantic mappings ── */
+    --background: 188 75% 97%;
+    --foreground: 187 89% 14%;
+    --card: 0 0% 100%;
+    --card-foreground: 187 89% 14%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 187 89% 14%;
+    --primary: 152 100% 38%;         /* Verde Claro #00c16e */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 187 89% 14%;        /* Verde Oscuro #043941 */
+    --secondary-foreground: 140 100% 91%;
+    --muted: 188 75% 94%;
+    --muted-foreground: 188 30% 40%;
+    --accent: 140 100% 91%;          /* Verde Claro 1 #d2ffe1 */
+    --accent-foreground: 187 89% 14%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 188 30% 90%;
+    --input: 188 30% 90%;
+    --ring: 152 100% 38%;
+    --radius: 0.75rem;
+
+    /* ── GRAMA green alias (legacy) ── */
+    --grama-green: 152 100% 38%;
+    --grama-green-foreground: 0 0% 100%;
+
+    /* ── Zona tokens ── */
+    --zona-investigacion: 152 100% 38%;
+    --zona-innovacion: 54 89% 77%;
+    --zona-seguridad: 0 72% 51%;
+
+    /* ── Sidebar ── */
+    --sidebar-background: 187 89% 14%;
+    --sidebar-foreground: 140 100% 91%;
+    --sidebar-primary: 152 100% 38%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 188 60% 24%;
+    --sidebar-accent-foreground: 140 100% 91%;
+    --sidebar-border: 188 60% 24%;
+    --sidebar-ring: 152 100% 38%;
+
+    /* ── Typography ── */
+    --font-ui: 'Manrope', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+
+    /* ── Radii ── */
+    --r-sm: 8px;
+    --r-md: 12px;
+    --r-lg: 16px;
+    --r-xl: 24px;
+
+    /* ── Shadows ── */
+    --sh-xs: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --sh-sm: 0 2px 8px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.05);
+    --sh-md: 0 4px 16px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.06);
+    --sh-lg: 0 8px 32px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.07);
+    --sh-glow-btn: 0 4px 20px hsla(152, 100%, 38%, .35);
+
+    /* ── Transitions ── */
+    --tf: 140ms ease;
+    --tn: 220ms ease;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-ui);
+  }
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* ── Glow button ── */
+.btn-glow {
+  box-shadow: var(--sh-glow-btn);
+  transition: all var(--tn);
+}
+.btn-glow:hover {
+  box-shadow: 0 6px 28px rgba(0,193,106,.45);
+  transform: translateY(-1px);
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--dk-border));
+  border-radius: 3px;
+}
+
+/* ── Hero gradient (brand dark green) ── */
+.hero-gradient {
+  background: linear-gradient(135deg, hsl(187 89% 14%), hsl(188 93% 22%));
+}
+
+/* ── GRAMA CSS Variables (direct hex) ── */
+:root {
+  --grama-oscuro:   #043941;
+  --grama-verde:    #00c16e;
+  --grama-menta:    #02d47e;
+  --grama-claro:    #d2ffe1;
+  --grama-cerceta:  #045f6c;
+  --grama-claro2:   #e3f8fb;
+}
+
+/* ── Patrón geométrico GRAMA (Tangram) ── */
+.grama-pattern {
+  background-image:
+    repeating-linear-gradient(60deg, rgba(2,212,126,0.04) 0, rgba(2,212,126,0.04) 1px, transparent 1px, transparent 55px),
+    repeating-linear-gradient(-60deg, rgba(2,212,126,0.04) 0, rgba(2,212,126,0.04) 1px, transparent 1px, transparent 55px);
+}
+
+/* ── Zona color badges ── */
+@layer components {
+  .zona-investigacion {
+    @apply bg-[hsl(var(--zona-investigacion))] text-black;
+  }
+  .zona-innovacion {
+    @apply bg-[hsl(var(--zona-innovacion))] text-black;
+  }
+  .zona-seguridad {
+    @apply bg-[hsl(var(--zona-seguridad))] text-white;
+  }
+}
+

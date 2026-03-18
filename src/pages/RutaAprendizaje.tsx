@@ -1,0 +1,174 @@
+// src/pages/RutaAprendizaje.tsx
+import { BookOpen, Clock, Video, Award } from 'lucide-react'
+import { useTaller } from '@/hooks/useTaller'
+import { modulosLXP } from '@/data/modulosLXP'
+import { mockEstadosModulos, mockProximaSesion, mockProgreso, getEstadoModulo } from '@/mock/mockEstados'
+import { ModuloCard } from '@/components/lxp/ModuloCard'
+import { ProgressRing } from '@/components/lxp/ProgressRing'
+import { LiveSessionCard } from '@/components/lxp/LiveSessionCard'
+
+export default function RutaAprendizaje() {
+  const { taller, slug } = useTaller()
+
+  if (!taller) return null
+
+  const sesionesEnVivo = modulosLXP.flatMap(m =>
+    m.subSecciones.flatMap(s =>
+      s.contenidos.filter(c => c.tipo === 'EN_VIVO')
+    )
+  ).length
+
+  return (
+    <div>
+      {/* ── Hero ── */}
+      <div className="px-8 py-10 grama-pattern" style={{ background: '#043941' }}>
+        <div className="max-w-4xl">
+          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#02d47e' }}>
+            {taller.nombreCorto}
+          </p>
+          <h1 className="text-3xl font-extrabold text-white mb-3 leading-tight">
+            Tu Ruta de Aprendizaje
+          </h1>
+          <p className="text-sm mb-6 max-w-2xl" style={{ color: 'rgba(255,255,255,0.65)' }}>
+            7 módulos secuenciados para dominar el equipamiento y el Programa Formativo EPT
+          </p>
+          <div className="flex flex-wrap gap-6">
+            {[
+              { icon: BookOpen, value: '7 módulos', sub: 'M0 → M6' },
+              { icon: Clock, value: '150 horas', sub: 'A + S + Presencial' },
+              { icon: Video, value: `${sesionesEnVivo} sesiones`, sub: 'en vivo' },
+              { icon: Award, value: '🎓 Certificación', sub: 'MINEDU' },
+            ].map(s => (
+              <div key={s.value} className="flex items-center gap-2">
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(2,212,126,0.12)' }}>
+                  <s.icon size={16} color="#02d47e" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-white">{s.value}</p>
+                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{s.sub}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Content ── */}
+      <div className="p-6 grid lg:grid-cols-3 gap-6">
+        {/* Timeline de módulos (2/3) */}
+        <div className="lg:col-span-2">
+          <h2 className="text-base font-extrabold mb-6" style={{ color: '#043941' }}>
+            Secuencia de módulos
+          </h2>
+
+          {/* Leyenda de modalidades */}
+          <div className="flex flex-wrap gap-3 mb-6">
+            {[
+              { label: 'A = Asíncrono (virtual)', bg: '#e3f8fb', text: '#045f6c' },
+              { label: 'S = Sincrónico (en vivo)', bg: '#fdf8da', text: '#ca8a04' },
+              { label: 'P = Presencial', bg: '#d2ffe1', text: '#00c16e' },
+            ].map(l => (
+              <span key={l.label} className="text-xs px-3 py-1 rounded-full font-medium" style={{ background: l.bg, color: l.text }}>
+                {l.label}
+              </span>
+            ))}
+          </div>
+
+          <div>
+            {modulosLXP.map((modulo, idx) => (
+              <ModuloCard
+                key={modulo.id}
+                modulo={modulo}
+                estado={getEstadoModulo(modulo.id).estado}
+                isLast={idx === modulosLXP.length - 1}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Sidebar derecho (1/3) */}
+        <div className="space-y-5">
+          {/* Progress ring */}
+          <div className="p-5 rounded-2xl border-2 text-center" style={{ borderColor: '#e3f8fb', background: '#ffffff' }}>
+            <h3 className="text-sm font-extrabold mb-4" style={{ color: '#043941' }}>Progreso general</h3>
+            <div className="flex justify-center mb-3">
+              <ProgressRing
+                percentage={mockProgreso.porcentajeGeneral}
+                size={100}
+                label={`${mockProgreso.modulosCompletados} de ${mockProgreso.modulosTotal} módulos`}
+                sublabel="completados"
+              />
+            </div>
+            <div className="space-y-2 mt-4">
+              {mockEstadosModulos.map(e => {
+                const modulo = modulosLXP.find(m => m.id === e.moduloId)
+                if (!modulo) return null
+                const colors = {
+                  completado: '#00c16e',
+                  en_curso: '#02d47e',
+                  disponible: '#045f6c',
+                  bloqueado: '#e2e8f0',
+                }
+                return (
+                  <div key={e.moduloId} className="flex items-center gap-2">
+                    <div className="text-xs font-bold w-6 shrink-0" style={{ color: '#045f6c' }}>
+                      M{modulo.numero}
+                    </div>
+                    <div className="flex-1 h-1.5 rounded-full" style={{ background: '#f1f5f9' }}>
+                      <div
+                        className="h-full rounded-full"
+                        style={{ width: `${e.porcentaje}%`, background: colors[e.estado] }}
+                      />
+                    </div>
+                    <span className="text-xs w-6 text-right" style={{ color: '#045f6c' }}>
+                      {e.porcentaje}%
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Próxima sesión */}
+          <LiveSessionCard
+            titulo={mockProximaSesion.titulo}
+            moduloNombre={mockProximaSesion.moduloNombre}
+            fecha={mockProximaSesion.fecha}
+            duracionMin={mockProximaSesion.duracionMin}
+            formador={mockProximaSesion.formador}
+            plataforma={mockProximaSesion.plataforma}
+            urlAcceso={mockProximaSesion.urlAcceso}
+            compact
+          />
+
+          {/* Resumen de horas */}
+          <div className="p-4 rounded-2xl border-2" style={{ borderColor: '#e3f8fb', background: '#ffffff' }}>
+            <h3 className="text-sm font-extrabold mb-3" style={{ color: '#043941' }}>
+              Desglose de horas
+            </h3>
+            <div className="space-y-2">
+              {[
+                { label: 'Virtual asíncrono', hours: modulosLXP.reduce((a, m) => a + m.horasAsincrono, 0), color: '#e3f8fb', text: '#045f6c' },
+                { label: 'Sincrónico (en vivo)', hours: modulosLXP.reduce((a, m) => a + m.horasSincrono, 0), color: '#fdf8da', text: '#ca8a04' },
+                { label: 'Presencial', hours: modulosLXP.reduce((a, m) => a + m.horasPresencial, 0), color: '#d2ffe1', text: '#00c16e' },
+              ].map(h => (
+                <div key={h.label} className="flex items-center justify-between text-xs">
+                  <span className="font-medium" style={{ color: '#043941' }}>{h.label}</span>
+                  <span className="font-extrabold px-2.5 py-0.5 rounded-full" style={{ background: h.color, color: h.text }}>
+                    {h.hours}h
+                  </span>
+                </div>
+              ))}
+              <div className="flex items-center justify-between text-xs pt-2 border-t" style={{ borderColor: '#e3f8fb' }}>
+                <span className="font-bold" style={{ color: '#043941' }}>Total</span>
+                <span className="font-extrabold" style={{ color: '#02d47e' }}>
+                  {modulosLXP.reduce((a, m) => a + m.horasTotal, 0)}h
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
