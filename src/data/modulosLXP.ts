@@ -1,6 +1,14 @@
 // src/data/modulosLXP.ts
 // Estructura completa de los 7 módulos LXP para todos los talleres EPT TSF/MINEDU
 
+import {
+  quizDiagnosticoTecnicoM0,
+  quizDiagnosticoPedagogicoM0,
+  quizZonaInvestigacionM2,
+  quizZonaInnovacionM3,
+  quizAcabadosAlmacenM4
+} from './quizBanks'
+
 export type FaseLXP =
   | 'diagnostico'
   | 'orientacion'
@@ -246,7 +254,8 @@ export const modulosLXP: ModuloLXP[] = [
             titulo: "Diagnóstico Técnico — Línea de base",
             descripcion: "8 preguntas situacionales para medir tu conocimiento previo del equipamiento. Sin nota mínima — solo para calibrar la capacitación",
             preguntas: 8,
-            duracionMin: 15
+            duracionMin: 15,
+            bancoPreguntas: quizDiagnosticoTecnicoM0
           }
         ]
       },
@@ -264,7 +273,8 @@ export const modulosLXP: ModuloLXP[] = [
             titulo: "Diagnóstico Pedagógico — Situaciones de Aula",
             descripcion: "6 preguntas sobre prácticas pedagógicas actuales. Sirve para calibrar el programa, no para evaluar",
             preguntas: 6,
-            duracionMin: 12
+            duracionMin: 12,
+            bancoPreguntas: quizDiagnosticoPedagogicoM0
           }
         ]
       },
@@ -586,7 +596,8 @@ export const modulosLXP: ModuloLXP[] = [
             descripcion: "Verifica tu comprensión del uso pedagógico de los equipos de investigación. Mínimo 75% para aprobar",
             preguntas: 10,
             puntajeMinimo: 75,
-            duracionMin: 20
+            duracionMin: 20,
+            bancoPreguntas: quizZonaInvestigacionM2
           }
         ]
       },
@@ -731,7 +742,8 @@ export const modulosLXP: ModuloLXP[] = [
             descripcion: "Evaluación de conocimiento técnico y de seguridad de máquinas. Combina preguntas conceptuales con situaciones reales de operación",
             preguntas: 20,
             puntajeMinimo: 80,
-            duracionMin: 35
+            duracionMin: 35,
+            bancoPreguntas: quizZonaInnovacionM3
           }
         ]
       },
@@ -909,7 +921,8 @@ export const modulosLXP: ModuloLXP[] = [
             descripcion: "Verifica tu comprensión del sistema de acabados, gestión del almacén y mantenimiento preventivo. Mínimo 75% para aprobar",
             preguntas: 12,
             puntajeMinimo: 75,
-            duracionMin: 20
+            duracionMin: 20,
+            bancoPreguntas: quizAcabadosAlmacenM4
           }
         ]
       },
