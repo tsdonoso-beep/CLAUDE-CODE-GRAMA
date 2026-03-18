@@ -13,6 +13,8 @@ import { ContenidoBadge } from '@/components/lxp/ContenidoBadge'
 import { QuizBlock } from '@/components/lxp/QuizBlock'
 import { ManualViewerModal } from '@/components/lxp/ManualViewerModal'
 import { EPPSelectorModal } from '@/components/lxp/EPPSelectorModal'
+import { MapaHabilidadesModal } from '@/components/lxp/MapaHabilidadesModal'
+import { TablaProgresionModal } from '@/components/lxp/TablaProgresionModal'
 import { useTaller } from '@/hooks/useTaller'
 import { getTallerBySlug } from '@/data/talleresConfig'
 import jsPDF from 'jspdf'
@@ -37,6 +39,8 @@ export default function ModuloDetalle() {
   const [currentInteractiveContent, setCurrentInteractiveContent] = useState<any>(null)
   const [manualAbierto, setManualAbierto] = useState<string | null>(null)
   const [showEPPSelector, setShowEPPSelector] = useState(false)
+  const [showMapaHabilidades, setShowMapaHabilidades] = useState(false)
+  const [showTablaProgresion, setShowTablaProgresion] = useState(false)
 
   const manualActivo = manualAbierto ? manualesRuta.find(m => m.id === manualAbierto) ?? null : null
   const taller = getTallerBySlug(slug ?? '')
@@ -121,6 +125,10 @@ export default function ModuloDetalle() {
     } else if (contenido.tipo === 'INTERACTIVO') {
       if (contenido.id === 'm1-s2-c1') {
         setShowEPPSelector(true)
+      } else if (contenido.id === 'm5-s2-c1') {
+        setShowMapaHabilidades(true)
+      } else if (contenido.id === 'm5-s3-c2') {
+        setShowTablaProgresion(true)
       } else if (contenido.titulo.toLowerCase().includes('grado')) {
         setCurrentInteractiveContent(contenido)
         setShowGradeModal(true)
@@ -438,6 +446,24 @@ export default function ModuloDetalle() {
           tallerSlug={slug ?? ''}
           tallerNombre={taller.nombre}
           onClose={() => setShowEPPSelector(false)}
+        />
+      )}
+
+      {/* Modal Mapa Habilidades EPT */}
+      {showMapaHabilidades && taller && (
+        <MapaHabilidadesModal
+          tallerSlug={slug ?? ''}
+          tallerNombre={taller.nombre}
+          onClose={() => setShowMapaHabilidades(false)}
+        />
+      )}
+
+      {/* Modal Tabla Progresión por Grado */}
+      {showTablaProgresion && taller && (
+        <TablaProgresionModal
+          tallerSlug={slug ?? ''}
+          tallerNombre={taller.nombre}
+          onClose={() => setShowTablaProgresion(false)}
         />
       )}
     </div>
