@@ -55,7 +55,7 @@ export function RepositorioCard({ bien }: RepositorioCardProps) {
   return (
     <button
       onClick={() => navigate(`/taller/${slug}/repositorio/bien/${bien.n}`)}
-      className="w-full text-left group relative overflow-hidden transition-all duration-200"
+      className="w-full h-full text-left group relative overflow-hidden transition-all duration-200 flex flex-col"
       style={{
         background: '#ffffff',
         borderRadius: '1rem',
@@ -76,7 +76,7 @@ export function RepositorioCard({ bien }: RepositorioCardProps) {
       {/* Accent bar top */}
       <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${accent}, ${tipoConf.color})` }} />
 
-      <div className="p-4">
+      <div className="p-4 flex flex-col flex-1">
         {/* Row 1: icon + title + quantity */}
         <div className="flex items-start gap-3 mb-3">
           {/* Icon pill */}
@@ -128,6 +128,9 @@ export function RepositorioCard({ bien }: RepositorioCardProps) {
             ))}
           </div>
         )}
+
+        {/* Spacer — empuja footer hacia abajo */}
+        <div className="flex-1" />
 
         {/* Row 3: tipo badge */}
         <div className="flex items-center justify-between">
