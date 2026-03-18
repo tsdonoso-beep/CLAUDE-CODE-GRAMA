@@ -45,6 +45,7 @@ export default function ModuloDetalle() {
   const [showMapaHabilidades, setShowMapaHabilidades] = useState(false)
   const [showTablaProgresion, setShowTablaProgresion] = useState(false)
   const [descargableAbierto, setDescargableAbierto] = useState<string | null>(null)
+  const [showTourSimulator, setShowTourSimulator] = useState(false)
 
   const manualActivo = manualAbierto ? manualesRuta.find(m => m.id === manualAbierto) ?? null : null
   const descargableActivo = descargableAbierto ? descargablesLXP.find(d => d.id === descargableAbierto) ?? null : null
@@ -124,7 +125,9 @@ export default function ModuloDetalle() {
         doc.save(`${contenido.titulo}.pdf`)
       }
     } else if (contenido.tipo === 'INTERACTIVO') {
-      if (contenido.id === 'm1-s2-c1') {
+      if (contenido.id === 'm0-s2-c2' && slug === 'mecanica-automotriz') {
+        setShowTourSimulator(true)
+      } else if (contenido.id === 'm1-s2-c1') {
         setShowEPPSelector(true)
       } else if (contenido.id === 'm5-s2-c1') {
         setShowMapaHabilidades(true)
@@ -547,6 +550,35 @@ export default function ModuloDetalle() {
           tallerNombre={taller.nombre}
           onClose={() => setShowTablaProgresion(false)}
         />
+      )}
+
+      {/* Modal Tour 3D — Simulador Taller Automotriz */}
+      {showTourSimulator && (
+        <div className="fixed inset-0 z-50 flex flex-col bg-black">
+          <div
+            className="flex items-center justify-between px-4 py-2 shrink-0"
+            style={{ background: '#043941', borderBottom: '1px solid rgba(2,212,126,0.25)' }}
+          >
+            <span className="text-sm font-bold text-white">
+              🚗 Tour 3D — Taller de Mecánica Automotriz
+            </span>
+            <button
+              onClick={() => setShowTourSimulator(false)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors"
+              style={{ background: 'rgba(255,255,255,0.1)', color: '#02d47e' }}
+              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
+              onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
+            >
+              ✕ Cerrar
+            </button>
+          </div>
+          <iframe
+            src="/tour-3d-automotriz-v2.html"
+            title="Tour 3D Taller Automotriz"
+            className="flex-1 w-full border-0"
+            allow="fullscreen"
+          />
+        </div>
       )}
     </div>
   )
