@@ -50,6 +50,7 @@ export interface ContenidoLXP {
   esActividad?: boolean       // true para actividades prácticas
   recursosRepositorio?: string[] // IDs de bienes relacionados
   bancoPreguntas?: PreguntaQuiz[]
+  manualId?: string   // ID del manual en manualesRuta.ts (para PDF interactivos)
 }
 
 export interface SubSeccionLXP {
@@ -348,7 +349,8 @@ export const modulosLXP: ModuloLXP[] = [
             titulo: "Marco Normativo de Seguridad Ocupacional en Talleres EPT",
             descripcion: "Ley 29783 de Seguridad y Salud en el Trabajo, Manual SSO MINEDU y obligaciones del docente como responsable del taller",
             paginas: 28,
-            duracionMin: 45
+            duracionMin: 45,
+            manualId: "manual-seguridad-m1"
           }
         ]
       },
@@ -878,7 +880,8 @@ export const modulosLXP: ModuloLXP[] = [
             modalidad: "asincrono",
             titulo: "Manual de Organización del Almacén EPT",
             descripcion: "Guía completa para el sistema de almacén: distribución física, etiquetado, registro digital y reportes de estado para la UGEL",
-            paginas: 20
+            paginas: 20,
+            manualId: "manual-almacen-m4"
           }
         ]
       },
@@ -1056,7 +1059,8 @@ export const modulosLXP: ModuloLXP[] = [
             titulo: "Guía de Planificación con Equipamiento — Método GRAMA",
             descripcion: "Metodología paso a paso para diseñar unidades de aprendizaje a partir del equipamiento: identificar el bien ancla, seleccionar competencias, diseñar actividades",
             paginas: 32,
-            duracionMin: 120
+            duracionMin: 120,
+            manualId: "manual-planificacion-m5"
           },
           {
             id: "m5-s4-c2",
@@ -1213,7 +1217,8 @@ export const modulosLXP: ModuloLXP[] = [
             titulo: "Briefing del Proyecto Integrador — Rúbrica y Criterios",
             descripcion: "Especificaciones completas del proyecto: qué debe producir, cómo se evaluará, qué procesos debe integrar y qué documentación debe presentar",
             paginas: 8,
-            duracionMin: 60
+            duracionMin: 60,
+            manualId: "manual-proyecto-integrador-m6"
           },
           {
             id: "m6-s1-c2",

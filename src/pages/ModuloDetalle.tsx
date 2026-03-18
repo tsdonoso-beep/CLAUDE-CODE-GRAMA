@@ -7,9 +7,11 @@ import {
   ExternalLink, Lock
 } from 'lucide-react'
 import { modulosLXP } from '@/data/modulosLXP'
+import { manualesRuta } from '@/data/manualesRuta'
 import { getEstadoModulo } from '@/mock/mockEstados'
 import { ContenidoBadge } from '@/components/lxp/ContenidoBadge'
 import { QuizBlock } from '@/components/lxp/QuizBlock'
+import { ManualViewerModal } from '@/components/lxp/ManualViewerModal'
 import { useTaller } from '@/hooks/useTaller'
 import jsPDF from 'jspdf'
 
@@ -31,6 +33,9 @@ export default function ModuloDetalle() {
   const [showGradeModal, setShowGradeModal] = useState(false)
   const [selectedGrade, setSelectedGrade] = useState<string | null>(null)
   const [currentInteractiveContent, setCurrentInteractiveContent] = useState<any>(null)
+  const [manualAbierto, setManualAbierto] = useState<string | null>(null)
+
+  const manualActivo = manualAbierto ? manualesRuta.find(m => m.id === manualAbierto) ?? null : null
 
   const moduloNum = parseInt(num ?? '0', 10)
   const modulo = modulosLXP.find(m => m.numero === moduloNum)
@@ -133,10 +138,10 @@ export default function ModuloDetalle() {
         alert('Actividad no disponible')
       }
     } else if (contenido.tipo === 'PDF') {
-      if (contenido.urlPDF) {
+      if (contenido.manualId) {
+        setManualAbierto(contenido.manualId)
+      } else if (contenido.urlPDF) {
         window.open(contenido.urlPDF, '_blank')
-      } else {
-        alert('Documento PDF no disponible')
       }
     } else {
       alert(`${contenido.tipo} - ${contenido.titulo}`)
@@ -392,7 +397,6 @@ export default function ModuloDetalle() {
             <p className="text-sm text-muted-foreground mb-6">
               Selecciona tu grado para adaptar los ejemplos pedagógicos a tu contexto
             </p>
-
             <div className="space-y-2 mb-6">
               {['1°', '2°', '3°', '4°', '5°'].map((grade) => (
                 <button
@@ -405,7 +409,6 @@ export default function ModuloDetalle() {
                 </button>
               ))}
             </div>
-
             <button
               onClick={() => setShowGradeModal(false)}
               className="w-full px-4 py-2 rounded-lg text-sm text-muted-foreground hover:bg-gray-100 transition-all"
@@ -414,6 +417,14 @@ export default function ModuloDetalle() {
             </button>
           </div>
         </div>
+      )}
+
+      {/* Modal visor de manuales */}
+      {manualActivo && (
+        <ManualViewerModal
+          manual={manualActivo}
+          onClose={() => setManualAbierto(null)}
+        />
       )}
     </div>
   )
