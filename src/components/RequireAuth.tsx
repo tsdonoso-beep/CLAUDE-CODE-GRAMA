@@ -2,6 +2,6 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
 export function RequireAuth() {
-  const isAuth = sessionStorage.getItem('grama-auth') === 'true'
-  return isAuth ? <Outlet /> : <Navigate to="/login" replace />
+  // Auth deshabilitada temporalmente — todas las rutas accesibles
+  return <Outlet />
 }
