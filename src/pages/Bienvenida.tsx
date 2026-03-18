@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { TallerCard } from '@/components/hub/TallerCard'
-import logoGramaFull from '@/assets/logo-grama-full.png'
+import { GramaLogo } from '@/components/GramaLogo'
 
 // Componente de stat con conteo animado
 function AnimatedStat({ target, suffix = '', label }: { target: number | string; suffix?: string; label: string }) {
@@ -98,7 +98,7 @@ export default function Bienvenida() {
         className="relative z-10 flex items-center justify-between px-6 sm:px-10 py-5 border-b animate-fade-in"
         style={{ borderColor: 'rgba(255,255,255,0.05)' }}
       >
-        <img src={logoGramaFull} alt="GRAMA" className="h-9 object-contain" />
+        <GramaLogo variant="glow" height={36} />
 
         <div className="hidden sm:flex items-center gap-3">
           <div

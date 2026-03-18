@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, AlertCircle } from 'lucide-react'
-import logoGramaFull from '@/assets/logo-grama-full.png'
+import { GramaLogo } from '@/components/GramaLogo'
 
 // Credenciales hardcodeadas — solo UI, sin auth real
 const VALID_EMAIL = 'docente@grama.pe'
@@ -60,11 +60,9 @@ export default function Login() {
         </div>
 
         <div className="relative z-10 text-center max-w-sm">
-          <img
-            src={logoGramaFull}
-            alt="GRAMA Proyectos Educativos"
-            className="h-20 mx-auto mb-8 object-contain"
-          />
+          <div className="flex justify-center mb-8">
+            <GramaLogo variant="glow" height={56} />
+          </div>
           <h2 className="text-2xl font-extrabold text-white mb-3">
             Plataforma de Capacitación Docente
           </h2>
@@ -96,11 +94,7 @@ export default function Login() {
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
         {/* Mobile: logo */}
         <div className="lg:hidden mb-8 text-center">
-          <img
-            src={logoGramaFull}
-            alt="GRAMA Proyectos Educativos"
-            className="h-16 mx-auto mb-3 object-contain"
-          />
+          <GramaLogo variant="glow" height={44} className="mx-auto mb-3" />
           <p className="text-xs font-medium" style={{ color: '#02d47e' }}>
             Plataforma de Capacitación Docente
           </p>

@@ -3,7 +3,7 @@ import { NavLink, useParams, useNavigate } from 'react-router-dom'
 import { Home, BookOpen, Package, ChevronLeft, LayoutGrid } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { mockProgreso } from '@/mock/mockEstados'
-import logoGrama from '@/assets/logo-grama-full.png'
+import { GramaLogo } from '@/components/GramaLogo'
 
 const TALLER_ACCENTS: Record<string, string> = {
   'mecanica-automotriz':  '#3b82f6',
@@ -61,7 +61,7 @@ export function Sidebar({ onCollapse }: SidebarProps) {
         className="relative z-10 flex items-center justify-between px-4 py-3.5 border-b"
         style={{ borderColor: 'rgba(255,255,255,0.07)' }}
       >
-        <img src={logoGrama} alt="GRAMA" className="h-8 object-contain" />
+        <GramaLogo variant="glow" height={30} />
         {onCollapse && (
           <button
             onClick={onCollapse}

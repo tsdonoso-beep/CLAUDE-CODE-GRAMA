@@ -150,6 +150,7 @@ export default function TallerHub() {
                 size={80}
                 label={`${mockProgreso.modulosCompletados}/${mockProgreso.modulosTotal}`}
                 sublabel="módulos"
+                dark
               />
               <p className="text-[10px] text-white/40 text-center">
                 {mockProgreso.horasCompletadas}h / {mockProgreso.horasTotal}h
@@ -387,6 +388,7 @@ export default function TallerHub() {
                 size={88}
                 label={`${mockProgreso.modulosCompletados} de ${mockProgreso.modulosTotal} módulos`}
                 sublabel="completados"
+                dark={false}
               />
             </div>
             <p className="text-xs" style={{ color: '#045f6c' }}>
