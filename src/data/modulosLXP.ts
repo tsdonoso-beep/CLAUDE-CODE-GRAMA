@@ -185,7 +185,7 @@ const quizSeguridadM1: PreguntaQuiz[] = [
 
 export const modulosLXP: ModuloLXP[] = [
   // ─────────────────────────────────────────────────────────────────────────
-  // M0 · Inicio y Diagnóstico (3h asincrono + 1h sincrono)
+  // M0 · Inicio y Diagnóstico (2h asincrono + 2h sincrono)
   // ─────────────────────────────────────────────────────────────────────────
   {
     numero: 0,
@@ -194,8 +194,8 @@ export const modulosLXP: ModuloLXP[] = [
     descripcion: "Conoce la plataforma, tu punto de partida y el contexto del programa TSF. Explora tu taller virtualmente y comparte tus expectativas.",
     fase: "diagnostico",
     horasTotal: 4,
-    horasAsincrono: 3,
-    horasSincrono: 1,
+    horasAsincrono: 2,
+    horasSincrono: 2,
     horasPresencial: 0,
     icon: "🔍",
     colorFase: "#045f6c",
@@ -206,52 +206,35 @@ export const modulosLXP: ModuloLXP[] = [
         titulo: "Bienvenida y Pacto de Aprendizaje",
         descripcion: "Presentación del programa, objetivos y compromiso del participante",
         colorAccent: "#045f6c",
+        phaseBadge: "EN VIVO",
         contenidos: [
           {
             id: "m0-s1-c1",
-            tipo: "VIDEO",
-            modalidad: "asincrono",
-            titulo: "Bienvenida al Programa TSF — MINEDU 2024",
-            descripcion: "Presentación oficial del programa, los 9 talleres y la hoja de ruta de 150 horas",
-            duracionMin: 10
+            tipo: "EN_VIVO",
+            modalidad: "sincrono",
+            titulo: "Bienvenidos al Programa TSF — MINEDU 2024",
+            descripcion: "Presentación oficial del programa, los 9 talleres y la hoja de ruta de 150 horas. Onboarding a la plataforma",
+            duracionMin: 50
           },
           {
             id: "m0-s1-c2",
             tipo: "DESCARGABLE",
             modalidad: "asincrono",
             titulo: "Kit del Participante — Descarga e imprime",
-            descripcion: "Guía completa del participante: cronograma, materiales requeridos y pacto de aprendizaje para firmar",
+            descripcion: "Guía completa del participante: cronograma, materiales y pacto de aprendizaje para firmar",
             paginas: 12,
             descargableId: "desc-m0-kit"
-          }
-        ]
-      },
-      {
-        id: "m0-s2",
-        numero: "0.2",
-        titulo: "Selección de Perfil de Grado",
-        descripcion: "Indica el grado que enseñarás para personalizar los contenidos",
-        colorAccent: "#045f6c",
-        contenidos: [
+          },
           {
-            id: "m0-s2-c1",
-            tipo: "INTERACTIVO",
+            id: "m0-s1-c3",
+            tipo: "QUIZ",
             modalidad: "asincrono",
-            titulo: "¿Qué grado enseñas?",
-            descripcion: "Selecciona tu grado (1°–5°) para adaptar los ejemplos pedagógicos a tu contexto",
+            titulo: "Queremos conocerte",
+            descripcion: "Indica tus datos sociodemográficos (profesión, ubicación, fecha de nacimiento, etc.) para conocerte mejor",
             duracionMin: 5
-          }
-        ]
-      },
-      {
-        id: "m0-s3",
-        numero: "0.3",
-        titulo: "Diagnóstico Situacional Técnico",
-        descripcion: "¿Cuánto sabes ya del equipamiento de tu taller?",
-        colorAccent: "#00c16e",
-        contenidos: [
+          },
           {
-            id: "m0-s3-c1",
+            id: "m0-s1-c4",
             tipo: "QUIZ",
             modalidad: "asincrono",
             titulo: "Diagnóstico Técnico — Línea de base",
@@ -259,18 +242,9 @@ export const modulosLXP: ModuloLXP[] = [
             preguntas: 8,
             duracionMin: 15,
             bancoPreguntas: quizDiagnosticoTecnicoM0
-          }
-        ]
-      },
-      {
-        id: "m0-s4",
-        numero: "0.4",
-        titulo: "Diagnóstico Pedagógico",
-        descripcion: "¿Cómo planificas hoy? ¿Qué dificultades tienes en el taller?",
-        colorAccent: "#00c16e",
-        contenidos: [
+          },
           {
-            id: "m0-s4-c1",
+            id: "m0-s1-c5",
             tipo: "QUIZ",
             modalidad: "asincrono",
             titulo: "Diagnóstico Pedagógico — Situaciones de Aula",
@@ -282,36 +256,44 @@ export const modulosLXP: ModuloLXP[] = [
         ]
       },
       {
-        id: "m0-s5",
-        numero: "0.5",
+        id: "m0-s2",
+        numero: "0.2",
         titulo: "Tour Virtual del Taller",
         descripcion: "Recorre el taller completo en 360° antes de conocerlo físicamente",
         colorAccent: "#02d47e",
         contenidos: [
           {
-            id: "m0-s5-c1",
+            id: "m0-s2-c1",
             tipo: "VIDEO",
             modalidad: "asincrono",
             titulo: "Tour Virtual 360° — Tu Taller Equipado",
             descripcion: "Recorrido visual de las 4 zonas: Investigación, Innovación, Acabados y Almacén. Con narración técnica de cada equipo",
             duracionMin: 45
+          },
+          {
+            id: "m0-s2-c2",
+            tipo: "INTERACTIVO",
+            modalidad: "asincrono",
+            titulo: "Juego interactivo",
+            descripcion: "Interactúa con el mapa de zonas y equipos del taller",
+            duracionMin: 15
           }
         ]
       },
       {
-        id: "m0-s6",
-        numero: "0.6",
+        id: "m0-s3",
+        numero: "0.3",
         titulo: "Sesión Sincrónica de Apertura",
-        descripcion: "Primer encuentro con tu grupo y el formador GRAMA",
+        descripcion: "Primer encuentro con tu grupo del taller y el formador GRAMA",
         colorAccent: "#d4c4fc",
         phaseBadge: "EN VIVO",
         contenidos: [
           {
-            id: "m0-s6-c1",
+            id: "m0-s3-c1",
             tipo: "EN_VIVO",
             modalidad: "sincrono",
             titulo: "Sesión de Apertura — Presentación y expectativas",
-            descripcion: "Conoce a tu grupo, comparte tus expectativas y recibe orientaciones del formador para el desarrollo del programa",
+            descripcion: "Conoce a tu grupo, comparte expectativas y recibe orientaciones del formador para el desarrollo del programa",
             duracionMin: 60
           }
         ]
@@ -320,16 +302,16 @@ export const modulosLXP: ModuloLXP[] = [
   },
 
   // ─────────────────────────────────────────────────────────────────────────
-  // M1 · Seguridad Integral y Arquitectura (9h asincrono + 2h sincrono + 2h presencial)
+  // M1 · Conocimiento del Taller (7h asincrono + 2h sincrono + 2h presencial)
   // ─────────────────────────────────────────────────────────────────────────
   {
     numero: 1,
     id: "m1",
-    nombre: "Seguridad y Arquitectura del Taller",
-    descripcion: "Marco normativo de seguridad, EPP por proceso, protocolos de operación y zonas del taller. Quiz obligatorio con 80% para continuar.",
+    nombre: "Conocimiento del Taller",
+    descripcion: "Marco del programa formativo, IA para docentes EPT, arquitectura del taller y seguridad operativa. Quiz obligatorio con 80% para continuar.",
     fase: "orientacion",
-    horasTotal: 13,
-    horasAsincrono: 9,
+    horasTotal: 11,
+    horasAsincrono: 7,
     horasSincrono: 2,
     horasPresencial: 2,
     icon: "🛡️",
@@ -340,35 +322,49 @@ export const modulosLXP: ModuloLXP[] = [
       {
         id: "m1-s1",
         numero: "1.1",
-        titulo: "Marco Normativo de Seguridad",
-        descripcion: "Ley 29783 y Manual SSO — fundamentos legales",
+        titulo: "Introducción al Programa Formativo DES/SFT",
+        descripcion: "¿Conoces el programa formativo que propone el CNEB MINEDU? Marco curricular de la Secundaria con Formación Técnica",
         colorAccent: "#ef4444",
         contenidos: [
           {
             id: "m1-s1-c1",
-            tipo: "PDF",
+            tipo: "VIDEO",
             modalidad: "asincrono",
-            titulo: "Marco Normativo de Seguridad Ocupacional en Talleres EPT",
-            descripcion: "Ley 29783 de Seguridad y Salud en el Trabajo, Manual SSO MINEDU y obligaciones del docente como responsable del taller",
-            paginas: 28,
-            duracionMin: 45,
-            manualId: "manual-seguridad-m1"
+            titulo: "Programa Formativo TSF — Competencias, Habilidades y Marco Transversal",
+            descripcion: "Introducción a las competencias, habilidades de las 14 UC y el marco transversal del programa formativo TSF — RM N° 165 2022 MINEDU",
+            duracionMin: 60
+          },
+          {
+            id: "m1-s1-c2",
+            tipo: "VIDEO",
+            modalidad: "asincrono",
+            titulo: "Inteligencia Artificial para Docentes EPT — Primeros Pasos",
+            descripcion: "Introducción práctica a herramientas de IA generativa (ChatGPT, Copilot, Gemini): cómo usarlas para planificar sesiones, generar recursos y gestionar el taller",
+            duracionMin: 60
           }
         ]
       },
       {
         id: "m1-s2",
         numero: "1.2",
-        titulo: "EPP por Proceso",
-        descripcion: "Tabla de Equipos de Protección Personal según operación y equipo",
-        colorAccent: "#ef4444",
+        titulo: "Arquitectura y Zonas del Taller",
+        descripcion: "Distribución de las 4 zonas y catálogo completo de bienes",
+        colorAccent: "#043941",
         contenidos: [
           {
             id: "m1-s2-c1",
+            tipo: "VIDEO",
+            modalidad: "asincrono",
+            titulo: "Las 4 Zonas del Taller — Lógica y Diseño",
+            descripcion: "Explicación pedagógica de por qué el taller está organizado en 4 zonas y su vinculación con el currículo EPT",
+            duracionMin: 60
+          },
+          {
+            id: "m1-s2-c2",
             tipo: "INTERACTIVO",
             modalidad: "asincrono",
-            titulo: "Selector de EPP por Equipo y Proceso",
-            descripcion: "Tabla filtrable interactiva: selecciona el equipo o proceso y obtén el EPP exacto requerido. Incluye guía de verificación de estado del EPP",
+            titulo: "Catálogo Interactivo de Bienes del Taller",
+            descripcion: "Explorador de todos los bienes por zona con descripción, uso pedagógico y normas de seguridad",
             duracionMin: 30
           }
         ]
@@ -376,68 +372,61 @@ export const modulosLXP: ModuloLXP[] = [
       {
         id: "m1-s3",
         numero: "1.3",
-        titulo: "Protocolos de Seguridad Operativa",
-        descripcion: "Procedimientos paso a paso para el uso seguro de cada equipo",
+        titulo: "Marco Normativo de Seguridad",
+        descripcion: "Ley 29783 y Manual SSO — fundamentos legales",
         colorAccent: "#ef4444",
         contenidos: [
           {
             id: "m1-s3-c1",
-            tipo: "VIDEO",
+            tipo: "PDF",
             modalidad: "asincrono",
-            titulo: "Protocolos de Seguridad — Máquinas y Herramientas",
-            descripcion: "Demostración en video de protocolos de seguridad: encendido, operación y apagado. Incluye errores comunes y cómo prevenirlos",
-            duracionMin: 60
-          },
-          {
-            id: "m1-s3-c2",
-            tipo: "DESCARGABLE",
-            modalidad: "asincrono",
-            titulo: "Fichas de Revisión Diaria — Plastificables A5",
-            descripcion: "Fichas para cada equipo crítico: lista de verificación antes del uso. Para imprimir, plastificar y colocar en cada máquina",
-            paginas: 16,
-            descargableId: "desc-m1-fichas-revision"
+            titulo: "Marco Normativo de Seguridad Ocupacional en Talleres EPT",
+            descripcion: "Ley 29783, Manual SSO MINEDU y obligaciones del docente como responsable del taller",
+            paginas: 28,
+            duracionMin: 45,
+            manualId: "manual-seguridad-m1"
           }
         ]
       },
       {
         id: "m1-s4",
         numero: "1.4",
-        titulo: "Mapa de Seguridad del Taller",
-        descripcion: "Señalización, rutas de evacuación y ubicación de equipos de emergencia",
+        titulo: "EPP, Protocolos y Mapa de Seguridad",
+        descripcion: "EPP por proceso, protocolos de seguridad operativa y mapa de seguridad del taller",
         colorAccent: "#ef4444",
         contenidos: [
           {
             id: "m1-s4-c1",
             tipo: "INTERACTIVO",
             modalidad: "asincrono",
-            titulo: "Constructor de Mapa de Seguridad",
-            descripcion: "Herramienta para crear el mapa de seguridad de tu taller: señalización, extintores, salidas de emergencia y zonas de riesgo",
-            duracionMin: 40
-          }
-        ]
-      },
-      {
-        id: "m1-s5",
-        numero: "1.5",
-        titulo: "Arquitectura y Zonas del Taller",
-        descripcion: "Distribución de las 4 zonas y catálogo completo de bienes",
-        colorAccent: "#043941",
-        contenidos: [
+            titulo: "Selector de EPP por Equipo y Proceso",
+            descripcion: "Tabla filtrable interactiva: selecciona el equipo o proceso y obtén el EPP exacto requerido",
+            duracionMin: 30
+          },
           {
-            id: "m1-s5-c1",
+            id: "m1-s4-c2",
             tipo: "VIDEO",
             modalidad: "asincrono",
-            titulo: "Las 4 Zonas del Taller — Lógica y Diseño",
-            descripcion: "Explicación pedagógica de por qué el taller está organizado en Investigación, Innovación, Acabados y Almacén. Vinculación con el currículo EPT",
+            titulo: "Protocolos de Seguridad — Máquinas y Herramientas",
+            descripcion: "Demostración en video de protocolos: encendido, operación y apagado. Incluye errores comunes y prevención",
             duracionMin: 60
           },
           {
-            id: "m1-s5-c2",
+            id: "m1-s4-c3",
+            tipo: "DESCARGABLE",
+            modalidad: "asincrono",
+            titulo: "Fichas de Revisión Diaria — Plastificables A5",
+            descripcion: "Fichas para cada equipo crítico: lista de verificación antes del uso. Para imprimir y plastificar",
+            paginas: 16,
+            descargableId: "desc-m1-fichas-revision"
+          },
+          {
+            id: "m1-s4-c4",
             tipo: "INTERACTIVO",
             modalidad: "asincrono",
-            titulo: "Catálogo Interactivo de Bienes del Taller",
-            descripcion: "Explorador de todos los bienes por zona. Con descripción, uso pedagógico y normas de seguridad para cada equipo",
-            duracionMin: 30
+            titulo: "Constructor de Mapa de Seguridad",
+            descripcion: "Herramienta para crear el mapa de seguridad del taller: señalización, extintores, salidas y zonas de riesgo",
+            duracionMin: 40
           }
         ]
       },
@@ -453,8 +442,8 @@ export const modulosLXP: ModuloLXP[] = [
             id: "m1-s6-c1",
             tipo: "QUIZ",
             modalidad: "asincrono",
-            titulo: "Quiz de Seguridad — 15 preguntas · Mínimo 80%",
-            descripcion: "Evaluación de competencias de seguridad. Situaciones reales del taller. Debes obtener al menos 80% para continuar al siguiente módulo",
+            titulo: "Quiz de Seguridad — 8 preguntas · Mínimo 80%",
+            descripcion: "Evaluación de competencias de seguridad con situaciones reales del taller. Debes obtener al menos 80% para continuar",
             preguntas: 8,
             puntajeMinimo: 80,
             bloqueaSiguiente: true,
@@ -494,7 +483,7 @@ export const modulosLXP: ModuloLXP[] = [
             tipo: "ACTIVIDAD_PRACTICA",
             modalidad: "presencial",
             titulo: "Visita Presencial 1 — Reconocimiento y Plano de Seguridad",
-            descripcion: "Recorre físicamente el taller, verifica la instalación de equipos, identifica riesgos y elabora el plano de seguridad con señalización. Entregable: plano A3 del taller",
+            descripcion: "Recorre físicamente el taller, verifica instalación de equipos, identifica riesgos y elabora el plano de seguridad (entregable: plano A3)",
             duracionMin: 120,
             esActividad: true
           }
