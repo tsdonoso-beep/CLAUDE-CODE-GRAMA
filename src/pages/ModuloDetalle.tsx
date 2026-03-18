@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
   Clock, ChevronLeft, ChevronDown, ChevronRight,
   FileText, Video, Zap, Download, Activity,
-  ExternalLink, Lock
+  ExternalLink, Lock, ClipboardList
 } from 'lucide-react'
 import { modulosLXP } from '@/data/modulosLXP'
 import { manualesRuta } from '@/data/manualesRuta'
@@ -36,6 +36,7 @@ export default function ModuloDetalle() {
   const { slug } = useTaller()
   const navigate = useNavigate()
   const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set(['0']))
+  const [diagnosticosOpen, setDiagnosticosOpen] = useState(false)
   const [showGradeModal, setShowGradeModal] = useState(false)
   const [selectedGrade, setSelectedGrade] = useState<string | null>(null)
   const [currentInteractiveContent, setCurrentInteractiveContent] = useState<any>(null)
@@ -288,86 +289,159 @@ export default function ModuloDetalle() {
                         {sub.descripcion}
                       </p>
                     )}
-                    {sub.contenidos.map(contenido => {
-                      const ContentIcon = CONTENT_ICON[contenido.tipo] ?? FileText
-                      const isQuizInteractivo = contenido.tipo === 'QUIZ' && !!contenido.bancoPreguntas
+
+                    {(() => {
+                      // Separar diagnósticos (quiz con bancoPreguntas sin bloqueo) del resto
+                      const diagnosticos = sub.contenidos.filter(
+                        c => c.tipo === 'QUIZ' && !!c.bancoPreguntas && !c.bloqueaSiguiente
+                      )
+                      const resto = sub.contenidos.filter(
+                        c => !(c.tipo === 'QUIZ' && !!c.bancoPreguntas && !c.bloqueaSiguiente)
+                      )
+                      const totalDiagMin = diagnosticos.reduce((acc, c) => acc + (c.duracionMin ?? 0), 0)
+                      const totalDiagPreg = diagnosticos.reduce((acc, c) => acc + (c.preguntas ?? c.bancoPreguntas?.length ?? 0), 0)
 
                       return (
-                        <div key={contenido.id}>
-                          {isQuizInteractivo ? (
-                            /* Quiz interactivo bloqueante */
-                            <QuizBlock
-                              contenidoId={contenido.id}
-                              titulo={contenido.titulo}
-                              preguntas={contenido.bancoPreguntas}
-                              puntajeMinimo={contenido.puntajeMinimo ?? 80}
-                              bloqueaSiguiente={contenido.bloqueaSiguiente ?? false}
-                            />
-                          ) : (
-                            /* Ítem de contenido normal */
-                            <div
-                              className="flex items-start gap-4 p-4 rounded-xl border transition-all hover:shadow-sm"
-                              style={{ borderColor: '#e3f8fb', background: '#ffffff' }}
-                            >
-                              <div
-                                className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
-                                style={{ background: '#e3f8fb' }}
-                              >
-                                <ContentIcon size={18} style={{ color: sub.colorAccent }} />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="flex flex-wrap items-center gap-2 mb-1">
-                                  <ContenidoBadge tipo={contenido.tipo} size="sm" />
-                                  <h4 className="text-sm font-bold" style={{ color: '#043941' }}>
-                                    {contenido.titulo}
-                                  </h4>
-                                </div>
-                                <p className="text-xs mb-2" style={{ color: '#045f6c' }}>
-                                  {contenido.descripcion}
-                                </p>
-                                <div className="flex flex-wrap gap-3 text-xs" style={{ color: '#94a3b8' }}>
-                                  {contenido.duracionMin && (
-                                    <span className="flex items-center gap-1">
-                                      <Clock size={11} />
-                                      {contenido.duracionMin >= 60
-                                        ? `${Math.floor(contenido.duracionMin / 60)}h${contenido.duracionMin % 60 > 0 ? ` ${contenido.duracionMin % 60}min` : ''}`
-                                        : `${contenido.duracionMin} min`}
-                                    </span>
-                                  )}
-                                  {contenido.paginas && (
-                                    <span>{contenido.paginas} páginas</span>
-                                  )}
-                                  {contenido.preguntas && (
-                                    <span>{contenido.preguntas} preguntas</span>
-                                  )}
-                                  {contenido.puntajeMinimo && (
-                                    <span className="font-semibold" style={{ color: '#ca8a04' }}>
-                                      Mínimo {contenido.puntajeMinimo}%
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                              {/* CTA de acción */}
-                              <button
-                                onClick={() => handleOpenContent(contenido)}
-                                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold text-white shrink-0 transition-all hover:opacity-90"
-                                style={{ background: contenido.tipo === 'ACTIVIDAD_PRACTICA' ? '#f59e0b' : '#02d47e' }}
-                              >
-                                {contenido.tipo === 'DESCARGABLE' ? (
-                                  <>Descargar <Download size={11} /></>
-                                ) : contenido.tipo === 'EN_VIVO' ? (
-                                  <>Ver enlace <ExternalLink size={11} /></>
-                                ) : contenido.tipo === 'ACTIVIDAD_PRACTICA' ? (
-                                  <>Ver actividad <ChevronRight size={11} /></>
+                        <>
+                          {/* Contenidos normales */}
+                          {resto.map(contenido => {
+                            const ContentIcon = CONTENT_ICON[contenido.tipo] ?? FileText
+                            const isQuizBloqueante = contenido.tipo === 'QUIZ' && !!contenido.bancoPreguntas && contenido.bloqueaSiguiente
+
+                            return (
+                              <div key={contenido.id}>
+                                {isQuizBloqueante ? (
+                                  <QuizBlock
+                                    contenidoId={contenido.id}
+                                    titulo={contenido.titulo}
+                                    preguntas={contenido.bancoPreguntas!}
+                                    puntajeMinimo={contenido.puntajeMinimo ?? 80}
+                                    bloqueaSiguiente={contenido.bloqueaSiguiente ?? false}
+                                  />
                                 ) : (
-                                  <>Abrir <ChevronRight size={11} /></>
+                                  <div
+                                    className="flex items-start gap-4 p-4 rounded-xl border transition-all hover:shadow-sm"
+                                    style={{ borderColor: '#e3f8fb', background: '#ffffff' }}
+                                  >
+                                    <div
+                                      className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
+                                      style={{ background: '#e3f8fb' }}
+                                    >
+                                      <ContentIcon size={18} style={{ color: sub.colorAccent }} />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                                        <ContenidoBadge tipo={contenido.tipo} size="sm" />
+                                        <h4 className="text-sm font-bold" style={{ color: '#043941' }}>
+                                          {contenido.titulo}
+                                        </h4>
+                                      </div>
+                                      <p className="text-xs mb-2" style={{ color: '#045f6c' }}>
+                                        {contenido.descripcion}
+                                      </p>
+                                      <div className="flex flex-wrap gap-3 text-xs" style={{ color: '#94a3b8' }}>
+                                        {contenido.duracionMin && (
+                                          <span className="flex items-center gap-1">
+                                            <Clock size={11} />
+                                            {contenido.duracionMin >= 60
+                                              ? `${Math.floor(contenido.duracionMin / 60)}h${contenido.duracionMin % 60 > 0 ? ` ${contenido.duracionMin % 60}min` : ''}`
+                                              : `${contenido.duracionMin} min`}
+                                          </span>
+                                        )}
+                                        {contenido.paginas && <span>{contenido.paginas} páginas</span>}
+                                        {contenido.preguntas && <span>{contenido.preguntas} preguntas</span>}
+                                        {contenido.puntajeMinimo && (
+                                          <span className="font-semibold" style={{ color: '#ca8a04' }}>
+                                            Mínimo {contenido.puntajeMinimo}%
+                                          </span>
+                                        )}
+                                      </div>
+                                    </div>
+                                    <button
+                                      onClick={() => handleOpenContent(contenido)}
+                                      className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold text-white shrink-0 transition-all hover:opacity-90"
+                                      style={{ background: contenido.tipo === 'ACTIVIDAD_PRACTICA' ? '#f59e0b' : '#02d47e' }}
+                                    >
+                                      {contenido.tipo === 'DESCARGABLE' ? (
+                                        <>Descargar <Download size={11} /></>
+                                      ) : contenido.tipo === 'EN_VIVO' ? (
+                                        <>Ver enlace <ExternalLink size={11} /></>
+                                      ) : contenido.tipo === 'ACTIVIDAD_PRACTICA' ? (
+                                        <>Ver actividad <ChevronRight size={11} /></>
+                                      ) : (
+                                        <>Abrir <ChevronRight size={11} /></>
+                                      )}
+                                    </button>
+                                  </div>
                                 )}
+                              </div>
+                            )
+                          })}
+
+                          {/* Bloque colapsable de diagnósticos */}
+                          {diagnosticos.length > 0 && (
+                            <div
+                              className="rounded-xl overflow-hidden border"
+                              style={{ borderColor: '#c8f0e8' }}
+                            >
+                              {/* Header del grupo */}
+                              <button
+                                onClick={() => setDiagnosticosOpen(o => !o)}
+                                className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors"
+                                style={{ background: diagnosticosOpen ? '#e8faf4' : '#f0fdf9' }}
+                              >
+                                <div
+                                  className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
+                                  style={{ background: '#d2ffe1' }}
+                                >
+                                  <ClipboardList size={15} style={{ color: '#00c16e' }} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-bold" style={{ color: '#043941' }}>
+                                    Diagnósticos de entrada
+                                  </p>
+                                  <p className="text-xs" style={{ color: '#045f6c' }}>
+                                    {diagnosticos.length} evaluaciones · {totalDiagPreg} preguntas · ~{totalDiagMin} min · Sin nota mínima
+                                  </p>
+                                </div>
+                                <span
+                                  className="text-xs px-2 py-0.5 rounded-full font-semibold shrink-0"
+                                  style={{ background: '#d2ffe1', color: '#00c16e' }}
+                                >
+                                  Solo calibración
+                                </span>
+                                {diagnosticosOpen
+                                  ? <ChevronDown size={15} style={{ color: '#045f6c' }} />
+                                  : <ChevronRight size={15} style={{ color: '#045f6c' }} />
+                                }
                               </button>
+
+                              {/* Quizzes desplegados */}
+                              {diagnosticosOpen && (
+                                <div
+                                  className="border-t p-4 space-y-4"
+                                  style={{ borderColor: '#c8f0e8', background: '#fafffd' }}
+                                >
+                                  <p className="text-xs italic" style={{ color: '#045f6c' }}>
+                                    Estas evaluaciones no tienen nota mínima. Solo sirven para que el programa se adapte a tu punto de partida.
+                                  </p>
+                                  {diagnosticos.map(contenido => (
+                                    <QuizBlock
+                                      key={contenido.id}
+                                      contenidoId={contenido.id}
+                                      titulo={contenido.titulo}
+                                      preguntas={contenido.bancoPreguntas!}
+                                      puntajeMinimo={0}
+                                      bloqueaSiguiente={false}
+                                    />
+                                  ))}
+                                </div>
+                              )}
                             </div>
                           )}
-                        </div>
+                        </>
                       )
-                    })}
+                    })()}
                   </div>
                 )}
               </div>
