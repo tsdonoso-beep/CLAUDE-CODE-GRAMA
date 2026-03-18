@@ -181,7 +181,7 @@ function generarPDF(d: DescargableLXP) {
   if (d.nota) {
     checkY(12)
     doc.setFillColor(255, 243, 200)
-    const nLines = doc.splitTextToSize('⚠ ' + d.nota, pageWidth - margin * 2 - 4)
+    const nLines = doc.splitTextToSize('(!) ' + d.nota, pageWidth - margin * 2 - 4)
     const nH = nLines.length * (isA5 ? 3.5 : 4.5) + 6
     doc.roundedRect(margin, y, pageWidth - margin * 2, nH, 2, 2, 'F')
     doc.setTextColor(146, 64, 14)
@@ -275,7 +275,7 @@ function generarPDF(d: DescargableLXP) {
         y += lblLines.length * lineH + 1
         doc.setFont('helvetica', 'normal')
         for (const op of campo.opciones ?? []) {
-          const opLines = doc.splitTextToSize('○  ' + op, pageWidth - margin * 2 - 8)
+          const opLines = doc.splitTextToSize('( ) ' + op, pageWidth - margin * 2 - 8)
           checkY(opLines.length * (isA5 ? 3.5 : 4.5) + 1)
           doc.text(opLines, margin + 6, y)
           y += opLines.length * (isA5 ? 3.5 : 4.5) + 0.5
