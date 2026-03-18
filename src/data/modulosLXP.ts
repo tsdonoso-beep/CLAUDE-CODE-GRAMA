@@ -372,8 +372,8 @@ export const modulosLXP: ModuloLXP[] = [
       {
         id: "m1-s3",
         numero: "1.3",
-        titulo: "Marco Normativo de Seguridad",
-        descripcion: "Ley 29783 y Manual SSO — fundamentos legales",
+        titulo: "Seguridad del Taller",
+        descripcion: "Marco normativo, EPP por proceso, protocolos operativos y mapa de seguridad",
         colorAccent: "#ef4444",
         contenidos: [
           {
@@ -385,18 +385,9 @@ export const modulosLXP: ModuloLXP[] = [
             paginas: 28,
             duracionMin: 45,
             manualId: "manual-seguridad-m1"
-          }
-        ]
-      },
-      {
-        id: "m1-s4",
-        numero: "1.4",
-        titulo: "EPP, Protocolos y Mapa de Seguridad",
-        descripcion: "EPP por proceso, protocolos de seguridad operativa y mapa de seguridad del taller",
-        colorAccent: "#ef4444",
-        contenidos: [
+          },
           {
-            id: "m1-s4-c1",
+            id: "m1-s3-c2",
             tipo: "INTERACTIVO",
             modalidad: "asincrono",
             titulo: "Selector de EPP por Equipo y Proceso",
@@ -404,7 +395,7 @@ export const modulosLXP: ModuloLXP[] = [
             duracionMin: 30
           },
           {
-            id: "m1-s4-c2",
+            id: "m1-s3-c3",
             tipo: "VIDEO",
             modalidad: "asincrono",
             titulo: "Protocolos de Seguridad — Máquinas y Herramientas",
@@ -412,7 +403,7 @@ export const modulosLXP: ModuloLXP[] = [
             duracionMin: 60
           },
           {
-            id: "m1-s4-c3",
+            id: "m1-s3-c4",
             tipo: "DESCARGABLE",
             modalidad: "asincrono",
             titulo: "Fichas de Revisión Diaria — Plastificables A5",
@@ -421,7 +412,7 @@ export const modulosLXP: ModuloLXP[] = [
             descargableId: "desc-m1-fichas-revision"
           },
           {
-            id: "m1-s4-c4",
+            id: "m1-s3-c5",
             tipo: "INTERACTIVO",
             modalidad: "asincrono",
             titulo: "Constructor de Mapa de Seguridad",
@@ -431,15 +422,15 @@ export const modulosLXP: ModuloLXP[] = [
         ]
       },
       {
-        id: "m1-s6",
-        numero: "1.6",
+        id: "m1-s4",
+        numero: "1.4",
         titulo: "Quiz de Seguridad — OBLIGATORIO",
         descripcion: "Debes obtener 80% para desbloquear M2 y M3",
         colorAccent: "#ca8a04",
         phaseBadge: "BLOQUEANTE",
         contenidos: [
           {
-            id: "m1-s6-c1",
+            id: "m1-s4-c1",
             tipo: "QUIZ",
             modalidad: "asincrono",
             titulo: "Quiz de Seguridad — 8 preguntas · Mínimo 80%",
@@ -453,15 +444,15 @@ export const modulosLXP: ModuloLXP[] = [
         ]
       },
       {
-        id: "m1-s7",
-        numero: "1.7",
+        id: "m1-s5",
+        numero: "1.5",
         titulo: "Sesión Sincrónica de Cierre M1",
         descripcion: "Revisión de casos reales y resolución de dudas sobre seguridad",
         colorAccent: "#d4c4fc",
         phaseBadge: "EN VIVO",
         contenidos: [
           {
-            id: "m1-s7-c1",
+            id: "m1-s5-c1",
             tipo: "EN_VIVO",
             modalidad: "sincrono",
             titulo: "Sesión Cierre M1 — Casos de Seguridad en el Taller",
@@ -471,15 +462,15 @@ export const modulosLXP: ModuloLXP[] = [
         ]
       },
       {
-        id: "m1-s8",
-        numero: "1.8",
+        id: "m1-s6",
+        numero: "1.6",
         titulo: "Visita de Reconocimiento Presencial",
         descripcion: "Primera visita al taller físico — levantamiento del plano de seguridad",
         colorAccent: "#f8ee91",
         phaseBadge: "PRESENCIAL",
         contenidos: [
           {
-            id: "m1-s8-c1",
+            id: "m1-s6-c1",
             tipo: "ACTIVIDAD_PRACTICA",
             modalidad: "presencial",
             titulo: "Visita Presencial 1 — Reconocimiento y Plano de Seguridad",
