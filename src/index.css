@@ -173,3 +173,125 @@
   }
 }
 
+/* ══════════════════════════════════════════════════════════════
+   GRAMA — Animaciones de plataforma
+══════════════════════════════════════════════════════════════ */
+
+/* Entrada suave desde abajo */
+@keyframes grama-fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: grama-fadeInUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+/* Stagger helpers */
+.stagger-1  { animation-delay: 0.05s; }
+.stagger-2  { animation-delay: 0.10s; }
+.stagger-3  { animation-delay: 0.15s; }
+.stagger-4  { animation-delay: 0.20s; }
+.stagger-5  { animation-delay: 0.25s; }
+.stagger-6  { animation-delay: 0.30s; }
+.stagger-7  { animation-delay: 0.35s; }
+.stagger-8  { animation-delay: 0.40s; }
+.stagger-9  { animation-delay: 0.45s; }
+
+/* Fade in simple */
+@keyframes grama-fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-fade-in {
+  animation: grama-fadeIn 0.6s ease both;
+}
+
+/* Aurora orb flotante */
+@keyframes grama-aurora {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -20px) scale(1.08); }
+  66%  { transform: translate(-20px, 15px) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+.animate-aurora {
+  animation: grama-aurora 12s ease-in-out infinite;
+}
+.animate-aurora-slow {
+  animation: grama-aurora 18s ease-in-out infinite reverse;
+}
+
+/* Shimmer de texto verde */
+@keyframes grama-shimmer {
+  0%,100% { opacity: 0.7; }
+  50%      { opacity: 1; }
+}
+.animate-shimmer {
+  animation: grama-shimmer 3s ease-in-out infinite;
+}
+
+/* Pulso suave (para badges activos) */
+@keyframes grama-pulse-soft {
+  0%,100% { box-shadow: 0 0 0 0 rgba(2, 212, 126, 0.25); }
+  50%     { box-shadow: 0 0 0 6px rgba(2, 212, 126, 0); }
+}
+.animate-pulse-soft {
+  animation: grama-pulse-soft 2.5s ease-in-out infinite;
+}
+
+/* Deslizamiento del gradiente de fondo */
+@keyframes grama-gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: grama-gradient-shift 8s ease infinite;
+}
+
+/* Patrón de grid más denso para hero premium */
+.grama-pattern-dense {
+  background-image:
+    repeating-linear-gradient(60deg, rgba(2,212,126,0.06) 0, rgba(2,212,126,0.06) 1px, transparent 1px, transparent 32px),
+    repeating-linear-gradient(-60deg, rgba(2,212,126,0.06) 0, rgba(2,212,126,0.06) 1px, transparent 1px, transparent 32px);
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: rgba(4, 57, 65, 0.6);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid rgba(2, 212, 126, 0.18);
+}
+
+/* Texto gradiente verde */
+.text-gradient-green {
+  background: linear-gradient(135deg, #02d47e 0%, #00c16e 50%, #02b8d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Highlight de línea activa en sidebar */
+.sidebar-active-glow {
+  box-shadow: inset 3px 0 0 #02d47e;
+}
+
+/* Hover card con lift premium */
+.card-lift {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.18s ease;
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(4, 57, 65, 0.35), 0 0 0 1.5px rgba(2,212,126,0.4);
+}
+
+/* Overline label estilo editorial */
+.overline-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
