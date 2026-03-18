@@ -11,6 +11,7 @@ import { getEstadoModulo } from '@/mock/mockEstados'
 import { ContenidoBadge } from '@/components/lxp/ContenidoBadge'
 import { QuizBlock } from '@/components/lxp/QuizBlock'
 import { useTaller } from '@/hooks/useTaller'
+import jsPDF from 'jspdf'
 
 const CONTENT_ICON: Record<string, React.ElementType> = {
   PDF: FileText,
@@ -27,6 +28,9 @@ export default function ModuloDetalle() {
   const { slug } = useTaller()
   const navigate = useNavigate()
   const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set(['0']))
+  const [showGradeModal, setShowGradeModal] = useState(false)
+  const [selectedGrade, setSelectedGrade] = useState<string | null>(null)
+  const [currentInteractiveContent, setCurrentInteractiveContent] = useState<any>(null)
 
   const moduloNum = parseInt(num ?? '0', 10)
   const modulo = modulosLXP.find(m => m.numero === moduloNum)
@@ -73,6 +77,79 @@ export default function ModuloDetalle() {
 
   const prevModulo = modulosLXP.find(m => m.numero === moduloNum - 1)
   const nextModulo = modulosLXP.find(m => m.numero === moduloNum + 1)
+
+  // Manejador para abrir contenidos
+  const handleOpenContent = (contenido: any) => {
+    if (contenido.tipo === 'DESCARGABLE') {
+      // Generar PDF descargable
+      const doc = new jsPDF()
+      const pageWidth = doc.internal.pageSize.getWidth()
+      const margin = 15
+
+      // Header
+      doc.setFillColor(4, 57, 65)
+      doc.rect(0, 0, pageWidth, 40, 'F')
+      doc.setTextColor(255, 255, 255)
+      doc.setFontSize(16)
+      doc.setFont('helvetica', 'bold')
+      doc.text(contenido.titulo, margin, 20)
+
+      doc.setFontSize(10)
+      doc.setFont('helvetica', 'normal')
+      doc.setTextColor(2, 212, 126)
+      doc.text(modulo?.nombre || 'Módulo', margin, 30)
+
+      // Contenido
+      doc.setTextColor(0, 0, 0)
+      doc.setFontSize(11)
+      doc.setFont('helvetica', 'normal')
+      const contenidoText = contenido.descripcion || 'Documento descargable del módulo'
+      const lines = doc.splitTextToSize(contenidoText, pageWidth - margin * 2)
+      doc.text(lines, margin, 50)
+
+      // Guardar
+      doc.save(`${contenido.titulo}.pdf`)
+    } else if (contenido.tipo === 'INTERACTIVO') {
+      // Mostrar modal para seleccionar grado
+      if (contenido.titulo.includes('grado')) {
+        setCurrentInteractiveContent(contenido)
+        setShowGradeModal(true)
+      } else if (contenido.urlInteractivo) {
+        window.open(contenido.urlInteractivo, '_blank')
+      } else {
+        alert(`${contenido.titulo} - Abrir contenido interactivo`)
+      }
+    } else if (contenido.tipo === 'VIDEO' && contenido.urlVideo) {
+      // Abrir video en nueva pestaña
+      window.open(contenido.urlVideo, '_blank')
+    } else if (contenido.tipo === 'EN_VIVO' && contenido.urlVivo) {
+      // Ir a la sesión en vivo
+      navigate(`/taller/${slug}/live/${modulo?.numero}`)
+    } else if (contenido.tipo === 'ACTIVIDAD_PRACTICA') {
+      // Redirigir a la actividad
+      if (contenido.urlActividad) {
+        window.open(contenido.urlActividad, '_blank')
+      } else {
+        alert('Actividad no disponible')
+      }
+    } else if (contenido.tipo === 'PDF') {
+      if (contenido.urlPDF) {
+        window.open(contenido.urlPDF, '_blank')
+      } else {
+        alert('Documento PDF no disponible')
+      }
+    } else {
+      alert(`${contenido.tipo} - ${contenido.titulo}`)
+    }
+  }
+
+  const handleGradeSelect = (grade: string) => {
+    setSelectedGrade(grade)
+    // Guardar la selección en localStorage
+    localStorage.setItem('selectedGrade', grade)
+    alert(`Perfil de grado seleccionado: ${grade}`)
+    setShowGradeModal(false)
+  }
 
   return (
     <div>
@@ -254,6 +331,7 @@ export default function ModuloDetalle() {
                               </div>
                               {/* CTA de acción */}
                               <button
+                                onClick={() => handleOpenContent(contenido)}
                                 className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold text-white shrink-0 transition-all hover:opacity-90"
                                 style={{ background: contenido.tipo === 'ACTIVIDAD_PRACTICA' ? '#f59e0b' : '#02d47e' }}
                               >
@@ -303,6 +381,40 @@ export default function ModuloDetalle() {
           )}
         </div>
       </div>
+
+      {/* Modal para selección de grado */}
+      {showGradeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-2xl p-8 max-w-md mx-auto shadow-lg">
+            <h3 className="text-xl font-bold mb-2" style={{ color: '#043941' }}>
+              ¿Qué grado enseñas?
+            </h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              Selecciona tu grado para adaptar los ejemplos pedagógicos a tu contexto
+            </p>
+
+            <div className="space-y-2 mb-6">
+              {['1°', '2°', '3°', '4°', '5°'].map((grade) => (
+                <button
+                  key={grade}
+                  onClick={() => handleGradeSelect(grade)}
+                  className="w-full px-4 py-3 rounded-lg border-2 text-left font-semibold transition-all hover:bg-primary/10"
+                  style={{ borderColor: selectedGrade === grade ? '#02d47e' : '#e3f8fb', color: '#043941' }}
+                >
+                  {grade} grado de secundaria
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setShowGradeModal(false)}
+              className="w-full px-4 py-2 rounded-lg text-sm text-muted-foreground hover:bg-gray-100 transition-all"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

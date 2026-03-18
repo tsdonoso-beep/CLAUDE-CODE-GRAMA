@@ -12,6 +12,7 @@ import {
   Tag, MapPin, Hash, Layers, Settings, GraduationCap,
   FileText, Wrench, PlayCircle, Download,
 } from "lucide-react";
+import jsPDF from 'jspdf';
 
 // ── Colores zona ───────────────────────────────────────────────────────────
 const zonaBadgeColors: Record<string, string> = {
@@ -49,16 +50,90 @@ function VideoFrame({ nombreBien }: { nombreBien: string }) {
 }
 
 // ── Botones PDF ────────────────────────────────────────────────────────────
-function PdfButtons() {
-  const handleDownload = (tipo: string) => {
-    // Aquí conectarás la URL real del PDF
-    alert(`PDF "${tipo}" disponible próximamente.`);
-  };
+function PdfButtons({ nombreBien }: { nombreBien: string }) {
+  const generatePDF = (tipo: "operatividad" | "mantenimiento") => {
+    const doc = new jsPDF()
+    const pageWidth = doc.internal.pageSize.getWidth()
+    const margin = 15
+
+    // Fondo de color para header
+    doc.setFillColor(4, 57, 65) // #043941
+    doc.rect(0, 0, pageWidth, 40, 'F')
+
+    // Título
+    doc.setTextColor(255, 255, 255)
+    doc.setFontSize(18)
+    doc.setFont('helvetica', 'bold')
+    doc.text(
+      tipo === 'operatividad' ? 'Manual de Operatividad' : 'Manual de Mantenimiento',
+      margin,
+      20
+    )
+
+    // Subtítulo
+    doc.setFontSize(10)
+    doc.setFont('helvetica', 'normal')
+    doc.setTextColor(2, 212, 126) // verde GRAMA
+    doc.text(nombreBien, margin, 30)
+
+    // Contenido principal
+    doc.setTextColor(0, 0, 0)
+    doc.setFontSize(12)
+    doc.setFont('helvetica', 'bold')
+    doc.text(tipo === 'operatividad' ? 'Guía de Operatividad' : 'Guía de Mantenimiento', margin, 55)
+
+    // Contenido detallado
+    doc.setFontSize(11)
+    doc.setFont('helvetica', 'normal')
+    
+    const contenido = tipo === 'operatividad' 
+      ? `Este manual contiene las instrucciones y procedimientos necesarios para operar correctamente el equipo denominado "${nombreBien}".
+
+Pasos principales:
+1. Verificar el estado del equipo antes de usar
+2. Revisar todos los mecanismos de seguridad
+3. Seguir los procedimientos de operación establecidos
+4. Usar todos los equipos de protección personal (EPP)
+5. Registrar el uso en la bitácora de actividades
+
+Para más información, consulte con el instructor responsable del taller.`
+      : `Este manual contiene las instrucciones para el mantenimiento preventivo y correctivo del equipo "${nombreBien}".
+
+Procedimientos de mantenimiento:
+1. Limpieza regular del equipo
+2. Lubricación de partes móviles
+3. Inspección de componentes críticos
+4. Reemplazo de piezas desgastadas
+5. Registro de mantenimiento
+
+Frecuencia de mantenimiento:
+- Diario: Limpieza y lubrificación de puntos críticos
+- Semanal: Inspección completa del equipo
+- Mensual: Mantenimiento preventivo profesional
+
+Para reparaciones mayores, contacte técnico especializado.`
+
+    const lines = doc.splitTextToSize(contenido, pageWidth - margin * 2)
+    doc.text(lines, margin, 65)
+
+    // Footer
+    const pageCount = doc.getNumberOfPages()
+    doc.setFontSize(8)
+    doc.setTextColor(100, 100, 100)
+    doc.text(
+      `Generado por GRAMA LXP — ${new Date().toLocaleDateString('es-PE')} | Página 1 de ${pageCount}`,
+      margin,
+      doc.internal.pageSize.getHeight() - 10
+    )
+
+    // Guardar el PDF
+    doc.save(`${nombreBien}_${tipo}.pdf`)
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <button
-        onClick={() => handleDownload("Manual de Operatividad")}
+        onClick={() => generatePDF('operatividad')}
         className="flex items-center gap-3 px-4 py-3.5 rounded-xl border-2 border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/60 transition-all group"
       >
         <div className="h-10 w-10 rounded-lg flex items-center justify-center shrink-0"
@@ -76,7 +151,7 @@ function PdfButtons() {
       </button>
 
       <button
-        onClick={() => handleDownload("Manual de Mantenimiento")}
+        onClick={() => generatePDF('mantenimiento')}
         className="flex items-center gap-3 px-4 py-3.5 rounded-xl border-2 border-border hover:border-primary/40 bg-card hover:bg-sidebar-accent transition-all group"
       >
         <div className="h-10 w-10 rounded-lg flex items-center justify-center shrink-0"
@@ -242,7 +317,7 @@ const RepoBienDetalle = () => {
               <VideoFrame nombreBien={bien.nombre} />
 
               {/* Botones PDF */}
-              <PdfButtons />
+              <PdfButtons nombreBien={bien.nombre} />
 
               {/* Info cards 2x2 */}
               <div className="grid sm:grid-cols-2 gap-4">
