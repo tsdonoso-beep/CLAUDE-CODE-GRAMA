@@ -1,8 +1,9 @@
 // src/pages/Repositorio.tsx
 import { useState, useMemo } from 'react'
 import {
-  Search, X, SlidersHorizontal, Package, Wrench, Sofa, BookOpen,
-  HardHat, Factory, FileText, Video, Download, PlayCircle, ChevronRight,
+  Search, X, SlidersHorizontal, Package, Wrench as WrenchLucide, Sofa, BookOpen,
+  HardHat, Factory, FileText, Video, PlayCircle, ChevronRight, BookMarked,
+  Wrench, GraduationCap, Usb,
 } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { RepositorioCard } from '@/components/lxp/RepositorioCard'
@@ -13,23 +14,52 @@ type Bien = Record<string, any>
 type Tab = 'catalogo' | 'manuales' | 'videos'
 
 const TIPO_ICONS: Record<string, React.ElementType> = {
-  EQUIPOS: Package, HERRAMIENTAS: Wrench, MOBILIARIO: Sofa,
+  EQUIPOS: Package, HERRAMIENTAS: WrenchLucide, MOBILIARIO: Sofa,
   PEDAGOGICO: BookOpen, 'PRODUCCIÓN': Factory, SEGURIDAD: HardHat,
 }
 
-// Tipos que suelen tener manual/video relevante en taller
-const TIPOS_CON_RECURSOS = ['EQUIPOS', 'HERRAMIENTAS', 'PRODUCCIÓN']
+// ── Clasificadores por nombre ─────────────────────────────────────────────────
+function esManualUso(nombre: string) {
+  const n = nombre.toLowerCase()
+  return n.includes('manual') && (n.includes('uso') || n.includes('operaci') || n.includes('instalac'))
+    && !n.includes('mantenimiento') && !n.includes('pedagóg') && !n.includes('pedagogic')
+}
+function esManualMantenimiento(nombre: string) {
+  const n = nombre.toLowerCase()
+  return n.includes('mantenimiento') || n.includes('mantención')
+}
+function esManualPedagogico(nombre: string) {
+  const n = nombre.toLowerCase()
+  return (n.includes('pedagóg') || n.includes('pedagogic')) && n.includes('manual')
+}
+function esUsb(nombre: string) {
+  const n = nombre.toLowerCase()
+  return n.includes('usb') || (n.includes('digital') && n.includes('manual'))
+}
+function esVideo(nombre: string) {
+  const n = nombre.toLowerCase()
+  return n.includes('video') || n.includes('tutorial') || n.includes('audiovisual')
+}
 
 export default function Repositorio() {
   const { taller, bienes, totalBienes, slug } = useTaller()
   const navigate = useNavigate()
   const [tab, setTab] = useState<Tab>('catalogo')
+
+  // ── Catálogo ──────────────────────────────────────────────────────────────
   const [busqueda, setBusqueda] = useState('')
   const [filtroZona, setFiltroZona] = useState('')
   const [filtroArea, setFiltroArea] = useState('')
   const [filtroSubarea, setFiltroSubarea] = useState('')
   const [filtroTipo, setFiltroTipo] = useState('')
   const [showFiltros, setShowFiltros] = useState(false)
+
+  // ── Manuales ──────────────────────────────────────────────────────────────
+  const [busquedaManual, setBusquedaManual] = useState('')
+  const [filtroManual, setFiltroManual] = useState<'todos' | 'uso' | 'mantenimiento' | 'pedagogico' | 'usb'>('todos')
+
+  // ── Videos ────────────────────────────────────────────────────────────────
+  const [busquedaVideo, setBusquedaVideo] = useState('')
 
   const zonas = useMemo(() =>
     [...new Set(bienes.map((b: Bien) => b.zona).filter(Boolean))].sort() as string[]
@@ -68,10 +98,42 @@ export default function Repositorio() {
     })
   , [bienes, busqueda, filtroZona, filtroArea, filtroSubarea, filtroTipo])
 
-  // Bienes con recursos relevantes (para manuales y videos)
-  const bienesConRecursos = useMemo(() =>
-    bienes.filter((b: Bien) => TIPOS_CON_RECURSOS.includes(b.tipo))
-  , [bienes])
+  // ── Manuales: bienes PEDAGOGICO agrupados ────────────────────────────────
+  const bienesManual = useMemo(() => {
+    const pedagogicos = bienes.filter((b: Bien) => b.tipo === 'PEDAGOGICO')
+    const q = busquedaManual.toLowerCase()
+    return pedagogicos.filter((b: Bien) => {
+      const matchQ = !q || b.nombre?.toLowerCase().includes(q) || b.zona?.toLowerCase().includes(q)
+      if (!matchQ) return false
+      if (filtroManual === 'uso')         return esManualUso(b.nombre ?? '')
+      if (filtroManual === 'mantenimiento') return esManualMantenimiento(b.nombre ?? '')
+      if (filtroManual === 'pedagogico')  return esManualPedagogico(b.nombre ?? '')
+      if (filtroManual === 'usb')         return esUsb(b.nombre ?? '')
+      // todos: excluir videos de esta vista
+      return !esVideo(b.nombre ?? '')
+    })
+  }, [bienes, busquedaManual, filtroManual])
+
+  // Conteos por categoría
+  const conteos = useMemo(() => {
+    const pedagogicos = bienes.filter((b: Bien) => b.tipo === 'PEDAGOGICO')
+    return {
+      uso:           pedagogicos.filter((b: Bien) => esManualUso(b.nombre ?? '')).length,
+      mantenimiento: pedagogicos.filter((b: Bien) => esManualMantenimiento(b.nombre ?? '')).length,
+      pedagogico:    pedagogicos.filter((b: Bien) => esManualPedagogico(b.nombre ?? '')).length,
+      usb:           pedagogicos.filter((b: Bien) => esUsb(b.nombre ?? '')).length,
+      total:         pedagogicos.filter((b: Bien) => !esVideo(b.nombre ?? '')).length,
+    }
+  }, [bienes])
+
+  // ── Videos: bienes con nombre de video ───────────────────────────────────
+  const bienesVideo = useMemo(() => {
+    const q = busquedaVideo.toLowerCase()
+    return bienes.filter((b: Bien) =>
+      esVideo(b.nombre ?? '') &&
+      (!q || b.nombre?.toLowerCase().includes(q) || b.zona?.toLowerCase().includes(q))
+    )
+  }, [bienes, busquedaVideo])
 
   if (!taller) return null
 
@@ -83,6 +145,19 @@ export default function Repositorio() {
 
   function resetFiltros() {
     setBusqueda(''); setFiltroZona(''); setFiltroArea(''); setFiltroSubarea(''); setFiltroTipo('')
+  }
+
+  // Función para obtener ícono y color de categoría de manual
+  function getManualMeta(nombre: string) {
+    if (esManualUso(nombre))
+      return { icon: BookMarked, color: '#059669', bg: '#d1fae5', label: 'Uso' }
+    if (esManualMantenimiento(nombre))
+      return { icon: Wrench, color: '#d97706', bg: '#fef3c7', label: 'Mantenimiento' }
+    if (esManualPedagogico(nombre))
+      return { icon: GraduationCap, color: '#7c3aed', bg: '#ede9fe', label: 'Pedagógico' }
+    if (esUsb(nombre))
+      return { icon: Usb, color: '#0891b2', bg: '#cffafe', label: 'Digital/USB' }
+    return { icon: FileText, color: '#64748b', bg: '#f1f5f9', label: 'Documento' }
   }
 
   return (
@@ -97,7 +172,7 @@ export default function Repositorio() {
             style={{ background: 'radial-gradient(circle, #ffffff 0%, transparent 70%)' }} />
         </div>
 
-        <div className="relative px-6 pt-10 pb-6">
+        <div className="relative px-6 pt-10 pb-0">
           <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: '#02d47e' }}>
             {taller.nombreCorto} · Repositorio
           </p>
@@ -108,9 +183,9 @@ export default function Repositorio() {
             {totalBienes} bienes catalogados · {zonas.length} zonas
           </p>
 
-          {/* Search hero — solo visible en tab catálogo */}
+          {/* Buscador por tab */}
           {tab === 'catalogo' && (
-            <div className="relative max-w-xl mb-5">
+            <div className="relative max-w-xl mb-4">
               <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#02d47e' }} />
               <input
                 type="text"
@@ -118,26 +193,63 @@ export default function Repositorio() {
                 value={busqueda}
                 onChange={e => setBusqueda(e.target.value)}
                 className="w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm font-medium outline-none"
-                style={{
-                  background: 'rgba(255,255,255,0.08)', color: '#ffffff',
-                  border: '1.5px solid rgba(2,212,126,0.3)',
-                }}
+                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(2,212,126,0.3)' }}
                 onFocus={e => (e.target.style.borderColor = '#02d47e')}
                 onBlur={e => (e.target.style.borderColor = 'rgba(2,212,126,0.3)')}
               />
               {busqueda && (
-                <button onClick={() => setBusqueda('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2"
-                  style={{ color: 'rgba(255,255,255,0.4)' }}>
+                <button onClick={() => setBusqueda('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }}>
                   <X size={14} />
                 </button>
               )}
             </div>
           )}
 
-          {/* Chips de tipo — rápido filtro */}
+          {tab === 'manuales' && (
+            <div className="relative max-w-xl mb-4">
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#02d47e' }} />
+              <input
+                type="text"
+                placeholder="Busca manuales por nombre o zona…"
+                value={busquedaManual}
+                onChange={e => setBusquedaManual(e.target.value)}
+                className="w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm font-medium outline-none"
+                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(2,212,126,0.3)' }}
+                onFocus={e => (e.target.style.borderColor = '#02d47e')}
+                onBlur={e => (e.target.style.borderColor = 'rgba(2,212,126,0.3)')}
+              />
+              {busquedaManual && (
+                <button onClick={() => setBusquedaManual('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+          )}
+
+          {tab === 'videos' && (
+            <div className="relative max-w-xl mb-4">
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#02d47e' }} />
+              <input
+                type="text"
+                placeholder="Busca videos por nombre o zona…"
+                value={busquedaVideo}
+                onChange={e => setBusquedaVideo(e.target.value)}
+                className="w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm font-medium outline-none"
+                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(2,212,126,0.3)' }}
+                onFocus={e => (e.target.style.borderColor = '#02d47e')}
+                onBlur={e => (e.target.style.borderColor = 'rgba(2,212,126,0.3)')}
+              />
+              {busquedaVideo && (
+                <button onClick={() => setBusquedaVideo('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Chips tipo — solo en catálogo */}
           {tab === 'catalogo' && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mb-4">
               {statsTipo.map(({ tipo, count, Icon }) => (
                 <button
                   key={tipo}
@@ -157,8 +269,35 @@ export default function Repositorio() {
             </div>
           )}
 
-          {/* Tabs principales */}
-          <div className="flex gap-1 mt-6">
+          {/* Chips filtro manual — solo en manuales */}
+          {tab === 'manuales' && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {([
+                { id: 'todos',         label: 'Todos',         count: conteos.total,         color: '#02d47e', bg: 'rgba(2,212,126,0.15)' },
+                { id: 'uso',           label: 'Uso',           count: conteos.uso,           color: '#059669', bg: 'rgba(5,150,105,0.15)' },
+                { id: 'mantenimiento', label: 'Mantenimiento', count: conteos.mantenimiento, color: '#d97706', bg: 'rgba(217,119,6,0.15)' },
+                { id: 'pedagogico',    label: 'Pedagógico',    count: conteos.pedagogico,    color: '#7c3aed', bg: 'rgba(124,58,237,0.15)' },
+                { id: 'usb',           label: 'Digital/USB',   count: conteos.usb,           color: '#0891b2', bg: 'rgba(8,145,178,0.15)' },
+              ] as const).map(f => (
+                <button
+                  key={f.id}
+                  onClick={() => setFiltroManual(f.id)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+                  style={{
+                    background: filtroManual === f.id ? f.color : 'rgba(255,255,255,0.08)',
+                    color: filtroManual === f.id ? '#fff' : 'rgba(255,255,255,0.65)',
+                    border: `1.5px solid ${filtroManual === f.id ? f.color : 'rgba(255,255,255,0.12)'}`,
+                  }}
+                >
+                  {f.label}
+                  <span className="font-black opacity-80">{f.count}</span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Tabs */}
+          <div className="flex gap-1 mt-2">
             {([
               { id: 'catalogo', label: 'Catálogo', icon: Package },
               { id: 'manuales', label: 'Manuales', icon: FileText },
@@ -185,7 +324,6 @@ export default function Repositorio() {
       {/* ══ TAB: CATÁLOGO ═══════════════════════════════════════════════════ */}
       {tab === 'catalogo' && (
         <>
-          {/* Barra filtros sticky */}
           <div className="sticky top-0 z-20 px-4 py-3 border-b shadow-sm" style={{ background: '#ffffff', borderColor: '#d1fae5' }}>
             <div className="flex items-center gap-3 overflow-x-auto pb-1">
               <button
@@ -304,134 +442,180 @@ export default function Repositorio() {
       {/* ══ TAB: MANUALES ═══════════════════════════════════════════════════ */}
       {tab === 'manuales' && (
         <div className="p-4 sm:p-6">
-          {/* Intro */}
-          <div className="mb-6 p-5 rounded-2xl border-2 flex items-start gap-4"
-            style={{ background: '#ffffff', borderColor: '#d1fae5' }}>
-            <div className="h-11 w-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: '#d1fae5' }}>
-              <FileText size={20} style={{ color: '#059669' }} />
-            </div>
-            <div>
-              <h2 className="font-extrabold text-base mb-1" style={{ color: '#043941' }}>Manuales de uso y mantenimiento</h2>
-              <p className="text-sm" style={{ color: '#045f6c' }}>
-                Documentación técnica de los equipos y herramientas del taller.
-                Haz clic en cualquier equipo para ver su ficha completa con el manual disponible.
-              </p>
-            </div>
+
+          {/* Resumen categórico — tarjetas de acceso rápido */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+            {([
+              { id: 'uso',           label: 'Manual de Uso',        icon: BookMarked,    color: '#059669', bg: '#d1fae5', count: conteos.uso,           desc: 'Operación y manejo seguro del equipo' },
+              { id: 'mantenimiento', label: 'Mantenimiento',        icon: Wrench,        color: '#d97706', bg: '#fef3c7', count: conteos.mantenimiento, desc: 'Limpieza, revisión y mantenimiento preventivo' },
+              { id: 'pedagogico',    label: 'Material Pedagógico',  icon: GraduationCap, color: '#7c3aed', bg: '#ede9fe', count: conteos.pedagogico,    desc: 'Guías y sesiones para el docente' },
+              { id: 'usb',           label: 'Digital / USB',        icon: Usb,           color: '#0891b2', bg: '#cffafe', count: conteos.usb,           desc: 'Material digital y en soporte USB' },
+            ] as const).map(cat => {
+              const Icon = cat.icon
+              const active = filtroManual === cat.id
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setFiltroManual(active ? 'todos' : cat.id)}
+                  className="flex flex-col gap-2 p-4 rounded-2xl text-left transition-all"
+                  style={{
+                    background: active ? cat.color : '#ffffff',
+                    border: `2px solid ${active ? cat.color : '#e2e8f0'}`,
+                    boxShadow: active ? `0 4px 16px ${cat.color}33` : 'none',
+                    transform: active ? 'translateY(-2px)' : 'none',
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="h-9 w-9 rounded-xl flex items-center justify-center"
+                      style={{ background: active ? 'rgba(255,255,255,0.2)' : cat.bg }}>
+                      <Icon size={16} style={{ color: active ? '#fff' : cat.color }} />
+                    </div>
+                    <span className="text-xl font-black" style={{ color: active ? '#fff' : cat.color }}>
+                      {cat.count}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold leading-tight" style={{ color: active ? '#fff' : '#0f172a' }}>
+                      {cat.label}
+                    </p>
+                    <p className="text-[10px] mt-0.5 leading-snug" style={{ color: active ? 'rgba(255,255,255,0.7)' : '#94a3b8' }}>
+                      {cat.desc}
+                    </p>
+                  </div>
+                </button>
+              )
+            })}
           </div>
 
-          {/* Dos columnas: Manual de uso + Manual de mantenimiento */}
-          <div className="grid sm:grid-cols-2 gap-6">
-            <RecursosColumna
-              titulo="Manual de uso"
-              subtitulo="Operatividad del equipo"
-              icon={FileText}
-              iconColor="#059669"
-              iconBg="#d1fae5"
-              bienes={bienesConRecursos}
-              slug={slug}
-              tipo="uso"
-              navigate={navigate}
-            />
-            <RecursosColumna
-              titulo="Manual de mantenimiento"
-              subtitulo="Procedimientos de mantención"
-              icon={Wrench}
-              iconColor="#d97706"
-              iconBg="#fef3c7"
-              bienes={bienesConRecursos}
-              slug={slug}
-              tipo="mantenimiento"
-              navigate={navigate}
-            />
+          {/* Resultado: lista de manuales */}
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-xs font-bold" style={{ color: '#64748b' }}>
+              {bienesManual.length} {bienesManual.length === 1 ? 'manual' : 'manuales'}
+              {filtroManual !== 'todos' ? ` · filtro activo` : ''}
+            </p>
+            {(busquedaManual || filtroManual !== 'todos') && (
+              <button
+                onClick={() => { setBusquedaManual(''); setFiltroManual('todos'); }}
+                className="flex items-center gap-1 text-xs font-bold px-2.5 py-1.5 rounded-lg"
+                style={{ color: '#ef4444', background: '#fff1f2', border: '1px solid #fecdd3' }}
+              >
+                <X size={11} /> Limpiar
+              </button>
+            )}
           </div>
+
+          {bienesManual.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16 rounded-2xl" style={{ background: '#f8fafc' }}>
+              <FileText size={32} style={{ color: '#cbd5e1' }} />
+              <p className="mt-3 text-sm font-bold" style={{ color: '#94a3b8' }}>Sin manuales en esta categoría</p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {bienesManual.map((b: Bien) => {
+                const meta = getManualMeta(b.nombre ?? '')
+                const MetaIcon = meta.icon
+                return (
+                  <button
+                    key={b.n}
+                    onClick={() => navigate(`/taller/${slug}/repositorio/bien/${b.n}`)}
+                    className="flex items-center gap-4 p-4 rounded-2xl text-left transition-all group"
+                    style={{ background: '#ffffff', border: '1.5px solid #e2e8f0' }}
+                    onMouseEnter={e => {
+                      const el = e.currentTarget as HTMLElement
+                      el.style.borderColor = meta.color
+                      el.style.boxShadow = `0 4px 12px ${meta.color}22`
+                    }}
+                    onMouseLeave={e => {
+                      const el = e.currentTarget as HTMLElement
+                      el.style.borderColor = '#e2e8f0'
+                      el.style.boxShadow = 'none'
+                    }}
+                  >
+                    {/* Ícono categoría */}
+                    <div className="h-11 w-11 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ background: meta.bg }}>
+                      <MetaIcon size={18} style={{ color: meta.color }} />
+                    </div>
+
+                    {/* Info */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold leading-snug" style={{ color: '#0f172a' }}>
+                        {b.nombre}
+                      </p>
+                      <div className="flex items-center gap-2 mt-1 flex-wrap">
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md"
+                          style={{ background: meta.bg, color: meta.color }}>
+                          {meta.label}
+                        </span>
+                        {b.zona && (
+                          <span className="text-[10px] font-medium" style={{ color: '#94a3b8' }}>
+                            {b.zona.replace('ZONA DE ', '')}
+                          </span>
+                        )}
+                        {b.cantidad > 1 && (
+                          <span className="text-[10px] font-medium" style={{ color: '#cbd5e1' }}>
+                            ×{b.cantidad}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Descripción truncada */}
+                    {b.descripcion && (
+                      <p className="hidden lg:block text-xs max-w-xs leading-snug line-clamp-2 shrink-0"
+                        style={{ color: '#94a3b8', maxWidth: 280 }}>
+                        {b.descripcion.slice(0, 120)}…
+                      </p>
+                    )}
+
+                    <ChevronRight size={14} className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ color: meta.color }} />
+                  </button>
+                )
+              })}
+            </div>
+          )}
         </div>
       )}
 
       {/* ══ TAB: VIDEOS ═════════════════════════════════════════════════════ */}
       {tab === 'videos' && (
         <div className="p-4 sm:p-6">
-          {/* Intro */}
-          <div className="mb-6 p-5 rounded-2xl border-2 flex items-start gap-4"
-            style={{ background: '#ffffff', borderColor: '#d1fae5' }}>
-            <div className="h-11 w-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: '#cffafe' }}>
-              <Video size={20} style={{ color: '#0891b2' }} />
-            </div>
-            <div>
-              <h2 className="font-extrabold text-base mb-1" style={{ color: '#043941' }}>Videos de uso y mantenimiento</h2>
-              <p className="text-sm" style={{ color: '#045f6c' }}>
-                Videos demostrativos de operación segura y mantenimiento preventivo por equipo.
-                Haz clic en un equipo para ver su video desde su ficha completa.
-              </p>
-            </div>
+
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-xs font-bold" style={{ color: '#64748b' }}>
+              {bienesVideo.length} {bienesVideo.length === 1 ? 'video' : 'videos'} disponibles
+            </p>
+            {busquedaVideo && (
+              <button
+                onClick={() => setBusquedaVideo('')}
+                className="flex items-center gap-1 text-xs font-bold px-2.5 py-1.5 rounded-lg"
+                style={{ color: '#ef4444', background: '#fff1f2', border: '1px solid #fecdd3' }}
+              >
+                <X size={11} /> Limpiar
+              </button>
+            )}
           </div>
 
-          {/* Grid de video cards */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {bienesConRecursos.map((b: Bien) => (
-              <VideoCard key={b.n} bien={b} slug={slug} navigate={navigate} />
-            ))}
-          </div>
+          {bienesVideo.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20 rounded-2xl" style={{ background: '#f8fafc' }}>
+              <Video size={32} style={{ color: '#cbd5e1' }} />
+              <p className="mt-3 text-sm font-bold" style={{ color: '#94a3b8' }}>No hay videos que coincidan</p>
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {bienesVideo.map((b: Bien) => (
+                <VideoCard key={b.n} bien={b} slug={slug} navigate={navigate} />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
   )
 }
 
-// ── Columna de recursos (manuales) ──────────────────────────────────────────
-function RecursosColumna({ titulo, subtitulo, icon: Icon, iconColor, iconBg, bienes, slug, tipo, navigate }: {
-  titulo: string; subtitulo: string; icon: React.ElementType
-  iconColor: string; iconBg: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  bienes: any[]; slug: string; tipo: string; navigate: (path: string) => void
-}) {
-  return (
-    <div className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e2e8f0', background: '#ffffff' }}>
-      {/* Header */}
-      <div className="px-5 py-4 border-b flex items-center gap-3" style={{ borderColor: '#f1f5f9', background: '#f8fafc' }}>
-        <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: iconBg }}>
-          <Icon size={16} style={{ color: iconColor }} />
-        </div>
-        <div>
-          <p className="font-bold text-sm" style={{ color: '#0f172a' }}>{titulo}</p>
-          <p className="text-xs" style={{ color: '#64748b' }}>{subtitulo}</p>
-        </div>
-      </div>
-
-      {/* Lista de bienes */}
-      <div className="divide-y" style={{ borderColor: '#f1f5f9' }}>
-        {bienes.slice(0, 12).map((b) => (
-          <button
-            key={b.n}
-            onClick={() => navigate(`/taller/${slug}/repositorio/bien/${b.n}`)}
-            className="w-full flex items-center gap-3 px-5 py-3.5 text-left transition-colors group"
-            style={{ background: 'transparent' }}
-            onMouseEnter={e => (e.currentTarget.style.background = '#f8fafc')}
-            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-          >
-            <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: iconBg }}>
-              <Download size={13} style={{ color: iconColor }} />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold truncate" style={{ color: '#0f172a' }}>{b.nombre}</p>
-              {b.marca && <p className="text-[10px]" style={{ color: '#94a3b8' }}>{b.marca}</p>}
-            </div>
-            <ChevronRight size={13} className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: iconColor }} />
-          </button>
-        ))}
-      </div>
-
-      {bienes.length > 12 && (
-        <div className="px-5 py-3 border-t" style={{ borderColor: '#f1f5f9' }}>
-          <p className="text-xs font-semibold text-center" style={{ color: '#94a3b8' }}>
-            +{bienes.length - 12} equipos más · ver en Catálogo
-          </p>
-        </div>
-      )}
-    </div>
-  )
-}
-
-// ── Video Card placeholder ───────────────────────────────────────────────────
+// ── Video Card ────────────────────────────────────────────────────────────────
 function VideoCard({ bien, slug, navigate }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   bien: any; slug: string; navigate: (path: string) => void
@@ -442,52 +626,50 @@ function VideoCard({ bien, slug, navigate }: {
       className="w-full text-left rounded-2xl overflow-hidden border-2 transition-all group"
       style={{ borderColor: '#e2e8f0', background: '#ffffff' }}
       onMouseEnter={e => {
-        (e.currentTarget as HTMLElement).style.borderColor = '#0891b2'
-        ;(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'
-        ;(e.currentTarget as HTMLElement).style.boxShadow = '0 8px 20px rgba(8,145,178,0.12)'
+        const el = e.currentTarget as HTMLElement
+        el.style.borderColor = '#0891b2'
+        el.style.transform = 'translateY(-2px)'
+        el.style.boxShadow = '0 8px 20px rgba(8,145,178,0.12)'
       }}
       onMouseLeave={e => {
-        (e.currentTarget as HTMLElement).style.borderColor = '#e2e8f0'
-        ;(e.currentTarget as HTMLElement).style.transform = 'translateY(0)'
-        ;(e.currentTarget as HTMLElement).style.boxShadow = 'none'
+        const el = e.currentTarget as HTMLElement
+        el.style.borderColor = '#e2e8f0'
+        el.style.transform = 'translateY(0)'
+        el.style.boxShadow = 'none'
       }}
     >
-      {/* Thumbnail placeholder */}
+      {/* Thumbnail */}
       <div className="aspect-video flex flex-col items-center justify-center relative overflow-hidden"
         style={{ background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)' }}>
         <div className="w-12 h-12 rounded-full flex items-center justify-center transition-transform group-hover:scale-110"
-          style={{ background: 'rgba(255,255,255,0.1)' }}>
-          <PlayCircle size={24} style={{ color: 'rgba(255,255,255,0.5)' }} />
+          style={{ background: 'rgba(255,255,255,0.12)' }}>
+          <PlayCircle size={24} style={{ color: 'rgba(255,255,255,0.7)' }} />
         </div>
-        <span className="text-[10px] mt-2 font-semibold" style={{ color: 'rgba(255,255,255,0.3)' }}>
-          Próximamente
+        {bien.zona && (
+          <span className="absolute bottom-2 left-3 text-[9px] font-semibold px-2 py-0.5 rounded-full"
+            style={{ background: 'rgba(0,0,0,0.4)', color: 'rgba(255,255,255,0.7)' }}>
+            {bien.zona.replace('ZONA DE ', '')}
+          </span>
+        )}
+        <span className="absolute top-2 right-2 text-[9px] font-bold px-2 py-0.5 rounded-full"
+          style={{ background: 'rgba(8,145,178,0.8)', color: '#fff' }}>
+          VIDEO
         </span>
       </div>
 
       {/* Info */}
       <div className="p-3">
-        <p className="text-xs font-bold leading-snug line-clamp-2 mb-1" style={{ color: '#0f172a' }}>
+        <p className="text-xs font-bold leading-snug line-clamp-2 mb-1.5" style={{ color: '#0f172a' }}>
           {bien.nombre}
         </p>
         <div className="flex items-center justify-between">
           <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md"
             style={{ background: '#cffafe', color: '#0891b2' }}>
-            Video operatividad
+            {bien.cantidad > 1 ? `${bien.cantidad} unidades` : 'Tutorial'}
           </span>
           <ChevronRight size={12} style={{ color: '#94a3b8' }} />
         </div>
       </div>
     </button>
-  )
-}
-
-// ── dummy import fix ─────────────────────────────────────────────────────────
-function Wrench(props: React.SVGProps<SVGSVGElement> & { size?: number }) {
-  const { size = 24, ...rest } = props
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-      strokeLinecap="round" strokeLinejoin="round" {...rest}>
-      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-    </svg>
   )
 }

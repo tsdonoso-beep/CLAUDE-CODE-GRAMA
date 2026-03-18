@@ -1,10 +1,11 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { getTallerBySlug } from "@/data/talleresConfig";
 import { getTallerDashboardData } from "@/data/tallerDashboardData";
 import { getTotalBienesByTaller } from "@/data/bienesData";
-import { buildModulosForTaller, getLiveSessionsForTaller } from "@/data/modulosConfig";
+import { buildModulosForTaller } from "@/data/modulosConfig";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Box, X, Maximize2, Minimize2 } from "lucide-react";
 
 // ── Íconos ────────────────────────────────────────────────────────────────────
 const IcoDoc = () => (
@@ -34,6 +35,81 @@ const IcoFile = () => (
     <line x1="16" y1="13" x2="8" y2="13"/>
   </svg>
 );
+
+// ── Modal Simulador 3D ────────────────────────────────────────────────────────
+function SimuladorModal({ onClose }: { onClose: () => void }) {
+  const [fullscreen, setFullscreen] = useState(false);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ background: "rgba(4,57,65,0.88)", backdropFilter: "blur(8px)" }}
+      onClick={e => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <div
+        className="flex flex-col overflow-hidden"
+        style={{
+          background: "#0a2a2f",
+          borderRadius: fullscreen ? 0 : 20,
+          border: "1.5px solid rgba(2,212,126,0.25)",
+          boxShadow: "0 32px 80px rgba(0,0,0,0.55)",
+          width:  fullscreen ? "100vw" : "min(94vw, 1200px)",
+          height: fullscreen ? "100vh" : "min(90vh, 800px)",
+          transition: "all 0.25s ease",
+        }}
+      >
+        {/* Header modal */}
+        <div className="flex items-center gap-3 px-5 py-3 shrink-0"
+          style={{ borderBottom: "1px solid rgba(2,212,126,0.15)", background: "rgba(2,212,126,0.05)" }}>
+          <div className="h-8 w-8 rounded-xl flex items-center justify-center"
+            style={{ background: "rgba(2,212,126,0.15)" }}>
+            <Box size={15} style={{ color: "#02d47e" }} />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-bold text-white leading-none">Simulador de Ambiente</p>
+            <p className="text-[11px] mt-0.5" style={{ color: "rgba(2,212,126,0.7)" }}>
+              Tour 3D · Taller de Mecánica Automotriz
+            </p>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => setFullscreen(!fullscreen)}
+              className="h-8 w-8 rounded-xl flex items-center justify-center transition-all"
+              style={{ background: "rgba(255,255,255,0.06)" }}
+              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = "rgba(2,212,126,0.15)")}
+              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)")}
+              title={fullscreen ? "Reducir" : "Pantalla completa"}
+            >
+              {fullscreen
+                ? <Minimize2 size={13} style={{ color: "rgba(255,255,255,0.6)" }} />
+                : <Maximize2 size={13} style={{ color: "rgba(255,255,255,0.6)" }} />}
+            </button>
+            <button
+              onClick={onClose}
+              className="h-8 w-8 rounded-xl flex items-center justify-center transition-all"
+              style={{ background: "rgba(255,255,255,0.06)" }}
+              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = "rgba(239,68,68,0.2)")}
+              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)")}
+              title="Cerrar"
+            >
+              <X size={14} style={{ color: "rgba(255,255,255,0.6)" }} />
+            </button>
+          </div>
+        </div>
+        {/* iframe */}
+        <div className="flex-1 relative overflow-hidden">
+          <iframe
+            src="/tour-3d-automotriz-v2.html"
+            title="Simulador de Ambiente — Mecánica Automotriz"
+            className="w-full h-full"
+            style={{ border: "none", display: "block" }}
+            allow="accelerometer; gyroscope; fullscreen"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ── Card de sección ───────────────────────────────────────────────────────────
 function SecCard({
@@ -67,10 +143,66 @@ function SecCard({
   );
 }
 
+// ── Card Simulador (automotriz only) ─────────────────────────────────────────
+function SimuladorCard({ onOpen }: { onOpen: () => void }) {
+  return (
+    <button
+      onClick={onOpen}
+      style={{
+        background: "linear-gradient(135deg, #043941 0%, #06555f 50%, #043941 100%)",
+        border: "1.5px solid rgba(2,212,126,0.3)",
+        borderRadius: 14, padding: "1.25rem", cursor: "pointer",
+        textAlign: "left", display: "flex", flexDirection: "column", gap: "0.55rem",
+        transition: "border-color .2s, transform .2s, box-shadow .2s",
+        fontFamily: "'Manrope', sans-serif", width: "100%",
+        position: "relative", overflow: "hidden",
+      }}
+      onMouseEnter={e => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = "#02d47e";
+        el.style.transform = "translateY(-3px)";
+        el.style.boxShadow = "0 10px 30px rgba(2,212,126,0.2)";
+      }}
+      onMouseLeave={e => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = "rgba(2,212,126,0.3)";
+        el.style.transform = "translateY(0)";
+        el.style.boxShadow = "none";
+      }}
+    >
+      {/* Decoración fondo */}
+      <div style={{ position: "absolute", right: -20, top: -20, width: 90, height: 90, borderRadius: "50%", background: "rgba(2,212,126,0.06)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", right: 10, bottom: -15, width: 60, height: 60, borderRadius: "50%", background: "rgba(2,212,126,0.04)", pointerEvents: "none" }} />
+
+      <div style={{ position: "relative", width: 34, height: 34, borderRadius: 9, background: "rgba(2,212,126,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+        <Box size={16} style={{ color: "#02d47e" }} />
+        {/* Pulso verde */}
+        <span style={{ position: "absolute", top: -3, right: -3, width: 10, height: 10, borderRadius: "50%", background: "#02d47e", border: "2px solid #043941" }} />
+      </div>
+
+      <div style={{ position: "relative" }}>
+        <div style={{ fontSize: "0.63rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "rgba(2,212,126,0.6)", marginBottom: 3 }}>
+          Ambiente Interactivo
+        </div>
+        <div style={{ fontSize: "0.86rem", fontWeight: 700, color: "#ffffff", lineHeight: 1.2 }}>
+          Simulador 3D
+        </div>
+      </div>
+      <div style={{ position: "relative", fontSize: "0.73rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.55, flex: 1 }}>
+        Explora el taller en un entorno 3D interactivo. Conoce las zonas, equipos y distribución del espacio.
+      </div>
+      <div style={{ position: "relative", fontSize: "0.7rem", fontWeight: 700, color: "#02d47e", marginTop: "0.15rem" }}>
+        Abrir simulador →
+      </div>
+    </button>
+  );
+}
+
 // ── COMPONENTE PRINCIPAL ──────────────────────────────────────────────────────
 export default function TallerDashboard() {
   const { slug }  = useParams<{ slug: string }>();
   const navigate  = useNavigate();
+  const [simAbierto, setSimAbierto] = useState(false);
 
   const taller      = getTallerBySlug(slug ?? "");
   const data        = useMemo(() => getTallerDashboardData(slug ?? ""), [slug]);
@@ -85,11 +217,12 @@ export default function TallerDashboard() {
     );
   }
 
-  // Título: primera(s) palabra(s) blanco, penúltima verde, última en acento del taller
-  const palabras = taller.nombre.split(" ");
-  const ultima   = palabras[palabras.length - 1];
+  const palabras  = taller.nombre.split(" ");
+  const ultima    = palabras[palabras.length - 1];
   const penultima = palabras.length > 1 ? palabras[palabras.length - 2] : "";
   const primeras  = palabras.length > 2 ? palabras.slice(0, -2).join(" ") : "";
+
+  const esAutomotriz = slug === "mecanica-automotriz";
 
   const secciones = [
     {
@@ -124,11 +257,9 @@ export default function TallerDashboard() {
           display: "grid", gridTemplateColumns: "1fr 42%", alignItems: "stretch",
           position: "relative", overflow: "hidden", minHeight: 340,
         }}>
-          {/* Grid decorativo fondo */}
           <div style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "repeating-linear-gradient(60deg,rgba(2,212,126,0.04) 0,rgba(2,212,126,0.04) 1px,transparent 1px,transparent 50px),repeating-linear-gradient(-60deg,rgba(2,212,126,0.04) 0,rgba(2,212,126,0.04) 1px,transparent 1px,transparent 50px)" }} />
 
           <div style={{ position: "relative", zIndex: 2, padding: "clamp(2rem,5vw,2.75rem)" }}>
-            {/* Breadcrumb + SidebarTrigger */}
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "1rem" }}>
               <SidebarTrigger className="text-white/50 hover:text-white hover:bg-white/10 -ml-1" />
               <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(2,212,126,0.12)", border: "1px solid rgba(2,212,126,0.2)", color: "#02d47e", borderRadius: 100, padding: "4px 12px", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const }}>
@@ -137,19 +268,16 @@ export default function TallerDashboard() {
               </div>
             </div>
 
-            {/* Título dinámico */}
             <h1 style={{ fontSize: "clamp(2rem,4vw,2.5rem)", fontWeight: 800, lineHeight: 0.95, letterSpacing: "-0.03em", color: "#fff", marginBottom: "0.9rem" }}>
               {primeras && <>{primeras}<br /></>}
               {penultima && <><span style={{ color: "#02d47e" }}>{penultima}</span><br /></>}
               <span style={{ color: data.tallerAccent }}>{ultima}</span>
             </h1>
 
-            {/* Descripción */}
             <p style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, maxWidth: 440, marginBottom: "1rem" }}>
               {data.presentacion}
             </p>
 
-            {/* Micro-datos */}
             <div style={{ display: "flex", gap: "1.25rem", flexWrap: "wrap" as const, marginBottom: "1.75rem" }}>
               {[
                 { icon: "👥", label: "30 estudiantes" },
@@ -162,7 +290,6 @@ export default function TallerDashboard() {
               ))}
             </div>
 
-            {/* CTAs */}
             <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" as const }}>
               <button
                 onClick={() => navigate(`/taller/${slug}/repositorio`)}
@@ -178,7 +305,6 @@ export default function TallerDashboard() {
               </button>
             </div>
 
-            {/* Stats */}
             <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" as const, paddingTop: "1.5rem", marginTop: "1.5rem", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
               {[
                 { val: "+300", label: "Recursos disponibles" },
@@ -193,7 +319,6 @@ export default function TallerDashboard() {
             </div>
           </div>
 
-          {/* Visual derecho — ocupa toda la altura */}
           <div style={{ position: "relative", zIndex: 2 }}>
             <div style={{ width: "100%", height: "100%", clipPath: "polygon(12% 0%,100% 0%,100% 100%,0% 100%)", overflow: "hidden" }}>
               <img src={taller.imagen} alt={taller.nombre} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -203,13 +328,12 @@ export default function TallerDashboard() {
           </div>
         </section>
 
-        {/* ── DESCRIPCIÓN + 5 COMPETENCIAS ─────────────────────────────────── */}
+        {/* ── DESCRIPCIÓN + COMPETENCIAS ────────────────────────────────────── */}
         <section style={{
           background: "#fff", borderRadius: 16, border: "1px solid rgba(4,57,65,0.08)",
           padding: "1.75rem 2rem",
           display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", alignItems: "start",
         }}>
-          {/* Texto amigable */}
           <div>
             <div style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#02d47e", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: 6 }}>
               <span style={{ width: 20, height: 2, background: "#02d47e", borderRadius: 2, display: "inline-block" }} />
@@ -226,13 +350,10 @@ export default function TallerDashboard() {
               una experiencia práctica real.
               <br /><br />
               Aquí encontrarás todo para planificar, enseñar y evaluar: desde fichas técnicas de cada
-              equipo hasta sesiones en vivo con especialistas. El objetivo es uno solo — que tus
-              estudiantes lleguen a la{" "}
-              <strong>certificación técnica</strong> con las habilidades que el sector demanda hoy.
+              equipo hasta sesiones en vivo con especialistas.
             </p>
           </div>
 
-          {/* 5 unidades de competencia reales */}
           <div>
             <div style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "rgba(4,57,65,0.4)", marginBottom: "0.75rem" }}>
               {data.unidadesCompetencia.length} competencias técnicas
@@ -256,31 +377,24 @@ export default function TallerDashboard() {
           <span style={{ flex: 1, height: 1, background: "rgba(4,57,65,0.1)", display: "block" }} />
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.75rem" }}>
+        {/* Grid: 4 secciones + opcional simulador */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: esAutomotriz ? "repeat(5,1fr)" : "repeat(4,1fr)",
+          gap: "0.75rem",
+        }}>
           {secciones.map(s => (
             <SecCard key={s.nombre} {...s} />
           ))}
+          {esAutomotriz && (
+            <SimuladorCard onOpen={() => setSimAbierto(true)} />
+          )}
         </div>
 
-        {/* ── TOUR 3D — solo automotriz ────────────────────────────────────── */}
-        {slug === "mecanica-automotriz" && (
-          <>
-            <div style={{ fontSize: "0.67rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "rgba(4,57,65,0.4)", display: "flex", alignItems: "center", gap: 8, padding: "0.25rem 0", marginTop: "0.5rem" }}>
-              Conoce más sobre el taller
-              <span style={{ flex: 1, height: 1, background: "rgba(4,57,65,0.1)", display: "block" }} />
-            </div>
-            <div style={{ borderRadius: 16, overflow: "hidden", border: "1.5px solid rgba(4,57,65,0.08)", background: "#fff" }}>
-              <iframe
-                src="/tour-3d-automotriz-v2.html"
-                title="Tour 3D — Mecánica Automotriz"
-                style={{ width: "100%", height: "80vh", border: "none", display: "block" }}
-                allow="accelerometer; gyroscope"
-              />
-            </div>
-          </>
-        )}
-
       </div>
+
+      {/* ── Modal Simulador ── */}
+      {simAbierto && <SimuladorModal onClose={() => setSimAbierto(false)} />}
     </main>
   );
 }
