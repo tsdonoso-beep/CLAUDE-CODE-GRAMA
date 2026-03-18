@@ -5,7 +5,7 @@ import { useTaller } from '@/hooks/useTaller'
 import { RepositorioCard } from '@/components/lxp/RepositorioCard'
 
 type FiltroZona = 'TODAS' | 'investigacion' | 'innovacion' | 'acabados' | 'almacen'
-type FiltroTipo = 'TODOS' | 'EQUIPOS' | 'HERRAMIENTAS' | 'MUEBLES' | 'PEDAGOGICO'
+type FiltroTipo = 'TODOS' | 'EQUIPOS' | 'HERRAMIENTAS' | 'MOBILIARIO' | 'PEDAGOGICO' | 'PRODUCCIÓN' | 'SEGURIDAD'
 
 function getZonaKey(zona: string): string {
   const z = zona.toLowerCase()
@@ -50,11 +50,13 @@ export default function Repositorio() {
   ]
 
   const tipos: { value: FiltroTipo; label: string }[] = [
-    { value: 'TODOS', label: 'Todos los tipos' },
-    { value: 'EQUIPOS', label: 'Equipos' },
+    { value: 'TODOS',      label: 'Todos los tipos' },
+    { value: 'EQUIPOS',    label: 'Equipos' },
     { value: 'HERRAMIENTAS', label: 'Herramientas' },
-    { value: 'MUEBLES', label: 'Muebles' },
+    { value: 'MOBILIARIO', label: 'Mobiliario' },
     { value: 'PEDAGOGICO', label: 'Material Pedagógico' },
+    { value: 'PRODUCCIÓN', label: 'Producción' },
+    { value: 'SEGURIDAD',  label: 'Seguridad' },
   ]
 
   return (

@@ -1,6 +1,6 @@
 // src/components/lxp/RepositorioCard.tsx
 import { useNavigate, useParams } from 'react-router-dom'
-import { FileText, Video, Shield, Package, Wrench, Archive, BookOpen } from 'lucide-react'
+import { FileText, Video, Shield, Package, Wrench, Sofa, BookOpen, HardHat, Factory } from 'lucide-react'
 
 interface BienData {
   n: number
@@ -21,10 +21,13 @@ interface RepositorioCardProps {
 }
 
 const TIPO_CONFIG: Record<string, { icon: React.ElementType; color: string; label: string }> = {
-  EQUIPOS: { icon: Package, color: '#00c16e', label: 'Equipo' },
-  HERRAMIENTAS: { icon: Wrench, color: '#0891b2', label: 'Herramienta' },
-  MUEBLES: { icon: Archive, color: '#8b5cf6', label: 'Mobiliario' },
-  PEDAGOGICO: { icon: BookOpen, color: '#f59e0b', label: 'Material Pedagógico' },
+  EQUIPOS:     { icon: Package,  color: '#00c16e', label: 'Equipo' },
+  HERRAMIENTAS:{ icon: Wrench,   color: '#0891b2', label: 'Herramienta' },
+  MOBILIARIO:  { icon: Sofa,     color: '#8b5cf6', label: 'Mobiliario' },
+  PEDAGOGICO:  { icon: BookOpen, color: '#f59e0b', label: 'Material Pedagógico' },
+  'PRODUCCIÓN':{ icon: Factory,  color: '#06b6d4', label: 'Producción' },
+  SEGURIDAD:   { icon: HardHat,  color: '#ef4444', label: 'Seguridad' },
+  '':          { icon: Package,  color: '#6b7280', label: 'Bien' },
 }
 
 function getZonaLabel(zona: string): { label: string; color: string } {
