@@ -50,7 +50,8 @@ export interface ContenidoLXP {
   esActividad?: boolean       // true para actividades prácticas
   recursosRepositorio?: string[] // IDs de bienes relacionados
   bancoPreguntas?: PreguntaQuiz[]
-  manualId?: string   // ID del manual en manualesRuta.ts (para PDF interactivos)
+  manualId?: string        // ID del manual en manualesRuta.ts (para PDF interactivos)
+  descargableId?: string   // ID del descargable en descargablesLXP.ts
 }
 
 export interface SubSeccionLXP {
@@ -220,7 +221,8 @@ export const modulosLXP: ModuloLXP[] = [
             modalidad: "asincrono",
             titulo: "Kit del Participante — Descarga e imprime",
             descripcion: "Guía completa del participante: cronograma, materiales requeridos y pacto de aprendizaje para firmar",
-            paginas: 12
+            paginas: 12,
+            descargableId: "desc-m0-kit"
           }
         ]
       },
@@ -392,7 +394,8 @@ export const modulosLXP: ModuloLXP[] = [
             modalidad: "asincrono",
             titulo: "Fichas de Revisión Diaria — Plastificables A5",
             descripcion: "Fichas para cada equipo crítico: lista de verificación antes del uso. Para imprimir, plastificar y colocar en cada máquina",
-            paginas: 16
+            paginas: 16,
+            descargableId: "desc-m1-fichas-revision"
           }
         ]
       },
@@ -855,7 +858,8 @@ export const modulosLXP: ModuloLXP[] = [
             modalidad: "asincrono",
             titulo: "Pack de Fichas de Revisión Diaria — A4 Plastificable",
             descripcion: "Una ficha por equipo crítico del taller. Para imprimir en A4, plastificar y colgar en cada máquina. Incluye instrucciones de uso del sistema de control",
-            paginas: 24
+            paginas: 24,
+            descargableId: "desc-m1-fichas-revision"
           }
         ]
       },
@@ -906,7 +910,8 @@ export const modulosLXP: ModuloLXP[] = [
             modalidad: "asincrono",
             titulo: "Bitácora del Taller — Registro de Mantenimiento",
             descripcion: "Plantilla de bitácora anual para registrar mantenimientos, incidentes, préstamos y estado del equipamiento. Formato oficial aceptado por UGEL",
-            paginas: 8
+            paginas: 8,
+            descargableId: "desc-m4-bitacora"
           }
         ]
       },
@@ -1068,7 +1073,8 @@ export const modulosLXP: ModuloLXP[] = [
             modalidad: "asincrono",
             titulo: "Plantilla de Unidad de Aprendizaje EPT — Descargable",
             descripcion: "Plantilla Word/Google Docs del formato oficial de unidad de aprendizaje adaptado al taller equipado. Con ejemplo completo de llenado",
-            paginas: 4
+            paginas: 4,
+            descargableId: "desc-m5-plantilla-sesion"
           }
         ]
       },
@@ -1093,7 +1099,8 @@ export const modulosLXP: ModuloLXP[] = [
             modalidad: "asincrono",
             titulo: "Pack de Instrumentos de Evaluación — EPT Talleres",
             descripcion: "Rúbricas, listas de cotejo y fichas de observación para evaluar competencias técnicas. Adaptables a cualquier taller y grado",
-            paginas: 18
+            paginas: 18,
+            descargableId: "desc-m5-pack-evaluacion"
           }
         ]
       },
@@ -1226,7 +1233,8 @@ export const modulosLXP: ModuloLXP[] = [
             modalidad: "asincrono",
             titulo: "Rúbrica de Evaluación — Proyecto Integrador",
             descripcion: "Rúbrica oficial de evaluación del proyecto con criterios técnicos, pedagógicos y de proceso. Descarga en Excel y PDF",
-            paginas: 2
+            paginas: 2,
+            descargableId: "desc-m6-rubrica-proyecto"
           }
         ]
       },

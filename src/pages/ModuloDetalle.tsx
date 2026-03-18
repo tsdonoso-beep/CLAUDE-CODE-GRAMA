@@ -15,6 +15,8 @@ import { ManualViewerModal } from '@/components/lxp/ManualViewerModal'
 import { EPPSelectorModal } from '@/components/lxp/EPPSelectorModal'
 import { MapaHabilidadesModal } from '@/components/lxp/MapaHabilidadesModal'
 import { TablaProgresionModal } from '@/components/lxp/TablaProgresionModal'
+import { DescargableViewerModal } from '@/components/lxp/DescargableViewerModal'
+import { descargablesLXP } from '@/data/descargablesLXP'
 import { useTaller } from '@/hooks/useTaller'
 import { getTallerBySlug } from '@/data/talleresConfig'
 import jsPDF from 'jspdf'
@@ -41,8 +43,10 @@ export default function ModuloDetalle() {
   const [showEPPSelector, setShowEPPSelector] = useState(false)
   const [showMapaHabilidades, setShowMapaHabilidades] = useState(false)
   const [showTablaProgresion, setShowTablaProgresion] = useState(false)
+  const [descargableAbierto, setDescargableAbierto] = useState<string | null>(null)
 
   const manualActivo = manualAbierto ? manualesRuta.find(m => m.id === manualAbierto) ?? null : null
+  const descargableActivo = descargableAbierto ? descargablesLXP.find(d => d.id === descargableAbierto) ?? null : null
   const taller = getTallerBySlug(slug ?? '')
 
   const moduloNum = parseInt(num ?? '0', 10)
@@ -94,34 +98,30 @@ export default function ModuloDetalle() {
   // Manejador para abrir contenidos
   const handleOpenContent = (contenido: any) => {
     if (contenido.tipo === 'DESCARGABLE') {
-      // Generar PDF descargable
-      const doc = new jsPDF()
-      const pageWidth = doc.internal.pageSize.getWidth()
-      const margin = 15
-
-      // Header
-      doc.setFillColor(4, 57, 65)
-      doc.rect(0, 0, pageWidth, 40, 'F')
-      doc.setTextColor(255, 255, 255)
-      doc.setFontSize(16)
-      doc.setFont('helvetica', 'bold')
-      doc.text(contenido.titulo, margin, 20)
-
-      doc.setFontSize(10)
-      doc.setFont('helvetica', 'normal')
-      doc.setTextColor(2, 212, 126)
-      doc.text(modulo?.nombre || 'Módulo', margin, 30)
-
-      // Contenido
-      doc.setTextColor(0, 0, 0)
-      doc.setFontSize(11)
-      doc.setFont('helvetica', 'normal')
-      const contenidoText = contenido.descripcion || 'Documento descargable del módulo'
-      const lines = doc.splitTextToSize(contenidoText, pageWidth - margin * 2)
-      doc.text(lines, margin, 50)
-
-      // Guardar
-      doc.save(`${contenido.titulo}.pdf`)
+      if (contenido.descargableId) {
+        setDescargableAbierto(contenido.descargableId)
+      } else {
+        // Fallback: PDF básico para descargables sin datos ricos
+        const doc = new jsPDF()
+        const pageWidth = doc.internal.pageSize.getWidth()
+        const margin = 15
+        doc.setFillColor(4, 57, 65)
+        doc.rect(0, 0, pageWidth, 40, 'F')
+        doc.setTextColor(255, 255, 255)
+        doc.setFontSize(16)
+        doc.setFont('helvetica', 'bold')
+        doc.text(contenido.titulo, margin, 20)
+        doc.setFontSize(10)
+        doc.setFont('helvetica', 'normal')
+        doc.setTextColor(2, 212, 126)
+        doc.text(modulo?.nombre || 'Módulo', margin, 30)
+        doc.setTextColor(0, 0, 0)
+        doc.setFontSize(11)
+        doc.setFont('helvetica', 'normal')
+        const lines = doc.splitTextToSize(contenido.descripcion || '', pageWidth - margin * 2)
+        doc.text(lines, margin, 50)
+        doc.save(`${contenido.titulo}.pdf`)
+      }
     } else if (contenido.tipo === 'INTERACTIVO') {
       if (contenido.id === 'm1-s2-c1') {
         setShowEPPSelector(true)
@@ -437,6 +437,14 @@ export default function ModuloDetalle() {
         <ManualViewerModal
           manual={manualActivo}
           onClose={() => setManualAbierto(null)}
+        />
+      )}
+
+      {/* Modal visor de descargables */}
+      {descargableActivo && (
+        <DescargableViewerModal
+          descargable={descargableActivo}
+          onClose={() => setDescargableAbierto(null)}
         />
       )}
 
