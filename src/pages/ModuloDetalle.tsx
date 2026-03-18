@@ -12,7 +12,9 @@ import { getEstadoModulo } from '@/mock/mockEstados'
 import { ContenidoBadge } from '@/components/lxp/ContenidoBadge'
 import { QuizBlock } from '@/components/lxp/QuizBlock'
 import { ManualViewerModal } from '@/components/lxp/ManualViewerModal'
+import { EPPSelectorModal } from '@/components/lxp/EPPSelectorModal'
 import { useTaller } from '@/hooks/useTaller'
+import { getTallerBySlug } from '@/data/talleresConfig'
 import jsPDF from 'jspdf'
 
 const CONTENT_ICON: Record<string, React.ElementType> = {
@@ -34,8 +36,10 @@ export default function ModuloDetalle() {
   const [selectedGrade, setSelectedGrade] = useState<string | null>(null)
   const [currentInteractiveContent, setCurrentInteractiveContent] = useState<any>(null)
   const [manualAbierto, setManualAbierto] = useState<string | null>(null)
+  const [showEPPSelector, setShowEPPSelector] = useState(false)
 
   const manualActivo = manualAbierto ? manualesRuta.find(m => m.id === manualAbierto) ?? null : null
+  const taller = getTallerBySlug(slug ?? '')
 
   const moduloNum = parseInt(num ?? '0', 10)
   const modulo = modulosLXP.find(m => m.numero === moduloNum)
@@ -115,14 +119,15 @@ export default function ModuloDetalle() {
       // Guardar
       doc.save(`${contenido.titulo}.pdf`)
     } else if (contenido.tipo === 'INTERACTIVO') {
-      // Mostrar modal para seleccionar grado
-      if (contenido.titulo.includes('grado')) {
+      if (contenido.id === 'm1-s2-c1') {
+        setShowEPPSelector(true)
+      } else if (contenido.titulo.toLowerCase().includes('grado')) {
         setCurrentInteractiveContent(contenido)
         setShowGradeModal(true)
       } else if (contenido.urlInteractivo) {
         window.open(contenido.urlInteractivo, '_blank')
       } else {
-        alert(`${contenido.titulo} - Abrir contenido interactivo`)
+        alert(`${contenido.titulo} - Próximamente disponible`)
       }
     } else if (contenido.tipo === 'VIDEO' && contenido.urlVideo) {
       // Abrir video en nueva pestaña
@@ -424,6 +429,15 @@ export default function ModuloDetalle() {
         <ManualViewerModal
           manual={manualActivo}
           onClose={() => setManualAbierto(null)}
+        />
+      )}
+
+      {/* Modal selector EPP */}
+      {showEPPSelector && taller && (
+        <EPPSelectorModal
+          tallerSlug={slug ?? ''}
+          tallerNombre={taller.nombre}
+          onClose={() => setShowEPPSelector(false)}
         />
       )}
     </div>
