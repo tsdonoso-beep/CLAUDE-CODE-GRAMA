@@ -98,7 +98,7 @@ export default function Bienvenida() {
         className="relative z-10 flex items-center justify-between px-6 sm:px-10 py-5 border-b animate-fade-in"
         style={{ borderColor: 'rgba(255,255,255,0.05)' }}
       >
-        <GramaLogo variant="glow" height={36} />
+        <GramaLogo variant="light" size="md" />
 
         <div className="hidden sm:flex items-center gap-3">
           <div

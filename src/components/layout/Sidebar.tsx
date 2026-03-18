@@ -61,7 +61,7 @@ export function Sidebar({ onCollapse }: SidebarProps) {
         className="relative z-10 flex items-center justify-between px-4 py-3.5 border-b"
         style={{ borderColor: 'rgba(255,255,255,0.07)' }}
       >
-        <GramaLogo variant="glow" height={30} />
+        <GramaLogo variant="light" size="sm" />
         {onCollapse && (
           <button
             onClick={onCollapse}

@@ -61,7 +61,7 @@ export default function Login() {
 
         <div className="relative z-10 text-center max-w-sm">
           <div className="flex justify-center mb-8">
-            <GramaLogo variant="glow" height={56} />
+            <GramaLogo variant="light" size="lg" />
           </div>
           <h2 className="text-2xl font-extrabold text-white mb-3">
             Plataforma de Capacitación Docente
@@ -94,7 +94,7 @@ export default function Login() {
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
         {/* Mobile: logo */}
         <div className="lg:hidden mb-8 text-center">
-          <GramaLogo variant="glow" height={44} className="mx-auto mb-3" />
+          <GramaLogo variant="light" size="md" className="mx-auto mb-3" />
           <p className="text-xs font-medium" style={{ color: '#02d47e' }}>
             Plataforma de Capacitación Docente
           </p>
