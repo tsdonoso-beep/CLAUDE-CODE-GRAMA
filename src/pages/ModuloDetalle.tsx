@@ -272,11 +272,11 @@ export default function ModuloDetalle() {
                     )}
                     {sub.contenidos.map(contenido => {
                       const ContentIcon = CONTENT_ICON[contenido.tipo] ?? FileText
-                      const isQuizWithBlock = contenido.tipo === 'QUIZ' && contenido.bloqueaSiguiente
+                      const isQuizInteractivo = contenido.tipo === 'QUIZ' && !!contenido.bancoPreguntas
 
                       return (
                         <div key={contenido.id}>
-                          {isQuizWithBlock && contenido.bancoPreguntas ? (
+                          {isQuizInteractivo ? (
                             /* Quiz interactivo bloqueante */
                             <QuizBlock
                               contenidoId={contenido.id}
