@@ -305,7 +305,7 @@ function generarPDF(d: DescargableLXP) {
     doc.setTextColor(150, 150, 150)
     doc.setFont('helvetica', 'normal')
     doc.text(
-      `GRAMA LXP · ${d.titulo} · Pág ${p}/${totalPages}`,
+      `GRAMA · ${d.titulo} · Pag ${p}/${totalPages}`,
       margin,
       pageHeight - 6
     )

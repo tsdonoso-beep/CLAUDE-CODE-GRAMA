@@ -52,7 +52,7 @@ export const generateDescargablePDF = (
   doc.setFontSize(8)
   doc.setTextColor(100, 100, 100)
   doc.text(
-    `Generado por GRAMA LXP — ${new Date().toLocaleDateString('es-PE')}`,
+    `Generado por GRAMA — ${new Date().toLocaleDateString('es-PE')}`,
     margin,
     pageHeight - 10
   )

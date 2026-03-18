@@ -3,9 +3,15 @@ import { useEffect, useRef, useState } from 'react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { TallerCard } from '@/components/hub/TallerCard'
 import { GramaLogo } from '@/components/GramaLogo'
+import { Layers, Clock, Award, Download, ChevronDown, CheckCircle, BookOpen } from 'lucide-react'
 
-// Componente de stat con conteo animado
-function AnimatedStat({ target, suffix = '', label }: { target: number | string; suffix?: string; label: string }) {
+// ── Stat con conteo animado ────────────────────────────────────────────────
+function AnimatedStat({
+  target, suffix = '', label, valueColor = '#02d47e', labelColor = 'rgba(255,255,255,0.55)'
+}: {
+  target: number | string; suffix?: string; label: string
+  valueColor?: string; labelColor?: string
+}) {
   const [display, setDisplay] = useState(typeof target === 'number' ? 0 : target)
   const ref = useRef<HTMLDivElement>(null)
   const started = useRef(false)
@@ -15,7 +21,7 @@ function AnimatedStat({ target, suffix = '', label }: { target: number | string;
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !started.current) {
         started.current = true
-        const duration = 1200
+        const duration = 1000
         const start = Date.now()
         const tick = () => {
           const elapsed = Date.now() - start
@@ -33,199 +39,339 @@ function AnimatedStat({ target, suffix = '', label }: { target: number | string;
 
   return (
     <div ref={ref} className="text-center animate-fade-in-up">
-      <p className="font-black leading-none" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', color: '#02d47e' }}>
+      <p className="font-black leading-none" style={{ fontSize: 'clamp(2rem, 3.5vw, 2.8rem)', color: valueColor }}>
         {typeof target === 'number' ? display : target}{suffix}
       </p>
-      <p className="text-xs mt-1.5 font-medium" style={{ color: 'rgba(255,255,255,0.4)', letterSpacing: '0.05em' }}>
+      <p className="text-xs mt-1.5 font-semibold tracking-wide" style={{ color: labelColor }}>
         {label}
       </p>
     </div>
   )
 }
 
-export default function Bienvenida() {
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 })
+// ── Módulos en el hero card ────────────────────────────────────────────────
+const MODULOS_LABELS = ['M0 Inicio', 'M1 Seguridad', 'M2 Investigación', 'M3 Innovación', 'M4 Acabados', 'M5 Formativo', 'M6 Proyecto']
 
-  // Parallax suave del hero con el mouse
-  useEffect(() => {
-    const handleMouse = (e: MouseEvent) => {
-      setMousePos({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      })
-    }
-    window.addEventListener('mousemove', handleMouse)
-    return () => window.removeEventListener('mousemove', handleMouse)
-  }, [])
+// ── Features ───────────────────────────────────────────────────────────────
+const FEATURES = [
+  {
+    icon: Layers,
+    color: '#02d47e',
+    bg: '#f0fdf9',
+    border: '#02d47e22',
+    title: 'Ruta de 7 módulos',
+    desc: 'Recorrido pedagógico estructurado: desde diagnóstico hasta proyecto integrador. Modalidad híbrida con sesiones síncronas y presenciales en el taller.',
+  },
+  {
+    icon: Download,
+    color: '#8b5cf6',
+    bg: '#faf5ff',
+    border: '#8b5cf622',
+    title: 'Materiales descargables',
+    desc: 'Fichas plastificables A5, rúbricas de evaluación 360°, bitácoras de mantenimiento preventivo y plantillas de sesión listas para el taller.',
+  },
+  {
+    icon: Award,
+    color: '#f59e0b',
+    bg: '#fffbeb',
+    border: '#f59e0b22',
+    title: 'Certificación Inroprin',
+    desc: 'Proyecto Integrador evaluado por jurado certificador oficial. Acreditación reconocida para docentes técnicos de Educación Para el Trabajo.',
+  },
+]
+
+// ── Componente principal ────────────────────────────────────────────────────
+export default function Bienvenida() {
+  const handleLogout = () => {
+    sessionStorage.removeItem('grama-auth')
+    window.location.href = '/login'
+  }
 
   return (
-    <div
-      className="min-h-screen"
-      style={{ background: '#030e12', fontFamily: "'Manrope', sans-serif" }}
-    >
-      {/* ── ORBS DE AMBIENTE ── */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div
-          className="absolute rounded-full animate-aurora"
-          style={{
-            width: 600, height: 600,
-            background: 'radial-gradient(circle, rgba(2,212,126,0.07) 0%, transparent 70%)',
-            top: '-100px', left: `${mousePos.x * 0.3}%`,
-            transition: 'left 3s ease-out',
-          }}
-        />
-        <div
-          className="absolute rounded-full animate-aurora-slow"
-          style={{
-            width: 500, height: 500,
-            background: 'radial-gradient(circle, rgba(4,95,108,0.1) 0%, transparent 70%)',
-            bottom: '0px', right: `${100 - mousePos.x * 0.2}%`,
-            transition: 'right 4s ease-out',
-          }}
-        />
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: 300, height: 300,
-            background: 'radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%)',
-            top: '40%', left: '60%',
-          }}
-        />
-      </div>
+    <div className="min-h-screen" style={{ background: '#ffffff', fontFamily: "'Manrope', sans-serif" }}>
 
-      {/* ── HEADER ── */}
-      <header
-        className="relative z-10 flex items-center justify-between px-6 sm:px-10 py-5 border-b animate-fade-in"
-        style={{ borderColor: 'rgba(255,255,255,0.05)' }}
-      >
-        <GramaLogo variant="light" size="md" />
+      {/* ── HEADER ──────────────────────────────────────────────────────── */}
+      <header style={{ background: '#ffffff', borderBottom: '1px solid #e3f8fb' }}>
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 py-4 flex items-center justify-between">
+          <GramaLogo variant="dark" size="md" />
 
-        <div className="hidden sm:flex items-center gap-3">
-          <div
-            className="h-7 px-3 rounded-full flex items-center gap-1.5 text-[10px] font-bold tracking-wider"
-            style={{
-              background: 'rgba(2,212,126,0.08)',
-              border: '1px solid rgba(2,212,126,0.15)',
-              color: '#02d47e',
+          <div className="hidden sm:flex items-center gap-2">
+            <div
+              className="h-7 px-3 rounded-full flex items-center gap-1.5 text-[10px] font-bold tracking-wider"
+              style={{
+                background: '#f0fdf9',
+                border: '1px solid rgba(2,212,126,0.25)',
+                color: '#043941',
+              }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
+              Inroprin · MSE-SFT · 2026
+            </div>
+          </div>
+
+          <button
+            onClick={handleLogout}
+            className="text-xs font-semibold px-3.5 py-2 rounded-xl transition-all"
+            style={{ color: 'rgba(4,57,65,0.45)', border: '1px solid transparent' }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.color = '#043941'
+              ;(e.currentTarget as HTMLElement).style.borderColor = '#e3f8fb'
+              ;(e.currentTarget as HTMLElement).style.background = '#f0fdf9'
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.color = 'rgba(4,57,65,0.45)'
+              ;(e.currentTarget as HTMLElement).style.borderColor = 'transparent'
+              ;(e.currentTarget as HTMLElement).style.background = 'transparent'
             }}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#02d47e] animate-pulse" />
-            MINEDU · MSE-SFT · 2026
-          </div>
+            Cerrar sesión
+          </button>
         </div>
-
-        <button
-          onClick={() => {
-            sessionStorage.removeItem('grama-auth')
-            window.location.href = '/login'
-          }}
-          className="text-xs font-semibold px-3.5 py-2 rounded-xl transition-all"
-          style={{ color: 'rgba(255,255,255,0.35)' }}
-          onMouseEnter={e => {
-            (e.currentTarget as HTMLElement).style.color = '#fff'
-            ;(e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.07)'
-          }}
-          onMouseLeave={e => {
-            (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.35)'
-            ;(e.currentTarget as HTMLElement).style.background = 'transparent'
-          }}
-        >
-          Cerrar sesión
-        </button>
       </header>
 
-      {/* ── HERO ── */}
-      <section className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 pt-16 pb-14">
-        {/* Overline */}
-        <div className="flex items-center gap-3 mb-6 animate-fade-in-up stagger-1">
-          <div
-            className="h-px flex-1"
-            style={{ background: 'linear-gradient(to right, transparent, rgba(2,212,126,0.4), transparent)', maxWidth: 80 }}
-          />
-          <span
-            className="text-[10px] font-black tracking-[0.2em] uppercase"
-            style={{ color: 'rgba(2,212,126,0.7)' }}
-          >
-            Plataforma de Capacitación Docente
-          </span>
-          <div
-            className="h-px"
-            style={{ background: 'rgba(2,212,126,0.2)', width: 40 }}
-          />
-        </div>
+      {/* ── HERO ────────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          background: 'linear-gradient(160deg, #f8fffe 0%, #ffffff 60%)',
+          borderBottom: '1px solid #e3f8fb',
+        }}
+      >
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 pt-14 pb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-        {/* Headline principal */}
-        <div className="mb-6">
-          <h1
-            className="font-black leading-[0.9] tracking-tight mb-2 animate-fade-in-up stagger-2"
-            style={{ fontSize: 'clamp(2.8rem, 6vw, 5.5rem)', color: '#ffffff' }}
-          >
-            Capacitación
-          </h1>
-          <h1
-            className="font-black leading-[0.9] tracking-tight mb-2 animate-fade-in-up stagger-3"
+          {/* ── Col izquierda ── */}
+          <div>
+            {/* Overline */}
+            <div className="flex items-center gap-2.5 mb-6 animate-fade-in-up stagger-1">
+              <div className="h-px w-10" style={{ background: '#02d47e' }} />
+              <span
+                className="text-[10px] font-black tracking-[0.18em] uppercase"
+                style={{ color: '#02d47e' }}
+              >
+                Plataforma de Capacitación Docente
+              </span>
+            </div>
+
+            {/* Headline */}
+            <div className="mb-6">
+              <h1
+                className="font-black leading-[0.88] tracking-tight animate-fade-in-up stagger-2"
+                style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)', color: '#043941' }}
+              >
+                Capacitación
+              </h1>
+              <h1
+                className="font-black leading-[0.88] tracking-tight mt-1 animate-fade-in-up stagger-3"
+                style={{
+                  fontSize: 'clamp(2.8rem, 6vw, 5rem)',
+                  background: 'linear-gradient(100deg, #02d47e 0%, #00c16e 45%, #22d3ee 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                Docente EPT
+              </h1>
+            </div>
+
+            {/* Descripción */}
+            <p
+              className="text-sm leading-loose max-w-sm mb-8 animate-fade-in-up stagger-4"
+              style={{ color: 'rgba(4,57,65,0.6)' }}
+            >
+              Talleres de Educación Para el Trabajo · Recorre los{' '}
+              <strong style={{ color: '#043941' }}>7 módulos</strong> del programa y obtén tu certificación
+              en <strong style={{ color: '#043941' }}>150 horas</strong> de formación híbrida.
+            </p>
+
+            {/* Checks rápidos */}
+            <div className="space-y-2.5 mb-10 animate-fade-in-up stagger-5">
+              {[
+                'Contenido asíncrono, sincrónico y presencial',
+                'Materiales descargables para el taller',
+                'Certificación oficial Inroprin',
+              ].map(item => (
+                <div key={item} className="flex items-center gap-2.5">
+                  <CheckCircle size={14} style={{ color: '#02d47e', flexShrink: 0 }} />
+                  <span className="text-sm" style={{ color: '#045f6c' }}>{item}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA scroll */}
+            <a
+              href="#talleres"
+              className="inline-flex items-center gap-2 text-sm font-bold animate-fade-in-up stagger-6 transition-all"
+              style={{ color: '#02d47e' }}
+              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.gap = '10px')}
+              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.gap = '8px')}
+            >
+              Elige tu especialidad
+              <ChevronDown size={15} />
+            </a>
+          </div>
+
+          {/* ── Col derecha: tarjeta programa ── */}
+          <div
+            className="rounded-2xl p-7 animate-fade-in-up stagger-3 lg:ml-4"
             style={{
-              fontSize: 'clamp(2.8rem, 6vw, 5.5rem)',
-              background: 'linear-gradient(100deg, #02d47e 0%, #00c16e 40%, #22d3ee 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
+              background: 'linear-gradient(145deg, #043941 0%, #045f6c 100%)',
+              boxShadow: '0 24px 56px rgba(4,57,65,0.2), 0 8px 20px rgba(4,57,65,0.12)',
             }}
           >
-            Docente
-          </h1>
-          <p
-            className="text-sm max-w-sm mt-5 leading-loose animate-fade-in-up stagger-4"
-            style={{ color: 'rgba(255,255,255,0.45)' }}
-          >
-            Talleres de Educación Para el Trabajo · Selecciona tu taller
-            para iniciar la ruta de certificación de <strong style={{ color: 'rgba(255,255,255,0.7)' }}>150 horas</strong>.
-          </p>
-        </div>
+            {/* Badge */}
+            <div
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase mb-5"
+              style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.2)' }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#02d47e] animate-pulse" />
+              Inroprin · 2026
+            </div>
 
-        {/* Stats */}
-        <div
-          className="flex flex-wrap gap-10 py-8 border-t border-b animate-fade-in-up stagger-5"
-          style={{ borderColor: 'rgba(255,255,255,0.06)' }}
-        >
+            <h3 className="text-white font-extrabold text-lg mb-1">Tu programa formativo</h3>
+            <p className="text-xs mb-6" style={{ color: 'rgba(255,255,255,0.45)' }}>
+              9 talleres EPT · modalidad híbrida
+            </p>
+
+            {/* 4 stat chips */}
+            <div className="grid grid-cols-2 gap-3 mb-7">
+              {[
+                { value: '9', label: 'Talleres EPT', icon: BookOpen },
+                { value: '7', label: 'Módulos', icon: Layers },
+                { value: '150h', label: 'Formación', icon: Clock },
+                { value: '🎓', label: 'Certificación', icon: null },
+              ].map(s => (
+                <div
+                  key={s.label}
+                  className="rounded-xl px-4 py-3 flex items-center gap-3"
+                  style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}
+                >
+                  <div>
+                    <p className="font-black text-lg leading-none" style={{ color: '#02d47e' }}>{s.value}</p>
+                    <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>{s.label}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Ruta de módulos */}
+            <div>
+              <p className="text-[10px] font-bold tracking-widest uppercase mb-3" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                Ruta de módulos
+              </p>
+              <div className="space-y-1.5">
+                {MODULOS_LABELS.map((label, i) => (
+                  <div key={label} className="flex items-center gap-2.5">
+                    <div
+                      className="h-5 w-5 rounded-full flex items-center justify-center text-[9px] font-black shrink-0"
+                      style={{
+                        background: i === 0 ? '#02d47e' : 'rgba(2,212,126,0.15)',
+                        color: i === 0 ? '#043941' : 'rgba(2,212,126,0.7)',
+                      }}
+                    >
+                      {i}
+                    </div>
+                    <span
+                      className="text-xs font-medium"
+                      style={{ color: i === 0 ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.45)' }}
+                    >
+                      {label}
+                    </span>
+                    {i === 0 && (
+                      <span
+                        className="text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                        style={{ background: '#02d47e22', color: '#02d47e' }}
+                      >
+                        Inicio
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── STATS STRIP ─────────────────────────────────────────────────── */}
+      <div style={{ background: '#043941' }}>
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 py-10 grid grid-cols-2 sm:grid-cols-4 gap-8">
           <AnimatedStat target={9}   label="Talleres EPT" />
           <AnimatedStat target={150} suffix="h" label="Modalidad híbrida" />
-          <AnimatedStat target={7}   label="Módulos LXP" />
-          <AnimatedStat target="🎓" label="Certificación MINEDU" />
+          <AnimatedStat target={7}   label="Módulos de formación" />
+          <AnimatedStat target="🎓"  label="Certificación Inroprin" />
         </div>
-      </section>
+      </div>
 
-      {/* ── GRID DE TALLERES ── */}
-      <section className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 pb-20">
-        {/* Sección header */}
-        <div className="flex items-center gap-4 mb-8 animate-fade-in-up">
-          <div>
-            <p className="overline-label" style={{ color: 'rgba(2,212,126,0.6)' }}>
-              Elige tu taller
-            </p>
-            <h2 className="text-xl font-extrabold text-white mt-0.5">
-              9 especialidades técnicas
+      {/* ── FEATURES ────────────────────────────────────────────────────── */}
+      <section style={{ background: '#ffffff', borderBottom: '1px solid #e3f8fb' }}>
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 py-16">
+          {/* Header */}
+          <div className="mb-10">
+            <p className="overline-label mb-2" style={{ color: '#02d47e' }}>¿Qué incluye?</p>
+            <h2 className="text-2xl font-extrabold" style={{ color: '#043941' }}>
+              Todo lo que necesitas para el taller
             </h2>
           </div>
-          <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.05)' }} />
-        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {talleresConfig.map((taller, i) => (
-            <TallerCard key={taller.id} taller={taller} index={i} />
-          ))}
+          {/* Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {FEATURES.map((f, i) => (
+              <div
+                key={f.title}
+                className="rounded-2xl p-6 card-lift animate-fade-in-up"
+                style={{
+                  background: f.bg,
+                  border: `1.5px solid ${f.border}`,
+                  animationDelay: `${i * 0.08}s`,
+                }}
+              >
+                <div
+                  className="h-10 w-10 rounded-xl flex items-center justify-center mb-4"
+                  style={{ background: `${f.color}18` }}
+                >
+                  <f.icon size={18} style={{ color: f.color }} />
+                </div>
+                <h3 className="text-sm font-extrabold mb-2" style={{ color: '#043941' }}>{f.title}</h3>
+                <p className="text-xs leading-relaxed" style={{ color: 'rgba(4,57,65,0.6)' }}>{f.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer
-        className="relative z-10 text-center py-8 border-t"
-        style={{ borderColor: 'rgba(255,255,255,0.04)' }}
-      >
-        <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.2)' }}>
-          GRAMA Proyectos Educativos · Programa MSE-SFT MINEDU 2026
-        </p>
+      {/* ── GRID DE TALLERES ────────────────────────────────────────────── */}
+      <section id="talleres" style={{ background: '#f0fdf9' }}>
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 py-16">
+          {/* Header */}
+          <div className="flex items-end justify-between gap-4 mb-8 animate-fade-in-up">
+            <div>
+              <p className="overline-label mb-1" style={{ color: '#02d47e' }}>Elige tu taller</p>
+              <h2 className="text-xl font-extrabold" style={{ color: '#043941' }}>
+                9 especialidades técnicas
+              </h2>
+            </div>
+            <div className="hidden sm:block h-px flex-1" style={{ background: 'rgba(4,57,65,0.08)', maxWidth: 300 }} />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {talleresConfig.map((taller, i) => (
+              <TallerCard key={taller.id} taller={taller} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ──────────────────────────────────────────────────────── */}
+      <footer style={{ background: '#ffffff', borderTop: '1px solid #e3f8fb' }}>
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 py-6 flex items-center justify-between">
+          <GramaLogo variant="dark" size="sm" />
+          <p className="text-[11px]" style={{ color: 'rgba(4,57,65,0.35)' }}>
+            GRAMA Proyectos Educativos · Programa MSE-SFT · 2026
+          </p>
+        </div>
       </footer>
+
     </div>
   )
 }

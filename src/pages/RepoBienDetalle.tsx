@@ -121,7 +121,7 @@ Para reparaciones mayores, contacte técnico especializado.`
     doc.setFontSize(8)
     doc.setTextColor(100, 100, 100)
     doc.text(
-      `Generado por GRAMA LXP — ${new Date().toLocaleDateString('es-PE')} | Página 1 de ${pageCount}`,
+      `Generado por GRAMA — ${new Date().toLocaleDateString('es-PE')} | Página 1 de ${pageCount}`,
       margin,
       doc.internal.pageSize.getHeight() - 10
     )

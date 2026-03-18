@@ -37,7 +37,7 @@ export default function RutaAprendizaje() {
               { icon: BookOpen, value: '7 módulos', sub: 'M0 → M6' },
               { icon: Clock, value: '150 horas', sub: 'A + S + Presencial' },
               { icon: Video, value: `${sesionesEnVivo} sesiones`, sub: 'en vivo' },
-              { icon: Award, value: '🎓 Certificación', sub: 'MINEDU' },
+              { icon: Award, value: '🎓 Certificación', sub: 'Inroprin' },
             ].map(s => (
               <div key={s.value} className="flex items-center gap-2">
                 <div className="h-9 w-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(2,212,126,0.12)' }}>

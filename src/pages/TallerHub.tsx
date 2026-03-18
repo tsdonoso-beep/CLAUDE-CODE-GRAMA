@@ -111,9 +111,9 @@ export default function TallerHub() {
               {/* Chips de stats */}
               <div className="flex flex-wrap gap-3 animate-fade-in-up stagger-3">
                 {[
-                  { icon: Layers, label: '7 Módulos', sub: 'LXP completos' },
+                  { icon: Layers, label: '7 Módulos', sub: 'de formación' },
                   { icon: Clock,  label: '150 Horas', sub: 'híbrida' },
-                  { icon: BookOpen, label: 'Certificación', sub: 'MINEDU Perú' },
+                  { icon: BookOpen, label: 'Certificación', sub: 'Inroprin' },
                 ].map(stat => (
                   <div
                     key={stat.label}
@@ -188,7 +188,7 @@ export default function TallerHub() {
                     Tu Ruta de Aprendizaje
                   </h2>
                   <p className="text-[10px]" style={{ color: 'rgba(4,57,65,0.45)' }}>
-                    {modulosLXP.length} módulos · Certificación MINEDU
+                    {modulosLXP.length} módulos · Certificación Inroprin
                   </p>
                 </div>
               </div>

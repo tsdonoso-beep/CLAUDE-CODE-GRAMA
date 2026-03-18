@@ -75,7 +75,7 @@ export default function Login() {
             {[
               { value: '9', label: 'Talleres EPT' },
               { value: '150h', label: 'de capacitación' },
-              { value: '7', label: 'módulos LXP' },
+              { value: '7', label: 'módulos' },
             ].map(s => (
               <div key={s.label} className="text-center">
                 <p className="text-2xl font-extrabold" style={{ color: '#02d47e' }}>

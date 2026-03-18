@@ -208,13 +208,13 @@ function TallerSidebar({ slug, taller }: { slug: string; taller: typeof talleres
           )}
           <div>
             <div style={{ fontSize: 11, fontWeight: 700, color: "#fff", lineHeight: 1.2 }}>{taller.nombre}</div>
-            <div style={{ fontSize: 8.5, color: "rgba(2,212,126,0.7)", fontWeight: 600, marginTop: 1 }}>T{taller.numero} · MINEDU SFT</div>
+            <div style={{ fontSize: 8.5, color: "rgba(2,212,126,0.7)", fontWeight: 600, marginTop: 1 }}>T{taller.numero} · Inroprin</div>
           </div>
         </div>
       )}
 
       {/* ── 1. Presentación del taller ── */}
-      <Seccion label="Formación Técnica MINEDU" collapsed={collapsed} onNavigate={() => navigate(`/taller/${slug}/formacion`)} active={exact(`/taller/${slug}/formacion`) || exact(`/taller/${slug}`)}>
+      <Seccion label="Formación Técnica" collapsed={collapsed} onNavigate={() => navigate(`/taller/${slug}/formacion`)} active={exact(`/taller/${slug}/formacion`) || exact(`/taller/${slug}`)}>
         <div style={{ padding: "2px 6px 6px" }}>
           <SbItem label="Inicio del taller"    icon={Home}     active={false} onClick={() => {}} />
           <SbItem label="Programa formativo"   icon={FileText}  active={exact(`/taller/${slug}/formacion`)} to={`/taller/${slug}/formacion`} />
