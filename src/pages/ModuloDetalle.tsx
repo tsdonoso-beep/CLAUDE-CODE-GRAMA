@@ -11,6 +11,7 @@ import { manualesRuta } from '@/data/manualesRuta'
 import { getEstadoModulo } from '@/mock/mockEstados'
 import { ContenidoBadge } from '@/components/lxp/ContenidoBadge'
 import { QuizBlock } from '@/components/lxp/QuizBlock'
+import { ConocenosForm } from '@/components/lxp/ConocenosForm'
 import { ManualViewerModal } from '@/components/lxp/ManualViewerModal'
 import { EPPSelectorModal } from '@/components/lxp/EPPSelectorModal'
 import { MapaHabilidadesModal } from '@/components/lxp/MapaHabilidadesModal'
@@ -320,7 +321,9 @@ export default function ModuloDetalle() {
 
                             return (
                               <div key={contenido.id}>
-                                {isQuizBloqueante ? (
+                                {contenido.id === 'm0-s1-c3' ? (
+                                  <ConocenosForm />
+                                ) : isQuizBloqueante ? (
                                   <QuizBlock
                                     contenidoId={contenido.id}
                                     titulo={contenido.titulo}
