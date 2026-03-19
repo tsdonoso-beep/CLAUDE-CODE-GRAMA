@@ -127,8 +127,15 @@ export default function ModuloDetalle() {
     } else if (contenido.tipo === 'INTERACTIVO') {
       if (contenido.id === 'm0-s2-c2' && slug === 'mecanica-automotriz') {
         setShowTourSimulator(true)
-      } else if (contenido.id === 'm1-s2-c1') {
+      } else if (contenido.id === 'm1-s2-c2') {
+        // Catálogo Interactivo de Bienes → Repositorio del taller
+        navigate(`/taller/${slug}/repositorio`)
+      } else if (contenido.id === 'm1-s3-c2') {
+        // Selector de EPP por Equipo y Proceso
         setShowEPPSelector(true)
+      } else if (contenido.id === 'm2-s4-c1') {
+        // Explorador Zona Investigación → Repositorio del taller
+        navigate(`/taller/${slug}/repositorio`)
       } else if (contenido.id === 'm5-s2-c1') {
         setShowMapaHabilidades(true)
       } else if (contenido.id === 'm5-s3-c2') {
