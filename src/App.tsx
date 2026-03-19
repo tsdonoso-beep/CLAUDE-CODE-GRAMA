@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { lazy, Suspense } from "react"
 import { AppShell } from "@/components/layout/AppShell"
 import { RequireAuth } from "@/components/RequireAuth"
+import { ProgressProvider } from "@/contexts/ProgressContext"
 
 // ── Pages (lazy loaded) ────────────────────────────────────────────────────
 const Login           = lazy(() => import("./pages/Login"))
@@ -49,6 +50,7 @@ function wrap(Page: React.LazyExoticComponent<() => JSX.Element>) {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <ProgressProvider>
     <TooltipProvider>
       <Toaster />
       <Sonner />
@@ -77,6 +79,7 @@ const App = () => (
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
+    </ProgressProvider>
   </QueryClientProvider>
 )
 

@@ -2,7 +2,7 @@
 import { NavLink, useParams, useNavigate } from 'react-router-dom'
 import { Home, BookOpen, Package, ChevronLeft, LayoutGrid } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
-import { mockProgreso } from '@/mock/mockEstados'
+import { useProgress } from '@/contexts/ProgressContext'
 import { GramaLogo } from '@/components/GramaLogo'
 
 const TALLER_ACCENTS: Record<string, string> = {
@@ -26,6 +26,8 @@ export function Sidebar({ onCollapse }: SidebarProps) {
   const navigate = useNavigate()
   const taller = talleresConfig.find(t => t.slug === slug)
   const accent = TALLER_ACCENTS[slug ?? ''] ?? '#02d47e'
+  const { getTallerProgreso } = useProgress()
+  const progreso = slug ? getTallerProgreso(slug) : { porcentaje: 0, completados: 0, total: 0 }
 
   const navItems = [
     { to: `/taller/${slug}`,             icon: Home,     label: 'Inicio' },
@@ -173,7 +175,7 @@ export function Sidebar({ onCollapse }: SidebarProps) {
             className="text-[10px] font-black"
             style={{ color: '#02d47e' }}
           >
-            {mockProgreso.porcentajeGeneral}%
+            {progreso.porcentaje}%
           </span>
         </div>
 
@@ -185,7 +187,7 @@ export function Sidebar({ onCollapse }: SidebarProps) {
           <div
             className="h-full rounded-full transition-all duration-1000"
             style={{
-              width: `${mockProgreso.porcentajeGeneral}%`,
+              width: `${progreso.porcentaje}%`,
               background: 'linear-gradient(90deg, #02d47e, #00c16e)',
               boxShadow: '0 0 8px rgba(2,212,126,0.4)',
             }}
@@ -194,10 +196,7 @@ export function Sidebar({ onCollapse }: SidebarProps) {
 
         <div className="flex items-center justify-between">
           <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.3)' }}>
-            {mockProgreso.modulosCompletados}/{mockProgreso.modulosTotal} módulos
-          </p>
-          <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.3)' }}>
-            {mockProgreso.horasCompletadas}h/{mockProgreso.horasTotal}h
+            {progreso.completados}/{progreso.total} actividades completadas
           </p>
         </div>
       </div>
