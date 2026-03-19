@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
   Clock, ChevronLeft, ChevronDown, ChevronRight,
   FileText, Video, Zap, Download, Activity,
-  ExternalLink, Lock, ClipboardList
+  ExternalLink, Lock, ClipboardList, School
 } from 'lucide-react'
 import { modulosLXP } from '@/data/modulosLXP'
 import { manualesRuta } from '@/data/manualesRuta'
@@ -38,6 +38,7 @@ export default function ModuloDetalle() {
   const navigate = useNavigate()
   const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set(['0']))
   const [diagnosticosOpen, setDiagnosticosOpen] = useState(false)
+  const [conocenosOpen, setConocenosOpen] = useState(false)
   const [showGradeModal, setShowGradeModal] = useState(false)
   const [selectedGrade, setSelectedGrade] = useState<string | null>(null)
   const [currentInteractiveContent, setCurrentInteractiveContent] = useState<any>(null)
@@ -322,7 +323,34 @@ export default function ModuloDetalle() {
                             return (
                               <div key={contenido.id}>
                                 {contenido.id === 'm0-s1-c3' ? (
-                                  <ConocenosForm />
+                                  <div className="rounded-2xl border overflow-hidden" style={{ borderColor: '#d1e8eb' }}>
+                                    <button
+                                      onClick={() => setConocenosOpen(o => !o)}
+                                      className="w-full flex items-center gap-3 px-5 py-4 text-left transition-colors"
+                                      style={{ background: conocenosOpen ? 'linear-gradient(135deg,#043941 0%,#045f6c 100%)' : '#f0fdf9' }}
+                                    >
+                                      <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: conocenosOpen ? 'rgba(2,212,126,0.2)' : '#d2ffe1' }}>
+                                        <School size={16} style={{ color: '#02d47e' }} />
+                                      </div>
+                                      <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-bold" style={{ color: conocenosOpen ? '#ffffff' : '#043941' }}>
+                                          {contenido.titulo}
+                                        </p>
+                                        <p className="text-xs" style={{ color: conocenosOpen ? '#a8d8de' : '#045f6c' }}>
+                                          {contenido.descripcion}
+                                        </p>
+                                      </div>
+                                      {conocenosOpen
+                                        ? <ChevronDown size={15} style={{ color: '#02d47e' }} />
+                                        : <ChevronRight size={15} style={{ color: '#045f6c' }} />
+                                      }
+                                    </button>
+                                    {conocenosOpen && (
+                                      <div className="border-t p-4" style={{ borderColor: '#d1e8eb', background: '#fafffd' }}>
+                                        <ConocenosForm />
+                                      </div>
+                                    )}
+                                  </div>
                                 ) : isQuizBloqueante ? (
                                   <QuizBlock
                                     contenidoId={contenido.id}
