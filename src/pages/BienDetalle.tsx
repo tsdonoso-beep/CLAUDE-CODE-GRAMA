@@ -3,9 +3,11 @@ import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   ChevronLeft, FileText, Video, Shield, Package,
-  Tag, Hash, MapPin, Layers
+  Tag, Hash, MapPin, Layers, AlertTriangle, CheckCircle2, XCircle
 } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
+import { eppPorTaller } from '@/data/eppData'
+import type { EPPItem } from '@/data/eppData'
 
 type TabId = 'manual-uso' | 'manual-mant' | 'manual-ped' | 'video'
 
@@ -203,27 +205,103 @@ export default function BienDetalle() {
           </section>
 
           {/* EPP requerido */}
-          <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#fecaca' }}>
-            <div className="px-6 py-4 border-b flex items-center gap-2" style={{ borderColor: '#fecaca', background: '#fff5f5' }}>
-              <Shield size={16} style={{ color: '#ef4444' }} />
-              <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
-                EPP requerido para este equipo
-              </h2>
-            </div>
-            <div className="p-6" style={{ background: '#ffffff' }}>
-              <div className="flex flex-wrap gap-2">
-                {getEPPForTipo(bien.tipo).map(epp => (
-                  <span
-                    key={epp}
-                    className="px-3 py-1.5 rounded-full text-xs font-semibold"
-                    style={{ background: '#fee2e2', color: '#ef4444' }}
-                  >
-                    {epp}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </section>
+          {(() => {
+            const eppResult = getEPPForBien(bien, slug ?? '')
+            const borderColor = eppResult.tipo === 'sin-epp' ? '#e3f8fb' : '#fecaca'
+            const bgHeader   = eppResult.tipo === 'sin-epp' ? '#f0faf5'  : '#fff5f5'
+            const iconColor  = eppResult.tipo === 'sin-epp' ? '#02d47e'  : '#ef4444'
+            return (
+              <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor }}>
+                <div className="px-6 py-4 border-b flex items-center gap-2" style={{ borderColor, background: bgHeader }}>
+                  <Shield size={16} style={{ color: iconColor }} />
+                  <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
+                    EPP requerido para este equipo
+                  </h2>
+                </div>
+                <div className="p-6" style={{ background: '#ffffff' }}>
+                  {/* Mensaje sin EPP */}
+                  {eppResult.tipo === 'sin-epp' && (
+                    <div className="flex items-center gap-2.5">
+                      <CheckCircle2 size={16} style={{ color: '#02d47e', flexShrink: 0 }} />
+                      <p className="text-sm" style={{ color: '#045f6c' }}>{eppResult.mensaje}</p>
+                    </div>
+                  )}
+
+                  {/* Items EPP */}
+                  {eppResult.tipo !== 'sin-epp' && eppResult.items.length > 0 && (
+                    <div className="space-y-4">
+                      {/* Advertencia NO guantes */}
+                      {eppResult.noGuantes && (
+                        <div className="flex items-start gap-2.5 p-3 rounded-xl" style={{ background: '#fef3c7', border: '1px solid #f59e0b33' }}>
+                          <XCircle size={15} style={{ color: '#d97706', flexShrink: 0, marginTop: 1 }} />
+                          <p className="text-xs font-bold" style={{ color: '#92400e' }}>
+                            PROHIBIDO usar guantes con este equipo (riesgo de atrapamiento)
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Lista de EPP */}
+                      <div className="space-y-2">
+                        {eppResult.items.map((epp: EPPItem) => (
+                          <div
+                            key={epp.nombre}
+                            className="flex items-center gap-3 px-3 py-2.5 rounded-xl"
+                            style={{
+                              background: epp.nivel === 'obligatorio' ? '#fee2e2' : '#fef9c3',
+                              border: `1px solid ${epp.nivel === 'obligatorio' ? '#fecaca' : '#fde68a'}`,
+                            }}
+                          >
+                            <Shield
+                              size={13}
+                              style={{ color: epp.nivel === 'obligatorio' ? '#ef4444' : '#ca8a04', flexShrink: 0 }}
+                            />
+                            <span
+                              className="text-xs font-semibold flex-1"
+                              style={{ color: epp.nivel === 'obligatorio' ? '#b91c1c' : '#854d0e' }}
+                            >
+                              {epp.nombre}
+                            </span>
+                            <span
+                              className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                              style={{
+                                background: epp.nivel === 'obligatorio' ? '#fca5a5' : '#fde68a',
+                                color: epp.nivel === 'obligatorio' ? '#7f1d1d' : '#713f12',
+                              }}
+                            >
+                              {epp.nivel === 'obligatorio' ? 'Obligatorio' : 'Recomendado'}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Alertas */}
+                      {eppResult.alertas && eppResult.alertas.length > 0 && (
+                        <div className="space-y-2 pt-1">
+                          {eppResult.alertas.map((alerta: string) => (
+                            <div
+                              key={alerta}
+                              className="flex items-start gap-2.5 p-3 rounded-xl"
+                              style={{ background: '#fff7ed', border: '1px solid rgba(249,115,22,0.2)' }}
+                            >
+                              <AlertTriangle size={14} style={{ color: '#f97316', flexShrink: 0, marginTop: 1 }} />
+                              <p className="text-xs" style={{ color: '#9a3412' }}>{alerta}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Nota genérica */}
+                      {eppResult.nota && (
+                        <p className="text-[11px] mt-2" style={{ color: 'rgba(4,57,65,0.4)' }}>
+                          {eppResult.nota}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </section>
+            )
+          })()}
         </div>
 
         {/* Sidebar */}
@@ -279,10 +357,108 @@ export default function BienDetalle() {
   )
 }
 
-function getEPPForTipo(tipo: string): string[] {
-  const base = ['Lentes de policarbonato', 'Calzado de seguridad']
-  if (tipo === 'EQUIPOS') {
-    return [...base, 'Orejeras', 'Guardapolvo', 'Mascarilla antipolvo']
+// ── Normaliza texto para comparación ──────────────────────────────────────
+function norm(s: string) {
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
+
+// ── Resultado de EPP ───────────────────────────────────────────────────────
+interface EPPResult {
+  tipo: 'especifico' | 'generico' | 'sin-epp'
+  items: EPPItem[]
+  noGuantes?: boolean
+  alertas?: string[]
+  mensaje?: string
+  nota?: string
+}
+
+// ── Lógica principal de EPP por bien ──────────────────────────────────────
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getEPPForBien(bien: any, tallerSlug: string): EPPResult {
+  const tipo = bien.tipo ?? ''
+
+  // Sin EPP: mobiliario, material pedagógico, sin clasificar
+  if (['MOBILIARIO', 'PEDAGOGICO', ''].includes(tipo)) {
+    return { tipo: 'sin-epp', items: [], mensaje: 'Este bien no requiere EPP específico.' }
   }
-  return [...base, 'Guantes apropiados']
+
+  // Los ítems de SEGURIDAD son EPP en sí mismos
+  if (tipo === 'SEGURIDAD') {
+    return { tipo: 'sin-epp', items: [], mensaje: 'Este bien es equipo de protección personal (EPP).' }
+  }
+
+  // Buscar match en la tabla EPP del taller por similitud de nombre
+  const rows = eppPorTaller[tallerSlug] ?? []
+  const nombreBien = norm(bien.nombre)
+
+  const match = rows.find(row => {
+    const nombreEquipo = norm(row.equipo)
+    // Palabras clave de 4+ caracteres del equipo en eppData
+    const words = nombreEquipo.split(/[\s\/(),]+/).filter((w: string) => w.length >= 4)
+    return words.length > 0 && words.some((w: string) => nombreBien.includes(w))
+  })
+
+  if (match) {
+    return {
+      tipo: 'especifico',
+      items: match.epp,
+      noGuantes: match.noGuantes,
+      alertas: match.alertas,
+    }
+  }
+
+  // Sin match en eppData → EPP genérico por tipo y zona
+  const zona = norm(bien.zona ?? '')
+
+  if (tipo === 'EQUIPOS') {
+    if (zona.includes('innovacion')) {
+      return {
+        tipo: 'generico',
+        items: [
+          { nombre: 'Lentes de policarbonato', nivel: 'obligatorio' },
+          { nombre: 'Calzado de seguridad', nivel: 'obligatorio' },
+        ],
+        nota: 'EPP general para zona de maquinaria. Consultar manual del equipo para EPP específico.',
+      }
+    }
+    if (zona.includes('investigacion') || zona.includes('almacen')) {
+      return {
+        tipo: 'generico',
+        items: [{ nombre: 'Calzado de seguridad', nivel: 'recomendado' }],
+        nota: 'Zona de bajo riesgo. Verificar condiciones específicas del equipo.',
+      }
+    }
+    if (zona.includes('acabados')) {
+      return {
+        tipo: 'generico',
+        items: [
+          { nombre: 'Guantes apropiados', nivel: 'obligatorio' },
+          { nombre: 'Lentes de policarbonato', nivel: 'recomendado' },
+        ],
+      }
+    }
+    return {
+      tipo: 'generico',
+      items: [{ nombre: 'Calzado de seguridad', nivel: 'recomendado' }],
+    }
+  }
+
+  if (tipo === 'HERRAMIENTAS') {
+    return {
+      tipo: 'generico',
+      items: [
+        { nombre: 'Guantes de cuero o nitrilo', nivel: 'obligatorio' },
+        { nombre: 'Lentes de policarbonato', nivel: 'recomendado' },
+      ],
+    }
+  }
+
+  if (tipo === 'PRODUCCIÓN') {
+    return {
+      tipo: 'generico',
+      items: [{ nombre: 'Guantes apropiados', nivel: 'recomendado' }],
+    }
+  }
+
+  return { tipo: 'sin-epp', items: [], mensaje: 'No requiere EPP específico.' }
 }
