@@ -9,13 +9,13 @@ import { useTaller } from '@/hooks/useTaller'
 import { eppPorTaller } from '@/data/eppData'
 import type { EPPItem } from '@/data/eppData'
 
-type TabId = 'manual-uso' | 'manual-mant' | 'manual-ped' | 'video'
+type TabId = 'manual' | 'video'
 
 export default function BienDetalle() {
   const { id } = useParams<{ id: string }>()
   const { taller, bienes, slug } = useTaller()
   const navigate = useNavigate()
-  const [activeTab, setActiveTab] = useState<TabId>('manual-uso')
+  const [activeTab, setActiveTab] = useState<TabId>('manual')
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const bien = bienes.find((b: any) => String(b.n) === id)
@@ -38,10 +38,8 @@ export default function BienDetalle() {
   }
 
   const tabs: { id: TabId; label: string; icon: React.ElementType }[] = [
-    { id: 'manual-uso', label: 'Manual de uso', icon: FileText },
-    { id: 'manual-mant', label: 'Mantenimiento', icon: FileText },
-    { id: 'manual-ped', label: 'Manual pedagógico', icon: FileText },
-    { id: 'video', label: 'Video operatividad', icon: Video },
+    { id: 'manual', label: 'Manual de uso y Mantenimiento', icon: FileText },
+    { id: 'video',  label: 'Video operatividad',            icon: Video   },
   ]
 
   // Bienes relacionados (misma zona)
@@ -187,7 +185,7 @@ export default function BienDetalle() {
                     <FileText size={28} style={{ color: '#045f6c' }} />
                   </div>
                   <p className="text-sm font-semibold mb-1" style={{ color: '#043941' }}>
-                    {tabs.find(t => t.id === activeTab)?.label}
+                    Manual de uso <span style={{ fontWeight: 800 }}>y matenimiento</span>
                   </p>
                   <p className="text-xs text-center" style={{ color: '#94a3b8' }}>
                     Próximamente — PDF del proveedor en preparación
@@ -203,6 +201,33 @@ export default function BienDetalle() {
               )}
             </div>
           </section>
+
+          {/* Bienes relacionados */}
+          {bienesRelacionados.length > 0 && (
+            <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
+              <div className="px-6 py-4 border-b" style={{ borderColor: '#e3f8fb', background: '#fafffe' }}>
+                <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>Bienes relacionados</h2>
+              </div>
+              <div className="p-5" style={{ background: '#ffffff' }}>
+                <div className="flex flex-wrap gap-3">
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  {bienesRelacionados.map((b: any) => (
+                    <button
+                      key={b.n}
+                      onClick={() => navigate(`/taller/${slug}/repositorio/bien/${b.n}`)}
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl border text-left transition-all hover:shadow-sm"
+                      style={{ borderColor: '#d1e8eb', background: '#f0faf5' }}
+                    >
+                      <Package size={14} style={{ color: '#02d47e', flexShrink: 0 }} />
+                      <span className="text-xs font-semibold line-clamp-1" style={{ color: '#043941' }}>
+                        {b.nombre}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
 
           {/* EPP requerido */}
           {(() => {
@@ -327,30 +352,20 @@ export default function BienDetalle() {
             </div>
           </div>
 
-          {/* Bienes relacionados */}
-          {bienesRelacionados.length > 0 && (
-            <div className="p-5 rounded-2xl border-2" style={{ borderColor: '#e3f8fb', background: '#ffffff' }}>
-              <h3 className="text-sm font-extrabold mb-4" style={{ color: '#043941' }}>
-                Bienes relacionados
-              </h3>
-              <div className="space-y-3">
-                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                {bienesRelacionados.map((b: any) => (
-                  <button
-                    key={b.n}
-                    onClick={() => navigate(`/taller/${slug}/repositorio/bien/${b.n}`)}
-                    className="w-full text-left flex items-center gap-3 p-3 rounded-xl border transition-all hover:shadow-sm"
-                    style={{ borderColor: '#e3f8fb' }}
-                  >
-                    <Package size={14} style={{ color: '#02d47e' }} />
-                    <span className="text-xs font-semibold line-clamp-2" style={{ color: '#043941' }}>
-                      {b.nombre}
-                    </span>
-                  </button>
-                ))}
-              </div>
+          {/* Ficha de mantenimiento rápido */}
+          <div className="p-5 rounded-2xl border-2" style={{ borderColor: '#e3f8fb', background: '#ffffff' }}>
+            <h3 className="text-sm font-extrabold mb-4" style={{ color: '#043941' }}>
+              Ficha de <span style={{ fontWeight: 800 }}>mantenimiento</span> rápido
+            </h3>
+            <div className="space-y-2">
+              {['', '', ''].map((_, i) => (
+                <div key={i} className="h-10 rounded-lg" style={{ background: '#f0faf5' }} />
+              ))}
+              <p className="text-[11px] pt-1" style={{ color: 'rgba(4,57,65,0.35)' }}>
+                Aún por detallar el contenido de visualización rápida de mantenimiento
+              </p>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
@@ -450,13 +465,6 @@ function getEPPForBien(bien: any, tallerSlug: string): EPPResult {
         { nombre: 'Guantes de cuero o nitrilo', nivel: 'obligatorio' },
         { nombre: 'Lentes de policarbonato', nivel: 'recomendado' },
       ],
-    }
-  }
-
-  if (tipo === 'PRODUCCIÓN') {
-    return {
-      tipo: 'generico',
-      items: [{ nombre: 'Guantes apropiados', nivel: 'recomendado' }],
     }
   }
 

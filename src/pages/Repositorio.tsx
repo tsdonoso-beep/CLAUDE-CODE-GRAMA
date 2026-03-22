@@ -2,7 +2,7 @@
 import { useState, useMemo } from 'react'
 import {
   Search, X, SlidersHorizontal, Package, Wrench as WrenchLucide, Sofa, BookOpen,
-  HardHat, Factory, FileText, Video, PlayCircle, ChevronRight, BookMarked,
+  HardHat, FileText, Video, PlayCircle, ChevronRight, BookMarked,
   Wrench, GraduationCap, Usb,
 } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
@@ -15,7 +15,19 @@ type Tab = 'catalogo' | 'manuales' | 'videos'
 
 const TIPO_ICONS: Record<string, React.ElementType> = {
   EQUIPOS: Package, HERRAMIENTAS: WrenchLucide, MOBILIARIO: Sofa,
-  PEDAGOGICO: BookOpen, 'PRODUCCIÓN': Factory, SEGURIDAD: HardHat,
+  PEDAGOGICO: BookOpen, SEGURIDAD: HardHat,
+}
+
+// Excluir del catálogo: manuales, videos, USB y capacitación (tienen sus propias pestañas)
+function esExcluidoDeCatalogo(nombre: string): boolean {
+  const n = nombre.toLowerCase()
+  return (
+    n.startsWith('manual') ||
+    n.startsWith('video') ||
+    n.includes('usb con información') ||
+    n.includes('usb capacitación') ||
+    n.includes('taller de capacitación')
+  )
 }
 
 // ── Clasificadores por nombre ─────────────────────────────────────────────────
@@ -93,7 +105,8 @@ export default function Repositorio() {
         (!filtroZona    || b.zona    === filtroZona) &&
         (!filtroArea    || b.area    === filtroArea) &&
         (!filtroSubarea || b.subarea === filtroSubarea) &&
-        (!filtroTipo    || b.tipo    === filtroTipo)
+        (!filtroTipo    || b.tipo    === filtroTipo) &&
+        !esExcluidoDeCatalogo(b.nombre ?? '')
       )
     })
   , [bienes, busqueda, filtroZona, filtroArea, filtroSubarea, filtroTipo])
