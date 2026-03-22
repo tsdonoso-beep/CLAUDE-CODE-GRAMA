@@ -1,6 +1,7 @@
 // src/pages/BienDetalle.tsx
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { useEscapeKey } from '@/hooks/useEscapeKey'
 import {
   ChevronLeft, FileText, Video, Shield, Package,
   Tag, Hash, MapPin, Layers, AlertTriangle, CheckCircle2, XCircle,
@@ -19,6 +20,8 @@ export default function BienDetalle() {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState<TabId>('manual')
   const [showPDFModal, setShowPDFModal] = useState(false)
+  const closePDFModal = useCallback(() => setShowPDFModal(false), [])
+  useEscapeKey(closePDFModal)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const bien = bienes.find((b: any) => String(b.n) === id)

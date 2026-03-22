@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { X, Download, FileText, Info, AlertTriangle, CheckSquare, ChevronDown, ChevronRight } from 'lucide-react'
 import type { DescargableLXP, SeccionFicha, CampoFicha } from '@/data/descargablesLXP'
 import jsPDF from 'jspdf'
+import { useEscapeKey } from '@/hooks/useEscapeKey'
 
 interface DescargableViewerModalProps {
   descargable: DescargableLXP
@@ -322,6 +323,7 @@ function generarPDF(d: DescargableLXP) {
 
 // ── Componente principal ───────────────────────────────────────────────────────
 export function DescargableViewerModal({ descargable: d, onClose }: DescargableViewerModalProps) {
+  useEscapeKey(onClose)
   const badge = TIPO_BADGE[d.tipo]
 
   return (

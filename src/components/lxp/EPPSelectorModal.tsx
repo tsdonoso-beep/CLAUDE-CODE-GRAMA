@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react'
 import { X, Search, ShieldCheck, ShieldAlert, AlertTriangle, Filter } from 'lucide-react'
 import { getEPPByTaller, type EPPRow } from '@/data/eppData'
+import { useEscapeKey } from '@/hooks/useEscapeKey'
 
 interface EPPSelectorModalProps {
   tallerSlug: string
@@ -130,6 +131,7 @@ function RowCard({ row }: { row: EPPRow }) {
 }
 
 export function EPPSelectorModal({ tallerSlug, tallerNombre, onClose }: EPPSelectorModalProps) {
+  useEscapeKey(onClose)
   const [query, setQuery]           = useState('')
   const [zonaFiltro, setZonaFiltro] = useState<string>('Todas')
 

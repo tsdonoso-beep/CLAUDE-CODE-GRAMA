@@ -1,7 +1,8 @@
 // src/pages/ModuloDetalle.tsx
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { useEscapeKey } from '@/hooks/useEscapeKey'
 import {
   Clock, ChevronLeft, ChevronDown, ChevronRight,
   FileText, Video, Zap, Download, Activity,
@@ -51,6 +52,10 @@ export default function ModuloDetalle() {
   const [showTablaProgresion, setShowTablaProgresion] = useState(false)
   const [descargableAbierto, setDescargableAbierto] = useState<string | null>(null)
   const [showTourSimulator, setShowTourSimulator] = useState(false)
+
+  const closeGradeModal = useCallback(() => setShowGradeModal(false), [])
+  const closeTourSimulator = useCallback(() => setShowTourSimulator(false), [])
+  useEscapeKey(showGradeModal ? closeGradeModal : showTourSimulator ? closeTourSimulator : () => {})
 
   const manualActivo = manualAbierto ? manualesRuta.find(m => m.id === manualAbierto) ?? null : null
   const descargableActivo = descargableAbierto ? descargablesLXP.find(d => d.id === descargableAbierto) ?? null : null
@@ -523,7 +528,10 @@ export default function ModuloDetalle() {
 
       {/* Modal para selección de grado */}
       {showGradeModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          onClick={e => { if (e.target === e.currentTarget) setShowGradeModal(false) }}
+        >
           <div className="bg-white rounded-2xl p-8 max-w-md mx-auto shadow-lg">
             <h3 className="text-xl font-bold mb-2" style={{ color: '#043941' }}>
               ¿Qué grado enseñas?

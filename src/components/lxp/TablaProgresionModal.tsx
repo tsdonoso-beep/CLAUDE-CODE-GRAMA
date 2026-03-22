@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { X, TrendingUp, BookOpen, Wrench, Target, Package } from 'lucide-react'
 import { getProgresionByTaller, type ItemProgresion } from '@/data/progresionGrados'
 import { HABILIDADES_EPT } from '@/data/habilidadesEPT'
+import { useEscapeKey } from '@/hooks/useEscapeKey'
 
 interface TablaProgresionModalProps {
   tallerSlug: string
@@ -128,6 +129,7 @@ function GradoCard({ item }: { item: ItemProgresion }) {
 }
 
 export function TablaProgresionModal({ tallerSlug, tallerNombre, onClose }: TablaProgresionModalProps) {
+  useEscapeKey(onClose)
   const [gradoActivo, setGradoActivo] = useState(0) // 0=1°, 1=2°, …, 4=5°
 
   const progresion = getProgresionByTaller(tallerSlug)

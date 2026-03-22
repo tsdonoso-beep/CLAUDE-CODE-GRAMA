@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react'
 import { X, Sparkles, ChevronRight } from 'lucide-react'
 import { getGruposByTaller, HABILIDADES_EPT, type GrupoEquipamiento } from '@/data/habilidadesEPT'
+import { useEscapeKey } from '@/hooks/useEscapeKey'
 
 interface MapaHabilidadesModalProps {
   tallerSlug: string
@@ -10,6 +11,7 @@ interface MapaHabilidadesModalProps {
 }
 
 export function MapaHabilidadesModal({ tallerSlug, tallerNombre, onClose }: MapaHabilidadesModalProps) {
+  useEscapeKey(onClose)
   const [habilidadActiva, setHabilidadActiva] = useState<string | null>(null)
   const [grupoActivo, setGrupoActivo] = useState<string | null>(null)
 

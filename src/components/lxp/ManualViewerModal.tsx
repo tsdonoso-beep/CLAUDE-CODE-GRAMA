@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { X, ChevronRight, ChevronDown, AlertTriangle, Info, BookOpen, FileText } from 'lucide-react'
 import type { ManualRuta, SeccionManual } from '@/data/manualesRuta'
+import { useEscapeKey } from '@/hooks/useEscapeKey'
 
 interface ManualViewerModalProps {
   manual: ManualRuta
@@ -118,6 +119,7 @@ function SeccionItem({ seccion, nivel = 0 }: { seccion: SeccionManual; nivel?: n
 }
 
 export function ManualViewerModal({ manual, onClose }: ManualViewerModalProps) {
+  useEscapeKey(onClose)
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
