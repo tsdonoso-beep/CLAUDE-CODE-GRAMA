@@ -3,11 +3,13 @@ import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   ChevronLeft, FileText, Video, Shield, Package,
-  Tag, Hash, MapPin, Layers, AlertTriangle, CheckCircle2, XCircle
+  Tag, Hash, MapPin, Layers, AlertTriangle, CheckCircle2, XCircle,
+  Download, X,
 } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { eppPorTaller } from '@/data/eppData'
 import type { EPPItem } from '@/data/eppData'
+import { getManualPDF, getDriveEmbedUrl, getDriveDownloadUrl } from '@/data/manualesPDF'
 
 type TabId = 'manual' | 'video'
 
@@ -16,6 +18,7 @@ export default function BienDetalle() {
   const { taller, bienes, slug } = useTaller()
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState<TabId>('manual')
+  const [showPDFModal, setShowPDFModal] = useState(false)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const bien = bienes.find((b: any) => String(b.n) === id)
@@ -41,6 +44,9 @@ export default function BienDetalle() {
     { id: 'manual', label: 'Manual de uso y Mantenimiento', icon: FileText },
     { id: 'video',  label: 'Video operatividad',            icon: Video   },
   ]
+
+  // Manual PDF
+  const manualUrl = getManualPDF(slug ?? '', bien.n)
 
   // Bienes relacionados (misma zona)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -176,6 +182,29 @@ export default function BienDetalle() {
                     Próximamente — Video del proveedor en preparación
                   </p>
                 </>
+              ) : manualUrl ? (
+                <>
+                  <div
+                    className="h-16 w-16 rounded-2xl flex items-center justify-center mb-4"
+                    style={{ background: '#e3f8fb' }}
+                  >
+                    <FileText size={28} style={{ color: '#045f6c' }} />
+                  </div>
+                  <p className="text-sm font-semibold mb-1" style={{ color: '#043941' }}>
+                    Manual de uso <span style={{ fontWeight: 800 }}>y mantenimiento</span>
+                  </p>
+                  <p className="text-xs text-center mb-4" style={{ color: '#94a3b8' }}>
+                    PDF disponible para visualización y descarga
+                  </p>
+                  <button
+                    onClick={() => setShowPDFModal(true)}
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-80"
+                    style={{ background: '#043941', color: '#02d47e' }}
+                  >
+                    <FileText size={14} />
+                    Ver manual
+                  </button>
+                </>
               ) : (
                 <>
                   <div
@@ -185,7 +214,7 @@ export default function BienDetalle() {
                     <FileText size={28} style={{ color: '#045f6c' }} />
                   </div>
                   <p className="text-sm font-semibold mb-1" style={{ color: '#043941' }}>
-                    Manual de uso <span style={{ fontWeight: 800 }}>y matenimiento</span>
+                    Manual de uso <span style={{ fontWeight: 800 }}>y mantenimiento</span>
                   </p>
                   <p className="text-xs text-center" style={{ color: '#94a3b8' }}>
                     Próximamente — PDF del proveedor en preparación
@@ -368,6 +397,61 @@ export default function BienDetalle() {
           </div>
         </div>
       </div>
+
+      {/* ── Modal PDF ── */}
+      {showPDFModal && manualUrl && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+          style={{ background: 'rgba(4,57,65,0.75)', backdropFilter: 'blur(4px)' }}
+          onClick={() => setShowPDFModal(false)}
+        >
+          <div
+            className="w-full max-w-4xl rounded-2xl overflow-hidden flex flex-col"
+            style={{ background: '#ffffff', maxHeight: '92vh' }}
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div
+              className="flex items-center justify-between px-5 py-3.5 border-b shrink-0"
+              style={{ borderColor: '#e3f8fb' }}
+            >
+              <div className="flex items-center gap-2">
+                <FileText size={15} style={{ color: '#045f6c' }} />
+                <p className="text-sm font-extrabold" style={{ color: '#043941' }}>
+                  Manual de uso y mantenimiento
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <a
+                  href={getDriveDownloadUrl(manualUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-semibold transition-opacity hover:opacity-80"
+                  style={{ background: '#043941', color: '#02d47e' }}
+                >
+                  <Download size={12} />
+                  Descargar
+                </a>
+                <button
+                  onClick={() => setShowPDFModal(false)}
+                  className="p-1.5 rounded-lg transition-colors"
+                  style={{ color: '#045f6c' }}
+                >
+                  <X size={18} />
+                </button>
+              </div>
+            </div>
+            {/* iframe PDF */}
+            <iframe
+              src={getDriveEmbedUrl(manualUrl)}
+              className="w-full flex-1"
+              style={{ border: 'none', minHeight: '75vh' }}
+              title={`Manual — ${bien.nombre}`}
+              allow="autoplay"
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
