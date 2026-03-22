@@ -194,10 +194,7 @@ export function ConocenosForm() {
 
   if (enviado) {
     return (
-      <div
-        className="rounded-2xl border p-8 flex flex-col items-center gap-3 text-center"
-        style={{ borderColor: '#b2f0d6', background: 'linear-gradient(135deg, #f0fdf9 0%, #e8faf4 100%)' }}
-      >
+      <div className="p-6 flex flex-col items-center gap-3 text-center">
         <div className="h-14 w-14 rounded-full flex items-center justify-center" style={{ background: '#d2ffe1' }}>
           <CheckCircle2 size={28} style={{ color: '#00c16e' }} />
         </div>
@@ -213,26 +210,7 @@ export function ConocenosForm() {
   }
 
   return (
-    <div
-      className="rounded-2xl border overflow-hidden"
-      style={{ borderColor: '#d1e8eb', background: '#ffffff' }}
-    >
-      {/* Header */}
-      <div
-        className="px-6 py-4 flex items-center gap-3"
-        style={{ background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)' }}
-      >
-        <div className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.2)' }}>
-          <School size={20} style={{ color: '#02d47e' }} />
-        </div>
-        <div>
-          <p className="text-sm font-bold text-white">Queremos conocerte</p>
-          <p className="text-xs" style={{ color: '#a8d8de' }}>Completa tu perfil para personalizar tu experiencia</p>
-        </div>
-      </div>
-
-      {/* Fields */}
-      <div className="p-6 space-y-5">
+    <div className="p-6 space-y-5">
 
         {/* Profesión */}
         <div>
@@ -323,7 +301,6 @@ export function ConocenosForm() {
         >
           {isComplete ? 'Guardar mis datos →' : 'Completa todos los campos para continuar'}
         </button>
-      </div>
     </div>
   )
 }
