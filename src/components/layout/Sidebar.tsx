@@ -205,18 +205,7 @@ export function Sidebar({ onCollapse }: SidebarProps) {
       <div className="relative z-10 px-3 pb-4">
         <button
           onClick={() => navigate('/')}
-          className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl transition-all text-xs"
-          style={{ color: 'rgba(255,255,255,0.3)' }}
-          onMouseEnter={e => {
-            const el = e.currentTarget as HTMLElement
-            el.style.background = 'rgba(255,255,255,0.06)'
-            el.style.color = 'rgba(255,255,255,0.6)'
-          }}
-          onMouseLeave={e => {
-            const el = e.currentTarget as HTMLElement
-            el.style.background = 'transparent'
-            el.style.color = 'rgba(255,255,255,0.3)'
-          }}
+          className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl transition-all text-xs text-white/30 hover:text-white/60 hover:bg-white/[0.06]"
         >
           <LayoutGrid size={13} />
           Ver todos los talleres

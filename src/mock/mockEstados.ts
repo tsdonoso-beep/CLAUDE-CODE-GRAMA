@@ -10,26 +10,24 @@ export interface EstadoModuloItem {
   porcentaje: number  // 0-100
 }
 
-// Estado inicial de ejemplo para que la ruta de aprendizaje se vea con datos
-// M0 → completado (ya pasó el diagnóstico)
-// M1 → en_curso (actualmente en seguridad)
-// M2 → disponible (disponible pero no iniciado)
-// M3–M6 → bloqueado (esperando aprobación de M1 quiz)
+// M0 → completado (diagnóstico de apertura realizado)
+// M1 → en_curso (actualmente trabajando en seguridad del taller)
+// M2–M6 → disponible (sin bloqueos — modo inspección de desarrollo)
 export const mockEstadosModulos: EstadoModuloItem[] = [
-  { moduloId: 'm0', estado: 'disponible', porcentaje: 0 },
-  { moduloId: 'm1', estado: 'disponible', porcentaje: 0 },
-  { moduloId: 'm2', estado: 'disponible', porcentaje: 0 },
-  { moduloId: 'm3', estado: 'disponible', porcentaje: 0 },
-  { moduloId: 'm4', estado: 'disponible', porcentaje: 0 },
-  { moduloId: 'm5', estado: 'disponible', porcentaje: 0 },
-  { moduloId: 'm6', estado: 'disponible', porcentaje: 0 },
+  { moduloId: 'm0', estado: 'completado', porcentaje: 100 },
+  { moduloId: 'm1', estado: 'en_curso',   porcentaje: 35  },
+  { moduloId: 'm2', estado: 'disponible', porcentaje: 0   },
+  { moduloId: 'm3', estado: 'disponible', porcentaje: 0   },
+  { moduloId: 'm4', estado: 'disponible', porcentaje: 0   },
+  { moduloId: 'm5', estado: 'disponible', porcentaje: 0   },
+  { moduloId: 'm6', estado: 'disponible', porcentaje: 0   },
 ]
 
-// Resumen de progreso hardcodeado (ProgressRing)
+// Resumen de progreso alineado con mockEstadosModulos
 export const mockProgreso = {
   modulosCompletados: 1,
   modulosTotal: 7,
-  horasCompletadas: 4,
+  horasCompletadas: 22,
   horasTotal: 150,
   porcentajeGeneral: 14
 }

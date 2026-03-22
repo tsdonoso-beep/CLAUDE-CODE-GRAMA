@@ -38,7 +38,7 @@ const TALLER_ESPECIALIDAD: Record<string, string> = {
 function FieldLabel({ icon: Icon, label }: { icon: React.ElementType; label: string }) {
   return (
     <label className="flex items-center gap-1.5 text-xs font-bold mb-1.5" style={{ color: '#043941' }}>
-      <Icon size={13} style={{ color: '#02c178' }} />
+      <Icon size={13} style={{ color: '#02d47e' }} />
       {label}
     </label>
   )
@@ -61,7 +61,7 @@ function StyledSelect({
         disabled={disabled}
         className="w-full appearance-none rounded-xl border px-4 py-3 pr-9 text-sm font-medium transition-all outline-none"
         style={{
-          borderColor: value ? '#02c178' : '#d1e8eb',
+          borderColor: value ? '#02d47e' : '#d1e8eb',
           background: disabled ? '#f8fffe' : '#ffffff',
           color: value ? '#043941' : '#94a3b8',
           cursor: disabled ? 'not-allowed' : 'pointer',
@@ -72,7 +72,7 @@ function StyledSelect({
         <option value="" disabled>{placeholder}</option>
         {options.map(o => <option key={o} value={o}>{o}</option>)}
       </select>
-      <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#02c178' }} />
+      <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#02d47e' }} />
     </div>
   )
 }
@@ -95,7 +95,7 @@ function DatePicker({ value, onChange }: {
           onChange={e => onChange({ ...value, dia: e.target.value })}
           className="w-full appearance-none rounded-xl border px-3 py-3 text-sm font-medium transition-all outline-none text-center"
           style={{
-            borderColor: value.dia ? '#02c178' : '#d1e8eb',
+            borderColor: value.dia ? '#02d47e' : '#d1e8eb',
             background: '#fff',
             color: value.dia ? '#043941' : '#94a3b8',
             boxShadow: value.dia ? '0 0 0 2px rgba(2,193,120,0.15)' : 'none',
@@ -104,7 +104,7 @@ function DatePicker({ value, onChange }: {
           <option value="">DD</option>
           {DIAS.map(d => <option key={d} value={d}>{d}</option>)}
         </select>
-        <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#02c178' }} />
+        <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#02d47e' }} />
       </div>
 
       {/* Mes */}
@@ -114,7 +114,7 @@ function DatePicker({ value, onChange }: {
           onChange={e => onChange({ ...value, mes: e.target.value })}
           className="w-full appearance-none rounded-xl border px-3 py-3 text-sm font-medium transition-all outline-none text-center"
           style={{
-            borderColor: value.mes ? '#02c178' : '#d1e8eb',
+            borderColor: value.mes ? '#02d47e' : '#d1e8eb',
             background: '#fff',
             color: value.mes ? '#043941' : '#94a3b8',
             boxShadow: value.mes ? '0 0 0 2px rgba(2,193,120,0.15)' : 'none',
@@ -123,7 +123,7 @@ function DatePicker({ value, onChange }: {
           <option value="">MM</option>
           {MESES.map((m, i) => <option key={m} value={String(i + 1).padStart(2, '0')}>{m}</option>)}
         </select>
-        <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#02c178' }} />
+        <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#02d47e' }} />
       </div>
 
       {/* Año */}
@@ -133,7 +133,7 @@ function DatePicker({ value, onChange }: {
           onChange={e => onChange({ ...value, anio: e.target.value })}
           className="w-full appearance-none rounded-xl border px-3 py-3 text-sm font-medium transition-all outline-none text-center"
           style={{
-            borderColor: value.anio ? '#02c178' : '#d1e8eb',
+            borderColor: value.anio ? '#02d47e' : '#d1e8eb',
             background: '#fff',
             color: value.anio ? '#043941' : '#94a3b8',
             boxShadow: value.anio ? '0 0 0 2px rgba(2,193,120,0.15)' : 'none',
@@ -142,7 +142,7 @@ function DatePicker({ value, onChange }: {
           <option value="">AAAA</option>
           {ANIOS.map(a => <option key={a} value={a}>{a}</option>)}
         </select>
-        <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#02c178' }} />
+        <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#02d47e' }} />
       </div>
     </div>
   )
@@ -222,7 +222,7 @@ export function ConocenosForm() {
             placeholder="Ej: Técnico electricista, Docente, Estudiante…"
             className="w-full rounded-xl border px-4 py-3 text-sm font-medium outline-none transition-all"
             style={{
-              borderColor: profesion ? '#02c178' : '#d1e8eb',
+              borderColor: profesion ? '#02d47e' : '#d1e8eb',
               color: '#043941',
               boxShadow: profesion ? '0 0 0 2px rgba(2,193,120,0.15)' : 'none',
             }}
@@ -254,7 +254,7 @@ export function ConocenosForm() {
           <FieldLabel icon={Calendar} label="Fecha de nacimiento" />
           <DatePicker value={fecha} onChange={setFecha} />
           {fecha.dia && fecha.mes && fecha.anio && (
-            <p className="mt-1.5 text-xs font-medium" style={{ color: '#02c178' }}>
+            <p className="mt-1.5 text-xs font-medium" style={{ color: '#02d47e' }}>
               {fecha.dia} de {MESES[parseInt(fecha.mes) - 1]} de {fecha.anio}
             </p>
           )}

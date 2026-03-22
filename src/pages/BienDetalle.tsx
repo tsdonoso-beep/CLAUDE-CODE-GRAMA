@@ -104,51 +104,7 @@ export default function BienDetalle() {
       <div className="p-6 grid lg:grid-cols-3 gap-6">
         {/* Main */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Info técnica */}
-          <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
-            <div className="px-6 py-4 border-b" style={{ borderColor: '#e3f8fb', background: '#fafffe' }}>
-              <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
-                Información técnica
-              </h2>
-            </div>
-            <div className="p-6 space-y-4" style={{ background: '#ffffff' }}>
-              <p className="text-sm leading-relaxed" style={{ color: '#043941' }}>
-                {bien.descripcion}
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 pt-2">
-                {[
-                  { icon: Hash, label: 'Código entidad', value: bien.codigoEntidad },
-                  { icon: Tag, label: 'Código interno', value: bien.codigoInterno },
-                  { icon: MapPin, label: 'Zona', value: bien.zona.split(',')[0].trim() },
-                  { icon: Layers, label: 'Tipo', value: bien.tipo },
-                ].filter(f => f.value).map(field => (
-                  <div key={field.label} className="flex items-start gap-2">
-                    <field.icon size={14} className="mt-0.5 shrink-0" style={{ color: '#045f6c' }} />
-                    <div>
-                      <p className="text-xs font-semibold" style={{ color: '#045f6c' }}>{field.label}</p>
-                      <p className="text-sm font-medium" style={{ color: '#043941' }}>{field.value}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Uso pedagógico */}
-          <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
-            <div className="px-6 py-4 border-b" style={{ borderColor: '#e3f8fb', background: '#fafffe' }}>
-              <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
-                Uso pedagógico
-              </h2>
-            </div>
-            <div className="p-6" style={{ background: '#ffffff' }}>
-              <p className="text-sm leading-relaxed" style={{ color: '#043941' }}>
-                {bien.usoPedagogico}
-              </p>
-            </div>
-          </section>
-
-          {/* Recursos (tabs) */}
+          {/* Recursos (tabs) — primero para que el docente los vea sin scroll */}
           <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
             <div className="border-b" style={{ borderColor: '#e3f8fb', background: '#fafffe' }}>
               <div className="flex overflow-x-auto">
@@ -231,6 +187,50 @@ export default function BienDetalle() {
                   </button>
                 </>
               )}
+            </div>
+          </section>
+
+          {/* Info técnica */}
+          <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
+            <div className="px-6 py-4 border-b" style={{ borderColor: '#e3f8fb', background: '#fafffe' }}>
+              <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
+                Información técnica
+              </h2>
+            </div>
+            <div className="p-6 space-y-4" style={{ background: '#ffffff' }}>
+              <p className="text-sm leading-relaxed" style={{ color: '#043941' }}>
+                {bien.descripcion}
+              </p>
+              <div className="grid sm:grid-cols-2 gap-4 pt-2">
+                {[
+                  { icon: Hash, label: 'Código entidad', value: bien.codigoEntidad },
+                  { icon: Tag, label: 'Código interno', value: bien.codigoInterno },
+                  { icon: MapPin, label: 'Zona', value: bien.zona.split(',')[0].trim() },
+                  { icon: Layers, label: 'Tipo', value: bien.tipo },
+                ].filter(f => f.value).map(field => (
+                  <div key={field.label} className="flex items-start gap-2">
+                    <field.icon size={14} className="mt-0.5 shrink-0" style={{ color: '#045f6c' }} />
+                    <div>
+                      <p className="text-xs font-semibold" style={{ color: '#045f6c' }}>{field.label}</p>
+                      <p className="text-sm font-medium" style={{ color: '#043941' }}>{field.value}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Uso pedagógico */}
+          <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
+            <div className="px-6 py-4 border-b" style={{ borderColor: '#e3f8fb', background: '#fafffe' }}>
+              <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
+                Uso pedagógico
+              </h2>
+            </div>
+            <div className="p-6" style={{ background: '#ffffff' }}>
+              <p className="text-sm leading-relaxed" style={{ color: '#043941' }}>
+                {bien.usoPedagogico}
+              </p>
             </div>
           </section>
 

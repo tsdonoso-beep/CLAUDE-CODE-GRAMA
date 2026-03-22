@@ -8,6 +8,11 @@ export function TopBar() {
   const location = useLocation()
   const taller = talleresConfig.find(t => t.slug === slug)
 
+  // Leer perfil del docente desde localStorage (guardado por ConocenosForm)
+  const stored = slug ? localStorage.getItem(`grama-conocenos-${slug}`) : null
+  const userData = stored ? JSON.parse(stored) : null
+  const displayName = userData?.profesion?.trim() || 'Docente'
+
   const crumbs: { label: string; to?: string }[] = [{ label: 'Inicio', to: '/' }]
   if (taller) {
     crumbs.push({ label: taller.nombreCorto, to: `/taller/${slug}` })
@@ -88,7 +93,7 @@ export function TopBar() {
               className="h-7 w-7 rounded-full flex items-center justify-center text-xs font-black"
               style={{ background: 'linear-gradient(135deg, #02d47e, #059669)', color: '#043941' }}
             >
-              D
+              {displayName.charAt(0).toUpperCase()}
             </div>
             <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 flex items-center justify-center"
               style={{ background: '#02d47e', borderColor: '#043941' }} />
@@ -96,7 +101,7 @@ export function TopBar() {
 
           <div className="hidden sm:block">
             <p className="text-xs font-bold leading-none" style={{ color: '#ffffff' }}>
-              Docente GRAMA
+              {displayName}
             </p>
             <p className="text-[10px] mt-0.5 leading-none" style={{ color: 'rgba(2,212,126,0.7)' }}>
               docente@grama.pe

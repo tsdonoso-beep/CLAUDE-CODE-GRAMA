@@ -264,6 +264,19 @@ export default function Repositorio() {
           {/* Chips tipo — solo en catálogo */}
           {tab === 'catalogo' && (
             <div className="flex flex-wrap gap-2 mb-4">
+              {/* Chip "Todos" — verde cuando ningún tipo está activo */}
+              <button
+                onClick={() => setFiltroTipo('')}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+                style={{
+                  background: !filtroTipo ? '#02d47e' : 'rgba(255,255,255,0.08)',
+                  color: !filtroTipo ? '#043941' : 'rgba(255,255,255,0.7)',
+                  border: `1.5px solid ${!filtroTipo ? '#02d47e' : 'rgba(255,255,255,0.12)'}`,
+                }}
+              >
+                Todos
+                <span className="font-black opacity-70">{statsTipo.reduce((acc, s) => acc + s.count, 0)}</span>
+              </button>
               {statsTipo.map(({ tipo, count, Icon }) => (
                 <button
                   key={tipo}
@@ -371,7 +384,7 @@ export default function Repositorio() {
                     border: '1.5px solid', borderColor: filtroZona === z ? '#043941' : '#d1fae5',
                   }}
                 >
-                  {z.replace('ZONA DE ', '').replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'DEPÓSITO')}
+                  {z.replace('ZONA DE ', '').replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'DEPÓSITO').replace('INVESTIGACIÓN, GESTIÓN Y DISEÑO', 'INV. Y DISEÑO')}
                 </button>
               ))}
 
@@ -563,7 +576,7 @@ export default function Repositorio() {
                         </span>
                         {b.zona && (
                           <span className="text-[10px] font-medium" style={{ color: '#94a3b8' }}>
-                            {b.zona.replace('ZONA DE ', '')}
+                            {b.zona.replace('ZONA DE ', '').replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'DEPÓSITO').replace('INVESTIGACIÓN, GESTIÓN Y DISEÑO', 'INV. Y DISEÑO')}
                           </span>
                         )}
                         {b.cantidad > 1 && (
