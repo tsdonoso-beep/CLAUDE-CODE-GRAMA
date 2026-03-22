@@ -387,15 +387,15 @@ export default function TallerHub() {
             <h3 className="text-xs font-extrabold mb-4" style={{ color: '#043941' }}>Tu progreso</h3>
             <div className="flex justify-center mb-2">
               <ProgressRing
-                percentage={mockProgreso.porcentajeGeneral}
+                percentage={progresoTaller.porcentaje}
                 size={88}
-                label={`${mockProgreso.modulosCompletados} de ${mockProgreso.modulosTotal} módulos`}
-                sublabel="completados"
+                label={`${progresoTaller.completados}/${progresoTaller.total}`}
+                sublabel="actividades"
                 dark={false}
               />
             </div>
             <p className="text-xs" style={{ color: '#045f6c' }}>
-              {mockProgreso.horasCompletadas}h / {mockProgreso.horasTotal}h
+              {progresoTaller.porcentaje}% completado
             </p>
           </div>
 
