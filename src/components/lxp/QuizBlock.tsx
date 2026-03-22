@@ -204,14 +204,15 @@ export function QuizBlock({
         </div>
       )}
 
-      {/* Continuar (siempre visible tras resultado — solo UI) */}
-      {estado === 'resultado' && (
+      {/* Continuar (visible tras aprobar) */}
+      {estado === 'resultado' && aprobado && (
         <div
           className="px-6 py-4 border-t flex justify-end"
           style={{ borderColor: '#e3f8fb', background: '#f0faf5' }}
         >
           <button
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold text-white transition-all"
+            onClick={() => onAprobado?.()}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold text-white transition-all hover:opacity-90"
             style={{ background: '#043941' }}
           >
             Continuar al siguiente módulo

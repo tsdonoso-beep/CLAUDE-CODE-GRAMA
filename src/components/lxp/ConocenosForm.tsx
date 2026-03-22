@@ -152,13 +152,14 @@ function DatePicker({ value, onChange }: {
 export function ConocenosForm() {
   const { taller } = useTaller()
   const especialidad = taller ? (TALLER_ESPECIALIDAD[taller.slug] ?? '') : ''
+  const storageKey = `grama-conocenos-${taller?.slug ?? 'default'}`
 
   const [profesion, setProfesion] = useState('')
   const [departamento, setDepartamento] = useState('')
   const [provincia, setProvincia] = useState('')
   const [fecha, setFecha] = useState({ dia: '', mes: '', anio: '' })
   const [ie, setIe] = useState('')
-  const [enviado, setEnviado] = useState(false)
+  const [enviado, setEnviado] = useState(() => !!localStorage.getItem(storageKey))
 
   const provincias = departamento ? getProvincias(departamento) : []
 
@@ -187,6 +188,7 @@ export function ConocenosForm() {
 
   const handleSubmit = () => {
     if (!isComplete) return
+    localStorage.setItem(storageKey, JSON.stringify({ profesion, departamento, provincia, fecha, ie }))
     setEnviado(true)
   }
 

@@ -71,12 +71,10 @@ export function TopBar() {
           style={{ background: 'rgba(255,255,255,0.05)' }}
           onMouseEnter={e => (e.currentTarget.style.background = 'rgba(2,212,126,0.12)')}
           onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
-          title="Notificaciones"
+          title="Sin notificaciones nuevas"
+          aria-label="Notificaciones"
         >
           <Bell size={14} style={{ color: 'rgba(255,255,255,0.5)' }} />
-          {/* dot */}
-          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full"
-            style={{ background: '#02d47e' }} />
         </button>
 
         {/* Divider */}

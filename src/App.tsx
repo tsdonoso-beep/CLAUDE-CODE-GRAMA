@@ -8,6 +8,7 @@ import { lazy, Suspense } from "react"
 import { AppShell } from "@/components/layout/AppShell"
 import { RequireAuth } from "@/components/RequireAuth"
 import { ProgressProvider } from "@/contexts/ProgressContext"
+import { ErrorBoundary } from "@/components/ErrorBoundary"
 
 // ── Pages (lazy loaded) ────────────────────────────────────────────────────
 const Login           = lazy(() => import("./pages/Login"))
@@ -55,6 +56,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ErrorBoundary>
         <Routes>
           {/* ── Pública ── */}
           <Route path="/login" element={wrap(Login)} />
@@ -77,6 +79,7 @@ const App = () => (
           {/* ── 404 ── */}
           <Route path="*" element={wrap(NotFound)} />
         </Routes>
+        </ErrorBoundary>
       </BrowserRouter>
     </TooltipProvider>
     </ProgressProvider>

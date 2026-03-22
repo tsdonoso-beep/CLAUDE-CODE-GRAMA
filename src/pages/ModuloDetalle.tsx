@@ -1,6 +1,7 @@
 // src/pages/ModuloDetalle.tsx
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 import {
   Clock, ChevronLeft, ChevronDown, ChevronRight,
   FileText, Video, Zap, Download, Activity,
@@ -9,6 +10,7 @@ import {
 import { modulosLXP } from '@/data/modulosLXP'
 import { manualesRuta } from '@/data/manualesRuta'
 import { getEstadoModulo } from '@/mock/mockEstados'
+import { useProgress } from '@/contexts/ProgressContext'
 import { ContenidoBadge } from '@/components/lxp/ContenidoBadge'
 import { QuizBlock } from '@/components/lxp/QuizBlock'
 import { ConocenosForm } from '@/components/lxp/ConocenosForm'
@@ -36,6 +38,7 @@ export default function ModuloDetalle() {
   const { num } = useParams<{ num: string }>()
   const { slug } = useTaller()
   const navigate = useNavigate()
+  const { markContenidoCompleted, markContenidoInProgress } = useProgress()
   const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set(['0']))
   const [diagnosticosOpen, setDiagnosticosOpen] = useState(false)
   const [conocenosOpen, setConocenosOpen] = useState(false)
@@ -72,8 +75,8 @@ export default function ModuloDetalle() {
         <h2 className="text-xl font-bold" style={{ color: '#043941' }}>
           Módulo bloqueado
         </h2>
-        <p className="text-sm" style={{ color: '#045f6c' }}>
-          Completa el módulo anterior para desbloquear este contenido.
+        <p className="text-sm text-center max-w-xs" style={{ color: '#045f6c' }}>
+          Aprueba el quiz del módulo anterior (mínimo 80%) para desbloquear este contenido.
         </p>
         <button
           onClick={() => navigate(`/taller/${slug}/ruta`)}
@@ -148,10 +151,10 @@ export default function ModuloDetalle() {
       } else if (contenido.urlInteractivo) {
         window.open(contenido.urlInteractivo, '_blank')
       } else {
-        alert(`${contenido.titulo} - Próximamente disponible`)
+        toast.info('Próximamente disponible', { description: contenido.titulo })
       }
     } else if (contenido.tipo === 'VIDEO' && contenido.urlVideo) {
-      // Abrir video en nueva pestaña
+      markContenidoInProgress(contenido.id)
       window.open(contenido.urlVideo, '_blank')
     } else if (contenido.tipo === 'EN_VIVO' && contenido.urlVivo) {
       // Ir a la sesión en vivo
@@ -161,7 +164,7 @@ export default function ModuloDetalle() {
       if (contenido.urlActividad) {
         window.open(contenido.urlActividad, '_blank')
       } else {
-        alert('Actividad no disponible')
+        toast.warning('Actividad en preparación', { description: 'Estará disponible próximamente en este módulo.' })
       }
     } else if (contenido.tipo === 'PDF') {
       if (contenido.manualId) {
@@ -170,15 +173,14 @@ export default function ModuloDetalle() {
         window.open(contenido.urlPDF, '_blank')
       }
     } else {
-      alert(`${contenido.tipo} - ${contenido.titulo}`)
+      toast('Contenido en revisión', { description: contenido.titulo })
     }
   }
 
   const handleGradeSelect = (grade: string) => {
     setSelectedGrade(grade)
-    // Guardar la selección en localStorage
     localStorage.setItem('selectedGrade', grade)
-    alert(`Perfil de grado seleccionado: ${grade}`)
+    toast.success('Perfil actualizado', { description: `Grado seleccionado: ${grade}` })
     setShowGradeModal(false)
   }
 
@@ -358,6 +360,10 @@ export default function ModuloDetalle() {
                                     preguntas={contenido.bancoPreguntas!}
                                     puntajeMinimo={contenido.puntajeMinimo ?? 80}
                                     bloqueaSiguiente={contenido.bloqueaSiguiente ?? false}
+                                    onAprobado={() => {
+                                      markContenidoCompleted(contenido.id)
+                                      toast.success('¡Quiz aprobado!', { description: 'Tu progreso ha sido guardado.' })
+                                    }}
                                   />
                                 ) : (
                                   <div

@@ -2,13 +2,16 @@
 import { BookOpen, Clock, Video, Award } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
-import { mockEstadosModulos, mockProximaSesion, mockProgreso, getEstadoModulo } from '@/mock/mockEstados'
+import { mockEstadosModulos, mockProximaSesion, getEstadoModulo } from '@/mock/mockEstados'
 import { ModuloCard } from '@/components/lxp/ModuloCard'
 import { ProgressRing } from '@/components/lxp/ProgressRing'
 import { LiveSessionCard } from '@/components/lxp/LiveSessionCard'
+import { useProgress } from '@/contexts/ProgressContext'
 
 export default function RutaAprendizaje() {
   const { taller, slug } = useTaller()
+  const { getTallerProgreso, getModuloProgreso } = useProgress()
+  const progresoTaller = getTallerProgreso(slug ?? '')
 
   if (!taller) return null
 
@@ -93,35 +96,28 @@ export default function RutaAprendizaje() {
             <h3 className="text-sm font-extrabold mb-4" style={{ color: '#043941' }}>Progreso general</h3>
             <div className="flex justify-center mb-3">
               <ProgressRing
-                percentage={mockProgreso.porcentajeGeneral}
+                percentage={progresoTaller.porcentaje}
                 size={100}
-                label={`${mockProgreso.modulosCompletados} de ${mockProgreso.modulosTotal} módulos`}
-                sublabel="completados"
+                label={`${progresoTaller.completados} de ${progresoTaller.total}`}
+                sublabel="actividades"
               />
             </div>
             <div className="space-y-2 mt-4">
-              {mockEstadosModulos.map(e => {
-                const modulo = modulosLXP.find(m => m.id === e.moduloId)
-                if (!modulo) return null
-                const colors = {
-                  completado: '#00c16e',
-                  en_curso: '#02d47e',
-                  disponible: '#045f6c',
-                  bloqueado: '#e2e8f0',
-                }
+              {modulosLXP.map(modulo => {
+                const { porcentaje } = getModuloProgreso(slug ?? '', modulo.numero)
                 return (
-                  <div key={e.moduloId} className="flex items-center gap-2">
+                  <div key={modulo.id} className="flex items-center gap-2">
                     <div className="text-xs font-bold w-6 shrink-0" style={{ color: '#045f6c' }}>
                       M{modulo.numero}
                     </div>
                     <div className="flex-1 h-1.5 rounded-full" style={{ background: '#f1f5f9' }}>
                       <div
-                        className="h-full rounded-full"
-                        style={{ width: `${e.porcentaje}%`, background: colors[e.estado] }}
+                        className="h-full rounded-full transition-all duration-500"
+                        style={{ width: `${porcentaje}%`, background: porcentaje === 100 ? '#00c16e' : '#02d47e' }}
                       />
                     </div>
                     <span className="text-xs w-6 text-right" style={{ color: '#045f6c' }}>
-                      {e.porcentaje}%
+                      {porcentaje}%
                     </span>
                   </div>
                 )

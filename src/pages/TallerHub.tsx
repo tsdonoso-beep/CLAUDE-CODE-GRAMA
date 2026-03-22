@@ -7,7 +7,8 @@ import {
 } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
-import { mockEstadosModulos, mockProximaSesion, mockProgreso } from '@/mock/mockEstados'
+import { mockEstadosModulos, mockProximaSesion } from '@/mock/mockEstados'
+import { useProgress } from '@/contexts/ProgressContext'
 import { LiveSessionCard } from '@/components/lxp/LiveSessionCard'
 import { ProgressRing } from '@/components/lxp/ProgressRing'
 
@@ -34,6 +35,8 @@ export default function TallerHub() {
   const { taller, slug, bienes, totalBienes } = useTaller()
   const navigate = useNavigate()
   const [hoveredModulo, setHoveredModulo] = useState<string | null>(null)
+  const { getTallerProgreso } = useProgress()
+  const progresoTaller = getTallerProgreso(slug ?? '')
 
   if (!taller) return null
 
@@ -146,14 +149,14 @@ export default function TallerHub() {
             >
               <p className="text-[10px] font-bold uppercase tracking-wider text-white/50">Tu progreso</p>
               <ProgressRing
-                percentage={mockProgreso.porcentajeGeneral}
+                percentage={progresoTaller.porcentaje}
                 size={80}
-                label={`${mockProgreso.modulosCompletados}/${mockProgreso.modulosTotal}`}
-                sublabel="módulos"
+                label={`${progresoTaller.completados}/${progresoTaller.total}`}
+                sublabel="actividades"
                 dark
               />
               <p className="text-[10px] text-white/40 text-center">
-                {mockProgreso.horasCompletadas}h / {mockProgreso.horasTotal}h
+                {progresoTaller.porcentaje}% completado
               </p>
             </div>
           </div>
