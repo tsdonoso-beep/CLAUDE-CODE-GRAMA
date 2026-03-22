@@ -139,8 +139,8 @@ export default function ModuloDetalle() {
         // Selector de EPP por Equipo y Proceso
         setShowEPPSelector(true)
       } else if (contenido.id === 'm2-s4-c1') {
-        // Explorador Zona Investigación → Repositorio del taller
-        navigate(`/taller/${slug}/repositorio`)
+        // Explorador Zona Investigación → Repositorio pre-filtrado
+        navigate(`/taller/${slug}/repositorio?zona=${encodeURIComponent('ZONA DE INVESTIGACIÓN, GESTIÓN Y DISEÑO')}`)
       } else if (contenido.id === 'm5-s2-c1') {
         setShowMapaHabilidades(true)
       } else if (contenido.id === 'm5-s3-c2') {

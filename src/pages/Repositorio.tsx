@@ -7,7 +7,7 @@ import {
 } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { RepositorioCard } from '@/components/lxp/RepositorioCard'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Bien = Record<string, any>
@@ -56,11 +56,12 @@ function esVideo(nombre: string) {
 export default function Repositorio() {
   const { taller, bienes, totalBienes, slug } = useTaller()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [tab, setTab] = useState<Tab>('catalogo')
 
   // ── Catálogo ──────────────────────────────────────────────────────────────
   const [busqueda, setBusqueda] = useState('')
-  const [filtroZona, setFiltroZona] = useState('')
+  const [filtroZona, setFiltroZona] = useState(() => searchParams.get('zona') ?? '')
   const [filtroArea, setFiltroArea] = useState('')
   const [filtroSubarea, setFiltroSubarea] = useState('')
   const [filtroTipo, setFiltroTipo] = useState('')
