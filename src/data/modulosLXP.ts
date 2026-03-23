@@ -52,6 +52,7 @@ export interface ContenidoLXP {
   bancoPreguntas?: PreguntaQuiz[]
   manualId?: string        // ID del manual en manualesRuta.ts (para PDF interactivos)
   descargableId?: string   // ID del descargable en descargablesLXP.ts
+  urlVideo?: string        // URL de Google Drive u otro servicio de video
 }
 
 export interface SubSeccionLXP {
@@ -340,7 +341,8 @@ export const modulosLXP: ModuloLXP[] = [
             modalidad: "asincrono",
             titulo: "Inteligencia Artificial para Docentes EPT — Primeros Pasos",
             descripcion: "Introducción práctica a herramientas de IA generativa (ChatGPT, Copilot, Gemini): cómo usarlas para planificar sesiones, generar recursos y gestionar el taller",
-            duracionMin: 60
+            duracionMin: 60,
+            urlVideo: "https://drive.google.com/file/d/19PeIosyz9jqLup--LlRT4VBH_AvEF-sZ/view?usp=sharing"
           }
         ]
       },

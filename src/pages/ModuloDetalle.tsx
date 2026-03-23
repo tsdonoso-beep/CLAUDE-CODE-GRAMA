@@ -20,6 +20,7 @@ import { EPPSelectorModal } from '@/components/lxp/EPPSelectorModal'
 import { MapaHabilidadesModal } from '@/components/lxp/MapaHabilidadesModal'
 import { TablaProgresionModal } from '@/components/lxp/TablaProgresionModal'
 import { DescargableViewerModal } from '@/components/lxp/DescargableViewerModal'
+import { VideoPlayerModal } from '@/components/lxp/VideoPlayerModal'
 import { descargablesLXP } from '@/data/descargablesLXP'
 import { useTaller } from '@/hooks/useTaller'
 import { getTallerBySlug } from '@/data/talleresConfig'
@@ -51,6 +52,7 @@ export default function ModuloDetalle() {
   const [showMapaHabilidades, setShowMapaHabilidades] = useState(false)
   const [showTablaProgresion, setShowTablaProgresion] = useState(false)
   const [descargableAbierto, setDescargableAbierto] = useState<string | null>(null)
+  const [videoAbierto, setVideoAbierto] = useState<{ titulo: string; descripcion?: string; duracionMin?: number; urlVideo: string } | null>(null)
   const [showTourSimulator, setShowTourSimulator] = useState(false)
 
   const closeGradeModal = useCallback(() => setShowGradeModal(false), [])
@@ -160,7 +162,12 @@ export default function ModuloDetalle() {
       }
     } else if (contenido.tipo === 'VIDEO' && contenido.urlVideo) {
       markContenidoInProgress(contenido.id)
-      window.open(contenido.urlVideo, '_blank')
+      setVideoAbierto({
+        titulo: contenido.titulo,
+        descripcion: contenido.descripcion,
+        duracionMin: contenido.duracionMin,
+        urlVideo: contenido.urlVideo,
+      })
     } else if (contenido.tipo === 'EN_VIVO' && contenido.urlVivo) {
       // Ir a la sesión en vivo
       navigate(`/taller/${slug}/live/${modulo?.numero}`)
@@ -605,6 +612,23 @@ export default function ModuloDetalle() {
           tallerSlug={slug ?? ''}
           tallerNombre={taller.nombre}
           onClose={() => setShowTablaProgresion(false)}
+        />
+      )}
+
+      {/* Modal Video Player */}
+      {videoAbierto && (
+        <VideoPlayerModal
+          titulo={videoAbierto.titulo}
+          descripcion={videoAbierto.descripcion}
+          duracionMin={videoAbierto.duracionMin}
+          urlVideo={videoAbierto.urlVideo}
+          onClose={() => setVideoAbierto(null)}
+          onComplete={() => {
+            const contenido = modulo.subSecciones
+              .flatMap(s => s.contenidos)
+              .find(c => c.urlVideo === videoAbierto.urlVideo)
+            if (contenido) markContenidoCompleted(contenido.id)
+          }}
         />
       )}
 
