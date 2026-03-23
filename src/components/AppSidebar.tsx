@@ -1,6 +1,5 @@
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import logoFull from "@/assets/logo-grama-full.png";
-import logoIcon from "@/assets/logo-grama.png";
+import { LogoGramaFull, LogoGramaIcon } from "@/assets/LogoGrama";
 import { NavLink } from "@/components/NavLink";
 import { talleresConfig } from "@/data/talleresConfig";
 import { buildModulosForTaller, getActiveLiveSession, getUpcomingLiveSession } from "@/data/modulosConfig";
@@ -25,9 +24,9 @@ function LogoGrama({ collapsed }: { collapsed: boolean }) {
   return (
     <Link to="/" style={{ display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", width: "100%", padding: collapsed ? "2px 0" : "4px 0" }}>
       {collapsed ? (
-        <img src={logoIcon} alt="GRAMA" style={{ width: 26, height: 26, objectFit: "contain" }} />
+        <LogoGramaIcon style={{ width: 26, height: 26 }} />
       ) : (
-        <img src={logoFull} alt="GRAMA Proyectos Educativos" style={{ maxWidth: "70%", objectFit: "contain" }} />
+        <LogoGramaFull style={{ maxWidth: "70%" }} />
       )}
     </Link>
   );

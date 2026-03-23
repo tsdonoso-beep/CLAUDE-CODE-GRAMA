@@ -1,7 +1,7 @@
 // src/pages/NotFound.tsx
 import { Link } from 'react-router-dom'
 import { Home } from 'lucide-react'
-import logoGrama from '@/assets/logo-grama.png'
+import { LogoGramaIcon } from '@/assets/LogoGrama'
 
 export default function NotFound() {
   return (
@@ -9,7 +9,7 @@ export default function NotFound() {
       className="min-h-screen flex flex-col items-center justify-center grama-pattern"
       style={{ background: '#043941' }}
     >
-      <img src={logoGrama} alt="GRAMA" className="h-16 w-16 mb-8 object-contain opacity-60" />
+      <LogoGramaIcon className="mb-8 opacity-60" style={{ width: 64, height: 64 }} />
       <h1 className="text-7xl font-extrabold mb-4" style={{ color: '#02d47e' }}>
         404
       </h1>
