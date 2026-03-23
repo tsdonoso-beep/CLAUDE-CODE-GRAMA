@@ -21,6 +21,35 @@ export function getDriveDownloadUrl(driveUrl: string): string {
 
 // tallerSlug → bien.n → Drive URL
 export const manualesPDFPorBien: Record<string, Record<number, string>> = {
+  electricidad: {
+    42:  'https://drive.google.com/file/d/1dfvV1tuf331b2dEorcn9f_wDVWERmUa9/view',  // Alicate de corte
+    43:  'https://drive.google.com/file/d/18eHG8mf4Zv6b8uc87_7i2E-4w42hmqam/view',  // Alicate de punta curva
+    45:  'https://drive.google.com/file/d/1INWegr_H0USWEGVlKbmSEDueriZQ_56l/view',  // Alicate pelacable
+    44:  'https://drive.google.com/file/d/1JlGk_KplU3nJfC1fViKG_WWFr7HCdq2g/view',  // Alicate universal
+    50:  'https://drive.google.com/file/d/1cSAV2xIRLGYPKlM-QXA-rgnuC69YE_9J/view',  // Calibrador AWG
+    51:  'https://drive.google.com/file/d/19dxsDGMUyNLpb5JfTlPuZB9ZLq0l7vD2/view',  // Cuchilla de electricista
+    47:  'https://drive.google.com/file/d/1W-YFAkjzWLFWVvQjTWIotdmMAk_C-7b9/view',  // Guía pasacables
+    46:  'https://drive.google.com/file/d/1DZaWqV4P-v0vVWng_2Jc087-qYRbda4g/view',  // Juego de destornilladores
+    52:  'https://drive.google.com/file/d/1F-BxKzbPoD9PavbEznZgcse6dxqHOxd_/view',  // Wincha de 5 metros
+    59:  'https://drive.google.com/file/d/1kaBLu9BzOUW9ZKi9dLqHQ1cNAd9bi5dn/view',  // Armario de metal
+    60:  'https://drive.google.com/file/d/1Sc6al1WNsEqcVn7G5iyALyWYfIgWV_2t/view',  // Carritos para transporte de equipos
+    18:  'https://drive.google.com/file/d/1yzQhUIS3mIo-wsA_V039eVWYROqBDkZv/view',  // Escritorio docente
+    57:  'https://drive.google.com/file/d/1Oi3n5UlZAN3ArVJ7h79_fN9K9a2nmQXM/view',  // Escritorio rodable docente
+    11:  'https://drive.google.com/file/d/1vqaXGPbmXMURFJwoVreeLEU139095XLf/view',  // Mesa de computadora estudiante
+    78:  'https://drive.google.com/file/d/1dXxPufRafeuTgqQqUx6V2-39NqL_D7TX/view',  // Mesa de trabajo
+    10:  'https://drive.google.com/file/d/1Mwf4BcRCAd2ybagpDtNPNPzBDh_14lwg/view',  // Mesa discapacitado
+    14:  'https://drive.google.com/file/d/1df53aGgPqq9om287YEcGe_WnZwEC1jcA/view',  // Mueble bajo
+    19:  'https://drive.google.com/file/d/1Lvx2YxuGhJi0RoUoY3uivkbVyk0XCJkQ/view',  // Silla docente
+    12:  'https://drive.google.com/file/d/1n8qFZ7m6lCWmJ-fDyRaIeULO89R1Vh7R/view',  // Silla estudiante
+    58:  'https://drive.google.com/file/d/1KuR-KOqvG6xU1SFZ_AWENTfFptH6xcn1/view',  // Silla rodable docente
+    21:  'https://drive.google.com/file/d/1EMkCARQrtWnvyKkMr-Eg6B5aiFvbiiRW/view',  // Lienzo metodologías de diseño
+    25:  'https://drive.google.com/file/d/17qqD17xNL6WyjTx898FmzyxAmYMcwSm-/view',  // Lienzo flujogramas DOP y DAP
+    24:  'https://drive.google.com/file/d/1-luKr89c2EI4oNpGBpfoFej3snxksUJz/view',  // Lienzo modelos de negocios
+    86:  'https://drive.google.com/file/d/1ZKth5WUcD_nGQBcrAibBIih6DqVnqJhO/view',  // Botiquín
+    84:  'https://drive.google.com/file/d/1nnMyEcc8CluRvvNcV-kJsGKA7XUfRuJM/view',  // Extintor CO2
+    85:  'https://drive.google.com/file/d/1M_8dPRO3-t7wvYN16WTzAAJYn1mPo-oK/view',  // Extintor PQS
+    87:  'https://drive.google.com/file/d/1bRLJ5qjAHfdpGMMVHkX7osVQpnFnffzS/view',  // Guantes de electricista
+  },
   electronica: {
     49:  'https://drive.google.com/file/d/1JQ9neDsjKGwNuU_9qOXVFAOQXhxc0w2g/view', // Alicate de corte
     52:  'https://drive.google.com/file/d/1SbShRHVA1EazJTF7sKQ_h_mZlY9wYBB7/view', // Alicate de punta
