@@ -52,8 +52,11 @@ function saveLocalRecords(records: Map<string, ProgressRecord>) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(obj))
 }
 
+const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
+  import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
+
 export function ProgressProvider({ children }: { children: ReactNode }) {
-  const { user } = useAuth()
+  const { user, allUnlocked } = useAuth()
   const [records, setRecords] = useState<Map<string, ProgressRecord>>(() => loadLocalRecords())
   const [loading, setLoading] = useState(false)
 
@@ -151,7 +154,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
   /** Devuelve el EstadoModulo para un módulo de modulosLXP (m0, m1…)
    *  Regla: un módulo está bloqueado si el anterior no tiene 100% de progreso.
-   *  M0 siempre está disponible (no tiene prerequisito). */
+   *  Excepción: docente@grama.pe, admins y DEV_MODE nunca ven módulos bloqueados. */
   const getEstadoModuloLXP = useCallback((moduloId: string): EstadoModulo => {
     const idx = modulosLXP.findIndex(m => m.id === moduloId)
     if (idx === -1) return 'bloqueado'
@@ -166,14 +169,15 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       return Math.round((done / allIds.length) * 100)
     }
 
-    // Si no es el primer módulo, verificar que el anterior esté completo
-    if (idx > 0 && porcentajeModulo(idx - 1) < 100) return 'bloqueado'
+    // docente@grama.pe, admins y dev local: nunca bloquear
+    const skipLock = allUnlocked || DEV_MODE
+    if (idx > 0 && !skipLock && porcentajeModulo(idx - 1) < 100) return 'bloqueado'
 
     const pct = porcentajeModulo(idx)
     if (pct === 100) return 'completado'
     if (pct > 0) return 'en_curso'
     return 'disponible'
-  }, [records])
+  }, [records, allUnlocked])
 
   return (
     <ProgressContext.Provider

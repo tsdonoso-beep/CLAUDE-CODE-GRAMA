@@ -10,6 +10,8 @@ interface AuthContextType {
   session: Session | null
   loading: boolean
   isAdmin: boolean
+  /** true para docente@grama.pe y admins — todos los módulos desbloqueados */
+  allUnlocked: boolean
   signOut: () => Promise<void>
 }
 
@@ -84,9 +86,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const isAdmin = profile?.role === 'admin'
+  const allUnlocked = isAdmin || user?.email === 'docente@grama.pe'
 
   return (
-    <AuthContext.Provider value={{ user, profile, session, loading, isAdmin, signOut }}>
+    <AuthContext.Provider value={{ user, profile, session, loading, isAdmin, allUnlocked, signOut }}>
       {children}
     </AuthContext.Provider>
   )
