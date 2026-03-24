@@ -63,12 +63,12 @@ export function ContenidoBadge({ tipo, size = 'sm', isLiveNow = false }: Conteni
 
   return (
     <span
-      className={`inline-flex items-center gap-1 font-semibold rounded-full ${
-        size === 'md' ? 'px-3 py-1 text-xs' : 'px-2 py-0.5 text-xs'
+      className={`inline-flex items-center gap-1 font-bold rounded-full ${
+        size === 'md' ? 'px-3 py-1 text-[11px]' : 'px-2.5 py-1 text-[10px]'
       }`}
       style={{ background: bg, color: text }}
     >
-      <Icon size={size === 'md' ? 11 : 10} />
+      <Icon size={11} />
       {label}
       {isLiveNow && tipo === 'EN_VIVO' && (
         <span

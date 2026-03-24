@@ -214,21 +214,21 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
                       {sub.descripcion}
                     </p>
                   )}
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-col gap-1.5">
                     {sub.contenidos.map(c => (
-                      <span key={c.id} className="flex items-center gap-1.5">
+                      <div key={c.id} className="flex items-center gap-1.5 min-w-0">
                         <ContenidoBadge tipo={c.tipo} size="sm" />
-                        <span className="text-xs" style={{ color: '#043941' }}>
-                          {c.titulo.length > 50 ? c.titulo.slice(0, 47) + '...' : c.titulo}
+                        <span className="text-xs truncate" style={{ color: '#043941' }}>
+                          {c.titulo}
                         </span>
                         {c.duracionMin && (
-                          <span className="text-xs" style={{ color: '#94a3b8' }}>
+                          <span className="text-xs shrink-0" style={{ color: '#94a3b8' }}>
                             {c.duracionMin >= 60
                               ? `${Math.floor(c.duracionMin / 60)}h${c.duracionMin % 60 > 0 ? `${c.duracionMin % 60}m` : ''}`
                               : `${c.duracionMin}min`}
                           </span>
                         )}
-                      </span>
+                      </div>
                     ))}
                   </div>
                 </div>
