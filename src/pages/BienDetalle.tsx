@@ -161,7 +161,24 @@ export default function BienDetalle() {
                         transformOrigin: 'center 55%',
                       }}
                       loading="lazy"
+                      onError={e => {
+                        const img = e.currentTarget
+                        img.style.display = 'none'
+                        const fallback = img.nextElementSibling as HTMLElement | null
+                        if (fallback?.dataset.fallback) fallback.style.display = 'flex'
+                      }}
                     />
+                    {/* Fallback cuando thumbnail no carga (ej: localhost) */}
+                    <div
+                      data-fallback="1"
+                      className="absolute inset-0 flex-col items-center justify-center gap-2"
+                      style={{ display: 'none', background: '#f0faf5' }}
+                    >
+                      <FileText size={32} style={{ color: '#045f6c' }} />
+                      <span className="text-xs font-semibold" style={{ color: '#045f6c' }}>
+                        Manual disponible
+                      </span>
+                    </div>
                     {/* Degradado inferior */}
                     <div
                       className="absolute inset-x-0 bottom-0 h-16"
