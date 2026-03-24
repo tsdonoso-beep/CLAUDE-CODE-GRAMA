@@ -1,11 +1,12 @@
 // src/pages/Bienvenida.tsx
 import { useEffect, useRef, useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { talleresConfig } from '@/data/talleresConfig'
 import { getTalleresDeIE, INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
 import { TallerCard } from '@/components/hub/TallerCard'
 import { GramaLogo } from '@/components/GramaLogo'
-import { Layers, Clock, Award, Download, ChevronDown, CheckCircle, BookOpen } from 'lucide-react'
+import { Layers, Clock, Award, Download, ChevronDown, CheckCircle, BookOpen, LayoutDashboard } from 'lucide-react'
 
 // ── Stat con conteo animado ────────────────────────────────────────────────
 function AnimatedStat({
@@ -85,6 +86,7 @@ const FEATURES = [
 // ── Componente principal ────────────────────────────────────────────────────
 export default function Bienvenida() {
   const { signOut, profile, allUnlocked } = useAuth()
+  const navigate = useNavigate()
 
   const talleresDisponibles = useMemo(() => {
     if (allUnlocked || !profile?.ie_id) return talleresConfig;
@@ -154,6 +156,25 @@ export default function Bienvenida() {
                 Inroprin · MSE-SFT · 2026
               </div>
             </div>
+
+            {profile?.role === 'admin' && (
+              <button
+                onClick={() => navigate('/admin')}
+                className="text-xs font-semibold px-3.5 py-2 rounded-xl transition-all flex items-center gap-1.5"
+                style={{ color: '#02d47e', border: '1px solid rgba(2,212,126,0.3)', background: 'rgba(2,212,126,0.08)' }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.background = 'rgba(2,212,126,0.18)'
+                  ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(2,212,126,0.5)'
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.background = 'rgba(2,212,126,0.08)'
+                  ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(2,212,126,0.3)'
+                }}
+              >
+                <LayoutDashboard size={13} />
+                Panel admin
+              </button>
+            )}
 
             <button
               onClick={handleLogout}
