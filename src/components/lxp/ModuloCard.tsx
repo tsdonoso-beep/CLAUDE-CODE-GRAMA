@@ -116,8 +116,8 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
                 M{modulo.numero} · {modulo.nombre}
               </h3>
               <span
-                className="text-xs px-2.5 py-0.5 rounded-full font-semibold"
-                style={{ background: config.badgeBg, color: config.badgeText }}
+                className="inline-flex items-center justify-center text-xs px-2.5 py-0.5 rounded-full font-semibold"
+                style={{ background: config.badgeBg, color: config.badgeText, minWidth: '90px' }}
               >
                 {config.badge}
               </span>
