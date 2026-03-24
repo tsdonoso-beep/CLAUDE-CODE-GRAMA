@@ -2,7 +2,7 @@
 import { BookOpen, Clock, Video, Award } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
-import { mockEstadosModulos, mockProximaSesion, getEstadoModulo } from '@/mock/mockEstados'
+import { mockProximaSesion } from '@/mock/mockEstados'
 import { ModuloCard } from '@/components/lxp/ModuloCard'
 import { ProgressRing } from '@/components/lxp/ProgressRing'
 import { LiveSessionCard } from '@/components/lxp/LiveSessionCard'
@@ -10,7 +10,7 @@ import { useProgress } from '@/contexts/ProgressContext'
 
 export default function RutaAprendizaje() {
   const { taller, slug } = useTaller()
-  const { getTallerProgreso, getModuloProgreso } = useProgress()
+  const { getTallerProgreso, getModuloProgreso, getEstadoModuloLXP } = useProgress()
   const progresoTaller = getTallerProgreso(slug ?? '')
 
   if (!taller) return null
@@ -82,7 +82,7 @@ export default function RutaAprendizaje() {
               <ModuloCard
                 key={modulo.id}
                 modulo={modulo}
-                estado={getEstadoModulo(modulo.id).estado}
+                estado={getEstadoModuloLXP(modulo.id)}
                 isLast={idx === modulosLXP.length - 1}
               />
             ))}

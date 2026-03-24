@@ -10,7 +10,6 @@ import {
 } from 'lucide-react'
 import { modulosLXP } from '@/data/modulosLXP'
 import { manualesRuta } from '@/data/manualesRuta'
-import { getEstadoModulo } from '@/mock/mockEstados'
 import { useProgress } from '@/contexts/ProgressContext'
 import { ContenidoBadge } from '@/components/lxp/ContenidoBadge'
 import { QuizBlock } from '@/components/lxp/QuizBlock'
@@ -40,7 +39,7 @@ export default function ModuloDetalle() {
   const { num } = useParams<{ num: string }>()
   const { slug } = useTaller()
   const navigate = useNavigate()
-  const { markContenidoCompleted, markContenidoInProgress } = useProgress()
+  const { markContenidoCompleted, markContenidoInProgress, getEstadoModuloLXP } = useProgress()
   const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set(['0']))
   const [diagnosticosOpen, setDiagnosticosOpen] = useState(false)
   const [conocenosOpen, setConocenosOpen] = useState(false)
@@ -65,7 +64,7 @@ export default function ModuloDetalle() {
 
   const moduloNum = parseInt(num ?? '0', 10)
   const modulo = modulosLXP.find(m => m.numero === moduloNum)
-  const estado = getEstadoModulo(modulo?.id ?? '').estado
+  const estado = getEstadoModuloLXP(modulo?.id ?? '')
 
   if (!modulo) {
     return (

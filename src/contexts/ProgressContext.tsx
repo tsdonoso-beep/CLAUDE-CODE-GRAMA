@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react'
 import { buildModulosForTaller } from '@/data/modulosConfig'
+import { modulosLXP } from '@/data/modulosLXP'
+import type { EstadoModulo } from '@/mock/mockEstados'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
 
@@ -15,6 +17,8 @@ interface ProgressContextType {
   markContenidoInProgress: (contenidoId: string) => void
   getModuloProgreso: (tallerSlug: string, moduloNum: number) => { porcentaje: number; completados: number; total: number }
   getTallerProgreso: (tallerSlug: string) => { porcentaje: number; completados: number; total: number }
+  /** Calcula el EstadoModulo para un módulo de modulosLXP (m0–m6) basado en progreso real */
+  getEstadoModuloLXP: (moduloId: string) => EstadoModulo
 }
 
 const ProgressContext = createContext<ProgressContextType | null>(null)
@@ -145,9 +149,35 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     return { porcentaje, completados, total }
   }, [records])
 
+  /** Devuelve el EstadoModulo para un módulo de modulosLXP (m0, m1…)
+   *  Regla: un módulo está bloqueado si el anterior no tiene 100% de progreso.
+   *  M0 siempre está disponible (no tiene prerequisito). */
+  const getEstadoModuloLXP = useCallback((moduloId: string): EstadoModulo => {
+    const idx = modulosLXP.findIndex(m => m.id === moduloId)
+    if (idx === -1) return 'bloqueado'
+
+    // Calcula % de completados para un módulo dado su índice
+    function porcentajeModulo(i: number): number {
+      const m = modulosLXP[i]
+      const allIds: string[] = []
+      m.subSecciones.forEach(s => s.contenidos.forEach(c => allIds.push(c.id)))
+      if (allIds.length === 0) return 0
+      const done = allIds.filter(id => records.get(id)?.completed).length
+      return Math.round((done / allIds.length) * 100)
+    }
+
+    // Si no es el primer módulo, verificar que el anterior esté completo
+    if (idx > 0 && porcentajeModulo(idx - 1) < 100) return 'bloqueado'
+
+    const pct = porcentajeModulo(idx)
+    if (pct === 100) return 'completado'
+    if (pct > 0) return 'en_curso'
+    return 'disponible'
+  }, [records])
+
   return (
     <ProgressContext.Provider
-      value={{ loading, getContenidoEstado, markContenidoCompleted, markContenidoInProgress, getModuloProgreso, getTallerProgreso }}
+      value={{ loading, getContenidoEstado, markContenidoCompleted, markContenidoInProgress, getModuloProgreso, getTallerProgreso, getEstadoModuloLXP }}
     >
       {children}
     </ProgressContext.Provider>
