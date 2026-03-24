@@ -162,11 +162,6 @@ export default function BienDetalle() {
                       }}
                       loading="lazy"
                     />
-                    {/* Degradado inferior */}
-                    <div
-                      className="absolute inset-x-0 bottom-0 h-16"
-                      style={{ background: 'linear-gradient(to top, rgba(4,57,65,0.65), transparent)' }}
-                    />
                     {/* Hover overlay */}
                     <div
                       className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
@@ -180,10 +175,6 @@ export default function BienDetalle() {
                         Abrir manual
                       </span>
                     </div>
-                    {/* Badge inferior */}
-                    <p className="absolute bottom-3 left-3 text-[10px] font-semibold text-white opacity-80">
-                      Pág. 1 · Vista previa
-                    </p>
                   </div>
 
                   {/* Botón secundario */}
