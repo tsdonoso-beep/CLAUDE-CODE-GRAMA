@@ -10,6 +10,9 @@ import { GramaLogo } from '@/components/GramaLogo'
 import type { Profile } from '@/types/database'
 import { useNavigate } from 'react-router-dom'
 
+const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
+  import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
+
 interface DocenteRow extends Profile {
   completados: number
   visualizados: number   // completado + en_progreso
@@ -31,6 +34,30 @@ function getTotalContenidosByTaller(slug: string): number {
   } catch {
     return 0
   }
+}
+
+// ── Mock data para DEV_MODE ────────────────────────────────────────────────
+function buildMockDocentes(): DocenteRow[] {
+  const total = getTotalContenidosByTaller('mecanica-automotriz')
+  const completados = Math.round(total * 0.48)
+  const visualizados = Math.round(total * 0.55)
+  return [
+    {
+      id: 'mock-1',
+      email: 'carlos.quispe@colegio.edu.pe',
+      nombre_completo: 'Carlos Quispe Mamani',
+      role: 'docente',
+      ie_id: 5, // GUILLERMO E. BILLINGHURST
+      taller_slug: 'mecanica-automotriz',
+      created_at: '2026-02-10T08:00:00Z',
+      last_seen_at: '2026-03-22T14:35:00Z',
+      completados,
+      visualizados,
+      total,
+      porcentaje: total > 0 ? Math.round((completados / total) * 100) : 0,
+      moduloActual: 'M3',
+    },
+  ]
 }
 
 // Extrae el número de módulo más alto con actividad desde los contenido_ids
@@ -93,6 +120,13 @@ export default function Admin() {
 
   async function fetchData() {
     setLoading(true)
+
+    // En DEV_MODE sin Supabase real, usar datos mock
+    if (DEV_MODE) {
+      setDocentes(buildMockDocentes())
+      setLoading(false)
+      return
+    }
 
     // 1. Todos los perfiles docentes
     const { data: profiles } = await supabase

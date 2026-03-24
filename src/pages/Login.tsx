@@ -37,9 +37,11 @@ function GramaInput({
 // Credenciales de desarrollo — activas cuando Supabase no está configurado
 const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
   import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
-const DEV_USERS = [
-  { email: 'admin@grama.pe', password: 'grama2025' },
-  { email: 'docente@grama.pe', password: 'grama2026' },
+const DEV_USERS: Array<{ email: string; password: string; role: 'admin' | 'docente' }> = [
+  { email: 'admin@grama.pe',           password: 'grama2025', role: 'admin' },
+  { email: 'docente@grama.pe',         password: 'grama2026', role: 'docente' },
+  { email: 't.donoso@inroprin.com',    password: 'grama2026', role: 'admin' },
+  { email: 'camila.gr@inroprin.com',   password: 'grama2026', role: 'admin' },
 ]
 
 // ── Tab: Ingresar ──────────────────────────────────────────────────────────
@@ -60,10 +62,12 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
       const validDev = DEV_USERS.find(u => u.email === email && u.password === password)
       if (validDev) {
         sessionStorage.setItem('grama-auth', 'true')
+        sessionStorage.setItem('grama-dev-email', validDev.email)
+        sessionStorage.setItem('grama-dev-role', validDev.role)
         onSuccess()
         return
       }
-      setError('Modo desarrollo — usa admin@grama.pe/grama2025 o docente@grama.pe/grama2026')
+      setError('Modo dev — usa docente@grama.pe/grama2026 o t.donoso@inroprin.com/grama2026')
       setLoading(false)
       return
     }

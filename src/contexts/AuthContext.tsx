@@ -17,6 +17,26 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null)
 
+const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
+  import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
+
+/** Construye un perfil mock a partir de sessionStorage (solo DEV_MODE) */
+function buildDevProfile(): Profile | null {
+  const email = sessionStorage.getItem('grama-dev-email')
+  const role = sessionStorage.getItem('grama-dev-role') as 'admin' | 'docente' | null
+  if (!email || !role) return null
+  return {
+    id: 'dev-user',
+    email,
+    nombre_completo: email.split('@')[0].replace(/[._]/g, ' '),
+    role,
+    ie_id: null,
+    taller_slug: null,
+    created_at: new Date().toISOString(),
+    last_seen_at: new Date().toISOString(),
+  }
+}
+
 export function useAuth() {
   const ctx = useContext(AuthContext)
   if (!ctx) throw new Error('useAuth must be inside AuthProvider')
@@ -47,7 +67,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Cargar sesión existente al montar
     supabase.auth.getSession()
       .then(async ({ data: { session } }) => {
         setSession(session)
@@ -56,12 +75,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const p = await fetchProfile(session.user.id)
           setProfile(p)
           touchLastSeen(session.user.id)
+        } else if (DEV_MODE) {
+          // Restaurar perfil de sesión de desarrollo
+          setProfile(buildDevProfile())
         }
         setLoading(false)
       })
-      .catch(() => setLoading(false))
+      .catch(() => {
+        if (DEV_MODE) setProfile(buildDevProfile())
+        setLoading(false)
+      })
 
-    // Escuchar cambios de sesión
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         setSession(session)
@@ -71,7 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setProfile(p)
           touchLastSeen(session.user.id)
         } else {
-          setProfile(null)
+          setProfile(DEV_MODE ? buildDevProfile() : null)
         }
       }
     )
@@ -82,11 +106,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function signOut() {
     await supabase.auth.signOut()
     sessionStorage.removeItem('grama-auth')
+    sessionStorage.removeItem('grama-dev-email')
+    sessionStorage.removeItem('grama-dev-role')
     localStorage.removeItem('navigator-progress')
+    setProfile(null)
   }
 
   const isAdmin = profile?.role === 'admin'
-  const allUnlocked = isAdmin || user?.email === 'docente@grama.pe'
+  const allUnlocked = isAdmin || user?.email === 'docente@grama.pe' || profile?.email === 'docente@grama.pe'
 
   return (
     <AuthContext.Provider value={{ user, profile, session, loading, isAdmin, allUnlocked, signOut }}>
