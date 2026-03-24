@@ -10,7 +10,7 @@ import {
 import { useTaller } from '@/hooks/useTaller'
 import { eppPorTaller } from '@/data/eppData'
 import type { EPPItem } from '@/data/eppData'
-import { getManualPDF, getDriveEmbedUrl, getDriveDownloadUrl, getDriveThumbnailUrl } from '@/data/manualesPDF'
+import { getManualPDF, getDriveEmbedUrl, getDriveDownloadUrl } from '@/data/manualesPDF'
 
 type TabId = 'manual' | 'video'
 
@@ -142,60 +142,28 @@ export default function BienDetalle() {
                   </p>
                 </>
               ) : manualUrl ? (
-                <div className="w-full flex flex-col gap-3">
-                  {/* Cover card — zoom al producto */}
+                <>
                   <div
-                    className="w-full aspect-video rounded-xl overflow-hidden cursor-pointer relative group"
-                    style={{ background: '#f8fffe' }}
-                    onClick={() => setShowPDFModal(true)}
+                    className="h-16 w-16 rounded-2xl flex items-center justify-center mb-4"
+                    style={{ background: '#e3f8fb' }}
                   >
-                    <img
-                      src={getDriveThumbnailUrl(manualUrl, 600)}
-                      alt="Imagen del producto"
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        objectPosition: 'center 55%',
-                        transform: 'scale(1.55)',
-                        transformOrigin: 'center 55%',
-                      }}
-                      loading="lazy"
-                    />
-                    {/* Degradado inferior */}
-                    <div
-                      className="absolute inset-x-0 bottom-0 h-16"
-                      style={{ background: 'linear-gradient(to top, rgba(4,57,65,0.65), transparent)' }}
-                    />
-                    {/* Hover overlay */}
-                    <div
-                      className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{ background: 'rgba(4,57,65,0.35)' }}
-                    >
-                      <span
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white"
-                        style={{ background: 'rgba(2,212,126,0.9)' }}
-                      >
-                        <FileText size={13} />
-                        Abrir manual
-                      </span>
-                    </div>
-                    {/* Badge inferior */}
-                    <p className="absolute bottom-3 left-3 text-[10px] font-semibold text-white opacity-80">
-                      Pág. 1 · Vista previa
-                    </p>
+                    <FileText size={28} style={{ color: '#045f6c' }} />
                   </div>
-
-                  {/* Botón secundario */}
+                  <p className="text-sm font-semibold mb-1" style={{ color: '#043941' }}>
+                    Manual de uso <span style={{ fontWeight: 800 }}>y mantenimiento</span>
+                  </p>
+                  <p className="text-xs text-center mb-4" style={{ color: '#94a3b8' }}>
+                    PDF disponible para visualización y descarga
+                  </p>
                   <button
                     onClick={() => setShowPDFModal(true)}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-80"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-80"
                     style={{ background: '#043941', color: '#02d47e' }}
                   >
                     <FileText size={14} />
-                    Ver manual completo
+                    Ver manual
                   </button>
-                </div>
+                </>
               ) : (
                 <>
                   <div
