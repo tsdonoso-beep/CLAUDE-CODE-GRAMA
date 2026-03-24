@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { lazy, Suspense } from "react"
 import { AppShell } from "@/components/layout/AppShell"
 import { RequireAuth } from "@/components/RequireAuth"
+import { RequireAdmin } from "@/components/RequireAdmin"
+import { AuthProvider } from "@/contexts/AuthContext"
 import { ProgressProvider } from "@/contexts/ProgressContext"
 import { ErrorBoundary } from "@/components/ErrorBoundary"
 
@@ -18,6 +20,7 @@ const RutaAprendizaje = lazy(() => import("./pages/RutaAprendizaje"))
 const ModuloDetalle   = lazy(() => import("./pages/ModuloDetalle"))
 const Repositorio     = lazy(() => import("./pages/Repositorio"))
 const BienDetalle     = lazy(() => import("./pages/BienDetalle"))
+const Admin           = lazy(() => import("./pages/Admin"))
 const NotFound        = lazy(() => import("./pages/NotFound"))
 
 const queryClient = new QueryClient()
@@ -51,38 +54,45 @@ function wrap(Page: React.LazyExoticComponent<() => JSX.Element>) {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <ProgressProvider>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ErrorBoundary>
-        <Routes>
-          {/* ── Pública ── */}
-          <Route path="/login" element={wrap(Login)} />
+    <AuthProvider>
+      <ProgressProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ErrorBoundary>
+              <Routes>
+                {/* ── Pública ── */}
+                <Route path="/login" element={wrap(Login)} />
 
-          {/* ── Requiere login simulado ── */}
-          <Route element={<RequireAuth />}>
-            {/* Bienvenida: sin sidebar */}
-            <Route path="/" element={wrap(Bienvenida)} />
+                {/* ── Requiere autenticación ── */}
+                <Route element={<RequireAuth />}>
+                  {/* Bienvenida: sin sidebar */}
+                  <Route path="/" element={wrap(Bienvenida)} />
 
-            {/* App con sidebar */}
-            <Route element={<AppShell />}>
-              <Route path="/taller/:slug"                        element={wrap(TallerHub)} />
-              <Route path="/taller/:slug/ruta"                   element={wrap(RutaAprendizaje)} />
-              <Route path="/taller/:slug/ruta/modulo/:num"       element={wrap(ModuloDetalle)} />
-              <Route path="/taller/:slug/repositorio"            element={wrap(Repositorio)} />
-              <Route path="/taller/:slug/repositorio/bien/:id"   element={wrap(BienDetalle)} />
-            </Route>
-          </Route>
+                  {/* App con sidebar */}
+                  <Route element={<AppShell />}>
+                    <Route path="/taller/:slug"                        element={wrap(TallerHub)} />
+                    <Route path="/taller/:slug/ruta"                   element={wrap(RutaAprendizaje)} />
+                    <Route path="/taller/:slug/ruta/modulo/:num"       element={wrap(ModuloDetalle)} />
+                    <Route path="/taller/:slug/repositorio"            element={wrap(Repositorio)} />
+                    <Route path="/taller/:slug/repositorio/bien/:id"   element={wrap(BienDetalle)} />
+                  </Route>
 
-          {/* ── 404 ── */}
-          <Route path="*" element={wrap(NotFound)} />
-        </Routes>
-        </ErrorBoundary>
-      </BrowserRouter>
-    </TooltipProvider>
-    </ProgressProvider>
+                  {/* ── Solo admin ── */}
+                  <Route element={<RequireAdmin />}>
+                    <Route path="/admin" element={wrap(Admin)} />
+                  </Route>
+                </Route>
+
+                {/* ── 404 ── */}
+                <Route path="*" element={wrap(NotFound)} />
+              </Routes>
+            </ErrorBoundary>
+          </BrowserRouter>
+        </TooltipProvider>
+      </ProgressProvider>
+    </AuthProvider>
   </QueryClientProvider>
 )
 

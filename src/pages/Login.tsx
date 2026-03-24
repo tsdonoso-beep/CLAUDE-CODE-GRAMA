@@ -1,89 +1,299 @@
 // src/pages/Login.tsx
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Eye, EyeOff, AlertCircle } from 'lucide-react'
+import { Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
+import { supabase } from '@/lib/supabase'
+import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
+import { talleresConfig } from '@/data/talleresConfig'
 
-// Credenciales hardcodeadas — solo UI, sin auth real
-const VALID_EMAIL = 'docente@grama.pe'
-const VALID_PASSWORD = 'grama2024'
+type Tab = 'login' | 'register'
 
-export default function Login() {
-  const navigate = useNavigate()
+const INPUT_STYLE = {
+  base: 'w-full px-4 py-3 rounded-xl border-2 text-sm outline-none transition-all',
+  colors: { borderColor: '#e3f8fb', color: '#043941', background: '#fafffe' },
+  focus: '#02d47e',
+  blur: '#e3f8fb',
+}
+
+function GramaInput({
+  id, type = 'text', value, onChange, placeholder, required, autoComplete,
+}: {
+  id: string; type?: string; value: string; onChange: (v: string) => void
+  placeholder?: string; required?: boolean; autoComplete?: string
+}) {
+  return (
+    <input
+      id={id} type={type} autoComplete={autoComplete}
+      value={value} onChange={e => onChange(e.target.value)}
+      placeholder={placeholder} required={required}
+      className={INPUT_STYLE.base}
+      style={INPUT_STYLE.colors}
+      onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
+      onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}
+    />
+  )
+}
+
+// ── Tab: Ingresar ──────────────────────────────────────────────────────────
+function LoginForm({ onSuccess }: { onSuccess: () => void }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPass, setShowPass] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
     setLoading(true)
-
-    // Simulate small delay
-    setTimeout(() => {
-      if (email === VALID_EMAIL && password === VALID_PASSWORD) {
-        sessionStorage.setItem('grama-auth', 'true')
-        navigate('/')
-      } else {
-        setError('Credenciales incorrectas. Verifica tu correo y contraseña.')
-        setLoading(false)
-      }
-    }, 600)
+    const { error: authError } = await supabase.auth.signInWithPassword({ email, password })
+    if (authError) {
+      setError('Credenciales incorrectas. Verifica tu correo y contraseña.')
+      setLoading(false)
+    } else {
+      onSuccess()
+    }
   }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-5">
+      {error && (
+        <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm" style={{ background: '#fee2e2', color: '#ef4444' }}>
+          <AlertCircle size={16} className="shrink-0" />{error}
+        </div>
+      )}
+
+      <div>
+        <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+          Correo electrónico
+        </label>
+        <GramaInput id="email" type="email" autoComplete="email" value={email} onChange={setEmail} placeholder="docente@colegio.pe" required />
+      </div>
+
+      <div>
+        <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+          Contraseña
+        </label>
+        <div className="relative">
+          <input
+            id="password" type={showPass ? 'text' : 'password'} autoComplete="current-password"
+            value={password} onChange={e => setPassword(e.target.value)}
+            placeholder="••••••••" required
+            className={`${INPUT_STYLE.base} pr-12`}
+            style={INPUT_STYLE.colors}
+            onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
+            onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}
+          />
+          <button type="button" onClick={() => setShowPass(!showPass)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1" style={{ color: '#045f6c' }} tabIndex={-1}>
+            {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
+          </button>
+        </div>
+      </div>
+
+      <div className="text-right">
+        <button type="button" className="text-xs font-medium" style={{ color: '#045f6c' }}
+          onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
+          onMouseLeave={e => (e.currentTarget.style.color = '#045f6c')}>
+          ¿Olvidaste tu contraseña?
+        </button>
+      </div>
+
+      <button type="submit" disabled={loading}
+        className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all disabled:opacity-70"
+        style={{ background: '#02d47e' }}
+        onMouseEnter={e => !loading && ((e.target as HTMLButtonElement).style.background = '#00c16e')}
+        onMouseLeave={e => !loading && ((e.target as HTMLButtonElement).style.background = '#02d47e')}>
+        {loading ? 'Ingresando...' : 'Ingresar'}
+      </button>
+    </form>
+  )
+}
+
+// ── Tab: Regístrate ────────────────────────────────────────────────────────
+function RegisterForm() {
+  const [nombre, setNombre] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPass, setShowPass] = useState(false)
+  const [ieId, setIeId] = useState<number | ''>('')
+  const [tallerSlug, setTallerSlug] = useState('')
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const talleresDeLaIE = ieId !== ''
+    ? INSTITUCIONES_EDUCATIVAS.find(ie => ie.id === ieId)?.talleres ?? []
+    : []
+
+  const tallerOptions = talleresConfig.filter(t => talleresDeLaIE.includes(t.slug))
+
+  function handleIeChange(id: number | '') {
+    setIeId(id)
+    setTallerSlug('')
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!nombre.trim() || !ieId || !tallerSlug) {
+      setError('Completa todos los campos.')
+      return
+    }
+    setError('')
+    setLoading(true)
+
+    const { error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          nombre_completo: nombre.trim(),
+          ie_id: String(ieId),
+          taller_slug: tallerSlug,
+        },
+      },
+    })
+
+    if (authError) {
+      setError(authError.message)
+      setLoading(false)
+    } else {
+      setSuccess(true)
+      setLoading(false)
+    }
+  }
+
+  if (success) {
+    return (
+      <div className="text-center py-6 space-y-4">
+        <div className="flex justify-center">
+          <CheckCircle size={48} style={{ color: '#02d47e' }} />
+        </div>
+        <h3 className="font-bold text-lg" style={{ color: '#043941' }}>¡Registro exitoso!</h3>
+        <p className="text-sm" style={{ color: '#045f6c' }}>
+          Revisa tu correo para confirmar tu cuenta y luego inicia sesión.
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm" style={{ background: '#fee2e2', color: '#ef4444' }}>
+          <AlertCircle size={16} className="shrink-0" />{error}
+        </div>
+      )}
+
+      <div>
+        <label htmlFor="nombre" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+          Nombre completo
+        </label>
+        <GramaInput id="nombre" value={nombre} onChange={setNombre} placeholder="Prof. Ana García" required />
+      </div>
+
+      <div>
+        <label htmlFor="reg-email" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+          Correo electrónico
+        </label>
+        <GramaInput id="reg-email" type="email" autoComplete="email" value={email} onChange={setEmail} placeholder="docente@colegio.pe" required />
+      </div>
+
+      <div>
+        <label htmlFor="reg-password" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+          Contraseña
+        </label>
+        <div className="relative">
+          <input
+            id="reg-password" type={showPass ? 'text' : 'password'} autoComplete="new-password"
+            value={password} onChange={e => setPassword(e.target.value)}
+            placeholder="Mín. 8 caracteres" required minLength={8}
+            className={`${INPUT_STYLE.base} pr-12`} style={INPUT_STYLE.colors}
+            onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
+            onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}
+          />
+          <button type="button" onClick={() => setShowPass(!showPass)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1" style={{ color: '#045f6c' }} tabIndex={-1}>
+            {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="ie" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+          Institución Educativa
+        </label>
+        <select
+          id="ie" required value={ieId}
+          onChange={e => handleIeChange(e.target.value === '' ? '' : Number(e.target.value))}
+          className={INPUT_STYLE.base} style={{ ...INPUT_STYLE.colors, cursor: 'pointer' }}
+          onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
+          onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}>
+          <option value="">Selecciona tu IE</option>
+          {INSTITUCIONES_EDUCATIVAS.map(ie => (
+            <option key={ie.id} value={ie.id}>
+              {ie.nombre} · {ie.distrito}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor="taller" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+          Taller que dictas
+        </label>
+        <select
+          id="taller" required value={tallerSlug}
+          onChange={e => setTallerSlug(e.target.value)}
+          disabled={!ieId}
+          className={INPUT_STYLE.base}
+          style={{ ...INPUT_STYLE.colors, cursor: ieId ? 'pointer' : 'not-allowed', opacity: ieId ? 1 : 0.5 }}
+          onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
+          onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}>
+          <option value="">{ieId ? 'Selecciona tu taller' : 'Primero elige la IE'}</option>
+          {tallerOptions.map(t => (
+            <option key={t.slug} value={t.slug}>{t.nombre}</option>
+          ))}
+        </select>
+      </div>
+
+      <button type="submit" disabled={loading}
+        className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all disabled:opacity-70"
+        style={{ background: '#02d47e' }}
+        onMouseEnter={e => !loading && ((e.target as HTMLButtonElement).style.background = '#00c16e')}
+        onMouseLeave={e => !loading && ((e.target as HTMLButtonElement).style.background = '#02d47e')}>
+        {loading ? 'Registrando...' : 'Crear cuenta'}
+      </button>
+    </form>
+  )
+}
+
+// ── Componente principal ────────────────────────────────────────────────────
+export default function Login() {
+  const navigate = useNavigate()
+  const [tab, setTab] = useState<Tab>('login')
+
+  const tabBase = 'flex-1 py-2.5 text-sm font-bold transition-all rounded-lg'
 
   return (
     <div className="min-h-screen flex" style={{ background: '#043941' }}>
       {/* ── Lado izquierdo (desktop) ── */}
-      <div
-        className="hidden lg:flex flex-col items-center justify-center w-1/2 px-16 py-12 grama-pattern relative"
-        style={{ background: '#052e35' }}
-      >
-        {/* Decoración geométrica Tangram */}
+      <div className="hidden lg:flex flex-col items-center justify-center w-1/2 px-16 py-12 grama-pattern relative" style={{ background: '#052e35' }}>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div
-            className="absolute -bottom-16 -left-16 h-64 w-64 rotate-45"
-            style={{ background: 'rgba(2,212,126,0.06)', borderRadius: '12px' }}
-          />
-          <div
-            className="absolute top-20 -right-8 h-40 w-40 rotate-12"
-            style={{ background: 'rgba(2,212,126,0.05)', borderRadius: '8px' }}
-          />
-          <div
-            className="absolute top-1/2 left-1/4 h-24 w-24 -rotate-45"
-            style={{
-              background: 'rgba(2,212,126,0.04)',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-            }}
-          />
+          <div className="absolute -bottom-16 -left-16 h-64 w-64 rotate-45" style={{ background: 'rgba(2,212,126,0.06)', borderRadius: '12px' }} />
+          <div className="absolute top-20 -right-8 h-40 w-40 rotate-12" style={{ background: 'rgba(2,212,126,0.05)', borderRadius: '8px' }} />
+          <div className="absolute top-1/2 left-1/4 h-24 w-24 -rotate-45" style={{ background: 'rgba(2,212,126,0.04)', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} />
         </div>
-
         <div className="relative z-10 text-center max-w-sm">
-          <div className="flex justify-center mb-8">
-            <GramaLogo variant="light" size="lg" />
-          </div>
-          <h2 className="text-2xl font-extrabold text-white mb-3">
-            Plataforma de Capacitación Docente
-          </h2>
-          <p className="text-sm font-medium" style={{ color: '#02d47e' }}>
-            Talleres EPT · Programa MSE-SFT · MINEDU Perú
-          </p>
-
-          {/* Stats decorativas */}
+          <div className="flex justify-center mb-8"><GramaLogo variant="light" size="lg" /></div>
+          <h2 className="text-2xl font-extrabold text-white mb-3">Plataforma de Capacitación Docente</h2>
+          <p className="text-sm font-medium" style={{ color: '#02d47e' }}>Talleres EPT · Programa MSE-SFT · MINEDU Perú</p>
           <div className="mt-10 grid grid-cols-3 gap-4">
-            {[
-              { value: '9', label: 'Talleres EPT' },
-              { value: '150h', label: 'de capacitación' },
-              { value: '7', label: 'módulos' },
-            ].map(s => (
+            {[{ value: '9', label: 'Talleres EPT' }, { value: '150h', label: 'de capacitación' }, { value: '7', label: 'módulos' }].map(s => (
               <div key={s.label} className="text-center">
-                <p className="text-2xl font-extrabold" style={{ color: '#02d47e' }}>
-                  {s.value}
-                </p>
-                <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                  {s.label}
-                </p>
+                <p className="text-2xl font-extrabold" style={{ color: '#02d47e' }}>{s.value}</p>
+                <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -92,138 +302,52 @@ export default function Login() {
 
       {/* ── Lado derecho: formulario ── */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-        {/* Mobile: logo */}
         <div className="lg:hidden mb-8 text-center">
           <GramaLogo variant="light" size="md" className="mx-auto mb-3" />
-          <p className="text-xs font-medium" style={{ color: '#02d47e' }}>
-            Plataforma de Capacitación Docente
-          </p>
+          <p className="text-xs font-medium" style={{ color: '#02d47e' }}>Plataforma de Capacitación Docente</p>
         </div>
 
         <div className="w-full max-w-sm">
           <div className="rounded-2xl overflow-hidden shadow-2xl">
-            <div className="p-8" style={{ background: '#ffffff' }}>
-              <h1
-                className="text-2xl font-extrabold mb-1"
-                style={{ color: '#043941' }}
-              >
-                Iniciar sesión
-              </h1>
-              <p className="text-sm mb-8" style={{ color: '#045f6c' }}>
-                Ingresa tus credenciales para acceder a la plataforma
-              </p>
-
-              {/* Error alert */}
-              {error && (
-                <div
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl mb-6 text-sm"
-                  style={{ background: '#fee2e2', color: '#ef4444' }}
-                >
-                  <AlertCircle size={16} className="shrink-0" />
-                  {error}
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Email */}
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-semibold mb-2"
-                    style={{ color: '#043941' }}
-                  >
-                    Correo electrónico
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    placeholder="docente@grama.pe"
-                    className="w-full px-4 py-3 rounded-xl border-2 text-sm outline-none transition-all"
-                    style={{
-                      borderColor: '#e3f8fb',
-                      color: '#043941',
-                      background: '#fafffe',
-                    }}
-                    onFocus={e => (e.target.style.borderColor = '#02d47e')}
-                    onBlur={e => (e.target.style.borderColor = '#e3f8fb')}
-                    required
-                  />
-                </div>
-
-                {/* Contraseña */}
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-semibold mb-2"
-                    style={{ color: '#043941' }}
-                  >
-                    Contraseña
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="password"
-                      type={showPass ? 'text' : 'password'}
-                      autoComplete="current-password"
-                      value={password}
-                      onChange={e => setPassword(e.target.value)}
-                      placeholder="••••••••"
-                      className="w-full px-4 py-3 pr-12 rounded-xl border-2 text-sm outline-none transition-all"
-                      style={{
-                        borderColor: '#e3f8fb',
-                        color: '#043941',
-                        background: '#fafffe',
-                      }}
-                      onFocus={e => (e.target.style.borderColor = '#02d47e')}
-                      onBlur={e => (e.target.style.borderColor = '#e3f8fb')}
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPass(!showPass)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1 transition-colors"
-                      style={{ color: '#045f6c' }}
-                      tabIndex={-1}
-                    >
-                      {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Olvidé contraseña (solo visual) */}
-                <div className="text-right">
-                  <button
-                    type="button"
-                    className="text-xs font-medium transition-colors"
-                    style={{ color: '#045f6c' }}
-                    onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
-                    onMouseLeave={e => (e.currentTarget.style.color = '#045f6c')}
-                  >
-                    ¿Olvidaste tu contraseña?
-                  </button>
-                </div>
-
-                {/* Botón ingresar */}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all disabled:opacity-70"
-                  style={{ background: '#02d47e' }}
-                  onMouseEnter={e => !loading && ((e.target as HTMLButtonElement).style.background = '#00c16e')}
-                  onMouseLeave={e => !loading && ((e.target as HTMLButtonElement).style.background = '#02d47e')}
-                >
-                  {loading ? 'Ingresando...' : 'Ingresar'}
-                </button>
-              </form>
+            {/* Tabs */}
+            <div className="p-2 flex gap-1" style={{ background: '#f0faf5' }}>
+              <button
+                onClick={() => setTab('login')}
+                className={tabBase}
+                style={tab === 'login'
+                  ? { background: '#ffffff', color: '#043941', boxShadow: '0 1px 4px rgba(4,57,65,0.12)' }
+                  : { color: '#045f6c' }}>
+                Ingresar
+              </button>
+              <button
+                onClick={() => setTab('register')}
+                className={tabBase}
+                style={tab === 'register'
+                  ? { background: '#ffffff', color: '#043941', boxShadow: '0 1px 4px rgba(4,57,65,0.12)' }
+                  : { color: '#045f6c' }}>
+                Regístrate
+              </button>
             </div>
 
-            {/* Footer del card */}
-            <div
-              className="px-8 py-4 text-center text-xs"
-              style={{ background: '#f0faf5', color: '#045f6c' }}
-            >
+            {/* Formulario */}
+            <div className="p-8" style={{ background: '#ffffff' }}>
+              {tab === 'login' ? (
+                <>
+                  <h1 className="text-2xl font-extrabold mb-1" style={{ color: '#043941' }}>Iniciar sesión</h1>
+                  <p className="text-sm mb-8" style={{ color: '#045f6c' }}>Ingresa tus credenciales para acceder</p>
+                  <LoginForm onSuccess={() => navigate('/')} />
+                </>
+              ) : (
+                <>
+                  <h1 className="text-2xl font-extrabold mb-1" style={{ color: '#043941' }}>Crear cuenta</h1>
+                  <p className="text-sm mb-6" style={{ color: '#045f6c' }}>Regístrate con los datos de tu taller</p>
+                  <RegisterForm />
+                </>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="px-8 py-4 text-center text-xs" style={{ background: '#f0faf5', color: '#045f6c' }}>
               ¿Problemas para acceder? Contacta a tu coordinador UGEL
             </div>
           </div>

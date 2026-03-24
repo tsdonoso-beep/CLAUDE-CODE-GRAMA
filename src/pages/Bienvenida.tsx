@@ -1,5 +1,6 @@
 // src/pages/Bienvenida.tsx
 import { useEffect, useRef, useState } from 'react'
+import { useAuth } from '@/contexts/AuthContext'
 import { talleresConfig } from '@/data/talleresConfig'
 import { TallerCard } from '@/components/hub/TallerCard'
 import { GramaLogo } from '@/components/GramaLogo'
@@ -82,8 +83,9 @@ const FEATURES = [
 
 // ── Componente principal ────────────────────────────────────────────────────
 export default function Bienvenida() {
-  const handleLogout = () => {
-    sessionStorage.removeItem('grama-auth')
+  const { signOut } = useAuth()
+  const handleLogout = async () => {
+    await signOut()
     window.location.href = '/login'
   }
 
