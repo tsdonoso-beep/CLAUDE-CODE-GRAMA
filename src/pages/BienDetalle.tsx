@@ -145,12 +145,8 @@ export default function BienDetalle() {
                 <div className="w-full flex flex-col gap-3">
                   {/* Cover card — zoom al producto */}
                   <div
-                    className="w-full rounded-2xl overflow-hidden cursor-pointer relative group"
-                    style={{
-                      aspectRatio: '4/3',
-                      background: '#f8fffe',
-                      boxShadow: '0 4px 20px rgba(4,57,65,0.10)',
-                    }}
+                    className="w-full aspect-video rounded-xl overflow-hidden cursor-pointer relative group"
+                    style={{ background: '#f8fffe' }}
                     onClick={() => setShowPDFModal(true)}
                   >
                     <img
