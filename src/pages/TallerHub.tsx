@@ -259,8 +259,8 @@ export default function TallerHub() {
 
                     {/* Estado */}
                     <div
-                      className="flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold shrink-0"
-                      style={{ background: conf.bg, color: conf.color, minWidth: '90px' }}
+                      className="flex items-center justify-center gap-1.5 py-1 rounded-full text-[10px] font-bold shrink-0"
+                      style={{ background: conf.bg, color: conf.color, width: '102px' }}
                     >
                       <StatusIcon size={11} />
                       {conf.label}

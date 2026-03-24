@@ -24,7 +24,7 @@ const ESTADO_CONFIG: Record<EstadoModulo, {
   completado: {
     bg: '#d2ffe1',
     border: '#00c16e',
-    badge: '✅ Completado',
+    badge: 'Completado',
     badgeBg: '#00c16e',
     badgeText: '#ffffff',
     icon: CheckCircle2,
@@ -33,7 +33,7 @@ const ESTADO_CONFIG: Record<EstadoModulo, {
   en_curso: {
     bg: '#ffffff',
     border: '#02d47e',
-    badge: '⏳ En curso',
+    badge: 'En curso',
     badgeBg: '#e3f8fb',
     badgeText: '#045f6c',
     icon: PlayCircle,
@@ -42,7 +42,7 @@ const ESTADO_CONFIG: Record<EstadoModulo, {
   disponible: {
     bg: '#ffffff',
     border: '#e3f8fb',
-    badge: '▶ Disponible',
+    badge: 'Disponible',
     badgeBg: '#e3f8fb',
     badgeText: '#045f6c',
     icon: PlayCircle,
@@ -51,7 +51,7 @@ const ESTADO_CONFIG: Record<EstadoModulo, {
   bloqueado: {
     bg: '#f8fafc',
     border: '#e2e8f0',
-    badge: '🔒 Bloqueado',
+    badge: 'Bloqueado',
     badgeBg: '#f1f5f9',
     badgeText: '#94a3b8',
     icon: Lock,
@@ -116,9 +116,10 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
                 M{modulo.numero} · {modulo.nombre}
               </h3>
               <span
-                className="inline-flex items-center justify-center text-xs px-2.5 py-0.5 rounded-full font-semibold"
-                style={{ background: config.badgeBg, color: config.badgeText, minWidth: '90px' }}
+                className="inline-flex items-center justify-center gap-1.5 text-xs py-0.5 rounded-full font-semibold"
+                style={{ background: config.badgeBg, color: config.badgeText, width: '102px' }}
               >
+                <Icon size={11} color={config.iconColor} />
                 {config.badge}
               </span>
               {modulo.requiereAprobacion && !bloqueado && (

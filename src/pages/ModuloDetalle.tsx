@@ -418,8 +418,8 @@ export default function ModuloDetalle() {
                                     </div>
                                     <button
                                       onClick={() => handleOpenContent(contenido)}
-                                      className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold text-white shrink-0 transition-all hover:opacity-90"
-                                      style={{ background: contenido.tipo === 'ACTIVIDAD_PRACTICA' ? '#f59e0b' : '#043941' }}
+                                      className="inline-flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold text-white shrink-0 transition-all hover:opacity-90"
+                                      style={{ background: contenido.tipo === 'ACTIVIDAD_PRACTICA' ? '#f59e0b' : '#043941', width: '108px' }}
                                     >
                                       {contenido.tipo === 'DESCARGABLE' ? (
                                         <>Descargar <Download size={11} /></>
