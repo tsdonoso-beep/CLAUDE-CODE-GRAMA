@@ -1,7 +1,8 @@
 // src/pages/Bienvenida.tsx
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { talleresConfig } from '@/data/talleresConfig'
+import { getTalleresDeIE, INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
 import { TallerCard } from '@/components/hub/TallerCard'
 import { GramaLogo } from '@/components/GramaLogo'
 import { Layers, Clock, Award, Download, ChevronDown, CheckCircle, BookOpen } from 'lucide-react'
@@ -83,7 +84,22 @@ const FEATURES = [
 
 // ── Componente principal ────────────────────────────────────────────────────
 export default function Bienvenida() {
-  const { signOut } = useAuth()
+  const { signOut, profile, allUnlocked } = useAuth()
+
+  const talleresDisponibles = useMemo(() => {
+    if (allUnlocked || !profile?.ie_id) return talleresConfig;
+    const slugs = getTalleresDeIE(profile.ie_id);
+    return slugs.length > 0
+      ? talleresConfig.filter(t => slugs.includes(t.slug))
+      : talleresConfig;
+  }, [profile?.ie_id, allUnlocked]);
+
+  const ie = profile?.ie_id
+    ? INSTITUCIONES_EDUCATIVAS.find(ie => ie.id === profile.ie_id)
+    : null;
+
+  const nTalleres = talleresDisponibles.length;
+
   const handleLogout = async () => {
     await signOut()
     window.location.href = '/login'
@@ -252,13 +268,13 @@ export default function Bienvenida() {
 
             <h3 className="text-white font-extrabold text-lg mb-1">Tu programa formativo</h3>
             <p className="text-xs mb-6" style={{ color: 'rgba(255,255,255,0.35)' }}>
-              9 talleres EPT · modalidad híbrida
+              {nTalleres} {ie && !allUnlocked ? `talleres en ${ie.nombre}` : 'talleres EPT'} · modalidad híbrida
             </p>
 
             {/* 4 stat chips */}
             <div className="grid grid-cols-2 gap-3 mb-7">
               {[
-                { value: '9', label: 'Talleres EPT', icon: BookOpen },
+                { value: String(nTalleres), label: ie && !allUnlocked ? 'Talleres en tu IE' : 'Talleres EPT', icon: BookOpen },
                 { value: '7', label: 'Módulos', icon: Layers },
                 { value: '150h', label: 'Formación', icon: Clock },
                 { value: '🎓', label: 'Certificación', icon: null },
@@ -325,7 +341,7 @@ export default function Bienvenida() {
       {/* ── STATS STRIP (continuación natural del hero) ───────────────────── */}
       <div style={{ background: '#032c32' }}>
         <div className="max-w-6xl mx-auto px-6 sm:px-10 py-10 grid grid-cols-2 sm:grid-cols-4 gap-8">
-          <AnimatedStat target={9}   label="Talleres EPT" />
+          <AnimatedStat target={nTalleres} label={ie && !allUnlocked ? 'Talleres en tu IE' : 'Talleres EPT'} />
           <AnimatedStat target={150} suffix="h" label="Modalidad híbrida" />
           <AnimatedStat target={7}   label="Módulos de formación" />
           <AnimatedStat target="🎓"  label="Certificación Inroprin" />
@@ -374,14 +390,14 @@ export default function Bienvenida() {
             <div>
               <p className="overline-label mb-1" style={{ color: '#02d47e' }}>Elige tu taller</p>
               <h2 className="text-xl font-extrabold" style={{ color: '#043941' }}>
-                9 especialidades técnicas
+                {nTalleres} especialidad{nTalleres !== 1 ? 'es' : ''}{ie && !allUnlocked ? ' disponibles en tu IE' : ' técnicas'}
               </h2>
             </div>
             <div className="hidden sm:block h-px flex-1" style={{ background: 'rgba(4,57,65,0.08)', maxWidth: 300 }} />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {talleresConfig.map((taller, i) => (
+            {talleresDisponibles.map((taller, i) => (
               <TallerCard key={taller.id} taller={taller} index={i} />
             ))}
           </div>

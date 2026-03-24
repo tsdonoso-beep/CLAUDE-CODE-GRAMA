@@ -1,16 +1,35 @@
-import { useState, memo } from "react";
+import { useState, memo, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { talleresConfig, TallerConfig } from "@/data/talleresConfig";
+import { getTalleresDeIE, INSTITUCIONES_EDUCATIVAS } from "@/data/ieData";
+import { useAuth } from "@/contexts/AuthContext";
 import { Search, ArrowRight } from "lucide-react";
 import { PageHeader } from "@/components/AppLayout";
 
 const Hub = () => {
   const [search, setSearch] = useState("");
+  const { profile, allUnlocked } = useAuth();
 
-  const filtered = talleresConfig.filter((t) =>
+  const talleresDisponibles = useMemo(() => {
+    if (allUnlocked || !profile?.ie_id) return talleresConfig;
+    const slugs = getTalleresDeIE(profile.ie_id);
+    return slugs.length > 0
+      ? talleresConfig.filter(t => slugs.includes(t.slug))
+      : talleresConfig;
+  }, [profile?.ie_id, allUnlocked]);
+
+  const ie = profile?.ie_id
+    ? INSTITUCIONES_EDUCATIVAS.find(ie => ie.id === profile.ie_id)
+    : null;
+
+  const filtered = talleresDisponibles.filter((t) =>
     t.nombre.toLowerCase().includes(search.toLowerCase()) ||
     t.descripcion.toLowerCase().includes(search.toLowerCase())
   );
+
+  const subtitulo = ie && !allUnlocked
+    ? `${talleresDisponibles.length} talleres disponibles en tu IE · 150 horas de formación`
+    : `Explora los 9 talleres de capacitación · 150 horas de formación`;
 
   return (
     <>
@@ -23,7 +42,7 @@ const Hub = () => {
             Bienvenido, Docente&nbsp;👋
           </h1>
           <p className="text-sm text-muted-foreground mt-1.5">
-            Explora los 9 talleres de capacitación&nbsp;·&nbsp;150 horas de formación
+            {subtitulo}
           </p>
           <div className="flex items-center gap-3 mt-5">
             <div className="relative flex-1 max-w-2xl">
@@ -37,7 +56,7 @@ const Hub = () => {
               />
             </div>
             <span className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-primary text-primary-foreground shadow-sm">
-              Todos
+              {ie && !allUnlocked ? `${talleresDisponibles.length} disponibles` : 'Todos'}
             </span>
           </div>
         </div>

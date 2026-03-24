@@ -12,11 +12,13 @@ import { useNavigate } from 'react-router-dom'
 
 interface DocenteRow extends Profile {
   completados: number
+  visualizados: number   // completado + en_progreso
   total: number
   porcentaje: number
+  moduloActual: string | null  // "M0", "M1", etc.
 }
 
-// Precomputa total de contenidos por taller (costoso → memoizar una sola vez)
+// Precomputa total de contenidos por taller
 function getTotalContenidosByTaller(slug: string): number {
   if (!slug) return 0
   try {
@@ -31,13 +33,26 @@ function getTotalContenidosByTaller(slug: string): number {
   }
 }
 
+// Extrae el número de módulo más alto con actividad desde los contenido_ids
+function calcModuloActual(contenidoIds: string[]): string | null {
+  let maxM = -1
+  for (const id of contenidoIds) {
+    const m = id.match(/-m(\d+)[-_]/)
+    if (m) {
+      const n = parseInt(m[1])
+      if (n > maxM) maxM = n
+    }
+  }
+  return maxM >= 0 ? `M${maxM}` : null
+}
+
 function formatDate(iso: string) {
   if (!iso) return '—'
   return new Intl.DateTimeFormat('es-PE', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(iso))
 }
 
 function downloadCSV(rows: DocenteRow[]) {
-  const headers = ['Nombre', 'Email', 'IE', 'Región', 'Taller', 'Completados', 'Total', 'Progreso %', 'Último acceso', 'Fecha registro']
+  const headers = ['Nombre', 'Email', 'IE', 'Región', 'Taller', 'Completados', 'Visualizados', 'Total', 'Progreso %', 'Módulo actual', 'Último acceso', 'Fecha registro']
   const data = rows.map(d => {
     const ie = INSTITUCIONES_EDUCATIVAS.find(ie => ie.id === d.ie_id)
     const taller = talleresConfig.find(t => t.slug === d.taller_slug)
@@ -48,13 +63,15 @@ function downloadCSV(rows: DocenteRow[]) {
       ie?.region ?? '—',
       taller?.nombre ?? d.taller_slug ?? '—',
       d.completados,
+      d.visualizados,
       d.total,
       d.porcentaje,
+      d.moduloActual ?? '—',
       formatDate(d.last_seen_at),
       formatDate(d.created_at),
     ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')
   })
-  const csv = '\uFEFF' + [headers.join(','), ...data].join('\n')  // BOM para Excel
+  const csv = '\uFEFF' + [headers.join(','), ...data].join('\n')
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
@@ -77,31 +94,50 @@ export default function Admin() {
   async function fetchData() {
     setLoading(true)
 
-    // Obtener todos los perfiles de docentes
+    // 1. Todos los perfiles docentes
     const { data: profiles } = await supabase
       .from('profiles')
       .select('*')
       .eq('role', 'docente')
       .order('created_at', { ascending: false })
 
-    if (!profiles) { setLoading(false); return }
+    if (!profiles || profiles.length === 0) { setLoading(false); return }
 
-    // Obtener conteo de contenidos completados por usuario
+    // 2. Todos los registros de progreso para esos docentes
+    const docenteIds = profiles.map(p => p.id)
     const { data: progresos } = await supabase
       .from('progreso_contenidos')
-      .select('usuario_id')
-      .eq('estado', 'completado')
+      .select('usuario_id, contenido_id, estado')
+      .in('usuario_id', docenteIds)
 
-    const completadosPorUsuario: Record<string, number> = {}
+    // 3. Agrupar por usuario
+    type UserStats = { completados: number; visualizados: number; ids: string[] }
+    const statsPorUsuario: Record<string, UserStats> = {}
+
     progresos?.forEach(p => {
-      completadosPorUsuario[p.usuario_id] = (completadosPorUsuario[p.usuario_id] ?? 0) + 1
+      if (!statsPorUsuario[p.usuario_id]) {
+        statsPorUsuario[p.usuario_id] = { completados: 0, visualizados: 0, ids: [] }
+      }
+      statsPorUsuario[p.usuario_id].visualizados++
+      statsPorUsuario[p.usuario_id].ids.push(p.contenido_id)
+      if (p.estado === 'completado') {
+        statsPorUsuario[p.usuario_id].completados++
+      }
     })
 
     const rows: DocenteRow[] = profiles.map(p => {
-      const completados = completadosPorUsuario[p.id] ?? 0
+      const stats = statsPorUsuario[p.id] ?? { completados: 0, visualizados: 0, ids: [] }
       const total = getTotalContenidosByTaller(p.taller_slug ?? '')
-      const porcentaje = total > 0 ? Math.round((completados / total) * 100) : 0
-      return { ...(p as Profile), completados, total, porcentaje }
+      const porcentaje = total > 0 ? Math.round((stats.completados / total) * 100) : 0
+      const moduloActual = calcModuloActual(stats.ids)
+      return {
+        ...(p as Profile),
+        completados: stats.completados,
+        visualizados: stats.visualizados,
+        total,
+        porcentaje,
+        moduloActual,
+      }
     })
 
     setDocentes(rows)
@@ -131,7 +167,7 @@ export default function Admin() {
         <div className="flex items-center gap-4">
           <GramaLogo variant="light" size="sm" />
           <div className="h-5 w-px" style={{ background: 'rgba(255,255,255,0.2)' }} />
-          <span className="text-sm font-bold text-white">Panel Administrador</span>
+          <span className="text-sm font-bold text-white">Panel Seguimiento</span>
         </div>
         <div className="flex items-center gap-3">
           <span className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{profile?.email}</span>
@@ -206,7 +242,7 @@ export default function Admin() {
               <table className="w-full text-sm">
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                    {['Docente', 'IE', 'Taller', 'Progreso', 'Último acceso', 'Registro'].map(h => (
+                    {['Docente', 'IE', 'Taller', 'Módulo', 'Progreso', 'Último acceso', 'Registro'].map(h => (
                       <th key={h} className="text-left px-5 py-3 text-xs font-bold"
                         style={{ color: 'rgba(255,255,255,0.35)' }}>{h}</th>
                     ))}
@@ -235,6 +271,16 @@ export default function Admin() {
                           </span>
                         </td>
                         <td className="px-5 py-3.5">
+                          {d.moduloActual ? (
+                            <span className="text-xs font-black px-2.5 py-1 rounded-lg"
+                              style={{ background: 'rgba(34,211,238,0.12)', color: '#22d3ee' }}>
+                              {d.moduloActual}
+                            </span>
+                          ) : (
+                            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>—</span>
+                          )}
+                        </td>
+                        <td className="px-5 py-3.5">
                           <div className="flex items-center gap-2">
                             <div className="flex-1 h-1.5 rounded-full max-w-[80px]" style={{ background: 'rgba(255,255,255,0.1)' }}>
                               <div className="h-full rounded-full transition-all"
@@ -245,8 +291,13 @@ export default function Admin() {
                             </span>
                           </div>
                           <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                            {d.completados}/{d.total} contenidos
+                            {d.completados}/{d.total} completados
                           </p>
+                          {d.visualizados > d.completados && (
+                            <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.2)' }}>
+                              {d.visualizados} visualizados
+                            </p>
+                          )}
                         </td>
                         <td className="px-5 py-3.5 text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>
                           {formatDate(d.last_seen_at)}
