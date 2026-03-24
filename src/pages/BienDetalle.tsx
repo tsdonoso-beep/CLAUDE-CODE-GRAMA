@@ -10,7 +10,7 @@ import {
 import { useTaller } from '@/hooks/useTaller'
 import { eppPorTaller } from '@/data/eppData'
 import type { EPPItem } from '@/data/eppData'
-import { getManualPDF, getDriveEmbedUrl, getDriveDownloadUrl } from '@/data/manualesPDF'
+import { getManualPDF, getDriveEmbedUrl, getDriveDownloadUrl, getDriveThumbnailUrl } from '@/data/manualesPDF'
 
 type TabId = 'manual' | 'video'
 
@@ -143,17 +143,27 @@ export default function BienDetalle() {
                 </>
               ) : manualUrl ? (
                 <>
+                  {/* Thumbnail página 1 del PDF */}
                   <div
-                    className="h-16 w-16 rounded-2xl flex items-center justify-center mb-4"
-                    style={{ background: '#e3f8fb' }}
+                    className="w-full rounded-xl overflow-hidden mb-4 border cursor-pointer relative group"
+                    style={{ borderColor: '#e3f8fb', aspectRatio: '3/4', maxWidth: '200px' }}
+                    onClick={() => setShowPDFModal(true)}
                   >
-                    <FileText size={28} style={{ color: '#045f6c' }} />
+                    <img
+                      src={getDriveThumbnailUrl(manualUrl)}
+                      alt="Vista previa del manual"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div
+                      className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ background: 'rgba(4,57,65,0.55)' }}
+                    >
+                      <span className="text-xs font-bold text-white">Ver manual</span>
+                    </div>
                   </div>
                   <p className="text-sm font-semibold mb-1" style={{ color: '#043941' }}>
                     Manual de uso <span style={{ fontWeight: 800 }}>y mantenimiento</span>
-                  </p>
-                  <p className="text-xs text-center mb-4" style={{ color: '#94a3b8' }}>
-                    PDF disponible para visualización y descarga
                   </p>
                   <button
                     onClick={() => setShowPDFModal(true)}
@@ -161,7 +171,7 @@ export default function BienDetalle() {
                     style={{ background: '#043941', color: '#02d47e' }}
                   >
                     <FileText size={14} />
-                    Ver manual
+                    Ver manual completo
                   </button>
                 </>
               ) : (

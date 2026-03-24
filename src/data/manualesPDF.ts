@@ -19,6 +19,12 @@ export function getDriveDownloadUrl(driveUrl: string): string {
   return id ? `https://drive.google.com/uc?export=download&id=${id}` : ''
 }
 
+// Thumbnail de la página 1 del PDF (imagen de vista previa)
+export function getDriveThumbnailUrl(driveUrl: string, width = 400): string {
+  const id = getDriveId(driveUrl)
+  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w${width}` : ''
+}
+
 // tallerSlug → bien.n → Drive URL
 export const manualesPDFPorBien: Record<string, Record<number, string>> = {
   electricidad: {
