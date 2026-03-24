@@ -46,16 +46,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Cargar sesión existente al montar
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      setSession(session)
-      setUser(session?.user ?? null)
-      if (session?.user) {
-        const p = await fetchProfile(session.user.id)
-        setProfile(p)
-        touchLastSeen(session.user.id)
-      }
-      setLoading(false)
-    })
+    supabase.auth.getSession()
+      .then(async ({ data: { session } }) => {
+        setSession(session)
+        setUser(session?.user ?? null)
+        if (session?.user) {
+          const p = await fetchProfile(session.user.id)
+          setProfile(p)
+          touchLastSeen(session.user.id)
+        }
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
 
     // Escuchar cambios de sesión
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
