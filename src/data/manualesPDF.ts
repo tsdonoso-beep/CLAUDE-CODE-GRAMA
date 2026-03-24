@@ -27,6 +27,90 @@ export function getDriveThumbnailUrl(driveUrl: string, width = 400): string {
 
 // tallerSlug → bien.n → Drive URL
 export const manualesPDFPorBien: Record<string, Record<number, string>> = {
+  'mecanica-automotriz': {
+    // ── Herramientas manuales ──────────────────────────────────────────────
+    129: 'https://drive.google.com/file/d/1AJWbait30iOj_ub5dKWiZs7ynEKr5qFp/view',  // Aceitera
+     70: 'https://drive.google.com/file/d/16u9VXfQFpoR4DI9Ult0x2r0lYBlvAnxX/view',  // Alicate de presión
+     93: 'https://drive.google.com/file/d/1jF6t5bHjCKX1DGlhkEL5aQpB5CJr3bz8/view',  // Arco de sierra
+    133: 'https://drive.google.com/file/d/1rhjw4dUJ9ZPWf5PPBIS-XSLzjZ7QrTpO/view',  // Bandeja para recolectar aceite
+    105: 'https://drive.google.com/file/d/10vczpodcyUklVGpazpmDN_j_wIirvOtA/view',  // Batería
+     71: 'https://drive.google.com/file/d/1OFeNZVvWqk1ioszSAbmBjIwN4Dk8vm-O/view',  // Calibrador digital
+    127: 'https://drive.google.com/file/d/10zRCLlDKsQSoqFDSi9gIBxpfA5F8X_T_/view',  // Cepillo de acero
+    117: 'https://drive.google.com/file/d/132z7BEIL6-G6zQ61a-ToDX8HLVQbeXq9/view',  // Compresímetro de anillos
+    106: 'https://drive.google.com/file/d/1W4XA_es02zLKqEfQ-kR0VL34DfJAetdE/view',  // Cúter
+    134: 'https://drive.google.com/file/d/1loUXEXN_dEtkBE_v363rzZMJSggkQbMe/view',  // Embudo de uso industrial
+     96: 'https://drive.google.com/file/d/1xy611aU5Q8DEljUDmv2GSNOhG7OO3cZu/view',  // Engrasadora
+     73: 'https://drive.google.com/file/d/11nY2CV68Rpc_H6BcfmZMqusZuE89z0Cf/view',  // Extractor de palier
+     63: 'https://drive.google.com/file/d/1PyD5K8uABTcdOM5T6UIItf-R2DQmmayy/view',  // Extractor de resortes (Compresor de resortes de suspensión)
+     67: 'https://drive.google.com/file/d/1jNU1ua9OnvWBdEjTEd40b6Ngh10EkosT/view',  // Extractor de Volante
+    135: 'https://drive.google.com/file/d/1rXneOCKRQ0fwgAhyMxheG6zmWrxl3Ztq/view',  // Galonera
+     75: 'https://drive.google.com/file/d/1v561f9HigNGxGM12XlcqthbrRXAWHC2W/view',  // Goniómetro digital
+     94: 'https://drive.google.com/file/d/1nuDAC3Szwt11XoGg-eoX6C-hcMKngUru/view',  // Herramienta para remover resorte de freno
+     69: 'https://drive.google.com/file/d/1jPfR9UsDdh3bK9ipJqHonNBw7hxRPylq/view',  // Juego de alicates
+     89: 'https://drive.google.com/file/d/1PeB9pQZl2sphb34kZIqgqm-pXF3zw_Ss/view',  // Juego de brocas
+    130: 'https://drive.google.com/file/d/1UJIMzY_9RKppLzbmdNnE88aBP3X4hM3s/view',  // Juego de Dados para bujías
+     74: 'https://drive.google.com/file/d/1IMX7uKNP4VpezY_lQJhA82_RgUJCr40Z/view',  // Juego de destornilladores (6) — zona herramientas
+    107: 'https://drive.google.com/file/d/1IMX7uKNP4VpezY_lQJhA82_RgUJCr40Z/view',  // Juego de destornilladores (6) — zona eléctrica (mismo manual)
+     87: 'https://drive.google.com/file/d/1GJMZu42_oUe457cjm1mCDoredRkvvUx6/view',  // Juego de Extractor de rodajes
+     88: 'https://drive.google.com/file/d/1baMTkE0yXtTFVcFD6-mXm1gb_W5_d3ak/view',  // Juego de Gauge de láminas
+    121: 'https://drive.google.com/file/d/1EOUjDTU1-Y461XjGuqvuPDOOhcwJWwtT/view',  // Juego de lapeadores de válvula
+     95: 'https://drive.google.com/file/d/1MYPbykeGqqsGxRi0gm7y7IWQFQrUaYJA/view',  // Juego de limas
+    123: 'https://drive.google.com/file/d/1lAaL0gY0nCWn7ApKhTAO0JQ0_caBIwRV/view',  // Juego de llaves Allen
+     62: 'https://drive.google.com/file/d/1jhc30LGc2GKoIgMq7z_bCTl-K0I0pT_3/view',  // Juego de llaves de dado
+     61: 'https://drive.google.com/file/d/1i5jwutCsOMko6576IcMdApNnaw5A7G1m/view',  // Juego de llaves de ruedas (Llave de cruz)
+    131: 'https://drive.google.com/file/d/10Joar6FLVssla4-4-zJdLP_Bq1dOfM7Z/view',  // Juego de llaves para filtros de aceite
+    120: 'https://drive.google.com/file/d/1OHSFegGB0YGRLTdGNMOgEfLNGNmV2wX5/view',  // Juego de micrómetro de interiores
+     64: 'https://drive.google.com/file/d/1QSEdkB7xINGBi0l2P_vYx6rLaUs8W90h/view',  // Kit de llaves mixtas boca-corona
+     86: 'https://drive.google.com/file/d/1937qbmDC7oeklWsvhMv8t7ZIowbaCRwX/view',  // Kit de Reloj comparador
+     90: 'https://drive.google.com/file/d/1nFSF45DypKAsUqEh5DKTI4vj_0f4FYsq/view',  // Kit de Terrajas y machos (mm y pulgadas)
+    125: 'https://drive.google.com/file/d/1FyumDpo783NkMd4lm3uHA9BdjkzmJ1iR/view',  // Kit para desmontaje de sensores
+     65: 'https://drive.google.com/file/d/1Ea2WBBBjaIhpZkMFb-JqJCAYqhlPlrBE/view',  // Llave ajustable
+     66: 'https://drive.google.com/file/d/1Rp7EyTm2kiJPThwLL-R6oXspuO_VBnju/view',  // Llave stillson
+     76: 'https://drive.google.com/file/d/1DwB8EN7b921fxPhFQixzWMuVRXlUuDxG/view',  // Manómetro
+     68: 'https://drive.google.com/file/d/1NGlHhCUmdt92hnSrq8PR-bDP7mU9Q_BG/view',  // Martillo de bola
+     97: 'https://drive.google.com/file/d/1uwRPAH1tw6nRrPW7FjWj9l9idzqVpujN/view',  // Mazo de goma
+     72: 'https://drive.google.com/file/d/1FsUe-pw9HhKGGiVlSbhBjy9-ZqlN4-s_/view',  // Micrómetro digital
+    128: 'https://drive.google.com/file/d/1PLHWKnfEt8N9oUpeCvjZB4NreCQyziGI/view',  // Piqueta martillo cincel
+     91: 'https://drive.google.com/file/d/1MHqIOQxy7L6MvagV6fMaiW5MmLGiOzjr/view',  // Prensa C
+     92: 'https://drive.google.com/file/d/10v31Bar5N7AgaXfhPhdTmStE60I2TNdG/view',  // Rayador
+    124: 'https://drive.google.com/file/d/1tIqnc_9x7WEEsQ2aYNl4GSEXNY_1HG9q/view',  // Recogedor magnético telescópico
+    118: 'https://drive.google.com/file/d/1zz0NRuKyPQA61iNs8m-X4aQ7WM6mowBb/view',  // Recolector de aceite
+    126: 'https://drive.google.com/file/d/1q676z2XQUvpenl1FMKxlLQKPDCDxILwN/view',  // Torquímetro
+
+    // ── Mobiliario ─────────────────────────────────────────────────────────
+     80: 'https://drive.google.com/file/d/1thj1CxX6Oj8nQRFAiaQjiClzNNdPfcoH/view',  // Anaquel de metal (1.00 x 0.40 x 1.80 m)
+     79: 'https://drive.google.com/file/d/1qdFTEHRFCEQoH5YvW1sMpQ5AXaPP34mk/view',  // Armario de Metal — zona taller
+     19: 'https://drive.google.com/file/d/1qdFTEHRFCEQoH5YvW1sMpQ5AXaPP34mk/view',  // Armario de Metal — zona TIC (mismo manual)
+     57: 'https://drive.google.com/file/d/1wuEPDuQl6rf5vI6OitDxA1Fzg-J5Dye4/view',  // Banco de trabajo con tornillo de banco
+     81: 'https://drive.google.com/file/d/1F-ccuPP9NNIKuyIvlpOqPxnaPga1QiyE/view',  // Carro porta herramientas
+     17: 'https://drive.google.com/file/d/1yX25P3Ur_1cMk2uQD1CFq3A6AK4TPtW0/view',  // Escritorio para el docente
+     58: 'https://drive.google.com/file/d/1Qs-ZWsGcmnw5gA1Qm7tOeCy4aT5SOUFx/view',  // Lavadero de 1 Poza
+    142: 'https://drive.google.com/file/d/1TVNyCWeqH4TiliAfhsbwT7wzZX0v0puT/view',  // Mesa de apoyo
+     10: 'https://drive.google.com/file/d/13w8H_tJNLlIfB0OwR7EWXOK7YiOpW7Z3/view',  // Mesa de Computadora para estudiante
+     11: 'https://drive.google.com/file/d/1j4_kzxnXgvVoTRZRgI0GiPVT5MSJ-w6G/view',  // Mesa Discapacitado
+     24: 'https://drive.google.com/file/d/1VUTLcXM1zUUxR2nJdGfFKlHouPC9ohZs/view',  // Mueble bajo (1000 x 600 x 900 mm)
+     18: 'https://drive.google.com/file/d/1Em45tac28jmQdCpa6oG9YpWabJPF3N60/view',  // Silla para el docente
+     12: 'https://drive.google.com/file/d/16EVFo910GKOJ6JfpTndGNY2NM2VAJBAn/view',  // Silla para Estudiante
+
+    // ── Material pedagógico ────────────────────────────────────────────────
+    154: 'https://drive.google.com/file/d/1xg2SGJ0hdZtohZLeXU0Fylf8erM3yZox/view',  // Láminas señalética y símbolos de seguridad (verificar n)
+     22: 'https://drive.google.com/file/d/1rfV-Fitax8D3aKEt1_YZtrSD2Bl-SV8X/view',  // Juego de Modelos piezas mecánicas (proyecciones)
+     20: 'https://drive.google.com/file/d/1oYxbtHjdC20bieOTAWpFTBwBWcXTkS7N/view',  // Kit Lienzo metodologías de diseño
+     26: 'https://drive.google.com/file/d/1boyNebGyyjA4GNWFbda3IMc6T3mWsloB/view',  // Kit Lienzo flujogramas DOP y DAP
+     25: 'https://drive.google.com/file/d/1bXocN2CAoDuEOUWQ5Lc9yFyfzews52vs/view',  // Kit Lienzo modelos de negocios
+
+    // ── EPP y seguridad ────────────────────────────────────────────────────
+    153: 'https://drive.google.com/file/d/1RAtRRsdU-1JD_QusaGqEokLd1DbxSmKk/view',  // Botiquín
+    150: 'https://drive.google.com/file/d/1HdhOyJNfpdBp3XK56meDtxfNsUpI54Tm/view',  // Escarpines
+    151: 'https://drive.google.com/file/d/1o0h3keLS2HbnJTpD8hUbNV1ijxOYPVRZ/view',  // Extintor CO2
+    152: 'https://drive.google.com/file/d/1LTgO_8Rj6MUTXyCkseH7DeTX-KvOXQmq/view',  // Extintor PQS
+    145: 'https://drive.google.com/file/d/1O8--cZQbrpgLYgD48EkiAod70EFkne39/view',  // Guantes de mecánico
+    147: 'https://drive.google.com/file/d/1GdvNmmLg4tuj8Z6zLUlTfgNAKDawK4kb/view',  // Guantes para soldar
+    144: 'https://drive.google.com/file/d/1CohewqTDwhrWi7hn5ipYf70cpxzcfFcW/view',  // Lentes de protección de policarbonato
+    148: 'https://drive.google.com/file/d/1AaVfg7Gy2LiuSYMbF1OBQ6VWP60QmFe7/view',  // Mandil de serraje
+    149: 'https://drive.google.com/file/d/1sZAuOrSBPpgXaHgb-z7svSbrgqQ191j7/view',  // Manga para soldar
+    146: 'https://drive.google.com/file/d/1MG38Fz7zb7wdZbkohrIp8xs3MfOmUO-o/view',  // Máscara electrónica para soldar
+  },
   electricidad: {
     42:  'https://drive.google.com/file/d/1dfvV1tuf331b2dEorcn9f_wDVWERmUa9/view',  // Alicate de corte
     43:  'https://drive.google.com/file/d/18eHG8mf4Zv6b8uc87_7i2E-4w42hmqam/view',  // Alicate de punta curva
