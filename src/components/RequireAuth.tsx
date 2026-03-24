@@ -2,10 +2,16 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 
+const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
+  import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
+
 export function RequireAuth() {
   const { user, loading } = useAuth()
 
-  if (loading) {
+  // En modo desarrollo, aceptar también el bypass por sessionStorage
+  const devBypass = DEV_MODE && sessionStorage.getItem('grama-auth') === 'true'
+
+  if (loading && !devBypass) {
     return (
       <div className="flex-1 flex items-center justify-center h-screen" style={{ background: '#043941' }}>
         <div className="flex flex-col items-center gap-3">
@@ -21,6 +27,6 @@ export function RequireAuth() {
     )
   }
 
-  if (!user) return <Navigate to="/login" replace />
+  if (!user && !devBypass) return <Navigate to="/login" replace />
   return <Outlet />
 }

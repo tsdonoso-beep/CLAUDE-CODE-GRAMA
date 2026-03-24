@@ -5,7 +5,6 @@ import { Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
 import { supabase } from '@/lib/supabase'
 import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
-import { talleresConfig } from '@/data/talleresConfig'
 
 type Tab = 'login' | 'register'
 
@@ -35,6 +34,14 @@ function GramaInput({
   )
 }
 
+// Credenciales de desarrollo — activas cuando Supabase no está configurado
+const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
+  import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
+const DEV_USERS = [
+  { email: 'admin@grama.pe', password: 'grama2025' },
+  { email: 'docente@grama.pe', password: 'grama2026' },
+]
+
 // ── Tab: Ingresar ──────────────────────────────────────────────────────────
 function LoginForm({ onSuccess }: { onSuccess: () => void }) {
   const [email, setEmail] = useState('')
@@ -47,6 +54,20 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
     e.preventDefault()
     setError('')
     setLoading(true)
+
+    // Bypass de desarrollo cuando Supabase no está configurado
+    if (DEV_MODE) {
+      const validDev = DEV_USERS.find(u => u.email === email && u.password === password)
+      if (validDev) {
+        sessionStorage.setItem('grama-auth', 'true')
+        onSuccess()
+        return
+      }
+      setError('Modo desarrollo — usa admin@grama.pe/grama2025 o docente@grama.pe/grama2026')
+      setLoading(false)
+      return
+    }
+
     const { error: authError } = await supabase.auth.signInWithPassword({ email, password })
     if (authError) {
       setError('Credenciales incorrectas. Verifica tu correo y contraseña.')
@@ -118,25 +139,13 @@ function RegisterForm() {
   const [password, setPassword] = useState('')
   const [showPass, setShowPass] = useState(false)
   const [ieId, setIeId] = useState<number | ''>('')
-  const [tallerSlug, setTallerSlug] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const talleresDeLaIE = ieId !== ''
-    ? INSTITUCIONES_EDUCATIVAS.find(ie => ie.id === ieId)?.talleres ?? []
-    : []
-
-  const tallerOptions = talleresConfig.filter(t => talleresDeLaIE.includes(t.slug))
-
-  function handleIeChange(id: number | '') {
-    setIeId(id)
-    setTallerSlug('')
-  }
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!nombre.trim() || !ieId || !tallerSlug) {
+    if (!nombre.trim() || !ieId) {
       setError('Completa todos los campos.')
       return
     }
@@ -150,7 +159,6 @@ function RegisterForm() {
         data: {
           nombre_completo: nombre.trim(),
           ie_id: String(ieId),
-          taller_slug: tallerSlug,
         },
       },
     })
@@ -226,7 +234,7 @@ function RegisterForm() {
         </label>
         <select
           id="ie" required value={ieId}
-          onChange={e => handleIeChange(e.target.value === '' ? '' : Number(e.target.value))}
+          onChange={e => setIeId(e.target.value === '' ? '' : Number(e.target.value))}
           className={INPUT_STYLE.base} style={{ ...INPUT_STYLE.colors, cursor: 'pointer' }}
           onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
           onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}>
@@ -237,25 +245,11 @@ function RegisterForm() {
             </option>
           ))}
         </select>
-      </div>
-
-      <div>
-        <label htmlFor="taller" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
-          Taller que dictas
-        </label>
-        <select
-          id="taller" required value={tallerSlug}
-          onChange={e => setTallerSlug(e.target.value)}
-          disabled={!ieId}
-          className={INPUT_STYLE.base}
-          style={{ ...INPUT_STYLE.colors, cursor: ieId ? 'pointer' : 'not-allowed', opacity: ieId ? 1 : 0.5 }}
-          onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
-          onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}>
-          <option value="">{ieId ? 'Selecciona tu taller' : 'Primero elige la IE'}</option>
-          {tallerOptions.map(t => (
-            <option key={t.slug} value={t.slug}>{t.nombre}</option>
-          ))}
-        </select>
+        {ieId !== '' && (
+          <p className="text-xs mt-1.5 font-medium" style={{ color: '#045f6c' }}>
+            {INSTITUCIONES_EDUCATIVAS.find(ie => ie.id === ieId)?.talleres.length ?? 0} talleres disponibles en tu IE
+          </p>
+        )}
       </div>
 
       <button type="submit" disabled={loading}
