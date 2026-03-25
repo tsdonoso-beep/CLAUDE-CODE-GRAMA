@@ -13,6 +13,7 @@ import { ProgressProvider } from "@/contexts/ProgressContext"
 import { ErrorBoundary } from "@/components/ErrorBoundary"
 
 // ── Pages (lazy loaded) ────────────────────────────────────────────────────
+const Landing        = lazy(() => import("./pages/Landing"))
 const Login           = lazy(() => import("./pages/Login"))
 const Bienvenida      = lazy(() => import("./pages/Bienvenida"))
 const TallerHub       = lazy(() => import("./pages/TallerHub"))
@@ -62,13 +63,14 @@ const App = () => (
           <BrowserRouter>
             <ErrorBoundary>
               <Routes>
-                {/* ── Pública ── */}
+                {/* ── Públicas ── */}
+                <Route path="/" element={wrap(Landing)} />
                 <Route path="/login" element={wrap(Login)} />
 
                 {/* ── Requiere autenticación ── */}
                 <Route element={<RequireAuth />}>
-                  {/* Bienvenida: sin sidebar */}
-                  <Route path="/" element={wrap(Bienvenida)} />
+                  {/* Hub: sin sidebar */}
+                  <Route path="/hub" element={wrap(Bienvenida)} />
 
                   {/* App con sidebar */}
                   <Route element={<AppShell />}>

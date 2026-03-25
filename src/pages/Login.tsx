@@ -391,7 +391,7 @@ export default function Login() {
                 <>
                   <h1 className="text-2xl font-extrabold mb-1" style={{ color: '#043941' }}>Iniciar sesión</h1>
                   <p className="text-sm mb-8" style={{ color: '#045f6c' }}>Ingresa tus credenciales para acceder</p>
-                  <LoginForm onSuccess={() => navigate('/')} />
+                  <LoginForm onSuccess={() => navigate('/hub')} />
                 </>
               ) : (
                 <>
