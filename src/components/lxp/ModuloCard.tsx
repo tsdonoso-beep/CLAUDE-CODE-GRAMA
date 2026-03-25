@@ -101,7 +101,7 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
             <div className="flex flex-wrap items-center gap-2 mb-1">
               <span className="text-base" aria-hidden>{modulo.icon}</span>
               <h3
-                className="font-extrabold text-base leading-tight"
+                className="font-bold text-sm leading-tight"
                 style={{ color: bloqueado ? '#94a3b8' : '#043941' }}
               >
                 M{modulo.numero} · {modulo.nombre}
@@ -156,7 +156,7 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
               <div key={sub.id}>
                 {/* Sección header */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: '#94a3b8' }}>
+                  <span className="text-xs font-bold" style={{ color: '#94a3b8' }}>
                     {sub.numero}
                   </span>
                   <span className="text-xs font-semibold" style={{ color: '#043941' }}>
