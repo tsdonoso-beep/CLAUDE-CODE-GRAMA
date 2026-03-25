@@ -2,16 +2,16 @@
 import { Link, useParams, useLocation } from 'react-router-dom'
 import { ChevronRight, LogOut, Bell } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
+import { useAuth } from '@/contexts/AuthContext'
 
 export function TopBar() {
   const { slug, num } = useParams<{ slug: string; num: string }>()
   const location = useLocation()
   const taller = talleresConfig.find(t => t.slug === slug)
+  const { profile, signOut } = useAuth()
 
-  // Leer perfil del docente desde localStorage (guardado por ConocenosForm)
-  const stored = slug ? localStorage.getItem(`grama-conocenos-${slug}`) : null
-  const userData = stored ? JSON.parse(stored) : null
-  const displayName = userData?.profesion?.trim() || 'Docente'
+  const displayName = profile?.nombre_completo || profile?.email?.split('@')[0] || 'Docente'
+  const displayEmail = profile?.email ?? ''
 
   const crumbs: { label: string; to?: string }[] = [{ label: 'Inicio', to: '/' }]
   if (taller) {
@@ -24,9 +24,8 @@ export function TopBar() {
     }
   }
 
-  function handleLogout() {
-    sessionStorage.removeItem('grama-auth')
-    window.location.href = '/login'
+  async function handleLogout() {
+    await signOut()
   }
 
   return (
@@ -104,7 +103,7 @@ export function TopBar() {
               {displayName}
             </p>
             <p className="text-[10px] mt-0.5 leading-none" style={{ color: 'rgba(2,212,126,0.7)' }}>
-              docente@grama.pe
+              {displayEmail}
             </p>
           </div>
         </div>

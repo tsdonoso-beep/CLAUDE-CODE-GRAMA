@@ -2,6 +2,8 @@
 import { useState } from 'react'
 import { CheckCircle2, XCircle, AlertTriangle, RotateCcw, ArrowRight } from 'lucide-react'
 import type { PreguntaQuiz } from '@/data/modulosLXP'
+import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/contexts/AuthContext'
 
 interface QuizBlockProps {
   contenidoId: string
@@ -16,12 +18,14 @@ interface QuizBlockProps {
 type QuizEstado = 'inicio' | 'respondiendo' | 'resultado'
 
 export function QuizBlock({
+  contenidoId,
   titulo,
   preguntas,
   puntajeMinimo,
   onAprobado,
   onReprobado,
 }: QuizBlockProps) {
+  const { user } = useAuth()
   const [estado, setEstado] = useState<QuizEstado>('inicio')
   const [respuestas, setRespuestas] = useState<Record<string, number>>({})
   const [intentos, setIntentos] = useState(0)
@@ -34,11 +38,28 @@ export function QuizBlock({
     if (estado === 'inicio') setEstado('respondiendo')
   }
 
-  function handleEnviar() {
+  async function handleEnviar() {
     setEstado('resultado')
-    setIntentos(prev => prev + 1)
+    const nuevoIntento = intentos + 1
+    setIntentos(nuevoIntento)
     const puntaje = calcularPuntaje()
-    if (puntaje >= puntajeMinimo) {
+    const aprobado = puntaje >= puntajeMinimo
+
+    // Persistir resultado en Supabase (best-effort, sin bloquear UI)
+    if (user) {
+      supabase.from('quiz_resultados').insert({
+        usuario_id:   user.id,
+        contenido_id: contenidoId,
+        intento:      nuevoIntento,
+        puntaje,
+        aprobado,
+        respuestas,
+      }).then(({ error }) => {
+        if (error) console.warn('[QuizBlock] No se pudo guardar resultado:', error.message)
+      })
+    }
+
+    if (aprobado) {
       onAprobado?.()
     } else {
       onReprobado?.()

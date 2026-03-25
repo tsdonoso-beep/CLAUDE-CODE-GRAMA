@@ -51,6 +51,26 @@ export interface Database {
           updated_at?: string
         }
       }
+      quiz_resultados: {
+        Row: {
+          id: string
+          usuario_id: string
+          contenido_id: string
+          intento: number
+          puntaje: number
+          aprobado: boolean
+          respuestas: Record<string, number>
+          created_at: string
+        }
+        Insert: {
+          usuario_id: string
+          contenido_id: string
+          intento: number
+          puntaje: number
+          aprobado: boolean
+          respuestas: Record<string, number>
+        }
+      }
     }
     Functions: Record<string, never>
     Enums: Record<string, never>
@@ -60,3 +80,4 @@ export interface Database {
 // Tipos derivados útiles
 export type Profile = Database['public']['Tables']['profiles']['Row']
 export type ProgresoContenido = Database['public']['Tables']['progreso_contenidos']['Row']
+export type QuizResultado = Database['public']['Tables']['quiz_resultados']['Row']
