@@ -7,7 +7,7 @@ import {
 } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
-import { mockEstadosModulos, mockProximaSesion } from '@/mock/mockEstados'
+import { mockProximaSesion } from '@/mock/mockEstados'
 import { useProgress } from '@/contexts/ProgressContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
@@ -37,7 +37,7 @@ export default function TallerHub() {
   const { taller, slug, bienes, totalBienes } = useTaller()
   const navigate = useNavigate()
   const [hoveredModulo, setHoveredModulo] = useState<string | null>(null)
-  const { getTallerProgreso } = useProgress()
+  const { getTallerProgreso, getEstadoModuloLXP } = useProgress()
   const { user, profile } = useAuth()
   const progresoTaller = getTallerProgreso(slug ?? '')
 
@@ -219,8 +219,7 @@ export default function TallerHub() {
             {/* Módulos */}
             <div className="divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
               {modulosPreview.map((modulo, idx) => {
-                const estadoItem = mockEstadosModulos.find(e => e.moduloId === modulo.id)
-                const estado = estadoItem?.estado ?? 'bloqueado'
+                const estado = getEstadoModuloLXP(modulo.id)
                 const conf = ESTADO_CONFIG[estado as keyof typeof ESTADO_CONFIG]
                 const StatusIcon = conf.icon
                 const isHovered = hoveredModulo === modulo.id
