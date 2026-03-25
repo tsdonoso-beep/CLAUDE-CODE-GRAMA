@@ -31,7 +31,7 @@ function buildDevProfile(): Profile | null {
     nombre_completo: email.split('@')[0].replace(/[._]/g, ' '),
     role,
     ie_id: null,
-    taller_slug: null,
+    taller_slug: sessionStorage.getItem('grama-dev-taller') ?? null,
     created_at: new Date().toISOString(),
     last_seen_at: new Date().toISOString(),
   }
@@ -108,6 +108,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     sessionStorage.removeItem('grama-auth')
     sessionStorage.removeItem('grama-dev-email')
     sessionStorage.removeItem('grama-dev-role')
+    sessionStorage.removeItem('grama-dev-taller')
     localStorage.removeItem('navigator-progress')
     setProfile(null)
   }
