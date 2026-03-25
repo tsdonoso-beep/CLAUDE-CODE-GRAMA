@@ -299,10 +299,10 @@ export default function ModuloDetalle() {
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-xs font-bold" style={{ color: '#045f6c' }}>
+                      <span className="text-xs" style={{ color: '#94a3b8' }}>
                         {sub.numero}
                       </span>
-                      <span className="text-sm font-extrabold" style={{ color: '#043941' }}>
+                      <span className="text-sm font-semibold" style={{ color: '#043941' }}>
                         {sub.titulo}
                       </span>
                       {sub.phaseBadge && (

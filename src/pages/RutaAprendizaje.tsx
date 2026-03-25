@@ -60,7 +60,7 @@ export default function RutaAprendizaje() {
       <div className="p-6 grid lg:grid-cols-3 gap-6">
         {/* Timeline de módulos (2/3) */}
         <div className="lg:col-span-2">
-          <h2 className="text-base font-extrabold mb-6" style={{ color: '#043941' }}>
+          <h2 className="text-sm font-extrabold mb-6" style={{ color: '#043941' }}>
             Secuencia de módulos
           </h2>
 

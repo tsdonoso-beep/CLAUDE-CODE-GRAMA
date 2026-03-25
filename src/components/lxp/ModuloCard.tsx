@@ -159,7 +159,7 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
                   <span className="text-xs font-bold" style={{ color: '#94a3b8' }}>
                     {sub.numero}
                   </span>
-                  <span className="text-xs font-semibold" style={{ color: '#043941' }}>
+                  <span className="text-xs font-bold" style={{ color: '#043941' }}>
                     {sub.titulo}
                   </span>
                   {sub.phaseBadge && (
@@ -174,7 +174,7 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
                   {sub.contenidos.map(c => (
                     <div key={c.id} className="flex items-center gap-3 min-w-0 py-0.5">
                       <ContenidoBadge tipo={c.tipo} size="list" />
-                      <span className="text-xs truncate flex-1" style={{ color: '#1e293b' }}>
+                      <span className="text-xs truncate flex-1" style={{ color: '#64748b' }}>
                         {c.titulo}
                       </span>
                       {c.duracionMin && (
