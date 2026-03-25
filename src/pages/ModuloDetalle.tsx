@@ -115,7 +115,6 @@ export default function ModuloDetalle() {
     })
   }
 
-  const prevModulo = modulosLXP.find(m => m.numero === moduloNum - 1)
   const nextModulo = modulosLXP.find(m => m.numero === moduloNum + 1)
 
   // Manejador para abrir contenidos
