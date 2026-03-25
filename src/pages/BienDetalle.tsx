@@ -247,9 +247,7 @@ export default function BienDetalle() {
               </h2>
             </div>
             <div className="p-6 space-y-4" style={{ background: '#ffffff' }}>
-              <p className="text-sm leading-relaxed" style={{ color: '#043941' }}>
-                {bien.tipo === 'PEDAGOGICO' ? bien.usoPedagogico : bien.descripcion}
-              </p>
+              {(() => { const txt = bien.tipo === 'PEDAGOGICO' ? bien.usoPedagogico : bien.descripcion; return txt?.trim() ? <p className="text-sm leading-relaxed" style={{ color: '#043941' }}>{txt}</p> : null })()}
               <div className="grid sm:grid-cols-2 gap-4 pt-2">
                 {(bien.tipo === 'PEDAGOGICO'
                   ? [
