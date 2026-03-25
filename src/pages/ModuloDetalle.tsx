@@ -284,18 +284,18 @@ export default function ModuloDetalle() {
             return (
               <div
                 key={sub.id}
-                className="rounded-2xl border-2 overflow-hidden"
-                style={{ borderColor: isOpen ? sub.colorAccent : '#e3f8fb' }}
+                className="rounded-2xl border overflow-hidden transition-all"
+                style={{ borderColor: isOpen ? '#02d47e' : '#e3f8fb' }}
               >
                 {/* Accordion header */}
                 <button
                   onClick={() => toggleSub(sub.id)}
                   className="w-full text-left px-6 py-4 flex items-center gap-4"
-                  style={{ background: isOpen ? '#fafffe' : '#ffffff' }}
+                  style={{ background: '#ffffff' }}
                 >
                   <div
-                    className="h-2 w-2 rounded-full shrink-0 mt-0.5"
-                    style={{ background: sub.colorAccent }}
+                    className="h-2 w-2 rounded-full shrink-0 mt-1.5"
+                    style={{ background: isOpen ? '#02d47e' : '#94a3b8' }}
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
@@ -306,11 +306,8 @@ export default function ModuloDetalle() {
                         {sub.titulo}
                       </span>
                       {sub.phaseBadge && (
-                        <span
-                          className="text-xs px-2 py-0.5 rounded-full font-semibold"
-                          style={{ background: '#043941', color: '#02d47e' }}
-                        >
-                          {sub.phaseBadge}
+                        <span className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: '#02d47e' }}>
+                          · {sub.phaseBadge}
                         </span>
                       )}
                     </div>
@@ -333,7 +330,7 @@ export default function ModuloDetalle() {
 
                 {/* Expanded content */}
                 {isOpen && (
-                  <div className="border-t px-6 py-5 space-y-4" style={{ borderColor: sub.colorAccent + '40', background: '#fafffe' }}>
+                  <div className="border-t px-6 py-5 space-y-4" style={{ borderColor: '#f1f5f9', background: '#ffffff' }}>
                     {sub.descripcion && (
                       <p className="text-sm" style={{ color: '#045f6c' }}>
                         {sub.descripcion}
@@ -405,19 +402,19 @@ export default function ModuloDetalle() {
                                   const estado = getContenidoEstado(contenido.id)
                                   return (
                                   <div
-                                    className="flex items-start gap-4 p-4 rounded-xl border transition-all hover:shadow-sm"
+                                    className="flex items-start gap-3 p-4 rounded-xl border transition-all hover:shadow-sm"
                                     style={{
                                       borderColor: estado.completed ? '#02d47e' : '#e3f8fb',
-                                      background: estado.completed ? '#f0fdf9' : '#ffffff',
+                                      background: estado.completed ? '#f0fdf9' : '#fafffe',
                                     }}
                                   >
                                     <div
-                                      className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
-                                      style={{ background: estado.completed ? 'rgba(2,212,126,0.15)' : '#e3f8fb' }}
+                                      className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0"
+                                      style={{ background: estado.completed ? 'rgba(2,212,126,0.12)' : '#f1f5f9' }}
                                     >
                                       {estado.completed
-                                        ? <CheckCircle2 size={18} style={{ color: '#02d47e' }} />
-                                        : <ContentIcon size={18} style={{ color: sub.colorAccent }} />
+                                        ? <CheckCircle2 size={16} style={{ color: '#02d47e' }} />
+                                        : <ContentIcon size={16} style={{ color: '#64748b' }} />
                                       }
                                     </div>
                                     <div className="flex-1 min-w-0">
