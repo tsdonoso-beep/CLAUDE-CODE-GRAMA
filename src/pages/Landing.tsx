@@ -7,6 +7,7 @@ import {
   Layers, Package, CheckCircle, Mail, Menu, X,
 } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
+import { useAuth } from '@/contexts/AuthContext'
 import { talleresConfig } from '@/data/talleresConfig'
 
 // ── Data ──────────────────────────────────────────────────────────────────────
@@ -101,6 +102,8 @@ function TalleresMarquee() {
 export default function Landing() {
   const navigate = useNavigate()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { profile } = useAuth()
+  const isLoggedIn = !!profile
 
   const goToApp = () => navigate('/hub')
 
@@ -124,13 +127,23 @@ export default function Landing() {
             ))}
           </nav>
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate('/login')}
-              className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-opacity hover:opacity-90"
-              style={{ background: '#02d47e', color: '#043941' }}
-            >
-              Iniciar sesión <ChevronRight size={13} />
-            </button>
+            {isLoggedIn ? (
+              <button
+                onClick={goToApp}
+                className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-opacity hover:opacity-90"
+                style={{ background: '#02d47e', color: '#043941' }}
+              >
+                Ir a la plataforma <ChevronRight size={13} />
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate('/login')}
+                className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-opacity hover:opacity-90"
+                style={{ background: '#02d47e', color: '#043941' }}
+              >
+                Iniciar sesión <ChevronRight size={13} />
+              </button>
+            )}
             <button className="md:hidden p-1.5 rounded-lg" onClick={() => setMobileMenuOpen(o => !o)} style={{ color: '#043941' }}>
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -248,13 +261,6 @@ export default function Landing() {
 
         {/* Marquee tickers */}
         <TalleresMarquee />
-
-        {/* Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
-            <path d="M0 56V28C360 0 720 56 1440 18V56H0Z" fill="#ffffff" />
-          </svg>
-        </div>
       </section>
 
       {/* ══ FEATURES ════════════════════════════════════════════════════════ */}

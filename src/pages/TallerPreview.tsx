@@ -1,5 +1,6 @@
 // src/pages/TallerPreview.tsx
 import { useParams, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { ArrowLeft, BookOpen, Clock, Mail, ChevronRight, Package, Layers, Award } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { getBienesByTaller, getTotalBienesByTaller } from '@/data/bienesData'
@@ -62,6 +63,9 @@ export default function TallerPreview() {
       </div>
     )
   }
+
+  // Scroll to top on every taller navigation
+  useEffect(() => { window.scrollTo(0, 0) }, [slug])
 
   const accent       = `hsl(${taller.color})`
   const accentAlpha  = (a: number) => `hsl(${taller.color} / ${a})`
@@ -247,8 +251,8 @@ export default function TallerPreview() {
                   <div
                     className="h-9 w-9 rounded-xl flex items-center justify-center text-[10px] font-black"
                     style={{
-                      background: i === 6 ? '#043941' : (i === 0 ? '#02d47e' : '#f0faf5'),
-                      color:      i === 6 ? '#02d47e' : (i === 0 ? '#043941' : '#94a3b8'),
+                      background: i === 6 ? '#043941' : '#f0faf5',
+                      color:      i === 6 ? '#02d47e' : '#94a3b8',
                     }}
                   >
                     {m.codigo}
@@ -362,16 +366,16 @@ export default function TallerPreview() {
         <TangramDecor accent="#02d47e" className="absolute top-0 left-0 h-64 w-64 opacity-30" />
 
         <div className="relative z-10 max-w-xl mx-auto px-6 py-20 text-center">
-          <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl mb-6 mx-auto"
-            style={{ background: 'rgba(2,212,126,0.15)', border: '1px solid rgba(2,212,126,0.3)' }}>
-            <Mail size={22} style={{ color: '#02d47e' }} />
-          </div>
+          {/* Pregunta inicial */}
+          <p className="text-[11px] font-black uppercase tracking-[0.18em] mb-4" style={{ color: '#02d47e' }}>
+            ¿Quieres saber más?
+          </p>
           <h2 className="text-2xl font-extrabold text-white mb-3 leading-tight">
-            ¿Tu IE tiene el taller<br />de {taller.nombre}?
+            Implementa el taller de<br />{taller.nombre} en tu IE
           </h2>
-          <p className="text-sm mb-10" style={{ color: 'rgba(255,255,255,0.5)' }}>
-            Contáctanos para registrar tu institución y que tus docentes
-            accedan a toda la plataforma de capacitación GRAMA.
+          <p className="text-sm mb-10 max-w-sm mx-auto" style={{ color: 'rgba(255,255,255,0.45)' }}>
+            Registra tu institución en el programa y da a tus docentes acceso
+            completo a la plataforma de capacitación GRAMA.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
