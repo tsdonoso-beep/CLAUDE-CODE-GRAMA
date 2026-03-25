@@ -239,24 +239,30 @@ export default function BienDetalle() {
             </div>
           </section>
 
-          {/* Info técnica */}
+          {/* Info técnica / Sobre este manual */}
           <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
             <div className="px-6 py-4 border-b" style={{ borderColor: '#e3f8fb', background: '#fafffe' }}>
               <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
-                Información técnica
+                {bien.tipo === 'PEDAGOGICO' ? 'Sobre este manual' : 'Información técnica'}
               </h2>
             </div>
             <div className="p-6 space-y-4" style={{ background: '#ffffff' }}>
               <p className="text-sm leading-relaxed" style={{ color: '#043941' }}>
-                {bien.descripcion}
+                {bien.tipo === 'PEDAGOGICO' ? bien.usoPedagogico : bien.descripcion}
               </p>
               <div className="grid sm:grid-cols-2 gap-4 pt-2">
-                {[
-                  { icon: Hash, label: 'Código entidad', value: bien.codigoEntidad },
-                  { icon: Tag, label: 'Código interno', value: bien.codigoInterno },
-                  { icon: MapPin, label: 'Zona', value: bien.zona.split(',')[0].trim() },
-                  { icon: Layers, label: 'Tipo', value: bien.tipo },
-                ].filter(f => f.value).map(field => (
+                {(bien.tipo === 'PEDAGOGICO'
+                  ? [
+                      { icon: MapPin,   label: 'Área de uso',        value: bien.zona.split(',')[0].trim() },
+                      { icon: Package,  label: 'Copias disponibles', value: String(bien.cantidad) },
+                    ]
+                  : [
+                      { icon: Hash,    label: 'Código entidad', value: bien.codigoEntidad },
+                      { icon: Tag,     label: 'Código interno', value: bien.codigoInterno },
+                      { icon: MapPin,  label: 'Zona',           value: bien.zona.split(',')[0].trim() },
+                      { icon: Layers,  label: 'Tipo',           value: bien.tipo },
+                    ]
+                ).filter(f => f.value).map(field => (
                   <div key={field.label} className="flex items-start gap-2">
                     <field.icon size={14} className="mt-0.5 shrink-0" style={{ color: '#045f6c' }} />
                     <div>
@@ -269,7 +275,8 @@ export default function BienDetalle() {
             </div>
           </section>
 
-          {/* Uso pedagógico */}
+          {/* Uso pedagógico — solo para no-manuales (PEDAGOGICO ya lo muestra arriba) */}
+          {bien.tipo !== 'PEDAGOGICO' && (
           <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
             <div className="px-6 py-4 border-b" style={{ borderColor: '#e3f8fb', background: '#fafffe' }}>
               <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
@@ -282,6 +289,7 @@ export default function BienDetalle() {
               </p>
             </div>
           </section>
+          )}
 
           {/* Bienes relacionados */}
           {bienesRelacionados.length > 0 && (
