@@ -106,6 +106,25 @@ export default function Bienvenida() {
 
   const nTalleres = talleresDisponibles.length;
 
+  // ── Redirect automático para docentes con un solo taller ──────────────────
+  useEffect(() => {
+    if (!profile || isAdmin || allUnlocked) return
+
+    // Tiene taller asignado directamente → ir directo
+    if (profile.taller_slug) {
+      navigate(`/taller/${profile.taller_slug}`, { replace: true })
+      return
+    }
+
+    // Su IE tiene exactamente 1 taller → ir directo
+    if (profile.ie_id) {
+      const slugs = getTalleresDeIE(profile.ie_id)
+      if (slugs.length === 1) {
+        navigate(`/taller/${slugs[0]}`, { replace: true })
+      }
+    }
+  }, [profile, isAdmin, allUnlocked, navigate])
+
   const handleLogout = async () => {
     await signOut()
     window.location.href = '/login'
