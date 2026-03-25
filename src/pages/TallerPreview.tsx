@@ -1,7 +1,8 @@
 // src/pages/TallerPreview.tsx
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, BookOpen, Clock, CheckCircle, Mail, ChevronRight } from 'lucide-react'
+import { ArrowLeft, BookOpen, Clock, CheckCircle, Mail, ChevronRight, Package } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
+import { getBienesByTaller, getTotalBienesByTaller } from '@/data/bienesData'
 import { GramaLogo } from '@/components/GramaLogo'
 
 // Ruta de aprendizaje estándar (igual para todos los talleres)
@@ -56,6 +57,108 @@ const MODULOS_RUTA = [
     fase: 'Proyecto',
   },
 ]
+
+// Mapeo de nombres de zona largos → etiqueta corta
+const ZONA_LABEL: Record<string, string> = {
+  'ZONA DE INVESTIGACIÓN, GESTIÓN Y DISEÑO': 'Zona Investigación',
+  'ZONA DE INNOVACIÓN': 'Zona Innovación',
+  'DEPÓSITO / ALMACÉN / SEGURIDAD': 'Almacén y Seguridad',
+}
+
+function RepositorioSection({ slug, accent }: { slug: string; accent: string }) {
+  const bienes = getBienesByTaller(slug)
+  const total = getTotalBienesByTaller(slug)
+
+  // Zonas únicas con conteo
+  const zonaMap = new Map<string, number>()
+  bienes.forEach(b => {
+    zonaMap.set(b.zona, (zonaMap.get(b.zona) ?? 0) + 1)
+  })
+  const zonas = Array.from(zonaMap.entries()).map(([nombre, count]) => ({
+    nombre,
+    label: ZONA_LABEL[nombre] ?? nombre,
+    count,
+  }))
+
+  // Top equipos de Zona Innovación (máx 8)
+  const equiposDestacados = bienes
+    .filter(b => b.zona.includes('INNOVACI') && b.tipo === 'EQUIPOS')
+    .slice(0, 8)
+
+  if (bienes.length === 0) return null
+
+  return (
+    <div className="px-6 md:px-12 py-12 border-t" style={{ background: '#ffffff', borderColor: '#e3f8fb' }}>
+      <div className="max-w-2xl mx-auto">
+        <div className="flex items-center gap-3 mb-2">
+          <div
+            className="h-8 w-8 rounded-xl flex items-center justify-center shrink-0"
+            style={{ background: `${accent}18` }}
+          >
+            <Package size={15} style={{ color: accent }} />
+          </div>
+          <div>
+            <p
+              className="text-[10px] font-black uppercase tracking-[0.14em]"
+              style={{ color: accent }}
+            >
+              Repositorio del Taller
+            </p>
+          </div>
+        </div>
+        <h2 className="text-sm font-extrabold mb-1" style={{ color: '#043941' }}>
+          Equipamiento asignado
+        </h2>
+        <p className="text-xs mb-6" style={{ color: '#64748b' }}>
+          Cada taller cuenta con {total} bienes distribuidos en {zonas.length} zonas de trabajo.
+        </p>
+
+        {/* Zonas con conteo */}
+        <div className="grid grid-cols-3 gap-3 mb-8">
+          {zonas.map(z => (
+            <div
+              key={z.nombre}
+              className="rounded-xl p-3 text-center"
+              style={{ background: '#f8fffe', border: '1px solid #e3f8fb' }}
+            >
+              <p className="text-base font-extrabold" style={{ color: '#043941' }}>{z.count}</p>
+              <p className="text-[10px] font-semibold mt-0.5 leading-tight" style={{ color: '#64748b' }}>{z.label}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Equipos destacados Zona Innovación */}
+        {equiposDestacados.length > 0 && (
+          <>
+            <p className="text-[10px] font-bold uppercase tracking-wide mb-3" style={{ color: '#94a3b8' }}>
+              Equipos principales · Zona Innovación
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {equiposDestacados.map((e, i) => (
+                <span
+                  key={i}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold"
+                  style={{ background: `${accent}12`, color: '#043941', border: `1px solid ${accent}25` }}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ background: accent }} />
+                  {e.nombre}
+                </span>
+              ))}
+              {bienes.filter(b => b.zona.includes('INNOVACI') && b.tipo === 'EQUIPOS').length > 8 && (
+                <span
+                  className="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-semibold"
+                  style={{ background: '#f1f5f9', color: '#94a3b8' }}
+                >
+                  +{bienes.filter(b => b.zona.includes('INNOVACI') && b.tipo === 'EQUIPOS').length - 8} más
+                </span>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
 
 export default function TallerPreview() {
   const { slug } = useParams<{ slug: string }>()
@@ -255,6 +358,9 @@ export default function TallerPreview() {
           </div>
         </div>
       </div>
+
+      {/* ── Repositorio del Taller ── */}
+      <RepositorioSection slug={taller.slug} accent={accent} />
 
       {/* ── CTA Contacto ── */}
       <div
