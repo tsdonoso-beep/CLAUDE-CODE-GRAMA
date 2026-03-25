@@ -19,6 +19,8 @@ interface DocenteRow extends Profile {
   total: number
   porcentaje: number
   moduloActual: string | null  // "M0", "M1", etc.
+  quizzesAprobados: number
+  quizzesTotal: number
 }
 
 /**
@@ -30,11 +32,18 @@ function getTotalContenidosLXP(): number {
     acc + m.subSecciones.reduce((a, s) => a + s.contenidos.length, 0), 0)
 }
 
+function getTotalQuizzesLXP(): number {
+  return modulosLXP.reduce((acc, m) =>
+    acc + m.subSecciones.reduce((a, s) =>
+      a + s.contenidos.filter(c => c.tipo === 'QUIZ').length, 0), 0)
+}
+
 // ── Mock data para DEV_MODE ────────────────────────────────────────────────
 function buildMockDocentes(): DocenteRow[] {
   const total = getTotalContenidosLXP()
   const completados = Math.round(total * 0.48)
   const visualizados = Math.round(total * 0.55)
+  const quizzesTotal = getTotalQuizzesLXP()
   return [
     {
       id: 'mock-1',
@@ -50,6 +59,8 @@ function buildMockDocentes(): DocenteRow[] {
       total,
       porcentaje: total > 0 ? Math.round((completados / total) * 100) : 0,
       moduloActual: 'M3',
+      quizzesAprobados: 3,
+      quizzesTotal,
     },
   ]
 }
@@ -77,7 +88,7 @@ function formatDate(iso: string) {
 }
 
 function downloadCSV(rows: DocenteRow[]) {
-  const headers = ['Nombre', 'Email', 'IE', 'Región', 'Taller', 'Completados', 'Visualizados', 'Total', 'Progreso %', 'Módulo actual', 'Último acceso', 'Fecha registro']
+  const headers = ['Nombre', 'Email', 'IE', 'Región', 'Taller', 'Completados', 'Visualizados', 'Total', 'Progreso %', 'Módulo actual', 'Quizzes aprobados', 'Total quizzes', 'Último acceso', 'Fecha registro']
   const data = rows.map(d => {
     const ie = INSTITUCIONES_EDUCATIVAS.find(ie => ie.id === d.ie_id)
     const taller = talleresConfig.find(t => t.slug === d.taller_slug)
@@ -92,6 +103,8 @@ function downloadCSV(rows: DocenteRow[]) {
       d.total,
       d.porcentaje,
       d.moduloActual ?? '—',
+      d.quizzesAprobados,
+      d.quizzesTotal,
       formatDate(d.last_seen_at),
       formatDate(d.created_at),
     ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')
@@ -135,14 +148,20 @@ export default function Admin() {
 
     if (!profiles || profiles.length === 0) { setLoading(false); return }
 
-    // 2. Todos los registros de progreso para esos docentes
+    // 2. Todos los registros de progreso y quiz para esos docentes (en paralelo)
     const docenteIds = profiles.map(p => p.id)
-    const { data: progresos } = await supabase
-      .from('progreso_contenidos')
-      .select('usuario_id, contenido_id, estado')
-      .in('usuario_id', docenteIds)
+    const [{ data: progresos }, { data: quizResults }] = await Promise.all([
+      supabase
+        .from('progreso_contenidos')
+        .select('usuario_id, contenido_id, estado')
+        .in('usuario_id', docenteIds),
+      supabase
+        .from('quiz_resultados')
+        .select('usuario_id, contenido_id, aprobado')
+        .in('usuario_id', docenteIds),
+    ])
 
-    // 3. Agrupar por usuario
+    // 3. Agrupar progreso por usuario
     type UserStats = { completados: number; visualizados: number; ids: string[] }
     const statsPorUsuario: Record<string, UserStats> = {}
 
@@ -157,12 +176,24 @@ export default function Admin() {
       }
     })
 
+    // 4. Agrupar quiz aprobados por usuario (1 por contenido_id aunque haya reintentos)
+    const quizzesAprobadasPorUsuario: Record<string, Set<string>> = {}
+    quizResults?.forEach(q => {
+      if (!q.aprobado) return
+      if (!quizzesAprobadasPorUsuario[q.usuario_id]) {
+        quizzesAprobadasPorUsuario[q.usuario_id] = new Set()
+      }
+      quizzesAprobadasPorUsuario[q.usuario_id].add(q.contenido_id)
+    })
+
     const totalLXP = getTotalContenidosLXP()
+    const totalQuizzes = getTotalQuizzesLXP()
     const rows: DocenteRow[] = profiles.map(p => {
       const stats = statsPorUsuario[p.id] ?? { completados: 0, visualizados: 0, ids: [] }
       const total = totalLXP
       const porcentaje = total > 0 ? Math.round((stats.completados / total) * 100) : 0
       const moduloActual = calcModuloActual(stats.ids)
+      const quizzesAprobados = quizzesAprobadasPorUsuario[p.id]?.size ?? 0
       return {
         ...(p as Profile),
         completados: stats.completados,
@@ -170,6 +201,8 @@ export default function Admin() {
         total,
         porcentaje,
         moduloActual,
+        quizzesAprobados,
+        quizzesTotal: totalQuizzes,
       }
     })
 
@@ -275,7 +308,7 @@ export default function Admin() {
               <table className="w-full text-sm">
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                    {['Docente', 'IE', 'Taller', 'Módulo', 'Progreso', 'Último acceso', 'Registro'].map(h => (
+                    {['Docente', 'IE', 'Taller', 'Módulo', 'Progreso', 'Quizzes', 'Último acceso', 'Registro'].map(h => (
                       <th key={h} className="text-left px-5 py-3 text-xs font-bold"
                         style={{ color: 'rgba(255,255,255,0.35)' }}>{h}</th>
                     ))}
@@ -330,6 +363,23 @@ export default function Admin() {
                             <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.2)' }}>
                               {d.visualizados} visualizados
                             </p>
+                          )}
+                        </td>
+                        <td className="px-5 py-3.5">
+                          {d.quizzesAprobados > 0 ? (
+                            <span
+                              className="text-xs font-bold px-2 py-1 rounded-lg"
+                              style={{
+                                background: d.quizzesAprobados === d.quizzesTotal
+                                  ? 'rgba(2,212,126,0.15)'
+                                  : 'rgba(245,158,11,0.12)',
+                                color: d.quizzesAprobados === d.quizzesTotal ? '#02d47e' : '#f59e0b',
+                              }}
+                            >
+                              {d.quizzesAprobados}/{d.quizzesTotal}
+                            </span>
+                          ) : (
+                            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>0/{d.quizzesTotal}</span>
                           )}
                         </td>
                         <td className="px-5 py-3.5 text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>
