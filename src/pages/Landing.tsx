@@ -212,25 +212,25 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Columna visual: tangram + stats cards */}
-            <div className="hidden lg:block relative">
-              {/* Tangram grande central */}
-              <div className="relative flex items-center justify-center h-72">
-                <Tangram color="#02d47e" opacity={0.18} rotate={0} className="absolute inset-0 w-full h-full" />
+            {/* Columna visual: tangram + stats limpios */}
+            <div className="hidden lg:flex flex-col items-center gap-10">
+              {/* Tangram grande */}
+              <div className="relative w-72 h-72">
+                <Tangram color="#02d47e" opacity={0.18} rotate={0} className="w-full h-full" />
+              </div>
 
-                {/* Cards flotantes sobre el tangram */}
-                <div className="absolute top-0 right-4 rounded-2xl px-5 py-4 shadow-xl" style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.12)' }}>
-                  <p className="text-2xl font-black" style={{ color: '#02d47e' }}>9</p>
-                  <p className="text-[10px] font-semibold mt-0.5" style={{ color: 'rgba(255,255,255,0.5)' }}>Talleres EPT</p>
-                </div>
-                <div className="absolute bottom-8 left-4 rounded-2xl px-5 py-4 shadow-xl" style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.12)' }}>
-                  <p className="text-2xl font-black" style={{ color: '#02d47e' }}>130h</p>
-                  <p className="text-[10px] font-semibold mt-0.5" style={{ color: 'rgba(255,255,255,0.5)' }}>de formación</p>
-                </div>
-                <div className="absolute bottom-24 right-0 rounded-2xl px-5 py-4 shadow-xl" style={{ background: 'rgba(2,212,126,0.15)', backdropFilter: 'blur(16px)', border: '1px solid rgba(2,212,126,0.3)' }}>
-                  <p className="text-2xl font-black text-white">200+</p>
-                  <p className="text-[10px] font-semibold mt-0.5" style={{ color: 'rgba(255,255,255,0.5)' }}>recursos digitales</p>
-                </div>
+              {/* Stats en línea vertical — sin fondos */}
+              <div className="w-72 flex flex-col divide-y" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
+                {[
+                  { value: '9',    label: 'Talleres EPT disponibles' },
+                  { value: '130h', label: 'de formación híbrida' },
+                  { value: '200+', label: 'recursos digitales' },
+                ].map(s => (
+                  <div key={s.label} className="flex items-center justify-between py-4">
+                    <span className="text-2xl font-black" style={{ color: '#02d47e' }}>{s.value}</span>
+                    <span className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.label}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
