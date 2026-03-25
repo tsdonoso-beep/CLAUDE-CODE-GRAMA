@@ -124,15 +124,12 @@ export default function Landing() {
             ))}
           </nav>
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/login')} className="hidden md:block text-xs font-semibold transition-opacity hover:opacity-60" style={{ color: '#043941' }}>
-              Iniciar sesión
-            </button>
             <button
-              onClick={goToApp}
+              onClick={() => navigate('/login')}
               className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-opacity hover:opacity-90"
               style={{ background: '#02d47e', color: '#043941' }}
             >
-              Ingresar <ChevronRight size={13} />
+              Iniciar sesión <ChevronRight size={13} />
             </button>
             <button className="md:hidden p-1.5 rounded-lg" onClick={() => setMobileMenuOpen(o => !o)} style={{ color: '#043941' }}>
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -146,8 +143,8 @@ export default function Landing() {
                 {l.label}
               </a>
             ))}
-            <button onClick={goToApp} className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-sm font-bold" style={{ background: '#02d47e', color: '#043941' }}>
-              Ingresar <ChevronRight size={14} />
+            <button onClick={() => navigate('/login')} className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-sm font-bold" style={{ background: '#02d47e', color: '#043941' }}>
+              Iniciar sesión <ChevronRight size={14} />
             </button>
           </div>
         )}

@@ -343,6 +343,19 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex" style={{ background: '#043941' }}>
+
+      {/* ── Botón volver al landing ── */}
+      <button
+        onClick={() => navigate('/')}
+        className="fixed top-4 left-4 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-opacity hover:opacity-70"
+        style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.1)' }}
+      >
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M19 12H5M12 5l-7 7 7 7" />
+        </svg>
+        Volver al inicio
+      </button>
+
       {/* ── Lado izquierdo (desktop) ── */}
       <div className="hidden lg:flex flex-col items-center justify-center w-1/2 px-16 py-12 grama-pattern relative" style={{ background: '#052e35' }}>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
