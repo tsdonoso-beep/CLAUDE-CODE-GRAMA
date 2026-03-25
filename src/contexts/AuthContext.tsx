@@ -112,7 +112,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setProfile(null)
   }
 
-  const isAdmin = profile?.role === 'admin'
+  const devIsAdmin = DEV_MODE && sessionStorage.getItem('grama-dev-role') === 'admin'
+  const isAdmin = profile?.role === 'admin' || devIsAdmin
   const allUnlocked = isAdmin || user?.email === 'docente@grama.pe' || profile?.email === 'docente@grama.pe'
 
   return (

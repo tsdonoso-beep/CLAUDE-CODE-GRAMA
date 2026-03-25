@@ -11,9 +11,10 @@ export function RequireAdmin() {
   if (loading) return null
 
   const devBypass = DEV_MODE && sessionStorage.getItem('grama-auth') === 'true'
+  const devIsAdmin = DEV_MODE && sessionStorage.getItem('grama-dev-role') === 'admin'
 
   if (!user && !devBypass) return <Navigate to="/login" replace />
-  if (profile?.role !== 'admin') return <Navigate to="/" replace />
+  if (profile?.role !== 'admin' && !devIsAdmin) return <Navigate to="/" replace />
 
   return <Outlet />
 }

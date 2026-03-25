@@ -85,7 +85,7 @@ const FEATURES = [
 
 // ── Componente principal ────────────────────────────────────────────────────
 export default function Bienvenida() {
-  const { signOut, profile, allUnlocked } = useAuth()
+  const { signOut, profile, isAdmin, allUnlocked } = useAuth()
   const navigate = useNavigate()
 
   const talleresDisponibles = useMemo(() => {
@@ -161,7 +161,7 @@ export default function Bienvenida() {
               </div>
             </div>
 
-            {profile?.role === 'admin' && (
+            {isAdmin && (
               <button
                 onClick={() => navigate('/admin')}
                 className="text-xs font-semibold px-3.5 py-2 rounded-xl transition-all flex items-center gap-1.5"
