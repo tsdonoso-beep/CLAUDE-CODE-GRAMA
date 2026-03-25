@@ -3,6 +3,7 @@ import { useState, useMemo, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
+import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
 import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
 import { talleresConfig } from '@/data/talleresConfig'
@@ -48,6 +49,7 @@ const DEV_USERS: Array<{ email: string; password: string; role: 'admin' | 'docen
 
 // ── Tab: Ingresar ──────────────────────────────────────────────────────────
 function LoginForm({ onSuccess }: { onSuccess: () => void }) {
+  const { refreshDevProfile } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPass, setShowPass] = useState(false)
@@ -71,6 +73,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
         } else {
           sessionStorage.removeItem('grama-dev-taller')
         }
+        refreshDevProfile()
         onSuccess()
         return
       }

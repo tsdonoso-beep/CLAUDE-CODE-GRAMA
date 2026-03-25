@@ -13,6 +13,8 @@ interface AuthContextType {
   /** true para docente@grama.pe y admins — todos los módulos desbloqueados */
   allUnlocked: boolean
   signOut: () => Promise<void>
+  /** Reconstruye el perfil desde sessionStorage (solo DEV_MODE) */
+  refreshDevProfile: () => void
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -103,6 +105,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => subscription.unsubscribe()
   }, [])
 
+  function refreshDevProfile() {
+    if (DEV_MODE) setProfile(buildDevProfile())
+  }
+
   async function signOut() {
     await supabase.auth.signOut()
     sessionStorage.removeItem('grama-auth')
@@ -118,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const allUnlocked = isAdmin || user?.email === 'docente@grama.pe' || profile?.email === 'docente@grama.pe'
 
   return (
-    <AuthContext.Provider value={{ user, profile, session, loading, isAdmin, allUnlocked, signOut }}>
+    <AuthContext.Provider value={{ user, profile, session, loading, isAdmin, allUnlocked, signOut, refreshDevProfile }}>
       {children}
     </AuthContext.Provider>
   )
