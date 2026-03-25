@@ -46,20 +46,23 @@ export default function ModuloDetalle() {
   const [showGradeModal, setShowGradeModal] = useState(false)
   const [selectedGrade, setSelectedGrade] = useState<string | null>(null)
   const [currentInteractiveContent, setCurrentInteractiveContent] = useState<any>(null)
-  const [manualAbierto, setManualAbierto] = useState<string | null>(null)
+  const [manualAbierto, setManualAbierto] = useState<{ manualId: string; contenidoId: string } | null>(null)
   const [showEPPSelector, setShowEPPSelector] = useState(false)
   const [showMapaHabilidades, setShowMapaHabilidades] = useState(false)
   const [showTablaProgresion, setShowTablaProgresion] = useState(false)
-  const [descargableAbierto, setDescargableAbierto] = useState<string | null>(null)
+  const [descargableAbierto, setDescargableAbierto] = useState<{ descargableId: string; contenidoId: string } | null>(null)
   const [videoAbierto, setVideoAbierto] = useState<{ titulo: string; descripcion?: string; duracionMin?: number; urlVideo: string } | null>(null)
   const [showTourSimulator, setShowTourSimulator] = useState(false)
 
   const closeGradeModal = useCallback(() => setShowGradeModal(false), [])
-  const closeTourSimulator = useCallback(() => setShowTourSimulator(false), [])
+  const closeTourSimulator = useCallback(() => {
+    setShowTourSimulator(false)
+    markContenidoCompleted('m0-s2-c2')
+  }, [markContenidoCompleted])
   useEscapeKey(showGradeModal ? closeGradeModal : showTourSimulator ? closeTourSimulator : () => {})
 
-  const manualActivo = manualAbierto ? manualesRuta.find(m => m.id === manualAbierto) ?? null : null
-  const descargableActivo = descargableAbierto ? descargablesLXP.find(d => d.id === descargableAbierto) ?? null : null
+  const manualActivo = manualAbierto ? manualesRuta.find(m => m.id === manualAbierto.manualId) ?? null : null
+  const descargableActivo = descargableAbierto ? descargablesLXP.find(d => d.id === descargableAbierto.descargableId) ?? null : null
   const taller = getTallerBySlug(slug ?? '')
 
   const moduloNum = parseInt(num ?? '0', 10)
@@ -110,9 +113,12 @@ export default function ModuloDetalle() {
 
   // Manejador para abrir contenidos
   const handleOpenContent = (contenido: any) => {
+    // Registrar "en progreso" al abrir cualquier contenido (excepto los que ya completan directo)
+    markContenidoInProgress(contenido.id)
+
     if (contenido.tipo === 'DESCARGABLE') {
       if (contenido.descargableId) {
-        setDescargableAbierto(contenido.descargableId)
+        setDescargableAbierto({ descargableId: contenido.descargableId, contenidoId: contenido.id })
       } else {
         // Fallback: PDF básico para descargables sin datos ricos
         const doc = new jsPDF()
@@ -134,18 +140,21 @@ export default function ModuloDetalle() {
         const lines = doc.splitTextToSize(contenido.descripcion || '', pageWidth - margin * 2)
         doc.text(lines, margin, 50)
         doc.save(`${contenido.titulo}.pdf`)
+        // Descargable sin visor → completar al descargar
+        markContenidoCompleted(contenido.id)
       }
     } else if (contenido.tipo === 'INTERACTIVO') {
       if (contenido.id === 'm0-s2-c2' && slug === 'mecanica-automotriz') {
         setShowTourSimulator(true)
       } else if (contenido.id === 'm1-s2-c2') {
         // Catálogo Interactivo de Bienes → Repositorio del taller
+        markContenidoCompleted(contenido.id)
         navigate(`/taller/${slug}/repositorio`)
       } else if (contenido.id === 'm1-s3-c2') {
-        // Selector de EPP por Equipo y Proceso
         setShowEPPSelector(true)
       } else if (contenido.id === 'm2-s4-c1') {
         // Explorador Zona Investigación → Repositorio pre-filtrado
+        markContenidoCompleted(contenido.id)
         navigate(`/taller/${slug}/repositorio?zona=${encodeURIComponent('ZONA DE INVESTIGACIÓN, GESTIÓN Y DISEÑO')}`)
       } else if (contenido.id === 'm5-s2-c1') {
         setShowMapaHabilidades(true)
@@ -156,11 +165,11 @@ export default function ModuloDetalle() {
         setShowGradeModal(true)
       } else if (contenido.urlInteractivo) {
         window.open(contenido.urlInteractivo, '_blank')
+        markContenidoCompleted(contenido.id)
       } else {
         toast.info('Próximamente disponible', { description: contenido.titulo })
       }
     } else if (contenido.tipo === 'VIDEO' && contenido.urlVideo) {
-      markContenidoInProgress(contenido.id)
       setVideoAbierto({
         titulo: contenido.titulo,
         descripcion: contenido.descripcion,
@@ -171,17 +180,18 @@ export default function ModuloDetalle() {
       // Ir a la sesión en vivo
       navigate(`/taller/${slug}/live/${modulo?.numero}`)
     } else if (contenido.tipo === 'ACTIVIDAD_PRACTICA') {
-      // Redirigir a la actividad
       if (contenido.urlActividad) {
         window.open(contenido.urlActividad, '_blank')
+        markContenidoCompleted(contenido.id)
       } else {
         toast.warning('Actividad en preparación', { description: 'Estará disponible próximamente en este módulo.' })
       }
     } else if (contenido.tipo === 'PDF') {
       if (contenido.manualId) {
-        setManualAbierto(contenido.manualId)
+        setManualAbierto({ manualId: contenido.manualId, contenidoId: contenido.id })
       } else if (contenido.urlPDF) {
         window.open(contenido.urlPDF, '_blank')
+        markContenidoCompleted(contenido.id)
       }
     } else {
       toast('Contenido en revisión', { description: contenido.titulo })
@@ -191,6 +201,7 @@ export default function ModuloDetalle() {
   const handleGradeSelect = (grade: string) => {
     setSelectedGrade(grade)
     localStorage.setItem('selectedGrade', grade)
+    if (currentInteractiveContent?.id) markContenidoCompleted(currentInteractiveContent.id)
     toast.success('Perfil actualizado', { description: `Grado seleccionado: ${grade}` })
     setShowGradeModal(false)
   }
@@ -571,46 +582,61 @@ export default function ModuloDetalle() {
         </div>
       )}
 
-      {/* Modal visor de manuales */}
-      {manualActivo && (
+      {/* Modal visor de manuales — completa el contenido al cerrar */}
+      {manualActivo && manualAbierto && (
         <ManualViewerModal
           manual={manualActivo}
-          onClose={() => setManualAbierto(null)}
+          onClose={() => {
+            markContenidoCompleted(manualAbierto.contenidoId)
+            setManualAbierto(null)
+          }}
         />
       )}
 
-      {/* Modal visor de descargables */}
-      {descargableActivo && (
+      {/* Modal visor de descargables — completa al cerrar */}
+      {descargableActivo && descargableAbierto && (
         <DescargableViewerModal
           descargable={descargableActivo}
-          onClose={() => setDescargableAbierto(null)}
+          onClose={() => {
+            markContenidoCompleted(descargableAbierto.contenidoId)
+            setDescargableAbierto(null)
+          }}
         />
       )}
 
-      {/* Modal selector EPP */}
+      {/* Modal selector EPP — completa m1-s3-c2 al cerrar */}
       {showEPPSelector && taller && (
         <EPPSelectorModal
           tallerSlug={slug ?? ''}
           tallerNombre={taller.nombre}
-          onClose={() => setShowEPPSelector(false)}
+          onClose={() => {
+            markContenidoCompleted('m1-s3-c2')
+            setShowEPPSelector(false)
+          }}
         />
       )}
 
-      {/* Modal Mapa Habilidades EPT */}
+      {/* Modal Mapa Habilidades — completa m5-s2-c1 al cerrar */}
       {showMapaHabilidades && taller && (
         <MapaHabilidadesModal
           tallerSlug={slug ?? ''}
           tallerNombre={taller.nombre}
-          onClose={() => setShowMapaHabilidades(false)}
+          onClose={() => {
+            markContenidoCompleted('m5-s2-c1')
+            setShowMapaHabilidades(false)
+          }}
         />
       )}
 
-      {/* Modal Tabla Progresión por Grado */}
+      {/* Modal Tabla Progresión — completa m5-s3-c2 al cerrar */}
       {showTablaProgresion && taller && (
         <TablaProgresionModal
           tallerSlug={slug ?? ''}
           tallerNombre={taller.nombre}
-          onClose={() => setShowTablaProgresion(false)}
+          onClose={() => {
+            markContenidoCompleted('m5-s3-c2')
+            setShowTablaProgresion(false)
+          }}
         />
       )}
 
@@ -642,7 +668,7 @@ export default function ModuloDetalle() {
               🚗 Tour 3D — Taller de Mecánica Automotriz
             </span>
             <button
-              onClick={() => setShowTourSimulator(false)}
+              onClick={closeTourSimulator}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors"
               style={{ background: 'rgba(255,255,255,0.1)', color: '#02d47e' }}
               onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
