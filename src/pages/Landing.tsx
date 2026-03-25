@@ -355,8 +355,9 @@ export default function Landing() {
             {talleresConfig.map(t => (
               <div
                 key={t.slug}
-                className="rounded-2xl overflow-hidden border bg-white transition-shadow hover:shadow-md"
+                className="rounded-2xl overflow-hidden border bg-white transition-shadow hover:shadow-md cursor-pointer"
                 style={{ borderColor: '#e3f8fb' }}
+                onClick={() => navigate(`/taller/${t.slug}/preview`)}
               >
                 {/* Imagen del taller */}
                 <div
@@ -397,7 +398,7 @@ export default function Landing() {
                       </span>
                     </div>
                     <button
-                      onClick={goToApp}
+                      onClick={() => navigate(`/taller/${t.slug}/preview`)}
                       className="flex items-center gap-1 text-[11px] font-bold transition-opacity hover:opacity-70"
                       style={{ color: '#02d47e' }}
                     >
