@@ -4,7 +4,7 @@ import { Download, Users, RefreshCw, LogOut, Filter } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
 import { talleresConfig } from '@/data/talleresConfig'
-import { buildModulosForTaller } from '@/data/modulosConfig'
+import { modulosLXP } from '@/data/modulosLXP'
 import { useAuth } from '@/contexts/AuthContext'
 import { GramaLogo } from '@/components/GramaLogo'
 import type { Profile } from '@/types/database'
@@ -21,24 +21,18 @@ interface DocenteRow extends Profile {
   moduloActual: string | null  // "M0", "M1", etc.
 }
 
-// Precomputa total de contenidos por taller
-function getTotalContenidosByTaller(slug: string): number {
-  if (!slug) return 0
-  try {
-    const modulos = buildModulosForTaller(slug)
-    return modulos.reduce((acc, m) => {
-      let count = m.contenidos.length
-      m.subSecciones?.forEach(s => { count += s.contenidos.length })
-      return acc + count
-    }, 0)
-  } catch {
-    return 0
-  }
+/**
+ * Total de contenidos del LXP (único sistema de IDs usado en la plataforma).
+ * Es el mismo para todos los talleres — los módulos son universales.
+ */
+function getTotalContenidosLXP(): number {
+  return modulosLXP.reduce((acc, m) =>
+    acc + m.subSecciones.reduce((a, s) => a + s.contenidos.length, 0), 0)
 }
 
 // ── Mock data para DEV_MODE ────────────────────────────────────────────────
 function buildMockDocentes(): DocenteRow[] {
-  const total = getTotalContenidosByTaller('mecanica-automotriz')
+  const total = getTotalContenidosLXP()
   const completados = Math.round(total * 0.48)
   const visualizados = Math.round(total * 0.55)
   return [
@@ -60,11 +54,15 @@ function buildMockDocentes(): DocenteRow[] {
   ]
 }
 
-// Extrae el número de módulo más alto con actividad desde los contenido_ids
+/**
+ * Extrae el módulo más alto en el que el docente tiene actividad.
+ * Soporta el formato LXP: "m0-s1-c1", "m3-s2-c1", etc.
+ */
 function calcModuloActual(contenidoIds: string[]): string | null {
   let maxM = -1
   for (const id of contenidoIds) {
-    const m = id.match(/-m(\d+)[-_]/)
+    // IDs LXP: m0-s1-c1 / m3-s2-c4 → captura el número tras la "m" inicial
+    const m = id.match(/^m(\d+)-/)
     if (m) {
       const n = parseInt(m[1])
       if (n > maxM) maxM = n
@@ -159,9 +157,10 @@ export default function Admin() {
       }
     })
 
+    const totalLXP = getTotalContenidosLXP()
     const rows: DocenteRow[] = profiles.map(p => {
       const stats = statsPorUsuario[p.id] ?? { completados: 0, visualizados: 0, ids: [] }
-      const total = getTotalContenidosByTaller(p.taller_slug ?? '')
+      const total = totalLXP
       const porcentaje = total > 0 ? Math.round((stats.completados / total) * 100) : 0
       const moduloActual = calcModuloActual(stats.ids)
       return {

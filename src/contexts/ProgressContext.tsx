@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react'
-import { buildModulosForTaller } from '@/data/modulosConfig'
 import { modulosLXP } from '@/data/modulosLXP'
 import type { EstadoModulo } from '@/mock/mockEstados'
 import { supabase } from '@/lib/supabase'
@@ -52,8 +51,19 @@ function saveLocalRecords(records: Map<string, ProgressRecord>) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(obj))
 }
 
-const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
-  import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
+/** Extrae todos los contenido IDs de un módulo LXP */
+function getIdsDeModuloLXP(moduloIdx: number): string[] {
+  const m = modulosLXP[moduloIdx]
+  if (!m) return []
+  const ids: string[] = []
+  m.subSecciones.forEach(s => s.contenidos.forEach(c => ids.push(c.id)))
+  return ids
+}
+
+/** Extrae todos los contenido IDs de todos los módulos LXP */
+function getTodosLosIdsLXP(): string[] {
+  return modulosLXP.flatMap((_, i) => getIdsDeModuloLXP(i))
+}
 
 export function ProgressProvider({ children }: { children: ReactNode }) {
   const { user, allUnlocked } = useAuth()
@@ -123,55 +133,53 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     syncToSupabase(contenidoId, 'en_progreso')
   }, [user])
 
-  const getModuloProgreso = useCallback((tallerSlug: string, moduloNum: number) => {
-    const modulos = buildModulosForTaller(tallerSlug)
-    const modulo = modulos.find(m => m.orden === moduloNum)
-    if (!modulo) return { porcentaje: 0, completados: 0, total: 0 }
-
-    const allIds: string[] = []
-    modulo.contenidos.forEach(c => allIds.push(c.id))
-    modulo.subSecciones?.forEach(s => s.contenidos.forEach(c => allIds.push(c.id)))
-
+  /**
+   * Progreso de un módulo específico.
+   * Usa los IDs de modulosLXP (fuente única de verdad) en lugar de modulosConfig.
+   * El parámetro tallerSlug se mantiene por compatibilidad de API pero no se usa,
+   * ya que los IDs de modulosLXP son genéricos (no dependientes del taller).
+   */
+  const getModuloProgreso = useCallback((_tallerSlug: string, moduloNum: number) => {
+    const idx = modulosLXP.findIndex(m => m.numero === moduloNum)
+    const allIds = getIdsDeModuloLXP(idx >= 0 ? idx : -1)
     const total = allIds.length
     const completados = allIds.filter(id => records.get(id)?.completed).length
     const porcentaje = total > 0 ? Math.round((completados / total) * 100) : 0
     return { porcentaje, completados, total }
   }, [records])
 
-  const getTallerProgreso = useCallback((tallerSlug: string) => {
-    const modulos = buildModulosForTaller(tallerSlug)
-    const allIds: string[] = []
-    modulos.forEach(m => {
-      m.contenidos.forEach(c => allIds.push(c.id))
-      m.subSecciones?.forEach(s => s.contenidos.forEach(c => allIds.push(c.id)))
-    })
-
+  /**
+   * Progreso total del taller.
+   * Usa todos los IDs de modulosLXP (fuente única de verdad).
+   * El tallerSlug se mantiene por compatibilidad pero no se usa.
+   */
+  const getTallerProgreso = useCallback((_tallerSlug: string) => {
+    const allIds = getTodosLosIdsLXP()
     const total = allIds.length
     const completados = allIds.filter(id => records.get(id)?.completed).length
     const porcentaje = total > 0 ? Math.round((completados / total) * 100) : 0
     return { porcentaje, completados, total }
   }, [records])
 
-  /** Devuelve el EstadoModulo para un módulo de modulosLXP (m0, m1…)
-   *  Regla: un módulo está bloqueado si el anterior no tiene 100% de progreso.
-   *  Excepción: docente@grama.pe, admins y DEV_MODE nunca ven módulos bloqueados. */
+  /**
+   * Estado de bloqueo de un módulo LXP.
+   * Regla: módulo N bloqueado si el N-1 no está al 100%.
+   * Excepción: admins y docente@grama.pe (allUnlocked) nunca ven bloqueos.
+   * NO se bypasea en DEV_MODE — los bloqueos son reales para docentes.
+   */
   const getEstadoModuloLXP = useCallback((moduloId: string): EstadoModulo => {
     const idx = modulosLXP.findIndex(m => m.id === moduloId)
     if (idx === -1) return 'bloqueado'
 
-    // Calcula % de completados para un módulo dado su índice
     function porcentajeModulo(i: number): number {
-      const m = modulosLXP[i]
-      const allIds: string[] = []
-      m.subSecciones.forEach(s => s.contenidos.forEach(c => allIds.push(c.id)))
+      const allIds = getIdsDeModuloLXP(i)
       if (allIds.length === 0) return 0
       const done = allIds.filter(id => records.get(id)?.completed).length
       return Math.round((done / allIds.length) * 100)
     }
 
-    // docente@grama.pe, admins y dev local: nunca bloquear
-    const skipLock = allUnlocked || DEV_MODE
-    if (idx > 0 && !skipLock && porcentajeModulo(idx - 1) < 100) return 'bloqueado'
+    // Solo admins y la cuenta demo tienen acceso libre — nunca DEV_MODE genérico
+    if (idx > 0 && !allUnlocked && porcentajeModulo(idx - 1) < 100) return 'bloqueado'
 
     const pct = porcentajeModulo(idx)
     if (pct === 100) return 'completado'
