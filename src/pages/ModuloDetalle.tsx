@@ -6,7 +6,7 @@ import { useEscapeKey } from '@/hooks/useEscapeKey'
 import {
   Clock, ChevronLeft, ChevronDown, ChevronRight,
   FileText, Video, Zap, Download, Activity,
-  ExternalLink, Lock, ClipboardList, School
+  ExternalLink, Lock, ClipboardList, School, CheckCircle2
 } from 'lucide-react'
 import { modulosLXP } from '@/data/modulosLXP'
 import { manualesRuta } from '@/data/manualesRuta'
@@ -39,7 +39,7 @@ export default function ModuloDetalle() {
   const { num } = useParams<{ num: string }>()
   const { slug } = useTaller()
   const navigate = useNavigate()
-  const { markContenidoCompleted, markContenidoInProgress, getEstadoModuloLXP } = useProgress()
+  const { markContenidoCompleted, markContenidoInProgress, getEstadoModuloLXP, getContenidoEstado } = useProgress()
   const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set(['0']))
   const [diagnosticosOpen, setDiagnosticosOpen] = useState(false)
   const [conocenosOpen, setConocenosOpen] = useState(false)
@@ -51,7 +51,7 @@ export default function ModuloDetalle() {
   const [showMapaHabilidades, setShowMapaHabilidades] = useState(false)
   const [showTablaProgresion, setShowTablaProgresion] = useState(false)
   const [descargableAbierto, setDescargableAbierto] = useState<{ descargableId: string; contenidoId: string } | null>(null)
-  const [videoAbierto, setVideoAbierto] = useState<{ titulo: string; descripcion?: string; duracionMin?: number; urlVideo: string } | null>(null)
+  const [videoAbierto, setVideoAbierto] = useState<{ titulo: string; descripcion?: string; duracionMin?: number; urlVideo: string; contenidoId: string } | null>(null)
   const [showTourSimulator, setShowTourSimulator] = useState(false)
 
   const closeGradeModal = useCallback(() => setShowGradeModal(false), [])
@@ -175,6 +175,7 @@ export default function ModuloDetalle() {
         descripcion: contenido.descripcion,
         duracionMin: contenido.duracionMin,
         urlVideo: contenido.urlVideo,
+        contenidoId: contenido.id,
       })
     } else if (contenido.tipo === 'EN_VIVO' && contenido.urlVivo) {
       // Ir a la sesión en vivo
@@ -387,16 +388,24 @@ export default function ModuloDetalle() {
                                       toast.success('¡Quiz aprobado!', { description: 'Tu progreso ha sido guardado.' })
                                     }}
                                   />
-                                ) : (
+                                ) : (() => {
+                                  const estado = getContenidoEstado(contenido.id)
+                                  return (
                                   <div
                                     className="flex items-start gap-4 p-4 rounded-xl border transition-all hover:shadow-sm"
-                                    style={{ borderColor: '#e3f8fb', background: '#ffffff' }}
+                                    style={{
+                                      borderColor: estado.completed ? '#02d47e' : '#e3f8fb',
+                                      background: estado.completed ? '#f0fdf9' : '#ffffff',
+                                    }}
                                   >
                                     <div
                                       className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
-                                      style={{ background: '#e3f8fb' }}
+                                      style={{ background: estado.completed ? 'rgba(2,212,126,0.15)' : '#e3f8fb' }}
                                     >
-                                      <ContentIcon size={18} style={{ color: sub.colorAccent }} />
+                                      {estado.completed
+                                        ? <CheckCircle2 size={18} style={{ color: '#02d47e' }} />
+                                        : <ContentIcon size={18} style={{ color: sub.colorAccent }} />
+                                      }
                                     </div>
                                     <div className="flex-1 min-w-0">
                                       <div className="flex flex-wrap items-center gap-2 mb-1">
@@ -404,6 +413,18 @@ export default function ModuloDetalle() {
                                         <h4 className="text-sm font-bold" style={{ color: '#043941' }}>
                                           {contenido.titulo}
                                         </h4>
+                                        {estado.completed && (
+                                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+                                            style={{ background: 'rgba(2,212,126,0.15)', color: '#02d47e' }}>
+                                            ✓ Completado
+                                          </span>
+                                        )}
+                                        {estado.inProgress && !estado.completed && (
+                                          <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full"
+                                            style={{ background: 'rgba(245,158,11,0.12)', color: '#b45309' }}>
+                                            En progreso
+                                          </span>
+                                        )}
                                       </div>
                                       <p className="text-xs mb-2" style={{ color: '#045f6c' }}>
                                         {contenido.descripcion}
@@ -428,10 +449,16 @@ export default function ModuloDetalle() {
                                     </div>
                                     <button
                                       onClick={() => handleOpenContent(contenido)}
-                                      className="inline-flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold text-white shrink-0 transition-all hover:opacity-90"
-                                      style={{ background: contenido.tipo === 'ACTIVIDAD_PRACTICA' ? '#f59e0b' : '#043941', width: '108px' }}
+                                      className="inline-flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold shrink-0 transition-all hover:opacity-90"
+                                      style={{
+                                        background: estado.completed ? 'rgba(2,212,126,0.15)' : contenido.tipo === 'ACTIVIDAD_PRACTICA' ? '#f59e0b' : '#043941',
+                                        color: estado.completed ? '#02d47e' : '#ffffff',
+                                        width: '108px',
+                                      }}
                                     >
-                                      {contenido.tipo === 'DESCARGABLE' ? (
+                                      {estado.completed ? (
+                                        <>Revisar <CheckCircle2 size={11} /></>
+                                      ) : contenido.tipo === 'DESCARGABLE' ? (
                                         <>Descargar <Download size={11} /></>
                                       ) : contenido.tipo === 'EN_VIVO' ? (
                                         <>Ver enlace <ExternalLink size={11} /></>
@@ -446,7 +473,8 @@ export default function ModuloDetalle() {
                                       )}
                                     </button>
                                   </div>
-                                )}
+                                  )
+                                })()}
                               </div>
                             )
                           })}
@@ -649,10 +677,7 @@ export default function ModuloDetalle() {
           urlVideo={videoAbierto.urlVideo}
           onClose={() => setVideoAbierto(null)}
           onComplete={() => {
-            const contenido = modulo.subSecciones
-              .flatMap(s => s.contenidos)
-              .find(c => c.urlVideo === videoAbierto.urlVideo)
-            if (contenido) markContenidoCompleted(contenido.id)
+            if (videoAbierto?.contenidoId) markContenidoCompleted(videoAbierto.contenidoId)
           }}
         />
       )}

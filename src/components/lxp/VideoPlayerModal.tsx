@@ -52,7 +52,7 @@ export function VideoPlayerModal({
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-[10px] font-bold uppercase tracking-widest mb-0.5" style={{ color: '#02d47e' }}>
-              Video · M1
+              Video
             </p>
             <h2 className="text-sm font-extrabold text-white leading-snug">{titulo}</h2>
             {(descripcion || duracionMin) && (

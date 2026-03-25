@@ -1,6 +1,6 @@
 // src/pages/TallerHub.tsx
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   BookOpen, Package, Clock, CheckCircle2, Lock, PlayCircle,
   ChevronRight, ArrowRight, Layers, Sparkles, Zap,
@@ -9,6 +9,8 @@ import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
 import { mockEstadosModulos, mockProximaSesion } from '@/mock/mockEstados'
 import { useProgress } from '@/contexts/ProgressContext'
+import { useAuth } from '@/contexts/AuthContext'
+import { supabase } from '@/lib/supabase'
 import { LiveSessionCard } from '@/components/lxp/LiveSessionCard'
 import { ProgressRing } from '@/components/lxp/ProgressRing'
 
@@ -36,7 +38,15 @@ export default function TallerHub() {
   const navigate = useNavigate()
   const [hoveredModulo, setHoveredModulo] = useState<string | null>(null)
   const { getTallerProgreso } = useProgress()
+  const { user, profile } = useAuth()
   const progresoTaller = getTallerProgreso(slug ?? '')
+
+  // Sincronizar taller_slug del perfil cuando el docente entra a un taller
+  useEffect(() => {
+    if (!user || !slug || profile?.role !== 'docente') return
+    if (profile?.taller_slug === slug) return
+    supabase.from('profiles').update({ taller_slug: slug }).eq('id', user.id)
+  }, [user?.id, slug, profile?.taller_slug, profile?.role])
 
   if (!taller) return null
 

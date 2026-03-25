@@ -1,10 +1,11 @@
 // src/pages/Login.tsx
-import { useState } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
 import { supabase } from '@/lib/supabase'
 import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
+import { talleresConfig } from '@/data/talleresConfig'
 
 type Tab = 'login' | 'register'
 
@@ -143,26 +144,43 @@ function RegisterForm() {
   const [password, setPassword] = useState('')
   const [showPass, setShowPass] = useState(false)
   const [ieId, setIeId] = useState<number | ''>('')
+  const [tallerSlug, setTallerSlug] = useState<string>('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  // Talleres disponibles para la IE seleccionada
+  const talleresDeIE = useMemo(() => {
+    if (!ieId) return []
+    const ie = INSTITUCIONES_EDUCATIVAS.find(ie => ie.id === ieId)
+    return (ie?.talleres ?? [])
+      .map(slug => talleresConfig.find(t => t.slug === slug))
+      .filter(Boolean) as typeof talleresConfig
+  }, [ieId])
+
+  // Auto-seleccionar si solo hay 1 taller
+  useEffect(() => {
+    if (talleresDeIE.length === 1) setTallerSlug(talleresDeIE[0].slug)
+    else setTallerSlug('')
+  }, [talleresDeIE])
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!nombre.trim() || !ieId) {
-      setError('Completa todos los campos.')
+    if (!nombre.trim() || !ieId || !tallerSlug) {
+      setError('Completa todos los campos, incluyendo el taller asignado.')
       return
     }
     setError('')
     setLoading(true)
 
-    const { error: authError } = await supabase.auth.signUp({
+    const { data, error: authError } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: {
           nombre_completo: nombre.trim(),
           ie_id: String(ieId),
+          taller_slug: tallerSlug,
         },
       },
     })
@@ -170,10 +188,24 @@ function RegisterForm() {
     if (authError) {
       setError(authError.message)
       setLoading(false)
-    } else {
-      setSuccess(true)
-      setLoading(false)
+      return
     }
+
+    // Upsert directo al perfil para garantizar que taller_slug quede guardado
+    // (complementa al trigger de Supabase si existe)
+    if (data.user) {
+      await supabase.from('profiles').upsert({
+        id: data.user.id,
+        email,
+        nombre_completo: nombre.trim(),
+        ie_id: Number(ieId),
+        taller_slug: tallerSlug,
+        role: 'docente',
+      }, { onConflict: 'id' })
+    }
+
+    setSuccess(true)
+    setLoading(false)
   }
 
   if (success) {
@@ -249,12 +281,38 @@ function RegisterForm() {
             </option>
           ))}
         </select>
-        {ieId !== '' && (
-          <p className="text-xs mt-1.5 font-medium" style={{ color: '#045f6c' }}>
-            {INSTITUCIONES_EDUCATIVAS.find(ie => ie.id === ieId)?.talleres.length ?? 0} talleres disponibles en tu IE
-          </p>
-        )}
       </div>
+
+      {/* Taller asignado — aparece cuando se selecciona una IE */}
+      {talleresDeIE.length > 0 && (
+        <div>
+          <label htmlFor="taller" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+            Taller asignado
+          </label>
+          {talleresDeIE.length === 1 ? (
+            <div
+              className="w-full px-4 py-3 rounded-xl border-2 text-sm font-semibold flex items-center gap-2"
+              style={{ borderColor: '#02d47e', color: '#043941', background: '#f0fdf9' }}
+            >
+              <CheckCircle size={15} style={{ color: '#02d47e' }} />
+              {talleresDeIE[0].nombre}
+            </div>
+          ) : (
+            <select
+              id="taller" required value={tallerSlug}
+              onChange={e => setTallerSlug(e.target.value)}
+              className={INPUT_STYLE.base} style={{ ...INPUT_STYLE.colors, cursor: 'pointer' }}
+              onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
+              onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}
+            >
+              <option value="">Selecciona tu taller</option>
+              {talleresDeIE.map(t => (
+                <option key={t.slug} value={t.slug}>{t.nombre}</option>
+              ))}
+            </select>
+          )}
+        </div>
+      )}
 
       <button type="submit" disabled={loading}
         className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all disabled:opacity-70"

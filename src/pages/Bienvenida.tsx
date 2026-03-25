@@ -2,11 +2,11 @@
 import { useEffect, useRef, useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
-import { talleresConfig } from '@/data/talleresConfig'
+import { talleresConfig, getTallerBySlug } from '@/data/talleresConfig'
 import { getTalleresDeIE, INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
 import { TallerCard } from '@/components/hub/TallerCard'
 import { GramaLogo } from '@/components/GramaLogo'
-import { Layers, Clock, Award, Download, ChevronDown, CheckCircle, BookOpen, LayoutDashboard } from 'lucide-react'
+import { Layers, Clock, Award, Download, ChevronDown, CheckCircle, BookOpen, LayoutDashboard, ArrowRight } from 'lucide-react'
 
 // ── Stat con conteo animado ────────────────────────────────────────────────
 function AnimatedStat({
@@ -98,6 +98,10 @@ export default function Bienvenida() {
 
   const ie = profile?.ie_id
     ? INSTITUCIONES_EDUCATIVAS.find(ie => ie.id === profile.ie_id)
+    : null;
+
+  const tallerAsignado = profile?.taller_slug
+    ? getTallerBySlug(profile.taller_slug)
     : null;
 
   const nTalleres = talleresDisponibles.length;
@@ -255,6 +259,34 @@ export default function Bienvenida() {
               ))}
             </div>
 
+            {/* Taller asignado (docentes con taller ya configurado) */}
+            {tallerAsignado && profile?.role === 'docente' && (
+              <button
+                onClick={() => navigate(`/taller/${tallerAsignado.slug}`)}
+                className="flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all mb-6 animate-fade-in-up stagger-6"
+                style={{
+                  background: 'rgba(2,212,126,0.1)',
+                  border: '1px solid rgba(2,212,126,0.3)',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(2,212,126,0.18)')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'rgba(2,212,126,0.1)')}
+              >
+                <span className="text-xl">{tallerAsignado.icon ?? '🛠'}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] font-bold tracking-widest uppercase" style={{ color: '#02d47e' }}>
+                    Tu taller asignado
+                  </p>
+                  <p className="text-sm font-extrabold text-white truncate">{tallerAsignado.nombre}</p>
+                  {ie && (
+                    <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                      {ie.nombre}
+                    </p>
+                  )}
+                </div>
+                <ArrowRight size={15} style={{ color: '#02d47e', flexShrink: 0 }} />
+              </button>
+            )}
+
             {/* CTA scroll */}
             <a
               href="#talleres"
@@ -263,7 +295,7 @@ export default function Bienvenida() {
               onMouseEnter={e => ((e.currentTarget as HTMLElement).style.gap = '10px')}
               onMouseLeave={e => ((e.currentTarget as HTMLElement).style.gap = '8px')}
             >
-              Elige tu especialidad
+              {tallerAsignado ? 'Ver todos los talleres' : 'Elige tu especialidad'}
               <ChevronDown size={15} />
             </a>
           </div>
