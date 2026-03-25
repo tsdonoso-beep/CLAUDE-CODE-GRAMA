@@ -8,45 +8,52 @@ import { GramaLogo } from '@/components/GramaLogo'
 const MODULOS_RUTA = [
   {
     codigo: 'M0',
-    titulo: 'Módulo Introductorio',
-    descripcion: 'Bienvenida al programa, presentación de la plataforma, normativa de seguridad básica y encuadre pedagógico del taller.',
-    horas: 20,
+    titulo: 'Inicio y Diagnóstico',
+    descripcion: 'Conoce la plataforma, tu punto de partida y el contexto del programa TSF. Explora tu taller virtualmente y comparte tus expectativas.',
+    horas: 4,
+    fase: 'Diagnóstico',
   },
   {
     codigo: 'M1',
-    titulo: 'Seguridad y Salud Ocupacional',
-    descripcion: 'Identificación de riesgos laborales, uso correcto de EPP, protocolos de emergencia y normativa de seguridad en el taller.',
-    horas: 20,
+    titulo: 'Conocimiento del Taller',
+    descripcion: 'Marco del programa formativo, IA para docentes EPT, arquitectura del taller y seguridad operativa. Quiz obligatorio con 80% para continuar.',
+    horas: 11,
+    fase: 'Orientación',
   },
   {
     codigo: 'M2',
-    titulo: 'Investigación Aplicada',
-    descripcion: 'Metodología de indagación, identificación de necesidades del entorno, análisis de problemas técnicos y planteamiento de soluciones.',
-    horas: 20,
+    titulo: 'Zona de Investigación',
+    descripcion: 'Domina el equipamiento de la zona de investigación: computadoras, cámaras, tablets, pizarras táctiles. Metodologías de indagación con tecnología.',
+    horas: 18,
+    fase: 'Apropiación',
   },
   {
     codigo: 'M3',
-    titulo: 'Innovación y Diseño',
-    descripcion: 'Procesos de ideación, prototipado y mejora de soluciones técnicas. Creatividad aplicada a la especialidad y pensamiento de diseño.',
-    horas: 20,
+    titulo: 'Zona de Innovación: Máquinas y Herramientas',
+    descripcion: 'El módulo más denso. Domina las máquinas de corte, fabricación digital y formado. Prácticas presenciales en niveles de complejidad creciente.',
+    horas: 36,
+    fase: 'Aplicación',
   },
   {
     codigo: 'M4',
-    titulo: 'Técnicas y Acabados',
-    descripcion: 'Dominio de los procesos técnicos propios de la especialidad: uso de herramientas, materiales y procedimientos de calidad.',
-    horas: 20,
+    titulo: 'Acabados y Almacén',
+    descripcion: 'Equipamiento de la zona de acabados, gestión del almacén y mantenimiento preventivo del taller. Fichas de revisión diaria.',
+    horas: 14,
+    fase: 'Aplicación',
   },
   {
     codigo: 'M5',
-    titulo: 'Formación Práctica',
-    descripcion: 'Consolidación de competencias mediante prácticas guiadas y trabajo colaborativo. Evaluación de desempeño técnico.',
-    horas: 20,
+    titulo: 'Programa Formativo en el Taller',
+    descripcion: 'Cómo planificar, implementar y evaluar competencias usando el equipamiento como ancla. Las 14 habilidades EPT desde el taller equipado.',
+    horas: 22,
+    fase: 'Aplicación',
   },
   {
     codigo: 'M6',
     titulo: 'Proyecto Integrador',
-    descripcion: 'Desarrollo de un proyecto real que integra todas las competencias del programa. Presentación ante la comunidad educativa.',
-    horas: 30,
+    descripcion: 'Produce un producto real en el taller usando todos los equipos y procesos aprendidos. Sustentación colectiva y ceremonia de certificación.',
+    horas: 25,
+    fase: 'Proyecto',
   },
 ]
 
@@ -222,9 +229,15 @@ export default function TallerPreview() {
                         {modulo.horas}h
                       </span>
                     </div>
-                    <p className="text-[11px] leading-relaxed" style={{ color: '#64748b' }}>
+                    <p className="text-[11px] leading-relaxed mb-2" style={{ color: '#64748b' }}>
                       {modulo.descripcion}
                     </p>
+                    <span
+                      className="text-[9px] font-bold uppercase tracking-wide"
+                      style={{ color: '#94a3b8' }}
+                    >
+                      {modulo.fase}
+                    </span>
                   </div>
                 </div>
               ))}
