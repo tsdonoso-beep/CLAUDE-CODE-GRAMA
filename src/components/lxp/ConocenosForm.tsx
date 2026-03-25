@@ -149,7 +149,7 @@ function DatePicker({ value, onChange }: {
 }
 
 // ─── Main Component ──────────────────────────────────────────────────────────
-export function ConocenosForm() {
+export function ConocenosForm({ onComplete }: { onComplete?: () => void } = {}) {
   const { taller } = useTaller()
   const especialidad = taller ? (TALLER_ESPECIALIDAD[taller.slug] ?? '') : ''
   const storageKey = `grama-conocenos-${taller?.slug ?? 'default'}`
@@ -190,6 +190,7 @@ export function ConocenosForm() {
     if (!isComplete) return
     localStorage.setItem(storageKey, JSON.stringify({ profesion, departamento, provincia, fecha, ie }))
     setEnviado(true)
+    onComplete?.()
   }
 
   if (enviado) {

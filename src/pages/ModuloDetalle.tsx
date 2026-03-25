@@ -177,9 +177,16 @@ export default function ModuloDetalle() {
         urlVideo: contenido.urlVideo,
         contenidoId: contenido.id,
       })
-    } else if (contenido.tipo === 'EN_VIVO' && contenido.urlVivo) {
-      // Ir a la sesión en vivo
-      navigate(`/taller/${slug}/live/${modulo?.numero}`)
+    } else if (contenido.tipo === 'EN_VIVO') {
+      if (contenido.urlVivo) {
+        window.open(contenido.urlVivo, '_blank')
+        markContenidoCompleted(contenido.id)
+      } else {
+        const fechaInfo = contenido.fechaSesion
+          ? `Fecha programada: ${new Intl.DateTimeFormat('es-PE', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(contenido.fechaSesion))}`
+          : 'El enlace estará disponible próximamente.'
+        toast.info('Sesión sincrónica', { description: fechaInfo })
+      }
     } else if (contenido.tipo === 'ACTIVIDAD_PRACTICA') {
       if (contenido.urlActividad) {
         window.open(contenido.urlActividad, '_blank')
@@ -372,7 +379,7 @@ export default function ModuloDetalle() {
                                     </button>
                                     {conocenosOpen && (
                                       <div className="border-t p-4" style={{ borderColor: '#d1e8eb', background: '#fafffd' }}>
-                                        <ConocenosForm />
+                                        <ConocenosForm onComplete={() => markContenidoCompleted('m0-s1-c3')} />
                                       </div>
                                     )}
                                   </div>

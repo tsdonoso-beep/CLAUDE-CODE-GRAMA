@@ -53,6 +53,11 @@ export interface ContenidoLXP {
   manualId?: string        // ID del manual en manualesRuta.ts (para PDF interactivos)
   descargableId?: string   // ID del descargable en descargablesLXP.ts
   urlVideo?: string        // URL de Google Drive u otro servicio de video
+  urlPDF?: string          // URL directa a un PDF externo (cuando no hay manualId)
+  urlInteractivo?: string  // URL externa para contenido interactivo
+  urlVivo?: string         // URL de sesión en vivo (Zoom, Meet, etc.)
+  urlActividad?: string    // URL de actividad práctica externa
+  fechaSesion?: string     // ISO string — fecha programada de sesión EN_VIVO
 }
 
 export interface SubSeccionLXP {
