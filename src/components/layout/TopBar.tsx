@@ -8,10 +8,15 @@ export function TopBar() {
   const { slug, num } = useParams<{ slug: string; num: string }>()
   const location = useLocation()
   const taller = talleresConfig.find(t => t.slug === slug)
-  const { profile, signOut } = useAuth()
+  const { profile, signOut, user } = useAuth()
 
-  const displayName = profile?.nombre_completo || profile?.email?.split('@')[0] || 'Docente'
-  const displayEmail = profile?.email ?? ''
+  const displayName =
+    profile?.nombre_completo ||
+    user?.user_metadata?.full_name ||
+    profile?.email?.split('@')[0] ||
+    user?.email?.split('@')[0] ||
+    'Docente'
+  const displayEmail = profile?.email ?? user?.email ?? ''
 
   const crumbs: { label: string; to?: string }[] = [{ label: 'Inicio', to: '/' }]
   if (taller) {

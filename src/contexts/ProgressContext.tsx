@@ -70,7 +70,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
   const [records, setRecords] = useState<Map<string, ProgressRecord>>(() => loadLocalRecords())
   const [loading, setLoading] = useState(false)
 
-  // Al autenticarse, cargar progreso desde Supabase y fusionar con localStorage
+  // Al autenticarse, cargar progreso desde Supabase — REEMPLAZA localStorage (fuente de verdad)
   useEffect(() => {
     if (!user) return
 
@@ -80,19 +80,18 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       .select('contenido_id, estado')
       .eq('usuario_id', user.id)
       .then(({ data }) => {
-        if (!data) { setLoading(false); return }
-
-        setRecords(prev => {
-          const merged = new Map(prev)
+        // Aunque no haya datos, reemplazamos para limpiar cualquier caché stale
+        const fresh = new Map<string, ProgressRecord>()
+        if (data) {
           data.forEach(({ contenido_id, estado }) => {
-            merged.set(contenido_id, {
+            fresh.set(contenido_id, {
               completed: estado === 'completado',
               inProgress: estado === 'en_progreso',
             })
           })
-          saveLocalRecords(merged)
-          return merged
-        })
+        }
+        saveLocalRecords(fresh)
+        setRecords(fresh)
         setLoading(false)
       })
   }, [user?.id])

@@ -300,7 +300,7 @@ export default function TallerHub() {
                   el.style.color = '#043941'
                 }}
               >
-                Ver los {modulosLXP.length} módulos completos
+                Ver todos los módulos ({modulosLXP.length})
                 <ArrowRight size={13} />
               </button>
             </div>
