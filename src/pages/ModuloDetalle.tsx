@@ -68,6 +68,7 @@ export default function ModuloDetalle() {
   const moduloNum = parseInt(num ?? '0', 10)
   const modulo = modulosLXP.find(m => m.numero === moduloNum)
   const estado = getEstadoModuloLXP(modulo?.id ?? '')
+  const prevModulo = modulosLXP.find(m => m.numero === moduloNum - 1)
 
   if (!modulo) {
     return (
@@ -78,6 +79,12 @@ export default function ModuloDetalle() {
   }
 
   if (estado === 'bloqueado') {
+    const mensajeBloqueo = prevModulo?.requiereAprobacion
+      ? `Aprueba el quiz del Módulo ${prevModulo.numero} (mínimo ${prevModulo.puntajeMinimoAcceso ?? 80}%) para desbloquear este módulo.`
+      : prevModulo
+        ? `Termina el Módulo ${prevModulo.numero} — ${prevModulo.nombre} — para continuar a este módulo.`
+        : 'Completa el módulo anterior para desbloquear este contenido.'
+
     return (
       <div className="flex flex-col items-center justify-center h-96 gap-4">
         <Lock size={40} style={{ color: '#94a3b8' }} />
@@ -85,7 +92,7 @@ export default function ModuloDetalle() {
           Módulo bloqueado
         </h2>
         <p className="text-sm text-center max-w-xs" style={{ color: '#045f6c' }}>
-          Aprueba el quiz del módulo anterior (mínimo 80%) para desbloquear este contenido.
+          {mensajeBloqueo}
         </p>
         <button
           onClick={() => navigate(`/taller/${slug}/ruta`)}
