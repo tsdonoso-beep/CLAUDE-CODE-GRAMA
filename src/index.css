@@ -248,6 +248,15 @@
   animation: grama-gradient-shift 8s ease infinite;
 }
 
+/* Marquee horizontal */
+@keyframes grama-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: grama-marquee 30s linear infinite;
+}
+
 /* Patrón de grid más denso para hero premium */
 .grama-pattern-dense {
   background-image:

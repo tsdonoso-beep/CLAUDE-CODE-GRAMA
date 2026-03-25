@@ -1,6 +1,6 @@
 // src/components/layout/Sidebar.tsx
 import { NavLink, useParams, useNavigate } from 'react-router-dom'
-import { Home, BookOpen, Package, ChevronLeft, LayoutGrid } from 'lucide-react'
+import { Home, BookOpen, Package, ChevronLeft, LayoutGrid, Globe } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { useProgress } from '@/contexts/ProgressContext'
 import { GramaLogo } from '@/components/GramaLogo'
@@ -201,14 +201,21 @@ export function Sidebar({ onCollapse }: SidebarProps) {
         </div>
       </div>
 
-      {/* ── Volver al Hub ── */}
-      <div className="relative z-10 px-3 pb-4">
+      {/* ── Navegación secundaria ── */}
+      <div className="relative z-10 px-3 pb-4 space-y-1">
         <button
           onClick={() => navigate('/hub')}
           className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl transition-all text-xs text-white/30 hover:text-white/60 hover:bg-white/[0.06]"
         >
           <LayoutGrid size={13} />
           Ver todos los talleres
+        </button>
+        <button
+          onClick={() => navigate('/')}
+          className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl transition-all text-xs text-white/20 hover:text-white/50 hover:bg-white/[0.04]"
+        >
+          <Globe size={13} />
+          Página principal
         </button>
       </div>
     </aside>
