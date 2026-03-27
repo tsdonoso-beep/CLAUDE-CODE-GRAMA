@@ -1,5 +1,5 @@
 // src/pages/Landing.tsx
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   BookOpen, Clock, Award, Users, Building2, Briefcase,
@@ -81,6 +81,20 @@ function Tangram({
   )
 }
 
+// ── Hook reveal al hacer scroll ───────────────────────────────────────────────
+function useReveal(threshold = 0.12) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setVisible(true); obs.disconnect() }
+    }, { threshold })
+    if (ref.current) obs.observe(ref.current)
+    return () => obs.disconnect()
+  }, [threshold])
+  return { ref, visible }
+}
+
 // ── Marquee de talleres ───────────────────────────────────────────────────────
 function TalleresMarquee() {
   const items = [...talleresConfig, ...talleresConfig]
@@ -106,6 +120,11 @@ export default function Landing() {
   const isLoggedIn = !!profile
 
   const goToApp = () => navigate('/hub')
+
+  // Reveal hooks por sección
+  const featuresReveal = useReveal()
+  const talleresReveal = useReveal()
+  const comunidadReveal = useReveal()
 
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", background: '#ffffff' }}>
@@ -184,14 +203,14 @@ export default function Landing() {
             {/* Columna texto */}
             <div>
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8" style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.25)' }}>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 animate-fade-in-up stagger-1" style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.25)' }}>
                 <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
                 <span className="text-[10px] font-black uppercase tracking-[0.14em]" style={{ color: '#02d47e' }}>
                   Plataforma Nacional · Talleres EPT · MINEDU Perú
                 </span>
               </div>
 
-              <h1 className="font-black text-white leading-[1.05] mb-6" style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.4rem)', letterSpacing: '-0.03em' }}>
+              <h1 className="font-black text-white leading-[1.05] mb-6 animate-fade-in-up stagger-2" style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.4rem)', letterSpacing: '-0.03em' }}>
                 Potenciamos la{' '}
                 <span className="relative inline-block">
                   <span style={{ color: '#02d47e' }}>educación</span>
@@ -199,11 +218,11 @@ export default function Landing() {
                 <br />técnica del Perú
               </h1>
 
-              <p className="text-sm leading-loose mb-10 max-w-lg" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                GRAMA acompaña a instituciones educativas y docentes EPT en la implementación y dominio de talleres técnicos completamente equipados.
+              <p className="text-sm leading-loose mb-10 max-w-lg animate-fade-in-up stagger-3" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                GRAMA acompaña a docentes EPT en la implementación y dominio pedagógico de talleres técnicos especializados — desde cualquier lugar, a tu ritmo.
               </p>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 animate-fade-in-up stagger-4">
                 <button
                   onClick={goToApp}
                   className="flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]"
@@ -312,12 +331,18 @@ export default function Landing() {
           </div>
 
           {/* Features — layout asimétrico */}
-          <div className="grid md:grid-cols-3 gap-5 mb-6">
+          <div ref={featuresReveal.ref} className="grid md:grid-cols-3 gap-5 mb-6">
             {FEATURES.map((f, i) => (
               <div
                 key={f.title}
                 className="group relative p-7 rounded-3xl border overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1"
-                style={{ borderColor: i === 0 ? 'rgba(2,212,126,0.3)' : '#e3f8fb', background: i === 0 ? 'linear-gradient(135deg, #f0fdf9 0%, #dcfce7 100%)' : '#fafffe' }}
+                style={{
+                  borderColor: i === 0 ? 'rgba(2,212,126,0.3)' : '#e3f8fb',
+                  background: i === 0 ? 'linear-gradient(135deg, #f0fdf9 0%, #dcfce7 100%)' : '#fafffe',
+                  opacity: featuresReveal.visible ? 1 : 0,
+                  transform: featuresReveal.visible ? 'translateY(0)' : 'translateY(32px)',
+                  transition: `opacity 0.5s ease ${i * 0.12}s, transform 0.5s ease ${i * 0.12}s`,
+                }}
               >
                 {/* Tangram mini decorativo en card */}
                 <Tangram
@@ -373,12 +398,17 @@ export default function Landing() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
-            {talleresConfig.map(t => (
+          <div ref={talleresReveal.ref} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+            {talleresConfig.map((t, i) => (
               <div
                 key={t.slug}
                 className="group rounded-3xl overflow-hidden bg-white cursor-pointer transition-all hover:shadow-xl hover:-translate-y-1"
-                style={{ border: '1px solid #e3f8fb' }}
+                style={{
+                  border: '1px solid #e3f8fb',
+                  opacity: talleresReveal.visible ? 1 : 0,
+                  transform: talleresReveal.visible ? 'translateY(0)' : 'translateY(32px)',
+                  transition: `opacity 0.5s ease ${i * 0.07}s, transform 0.5s ease ${i * 0.07}s`,
+                }}
                 onClick={() => navigate(`/taller/${t.slug}/preview`)}
               >
                 {/* Imagen */}
@@ -453,12 +483,18 @@ export default function Landing() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {COMMUNITY.map(c => (
+          <div ref={comunidadReveal.ref} className="grid md:grid-cols-3 gap-6">
+            {COMMUNITY.map((c, i) => (
               <div
                 key={c.title}
                 className="group relative p-7 rounded-3xl border flex flex-col overflow-hidden transition-all hover:shadow-md hover:-translate-y-0.5"
-                style={{ borderColor: '#e3f8fb', background: '#ffffff' }}
+                style={{
+                  borderColor: '#e3f8fb',
+                  background: '#ffffff',
+                  opacity: comunidadReveal.visible ? 1 : 0,
+                  transform: comunidadReveal.visible ? 'translateY(0)' : 'translateY(28px)',
+                  transition: `opacity 0.5s ease ${i * 0.12}s, transform 0.5s ease ${i * 0.12}s`,
+                }}
               >
                 <div className="h-11 w-11 rounded-2xl flex items-center justify-center mb-5" style={{ background: c.bg }}>
                   <c.icon size={19} style={{ color: c.color }} />
