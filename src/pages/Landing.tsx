@@ -225,25 +225,66 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Columna visual: tangram + stats limpios */}
-            <div className="hidden lg:flex flex-col items-center gap-10">
-              {/* Tangram grande */}
-              <div className="relative w-72 h-72">
-                <Tangram color="#02d47e" opacity={0.18} rotate={0} className="w-full h-full" />
+            {/* Columna visual: tangram + chips flotantes */}
+            <div className="hidden lg:flex items-center justify-center relative" style={{ minHeight: 360 }}>
+              {/* Tangram grande central */}
+              <Tangram color="#02d47e" opacity={0.22} rotate={12} className="w-80 h-80" />
+
+              {/* Chip: 7 módulos — arriba izquierda */}
+              <div
+                className="absolute flex items-center gap-2.5 px-4 py-2.5 rounded-2xl animate-fade-in-up stagger-3"
+                style={{
+                  top: 10, left: -20,
+                  background: 'rgba(255,255,255,0.07)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  backdropFilter: 'blur(8px)',
+                }}
+              >
+                <span className="h-7 w-7 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.2)' }}>
+                  <BookOpen size={13} style={{ color: '#02d47e' }} />
+                </span>
+                <div>
+                  <p className="text-[11px] font-black text-white leading-none">7 módulos</p>
+                  <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>por taller</p>
+                </div>
               </div>
 
-              {/* Stats en línea vertical — sin fondos */}
-              <div className="w-72 flex flex-col divide-y" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
-                {[
-                  { value: '9',    label: 'Talleres EPT disponibles' },
-                  { value: '130h', label: 'de formación híbrida' },
-                  { value: '200+', label: 'recursos digitales' },
-                ].map(s => (
-                  <div key={s.label} className="flex items-center justify-between py-4">
-                    <span className="text-2xl font-black" style={{ color: '#02d47e' }}>{s.value}</span>
-                    <span className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.label}</span>
-                  </div>
-                ))}
+              {/* Chip: 130h — derecha */}
+              <div
+                className="absolute flex items-center gap-2.5 px-4 py-2.5 rounded-2xl animate-fade-in-up stagger-4"
+                style={{
+                  top: '40%', right: -32,
+                  background: 'rgba(255,255,255,0.07)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  backdropFilter: 'blur(8px)',
+                }}
+              >
+                <span className="h-7 w-7 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.2)' }}>
+                  <Clock size={13} style={{ color: '#02d47e' }} />
+                </span>
+                <div>
+                  <p className="text-[11px] font-black text-white leading-none">130h</p>
+                  <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>formación híbrida</p>
+                </div>
+              </div>
+
+              {/* Chip: Autonomía — abajo derecha */}
+              <div
+                className="absolute flex items-center gap-2.5 px-4 py-2.5 rounded-2xl animate-fade-in-up stagger-5"
+                style={{
+                  bottom: 10, right: -10,
+                  background: 'rgba(2,212,126,0.12)',
+                  border: '1px solid rgba(2,212,126,0.25)',
+                  backdropFilter: 'blur(8px)',
+                }}
+              >
+                <span className="h-7 w-7 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.2)' }}>
+                  <Award size={13} style={{ color: '#02d47e' }} />
+                </span>
+                <div>
+                  <p className="text-[11px] font-black leading-none" style={{ color: '#02d47e' }}>Autonomía</p>
+                  <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>garantizada al finalizar</p>
+                </div>
               </div>
             </div>
           </div>
