@@ -490,10 +490,40 @@ export default function Landing() {
         <div className="absolute pointer-events-none" style={{ width: 700, height: 700, background: 'radial-gradient(circle, rgba(2,212,126,0.1) 0%, transparent 60%)', right: -150, top: -200 }} />
         <div className="absolute pointer-events-none" style={{ width: 500, height: 500, background: 'radial-gradient(circle, rgba(4,95,108,0.25) 0%, transparent 60%)', left: -100, bottom: -100 }} />
 
-        {/* Tangram decorativo — esquinas */}
+        {/* Tangram decorativo — esquinas fijas */}
         <Tangram color="#02d47e" opacity={0.10} rotate={15}  className="absolute w-80 h-80 -top-8 -right-8" />
         <Tangram color="#02d47e" opacity={0.06} rotate={-20} className="absolute w-64 h-64 bottom-16 -left-8" />
         <Tangram color="#ffffff" opacity={0.03} rotate={45}  className="absolute w-48 h-48 top-1/2 left-1/3" />
+
+        {/* Piezas individuales del tangram flotando libremente */}
+        {/* Triángulo grande — arriba izquierda */}
+        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:52, height:52, top:'12%', left:'8%', '--dur':'14s' } as React.CSSProperties}>
+          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.13} />
+        </svg>
+        {/* Triángulo mediano — centro izquierda */}
+        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:36, height:36, top:'45%', left:'15%', '--dur':'18s' } as React.CSSProperties}>
+          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.10} />
+        </svg>
+        {/* Cuadrado — arriba centro */}
+        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:28, height:28, top:'8%', left:'42%', '--dur':'11s' } as React.CSSProperties}>
+          <rect x="5" y="5" width="40" height="40" transform="rotate(20 25 25)" fill="#ffffff" fillOpacity={0.08} />
+        </svg>
+        {/* Triángulo pequeño — derecha alta */}
+        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:24, height:24, top:'22%', right:'22%', '--dur':'9s' } as React.CSSProperties}>
+          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.15} />
+        </svg>
+        {/* Paralelogramo — centro derecha */}
+        <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-a" style={{ width:48, height:24, top:'55%', right:'18%', '--dur':'16s' } as React.CSSProperties}>
+          <polygon points="20,0 80,0 60,40 0,40" fill="#02d47e" fillOpacity={0.09} />
+        </svg>
+        {/* Triángulo grande 2 — abajo derecha */}
+        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-b" style={{ width:44, height:44, bottom:'18%', right:'8%', '--dur':'13s' } as React.CSSProperties}>
+          <polygon points="0,0 80,40 0,80" fill="#ffffff" fillOpacity={0.06} />
+        </svg>
+        {/* Triángulo pequeño 2 — abajo izquierda */}
+        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-c" style={{ width:22, height:22, bottom:'25%', left:'28%', '--dur':'21s' } as React.CSSProperties}>
+          <polygon points="20,0 40,40 0,40" fill="#02d47e" fillOpacity={0.12} />
+        </svg>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 pt-20 pb-10">
           {/* Grid hero: texto izq, visual der */}
@@ -633,36 +663,37 @@ export default function Landing() {
             </p>
           </div>
 
-          {/* Features — layout asimétrico */}
+          {/* Features — 3 cards homologadas */}
           <div ref={featuresReveal.ref} className="grid md:grid-cols-3 gap-5 mb-6">
             {FEATURES.map((f, i) => (
               <div
                 key={f.title}
-                className="group relative p-7 rounded-3xl border overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1"
+                className="group relative p-7 rounded-3xl border overflow-hidden transition-all hover:shadow-xl hover:-translate-y-2"
                 style={{
-                  borderColor: i === 0 ? 'rgba(2,212,126,0.3)' : '#e3f8fb',
-                  background: i === 0 ? 'linear-gradient(135deg, #f0fdf9 0%, #dcfce7 100%)' : '#fafffe',
+                  borderColor: 'rgba(2,212,126,0.25)',
+                  background: 'linear-gradient(145deg, #f0fdf9 0%, #e8fdf2 100%)',
                   opacity: featuresReveal.visible ? 1 : 0,
-                  transform: featuresReveal.visible ? 'translateY(0)' : 'translateY(32px)',
-                  transition: `opacity 0.5s ease ${i * 0.12}s, transform 0.5s ease ${i * 0.12}s`,
+                  transform: featuresReveal.visible ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.97)',
+                  transition: `opacity 0.55s cubic-bezier(0.22,1,0.36,1) ${i * 0.14}s, transform 0.55s cubic-bezier(0.22,1,0.36,1) ${i * 0.14}s`,
                 }}
               >
-                {/* Tangram mini decorativo en card */}
-                <Tangram
-                  color="#02d47e"
-                  opacity={i === 0 ? 0.12 : 0.05}
-                  rotate={i * 30}
-                  className="absolute -bottom-4 -right-4 w-24 h-24"
-                />
+                {/* Tangram flotante en card — animado */}
+                <div
+                  className={i === 0 ? 'float-c' : i === 1 ? 'float-a' : 'float-b'}
+                  style={{ position: 'absolute', bottom: -12, right: -12, '--dur': `${14 + i * 3}s` } as React.CSSProperties}
+                >
+                  <Tangram color="#02d47e" opacity={0.13} rotate={i * 35} className="w-28 h-28" />
+                </div>
+
                 <div className="relative z-10">
                   <div className="h-11 w-11 rounded-2xl flex items-center justify-center mb-5"
-                    style={{ background: i === 0 ? 'rgba(2,212,126,0.2)' : 'rgba(2,212,126,0.10)' }}>
+                    style={{ background: 'rgba(2,212,126,0.18)', border: '1px solid rgba(2,212,126,0.2)' }}>
                     <f.icon size={19} style={{ color: '#02d47e' }} />
                   </div>
-                  <span className="text-[9px] font-black uppercase tracking-[0.16em] mb-1.5 block" style={{ color: i === 0 ? '#02d47e' : '#94a3b8' }}>
+                  <span className="text-[9px] font-black uppercase tracking-[0.18em] mb-2 block" style={{ color: '#02d47e' }}>
                     {f.overline}
                   </span>
-                  <h3 className="text-sm font-extrabold mb-2 leading-snug" style={{ color: '#043941' }}>{f.title}</h3>
+                  <h3 className="text-sm font-extrabold mb-2.5 leading-snug" style={{ color: '#043941' }}>{f.title}</h3>
                   <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>{f.desc}</p>
                 </div>
               </div>
