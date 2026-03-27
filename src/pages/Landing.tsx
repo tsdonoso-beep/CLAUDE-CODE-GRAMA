@@ -3,12 +3,14 @@ import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   BookOpen, Clock, Award, Users, Building2, Briefcase,
-  Video, FileText, ChevronRight, ArrowRight,
-  Layers, Package, CheckCircle, Mail, Menu, X,
+  Video, FileText, ChevronRight, ChevronLeft, ArrowRight,
+  Layers, Package, CheckCircle, Mail, Menu, X, Wrench,
 } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
 import { useAuth } from '@/contexts/AuthContext'
 import { talleresConfig } from '@/data/talleresConfig'
+import { getBienesByTaller } from '@/data/bienesData'
+import { modulosLXP } from '@/data/modulosLXP'
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const STATS = [
@@ -130,6 +132,178 @@ function TalleresMarquee() {
   )
 }
 
+// ── Modal carrusel de taller ──────────────────────────────────────────────────
+function TallerModal({
+  index, dir, onClose, onPrev, onNext, onViewFull,
+}: {
+  index: number
+  dir: 'next' | 'prev'
+  onClose: () => void
+  onPrev: () => void
+  onNext: () => void
+  onViewFull: () => void
+}) {
+  const taller  = talleresConfig[index]
+  const bienes  = getBienesByTaller(taller.slug).slice(0, 6)
+  const isFirst = index === 0
+  const isLast  = index === talleresConfig.length - 1
+  const slideClass = dir === 'next' ? 'slide-in-right' : 'slide-in-left'
+
+  // Cerrar con Escape
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [onClose])
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-fade-in-up"
+        style={{ animationDuration: '0.2s' }}
+        onClick={onClose}
+      />
+
+      {/* Panel */}
+      <div className="fixed inset-x-0 bottom-0 z-50 flex justify-center md:inset-0 md:items-center md:p-6">
+        <div
+          className="slide-up-modal bg-white w-full md:max-w-lg rounded-t-3xl md:rounded-3xl overflow-hidden flex flex-col shadow-2xl"
+          style={{ maxHeight: '92vh' }}
+        >
+          {/* Header imagen */}
+          <div className="relative h-52 shrink-0 overflow-hidden">
+            <img
+              key={taller.slug}
+              src={taller.imagen}
+              alt={taller.nombre}
+              className={`w-full h-full object-cover ${slideClass}`}
+              style={{ filter: 'brightness(0.75) saturate(0.9)' }}
+            />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(4,57,65,0.15) 0%, rgba(4,57,65,0.88) 100%)' }} />
+
+            {/* Cerrar */}
+            <button
+              onClick={onClose}
+              className="absolute top-3 right-3 h-8 w-8 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
+              style={{ background: 'rgba(0,0,0,0.45)' }}
+            >
+              <X size={14} color="white" />
+            </button>
+
+            {/* Tangram mini */}
+            <Tangram color={`hsl(${taller.color})`} opacity={0.3} rotate={15} className="absolute -bottom-4 -right-4 w-24 h-24" />
+
+            {/* Info */}
+            <div className={`absolute bottom-4 left-5 right-16 ${slideClass}`} key={`info-${taller.slug}`}>
+              <span
+                className="text-[9px] font-black px-2.5 py-1 rounded-full inline-block mb-1.5"
+                style={{ background: `hsl(${taller.color})`, color: '#fff' }}
+              >
+                T{String(taller.numero).padStart(2, '0')} · {index + 1} de {talleresConfig.length}
+              </span>
+              <h2 className="text-xl font-black text-white leading-tight">{taller.nombre}</h2>
+            </div>
+          </div>
+
+          {/* Cuerpo scrollable */}
+          <div key={taller.slug} className={`flex-1 overflow-y-auto p-5 space-y-5 ${slideClass}`}>
+            {/* Descripción */}
+            <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>{taller.descripcion}</p>
+
+            {/* Ruta de aprendizaje */}
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[0.15em] mb-2.5 flex items-center gap-2" style={{ color: '#02d47e' }}>
+                <BookOpen size={11} /> Ruta de aprendizaje · 7 módulos · 130h
+              </p>
+              <div className="space-y-1.5">
+                {modulosLXP.map((m, i) => (
+                  <div
+                    key={m.id}
+                    className="flex items-center gap-3 px-3 py-2 rounded-xl"
+                    style={{ background: '#f0faf5' }}
+                  >
+                    <span className="text-[10px] font-black w-5 shrink-0 text-center" style={{ color: '#94a3b8' }}>M{i}</span>
+                    <span className="text-[11px] font-semibold flex-1" style={{ color: '#043941' }}>{m.nombre}</span>
+                    <span className="text-[10px] shrink-0 font-medium" style={{ color: '#94a3b8' }}>{m.horasTotal}h</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Equipamiento */}
+            {bienes.length > 0 && (
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.15em] mb-2.5 flex items-center gap-2" style={{ color: '#02d47e' }}>
+                  <Wrench size={11} /> Equipamiento representativo
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {bienes.map(b => (
+                    <span
+                      key={b.nombre}
+                      className="text-[10px] font-medium px-2.5 py-1 rounded-full"
+                      style={{ background: '#e3f8fb', color: '#045f6c' }}
+                    >
+                      {b.nombre}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Footer */}
+          <div className="p-4 space-y-3 shrink-0 border-t" style={{ borderColor: '#f0faf5' }}>
+            {/* Dots de posición */}
+            <div className="flex items-center justify-center gap-1.5">
+              {talleresConfig.map((_, i) => (
+                <div
+                  key={i}
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width: i === index ? 20 : 6,
+                    height: 6,
+                    background: i === index ? '#02d47e' : '#e3f8fb',
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Prev / Next */}
+            <div className="flex gap-2">
+              <button
+                onClick={onPrev}
+                disabled={isFirst}
+                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all hover:bg-opacity-80 disabled:opacity-30"
+                style={{ background: '#f0faf5', color: '#043941' }}
+              >
+                <ChevronLeft size={13} /> Anterior
+              </button>
+              <button
+                onClick={onNext}
+                disabled={isLast}
+                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all hover:bg-opacity-80 disabled:opacity-30"
+                style={{ background: '#f0faf5', color: '#043941' }}
+              >
+                Siguiente <ChevronRight size={13} />
+              </button>
+            </div>
+
+            {/* CTA principal */}
+            <button
+              onClick={onViewFull}
+              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold text-white transition-all hover:scale-[1.02] hover:shadow-lg"
+              style={{ background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)' }}
+            >
+              Ver taller completo <ArrowRight size={14} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
 // ── Componente principal ──────────────────────────────────────────────────────
 export default function Landing() {
   const navigate = useNavigate()
@@ -138,6 +312,15 @@ export default function Landing() {
   const isLoggedIn = !!profile
 
   const goToApp = () => navigate('/hub')
+
+  // Modal carrusel
+  const [modalIndex, setModalIndex] = useState<number | null>(null)
+  const [modalDir, setModalDir] = useState<'next' | 'prev'>('next')
+
+  const openModal = (i: number) => { setModalDir('next'); setModalIndex(i) }
+  const closeModal = () => setModalIndex(null)
+  const goPrev = () => { setModalDir('prev'); setModalIndex(i => Math.max(0, i! - 1)) }
+  const goNext = () => { setModalDir('next'); setModalIndex(i => Math.min(talleresConfig.length - 1, i! + 1)) }
 
   // Reveal hooks por sección
   const featuresReveal = useReveal()
@@ -430,7 +613,7 @@ export default function Landing() {
                   transform: talleresReveal.visible ? 'translateY(0)' : 'translateY(32px)',
                   transition: `opacity 0.5s ease ${i * 0.07}s, transform 0.5s ease ${i * 0.07}s`,
                 }}
-                onClick={() => navigate(`/taller/${t.slug}/preview`)}
+                onClick={() => openModal(i)}
               >
                 {/* Imagen */}
                 <div className="relative h-40 overflow-hidden">
@@ -465,7 +648,7 @@ export default function Landing() {
                       </span>
                     </div>
                     <span className="flex items-center gap-1 text-[11px] font-bold transition-opacity group-hover:opacity-70" style={{ color: '#02d47e' }}>
-                      Ver taller <ChevronRight size={11} />
+                      Ver resumen <ChevronRight size={11} />
                     </span>
                   </div>
                 </div>
@@ -581,6 +764,18 @@ export default function Landing() {
           </div>
         </div>
       </section>
+
+      {/* ══ MODAL CARRUSEL ══════════════════════════════════════════════════ */}
+      {modalIndex !== null && (
+        <TallerModal
+          index={modalIndex}
+          dir={modalDir}
+          onClose={closeModal}
+          onPrev={goPrev}
+          onNext={goNext}
+          onViewFull={() => { navigate(`/taller/${talleresConfig[modalIndex].slug}/preview`); closeModal() }}
+        />
+      )}
 
       {/* ══ FOOTER ══════════════════════════════════════════════════════════ */}
       <footer style={{ background: '#043941' }} className="px-6 py-12">
