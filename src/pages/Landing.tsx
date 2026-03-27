@@ -19,15 +19,33 @@ const STATS = [
 ]
 
 const FEATURES = [
-  { icon: Layers,   title: 'Ecosistema Educativo',   desc: 'Acompañamos a instituciones educativas en la implementación y dominio de talleres técnicos completamente equipados.' },
-  { icon: BookOpen, title: 'Capacitación Docente',   desc: 'Programas formativos híbridos de 130 horas que preparan a docentes EPT para el uso pedagógico de cada taller.' },
-  { icon: Package,  title: 'Repositorio Digital',    desc: 'Mega repositorio de documentación técnica: manuales, fichas IPRC, protocolos de seguridad y rutas estructuradas.' },
+  {
+    icon: Package,
+    overline: 'El problema',
+    title: 'El conocimiento técnico se queda en las cajas',
+    desc: 'Los equipos llegan al taller pero los docentes no reciben formación para usarlos. El conocimiento es presencial, único e irrecuperable: cuando el docente rota, todo se pierde.',
+    accent: true,
+  },
+  {
+    icon: Layers,
+    overline: 'Nuestra solución',
+    title: 'Una ruta de aprendizaje híbrida diseñada para ti',
+    desc: 'Accede a 7 módulos formativos con contenido asíncrono, sesiones en vivo y práctica presencial. Aprende sobre cada equipo a tu ritmo, desde cualquier lugar y cuando puedas.',
+    accent: false,
+  },
+  {
+    icon: Award,
+    overline: 'El resultado',
+    title: 'Autonomía docente garantizada al finalizar',
+    desc: 'Al completar la ruta, dominas el uso pedagógico de cada equipo de tu taller y puedes replicar ese aprendizaje con tus estudiantes — con confianza y sin depender de nadie.',
+    accent: false,
+  },
 ]
 
 const PRODUCTS = [
-  { icon: Video,    title: 'Formación Híbrida',    desc: 'Sesiones en vivo + videos + documentación asíncrona' },
-  { icon: FileText, title: 'Mega Repositorio',      desc: 'Manuales, Fichas IPRC y protocolos descargables' },
-  { icon: Award,    title: 'Certificación Oficial', desc: 'Programa TSF de 130 horas · Inroprin' },
+  { icon: Video,    title: 'Acceso asíncrono',     desc: 'Videos + lecturas + fichas disponibles 24/7' },
+  { icon: FileText, title: 'Repositorio completo',  desc: 'Manuales, fichas IPRC y protocolos descargables' },
+  { icon: Award,    title: 'Acompañamiento en vivo', desc: 'Sesiones sincrónicas con expertos por taller' },
 ]
 
 const COMMUNITY = [
@@ -320,13 +338,13 @@ export default function Landing() {
           <div className="max-w-xl mb-16">
             <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] mb-3" style={{ color: '#02d47e' }}>
               <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
-              Ecosistema GRAMA
+              ¿Por qué GRAMA?
             </span>
             <h2 className="font-extrabold leading-tight mb-3" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', color: '#043941' }}>
-              El ecosistema completo para tu taller técnico
+              El conocimiento no debería perderse
             </h2>
             <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
-              Desde el equipamiento del taller hasta la formación docente y el repositorio de recursos pedagógicos.
+              Transformamos la capacitación presencial y efímera en un ecosistema híbrido de aprendizaje accesible, transferible y duradero.
             </p>
           </div>
 
@@ -356,7 +374,10 @@ export default function Landing() {
                     style={{ background: i === 0 ? 'rgba(2,212,126,0.2)' : 'rgba(2,212,126,0.10)' }}>
                     <f.icon size={19} style={{ color: '#02d47e' }} />
                   </div>
-                  <h3 className="text-sm font-extrabold mb-2" style={{ color: '#043941' }}>{f.title}</h3>
+                  <span className="text-[9px] font-black uppercase tracking-[0.16em] mb-1.5 block" style={{ color: i === 0 ? '#02d47e' : '#94a3b8' }}>
+                    {f.overline}
+                  </span>
+                  <h3 className="text-sm font-extrabold mb-2 leading-snug" style={{ color: '#043941' }}>{f.title}</h3>
                   <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>{f.desc}</p>
                 </div>
               </div>
