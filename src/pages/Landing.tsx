@@ -225,67 +225,55 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Columna visual: tangram + chips flotantes */}
-            <div className="hidden lg:flex items-center justify-center relative" style={{ minHeight: 360 }}>
-              {/* Tangram grande central */}
-              <Tangram color="#02d47e" opacity={0.22} rotate={12} className="w-80 h-80" />
+            {/* Columna visual — composición geométrica pura, sin texto */}
+            <div className="hidden lg:block relative" style={{ minHeight: 380, width: '100%' }}>
+              {/* Aurora orb principal */}
+              <div className="absolute animate-aurora" style={{
+                width: 420, height: 420,
+                background: 'radial-gradient(circle, rgba(2,212,126,0.18) 0%, rgba(4,95,108,0.12) 40%, transparent 70%)',
+                top: '50%', left: '50%',
+                transform: 'translate(-50%, -50%)',
+                borderRadius: '50%',
+              }} />
+              {/* Aurora orb secundario */}
+              <div className="absolute animate-aurora-slow" style={{
+                width: 280, height: 280,
+                background: 'radial-gradient(circle, rgba(2,212,126,0.12) 0%, transparent 65%)',
+                top: '20%', right: '5%',
+                borderRadius: '50%',
+              }} />
 
-              {/* Chip: 7 módulos — arriba izquierda */}
-              <div
-                className="absolute flex items-center gap-2.5 px-4 py-2.5 rounded-2xl animate-fade-in-up stagger-3"
-                style={{
-                  top: 10, left: -20,
-                  background: 'rgba(255,255,255,0.07)',
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  backdropFilter: 'blur(8px)',
-                }}
-              >
-                <span className="h-7 w-7 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.2)' }}>
-                  <BookOpen size={13} style={{ color: '#02d47e' }} />
-                </span>
-                <div>
-                  <p className="text-[11px] font-black text-white leading-none">7 módulos</p>
-                  <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>por taller</p>
-                </div>
+              {/* Tangram principal — grande, centrado */}
+              <div className="absolute" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                <Tangram color="#02d47e" opacity={0.30} rotate={8} className="w-72 h-72" />
               </div>
 
-              {/* Chip: 130h — derecha */}
-              <div
-                className="absolute flex items-center gap-2.5 px-4 py-2.5 rounded-2xl animate-fade-in-up stagger-4"
-                style={{
-                  top: '40%', right: -32,
-                  background: 'rgba(255,255,255,0.07)',
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  backdropFilter: 'blur(8px)',
-                }}
-              >
-                <span className="h-7 w-7 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.2)' }}>
-                  <Clock size={13} style={{ color: '#02d47e' }} />
-                </span>
-                <div>
-                  <p className="text-[11px] font-black text-white leading-none">130h</p>
-                  <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>formación híbrida</p>
-                </div>
+              {/* Tangram secundario — detrás, rotado */}
+              <div className="absolute" style={{ top: '10%', right: '8%' }}>
+                <Tangram color="#02d47e" opacity={0.10} rotate={55} className="w-48 h-48" />
               </div>
 
-              {/* Chip: Autonomía — abajo derecha */}
-              <div
-                className="absolute flex items-center gap-2.5 px-4 py-2.5 rounded-2xl animate-fade-in-up stagger-5"
-                style={{
-                  bottom: 10, right: -10,
-                  background: 'rgba(2,212,126,0.12)',
-                  border: '1px solid rgba(2,212,126,0.25)',
-                  backdropFilter: 'blur(8px)',
-                }}
-              >
-                <span className="h-7 w-7 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.2)' }}>
-                  <Award size={13} style={{ color: '#02d47e' }} />
-                </span>
-                <div>
-                  <p className="text-[11px] font-black leading-none" style={{ color: '#02d47e' }}>Autonomía</p>
-                  <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>garantizada al finalizar</p>
-                </div>
+              {/* Tangram terciario — esquina inferior */}
+              <div className="absolute" style={{ bottom: '5%', left: '6%' }}>
+                <Tangram color="#ffffff" opacity={0.05} rotate={-30} className="w-36 h-36" />
               </div>
+
+              {/* Puntos decorativos — constelación */}
+              {[
+                { top: '18%', left: '12%',  size: 5,  op: 0.5 },
+                { top: '28%', right: '18%', size: 3,  op: 0.35 },
+                { top: '62%', left: '20%',  size: 4,  op: 0.4 },
+                { top: '75%', right: '12%', size: 6,  op: 0.25 },
+                { top: '45%', left: '8%',   size: 3,  op: 0.3 },
+              ].map((d, i) => (
+                <div key={i} className="absolute rounded-full animate-pulse-soft" style={{
+                  top: d.top, left: d.left, right: (d as any).right,
+                  width: d.size, height: d.size,
+                  background: '#02d47e',
+                  opacity: d.op,
+                  animationDelay: `${i * 0.4}s`,
+                }} />
+              ))}
             </div>
           </div>
 
