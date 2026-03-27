@@ -115,6 +115,98 @@ function useReveal(threshold = 0.12) {
   return { ref, visible }
 }
 
+// ── Carrusel horizontal de talleres ──────────────────────────────────────────
+function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void }) {
+  const scrollRef  = useRef<HTMLDivElement>(null)
+  const speedRef   = useRef(0.7)
+  const pausedRef  = useRef(false)
+  const rafRef     = useRef<number>()
+  const items = [...talleresConfig, ...talleresConfig]
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    const tick = () => {
+      if (!pausedRef.current && el) {
+        el.scrollLeft += speedRef.current
+        if (el.scrollLeft >= el.scrollWidth / 2) el.scrollLeft = 0
+        if (el.scrollLeft <= 0 && speedRef.current < 0) el.scrollLeft = el.scrollWidth / 2
+      }
+      rafRef.current = requestAnimationFrame(tick)
+    }
+    rafRef.current = requestAnimationFrame(tick)
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
+  }, [])
+
+  return (
+    <div className="relative">
+      <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to right, #f0faf5 0%, transparent 100%)' }} />
+      <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to left, #f0faf5 0%, transparent 100%)' }} />
+
+      <button
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+        style={{ background: '#043941', color: '#02d47e' }}
+        onMouseEnter={() => { speedRef.current = -4; pausedRef.current = false }}
+        onMouseLeave={() => { speedRef.current = 0.7 }}
+      >
+        <ChevronLeft size={18} />
+      </button>
+
+      <button
+        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+        style={{ background: '#043941', color: '#02d47e' }}
+        onMouseEnter={() => { speedRef.current = 4; pausedRef.current = false }}
+        onMouseLeave={() => { speedRef.current = 0.7 }}
+      >
+        <ChevronRight size={18} />
+      </button>
+
+      <div
+        ref={scrollRef}
+        className="flex gap-4 overflow-x-hidden px-12 pb-4"
+        style={{ scrollbarWidth: 'none' }}
+        onMouseEnter={() => { pausedRef.current = true }}
+        onMouseLeave={() => { pausedRef.current = false; speedRef.current = 0.7 }}
+      >
+        {items.map((t, i) => (
+          <div
+            key={i}
+            className="shrink-0 rounded-2xl overflow-hidden bg-white cursor-pointer group transition-all hover:shadow-xl hover:-translate-y-1.5"
+            style={{ width: 178, border: '1px solid #e3f8fb' }}
+            onClick={() => onOpenModal(i % talleresConfig.length)}
+          >
+            <div className="relative overflow-hidden" style={{ height: 210 }}>
+              <img
+                src={t.imagen}
+                alt={t.nombre}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                style={{ filter: 'brightness(0.82) saturate(0.88)' }}
+              />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(4,57,65,0.85) 100%)' }} />
+              <div className="absolute top-2.5 left-2.5">
+                <span className="text-[9px] font-black px-2 py-0.5 rounded-full" style={{ background: `hsl(${t.color})`, color: '#fff' }}>
+                  T{String(t.numero).padStart(2, '0')}
+                </span>
+              </div>
+              <Tangram color={`hsl(${t.color})`} opacity={0.3} rotate={15} className="absolute -bottom-3 -right-3 w-16 h-16" />
+            </div>
+            <div className="p-3.5">
+              <h3 className="text-xs font-extrabold mb-1 leading-snug" style={{ color: '#043941' }}>{t.nombre}</h3>
+              <p className="text-[10px] leading-relaxed line-clamp-2 mb-3" style={{ color: '#64748b' }}>{t.descripcion}</p>
+              <div className="flex items-center gap-2.5" style={{ color: '#94a3b8' }}>
+                <span className="flex items-center gap-1 text-[9px] font-semibold"><BookOpen size={9} /> 7 módulos</span>
+                <span className="flex items-center gap-1 text-[9px] font-semibold"><Clock size={9} /> 130h</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ── Marquee de talleres ───────────────────────────────────────────────────────
 function TalleresMarquee() {
   const items = [...talleresConfig, ...talleresConfig]
@@ -616,58 +708,12 @@ export default function Landing() {
             </p>
           </div>
 
-          <div ref={talleresReveal.ref} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
-            {talleresConfig.map((t, i) => (
-              <div
-                key={t.slug}
-                className="group rounded-3xl overflow-hidden bg-white cursor-pointer transition-all hover:shadow-xl hover:-translate-y-1"
-                style={{
-                  border: '1px solid #e3f8fb',
-                  opacity: talleresReveal.visible ? 1 : 0,
-                  transform: talleresReveal.visible ? 'translateY(0)' : 'translateY(32px)',
-                  transition: `opacity 0.5s ease ${i * 0.07}s, transform 0.5s ease ${i * 0.07}s`,
-                }}
-                onClick={() => openModal(i)}
-              >
-                {/* Imagen */}
-                <div className="relative h-40 overflow-hidden">
-                  <img
-                    src={t.imagen}
-                    alt={t.nombre}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    style={{ filter: 'brightness(0.8) saturate(0.85)' }}
-                  />
-                  <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 35%, rgba(4,57,65,0.75) 100%)' }} />
-                  {/* Badge número */}
-                  <div className="absolute top-3 left-3">
-                    <span className="text-[9px] font-black px-2.5 py-1 rounded-full" style={{ background: `hsl(${t.color} / 0.85)`, color: '#ffffff' }}>
-                      T{String(t.numero).padStart(2, '0')}
-                    </span>
-                  </div>
-                  {/* Tangram mini sobre imagen */}
-                  <Tangram color={`hsl(${t.color})`} opacity={0.25} rotate={0} className="absolute -bottom-4 -right-4 w-20 h-20" />
-                </div>
-
-                {/* Contenido */}
-                <div className="p-5">
-                  <h3 className="text-sm font-extrabold mb-1.5" style={{ color: '#043941' }}>{t.nombre}</h3>
-                  <p className="text-[11px] leading-relaxed line-clamp-2 mb-4" style={{ color: '#64748b' }}>{t.descripcion}</p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3" style={{ color: '#94a3b8' }}>
-                      <span className="flex items-center gap-1 text-[10px] font-semibold">
-                        <BookOpen size={10} /> 7 módulos
-                      </span>
-                      <span className="flex items-center gap-1 text-[10px] font-semibold">
-                        <Clock size={10} /> 130h
-                      </span>
-                    </div>
-                    <span className="flex items-center gap-1 text-[11px] font-bold transition-opacity group-hover:opacity-70" style={{ color: '#02d47e' }}>
-                      Ver resumen <ChevronRight size={11} />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div
+            ref={talleresReveal.ref}
+            className="mb-12"
+            style={{ opacity: talleresReveal.visible ? 1 : 0, transform: talleresReveal.visible ? 'none' : 'translateY(24px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
+          >
+            <TalleresCarousel onOpenModal={openModal} />
           </div>
 
           <div className="text-center">
