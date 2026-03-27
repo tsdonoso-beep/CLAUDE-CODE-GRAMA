@@ -45,15 +45,15 @@ const FEATURES = [
 ]
 
 const PRODUCTS = [
-  { icon: Video,    title: 'Acceso asíncrono',     desc: 'Videos + lecturas + fichas disponibles 24/7' },
-  { icon: FileText, title: 'Repositorio completo',  desc: 'Manuales, fichas IPRC y protocolos descargables' },
-  { icon: Award,    title: 'Acompañamiento en vivo', desc: 'Sesiones sincrónicas con expertos por taller' },
+  { icon: Video,    title: 'Acceso asíncrono',      desc: 'Videos + lecturas + fichas disponibles 24/7' },
+  { icon: FileText, title: 'Repositorio completo',   desc: 'Manuales, fichas IPRC y protocolos descargables' },
+  { icon: Clock,    title: 'Acompañamiento en vivo', desc: 'Sesiones sincrónicas con expertos por taller' },
 ]
 
 const COMMUNITY = [
-  { icon: Users,     color: '#02d47e', bg: 'rgba(2,212,126,0.08)',   title: 'Docentes EPT',          desc: 'Accede a la ruta de aprendizaje, domina el uso pedagógico de los equipos y mejora tus competencias técnicas.', cta: 'Ingresar a la plataforma', action: 'app' },
-  { icon: Building2, color: '#045f6c', bg: 'rgba(4,95,108,0.08)',    title: 'Instituciones Educativas', desc: 'Implementamos talleres equipados con documentación técnica y formación docente integrada para tu programa EPT.', cta: 'Conocer más',               action: 'contact' },
-  { icon: Briefcase, color: '#043941', bg: 'rgba(4,57,65,0.08)',     title: 'Coordinadores EPT',     desc: 'Gestiona el avance formativo de tu equipo docente, monitorea el progreso y garantiza la implementación pedagógica.', cta: 'Contactar',               action: 'contact' },
+  { icon: Users,     color: '#02d47e', bg: 'rgba(2,212,126,0.08)',   title: 'Docentes EPT',            desc: 'Accede a la ruta de aprendizaje, domina el uso pedagógico de los equipos y mejora tus competencias técnicas.', cta: 'Ingresar a la plataforma', action: 'app' },
+  { icon: Building2, color: '#045f6c', bg: 'rgba(4,95,108,0.08)',    title: 'Instituciones Educativas', desc: 'Implementamos talleres equipados con documentación técnica y formación docente integrada para tu programa EPT.', cta: 'Escribirnos',              action: 'mail' },
+  { icon: Briefcase, color: '#043941', bg: 'rgba(4,57,65,0.08)',     title: 'Coordinadores EPT',       desc: 'Gestiona el avance formativo de tu equipo docente, monitorea el progreso y garantiza la implementación pedagógica.', cta: 'Contactar',            action: 'mail' },
 ]
 
 const NAV_LINKS = [
@@ -134,13 +134,14 @@ function TalleresMarquee() {
 
 // ── Modal carrusel de taller ──────────────────────────────────────────────────
 function TallerModal({
-  index, dir, onClose, onPrev, onNext, onViewFull,
+  index, dir, onClose, onPrev, onNext, onGoTo, onViewFull,
 }: {
   index: number
   dir: 'next' | 'prev'
   onClose: () => void
   onPrev: () => void
   onNext: () => void
+  onGoTo: (i: number) => void
   onViewFull: () => void
 }) {
   const taller  = talleresConfig[index]
@@ -254,16 +255,18 @@ function TallerModal({
 
           {/* Footer */}
           <div className="p-4 space-y-3 shrink-0 border-t" style={{ borderColor: '#f0faf5' }}>
-            {/* Dots de posición */}
+            {/* Dots de posición — clickeables */}
             <div className="flex items-center justify-center gap-1.5">
               {talleresConfig.map((_, i) => (
-                <div
+                <button
                   key={i}
+                  onClick={() => i !== index && onGoTo(i)}
                   className="rounded-full transition-all duration-300"
                   style={{
                     width: i === index ? 20 : 6,
                     height: 6,
                     background: i === index ? '#02d47e' : '#e3f8fb',
+                    cursor: i === index ? 'default' : 'pointer',
                   }}
                 />
               ))}
@@ -321,9 +324,12 @@ export default function Landing() {
   const closeModal = () => setModalIndex(null)
   const goPrev = () => { setModalDir('prev'); setModalIndex(i => Math.max(0, i! - 1)) }
   const goNext = () => { setModalDir('next'); setModalIndex(i => Math.min(talleresConfig.length - 1, i! + 1)) }
+  const goTo   = (i: number) => { setModalDir(i > (modalIndex ?? 0) ? 'next' : 'prev'); setModalIndex(i) }
 
   // Reveal hooks por sección
+  const featuresHeaderReveal = useReveal()
   const featuresReveal = useReveal()
+  const talleresHeaderReveal = useReveal()
   const talleresReveal = useReveal()
   const comunidadReveal = useReveal()
 
@@ -425,11 +431,11 @@ export default function Landing() {
 
               <div className="flex flex-wrap gap-3 animate-fade-in-up stagger-4">
                 <button
-                  onClick={goToApp}
+                  onClick={isLoggedIn ? goToApp : () => navigate('/login')}
                   className="flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]"
                   style={{ background: '#02d47e', color: '#043941' }}
                 >
-                  Ingresar a la plataforma
+                  {isLoggedIn ? 'Ir a la plataforma' : 'Comenzar ahora'}
                   <ArrowRight size={15} />
                 </button>
                 <a
@@ -518,7 +524,11 @@ export default function Landing() {
         <Tangram color="#02d47e" opacity={0.035} rotate={30} className="absolute w-96 h-96 -right-20 top-0 pointer-events-none" />
 
         <div className="max-w-6xl mx-auto">
-          <div className="max-w-xl mb-16">
+          <div
+            ref={featuresHeaderReveal.ref}
+            className="max-w-xl mb-16"
+            style={{ opacity: featuresHeaderReveal.visible ? 1 : 0, transform: featuresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
+          >
             <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] mb-3" style={{ color: '#02d47e' }}>
               <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
               ¿Por qué GRAMA?
@@ -589,7 +599,11 @@ export default function Landing() {
         <Tangram color="#043941" opacity={0.025} rotate={-15} className="absolute w-80 h-80 -left-10 bottom-10 pointer-events-none" />
 
         <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div
+            ref={talleresHeaderReveal.ref}
+            className="text-center max-w-2xl mx-auto mb-16"
+            style={{ opacity: talleresHeaderReveal.visible ? 1 : 0, transform: talleresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
+          >
             <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] mb-3" style={{ color: '#02d47e' }}>
               <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
               Especialidades disponibles
@@ -598,7 +612,7 @@ export default function Landing() {
               {talleresConfig.length} especialidades técnicas
             </h2>
             <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
-              Talleres completamente equipados con ruta de aprendizaje y repositorio pedagógico propio.
+              Haz clic en cualquier taller para ver su ruta de aprendizaje y equipamiento.
             </p>
           </div>
 
@@ -706,7 +720,7 @@ export default function Landing() {
                 <h3 className="text-sm font-extrabold mb-2" style={{ color: '#043941' }}>{c.title}</h3>
                 <p className="text-xs leading-relaxed flex-1 mb-5" style={{ color: '#64748b' }}>{c.desc}</p>
                 <button
-                  onClick={c.action === 'app' ? goToApp : undefined}
+                  onClick={c.action === 'app' ? goToApp : () => window.location.href = 'mailto:contacto@grama.pe'}
                   className="flex items-center gap-1.5 text-xs font-bold transition-opacity hover:opacity-60 self-start"
                   style={{ color: c.color }}
                 >
@@ -736,10 +750,10 @@ export default function Landing() {
                   <CheckCircle size={22} style={{ color: '#02d47e' }} />
                 </div>
                 <h2 className="font-extrabold text-white mb-3" style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>
-                  ¿Listo para potenciar tu taller?
+                  Tu taller ya está equipado.<br />Ahora falta que lo domines.
                 </h2>
                 <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                  Contáctanos para conocer más sobre GRAMA o inicia sesión directamente con tus credenciales institucionales.
+                  Inicia tu ruta de aprendizaje con GRAMA y conviértete en el referente pedagógico de tu especialidad técnica.
                 </p>
               </div>
               <div className="flex flex-col gap-3 shrink-0">
@@ -773,6 +787,7 @@ export default function Landing() {
           onClose={closeModal}
           onPrev={goPrev}
           onNext={goNext}
+          onGoTo={goTo}
           onViewFull={() => { navigate(`/taller/${talleresConfig[modalIndex].slug}/preview`); closeModal() }}
         />
       )}
