@@ -496,33 +496,26 @@ export default function Landing() {
         <Tangram color="#ffffff" opacity={0.03} rotate={45}  className="absolute w-48 h-48 top-1/2 left-1/3" />
 
         {/* Piezas individuales del tangram flotando libremente */}
-        {/* Triángulo grande — arriba izquierda */}
-        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:52, height:52, top:'12%', left:'8%', '--dur':'14s' } as React.CSSProperties}>
-          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.13} />
+        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:70, height:70, top:'12%', left:'6%', animationDuration:'14s' }}>
+          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.35} />
         </svg>
-        {/* Triángulo mediano — centro izquierda */}
-        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:36, height:36, top:'45%', left:'15%', '--dur':'18s' } as React.CSSProperties}>
-          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.10} />
+        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:50, height:50, top:'48%', left:'12%', animationDuration:'18s' }}>
+          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.28} />
         </svg>
-        {/* Cuadrado — arriba centro */}
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:28, height:28, top:'8%', left:'42%', '--dur':'11s' } as React.CSSProperties}>
-          <rect x="5" y="5" width="40" height="40" transform="rotate(20 25 25)" fill="#ffffff" fillOpacity={0.08} />
+        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:42, height:42, top:'6%', left:'40%', animationDuration:'11s' }}>
+          <rect x="4" y="4" width="42" height="42" transform="rotate(20 25 25)" fill="#ffffff" fillOpacity={0.18} />
         </svg>
-        {/* Triángulo pequeño — derecha alta */}
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:24, height:24, top:'22%', right:'22%', '--dur':'9s' } as React.CSSProperties}>
-          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.15} />
+        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:38, height:38, top:'20%', right:'20%', animationDuration:'9s' }}>
+          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.40} />
         </svg>
-        {/* Paralelogramo — centro derecha */}
-        <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-a" style={{ width:48, height:24, top:'55%', right:'18%', '--dur':'16s' } as React.CSSProperties}>
-          <polygon points="20,0 80,0 60,40 0,40" fill="#02d47e" fillOpacity={0.09} />
+        <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-a" style={{ width:64, height:32, top:'58%', right:'15%', animationDuration:'16s' }}>
+          <polygon points="20,0 80,0 60,40 0,40" fill="#02d47e" fillOpacity={0.25} />
         </svg>
-        {/* Triángulo grande 2 — abajo derecha */}
-        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-b" style={{ width:44, height:44, bottom:'18%', right:'8%', '--dur':'13s' } as React.CSSProperties}>
-          <polygon points="0,0 80,40 0,80" fill="#ffffff" fillOpacity={0.06} />
+        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-b" style={{ width:58, height:58, bottom:'15%', right:'6%', animationDuration:'13s' }}>
+          <polygon points="0,0 80,40 0,80" fill="#ffffff" fillOpacity={0.15} />
         </svg>
-        {/* Triángulo pequeño 2 — abajo izquierda */}
-        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-c" style={{ width:22, height:22, bottom:'25%', left:'28%', '--dur':'21s' } as React.CSSProperties}>
-          <polygon points="20,0 40,40 0,40" fill="#02d47e" fillOpacity={0.12} />
+        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-c" style={{ width:34, height:34, bottom:'28%', left:'30%', animationDuration:'21s' }}>
+          <polygon points="20,0 40,40 0,40" fill="#02d47e" fillOpacity={0.32} />
         </svg>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 pt-20 pb-10">
