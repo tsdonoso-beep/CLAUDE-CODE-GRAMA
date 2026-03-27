@@ -52,7 +52,7 @@ const PRODUCTS = [
 
 const COMMUNITY = [
   { icon: Users,     color: '#02d47e', bg: 'rgba(2,212,126,0.08)',   title: 'Docentes EPT',            desc: 'Accede a la ruta de aprendizaje, domina el uso pedagógico de los equipos y mejora tus competencias técnicas.', cta: 'Ingresar a la plataforma', action: 'app' },
-  { icon: Building2, color: '#045f6c', bg: 'rgba(4,95,108,0.08)',    title: 'Instituciones Educativas', desc: 'Implementamos talleres equipados con documentación técnica y formación docente integrada para tu programa EPT.', cta: 'Escribirnos',              action: 'mail' },
+  { icon: Building2, color: '#045f6c', bg: 'rgba(4,95,108,0.08)',    title: 'Instituciones Educativas', desc: 'Si tu IE ya cuenta con talleres EPT equipados, GRAMA capacita a tus docentes para entender y aprovechar al máximo cada equipo especializado.', cta: 'Escribirnos',              action: 'mail' },
   { icon: Briefcase, color: '#043941', bg: 'rgba(4,57,65,0.08)',     title: 'Coordinadores EPT',       desc: 'Gestiona el avance formativo de tu equipo docente, monitorea el progreso y garantiza la implementación pedagógica.', cta: 'Contactar',            action: 'mail' },
 ]
 
