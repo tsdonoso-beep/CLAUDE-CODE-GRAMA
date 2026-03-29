@@ -165,7 +165,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
 
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-hidden px-12 pb-4"
+        className="flex gap-5 overflow-x-hidden px-14 pb-4"
         style={{ scrollbarWidth: 'none' }}
         onMouseEnter={() => { pausedRef.current = true }}
         onMouseLeave={() => { pausedRef.current = false; speedRef.current = 0.7 }}
@@ -173,31 +173,31 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
         {items.map((t, i) => (
           <div
             key={i}
-            className="shrink-0 rounded-2xl overflow-hidden bg-white cursor-pointer group transition-all hover:shadow-xl hover:-translate-y-1.5"
-            style={{ width: 178, border: '1px solid #e3f8fb' }}
+            className="shrink-0 rounded-2xl overflow-hidden bg-white cursor-pointer group transition-all hover:shadow-xl hover:-translate-y-2"
+            style={{ width: 248, border: '1px solid #e3f8fb' }}
             onClick={() => onOpenModal(i % talleresConfig.length)}
           >
-            <div className="relative overflow-hidden" style={{ height: 210 }}>
+            <div className="relative overflow-hidden" style={{ height: 272 }}>
               <img
                 src={t.imagen}
                 alt={t.nombre}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 style={{ filter: 'brightness(0.82) saturate(0.88)' }}
               />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(4,57,65,0.85) 100%)' }} />
-              <div className="absolute top-2.5 left-2.5">
-                <span className="text-[9px] font-black px-2 py-0.5 rounded-full" style={{ background: `hsl(${t.color})`, color: '#fff' }}>
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(4,57,65,0.88) 100%)' }} />
+              <div className="absolute top-3 left-3">
+                <span className="text-[10px] font-black px-2.5 py-1 rounded-full" style={{ background: `hsl(${t.color})`, color: '#fff' }}>
                   T{String(t.numero).padStart(2, '0')}
                 </span>
               </div>
-              <Tangram color={`hsl(${t.color})`} opacity={0.3} rotate={15} className="absolute -bottom-3 -right-3 w-16 h-16" />
+              <Tangram color={`hsl(${t.color})`} opacity={0.3} rotate={15} className="absolute -bottom-3 -right-3 w-20 h-20" />
             </div>
-            <div className="p-3.5">
-              <h3 className="text-xs font-extrabold mb-1 leading-snug" style={{ color: '#043941' }}>{t.nombre}</h3>
-              <p className="text-[10px] leading-relaxed line-clamp-2 mb-3" style={{ color: '#64748b' }}>{t.descripcion}</p>
-              <div className="flex items-center gap-2.5" style={{ color: '#94a3b8' }}>
-                <span className="flex items-center gap-1 text-[9px] font-semibold"><BookOpen size={9} /> 7 módulos</span>
-                <span className="flex items-center gap-1 text-[9px] font-semibold"><Clock size={9} /> 130h</span>
+            <div className="p-4.5" style={{ padding: '14px 16px 16px' }}>
+              <h3 className="text-sm font-extrabold mb-1.5 leading-snug" style={{ color: '#043941' }}>{t.nombre}</h3>
+              <p className="text-xs leading-relaxed line-clamp-2 mb-3.5" style={{ color: '#64748b' }}>{t.descripcion}</p>
+              <div className="flex items-center gap-3" style={{ color: '#94a3b8' }}>
+                <span className="flex items-center gap-1 text-[10px] font-semibold"><BookOpen size={10} /> 7 módulos</span>
+                <span className="flex items-center gap-1 text-[10px] font-semibold"><Clock size={10} /> 130h</span>
               </div>
             </div>
           </div>
@@ -621,9 +621,9 @@ export default function Landing() {
           {/* Stats band */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.07)' }}>
             {STATS.map(s => (
-              <div key={s.value} className="flex flex-col items-center py-5 px-4" style={{ background: 'rgba(4,57,65,0.5)' }}>
-                <span className="font-black leading-none mb-1" style={{ fontSize: 'clamp(1.6rem, 4vw, 2.2rem)', color: '#02d47e' }}>{s.value}</span>
-                <span className="text-[10px] font-medium text-center" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.label}</span>
+              <div key={s.value} className="flex flex-col items-center py-6 px-4" style={{ background: 'rgba(4,57,65,0.5)' }}>
+                <span className="font-black leading-none mb-1.5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', color: '#02d47e' }}>{s.value}</span>
+                <span className="text-xs font-medium text-center" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.label}</span>
               </div>
             ))}
           </div>
@@ -679,15 +679,15 @@ export default function Landing() {
                 </div>
 
                 <div className="relative z-10">
-                  <div className="h-11 w-11 rounded-2xl flex items-center justify-center mb-5"
+                  <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-6"
                     style={{ background: 'rgba(2,212,126,0.18)', border: '1px solid rgba(2,212,126,0.2)' }}>
-                    <f.icon size={19} style={{ color: '#02d47e' }} />
+                    <f.icon size={22} style={{ color: '#02d47e' }} />
                   </div>
-                  <span className="text-[9px] font-black uppercase tracking-[0.18em] mb-2 block" style={{ color: '#02d47e' }}>
+                  <span className="text-[10px] font-black uppercase tracking-[0.18em] mb-2 block" style={{ color: '#02d47e' }}>
                     {f.overline}
                   </span>
-                  <h3 className="text-sm font-extrabold mb-2.5 leading-snug" style={{ color: '#043941' }}>{f.title}</h3>
-                  <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>{f.desc}</p>
+                  <h3 className="text-base font-extrabold mb-3 leading-snug" style={{ color: '#043941' }}>{f.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>{f.desc}</p>
                 </div>
               </div>
             ))}
@@ -784,11 +784,11 @@ export default function Landing() {
                   transition: `opacity 0.5s ease ${i * 0.12}s, transform 0.5s ease ${i * 0.12}s`,
                 }}
               >
-                <div className="h-11 w-11 rounded-2xl flex items-center justify-center mb-5" style={{ background: c.bg }}>
-                  <c.icon size={19} style={{ color: c.color }} />
+                <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-5" style={{ background: c.bg }}>
+                  <c.icon size={22} style={{ color: c.color }} />
                 </div>
-                <h3 className="text-sm font-extrabold mb-2" style={{ color: '#043941' }}>{c.title}</h3>
-                <p className="text-xs leading-relaxed flex-1 mb-5" style={{ color: '#64748b' }}>{c.desc}</p>
+                <h3 className="text-base font-extrabold mb-2" style={{ color: '#043941' }}>{c.title}</h3>
+                <p className="text-sm leading-relaxed flex-1 mb-5" style={{ color: '#64748b' }}>{c.desc}</p>
                 <button
                   onClick={c.action === 'app' ? goToApp : () => window.location.href = 'mailto:contacto@grama.pe'}
                   className="flex items-center gap-1.5 text-xs font-bold transition-opacity hover:opacity-60 self-start"
