@@ -369,7 +369,7 @@ export default function TallerPreview() {
               </p>
 
               {/* Tabs */}
-              <div className="flex gap-1 mb-5">
+              <div className="flex gap-2 mb-5">
                 {([
                   { id: 'bienes',   label: 'Bienes',   Icon: Package  },
                   { id: 'manuales', label: 'Manuales', Icon: FileText },
@@ -377,10 +377,10 @@ export default function TallerPreview() {
                 ] as const).map(tab => (
                   <button key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className="flex items-center gap-2 px-5 py-2 rounded-t-lg text-sm font-semibold transition-all"
+                    className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all"
                     style={activeTab === tab.id
-                      ? { background: '#ffffff', color: '#043941' }
-                      : { background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                      ? { background: '#ffffff', color: '#043941', fontWeight: 700 }
+                      : { background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.12)' }}>
                     <tab.Icon size={13} />
                     {tab.label}
                   </button>
