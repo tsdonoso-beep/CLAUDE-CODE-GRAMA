@@ -2,7 +2,7 @@
 import { useState, useMemo } from 'react'
 import {
   Search, X, SlidersHorizontal, Package, Wrench as WrenchLucide, Sofa, BookOpen,
-  HardHat, FileText, Video, ChevronRight, BookMarked,
+  HardHat, FileText, Video, PlayCircle, ChevronRight, BookMarked,
   Wrench, GraduationCap,
 } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
