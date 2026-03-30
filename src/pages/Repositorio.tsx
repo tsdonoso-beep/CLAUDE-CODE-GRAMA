@@ -11,7 +11,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Bien = Record<string, any>
-type Tab = 'catalogo' | 'manuales' | 'videos'
+type Tab = 'bienes' | 'manuales' | 'videos'
 
 const TIPO_ICONS: Record<string, React.ElementType> = {
   EQUIPOS: Package, HERRAMIENTAS: WrenchLucide, MOBILIARIO: Sofa,
@@ -57,7 +57,7 @@ export default function Repositorio() {
   const { taller, bienes, totalBienes, slug } = useTaller()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const [tab, setTab] = useState<Tab>('catalogo')
+  const [tab, setTab] = useState<Tab>('bienes')
 
   // ── Catálogo ──────────────────────────────────────────────────────────────
   const [busqueda, setBusqueda] = useState('')
@@ -197,8 +197,31 @@ export default function Repositorio() {
             {totalBienes} bienes catalogados · {zonas.length} zonas
           </p>
 
-          {/* Buscador por tab */}
-          {tab === 'catalogo' && (
+          {/* 1. TABS — primero */}
+          <div className="flex gap-2 mb-5">
+            {([
+              { id: 'bienes',   label: 'Bienes',   icon: Package  },
+              { id: 'manuales', label: 'Manuales', icon: FileText },
+              { id: 'videos',   label: 'Videos',   icon: Video    },
+            ] as { id: Tab; label: string; icon: React.ElementType }[]).map(t => (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all"
+                style={{
+                  background: tab === t.id ? '#ffffff' : 'rgba(255,255,255,0.1)',
+                  color:      tab === t.id ? '#043941' : 'rgba(255,255,255,0.6)',
+                  border: tab === t.id ? 'none' : '1px solid rgba(255,255,255,0.12)',
+                }}
+              >
+                <t.icon size={13} />
+                {t.label}
+              </button>
+            ))}
+          </div>
+
+          {/* 2. BUSCADOR — segundo */}
+          {tab === 'bienes' && (
             <div className="relative max-w-xl mb-4">
               <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#02d47e' }} />
               <input
@@ -261,10 +284,9 @@ export default function Repositorio() {
             </div>
           )}
 
-          {/* Chips tipo — solo en catálogo */}
-          {tab === 'catalogo' && (
-            <div className="flex flex-wrap gap-2 mb-4">
-              {/* Chip "Todos" — verde cuando ningún tipo está activo */}
+          {/* 3. SUB-FILTROS — tercero */}
+          {tab === 'bienes' && (
+            <div className="flex flex-wrap gap-2 pb-5">
               <button
                 onClick={() => setFiltroTipo('')}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
@@ -296,15 +318,14 @@ export default function Repositorio() {
             </div>
           )}
 
-          {/* Chips filtro manual — solo en manuales */}
           {tab === 'manuales' && (
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-2 pb-5">
               {([
-                { id: 'todos',         label: 'Todos',         count: conteos.total,         color: '#02d47e', bg: 'rgba(2,212,126,0.15)' },
-                { id: 'uso',           label: 'Uso',           count: conteos.uso,           color: '#059669', bg: 'rgba(5,150,105,0.15)' },
-                { id: 'mantenimiento', label: 'Mantenimiento', count: conteos.mantenimiento, color: '#d97706', bg: 'rgba(217,119,6,0.15)' },
-                { id: 'pedagogico',    label: 'Pedagógico',    count: conteos.pedagogico,    color: '#7c3aed', bg: 'rgba(124,58,237,0.15)' },
-                { id: 'usb',           label: 'Digital/USB',   count: conteos.usb,           color: '#0891b2', bg: 'rgba(8,145,178,0.15)' },
+                { id: 'todos',         label: 'Todos',         count: conteos.total,         color: '#02d47e' },
+                { id: 'uso',           label: 'Uso',           count: conteos.uso,           color: '#059669' },
+                { id: 'mantenimiento', label: 'Mantenimiento', count: conteos.mantenimiento, color: '#d97706' },
+                { id: 'pedagogico',    label: 'Pedagógico',    count: conteos.pedagogico,    color: '#7c3aed' },
+                { id: 'usb',           label: 'Digital/USB',   count: conteos.usb,           color: '#0891b2' },
               ] as const).map(f => (
                 <button
                   key={f.id}
@@ -322,34 +343,11 @@ export default function Repositorio() {
               ))}
             </div>
           )}
-
-          {/* Tabs */}
-          <div className="flex gap-1 mt-2">
-            {([
-              { id: 'catalogo', label: 'Catálogo', icon: Package },
-              { id: 'manuales', label: 'Manuales', icon: FileText },
-              { id: 'videos',   label: 'Videos',   icon: Video },
-            ] as { id: Tab; label: string; icon: React.ElementType }[]).map(t => (
-              <button
-                key={t.id}
-                onClick={() => setTab(t.id)}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-sm font-bold transition-all"
-                style={{
-                  background: tab === t.id ? '#f0fdf8' : 'rgba(255,255,255,0.07)',
-                  color: tab === t.id ? '#043941' : 'rgba(255,255,255,0.55)',
-                  borderBottom: tab === t.id ? '2px solid #02d47e' : '2px solid transparent',
-                }}
-              >
-                <t.icon size={14} />
-                {t.label}
-              </button>
-            ))}
-          </div>
         </div>
       </div>
 
       {/* ══ TAB: CATÁLOGO ═══════════════════════════════════════════════════ */}
-      {tab === 'catalogo' && (
+      {tab === 'bienes' && (
         <>
           <div className="sticky top-0 z-20 px-4 py-3 border-b shadow-sm" style={{ background: '#ffffff', borderColor: '#d1fae5' }}>
             <div className="flex items-center gap-3 overflow-x-auto pb-1">
