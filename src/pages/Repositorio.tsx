@@ -21,16 +21,15 @@ const TIPO_ICONS: Record<string, React.ElementType> = {
 // Excluir del catálogo: manuales, videos, USB y capacitación (tienen sus propias pestañas)
 function esExcluidoDeCatalogo(nombre: string): boolean {
   const n = nombre.toLowerCase()
-  return (
-    n.startsWith('manual') ||
-    n.startsWith('video') ||
-    n.includes('usb con información') ||
-    n.includes('usb capacitación') ||
-    n.includes('taller de capacitación')
-  )
+  // Manuales y videos van a sus propias pestañas; los USB son bienes físicos y sí aparecen aquí
+  return n.startsWith('manual') || n.startsWith('video')
 }
 
 // ── Clasificadores por nombre ─────────────────────────────────────────────────
+// Regla principal: el nombre DEBE contener 'manual' para pertenecer a la sección Manuales
+function esManual(nombre: string) {
+  return nombre.toLowerCase().includes('manual')
+}
 function esManualUso(nombre: string) {
   const n = nombre.toLowerCase()
   return n.includes('manual') && (n.includes('uso') || n.includes('operaci') || n.includes('instalac'))
@@ -38,15 +37,11 @@ function esManualUso(nombre: string) {
 }
 function esManualMantenimiento(nombre: string) {
   const n = nombre.toLowerCase()
-  return n.includes('mantenimiento') || n.includes('mantención')
+  return n.includes('manual') && (n.includes('mantenimiento') || n.includes('mantención'))
 }
 function esManualPedagogico(nombre: string) {
   const n = nombre.toLowerCase()
-  return (n.includes('pedagóg') || n.includes('pedagogic')) && n.includes('manual')
-}
-function esUsb(nombre: string) {
-  const n = nombre.toLowerCase()
-  return n.includes('usb') || (n.includes('digital') && n.includes('manual'))
+  return n.includes('manual') && (n.includes('pedagóg') || n.includes('pedagogic'))
 }
 function esVideo(nombre: string) {
   const n = nombre.toLowerCase()
@@ -69,7 +64,7 @@ export default function Repositorio() {
 
   // ── Manuales ──────────────────────────────────────────────────────────────
   const [busquedaManual, setBusquedaManual] = useState('')
-  const [filtroManual, setFiltroManual] = useState<'todos' | 'uso' | 'mantenimiento' | 'pedagogico' | 'usb'>('todos')
+  const [filtroManual, setFiltroManual] = useState<'todos' | 'uso' | 'mantenimiento' | 'pedagogico'>('todos')
 
   // ── Videos ────────────────────────────────────────────────────────────────
   const [busquedaVideo, setBusquedaVideo] = useState('')
@@ -112,31 +107,28 @@ export default function Repositorio() {
     })
   , [bienes, busqueda, filtroZona, filtroArea, filtroSubarea, filtroTipo])
 
-  // ── Manuales: bienes PEDAGOGICO agrupados ────────────────────────────────
+  // ── Manuales: solo ítems cuyo nombre contiene 'manual' ──────────────────
   const bienesManual = useMemo(() => {
-    const pedagogicos = bienes.filter((b: Bien) => b.tipo === 'PEDAGOGICO')
+    const soloManuales = bienes.filter((b: Bien) => esManual(b.nombre ?? ''))
     const q = busquedaManual.toLowerCase()
-    return pedagogicos.filter((b: Bien) => {
+    return soloManuales.filter((b: Bien) => {
       const matchQ = !q || b.nombre?.toLowerCase().includes(q) || b.zona?.toLowerCase().includes(q)
       if (!matchQ) return false
-      if (filtroManual === 'uso')         return esManualUso(b.nombre ?? '')
+      if (filtroManual === 'uso')           return esManualUso(b.nombre ?? '')
       if (filtroManual === 'mantenimiento') return esManualMantenimiento(b.nombre ?? '')
-      if (filtroManual === 'pedagogico')  return esManualPedagogico(b.nombre ?? '')
-      if (filtroManual === 'usb')         return esUsb(b.nombre ?? '')
-      // todos: excluir videos de esta vista
-      return !esVideo(b.nombre ?? '')
+      if (filtroManual === 'pedagogico')    return esManualPedagogico(b.nombre ?? '')
+      return true // todos
     })
   }, [bienes, busquedaManual, filtroManual])
 
-  // Conteos por categoría
+  // Conteos por categoría de manual
   const conteos = useMemo(() => {
-    const pedagogicos = bienes.filter((b: Bien) => b.tipo === 'PEDAGOGICO')
+    const soloManuales = bienes.filter((b: Bien) => esManual(b.nombre ?? ''))
     return {
-      uso:           pedagogicos.filter((b: Bien) => esManualUso(b.nombre ?? '')).length,
-      mantenimiento: pedagogicos.filter((b: Bien) => esManualMantenimiento(b.nombre ?? '')).length,
-      pedagogico:    pedagogicos.filter((b: Bien) => esManualPedagogico(b.nombre ?? '')).length,
-      usb:           pedagogicos.filter((b: Bien) => esUsb(b.nombre ?? '')).length,
-      total:         pedagogicos.filter((b: Bien) => !esVideo(b.nombre ?? '')).length,
+      uso:           soloManuales.filter((b: Bien) => esManualUso(b.nombre ?? '')).length,
+      mantenimiento: soloManuales.filter((b: Bien) => esManualMantenimiento(b.nombre ?? '')).length,
+      pedagogico:    soloManuales.filter((b: Bien) => esManualPedagogico(b.nombre ?? '')).length,
+      total:         soloManuales.length,
     }
   }, [bienes])
 
@@ -325,7 +317,6 @@ export default function Repositorio() {
                 { id: 'uso',           label: 'Uso',           count: conteos.uso,           color: '#059669' },
                 { id: 'mantenimiento', label: 'Mantenimiento', count: conteos.mantenimiento, color: '#d97706' },
                 { id: 'pedagogico',    label: 'Pedagógico',    count: conteos.pedagogico,    color: '#7c3aed' },
-                { id: 'usb',           label: 'Digital/USB',   count: conteos.usb,           color: '#0891b2' },
               ] as const).map(f => (
                 <button
                   key={f.id}
