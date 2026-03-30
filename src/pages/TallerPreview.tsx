@@ -1,55 +1,142 @@
 // src/pages/TallerPreview.tsx
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
-import { ArrowLeft, BookOpen, Clock, Mail, ChevronRight, Package, Layers, Award } from 'lucide-react'
+import {
+  ArrowLeft, BookOpen, Clock, Mail, ChevronRight, Package, Layers, Award,
+  Search, Filter, FileText, Play, Wrench, Monitor, Shield, Grid3x3
+} from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
-import { getBienesByTaller, getTotalBienesByTaller } from '@/data/bienesData'
+import { getBienesByTaller, getTotalBienesByTaller, type Bien } from '@/data/bienesData'
 import { GramaLogo } from '@/components/GramaLogo'
 
-// ── Datos de programa ────────────────────────────────────────────────────────
+// ── Módulos ruta (150h total) ────────────────────────────────────────────────
 const MODULOS_RUTA = [
-  { codigo: 'M0', titulo: 'Inicio y Diagnóstico',          descripcion: 'Conoce la plataforma, tu punto de partida y el contexto del programa TSF. Explora tu taller virtualmente.',             horas: 4,  fase: 'Diagnóstico' },
-  { codigo: 'M1', titulo: 'Conocimiento del Taller',       descripcion: 'Marco del programa formativo, IA para docentes EPT, arquitectura del taller y seguridad operativa.',                     horas: 11, fase: 'Orientación'  },
-  { codigo: 'M2', titulo: 'Zona de Investigación',         descripcion: 'Domina el equipamiento de la zona de investigación: computadoras, cámaras, tablets y pizarras táctiles.',               horas: 18, fase: 'Apropiación'  },
-  { codigo: 'M3', titulo: 'Zona de Innovación: Máquinas',  descripcion: 'El módulo más denso. Domina máquinas de corte, fabricación digital y formado con prácticas presenciales.',              horas: 36, fase: 'Aplicación'   },
-  { codigo: 'M4', titulo: 'Acabados y Almacén',            descripcion: 'Equipamiento de la zona de acabados, gestión del almacén y mantenimiento preventivo del taller.',                        horas: 14, fase: 'Aplicación'   },
-  { codigo: 'M5', titulo: 'Programa Formativo',            descripcion: 'Planifica, implementa y evalúa competencias usando el equipamiento como ancla. Las 14 habilidades EPT.',                horas: 22, fase: 'Aplicación'   },
-  { codigo: 'M6', titulo: 'Proyecto Integrador',           descripcion: 'Produce un producto real usando todos los equipos aprendidos. Sustentación colectiva y ceremonia de certificación.',    horas: 25, fase: 'Proyecto'     },
+  { codigo: 'M0', titulo: 'Inicio y Diagnóstico',         descripcion: 'Conoce la plataforma, tu punto de partida y el contexto del programa TSF. Explora tu taller virtualmente.',          horas: 4,  fase: 'Diagnóstico' },
+  { codigo: 'M1', titulo: 'Conocimiento del Taller',      descripcion: 'Marco del programa formativo, IA para docentes EPT, arquitectura del taller y seguridad operativa.',                  horas: 11, fase: 'Orientación'  },
+  { codigo: 'M2', titulo: 'Zona de Investigación',        descripcion: 'Domina el equipamiento de la zona de investigación: computadoras, cámaras, tablets y pizarras táctiles.',            horas: 22, fase: 'Apropiación'  },
+  { codigo: 'M3', titulo: 'Zona de Innovación: Máquinas', descripcion: 'El módulo más denso. Domina máquinas de corte, fabricación digital y formado con prácticas presenciales.',           horas: 42, fase: 'Aplicación'   },
+  { codigo: 'M4', titulo: 'Acabados y Almacén',           descripcion: 'Equipamiento de la zona de acabados, gestión del almacén y mantenimiento preventivo del taller.',                     horas: 18, fase: 'Aplicación'   },
+  { codigo: 'M5', titulo: 'Programa Formativo',           descripcion: 'Planifica, implementa y evalúa competencias usando el equipamiento como ancla. Las 14 habilidades EPT.',             horas: 26, fase: 'Aplicación'   },
+  { codigo: 'M6', titulo: 'Proyecto Integrador',          descripcion: 'Produce un producto real usando todos los equipos aprendidos. Sustentación colectiva y ceremonia de certificación.', horas: 27, fase: 'Proyecto'     },
 ]
 
+// ── Tipos de bienes ──────────────────────────────────────────────────────────
+const TIPOS = [
+  { key: 'EQUIPOS',      label: 'Equipos',      Icon: Monitor  },
+  { key: 'HERRAMIENTAS', label: 'Herramientas', Icon: Wrench   },
+  { key: 'MOBILIARIO',   label: 'Mobiliario',   Icon: Grid3x3  },
+  { key: 'PEDAGOGICO',   label: 'Pedagógico',   Icon: BookOpen },
+  { key: 'SEGURIDAD',    label: 'Seguridad',    Icon: Shield   },
+]
+const TIPO_LABEL: Record<string, string> = Object.fromEntries(TIPOS.map(t => [t.key, t.label]))
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const TIPO_ICON: Record<string, any>     = Object.fromEntries(TIPOS.map(t => [t.key, t.Icon]))
+
+// ── Zonas ────────────────────────────────────────────────────────────────────
+const ZONA_SHORT: Record<string, string> = {
+  'ZONA DE INVESTIGACIÓN, GESTIÓN Y DISEÑO': 'INV. Y DISEÑO',
+  'ZONA DE INNOVACIÓN':                      'INNOVACIÓN',
+  'DEPÓSITO / ALMACÉN / SEGURIDAD':          'DEPÓSITO',
+}
 const ZONA_META: Record<string, { label: string; Icon: typeof Package }> = {
-  'ZONA DE INVESTIGACIÓN, GESTIÓN Y DISEÑO': { label: 'Investigación',    Icon: Layers  },
-  'ZONA DE INNOVACIÓN':                       { label: 'Innovación',       Icon: Package },
-  'DEPÓSITO / ALMACÉN / SEGURIDAD':           { label: 'Almacén',          Icon: Award   },
+  'ZONA DE INVESTIGACIÓN, GESTIÓN Y DISEÑO': { label: 'Investigación', Icon: Layers  },
+  'ZONA DE INNOVACIÓN':                      { label: 'Innovación',    Icon: Package },
+  'DEPÓSITO / ALMACÉN / SEGURIDAD':          { label: 'Almacén',       Icon: Award   },
 }
 
-// ── Decoración tangram: polígonos SVG inspirados en el puzzle de 7 piezas ──
+// ── Tangram decoración ───────────────────────────────────────────────────────
 function TangramDecor({ accent, className = '' }: { accent: string; className?: string }) {
   return (
-    <svg
-      viewBox="0 0 200 200"
-      className={`pointer-events-none select-none ${className}`}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* Triángulo grande izquierda */}
-      <polygon points="0,200 100,100 0,0"     fill={accent} fillOpacity="0.12" />
-      {/* Triángulo grande derecha */}
-      <polygon points="200,0 100,100 200,200" fill={accent} fillOpacity="0.07" />
-      {/* Cuadrado central rotado 45° */}
+    <svg viewBox="0 0 200 200" className={`pointer-events-none select-none ${className}`} xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,200 100,100 0,0"      fill={accent} fillOpacity="0.12" />
+      <polygon points="200,0 100,100 200,200"  fill={accent} fillOpacity="0.07" />
       <rect x="75" y="75" width="50" height="50" transform="rotate(45 100 100)" fill={accent} fillOpacity="0.10" />
-      {/* Triángulo pequeño sup */}
-      <polygon points="100,0 150,50 50,50"    fill={accent} fillOpacity="0.08" />
-      {/* Triángulo pequeño inf */}
+      <polygon points="100,0 150,50 50,50"     fill={accent} fillOpacity="0.08" />
       <polygon points="100,200 50,150 150,150" fill={accent} fillOpacity="0.08" />
     </svg>
   )
 }
 
+// ── Card de bien ─────────────────────────────────────────────────────────────
+function BienCard({ bien, accent, accentAlpha }: {
+  bien: Bien
+  accent: string
+  accentAlpha: (a: number) => string
+}) {
+  const Icon      = TIPO_ICON[bien.tipo] ?? Package
+  const zonaShort = ZONA_SHORT[bien.zona] ?? bien.zona
+  const tipoLabel = TIPO_LABEL[bien.tipo] ?? bien.tipo
+
+  return (
+    <div
+      className="bg-white rounded-2xl flex flex-col transition-shadow hover:shadow-md overflow-hidden"
+      style={{ border: '1.5px solid #e8f4f8', borderTopColor: accent, borderTopWidth: 3 }}
+    >
+      {/* Top row */}
+      <div className="flex items-start justify-between px-3 pt-3 pb-1">
+        <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
+          style={{ background: accentAlpha(0.12) }}>
+          <Icon size={14} style={{ color: accent }} />
+        </div>
+        {bien.cantidad > 1 && (
+          <span className="text-[9px] font-black px-1.5 py-0.5 rounded-md"
+            style={{ background: 'rgba(2,212,126,0.13)', color: '#02d47e' }}>
+            ×{bien.cantidad}
+          </span>
+        )}
+      </div>
+
+      {/* Body */}
+      <div className="px-3 pb-2 flex-1">
+        <p className="text-xs font-bold leading-tight line-clamp-2 mb-1" style={{ color: '#043941' }}>
+          {bien.nombre}
+        </p>
+        {(bien.marca || bien.modelo) && (
+          <p className="text-[10px] font-medium truncate" style={{ color: '#94a3b8' }}>
+            {[bien.marca, bien.modelo].filter(Boolean).join(' · ')}
+          </p>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className="px-3 pb-3">
+        <p className="text-[9px] font-black uppercase tracking-wide mb-2" style={{ color: accent }}>
+          {zonaShort}
+        </p>
+        <div className="flex items-center justify-between">
+          <span className="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full"
+            style={{ background: accentAlpha(0.1), color: '#043941' }}>
+            <Icon size={9} />
+            {tipoLabel}
+          </span>
+          <div className="flex items-center gap-1">
+            <span className="h-5 w-5 rounded flex items-center justify-center"
+              style={{ background: '#f1f5f9' }}>
+              <FileText size={9} style={{ color: '#94a3b8' }} />
+            </span>
+            <span className="h-5 w-5 rounded flex items-center justify-center"
+              style={{ background: '#f1f5f9' }}>
+              <Play size={9} style={{ color: '#94a3b8' }} />
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── Componente principal ─────────────────────────────────────────────────────
 export default function TallerPreview() {
-  const { slug }  = useParams<{ slug: string }>()
-  const navigate  = useNavigate()
-  const taller    = talleresConfig.find(t => t.slug === slug)
+  const { slug }   = useParams<{ slug: string }>()
+  const navigate   = useNavigate()
+  const taller     = talleresConfig.find(t => t.slug === slug)
+
+  const [activeTab,   setActiveTab]   = useState<'bienes' | 'manuales' | 'videos'>('bienes')
+  const [search,      setSearch]      = useState('')
+  const [tipoFilter,  setTipoFilter]  = useState('ALL')
+  const [zonaFilters, setZonaFilters] = useState<string[]>([])
+
+  useEffect(() => { window.scrollTo(0, 0) }, [slug])
 
   if (!taller) {
     return (
@@ -64,77 +151,80 @@ export default function TallerPreview() {
     )
   }
 
-  // Scroll to top on every taller navigation
-  useEffect(() => { window.scrollTo(0, 0) }, [slug])
+  const accent      = `hsl(${taller.color})`
+  const accentAlpha = (a: number) => `hsl(${taller.color} / ${a})`
+  const totalHoras  = MODULOS_RUTA.reduce((s, m) => s + m.horas, 0)
 
-  const accent       = `hsl(${taller.color})`
-  const accentAlpha  = (a: number) => `hsl(${taller.color} / ${a})`
-  const totalHoras   = MODULOS_RUTA.reduce((s, m) => s + m.horas, 0)
+  const bienes      = getBienesByTaller(taller.slug)
+  const totalBienes = getTotalBienesByTaller(taller.slug)
 
-  const bienes           = getBienesByTaller(taller.slug)
-  const totalBienes      = getTotalBienesByTaller(taller.slug)
-  const zonaMap          = new Map<string, number>()
+  // Zonas únicas
+  const zonaMap = new Map<string, number>()
   bienes.forEach(b => zonaMap.set(b.zona, (zonaMap.get(b.zona) ?? 0) + 1))
-  const zonas            = Array.from(zonaMap.entries()).map(([nombre, count]) => ({
+  const zonas = Array.from(zonaMap.entries()).map(([nombre, count]) => ({
     nombre, count,
     label: ZONA_META[nombre]?.label ?? nombre,
     Icon:  ZONA_META[nombre]?.Icon  ?? Package,
   }))
-  const equiposInnov     = bienes.filter(b => b.zona.includes('INNOVACI') && b.tipo === 'EQUIPOS')
-  const equiposTop       = equiposInnov.slice(0, 8)
-  const equiposExtra     = equiposInnov.length - 8
+  const ZONA_KEYS = Array.from(zonaMap.keys())
+
+  // Conteo por tipo
+  const tipoCounts = bienes.reduce((acc, b) => {
+    if (b.tipo) acc[b.tipo] = (acc[b.tipo] ?? 0) + 1
+    return acc
+  }, {} as Record<string, number>)
+
+  // Bienes filtrados
+  const filteredBienes = bienes
+    .filter(b => tipoFilter === 'ALL' || b.tipo === tipoFilter)
+    .filter(b => zonaFilters.length === 0 || zonaFilters.includes(b.zona))
+    .filter(b => {
+      if (!search.trim()) return true
+      const q = search.toLowerCase()
+      return (
+        b.nombre.toLowerCase().includes(q) ||
+        b.marca.toLowerCase().includes(q)  ||
+        b.modelo.toLowerCase().includes(q) ||
+        b.codigoEntidad.toLowerCase().includes(q)
+      )
+    })
 
   return (
     <div className="min-h-screen" style={{ fontFamily: "'Manrope', sans-serif", background: '#ffffff' }}>
 
-      {/* ── Navbar blanco (igual que Landing) ──────────────────────────────── */}
+      {/* ── Navbar ──────────────────────────────────────────────────────────── */}
       <header
         className="fixed top-0 left-0 right-0 z-50 border-b"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderColor: 'rgba(4,57,65,0.08)' }}
       >
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-          <button
-            onClick={() => navigate('/')}
+          <button onClick={() => navigate('/')}
             className="flex items-center gap-2 text-xs font-semibold transition-opacity hover:opacity-60"
-            style={{ color: '#045f6c' }}
-          >
+            style={{ color: '#045f6c' }}>
             <ArrowLeft size={14} />
             Todas las especialidades
           </button>
           <GramaLogo variant="dark" size="sm" />
-          <button
-            onClick={() => navigate('/login')}
-            className="px-4 py-1.5 rounded-lg text-xs font-bold text-white transition-opacity hover:opacity-90"
-            style={{ background: '#02d47e', color: '#043941' }}
-          >
+          <button onClick={() => navigate('/login')}
+            className="px-4 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-90"
+            style={{ background: '#02d47e', color: '#043941' }}>
             Acceder
           </button>
         </div>
       </header>
 
-      {/* ── Hero: oscuro GRAMA + imagen a la derecha ────────────────────────── */}
-      <section
-        className="relative overflow-hidden pt-14"
-        style={{ background: '#043941', minHeight: '88vh' }}
-      >
-        {/* Patrón de fondo */}
+      {/* ── Hero ────────────────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden pt-14" style={{ background: '#043941', minHeight: '88vh' }}>
         <div className="absolute inset-0 grama-pattern opacity-30" />
-
-        {/* Orb radial verde */}
         <div className="absolute pointer-events-none" style={{
           width: 500, height: 500,
           background: 'radial-gradient(circle, rgba(2,212,126,0.14) 0%, transparent 65%)',
           right: -80, top: -80,
         }} />
-
-        {/* Decoración tangram — esquina inferior izquierda */}
         <TangramDecor accent="#02d47e" className="absolute bottom-0 left-0 h-72 w-72 opacity-50" />
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
-
-          {/* Texto */}
           <div>
-            {/* Badge taller */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6"
               style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.25)' }}>
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: '#02d47e' }} />
@@ -147,16 +237,14 @@ export default function TallerPreview() {
               style={{ fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', letterSpacing: '-0.02em' }}>
               {taller.nombre}
             </h1>
-
             <p className="text-sm leading-relaxed mb-8" style={{ color: 'rgba(255,255,255,0.6)', maxWidth: 420 }}>
               {taller.descripcion}
             </p>
 
-            {/* Stats en fila */}
             <div className="flex flex-wrap gap-5">
               {[
-                { icon: BookOpen, v: '7 módulos',       sub: 'de formación' },
-                { icon: Clock,    v: `${totalHoras}h`,  sub: 'duración total' },
+                { icon: BookOpen, v: '7 módulos',         sub: 'de formación'     },
+                { icon: Clock,    v: `${totalHoras}h`,    sub: 'duración total'   },
                 { icon: Package,  v: String(totalBienes), sub: 'bienes asignados' },
               ].map(s => (
                 <div key={s.sub} className="flex items-center gap-2.5">
@@ -172,7 +260,6 @@ export default function TallerPreview() {
               ))}
             </div>
 
-            {/* CTAs */}
             <div className="flex flex-wrap gap-3 mt-10">
               <a href="mailto:soporte@grama.pe"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-opacity hover:opacity-90"
@@ -190,22 +277,14 @@ export default function TallerPreview() {
             </div>
           </div>
 
-          {/* Imagen del taller */}
           <div className="relative hidden md:block">
-            {/* Decoración tangram superpuesta a la imagen */}
             <TangramDecor accent={accent} className="absolute -top-8 -right-8 h-48 w-48 z-10" />
             <div className="relative rounded-3xl overflow-hidden shadow-2xl"
               style={{ border: `2px solid ${accentAlpha(0.35)}` }}>
-              <img
-                src={taller.imagen}
-                alt={taller.nombre}
-                className="w-full h-72 object-cover"
-                style={{ filter: 'saturate(0.9)' }}
-              />
-              {/* Overlay con color acento del taller */}
+              <img src={taller.imagen} alt={taller.nombre} className="w-full h-72 object-cover"
+                style={{ filter: 'saturate(0.9)' }} />
               <div className="absolute inset-0"
                 style={{ background: `linear-gradient(160deg, transparent 40%, ${accentAlpha(0.4)} 100%)` }} />
-              {/* Badge número */}
               <div className="absolute top-4 left-4">
                 <span className="text-xs font-black px-3 py-1.5 rounded-full"
                   style={{ background: accentAlpha(0.85), color: '#ffffff' }}>
@@ -217,63 +296,41 @@ export default function TallerPreview() {
         </div>
       </section>
 
-      {/* ── Ruta de Aprendizaje ─────────────────────────────────────────────── */}
+      {/* ── Ruta de Aprendizaje ──────────────────────────────────────────────── */}
       <section style={{ background: '#f0faf5' }}>
         <div className="max-w-5xl mx-auto px-6 py-16">
-
-          {/* Header sección */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
               <p className="text-[10px] font-black uppercase tracking-[0.18em] mb-2" style={{ color: '#02d47e' }}>
                 Programa de formación
               </p>
-              <h2 className="text-xl font-extrabold" style={{ color: '#043941' }}>
-                Ruta de Aprendizaje
-              </h2>
+              <h2 className="text-xl font-extrabold" style={{ color: '#043941' }}>Ruta de Aprendizaje</h2>
               <p className="text-xs mt-1" style={{ color: '#64748b' }}>
                 Estructura estándar MSE-SFT · {totalHoras}h en 7 módulos
               </p>
             </div>
-            {/* Mini tangram decorativo */}
             <TangramDecor accent={accent} className="h-16 w-16 opacity-60 shrink-0" />
           </div>
 
-          {/* Grid de módulos */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {MODULOS_RUTA.map((m, i) => (
-              <div
-                key={m.codigo}
+              <div key={m.codigo}
                 className={`bg-white rounded-2xl p-5 flex gap-4 border transition-shadow hover:shadow-md${i === 6 ? ' md:col-span-2' : ''}`}
-                style={{ borderColor: '#e3f8fb' }}
-              >
-                {/* Código */}
+                style={{ borderColor: '#e3f8fb' }}>
                 <div className="shrink-0 pt-0.5">
-                  <div
-                    className="h-9 w-9 rounded-xl flex items-center justify-center text-[10px] font-black"
-                    style={{
-                      background: i === 6 ? '#043941' : '#f0faf5',
-                      color:      i === 6 ? '#02d47e' : '#94a3b8',
-                    }}
-                  >
+                  <div className="h-9 w-9 rounded-xl flex items-center justify-center text-[10px] font-black"
+                    style={{ background: i === 6 ? '#043941' : '#f0faf5', color: i === 6 ? '#02d47e' : '#94a3b8' }}>
                     {m.codigo}
                   </div>
                 </div>
-
-                {/* Contenido */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2 mb-1">
                     <p className="text-sm font-bold" style={{ color: '#043941' }}>{m.titulo}</p>
-                    <span className="text-[10px] font-bold shrink-0 tabular-nums" style={{ color: '#94a3b8' }}>
-                      {m.horas}h
-                    </span>
+                    <span className="text-[10px] font-bold shrink-0 tabular-nums" style={{ color: '#94a3b8' }}>{m.horas}h</span>
                   </div>
-                  <p className="text-[11px] leading-relaxed mb-2.5" style={{ color: '#64748b' }}>
-                    {m.descripcion}
-                  </p>
-                  <span
-                    className="inline-block text-[9px] font-black uppercase tracking-[0.12em] px-2 py-0.5 rounded-full"
-                    style={{ background: '#e3f8fb', color: '#045f6c' }}
-                  >
+                  <p className="text-[11px] leading-relaxed mb-2.5" style={{ color: '#64748b' }}>{m.descripcion}</p>
+                  <span className="inline-block text-[9px] font-black uppercase tracking-[0.12em] px-2 py-0.5 rounded-full"
+                    style={{ background: '#e3f8fb', color: '#045f6c' }}>
                     {m.fase}
                   </span>
                 </div>
@@ -283,79 +340,156 @@ export default function TallerPreview() {
         </div>
       </section>
 
-      {/* ── Repositorio del Taller ──────────────────────────────────────────── */}
+      {/* ── Repositorio del Taller ───────────────────────────────────────────── */}
       {bienes.length > 0 && (
         <section style={{ background: '#ffffff' }}>
           <div className="max-w-5xl mx-auto px-6 py-16">
 
-            {/* Header sección */}
-            <div className="flex items-start justify-between mb-10 gap-4">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.18em] mb-2" style={{ color: '#02d47e' }}>
-                  Repositorio del Taller
-                </p>
-                <h2 className="text-xl font-extrabold mb-1" style={{ color: '#043941' }}>
-                  Equipamiento asignado
-                </h2>
-                <p className="text-xs" style={{ color: '#64748b' }}>
-                  {totalBienes} bienes · {zonas.length} zonas de trabajo · dotación oficial MINEDU
-                </p>
-              </div>
-              <TangramDecor accent={accent} className="h-16 w-16 opacity-50 shrink-0" />
+            {/* Header */}
+            <div className="mb-6">
+              <p className="text-[10px] font-black uppercase tracking-[0.18em] mb-1" style={{ color: '#02d47e' }}>
+                {taller.nombre} · Repositorio
+              </p>
+              <h2 className="text-xl font-extrabold mb-1" style={{ color: '#043941' }}>Recursos del Taller</h2>
+              <p className="text-xs" style={{ color: '#64748b' }}>
+                {totalBienes} bienes catalogados · {zonas.length} zonas
+              </p>
             </div>
 
-            {/* Zonas */}
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              {zonas.map(z => (
-                <div
-                  key={z.nombre}
-                  className="rounded-2xl p-5 border"
-                  style={{ background: accentAlpha(0.06), borderColor: accentAlpha(0.18) }}
-                >
-                  <div className="h-10 w-10 rounded-xl flex items-center justify-center mb-3"
-                    style={{ background: accentAlpha(0.14) }}>
-                    <z.Icon size={18} style={{ color: accent }} />
-                  </div>
-                  <p className="text-2xl font-extrabold leading-none mb-1" style={{ color: '#043941' }}>{z.count}</p>
-                  <p className="text-[11px] font-semibold" style={{ color: '#64748b' }}>{z.label}</p>
-                </div>
+            {/* Tabs: Bienes / Manuales / Videos */}
+            <div className="flex gap-1 mb-6 p-1 rounded-xl w-fit" style={{ background: '#f1f5f9' }}>
+              {([
+                { id: 'bienes',   label: 'Bienes',   Icon: Package  },
+                { id: 'manuales', label: 'Manuales', Icon: FileText },
+                { id: 'videos',   label: 'Videos',   Icon: Play     },
+              ] as const).map(tab => (
+                <button key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all"
+                  style={activeTab === tab.id
+                    ? { background: '#043941', color: '#ffffff' }
+                    : { color: '#64748b', background: 'transparent' }}>
+                  <tab.Icon size={13} />
+                  {tab.label}
+                </button>
               ))}
             </div>
 
-            {/* Equipos destacados */}
-            {equiposTop.length > 0 && (
-              <div className="rounded-2xl p-6 border" style={{ borderColor: '#e3f8fb', background: '#f8fffe' }}>
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="h-1.5 w-6 rounded-full" style={{ background: '#02d47e' }} />
-                  <p className="text-[10px] font-black uppercase tracking-[0.14em]" style={{ color: '#043941' }}>
-                    Equipos principales · Zona Innovación
-                  </p>
+            {/* ── Tab Bienes ── */}
+            {activeTab === 'bienes' && (
+              <>
+                {/* Search */}
+                <div className="relative mb-4">
+                  <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
+                    style={{ color: '#94a3b8' }} />
+                  <input
+                    type="text"
+                    placeholder="Busca por nombre, marca, modelo o código..."
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 rounded-xl text-sm outline-none transition-all"
+                    style={{ background: '#f8fafc', border: '1.5px solid #e2e8f0', color: '#043941' }}
+                    onFocus={e  => (e.currentTarget.style.borderColor = accent)}
+                    onBlur={e   => (e.currentTarget.style.borderColor = '#e2e8f0')}
+                  />
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {equiposTop.map((e, i) => (
-                    <span
-                      key={i}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold"
-                      style={{ background: accentAlpha(0.1), color: '#043941', border: `1px solid ${accentAlpha(0.2)}` }}
-                    >
-                      <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ background: accent }} />
-                      {e.nombre}
-                    </span>
+
+                {/* Tipo pills */}
+                <div className="flex flex-wrap gap-2 mb-3">
+                  <button
+                    onClick={() => setTipoFilter('ALL')}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all"
+                    style={tipoFilter === 'ALL'
+                      ? { background: '#02d47e', color: '#043941' }
+                      : { background: '#f1f5f9', color: '#64748b' }}>
+                    Todos {bienes.length}
+                  </button>
+                  {TIPOS.filter(t => tipoCounts[t.key]).map(t => (
+                    <button key={t.key}
+                      onClick={() => setTipoFilter(t.key)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+                      style={tipoFilter === t.key
+                        ? { background: '#043941', color: '#ffffff' }
+                        : { background: '#f1f5f9', color: '#64748b' }}>
+                      <t.Icon size={10} />
+                      {t.label} {tipoCounts[t.key]}
+                    </button>
                   ))}
-                  {equiposExtra > 0 && (
-                    <span className="inline-flex items-center px-3 py-1.5 rounded-xl text-xs font-semibold"
-                      style={{ background: '#f1f5f9', color: '#94a3b8' }}>
-                      +{equiposExtra} más
-                    </span>
-                  )}
                 </div>
+
+                {/* Zona chips */}
+                <div className="flex flex-wrap items-center gap-2 mb-4">
+                  <span className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full"
+                    style={{ background: '#f1f5f9', color: '#64748b' }}>
+                    <Filter size={10} /> Zonas
+                  </span>
+                  {ZONA_KEYS.map(zk => (
+                    <button key={zk}
+                      onClick={() => setZonaFilters(prev =>
+                        prev.includes(zk) ? prev.filter(z => z !== zk) : [...prev, zk]
+                      )}
+                      className="px-3 py-1.5 rounded-full text-xs font-semibold border transition-all"
+                      style={zonaFilters.includes(zk)
+                        ? { background: accentAlpha(0.12), borderColor: accent, color: '#043941' }
+                        : { background: 'white', borderColor: '#e2e8f0', color: '#64748b' }}>
+                      {ZONA_SHORT[zk] ?? zk}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Count */}
+                <p className="text-xs font-semibold mb-4" style={{ color: '#94a3b8' }}>
+                  {filteredBienes.length} de {bienes.length} bienes
+                </p>
+
+                {/* Grid */}
+                {filteredBienes.length > 0 ? (
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {filteredBienes.map((bien, i) => (
+                      <BienCard key={i} bien={bien} accent={accent} accentAlpha={accentAlpha} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-16">
+                    <p className="text-sm font-semibold mb-1" style={{ color: '#043941' }}>Sin resultados</p>
+                    <p className="text-xs" style={{ color: '#94a3b8' }}>Prueba con otro término o quita filtros</p>
+                  </div>
+                )}
+              </>
+            )}
+
+            {/* ── Tab Manuales ── */}
+            {activeTab === 'manuales' && (
+              <div className="text-center py-20">
+                <div className="h-16 w-16 rounded-2xl mx-auto mb-4 flex items-center justify-center"
+                  style={{ background: '#f1f5f9' }}>
+                  <FileText size={24} style={{ color: '#94a3b8' }} />
+                </div>
+                <p className="font-bold text-sm mb-1" style={{ color: '#043941' }}>Próximamente</p>
+                <p className="text-xs" style={{ color: '#94a3b8' }}>
+                  Manuales técnicos y guías de uso del equipamiento
+                </p>
+              </div>
+            )}
+
+            {/* ── Tab Videos ── */}
+            {activeTab === 'videos' && (
+              <div className="text-center py-20">
+                <div className="h-16 w-16 rounded-2xl mx-auto mb-4 flex items-center justify-center"
+                  style={{ background: '#f1f5f9' }}>
+                  <Play size={24} style={{ color: '#94a3b8' }} />
+                </div>
+                <p className="font-bold text-sm mb-1" style={{ color: '#043941' }}>Próximamente</p>
+                <p className="text-xs" style={{ color: '#94a3b8' }}>
+                  Videos de demostración y tutoriales por equipo
+                </p>
               </div>
             )}
           </div>
         </section>
       )}
 
-      {/* ── CTA Final ──────────────────────────────────────────────────────── */}
+      {/* ── CTA Final ───────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden" style={{ background: '#043941' }}>
         <div className="absolute inset-0 grama-pattern opacity-25" />
         <div className="absolute pointer-events-none" style={{
@@ -366,7 +500,6 @@ export default function TallerPreview() {
         <TangramDecor accent="#02d47e" className="absolute top-0 left-0 h-64 w-64 opacity-30" />
 
         <div className="relative z-10 max-w-xl mx-auto px-6 py-20 text-center">
-          {/* Pregunta inicial */}
           <p className="text-[11px] font-black uppercase tracking-[0.18em] mb-4" style={{ color: '#02d47e' }}>
             ¿Quieres saber más?
           </p>
@@ -378,16 +511,13 @@ export default function TallerPreview() {
             completo a la plataforma de capacitación GRAMA.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href="mailto:soporte@grama.pe"
+            <a href="mailto:soporte@grama.pe"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-opacity hover:opacity-90"
-              style={{ background: '#02d47e', color: '#043941' }}
-            >
+              style={{ background: '#02d47e', color: '#043941' }}>
               <Mail size={15} />
               Comunícate con nosotros
             </a>
-            <button
-              onClick={() => navigate('/login')}
+            <button onClick={() => navigate('/login')}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all"
               style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.65)', border: '1px solid rgba(255,255,255,0.12)' }}
               onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.13)')}
@@ -397,7 +527,6 @@ export default function TallerPreview() {
           </div>
         </div>
 
-        {/* Footer */}
         <div className="border-t px-6 py-4 flex items-center justify-between max-w-5xl mx-auto"
           style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
           <GramaLogo variant="light" size="sm" />
