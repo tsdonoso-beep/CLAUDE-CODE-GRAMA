@@ -17,7 +17,7 @@ const STATS = [
   { value: '9',    label: 'Talleres EPT' },
   { value: '36+',  label: 'Docentes capacitados' },
   { value: '200+', label: 'Fichas descargables' },
-  { value: '130h', label: 'Formación híbrida' },
+  { value: '150h', label: 'Formación híbrida' },
 ]
 
 const FEATURES = [
@@ -197,7 +197,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
               <p className="text-xs leading-relaxed line-clamp-2 mb-3.5" style={{ color: '#64748b' }}>{t.descripcion}</p>
               <div className="flex items-center gap-3" style={{ color: '#94a3b8' }}>
                 <span className="flex items-center gap-1 text-[10px] font-semibold"><BookOpen size={10} /> 7 módulos</span>
-                <span className="flex items-center gap-1 text-[10px] font-semibold"><Clock size={10} /> 130h</span>
+                <span className="flex items-center gap-1 text-[10px] font-semibold"><Clock size={10} /> 150h</span>
               </div>
             </div>
           </div>
@@ -307,7 +307,7 @@ function TallerModal({
             {/* Ruta de aprendizaje */}
             <div>
               <p className="text-[10px] font-black uppercase tracking-[0.15em] mb-2.5 flex items-center gap-2" style={{ color: '#02d47e' }}>
-                <BookOpen size={11} /> Ruta de aprendizaje · 7 módulos · 130h
+                <BookOpen size={11} /> Ruta de aprendizaje · 7 módulos · 150h
               </p>
               <div className="space-y-1.5">
                 {modulosLXP.map((m, i) => (

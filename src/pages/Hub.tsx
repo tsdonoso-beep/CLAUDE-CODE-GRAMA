@@ -114,7 +114,7 @@ const TallerCard = memo(({ taller, index }: { taller: TallerConfig; index: numbe
           <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3 flex-1">
             {taller.descripcion}
           </p>
-          <p className="text-[11px] text-muted-foreground mt-2">6 módulos · 150h</p>
+          <p className="text-[11px] text-muted-foreground mt-2">7 módulos · 150h</p>
           <div className="flex items-center justify-between mt-3 pt-3 border-t">
             <div className="flex items-center gap-2 flex-1 mr-3">
               <div className="h-1.5 flex-1 bg-muted rounded-full overflow-hidden">
