@@ -1,5 +1,5 @@
 // src/components/layout/TopBar.tsx
-import { Link, useParams, useLocation } from 'react-router-dom'
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
 import { ChevronRight, LogOut, Bell } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { useAuth } from '@/contexts/AuthContext'
@@ -9,6 +9,7 @@ export function TopBar() {
   const location = useLocation()
   const taller = talleresConfig.find(t => t.slug === slug)
   const { profile, signOut, user } = useAuth()
+  const navigate = useNavigate()
 
   const displayName =
     profile?.nombre_completo ||
@@ -89,8 +90,15 @@ export function TopBar() {
         {/* Divider */}
         <div className="w-px h-5" style={{ background: 'rgba(255,255,255,0.1)' }} />
 
-        {/* User */}
-        <div className="flex items-center gap-2.5">
+        {/* User — click → /perfil */}
+        <button
+          onClick={() => navigate('/perfil')}
+          className="flex items-center gap-2.5 rounded-xl px-2 py-1 transition-all"
+          style={{ background: 'transparent' }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(2,212,126,0.08)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+          title="Ver perfil"
+        >
           {/* Avatar */}
           <div className="relative">
             <div
@@ -99,11 +107,11 @@ export function TopBar() {
             >
               {displayName.charAt(0).toUpperCase()}
             </div>
-            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 flex items-center justify-center"
+            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
               style={{ background: '#02d47e', borderColor: '#043941' }} />
           </div>
 
-          <div className="hidden sm:block">
+          <div className="hidden sm:block text-left">
             <p className="text-xs font-bold leading-none" style={{ color: '#ffffff' }}>
               {displayName}
             </p>
@@ -111,7 +119,7 @@ export function TopBar() {
               {displayEmail}
             </p>
           </div>
-        </div>
+        </button>
 
         {/* Logout */}
         <button

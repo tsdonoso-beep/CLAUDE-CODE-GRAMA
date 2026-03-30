@@ -23,6 +23,7 @@ const ModuloDetalle   = lazy(() => import("./pages/ModuloDetalle"))
 const Repositorio     = lazy(() => import("./pages/Repositorio"))
 const BienDetalle     = lazy(() => import("./pages/BienDetalle"))
 const Admin           = lazy(() => import("./pages/Admin"))
+const Perfil          = lazy(() => import("./pages/Perfil"))
 const NotFound        = lazy(() => import("./pages/NotFound"))
 
 const queryClient = new QueryClient()
@@ -73,6 +74,7 @@ const App = () => (
                 <Route element={<RequireAuth />}>
                   {/* Hub: sin sidebar */}
                   <Route path="/hub" element={wrap(Bienvenida)} />
+                  <Route path="/perfil" element={wrap(Perfil)} />
 
                   {/* App con sidebar */}
                   <Route element={<AppShell />}>
