@@ -237,7 +237,11 @@ function TallerModal({
   onViewFull: () => void
 }) {
   const taller  = talleresConfig[index]
-  const bienes  = getBienesByTaller(taller.slug).slice(0, 6)
+  const todosLos = getBienesByTaller(taller.slug)
+  // Equipos representativos: EQUIPOS de INNOVACIÓN primero, luego resto, máx 8
+  const equiposInnov = todosLos.filter(b => b.tipo === 'EQUIPOS' && b.zona.includes('INNOVA'))
+  const equiposResto = todosLos.filter(b => b.tipo === 'EQUIPOS' && !b.zona.includes('INNOVA'))
+  const bienes = [...equiposInnov, ...equiposResto].slice(0, 8)
   const isFirst = index === 0
   const isLast  = index === talleresConfig.length - 1
   const slideClass = dir === 'next' ? 'slide-in-right' : 'slide-in-left'
@@ -303,6 +307,24 @@ function TallerModal({
           <div key={taller.slug} className={`flex-1 overflow-y-auto p-5 space-y-5 ${slideClass}`}>
             {/* Descripción */}
             <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>{taller.descripcion}</p>
+
+            {/* Competencias */}
+            {taller.competencias?.length > 0 && (
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.15em] mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.2 7.8L9 2.5" stroke="#02d47e" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  Competencias que desarrollarás
+                </p>
+                <div className="grid grid-cols-2 gap-1">
+                  {taller.competencias.slice(0, 4).map((c, i) => (
+                    <div key={i} className="flex items-start gap-1.5 px-2 py-1.5 rounded-lg" style={{ background: '#f0faf5' }}>
+                      <span className="h-1.5 w-1.5 rounded-full shrink-0 mt-1" style={{ background: '#02d47e' }} />
+                      <span className="text-[10px] leading-snug" style={{ color: '#043941' }}>{c}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Ruta de aprendizaje */}
             <div>
