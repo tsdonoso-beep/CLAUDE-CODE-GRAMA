@@ -31,16 +31,18 @@ function esExcluidoDeCatalogo(nombre: string): boolean {
 function esManual(nombre: string) {
   return nombre.toLowerCase().trimStart().startsWith('manual')
 }
+// Usa "de uso" / "de operación" para identificar el TIPO del manual,
+// no el tema que describe ("equipo de mantenimiento" no lo convierte en manual de mantenimiento)
 function esManualUso(nombre: string) {
   const n = nombre.toLowerCase()
   return n.trimStart().startsWith('manual') &&
-    (n.includes('uso') || n.includes('operaci') || n.includes('instalac')) &&
-    !n.includes('mantenimiento') && !n.includes('pedagóg') && !n.includes('pedagogic')
+    (n.includes('de uso') || n.includes('de operaci') || n.includes('de instalac'))
 }
 function esManualMantenimiento(nombre: string) {
   const n = nombre.toLowerCase()
+  // Solo si "de mantenimiento" aparece en los primeros 35 caracteres (es el tipo del manual)
   return n.trimStart().startsWith('manual') &&
-    (n.includes('mantenimiento') || n.includes('mantención'))
+    (n.slice(0, 35).includes('de mantenimiento') || n.slice(0, 35).includes('de mantención'))
 }
 function esManualPedagogico(nombre: string) {
   const n = nombre.toLowerCase()
