@@ -187,7 +187,11 @@ export default function TallerHub() {
             {/* Header sección */}
             <div
               className="flex items-center justify-between px-5 py-4 border-b"
-              style={{ borderColor: 'rgba(4,57,65,0.06)', background: 'rgba(4,57,65,0.02)' }}
+              style={{
+                borderColor: 'rgba(4,57,65,0.08)',
+                background: 'rgba(4,57,65,0.05)',
+                boxShadow: '0 2px 6px rgba(4,57,65,0.06)',
+              }}
             >
               <div className="flex items-center gap-2.5">
                 <div
@@ -313,7 +317,11 @@ export default function TallerHub() {
           >
             <div
               className="flex items-center justify-between px-5 py-4 border-b"
-              style={{ borderColor: 'rgba(4,57,65,0.06)', background: 'rgba(4,57,65,0.02)' }}
+              style={{
+                borderColor: 'rgba(4,57,65,0.08)',
+                background: 'rgba(4,57,65,0.05)',
+                boxShadow: '0 2px 6px rgba(4,57,65,0.06)',
+              }}
             >
               <div className="flex items-center gap-2.5">
                 <div className="h-8 w-8 rounded-lg flex items-center justify-center"
@@ -455,7 +463,7 @@ export default function TallerHub() {
             className="rounded-2xl overflow-hidden animate-fade-in-up stagger-4"
             style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}
           >
-            <div className="px-4 py-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.06)', background: 'rgba(4,57,65,0.02)' }}>
+            <div className="px-4 py-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.08)', background: 'rgba(4,57,65,0.05)', boxShadow: '0 2px 6px rgba(4,57,65,0.06)' }}>
               <p className="text-[10px] font-black uppercase tracking-wider" style={{ color: 'rgba(4,57,65,0.4)' }}>
                 Acceso rápido
               </p>
