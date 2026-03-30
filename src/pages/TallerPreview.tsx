@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   ArrowLeft, BookOpen, Clock, Mail, ChevronRight, Package, Layers, Award,
-  Search, Filter, FileText, Play, Wrench, Monitor, Shield, Grid3x3
+  Search, Filter, FileText, Play, Wrench, Monitor, Shield, Grid3x3, ExternalLink
 } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { getBienesByTaller, getTotalBienesByTaller, type Bien } from '@/data/bienesData'
@@ -58,10 +58,9 @@ function TangramDecor({ accent, className = '' }: { accent: string; className?: 
 }
 
 // ── Card de bien ─────────────────────────────────────────────────────────────
-function BienCard({ bien, accent, accentAlpha }: {
+function BienCard({ bien, accent }: {
   bien: Bien
   accent: string
-  accentAlpha: (a: number) => string
 }) {
   const Icon      = TIPO_ICON[bien.tipo] ?? Package
   const zonaShort = ZONA_SHORT[bien.zona] ?? bien.zona
@@ -69,56 +68,63 @@ function BienCard({ bien, accent, accentAlpha }: {
 
   return (
     <div
-      className="bg-white rounded-2xl flex flex-col transition-shadow hover:shadow-md overflow-hidden"
-      style={{ border: '1.5px solid #e8f4f8', borderTopColor: accent, borderTopWidth: 3 }}
+      className="bg-white rounded-xl flex flex-col transition-all hover:shadow-lg hover:-translate-y-0.5 overflow-hidden"
+      style={{ border: '1px solid #e2eef2', borderLeftColor: accent, borderLeftWidth: 4 }}
     >
       {/* Top row */}
       <div className="flex items-start justify-between px-3 pt-3 pb-1">
         <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
-          style={{ background: accentAlpha(0.12) }}>
-          <Icon size={14} style={{ color: accent }} />
+          style={{ background: 'rgba(2,212,126,0.12)' }}>
+          <Icon size={14} style={{ color: '#02d47e' }} />
         </div>
-        {bien.cantidad > 1 && (
+        {bien.cantidad >= 1 && (
           <span className="text-[9px] font-black px-1.5 py-0.5 rounded-md"
-            style={{ background: 'rgba(2,212,126,0.13)', color: '#02d47e' }}>
+            style={{ background: 'rgba(2,212,126,0.15)', color: '#02b36a' }}>
             ×{bien.cantidad}
           </span>
         )}
       </div>
 
       {/* Body */}
-      <div className="px-3 pb-2 flex-1">
+      <div className="px-3 pb-1 flex-1">
         <p className="text-xs font-bold leading-tight line-clamp-2 mb-1" style={{ color: '#043941' }}>
           {bien.nombre}
         </p>
         {(bien.marca || bien.modelo) && (
-          <p className="text-[10px] font-medium truncate" style={{ color: '#94a3b8' }}>
+          <p className="text-[10px] truncate" style={{ color: '#94a3b8' }}>
             {[bien.marca, bien.modelo].filter(Boolean).join(' · ')}
           </p>
         )}
       </div>
 
-      {/* Footer */}
-      <div className="px-3 pb-3">
-        <p className="text-[9px] font-black uppercase tracking-wide mb-2" style={{ color: accent }}>
+      {/* Zona label */}
+      <div className="px-3 pt-1">
+        <p className="text-[9px] font-black uppercase tracking-wider" style={{ color: accent }}>
           {zonaShort}
         </p>
-        <div className="flex items-center justify-between">
-          <span className="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full"
-            style={{ background: accentAlpha(0.1), color: '#043941' }}>
-            <Icon size={9} />
-            {tipoLabel}
+      </div>
+
+      {/* Footer */}
+      <div className="px-3 pb-3 pt-2 flex items-center justify-between border-t mt-2"
+        style={{ borderColor: '#f0f8fa' }}>
+        <span className="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-1 rounded-full border"
+          style={{ borderColor: 'rgba(2,212,126,0.4)', color: '#02916a', background: 'rgba(2,212,126,0.07)' }}>
+          <Icon size={8} />
+          {tipoLabel}
+        </span>
+        <div className="flex items-center gap-1">
+          <span className="h-5 w-5 rounded-md flex items-center justify-center cursor-pointer hover:opacity-70 transition-opacity"
+            style={{ background: '#f1f5f9' }}>
+            <FileText size={9} style={{ color: '#94a3b8' }} />
           </span>
-          <div className="flex items-center gap-1">
-            <span className="h-5 w-5 rounded flex items-center justify-center"
-              style={{ background: '#f1f5f9' }}>
-              <FileText size={9} style={{ color: '#94a3b8' }} />
-            </span>
-            <span className="h-5 w-5 rounded flex items-center justify-center"
-              style={{ background: '#f1f5f9' }}>
-              <Play size={9} style={{ color: '#94a3b8' }} />
-            </span>
-          </div>
+          <span className="h-5 w-5 rounded-md flex items-center justify-center cursor-pointer hover:opacity-70 transition-opacity"
+            style={{ background: '#f1f5f9' }}>
+            <Play size={9} style={{ color: '#94a3b8' }} />
+          </span>
+          <span className="h-5 w-5 rounded-md flex items-center justify-center cursor-pointer hover:opacity-70 transition-opacity"
+            style={{ background: '#fff1f0' }}>
+            <ExternalLink size={8} style={{ color: '#f87171' }} />
+          </span>
         </div>
       </div>
     </div>
@@ -342,149 +348,168 @@ export default function TallerPreview() {
 
       {/* ── Repositorio del Taller ───────────────────────────────────────────── */}
       {bienes.length > 0 && (
-        <section style={{ background: '#ffffff' }}>
-          <div className="max-w-5xl mx-auto px-6 py-16">
+        <section>
+          {/* ── Header oscuro ── */}
+          <div style={{ background: '#043941' }}>
+            <div className="max-w-5xl mx-auto px-6 pt-10 pb-0">
 
-            {/* Header */}
-            <div className="mb-6">
-              <p className="text-[10px] font-black uppercase tracking-[0.18em] mb-1" style={{ color: '#02d47e' }}>
+              {/* Breadcrumb */}
+              <p className="text-[10px] font-black uppercase tracking-[0.18em] mb-2"
+                style={{ color: '#02d47e' }}>
                 {taller.nombre} · Repositorio
               </p>
-              <h2 className="text-xl font-extrabold mb-1" style={{ color: '#043941' }}>Recursos del Taller</h2>
-              <p className="text-xs" style={{ color: '#64748b' }}>
+
+              {/* Título + subtítulo */}
+              <h2 className="font-extrabold text-white mb-1"
+                style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', letterSpacing: '-0.02em' }}>
+                Recursos del Taller
+              </h2>
+              <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.45)' }}>
                 {totalBienes} bienes catalogados · {zonas.length} zonas
               </p>
-            </div>
 
-            {/* Tabs: Bienes / Manuales / Videos */}
-            <div className="flex gap-1 mb-6 p-1 rounded-xl w-fit" style={{ background: '#f1f5f9' }}>
-              {([
-                { id: 'bienes',   label: 'Bienes',   Icon: Package  },
-                { id: 'manuales', label: 'Manuales', Icon: FileText },
-                { id: 'videos',   label: 'Videos',   Icon: Play     },
-              ] as const).map(tab => (
-                <button key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all"
-                  style={activeTab === tab.id
-                    ? { background: '#043941', color: '#ffffff' }
-                    : { color: '#64748b', background: 'transparent' }}>
-                  <tab.Icon size={13} />
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {/* ── Tab Bienes ── */}
-            {activeTab === 'bienes' && (
-              <>
-                {/* Search */}
-                <div className="relative mb-4">
-                  <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
-                    style={{ color: '#94a3b8' }} />
-                  <input
-                    type="text"
-                    placeholder="Busca por nombre, marca, modelo o código..."
-                    value={search}
-                    onChange={e => setSearch(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 rounded-xl text-sm outline-none transition-all"
-                    style={{ background: '#f8fafc', border: '1.5px solid #e2e8f0', color: '#043941' }}
-                    onFocus={e  => (e.currentTarget.style.borderColor = accent)}
-                    onBlur={e   => (e.currentTarget.style.borderColor = '#e2e8f0')}
-                  />
-                </div>
-
-                {/* Tipo pills */}
-                <div className="flex flex-wrap gap-2 mb-3">
-                  <button
-                    onClick={() => setTipoFilter('ALL')}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all"
-                    style={tipoFilter === 'ALL'
-                      ? { background: '#02d47e', color: '#043941' }
-                      : { background: '#f1f5f9', color: '#64748b' }}>
-                    Todos {bienes.length}
+              {/* Tabs */}
+              <div className="flex gap-1 mb-5">
+                {([
+                  { id: 'bienes',   label: 'Bienes',   Icon: Package  },
+                  { id: 'manuales', label: 'Manuales', Icon: FileText },
+                  { id: 'videos',   label: 'Videos',   Icon: Play     },
+                ] as const).map(tab => (
+                  <button key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className="flex items-center gap-2 px-5 py-2 rounded-t-lg text-sm font-semibold transition-all"
+                    style={activeTab === tab.id
+                      ? { background: '#ffffff', color: '#043941' }
+                      : { background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                    <tab.Icon size={13} />
+                    {tab.label}
                   </button>
-                  {TIPOS.filter(t => tipoCounts[t.key]).map(t => (
-                    <button key={t.key}
-                      onClick={() => setTipoFilter(t.key)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
-                      style={tipoFilter === t.key
-                        ? { background: '#043941', color: '#ffffff' }
-                        : { background: '#f1f5f9', color: '#64748b' }}>
-                      <t.Icon size={10} />
-                      {t.label} {tipoCounts[t.key]}
+                ))}
+              </div>
+
+              {/* Search + tipo pills — solo en tab Bienes */}
+              {activeTab === 'bienes' && (
+                <div className="pb-5">
+                  <div className="relative mb-4">
+                    <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
+                      style={{ color: 'rgba(255,255,255,0.35)' }} />
+                    <input
+                      type="text"
+                      placeholder="Busca por nombre, marca, modelo o código..."
+                      value={search}
+                      onChange={e => setSearch(e.target.value)}
+                      className="w-full max-w-xl pl-10 pr-4 py-2.5 rounded-xl text-sm outline-none"
+                      style={{
+                        background: 'rgba(255,255,255,0.08)',
+                        border: '1px solid rgba(255,255,255,0.15)',
+                        color: '#ffffff',
+                      }}
+                    />
+                  </div>
+
+                  {/* Tipo pills */}
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => setTipoFilter('ALL')}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all"
+                      style={tipoFilter === 'ALL'
+                        ? { background: '#02d47e', color: '#043941' }
+                        : { background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)' }}>
+                      Todos {bienes.length}
                     </button>
-                  ))}
-                </div>
-
-                {/* Zona chips */}
-                <div className="flex flex-wrap items-center gap-2 mb-4">
-                  <span className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full"
-                    style={{ background: '#f1f5f9', color: '#64748b' }}>
-                    <Filter size={10} /> Zonas
-                  </span>
-                  {ZONA_KEYS.map(zk => (
-                    <button key={zk}
-                      onClick={() => setZonaFilters(prev =>
-                        prev.includes(zk) ? prev.filter(z => z !== zk) : [...prev, zk]
-                      )}
-                      className="px-3 py-1.5 rounded-full text-xs font-semibold border transition-all"
-                      style={zonaFilters.includes(zk)
-                        ? { background: accentAlpha(0.12), borderColor: accent, color: '#043941' }
-                        : { background: 'white', borderColor: '#e2e8f0', color: '#64748b' }}>
-                      {ZONA_SHORT[zk] ?? zk}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Count */}
-                <p className="text-xs font-semibold mb-4" style={{ color: '#94a3b8' }}>
-                  {filteredBienes.length} de {bienes.length} bienes
-                </p>
-
-                {/* Grid */}
-                {filteredBienes.length > 0 ? (
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {filteredBienes.map((bien, i) => (
-                      <BienCard key={i} bien={bien} accent={accent} accentAlpha={accentAlpha} />
+                    {TIPOS.filter(t => tipoCounts[t.key]).map(t => (
+                      <button key={t.key}
+                        onClick={() => setTipoFilter(t.key)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+                        style={tipoFilter === t.key
+                          ? { background: 'rgba(255,255,255,0.95)', color: '#043941' }
+                          : { background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)' }}>
+                        <t.Icon size={10} />
+                        {t.label} {tipoCounts[t.key]}
+                      </button>
                     ))}
                   </div>
-                ) : (
-                  <div className="text-center py-16">
-                    <p className="text-sm font-semibold mb-1" style={{ color: '#043941' }}>Sin resultados</p>
-                    <p className="text-xs" style={{ color: '#94a3b8' }}>Prueba con otro término o quita filtros</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* ── Body blanco ── */}
+          <div style={{ background: '#ffffff' }}>
+            <div className="max-w-5xl mx-auto px-6 py-6">
+
+              {/* ── Tab Bienes ── */}
+              {activeTab === 'bienes' && (
+                <>
+                  {/* Zona chips */}
+                  <div className="flex flex-wrap items-center gap-2 mb-3 pb-4 border-b" style={{ borderColor: '#f0f4f6' }}>
+                    <span className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border"
+                      style={{ borderColor: '#e2e8f0', color: '#64748b' }}>
+                      <Filter size={10} /> Filtros
+                    </span>
+                    {ZONA_KEYS.map(zk => (
+                      <button key={zk}
+                        onClick={() => setZonaFilters(prev =>
+                          prev.includes(zk) ? prev.filter(z => z !== zk) : [...prev, zk]
+                        )}
+                        className="px-3 py-1.5 rounded-full text-xs font-semibold border transition-all"
+                        style={zonaFilters.includes(zk)
+                          ? { background: accentAlpha(0.1), borderColor: accent, color: '#043941' }
+                          : { background: 'white', borderColor: '#e2e8f0', color: '#64748b' }}>
+                        {ZONA_SHORT[zk] ?? zk}
+                      </button>
+                    ))}
                   </div>
-                )}
-              </>
-            )}
 
-            {/* ── Tab Manuales ── */}
-            {activeTab === 'manuales' && (
-              <div className="text-center py-20">
-                <div className="h-16 w-16 rounded-2xl mx-auto mb-4 flex items-center justify-center"
-                  style={{ background: '#f1f5f9' }}>
-                  <FileText size={24} style={{ color: '#94a3b8' }} />
-                </div>
-                <p className="font-bold text-sm mb-1" style={{ color: '#043941' }}>Próximamente</p>
-                <p className="text-xs" style={{ color: '#94a3b8' }}>
-                  Manuales técnicos y guías de uso del equipamiento
-                </p>
-              </div>
-            )}
+                  {/* Count */}
+                  <p className="text-xs font-semibold mb-4" style={{ color: '#94a3b8' }}>
+                    {filteredBienes.length} de {bienes.length} bienes
+                  </p>
 
-            {/* ── Tab Videos ── */}
-            {activeTab === 'videos' && (
-              <div className="text-center py-20">
-                <div className="h-16 w-16 rounded-2xl mx-auto mb-4 flex items-center justify-center"
-                  style={{ background: '#f1f5f9' }}>
-                  <Play size={24} style={{ color: '#94a3b8' }} />
+                  {/* Grid */}
+                  {filteredBienes.length > 0 ? (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {filteredBienes.map((bien, i) => (
+                        <BienCard key={i} bien={bien} accent={accent} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-16">
+                      <p className="text-sm font-semibold mb-1" style={{ color: '#043941' }}>Sin resultados</p>
+                      <p className="text-xs" style={{ color: '#94a3b8' }}>Prueba con otro término o quita filtros</p>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {/* ── Tab Manuales ── */}
+              {activeTab === 'manuales' && (
+                <div className="text-center py-20">
+                  <div className="h-16 w-16 rounded-2xl mx-auto mb-4 flex items-center justify-center"
+                    style={{ background: '#f1f5f9' }}>
+                    <FileText size={24} style={{ color: '#94a3b8' }} />
+                  </div>
+                  <p className="font-bold text-sm mb-1" style={{ color: '#043941' }}>Próximamente</p>
+                  <p className="text-xs" style={{ color: '#94a3b8' }}>
+                    Manuales técnicos y guías de uso del equipamiento
+                  </p>
                 </div>
-                <p className="font-bold text-sm mb-1" style={{ color: '#043941' }}>Próximamente</p>
-                <p className="text-xs" style={{ color: '#94a3b8' }}>
-                  Videos de demostración y tutoriales por equipo
-                </p>
-              </div>
-            )}
+              )}
+
+              {/* ── Tab Videos ── */}
+              {activeTab === 'videos' && (
+                <div className="text-center py-20">
+                  <div className="h-16 w-16 rounded-2xl mx-auto mb-4 flex items-center justify-center"
+                    style={{ background: '#f1f5f9' }}>
+                    <Play size={24} style={{ color: '#94a3b8' }} />
+                  </div>
+                  <p className="font-bold text-sm mb-1" style={{ color: '#043941' }}>Próximamente</p>
+                  <p className="text-xs" style={{ color: '#94a3b8' }}>
+                    Videos de demostración y tutoriales por equipo
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </section>
       )}
