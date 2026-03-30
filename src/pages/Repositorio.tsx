@@ -460,12 +460,11 @@ export default function Repositorio() {
         <div className="p-4 sm:p-6">
 
           {/* Resumen categórico — tarjetas de acceso rápido */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+          <div className="grid grid-cols-3 gap-3 mb-6">
             {([
               { id: 'uso',           label: 'Manual de Uso',        icon: BookMarked,    color: '#059669', bg: '#d1fae5', count: conteos.uso,           desc: 'Operación y manejo seguro del equipo' },
               { id: 'mantenimiento', label: 'Mantenimiento',        icon: Wrench,        color: '#d97706', bg: '#fef3c7', count: conteos.mantenimiento, desc: 'Limpieza, revisión y mantenimiento preventivo' },
               { id: 'pedagogico',    label: 'Material Pedagógico',  icon: GraduationCap, color: '#7c3aed', bg: '#ede9fe', count: conteos.pedagogico,    desc: 'Guías y sesiones para el docente' },
-              { id: 'usb',           label: 'Digital / USB',        icon: Usb,           color: '#0891b2', bg: '#cffafe', count: conteos.usb,           desc: 'Material digital y en soporte USB' },
             ] as const).map(cat => {
               const Icon = cat.icon
               const active = filtroManual === cat.id
