@@ -1,7 +1,7 @@
 // src/pages/Perfil.tsx
 import { useNavigate } from 'react-router-dom'
 import {
-  Mail, MapPin, Building2, BookOpen, Package, Clock,
+  Mail, MapPin, Building2, Package,
   ChevronRight, Shield, LogOut, ArrowRight, Layers, Play,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
@@ -29,6 +29,22 @@ function getInitials(name: string) {
   return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase() || '?'
 }
 
+// ── Tangram decorativo (mismo componente que Landing) ────────────────────────
+function Tangram({ color = '#02d47e', opacity = 0.12, className = '', rotate = 0 }:
+  { color?: string; opacity?: number; className?: string; rotate?: number }) {
+  return (
+    <svg viewBox="0 0 160 160" className={`pointer-events-none select-none ${className}`}
+      style={{ transform: `rotate(${rotate}deg)` }} xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,160 80,80 0,0"              fill={color} fillOpacity={opacity} />
+      <polygon points="160,0 80,80 160,160"           fill={color} fillOpacity={opacity * 0.7} />
+      <polygon points="0,160 80,160 80,80"            fill={color} fillOpacity={opacity * 1.2} />
+      <polygon points="80,80 120,80 120,120"          fill={color} fillOpacity={opacity * 0.8} />
+      <polygon points="80,80 80,120 120,120"          fill={color} fillOpacity={opacity * 0.6} />
+      <polygon points="120,80 160,80 160,120 120,120" fill={color} fillOpacity={opacity * 0.5} />
+    </svg>
+  )
+}
+
 export default function Perfil() {
   const navigate = useNavigate()
   const { profile, user, isAdmin, signOut } = useAuth()
@@ -48,148 +64,154 @@ export default function Perfil() {
   const region   = ie ? ie.region : '—'
 
   return (
-    <div className="min-h-screen" style={{ fontFamily: "'Manrope', sans-serif", background: '#f8fdfb' }}>
+    <div className="min-h-screen" style={{ fontFamily: "'Manrope', sans-serif", background: '#f0faf5' }}>
 
-      {/* ── Navbar limpia ── */}
-      <header
-        className="fixed top-0 left-0 right-0 z-50 border-b"
-        style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(16px)', borderColor: 'rgba(4,57,65,0.07)' }}
-      >
-        <div className="max-w-5xl mx-auto px-6 h-13 flex items-center justify-between" style={{ height: 52 }}>
-          <GramaLogo variant="dark" size="sm" />
-          <div className="flex items-center gap-3">
-            {isAdmin && (
+      {/* ══ HERO OSCURO (navbar + greeting integrados) ══════════════════════ */}
+      <section className="relative overflow-hidden" style={{ background: '#043941', minHeight: 320 }}>
+
+        {/* Patrón GRAMA */}
+        <div className="absolute inset-0 grama-pattern opacity-30 pointer-events-none" />
+
+        {/* Orbs ambientales */}
+        <div className="absolute pointer-events-none"
+          style={{ width: 600, height: 600, background: 'radial-gradient(circle, rgba(2,212,126,0.09) 0%, transparent 60%)', right: -150, top: -180 }} />
+        <div className="absolute pointer-events-none"
+          style={{ width: 400, height: 400, background: `radial-gradient(circle, ${accent}0e 0%, transparent 60%)`, left: -80, bottom: -100 }} />
+
+        {/* Tangrams de esquina — estáticos */}
+        <Tangram color="#02d47e" opacity={0.08}  rotate={15}  className="absolute w-72 h-72 -top-6 -right-6" />
+        <Tangram color="#02d47e" opacity={0.05}  rotate={-20} className="absolute w-52 h-52 bottom-8 -left-6" />
+        <Tangram color="#ffffff" opacity={0.025} rotate={45}  className="absolute w-40 h-40 top-1/2 left-1/3" />
+
+        {/* Piezas individuales flotando */}
+        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a"
+          style={{ width: 60, height: 60, top: '18%', left: '5%', animationDuration: '14s' }}>
+          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.25} />
+        </svg>
+        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b"
+          style={{ width: 44, height: 44, top: '55%', left: '10%', animationDuration: '19s' }}>
+          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.18} />
+        </svg>
+        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d"
+          style={{ width: 34, height: 34, top: '15%', right: '22%', animationDuration: '10s' }}>
+          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.30} />
+        </svg>
+        <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-c"
+          style={{ width: 56, height: 28, top: '62%', right: '12%', animationDuration: '16s' }}>
+          <polygon points="20,0 80,0 60,40 0,40" fill="#02d47e" fillOpacity={0.18} />
+        </svg>
+        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-a"
+          style={{ width: 30, height: 30, bottom: '20%', left: '32%', animationDuration: '22s' }}>
+          <polygon points="20,0 40,40 0,40" fill="#02d47e" fillOpacity={0.22} />
+        </svg>
+
+        {/* ── Navbar integrada en el hero ── */}
+        <div className="relative z-20 border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+          <div className="max-w-5xl mx-auto px-6 flex items-center justify-between" style={{ height: 52 }}>
+            <GramaLogo variant="light" size="sm" />
+            <div className="flex items-center gap-2.5">
+              {isAdmin && (
+                <button
+                  onClick={() => navigate('/admin')}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
+                  style={{ background: 'rgba(2,212,126,0.14)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.25)' }}
+                >
+                  <Shield size={12} />
+                  Panel de Admin
+                </button>
+              )}
+              {taller && (
+                <button
+                  onClick={() => navigate(`/taller/${taller.slug}`)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
+                  style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.85)', border: '1px solid rgba(255,255,255,0.12)' }}
+                >
+                  Ir a mi taller <ChevronRight size={12} />
+                </button>
+              )}
               <button
-                onClick={() => navigate('/admin')}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
-                style={{ background: 'rgba(2,212,126,0.1)', color: '#043941', border: '1px solid rgba(2,212,126,0.2)' }}
+                onClick={() => signOut()}
+                className="flex items-center gap-1.5 text-xs font-medium transition-opacity hover:opacity-60 px-2 py-1.5"
+                style={{ color: 'rgba(255,255,255,0.28)' }}
               >
-                <Shield size={12} style={{ color: '#02d47e' }} />
-                Panel de Admin
+                <LogOut size={12} />
+                Salir
               </button>
-            )}
-            {taller && (
-              <button
-                onClick={() => navigate(`/taller/${taller.slug}`)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
-                style={{ background: '#043941', color: '#02d47e' }}
-              >
-                Ir a mi taller
-                <ChevronRight size={12} />
-              </button>
-            )}
-            <button
-              onClick={() => signOut()}
-              className="flex items-center gap-1.5 text-xs font-medium transition-opacity hover:opacity-60 px-2 py-1.5"
-              style={{ color: 'rgba(4,57,65,0.4)' }}
-            >
-              <LogOut size={12} />
-              Salir
-            </button>
+            </div>
           </div>
         </div>
-      </header>
 
-      {/* ── Hero: bienvenida personal centrada ── */}
-      <section
-        className="relative overflow-hidden flex flex-col items-center justify-center text-center"
-        style={{ paddingTop: 130, paddingBottom: 64, background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)' }}
-      >
-        {/* Decoración de fondo */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(2,212,126,0.06) 0%, transparent 70%)' }}
-        />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none"
-          style={{ width: 1, height: '100%', background: 'linear-gradient(to bottom, rgba(2,212,126,0.15), transparent)' }} />
+        {/* ── Greeting centrado ── */}
+        <div className="relative z-10 flex flex-col items-center text-center px-6 pt-10 pb-14">
 
-        <div className="relative z-10 flex flex-col items-center">
-          {/* Anillo decorativo alrededor del avatar */}
+          {/* Avatar con anillos */}
           <div className="relative mb-5">
-            {/* Anillo exterior pulsante */}
-            <div
-              className="absolute inset-0 rounded-full animate-pulse"
-              style={{
-                margin: -10,
-                background: `radial-gradient(circle, ${accent}12 0%, transparent 70%)`,
-                border: `1px solid ${accent}18`,
-                borderRadius: '50%',
-              }}
-            />
-            {/* Anillo medio */}
-            <div
-              className="absolute inset-0 rounded-full"
-              style={{
-                margin: -4,
-                border: `1px solid ${accent}22`,
-                borderRadius: '50%',
-              }}
-            />
-            {/* Avatar principal */}
+            <div className="absolute rounded-full animate-pulse pointer-events-none"
+              style={{ inset: -12, border: `1px solid ${accent}20`, background: `radial-gradient(circle, ${accent}08 0%, transparent 70%)`, borderRadius: '50%' }} />
+            <div className="absolute rounded-full pointer-events-none"
+              style={{ inset: -5, border: `1px solid ${accent}28`, borderRadius: '50%' }} />
             <div
               className="h-20 w-20 rounded-full flex items-center justify-center text-2xl font-black relative z-10"
               style={{
-                background: `linear-gradient(135deg, #043941, #045f6c)`,
+                background: 'linear-gradient(135deg, rgba(2,212,126,0.25) 0%, rgba(4,95,108,0.4) 100%)',
+                border: `2px solid ${accent}40`,
                 color: '#02d47e',
-                boxShadow: `0 8px 32px rgba(4,57,65,0.18), 0 0 0 3px ${accent}25`,
+                boxShadow: `0 0 40px ${accent}18, inset 0 1px 0 rgba(255,255,255,0.1)`,
                 letterSpacing: '-0.02em',
+                backdropFilter: 'blur(8px)',
               }}
             >
               {getInitials(displayName)}
             </div>
             {isAdmin && (
-              <div
-                className="absolute -bottom-1 -right-1 h-7 w-7 rounded-full flex items-center justify-center z-20"
-                style={{ background: '#02d47e', border: '2.5px solid #fff', boxShadow: '0 2px 8px rgba(2,212,126,0.4)' }}
-              >
+              <div className="absolute -bottom-1 -right-1 h-7 w-7 rounded-full flex items-center justify-center z-20"
+                style={{ background: '#02d47e', border: '2.5px solid #043941', boxShadow: '0 2px 10px rgba(2,212,126,0.45)' }}>
                 <Shield size={13} style={{ color: '#043941' }} />
               </div>
             )}
           </div>
 
-          {/* Greeting */}
-          <p className="text-xs font-semibold mb-1.5" style={{ color: '#94a3b8', letterSpacing: '0.08em' }}>
+          <p className="text-[10px] font-semibold tracking-[0.14em] mb-2 animate-fade-in-up"
+            style={{ color: 'rgba(255,255,255,0.38)' }}>
             {isAdmin ? 'ADMINISTRADOR · GRAMA' : 'DOCENTE EPT · PROGRAMA MSE-SFT'}
           </p>
-          <h1
-            className="font-black text-center mb-1"
-            style={{ color: '#043941', fontSize: 'clamp(2rem, 5vw, 3rem)', letterSpacing: '-0.03em', lineHeight: 1.05 }}
-          >
+
+          <h1 className="font-black text-white mb-2 animate-fade-in-up stagger-1"
+            style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', letterSpacing: '-0.03em', lineHeight: 1.05 }}>
             Hola, {firstName}
           </h1>
-          <p className="text-sm mb-5" style={{ color: '#94a3b8' }}>
+
+          <p className="text-sm mb-6 animate-fade-in-up stagger-2" style={{ color: 'rgba(255,255,255,0.4)' }}>
             {displayName !== firstName ? displayName : displayEmail}
           </p>
 
           {/* Chips de contexto */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
+          <div className="flex flex-wrap items-center justify-center gap-2 animate-fade-in-up stagger-3">
             {ie && (
-              <span
-                className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium"
-                style={{ background: 'rgba(4,57,65,0.06)', color: '#043941', border: '1px solid rgba(4,57,65,0.1)' }}
-              >
+              <span className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium"
+                style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.65)', border: '1px solid rgba(255,255,255,0.1)' }}>
                 <Building2 size={11} />
                 {ie.nombre}
               </span>
             )}
             {region !== '—' && (
-              <span
-                className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium"
-                style={{ background: 'rgba(4,57,65,0.06)', color: '#043941', border: '1px solid rgba(4,57,65,0.1)' }}
-              >
+              <span className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium"
+                style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.65)', border: '1px solid rgba(255,255,255,0.1)' }}>
                 <MapPin size={11} />
                 {region}
               </span>
             )}
-            <span
-              className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium"
-              style={{ background: 'rgba(4,57,65,0.06)', color: '#043941', border: '1px solid rgba(4,57,65,0.1)' }}
-            >
+            <span className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium"
+              style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.65)', border: '1px solid rgba(255,255,255,0.1)' }}>
               <Mail size={11} />
               {displayEmail}
             </span>
           </div>
         </div>
+
+        {/* Fade-out al contenido claro */}
+        <div className="absolute bottom-0 left-0 right-0 h-12 pointer-events-none"
+          style={{ background: 'linear-gradient(to bottom, transparent, #f0faf5)' }} />
       </section>
 
       {/* ── Contenido principal ── */}
