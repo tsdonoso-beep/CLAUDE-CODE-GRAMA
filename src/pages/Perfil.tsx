@@ -39,7 +39,7 @@ export default function Perfil() {
       <header className="sticky top-0 z-40 border-b"
         style={{ background: 'rgba(4,57,65,0.97)', backdropFilter: 'blur(12px)', borderColor: 'rgba(2,212,126,0.15)' }}>
         <div className="max-w-3xl mx-auto px-5 h-12 flex items-center justify-between">
-          <button onClick={() => navigate(taller ? `/taller/${taller.slug}` : '/hub')}
+          <button onClick={() => navigate(taller ? `/taller/${taller.slug}` : isAdmin ? '/admin' : '/')}
             className="flex items-center gap-2 text-xs font-semibold transition-opacity hover:opacity-60"
             style={{ color: 'rgba(2,212,126,0.8)' }}>
             <ChevronRight size={13} className="rotate-180" />

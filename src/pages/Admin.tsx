@@ -237,7 +237,7 @@ export default function Admin() {
         </div>
         <div className="flex items-center gap-3">
           <span className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{profile?.email}</span>
-          <button onClick={() => navigate('/hub')} className="text-xs px-3 py-1.5 rounded-lg font-semibold"
+          <button onClick={() => navigate('/perfil')} className="text-xs px-3 py-1.5 rounded-lg font-semibold"
             style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e' }}>
             Ver plataforma
           </button>

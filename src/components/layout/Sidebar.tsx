@@ -64,9 +64,9 @@ export function Sidebar({ onCollapse }: SidebarProps) {
         style={{ borderColor: 'rgba(255,255,255,0.07)' }}
       >
         <button
-          onClick={() => navigate('/hub')}
+          onClick={() => navigate('/perfil')}
           className="transition-opacity hover:opacity-80 active:opacity-60"
-          title="Ver todos los talleres"
+          title="Ver mi perfil"
           style={{ display: 'flex', alignItems: 'center' }}
         >
           <GramaLogo variant="light" size="sm" />
@@ -204,7 +204,7 @@ export function Sidebar({ onCollapse }: SidebarProps) {
       {/* ── Navegación secundaria ── */}
       <div className="relative z-10 px-3 pb-4 space-y-1">
         <button
-          onClick={() => navigate('/hub')}
+          onClick={() => navigate('/perfil')}
           className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl transition-all text-xs text-white/30 hover:text-white/60 hover:bg-white/[0.06]"
         >
           <LayoutGrid size={13} />

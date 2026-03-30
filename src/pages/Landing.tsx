@@ -428,7 +428,7 @@ export default function Landing() {
   const { profile } = useAuth()
   const isLoggedIn = !!profile
 
-  const goToApp = () => navigate('/hub')
+  const goToApp = () => navigate('/perfil')
 
   // Modal carrusel
   const [modalIndex, setModalIndex] = useState<number | null>(null)
