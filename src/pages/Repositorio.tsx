@@ -2,8 +2,8 @@
 import { useState, useMemo } from 'react'
 import {
   Search, X, SlidersHorizontal, Package, Wrench as WrenchLucide, Sofa, BookOpen,
-  HardHat, FileText, Video, PlayCircle, ChevronRight, BookMarked,
-  Wrench, GraduationCap, Usb,
+  HardHat, FileText, Video, ChevronRight, BookMarked,
+  Wrench, GraduationCap,
 } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { RepositorioCard } from '@/components/lxp/RepositorioCard'
@@ -161,8 +161,6 @@ export default function Repositorio() {
       return { icon: Wrench, color: '#d97706', bg: '#fef3c7', label: 'Mantenimiento' }
     if (esManualPedagogico(nombre))
       return { icon: GraduationCap, color: '#7c3aed', bg: '#ede9fe', label: 'Pedagógico' }
-    if (esUsb(nombre))
-      return { icon: Usb, color: '#0891b2', bg: '#cffafe', label: 'Digital/USB' }
     return { icon: FileText, color: '#64748b', bg: '#f1f5f9', label: 'Documento' }
   }
 
