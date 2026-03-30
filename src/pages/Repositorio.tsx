@@ -26,22 +26,26 @@ function esExcluidoDeCatalogo(nombre: string): boolean {
 }
 
 // ── Clasificadores por nombre ─────────────────────────────────────────────────
-// Regla principal: el nombre DEBE contener 'manual' para pertenecer a la sección Manuales
+// Regla principal: el nombre DEBE empezar con "manual" (es un documento)
+// "Remachadora manual", "Taladro manual" → NO son manuales (manual es adjetivo al final)
 function esManual(nombre: string) {
-  return nombre.toLowerCase().includes('manual')
+  return nombre.toLowerCase().trimStart().startsWith('manual')
 }
 function esManualUso(nombre: string) {
   const n = nombre.toLowerCase()
-  return n.includes('manual') && (n.includes('uso') || n.includes('operaci') || n.includes('instalac'))
-    && !n.includes('mantenimiento') && !n.includes('pedagóg') && !n.includes('pedagogic')
+  return n.trimStart().startsWith('manual') &&
+    (n.includes('uso') || n.includes('operaci') || n.includes('instalac')) &&
+    !n.includes('mantenimiento') && !n.includes('pedagóg') && !n.includes('pedagogic')
 }
 function esManualMantenimiento(nombre: string) {
   const n = nombre.toLowerCase()
-  return n.includes('manual') && (n.includes('mantenimiento') || n.includes('mantención'))
+  return n.trimStart().startsWith('manual') &&
+    (n.includes('mantenimiento') || n.includes('mantención'))
 }
 function esManualPedagogico(nombre: string) {
   const n = nombre.toLowerCase()
-  return n.includes('manual') && (n.includes('pedagóg') || n.includes('pedagogic'))
+  return n.trimStart().startsWith('manual') &&
+    (n.includes('pedagóg') || n.includes('pedagogic'))
 }
 function esVideo(nombre: string) {
   const n = nombre.toLowerCase()
