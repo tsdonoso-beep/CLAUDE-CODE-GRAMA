@@ -1,7 +1,7 @@
 // src/pages/Perfil.tsx
 import { useNavigate } from 'react-router-dom'
 import {
-  Mail, MapPin, Building2, Package,
+  Mail, MapPin, Building2, Package, Clock,
   ChevronRight, Shield, LogOut, ArrowRight, Layers, Play,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
