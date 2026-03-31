@@ -138,66 +138,68 @@ export default function Perfil() {
       {/* ══ HERO CINÉMATICO ════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden" style={{ minHeight: 340 }}>
 
-        {/* Fondo sólido — sin imagen de taller (el perfil es del docente, no del taller) */}
-        <div className="absolute inset-0" style={{ background: '#043941' }} />
-
-        {/* Overlay degradado */}
+        {/* ── Fondo degradado GRAMA — sin blur, sin overlay oscuro ── */}
         <div
           className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(100deg, rgba(4,10,20,0.92) 0%, rgba(4,10,20,0.75) 50%, rgba(4,10,20,0.45) 100%)',
-          }}
+          style={{ background: 'linear-gradient(130deg, #021c26 0%, #032e38 35%, #043941 65%, #044f5e 100%)' }}
         />
 
-        {/* Patrón GRAMA denso */}
-        <div className="absolute inset-0 grama-pattern-dense opacity-60 pointer-events-none" />
-
-        {/* Orb de acento animado */}
-        <div
-          className="absolute pointer-events-none animate-aurora-slow"
-          style={{
-            width: 420, height: 420,
-            background: `radial-gradient(circle, ${accent}18 0%, transparent 65%)`,
-            right: -60, top: -60,
-          }}
+        {/* Resplandor verde suave — bottom left */}
+        <div className="absolute pointer-events-none"
+          style={{ width: 480, height: 480, background: 'radial-gradient(ellipse, rgba(2,180,110,0.10) 0%, transparent 65%)', left: '5%', bottom: '-20%' }}
         />
 
-        {/* Orb ambiental izquierdo */}
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            width: 300, height: 300,
-            background: 'radial-gradient(circle, rgba(2,212,126,0.07) 0%, transparent 65%)',
-            left: -80, bottom: -80,
-          }}
-        />
+        {/* ── Composición geométrica — inspirada en la imagen de referencia ── */}
+        {/* Grupo principal izquierdo: polígonos grandes solapados */}
+        <svg className="absolute pointer-events-none" viewBox="0 0 600 340" preserveAspectRatio="xMinYMid meet"
+          style={{ left: 0, top: 0, width: '55%', height: '100%', opacity: 1 }}>
 
-        {/* Tangrams esquinas — estáticos */}
-        <Tangram color="#02d47e" opacity={0.08}  rotate={15}  className="absolute w-72 h-72 -top-6 -right-6" />
-        <Tangram color="#02d47e" opacity={0.05}  rotate={-20} className="absolute w-52 h-52 bottom-4 -left-8" />
-        <Tangram color="#ffffff" opacity={0.025} rotate={45}  className="absolute w-40 h-40 top-1/2 left-1/3" />
+          {/* Triángulo grande inferior-izquierdo — base sólida */}
+          <polygon points="-20,340 220,120 320,340" fill="#00936a" fillOpacity="0.22" />
 
-        {/* Piezas individuales flotando */}
-        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a"
-          style={{ width: 60, height: 60, top: '18%', left: '5%', animationDuration: '14s' }}>
-          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.25} />
+          {/* Rombo central — pieza principal */}
+          <polygon points="60,280 200,80 340,200 200,340" fill="#009e74" fillOpacity="0.30" />
+
+          {/* Triángulo mediano — se superpone al rombo, más claro */}
+          <polygon points="120,180 280,60 320,220" fill="#02b87e" fillOpacity="0.38" />
+
+          {/* Triángulo pequeño apuntando derecha — acento superior */}
+          <polygon points="260,100 320,160 260,220" fill="#02d47e" fillOpacity="0.32" />
+
+          {/* Cuña inferior-derecha */}
+          <polygon points="240,260 380,180 400,340 240,340" fill="#007a58" fillOpacity="0.20" />
+
+          {/* Paralelogramo que sale del borde izquierdo */}
+          <polygon points="-60,180 80,80 120,160 -20,260" fill="#02c478" fillOpacity="0.25" />
+
+          {/* Pequeño triángulo flotante */}
+          <polygon points="380,60 420,120 340,120" fill="#02d47e" fillOpacity="0.28" />
         </svg>
-        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b"
-          style={{ width: 44, height: 44, top: '55%', left: '10%', animationDuration: '19s' }}>
-          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.18} />
+
+        {/* Piezas sueltas lado derecho — discretas */}
+        <svg className="absolute pointer-events-none float-a"
+          style={{ width: 48, height: 48, top: '14%', right: '18%', animationDuration: '18s' }}
+          viewBox="0 0 48 48">
+          <polygon points="24,0 48,48 0,48" fill="#02d47e" fillOpacity="0.28" />
         </svg>
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d"
-          style={{ width: 34, height: 34, top: '15%', right: '22%', animationDuration: '10s' }}>
-          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.28} />
+        <svg className="absolute pointer-events-none float-b"
+          style={{ width: 80, height: 50, top: '8%', right: '6%', animationDuration: '14s' }}
+          viewBox="0 0 80 50">
+          <polygon points="0,0 80,0 60,50 20,50" fill="#009e74" fillOpacity="0.22" />
         </svg>
-        <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-c"
-          style={{ width: 56, height: 28, top: '62%', right: '12%', animationDuration: '16s' }}>
-          <polygon points="20,0 80,0 60,40 0,40" fill="#02d47e" fillOpacity={0.18} />
+        <svg className="absolute pointer-events-none float-c"
+          style={{ width: 28, height: 28, bottom: '30%', right: '28%', animationDuration: '21s' }}
+          viewBox="0 0 28 28">
+          <polygon points="14,0 28,28 0,28" fill="#02d47e" fillOpacity="0.35" />
         </svg>
-        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-a"
-          style={{ width: 30, height: 30, bottom: '22%', left: '32%', animationDuration: '22s' }}>
-          <polygon points="20,0 40,40 0,40" fill="#02d47e" fillOpacity={0.22} />
-        </svg>
+
+        {/* Puntos de luz — detalle sutil */}
+        <div className="absolute pointer-events-none rounded-full"
+          style={{ width: 4, height: 4, background: 'rgba(2,212,126,0.6)', top: '38%', left: '42%', boxShadow: '0 0 6px rgba(2,212,126,0.5)' }} />
+        <div className="absolute pointer-events-none rounded-full"
+          style={{ width: 3, height: 3, background: 'rgba(2,212,126,0.4)', top: '18%', left: '8%' }} />
+        <div className="absolute pointer-events-none rounded-full"
+          style={{ width: 2, height: 2, background: 'rgba(255,255,255,0.35)', top: '55%', left: '25%' }} />
 
         {/* ── Navbar integrada en el hero ── */}
         <div className="relative z-20 border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
@@ -433,35 +435,6 @@ export default function Perfil() {
               />
 
               <div className="p-5">
-                {/* Taller mini-hero: imagen + descripción */}
-                {taller.imagen && (
-                  <div className="relative h-32 rounded-xl overflow-hidden mb-4">
-                    <img
-                      src={taller.imagen}
-                      alt={taller.nombre}
-                      className="w-full h-full object-cover"
-                    />
-                    <div
-                      className="absolute inset-0"
-                      style={{ background: 'linear-gradient(to right, rgba(4,10,20,0.75) 0%, rgba(4,10,20,0.2) 100%)' }}
-                    />
-                    <div className="absolute inset-0 flex items-center px-5 gap-3">
-                      <span
-                        className="text-[10px] font-black px-2.5 py-1 rounded-full shrink-0"
-                        style={{ background: accent, color: '#fff', boxShadow: `0 2px 8px ${accent}50` }}
-                      >
-                        T{String(taller.numero).padStart(2, '0')}
-                      </span>
-                      <h2
-                        className="text-base font-extrabold text-white leading-tight"
-                        style={{ letterSpacing: '-0.015em' }}
-                      >
-                        {taller.nombre}
-                      </h2>
-                    </div>
-                  </div>
-                )}
-
                 <p className="text-sm leading-relaxed mb-4" style={{ color: '#64748b' }}>
                   {taller.descripcion}
                 </p>
