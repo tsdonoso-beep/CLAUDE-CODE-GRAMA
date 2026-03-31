@@ -266,9 +266,11 @@ export default function Perfil() {
                     <span className="w-1 h-1 rounded-full animate-pulse" style={{ background: accent }} />
                     {isAdmin
                       ? 'ADMINISTRADOR · GRAMA'
-                      : taller
-                        ? `DOCENTE EPT · T${String(taller.numero).padStart(2, '0')}`
-                        : 'DOCENTE EPT · PROGRAMA MSE-SFT'}
+                      : tallerSlugsAccesibles.length > 1
+                        ? `DOCENTE EPT · ${tallerSlugsAccesibles.length} TALLERES`
+                        : taller
+                          ? `DOCENTE EPT · T${String(taller.numero).padStart(2, '0')}`
+                          : 'DOCENTE EPT · PROGRAMA MSE-SFT'}
                   </span>
                   {isAdmin && (
                     <button
@@ -320,32 +322,45 @@ export default function Perfil() {
               </div>
             </div>
 
-            {/* Right: ProgressRing frosted glass card (desktop only) */}
-            {taller && (
+            {/* Right: progreso — ProgressRing (1 taller) o barras (2+) */}
+            {tallerSlugsAccesibles.length === 1 && taller ? (
               <div
                 className="hidden lg:flex flex-col items-center gap-3 p-5 rounded-2xl animate-fade-in-up stagger-4"
-                style={{
-                  background: 'rgba(255,255,255,0.07)',
-                  backdropFilter: 'blur(16px)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  minWidth: 156,
-                }}
+                style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.1)', minWidth: 156 }}
               >
-                <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                  Tu progreso
-                </p>
-                <ProgressRing
-                  percentage={progreso.porcentaje}
-                  size={88}
-                  label={`${progreso.completados}/${progreso.total}`}
-                  sublabel="actividades"
-                  dark
-                />
-                <p className="text-[10px] text-center" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                  {progreso.porcentaje}% completado
-                </p>
+                <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.5)' }}>Tu progreso</p>
+                <ProgressRing percentage={progreso.porcentaje} size={88} label={`${progreso.completados}/${progreso.total}`} sublabel="actividades" dark />
+                <p className="text-[10px] text-center" style={{ color: 'rgba(255,255,255,0.4)' }}>{progreso.porcentaje}% completado</p>
               </div>
-            )}
+            ) : tallerSlugsAccesibles.length > 1 ? (
+              <div
+                className="hidden lg:flex flex-col gap-2.5 p-4 rounded-2xl animate-fade-in-up stagger-4"
+                style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.1)', minWidth: 220 }}
+              >
+                <p className="text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>Mis talleres</p>
+                {tallerSlugsAccesibles.map(s => {
+                  const t = talleresConfig.find(x => x.slug === s)
+                  if (!t) return null
+                  const ta = TALLER_ACCENTS[s] ?? '#02d47e'
+                  const p  = getTallerProgreso(s)
+                  return (
+                    <div key={s}>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md"
+                          style={{ background: `${ta}25`, color: ta }}>
+                          T{String(t.numero).padStart(2, '0')}
+                        </span>
+                        <span className="text-xs font-semibold truncate" style={{ color: 'rgba(255,255,255,0.8)' }}>{t.nombreCorto}</span>
+                        <span className="ml-auto text-[10px] font-bold shrink-0" style={{ color: ta }}>{p.porcentaje}%</span>
+                      </div>
+                      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                        <div className="h-full rounded-full transition-all" style={{ width: `${p.porcentaje}%`, background: ta }} />
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            ) : null}
           </div>
         </div>
 
