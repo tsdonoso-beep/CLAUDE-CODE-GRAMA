@@ -28,15 +28,19 @@ function buildDevProfile(): Profile | null {
   const role = sessionStorage.getItem('grama-dev-role') as 'admin' | 'docente' | null
   if (!email || !role) return null
   return {
-    id: 'dev-user',
-    email,
-    nombre_completo: email.split('@')[0].replace(/[._]/g, ' '),
-    role,
-    ie_id: null,
-    taller_slug: sessionStorage.getItem('grama-dev-taller') ?? null,
-    created_at: new Date().toISOString(),
-    last_seen_at: new Date().toISOString(),
-  }
+    const tallerSlugsRaw = sessionStorage.getItem('grama-dev-tallers')
+    const tallerSlugs: string[] | null = tallerSlugsRaw ? JSON.parse(tallerSlugsRaw) : null
+    return {
+      id: 'dev-user',
+      email,
+      nombre_completo: email.split('@')[0].replace(/[._]/g, ' '),
+      role,
+      ie_id: null,
+      taller_slug: sessionStorage.getItem('grama-dev-taller') ?? null,
+      taller_slugs: tallerSlugs,
+      created_at: new Date().toISOString(),
+      last_seen_at: new Date().toISOString(),
+    }
 }
 
 export function useAuth() {

@@ -12,6 +12,7 @@ export interface Database {
           role: 'docente' | 'admin'
           ie_id: number | null
           taller_slug: string | null
+          taller_slugs: string[] | null
           created_at: string
           last_seen_at: string
         }
@@ -22,6 +23,7 @@ export interface Database {
           role?: 'docente' | 'admin'
           ie_id?: number | null
           taller_slug?: string | null
+          taller_slugs?: string[] | null
           created_at?: string
           last_seen_at?: string
         }
@@ -30,6 +32,7 @@ export interface Database {
           role?: 'docente' | 'admin'
           ie_id?: number | null
           taller_slug?: string | null
+          taller_slugs?: string[] | null
           last_seen_at?: string
         }
       }

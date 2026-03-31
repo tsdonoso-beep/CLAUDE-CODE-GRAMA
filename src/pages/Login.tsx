@@ -39,12 +39,13 @@ function GramaInput({
 // Credenciales de desarrollo — activas cuando Supabase no está configurado
 const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
   import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
-const DEV_USERS: Array<{ email: string; password: string; role: 'admin' | 'docente'; taller_slug?: string }> = [
+const DEV_USERS: Array<{ email: string; password: string; role: 'admin' | 'docente'; taller_slug?: string; taller_slugs?: string[] }> = [
   { email: 'admin@grama.pe',           password: 'grama2025', role: 'admin' },
   { email: 'docente@grama.pe',         password: 'grama2026', role: 'docente' },
   { email: 't.donoso@inroprin.com',    password: 'grama2026', role: 'admin' },
   { email: 'camila.gr@inroprin.com',   password: 'grama2026', role: 'admin' },
-  { email: 'automotriz@grama.pe',      password: 'grama2026', role: 'docente', taller_slug: 'mecanica-automotriz' },
+  { email: 'automotriz@grama.pe',      password: 'grama2026', role: 'docente', taller_slug: 'mecanica-automotriz', taller_slugs: ['mecanica-automotriz'] },
+  { email: 'dostalleres@grama.pe',     password: 'grama2026', role: 'docente', taller_slug: 'mecanica-automotriz', taller_slugs: ['mecanica-automotriz', 'electricidad'] },
 ]
 
 // ── Tab: Ingresar ──────────────────────────────────────────────────────────
@@ -72,6 +73,11 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
           sessionStorage.setItem('grama-dev-taller', validDev.taller_slug)
         } else {
           sessionStorage.removeItem('grama-dev-taller')
+        }
+        if (validDev.taller_slugs) {
+          sessionStorage.setItem('grama-dev-tallers', JSON.stringify(validDev.taller_slugs))
+        } else {
+          sessionStorage.removeItem('grama-dev-tallers')
         }
         refreshDevProfile()
         onSuccess()

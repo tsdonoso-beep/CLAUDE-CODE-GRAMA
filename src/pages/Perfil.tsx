@@ -121,6 +121,12 @@ export default function Perfil() {
   const displayEmail = profile?.email ?? user?.email ?? ''
   const tallerSlug   = profile?.taller_slug ?? null
 
+  // Talleres accesibles: usa taller_slugs si existe, si no cae al taller_slug único
+  const tallerSlugsAccesibles: string[] =
+    profile?.taller_slugs?.length
+      ? profile.taller_slugs
+      : tallerSlug ? [tallerSlug] : []
+
   const ie          = INSTITUCIONES_EDUCATIVAS.find(i => i.id === profile?.ie_id)
   const taller      = tallerSlug ? talleresConfig.find(t => t.slug === tallerSlug) : null
   const accent      = taller ? (TALLER_ACCENTS[taller.slug] ?? '#02d47e') : '#02d47e'
@@ -376,84 +382,76 @@ export default function Perfil() {
             </div>
           )}
 
-          {/* ── "Continuar donde lo dejaste" — section card ── */}
-          {taller ? (
-            <section
-              className="rounded-2xl overflow-hidden animate-fade-in-up stagger-1"
-              style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}
-            >
-              <SectionHeader
-                icon={Play}
-                title="Continuar donde lo dejaste"
-                subtitle={taller.nombre}
-                iconColor={accent}
-                action={
-                  <button
-                    onClick={() => navigate(`/taller/${taller.slug}`)}
-                    className="flex items-center gap-1 text-xs font-bold transition-all"
-                    style={{ color: accent }}
+          {/* ── Talleres activos del docente ── */}
+          {tallerSlugsAccesibles.length > 0 ? (
+            <>
+              {tallerSlugsAccesibles.map((slug, idx) => {
+                const t = talleresConfig.find(x => x.slug === slug)
+                if (!t) return null
+                const ta = TALLER_ACCENTS[t.slug] ?? '#02d47e'
+                const bienes = getTotalBienesByTaller(t.slug)
+                const isPrimario = slug === tallerSlug
+                return (
+                  <section
+                    key={slug}
+                    className={`rounded-2xl overflow-hidden animate-fade-in-up stagger-${idx + 1}`}
+                    style={{ background: '#ffffff', border: `1px solid ${isPrimario ? ta + '30' : 'rgba(4,57,65,0.07)'}` }}
                   >
-                    Ir al taller <ChevronRight size={13} />
-                  </button>
-                }
-              />
-
-              <div className="p-5">
-                {/* Badge + nombre taller */}
-                <div className="flex items-center gap-3 mb-3 pb-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
-                  <span
-                    className="text-xs font-extrabold px-2.5 py-1 rounded-lg shrink-0"
-                    style={{ background: `${accent}18`, color: accent, border: `1px solid ${accent}25` }}
-                  >
-                    T{String(taller.numero).padStart(2, '0')}
-                  </span>
-                  <p className="text-sm font-extrabold uppercase tracking-wide" style={{ color: '#043941', letterSpacing: '0.04em' }}>
-                    {taller.nombre}
-                  </p>
-                </div>
-
-                <p className="text-sm leading-relaxed mb-4" style={{ color: '#64748b' }}>
-                  {taller.descripcion}
-                </p>
-
-                {/* Stats row */}
-                <div className="flex gap-2 mb-4">
-                  {[
-                    { label: `${TOTAL_MODULOS} Módulos`, color: accent },
-                    { label: `${TOTAL_HORAS}h Formación`, color: '#045f6c' },
-                    { label: `${totalBienes} Bienes`, color: '#02d47e' },
-                  ].map(chip => (
-                    <span
-                      key={chip.label}
-                      className="text-[10px] font-bold px-2.5 py-1 rounded-full"
-                      style={{ background: `${chip.color}12`, color: chip.color, border: `1px solid ${chip.color}20` }}
-                    >
-                      {chip.label}
-                    </span>
-                  ))}
-                </div>
-
-                {/* CTA buttons */}
-                <div className="flex gap-2.5">
-                  <button
-                    onClick={() => navigate(`/taller/${taller.slug}`)}
-                    className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold transition-opacity hover:opacity-90"
-                    style={{ background: '#043941', color: '#02d47e' }}
-                  >
-                    <Play size={14} />
-                    Continuar Ruta
-                  </button>
-                  <button
-                    onClick={() => navigate(`/taller/${taller.slug}/repositorio`)}
-                    className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-opacity hover:opacity-80"
-                    style={{ background: 'rgba(4,57,65,0.05)', color: '#043941', border: '1px solid rgba(4,57,65,0.1)' }}
-                  >
-                    <Package size={13} />
-                    Repositorio
-                  </button>
-                </div>
-              </div>
-            </section>
+                    <SectionHeader
+                      icon={Play}
+                      title={isPrimario ? 'Continuar donde lo dejaste' : 'Taller activo'}
+                      subtitle={t.nombre}
+                      iconColor={ta}
+                      action={
+                        <button
+                          onClick={() => navigate(`/taller/${t.slug}`)}
+                          className="flex items-center gap-1 text-xs font-bold transition-all"
+                          style={{ color: ta }}
+                        >
+                          Ir al taller <ChevronRight size={13} />
+                        </button>
+                      }
+                    />
+                    <div className="p-5">
+                      <div className="flex items-center gap-3 mb-3 pb-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
+                        <span className="text-xs font-extrabold px-2.5 py-1 rounded-lg shrink-0"
+                          style={{ background: `${ta}18`, color: ta, border: `1px solid ${ta}25` }}>
+                          T{String(t.numero).padStart(2, '0')}
+                        </span>
+                        <p className="text-sm font-extrabold uppercase tracking-wide" style={{ color: '#043941', letterSpacing: '0.04em' }}>
+                          {t.nombre}
+                        </p>
+                      </div>
+                      <p className="text-sm leading-relaxed mb-4" style={{ color: '#64748b' }}>{t.descripcion}</p>
+                      <div className="flex gap-2 mb-4">
+                        {[
+                          { label: `${TOTAL_MODULOS} Módulos`, color: ta },
+                          { label: `${TOTAL_HORAS}h Formación`, color: '#045f6c' },
+                          { label: `${bienes} Bienes`, color: '#02d47e' },
+                        ].map(chip => (
+                          <span key={chip.label} className="text-[10px] font-bold px-2.5 py-1 rounded-full"
+                            style={{ background: `${chip.color}12`, color: chip.color, border: `1px solid ${chip.color}20` }}>
+                            {chip.label}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex gap-2.5">
+                        <button onClick={() => navigate(`/taller/${t.slug}`)}
+                          className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold transition-opacity hover:opacity-90"
+                          style={{ background: '#043941', color: '#02d47e' }}>
+                          <Play size={14} /> Continuar Ruta
+                        </button>
+                        <button onClick={() => navigate(`/taller/${t.slug}/repositorio`)}
+                          className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-opacity hover:opacity-80"
+                          style={{ background: 'rgba(4,57,65,0.05)', color: '#043941', border: '1px solid rgba(4,57,65,0.1)' }}>
+                          <Package size={13} /> Repositorio
+                        </button>
+                      </div>
+                    </div>
+                  </section>
+                )
+              })}
+            </>
           ) : !isAdmin && (
             <section
               className="rounded-2xl overflow-hidden animate-fade-in-up stagger-1"
@@ -520,40 +518,32 @@ export default function Perfil() {
 
             <div className="grid grid-cols-2 divide-x divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
               {talleresConfig.map(t => {
-                const esMio   = t.slug === tallerSlug
-                const ta      = TALLER_ACCENTS[t.slug] ?? '#02d47e'
-                const bienesT = getTotalBienesByTaller(t.slug)
+                const esAccesible = isAdmin || tallerSlugsAccesibles.includes(t.slug)
+                const esPrimario  = t.slug === tallerSlug
+                const ta          = TALLER_ACCENTS[t.slug] ?? '#02d47e'
+                const bienesT     = getTotalBienesByTaller(t.slug)
                 return (
                   <button
                     key={t.slug}
-                    onClick={() =>
-                      (isAdmin || esMio) ? navigate(`/taller/${t.slug}`) : undefined
-                    }
+                    onClick={() => esAccesible ? navigate(`/taller/${t.slug}`) : undefined}
                     className="w-full text-left flex items-center gap-3 px-5 py-4 transition-all"
-                    style={{ background: 'transparent' }}
-                    onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.025)')}
+                    style={{ background: 'transparent', cursor: esAccesible ? 'pointer' : 'default' }}
+                    onMouseEnter={e => { if (esAccesible) (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.025)' }}
                     onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = 'transparent')}
                   >
-                    {/* Borde izquierdo de acento — solo activo */}
-                    <div
-                      className="w-0.5 self-stretch rounded-full shrink-0"
-                      style={{ background: esMio ? ta : 'transparent', minHeight: 36 }}
-                    />
+                    {/* Borde izquierdo — acento para accesibles */}
+                    <div className="w-0.5 self-stretch rounded-full shrink-0"
+                      style={{ background: esAccesible ? ta : 'transparent', minHeight: 36 }} />
 
                     {/* Badge número */}
-                    <span
-                      className="text-[10px] font-extrabold px-2.5 py-1 rounded-full shrink-0"
-                      style={{
-                        background: 'rgba(4,57,65,0.06)',
-                        color: 'rgba(4,57,65,0.5)',
-                      }}
-                    >
+                    <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full shrink-0"
+                      style={{ background: esAccesible ? `${ta}15` : 'rgba(4,57,65,0.06)', color: esAccesible ? ta : 'rgba(4,57,65,0.5)' }}>
                       T{String(t.numero).padStart(2, '0')}
                     </span>
 
                     {/* Nombre + stats */}
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold leading-snug truncate" style={{ color: '#043941' }}>
+                      <p className="text-sm font-bold leading-snug truncate" style={{ color: esAccesible ? '#043941' : 'rgba(4,57,65,0.55)' }}>
                         {t.nombre}
                       </p>
                       <p className="text-xs mt-0.5" style={{ color: 'rgba(4,57,65,0.38)' }}>
@@ -562,11 +552,11 @@ export default function Perfil() {
                     </div>
 
                     {/* Estado */}
-                    {esMio ? (
+                    {esPrimario ? (
                       <span className="text-xs font-bold shrink-0" style={{ color: ta }}>✓ activo</span>
-                    ) : (
-                      <ChevronRight size={14} style={{ color: 'rgba(4,57,65,0.18)', flexShrink: 0 }} />
-                    )}
+                    ) : esAccesible ? (
+                      <ChevronRight size={14} style={{ color: ta, flexShrink: 0 }} />
+                    ) : null}
                   </button>
                 )
               })}
