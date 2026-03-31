@@ -19,7 +19,7 @@ export function TopBar() {
     'Docente'
   const displayEmail = profile?.email ?? user?.email ?? ''
 
-  const crumbs: { label: string; to?: string }[] = [{ label: 'Inicio', to: '/' }]
+  const crumbs: { label: string; to?: string }[] = [{ label: 'Mi Perfil', to: '/perfil' }]
   if (taller) {
     crumbs.push({ label: taller.nombreCorto, to: `/taller/${slug}` })
     if (location.pathname.includes('/ruta')) {

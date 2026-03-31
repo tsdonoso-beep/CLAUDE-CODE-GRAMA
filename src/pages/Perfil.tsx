@@ -166,7 +166,9 @@ export default function Perfil() {
         {/* ── Navbar integrada en el hero ── */}
         <div className="relative z-20 border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
           <div className="max-w-7xl mx-auto px-8 flex items-center justify-between" style={{ height: 52 }}>
-            <GramaLogo variant="light" size="sm" />
+            <button onClick={() => navigate('/')} className="transition-opacity hover:opacity-75">
+              <GramaLogo variant="light" size="sm" />
+            </button>
             <div className="flex items-center gap-2">
               {isAdmin && (
                 <button
