@@ -322,69 +322,6 @@ export default function TallerPreview() {
         </div>
       </section>
 
-      {/* ── Equipamiento Representativo ─────────────────────────────────────── */}
-      {bienes.length > 0 && (() => {
-        const equiposTop = bienes
-          .filter(b => b.tipo === 'EQUIPOS' && b.zona.includes('INNOVA'))
-          .slice(0, 8)
-        const equiposExtra = bienes
-          .filter(b => b.tipo === 'EQUIPOS' && !b.zona.includes('INNOVA'))
-          .slice(0, Math.max(0, 8 - equiposTop.length))
-        const equiposMostrar = [...equiposTop, ...equiposExtra].slice(0, 8)
-        if (equiposMostrar.length === 0) return null
-        return (
-          <section style={{ background: '#f8fffe' }}>
-            <div className="max-w-5xl mx-auto px-6 py-14">
-              <div className="flex items-end justify-between mb-8 gap-4">
-                <div>
-                  <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] mb-2" style={{ color: '#02d47e' }}>
-                    Dotación oficial MINEDU
-                  </p>
-                  <h2 className="text-xl font-extrabold mb-1" style={{ color: '#043941' }}>
-                    Equipamiento del Taller
-                  </h2>
-                  <p className="text-xs" style={{ color: '#64748b' }}>
-                    Equipos principales que recibirá tu institución educativa
-                  </p>
-                </div>
-                <span className="text-[10px] font-extrabold px-3 py-1.5 rounded-full shrink-0"
-                  style={{ background: accentAlpha(0.1), color: accent }}>
-                  {totalBienes} bienes en total
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {equiposMostrar.map((equipo, i) => (
-                  <div key={i} className="bg-white rounded-2xl p-4 border transition-shadow hover:shadow-md flex flex-col gap-3"
-                    style={{ borderColor: '#e3f8fb', borderTopColor: accent, borderTopWidth: 3 }}>
-                    <div className="h-9 w-9 rounded-xl flex items-center justify-center"
-                      style={{ background: accentAlpha(0.1) }}>
-                      <Package size={15} style={{ color: accent }} />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs font-bold leading-snug line-clamp-2 mb-1" style={{ color: '#043941' }}>
-                        {equipo.nombre}
-                      </p>
-                      {equipo.marca && (
-                        <p className="text-[10px] font-medium" style={{ color: '#94a3b8' }}>
-                          {equipo.marca}{equipo.modelo ? ` · ${equipo.modelo}` : ''}
-                        </p>
-                      )}
-                    </div>
-                    {equipo.cantidad > 1 && (
-                      <span className="text-[11px] font-extrabold self-start px-2 py-0.5 rounded-full"
-                        style={{ background: 'rgba(2,212,126,0.12)', color: '#02916a' }}>
-                        ×{equipo.cantidad} unid.
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )
-      })()}
-
       {/* ── Ruta de Aprendizaje ──────────────────────────────────────────────── */}
       <section style={{ background: '#f0faf5' }}>
         <div className="max-w-5xl mx-auto px-6 py-16">
