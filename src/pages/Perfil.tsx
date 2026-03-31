@@ -100,9 +100,9 @@ function SectionHeader({
           <Icon size={15} style={{ color: iconColor }} />
         </div>
         <div>
-          <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>{title}</h2>
+          <h2 className="text-base font-extrabold leading-tight" style={{ color: '#043941' }}>{title}</h2>
           {subtitle && (
-            <p className="text-[10px]" style={{ color: 'rgba(4,57,65,0.45)' }}>{subtitle}</p>
+            <p className="text-xs mt-0.5" style={{ color: 'rgba(4,57,65,0.45)' }}>{subtitle}</p>
           )}
         </div>
       </div>
@@ -420,8 +420,8 @@ export default function Perfil() {
             >
               <SectionHeader
                 icon={Play}
-                title="Continuar donde lo dejaste"
-                subtitle={taller.nombre}
+                title={taller.nombre}
+                subtitle="Continuar donde lo dejaste"
                 iconColor={accent}
                 action={
                   <button
