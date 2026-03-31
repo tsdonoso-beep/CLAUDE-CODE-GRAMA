@@ -226,7 +226,7 @@ function TalleresMarquee() {
 
 // ── Modal carrusel de taller ──────────────────────────────────────────────────
 function TallerModal({
-  index, dir, onClose, onPrev, onNext, onGoTo, onViewFull,
+  index, dir, onClose, onPrev, onNext, onGoTo,
 }: {
   index: number
   dir: 'next' | 'prev'
@@ -234,7 +234,6 @@ function TallerModal({
   onPrev: () => void
   onNext: () => void
   onGoTo: (i: number) => void
-  onViewFull: () => void
 }) {
   const taller  = talleresConfig[index]
   const todosLos = getBienesByTaller(taller.slug)
@@ -407,13 +406,13 @@ function TallerModal({
             </div>
 
             {/* CTA principal */}
-            <button
-              onClick={onViewFull}
+            <a
+              href="mailto:contacto@grama.pe"
               className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold text-white transition-all hover:scale-[1.02] hover:shadow-lg"
               style={{ background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)' }}
             >
-              Ver taller completo <ArrowRight size={14} />
-            </button>
+              Solicitar información <ArrowRight size={14} />
+            </a>
           </div>
         </div>
       </div>
@@ -880,7 +879,6 @@ export default function Landing() {
           onPrev={goPrev}
           onNext={goNext}
           onGoTo={goTo}
-          onViewFull={() => { navigate(`/taller/${talleresConfig[modalIndex].slug}/preview`); closeModal() }}
         />
       )}
 

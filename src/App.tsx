@@ -14,7 +14,6 @@ import { ErrorBoundary } from "@/components/ErrorBoundary"
 
 // ── Pages (lazy loaded) ────────────────────────────────────────────────────
 const Landing        = lazy(() => import("./pages/Landing"))
-const TallerPreview   = lazy(() => import("./pages/TallerPreview"))
 const Login           = lazy(() => import("./pages/Login"))
 const Bienvenida      = lazy(() => import("./pages/Bienvenida"))
 const TallerHub       = lazy(() => import("./pages/TallerHub"))
@@ -67,7 +66,6 @@ const App = () => (
               <Routes>
                 {/* ── Públicas ── */}
                 <Route path="/" element={wrap(Landing)} />
-                <Route path="/taller/:slug/preview" element={wrap(TallerPreview)} />
                 <Route path="/login" element={wrap(Login)} />
 
                 {/* ── Requiere autenticación ── */}
