@@ -503,7 +503,7 @@ export default function Landing() {
       </header>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden pt-14" style={{ background: '#043941', minHeight: '94vh' }}>
+      <section className="relative overflow-hidden pt-16" style={{ background: '#043941' }}>
         {/* Patrón GRAMA */}
         <div className="absolute inset-0 grama-pattern opacity-30" />
 
@@ -539,9 +539,9 @@ export default function Landing() {
           <polygon points="20,0 40,40 0,40" fill="#02d47e" fillOpacity={0.32} />
         </svg>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-20 pb-10">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-14 lg:pt-24 lg:pb-16">
           {/* Grid hero: texto izq, visual der */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
 
             {/* Columna texto */}
             <div>
