@@ -504,6 +504,16 @@ export default function Perfil() {
               }
             />
 
+            {/* Intro */}
+            <div className="px-5 py-3.5 flex items-start justify-between gap-4 border-b" style={{ borderColor: 'rgba(4,57,65,0.05)', background: 'rgba(4,57,65,0.015)' }}>
+              <p className="text-xs leading-relaxed" style={{ color: 'rgba(4,57,65,0.52)' }}>
+                Estos son los talleres EPT disponibles en el Programa MSE-SFT. Si deseas más información sobre algún taller, escríbenos a{' '}
+                <a href="mailto:contacto@grama.pe" className="font-semibold transition-opacity hover:opacity-70" style={{ color: '#02d47e' }}>
+                  contacto@grama.pe
+                </a>
+              </p>
+            </div>
+
             <div className="grid grid-cols-2 divide-x divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
               {talleresConfig.map(t => {
                 const esMio   = t.slug === tallerSlug
