@@ -208,7 +208,7 @@ export default function Perfil() {
 
         {/* ── Navbar integrada en el hero ── */}
         <div className="relative z-20 border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-          <div className="max-w-5xl mx-auto px-6 flex items-center justify-between" style={{ height: 52 }}>
+          <div className="max-w-7xl mx-auto px-8 flex items-center justify-between" style={{ height: 52 }}>
             <GramaLogo variant="light" size="sm" />
             <div className="flex items-center gap-2">
               {isAdmin && (
@@ -243,7 +243,7 @@ export default function Perfil() {
         </div>
 
         {/* ── Hero content: horizontal layout ── */}
-        <div className="relative z-10 max-w-5xl mx-auto px-6 pt-8 pb-10">
+        <div className="relative z-10 max-w-7xl mx-auto px-8 pt-8 pb-10">
           <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-center">
 
             {/* Left: avatar + text */}
@@ -318,13 +318,13 @@ export default function Perfil() {
                 </div>
 
                 <h1
-                  className="font-black text-white leading-tight mb-1.5 animate-fade-in-up stagger-1"
-                  style={{ fontSize: 'clamp(1.9rem, 4vw, 3rem)', letterSpacing: '-0.02em' }}
+                  className="font-black text-white leading-tight mb-2 animate-fade-in-up stagger-1"
+                  style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)', letterSpacing: '-0.025em' }}
                 >
                   Hola, {firstName}
                 </h1>
 
-                <p className="text-sm mb-4 animate-fade-in-up stagger-2" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                <p className="text-base mb-4 animate-fade-in-up stagger-2" style={{ color: 'rgba(255,255,255,0.45)' }}>
                   {displayName !== firstName ? displayName : ''}{displayName !== firstName && displayEmail ? ' · ' : ''}{displayEmail}
                 </p>
 
@@ -392,7 +392,7 @@ export default function Perfil() {
       </section>
 
       {/* ══ CONTENIDO PRINCIPAL ════════════════════════════════════════════════ */}
-      <div className="p-5 grid lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+      <div className="p-6 grid lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
 
         {/* ── Col principal (2/3) ─────────────────────────────────────────── */}
         <div className="lg:col-span-2 space-y-5">
@@ -469,7 +469,7 @@ export default function Perfil() {
                   </div>
                 )}
 
-                <p className="text-xs leading-relaxed mb-4" style={{ color: '#64748b' }}>
+                <p className="text-sm leading-relaxed mb-4" style={{ color: '#64748b' }}>
                   {taller.descripcion}
                 </p>
 
@@ -563,60 +563,62 @@ export default function Perfil() {
               }
             />
 
-            <div className="p-4">
-              <div className="grid grid-cols-3 gap-2.5">
-                {talleresConfig.map(t => {
-                  const esMio   = t.slug === tallerSlug
-                  const ta      = TALLER_ACCENTS[t.slug] ?? '#02d47e'
-                  const bienesT = getTotalBienesByTaller(t.slug)
-                  return (
-                    <button
-                      key={t.slug}
-                      onClick={() =>
-                        isAdmin || esMio
-                          ? navigate(`/taller/${t.slug}`)
-                          : navigate(`/taller/${t.slug}/preview`)
-                      }
-                      className="text-left rounded-xl border bg-white transition-all hover:shadow-md hover:-translate-y-0.5 overflow-hidden group"
+            <div className="divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
+              {talleresConfig.map(t => {
+                const esMio   = t.slug === tallerSlug
+                const ta      = TALLER_ACCENTS[t.slug] ?? '#02d47e'
+                const bienesT = getTotalBienesByTaller(t.slug)
+                return (
+                  <button
+                    key={t.slug}
+                    onClick={() =>
+                      isAdmin || esMio
+                        ? navigate(`/taller/${t.slug}`)
+                        : navigate(`/taller/${t.slug}/preview`)
+                    }
+                    className="w-full text-left flex items-center gap-4 px-5 py-3.5 transition-all"
+                    style={{ background: esMio ? `${ta}06` : 'transparent' }}
+                    onMouseEnter={e => { if (!esMio) (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.02)' }}
+                    onMouseLeave={e => { if (!esMio) (e.currentTarget as HTMLElement).style.background = 'transparent' }}
+                  >
+                    {/* Dot de acento — solo el activo usa su color */}
+                    <div
+                      className="w-1 self-stretch rounded-full shrink-0"
+                      style={{ background: esMio ? ta : 'rgba(4,57,65,0.08)', minHeight: 36 }}
+                    />
+
+                    {/* Badge número */}
+                    <span
+                      className="text-[10px] font-black px-2 py-0.5 rounded-full shrink-0"
                       style={{
-                        borderColor: esMio ? ta : 'rgba(4,57,65,0.07)',
-                        boxShadow: esMio ? `0 0 0 1px ${ta}30, 0 2px 12px ${ta}10` : undefined,
-                        borderWidth: esMio ? 2 : 1,
+                        background: esMio ? `${ta}18` : 'rgba(4,57,65,0.06)',
+                        color: esMio ? ta : 'rgba(4,57,65,0.45)',
                       }}
                     >
-                      {/* Barra de acento superior */}
-                      <div className="h-1" style={{ background: ta }} />
-                      <div className="p-3">
-                        <div className="flex items-center justify-between mb-2">
-                          <span
-                            className="text-[9px] font-black px-2 py-0.5 rounded-full"
-                            style={{ background: esMio ? ta : `${ta}15`, color: esMio ? '#fff' : ta }}
-                          >
-                            T{String(t.numero).padStart(2, '0')}
-                          </span>
-                          {esMio && (
-                            <span
-                              className="text-[8px] font-black uppercase tracking-wide"
-                              style={{ color: ta }}
-                            >
-                              ✓ activo
-                            </span>
-                          )}
-                        </div>
-                        <p
-                          className="text-[11px] font-bold leading-snug mb-1.5 line-clamp-2"
-                          style={{ color: '#043941' }}
-                        >
-                          {t.nombre}
-                        </p>
-                        <p className="text-[10px]" style={{ color: '#b0c4ca' }}>
-                          {bienesT} bienes · {TOTAL_MODULOS} módulos
-                        </p>
-                      </div>
-                    </button>
-                  )
-                })}
-              </div>
+                      T{String(t.numero).padStart(2, '0')}
+                    </span>
+
+                    {/* Nombre + stats */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold leading-snug truncate" style={{ color: '#043941' }}>
+                        {t.nombre}
+                      </p>
+                      <p className="text-xs mt-0.5" style={{ color: 'rgba(4,57,65,0.38)' }}>
+                        {bienesT} bienes · {TOTAL_MODULOS} módulos
+                      </p>
+                    </div>
+
+                    {/* Estado */}
+                    {esMio ? (
+                      <span className="text-[10px] font-bold shrink-0" style={{ color: ta }}>
+                        ✓ activo
+                      </span>
+                    ) : (
+                      <ChevronRight size={14} style={{ color: 'rgba(4,57,65,0.2)', flexShrink: 0 }} />
+                    )}
+                  </button>
+                )
+              })}
             </div>
           </section>
         </div>
@@ -648,14 +650,14 @@ export default function Perfil() {
                     <item.Icon size={13} style={{ color: '#045f6c' }} />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-[9px] font-black uppercase tracking-widest mb-0.5" style={{ color: '#b0c4ca' }}>
+                    <p className="text-[10px] font-black uppercase tracking-widest mb-0.5" style={{ color: '#b0c4ca' }}>
                       {item.label}
                     </p>
-                    <p className="text-xs font-bold leading-snug break-words" style={{ color: '#043941' }}>
+                    <p className="text-sm font-bold leading-snug break-words" style={{ color: '#043941' }}>
                       {item.value}
                     </p>
                     {item.sub && (
-                      <p className="text-[10px] mt-0.5" style={{ color: '#94a3b8' }}>{item.sub}</p>
+                      <p className="text-xs mt-0.5" style={{ color: '#94a3b8' }}>{item.sub}</p>
                     )}
                   </div>
                 </div>
@@ -705,8 +707,8 @@ export default function Perfil() {
                       <item.Icon size={15} style={{ color: item.color }} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-bold leading-none mb-0.5" style={{ color: '#043941' }}>{item.label}</p>
-                      <p className="text-[10px]" style={{ color: '#94a3b8' }}>{item.sub}</p>
+                      <p className="text-sm font-bold leading-none mb-0.5" style={{ color: '#043941' }}>{item.label}</p>
+                      <p className="text-xs" style={{ color: '#94a3b8' }}>{item.sub}</p>
                     </div>
                     <ChevronRight size={13} style={{ color: 'rgba(4,57,65,0.2)' }} />
                   </button>
