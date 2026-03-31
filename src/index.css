@@ -90,6 +90,17 @@
     --font-ui: 'Manrope', sans-serif;
     --font-mono: 'DM Mono', monospace;
 
+    /* NOTE: Manrope is imported with weights 200–800 only.
+       font-weight: 900 (Black) will fall back to 800 (ExtraBold).
+       Always use font-extrabold (800) as the maximum weight. */
+    --fw-black:     800;  /* Manrope max = ExtraBold 800, NOT 900 */
+    --fw-extrabold: 800;
+    --fw-bold:      700;
+    --fw-semibold:  600;
+    --fw-medium:    500;
+    --fw-regular:   400;
+    --fw-light:     300;
+
     /* ── Radii ── */
     --r-sm: 8px;
     --r-md: 12px;
