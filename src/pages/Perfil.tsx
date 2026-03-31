@@ -138,15 +138,8 @@ export default function Perfil() {
       {/* ══ HERO CINÉMATICO ════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden" style={{ minHeight: 340 }}>
 
-        {/* Foto de fondo full-bleed (si hay taller) */}
-        {taller?.imagen ? (
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${taller.imagen})`, filter: 'brightness(0.35) saturate(0.8)' }}
-          />
-        ) : (
-          <div className="absolute inset-0" style={{ background: '#043941' }} />
-        )}
+        {/* Fondo sólido — sin imagen de taller (el perfil es del docente, no del taller) */}
+        <div className="absolute inset-0" style={{ background: '#043941' }} />
 
         {/* Overlay degradado */}
         <div
@@ -563,7 +556,7 @@ export default function Perfil() {
               }
             />
 
-            <div className="divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
+            <div className="grid grid-cols-2 divide-x divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
               {talleresConfig.map(t => {
                 const esMio   = t.slug === tallerSlug
                 const ta      = TALLER_ACCENTS[t.slug] ?? '#02d47e'
@@ -576,23 +569,23 @@ export default function Perfil() {
                         ? navigate(`/taller/${t.slug}`)
                         : navigate(`/taller/${t.slug}/preview`)
                     }
-                    className="w-full text-left flex items-center gap-4 px-5 py-3.5 transition-all"
-                    style={{ background: esMio ? `${ta}06` : 'transparent' }}
-                    onMouseEnter={e => { if (!esMio) (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.02)' }}
-                    onMouseLeave={e => { if (!esMio) (e.currentTarget as HTMLElement).style.background = 'transparent' }}
+                    className="w-full text-left flex items-center gap-3 px-5 py-4 transition-all"
+                    style={{ background: 'transparent' }}
+                    onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.025)')}
+                    onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = 'transparent')}
                   >
-                    {/* Dot de acento — solo el activo usa su color */}
+                    {/* Borde izquierdo de acento — solo activo */}
                     <div
-                      className="w-1 self-stretch rounded-full shrink-0"
-                      style={{ background: esMio ? ta : 'rgba(4,57,65,0.08)', minHeight: 36 }}
+                      className="w-0.5 self-stretch rounded-full shrink-0"
+                      style={{ background: esMio ? ta : 'transparent', minHeight: 36 }}
                     />
 
                     {/* Badge número */}
                     <span
-                      className="text-[10px] font-black px-2 py-0.5 rounded-full shrink-0"
+                      className="text-[10px] font-black px-2.5 py-1 rounded-full shrink-0"
                       style={{
-                        background: esMio ? `${ta}18` : 'rgba(4,57,65,0.06)',
-                        color: esMio ? ta : 'rgba(4,57,65,0.45)',
+                        background: 'rgba(4,57,65,0.06)',
+                        color: 'rgba(4,57,65,0.5)',
                       }}
                     >
                       T{String(t.numero).padStart(2, '0')}
@@ -610,11 +603,9 @@ export default function Perfil() {
 
                     {/* Estado */}
                     {esMio ? (
-                      <span className="text-[10px] font-bold shrink-0" style={{ color: ta }}>
-                        ✓ activo
-                      </span>
+                      <span className="text-xs font-bold shrink-0" style={{ color: ta }}>✓ activo</span>
                     ) : (
-                      <ChevronRight size={14} style={{ color: 'rgba(4,57,65,0.2)', flexShrink: 0 }} />
+                      <ChevronRight size={14} style={{ color: 'rgba(4,57,65,0.18)', flexShrink: 0 }} />
                     )}
                   </button>
                 )
