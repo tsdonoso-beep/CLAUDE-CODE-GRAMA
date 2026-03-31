@@ -78,7 +78,7 @@ function BienCard({ bien, accent }: {
           <Icon size={14} style={{ color: '#02d47e' }} />
         </div>
         {bien.cantidad >= 1 && (
-          <span className="text-[9px] font-black px-1.5 py-0.5 rounded-md"
+          <span className="text-[11px] font-extrabold px-1.5 py-0.5 rounded-md"
             style={{ background: 'rgba(2,212,126,0.15)', color: '#02b36a' }}>
             ×{bien.cantidad}
           </span>
@@ -99,7 +99,7 @@ function BienCard({ bien, accent }: {
 
       {/* Zona label */}
       <div className="px-3 pt-1">
-        <p className="text-[9px] font-black uppercase tracking-wider" style={{ color: accent }}>
+        <p className="text-[11px] font-extrabold uppercase tracking-wider" style={{ color: accent }}>
           {zonaShort}
         </p>
       </div>
@@ -107,7 +107,7 @@ function BienCard({ bien, accent }: {
       {/* Footer */}
       <div className="px-3 pb-3 pt-2 flex items-center justify-between border-t mt-2"
         style={{ borderColor: '#f0f8fa' }}>
-        <span className="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-1 rounded-full border"
+        <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-1 rounded-full border"
           style={{ borderColor: 'rgba(2,212,126,0.4)', color: '#02916a', background: 'rgba(2,212,126,0.07)' }}>
           <Icon size={8} />
           {tipoLabel}
@@ -234,7 +234,7 @@ export default function TallerPreview() {
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6"
               style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.25)' }}>
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: '#02d47e' }} />
-              <span className="text-[10px] font-black uppercase tracking-[0.14em]" style={{ color: '#02d47e' }}>
+              <span className="text-[10px] font-extrabold uppercase tracking-[0.14em]" style={{ color: '#02d47e' }}>
                 T{String(taller.numero).padStart(2, '0')} · Taller EPT · MINEDU Perú
               </span>
             </div>
@@ -249,7 +249,7 @@ export default function TallerPreview() {
 
             {/* Competencias clave */}
             <div className="mb-8">
-              <p className="text-[9px] font-black uppercase tracking-[0.18em] mb-3" style={{ color: 'rgba(255,255,255,0.35)' }}>
+              <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] mb-3" style={{ color: 'rgba(255,255,255,0.35)' }}>
                 Competencias que desarrollarás
               </p>
               <ul className="flex flex-col gap-2">
@@ -312,7 +312,7 @@ export default function TallerPreview() {
               <div className="absolute inset-0"
                 style={{ background: `linear-gradient(160deg, transparent 40%, ${accentAlpha(0.4)} 100%)` }} />
               <div className="absolute top-4 left-4">
-                <span className="text-xs font-black px-3 py-1.5 rounded-full"
+                <span className="text-xs font-extrabold px-3 py-1.5 rounded-full"
                   style={{ background: accentAlpha(0.85), color: '#ffffff' }}>
                   T{String(taller.numero).padStart(2, '0')}
                 </span>
@@ -337,7 +337,7 @@ export default function TallerPreview() {
             <div className="max-w-5xl mx-auto px-6 py-14">
               <div className="flex items-end justify-between mb-8 gap-4">
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.18em] mb-2" style={{ color: '#02d47e' }}>
+                  <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] mb-2" style={{ color: '#02d47e' }}>
                     Dotación oficial MINEDU
                   </p>
                   <h2 className="text-xl font-extrabold mb-1" style={{ color: '#043941' }}>
@@ -347,7 +347,7 @@ export default function TallerPreview() {
                     Equipos principales que recibirá tu institución educativa
                   </p>
                 </div>
-                <span className="text-[10px] font-black px-3 py-1.5 rounded-full shrink-0"
+                <span className="text-[10px] font-extrabold px-3 py-1.5 rounded-full shrink-0"
                   style={{ background: accentAlpha(0.1), color: accent }}>
                   {totalBienes} bienes en total
                 </span>
@@ -372,7 +372,7 @@ export default function TallerPreview() {
                       )}
                     </div>
                     {equipo.cantidad > 1 && (
-                      <span className="text-[9px] font-black self-start px-2 py-0.5 rounded-full"
+                      <span className="text-[11px] font-extrabold self-start px-2 py-0.5 rounded-full"
                         style={{ background: 'rgba(2,212,126,0.12)', color: '#02916a' }}>
                         ×{equipo.cantidad} unid.
                       </span>
@@ -390,7 +390,7 @@ export default function TallerPreview() {
         <div className="max-w-5xl mx-auto px-6 py-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
-              <p className="text-[10px] font-black uppercase tracking-[0.18em] mb-2" style={{ color: '#02d47e' }}>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] mb-2" style={{ color: '#02d47e' }}>
                 Programa de formación
               </p>
               <h2 className="text-xl font-extrabold" style={{ color: '#043941' }}>Ruta de Aprendizaje</h2>
@@ -407,7 +407,7 @@ export default function TallerPreview() {
                 className={`bg-white rounded-2xl p-5 flex gap-4 border transition-shadow hover:shadow-md${i === 6 ? ' md:col-span-2' : ''}`}
                 style={{ borderColor: '#e3f8fb' }}>
                 <div className="shrink-0 pt-0.5">
-                  <div className="h-9 w-9 rounded-xl flex items-center justify-center text-[10px] font-black"
+                  <div className="h-9 w-9 rounded-xl flex items-center justify-center text-[10px] font-extrabold"
                     style={{ background: i === 6 ? '#043941' : '#f0faf5', color: i === 6 ? '#02d47e' : '#94a3b8' }}>
                     {m.codigo}
                   </div>
@@ -418,7 +418,7 @@ export default function TallerPreview() {
                     <span className="text-[10px] font-bold shrink-0 tabular-nums" style={{ color: '#94a3b8' }}>{m.horas}h</span>
                   </div>
                   <p className="text-[11px] leading-relaxed mb-2.5" style={{ color: '#64748b' }}>{m.descripcion}</p>
-                  <span className="inline-block text-[9px] font-black uppercase tracking-[0.12em] px-2 py-0.5 rounded-full"
+                  <span className="inline-block text-[11px] font-extrabold uppercase tracking-[0.12em] px-2 py-0.5 rounded-full"
                     style={{ background: '#e3f8fb', color: '#045f6c' }}>
                     {m.fase}
                   </span>
@@ -437,7 +437,7 @@ export default function TallerPreview() {
             <div className="max-w-5xl mx-auto px-6 pt-10 pb-0">
 
               {/* Breadcrumb */}
-              <p className="text-[10px] font-black uppercase tracking-[0.18em] mb-2"
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] mb-2"
                 style={{ color: '#02d47e' }}>
                 {taller.nombre} · Repositorio
               </p>
@@ -608,7 +608,7 @@ export default function TallerPreview() {
         <TangramDecor accent="#02d47e" className="absolute top-0 left-0 h-64 w-64 opacity-30" />
 
         <div className="relative z-10 max-w-xl mx-auto px-6 py-20 text-center">
-          <p className="text-[11px] font-black uppercase tracking-[0.18em] mb-4" style={{ color: '#02d47e' }}>
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] mb-4" style={{ color: '#02d47e' }}>
             ¿Quieres saber más?
           </p>
           <h2 className="text-2xl font-extrabold text-white mb-3 leading-tight">

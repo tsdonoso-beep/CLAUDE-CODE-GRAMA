@@ -16,6 +16,19 @@ export default {
       fontFamily: {
         sans: ["Manrope", "system-ui", "sans-serif"],
       },
+      /* ── GRAMA Typography Scale — Guía de Marca 2024 ──
+         Font: Manrope. Weights 200–800 ONLY (no 900/Black).
+         Never use text below overline (0.6875rem / 11px). */
+      fontSize: {
+        'display': ['clamp(2.2rem, 5vw, 3.4rem)',  { lineHeight: '1.05', letterSpacing: '-0.03em',  fontWeight: '800' }],
+        'h1':      ['clamp(1.6rem, 3vw, 2.4rem)',   { lineHeight: '1.1',  letterSpacing: '-0.025em', fontWeight: '800' }],
+        'h2':      ['1.125rem',  { lineHeight: '1.3', letterSpacing: '-0.01em',  fontWeight: '800' }],
+        'h3':      ['1rem',      { lineHeight: '1.4', letterSpacing: '-0.005em', fontWeight: '700' }],
+        'body-lg': ['0.9375rem', { lineHeight: '1.65' }],
+        'body':    ['0.875rem',  { lineHeight: '1.55' }],
+        'label':   ['0.75rem',   { lineHeight: '1.4',  fontWeight: '600' }],
+        'overline':['0.6875rem', { lineHeight: '1',    letterSpacing: '0.12em', fontWeight: '700' }],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

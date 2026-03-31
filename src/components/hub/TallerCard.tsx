@@ -88,7 +88,7 @@ export function TallerCard({ taller, index = 0 }: TallerCardProps) {
 
       {/* ── Número watermark ── */}
       <div
-        className="absolute top-1 right-3 font-black select-none pointer-events-none"
+        className="absolute top-1 right-3 font-extrabold select-none pointer-events-none"
         style={{
           fontSize: 'clamp(4rem, 7vw, 6rem)',
           lineHeight: 1,
@@ -105,7 +105,7 @@ export function TallerCard({ taller, index = 0 }: TallerCardProps) {
         {/* Top */}
         <div className="flex items-start justify-between">
           <span
-            className="text-[10px] font-black px-2.5 py-1 rounded-full tracking-[0.1em]"
+            className="text-[10px] font-extrabold px-2.5 py-1 rounded-full tracking-[0.1em]"
             style={{
               background: `${accent}1a`,
               color: accent,

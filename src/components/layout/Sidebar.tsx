@@ -91,7 +91,7 @@ export function Sidebar({ onCollapse }: SidebarProps) {
           {/* Badge número + línea acento */}
           <div className="flex items-center gap-2 mb-1.5">
             <span
-              className="text-[9px] font-black px-2 py-0.5 rounded-full tracking-[0.12em]"
+              className="text-[11px] font-extrabold px-2 py-0.5 rounded-full tracking-[0.12em]"
               style={{
                 background: `${accent}1a`,
                 color: accent,
@@ -114,7 +114,7 @@ export function Sidebar({ onCollapse }: SidebarProps) {
       {/* ── Navegación ── */}
       <nav className="relative z-10 flex-1 px-3 py-4 space-y-1">
         <p
-          className="text-[9px] font-black uppercase tracking-[0.14em] px-3 mb-2"
+          className="text-[11px] font-extrabold uppercase tracking-[0.14em] px-3 mb-2"
           style={{ color: 'rgba(255,255,255,0.2)' }}
         >
           Navegación
@@ -172,7 +172,7 @@ export function Sidebar({ onCollapse }: SidebarProps) {
             Progreso general
           </p>
           <span
-            className="text-[10px] font-black"
+            className="text-[10px] font-extrabold"
             style={{ color: '#02d47e' }}
           >
             {progreso.porcentaje}%

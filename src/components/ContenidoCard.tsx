@@ -62,7 +62,7 @@ export function ContenidoCard({ item, completed = false, inProgress = false, onC
           ) : (
             <Circle className="h-5 w-5 text-muted-foreground/40" />
           )}
-          <span className="text-[9px] text-muted-foreground">
+          <span className="text-[11px] text-muted-foreground">
             {completed ? "Completado" : inProgress ? "En curso" : "Pendiente"}
           </span>
         </div>

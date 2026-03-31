@@ -102,7 +102,7 @@ export function TopBar() {
           {/* Avatar */}
           <div className="relative">
             <div
-              className="h-7 w-7 rounded-full flex items-center justify-center text-xs font-black"
+              className="h-7 w-7 rounded-full flex items-center justify-center text-xs font-extrabold"
               style={{ background: 'linear-gradient(135deg, #02d47e, #059669)', color: '#043941' }}
             >
               {displayName.charAt(0).toUpperCase()}

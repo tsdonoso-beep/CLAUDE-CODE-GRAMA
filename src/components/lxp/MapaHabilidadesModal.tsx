@@ -151,7 +151,7 @@ export function MapaHabilidadesModal({ tallerSlug, tallerNombre, onClose }: Mapa
                         {h.descripcion}
                       </p>
                       {!tieneGrupo && (
-                        <span className="text-[9px] italic" style={{ color: '#94a3b8' }}>
+                        <span className="text-[11px] italic" style={{ color: '#94a3b8' }}>
                           No aplicable en este taller
                         </span>
                       )}

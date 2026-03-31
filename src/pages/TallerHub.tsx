@@ -93,7 +93,7 @@ export default function TallerHub() {
           {/* Overline */}
           <div className="flex items-center gap-2 mb-5 animate-fade-in-up">
             <div
-              className="flex items-center gap-2 h-6 px-3 rounded-full text-[10px] font-black tracking-[0.12em] uppercase"
+              className="flex items-center gap-2 h-6 px-3 rounded-full text-[10px] font-extrabold tracking-[0.12em] uppercase"
               style={{
                 background: `${accent}18`,
                 border: `1px solid ${accent}35`,
@@ -109,7 +109,7 @@ export default function TallerHub() {
             {/* Left */}
             <div>
               <h1
-                className="font-black text-white leading-tight mb-3 animate-fade-in-up stagger-1"
+                className="font-extrabold text-white leading-tight mb-3 animate-fade-in-up stagger-1"
                 style={{ fontSize: 'clamp(1.9rem, 4vw, 3rem)', letterSpacing: '-0.02em' }}
               >
                 {taller.nombre}
@@ -201,7 +201,7 @@ export default function TallerHub() {
                   <Layers size={15} style={{ color: accent }} />
                 </div>
                 <div>
-                  <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
+                  <h2 className="text-h3 font-extrabold" style={{ color: '#043941' }}>
                     Tu Ruta de Aprendizaje
                   </h2>
                   <p className="text-[10px]" style={{ color: 'rgba(4,57,65,0.45)' }}>
@@ -250,7 +250,7 @@ export default function TallerHub() {
                   >
                     {/* Número */}
                     <div
-                      className="w-9 h-9 rounded-xl flex items-center justify-center text-xs font-black shrink-0"
+                      className="w-9 h-9 rounded-xl flex items-center justify-center text-xs font-extrabold shrink-0"
                       style={{
                         background: isEnCurso ? `${accent}20` : conf.bg,
                         color: isEnCurso ? accent : conf.color,
@@ -329,7 +329,7 @@ export default function TallerHub() {
                   <Package size={15} style={{ color: '#02d47e' }} />
                 </div>
                 <div>
-                  <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
+                  <h2 className="text-h3 font-extrabold" style={{ color: '#043941' }}>
                     Repositorio de Recursos
                   </h2>
                   <p className="text-[10px]" style={{ color: 'rgba(4,57,65,0.45)' }}>
@@ -464,7 +464,7 @@ export default function TallerHub() {
             style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}
           >
             <div className="px-4 py-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.08)', background: 'rgba(4,57,65,0.05)', boxShadow: '0 2px 6px rgba(4,57,65,0.06)' }}>
-              <p className="text-[10px] font-black uppercase tracking-wider" style={{ color: 'rgba(4,57,65,0.4)' }}>
+              <p className="text-[10px] font-extrabold uppercase tracking-wider" style={{ color: 'rgba(4,57,65,0.4)' }}>
                 Acceso rápido
               </p>
             </div>

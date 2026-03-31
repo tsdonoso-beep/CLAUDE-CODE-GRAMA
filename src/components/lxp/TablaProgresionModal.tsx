@@ -192,7 +192,7 @@ export function TablaProgresionModal({ tallerSlug, tallerNombre, onClose }: Tabl
                     {GRADO_NUM[idx]}
                   </div>
                   <span
-                    className="text-[9px] font-bold text-center leading-tight hidden sm:block"
+                    className="text-[11px] font-bold text-center leading-tight hidden sm:block"
                     style={{ color: gradoActivo === idx ? item.color : '#94a3b8' }}
                   >
                     {item.nivel.split(' ').slice(0, 1).join(' ')}

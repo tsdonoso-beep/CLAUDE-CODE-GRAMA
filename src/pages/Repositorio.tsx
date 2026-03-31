@@ -293,7 +293,7 @@ export default function Repositorio() {
                 }}
               >
                 Todos
-                <span className="font-black opacity-70">{statsTipo.reduce((acc, s) => acc + s.count, 0)}</span>
+                <span className="font-extrabold opacity-70">{statsTipo.reduce((acc, s) => acc + s.count, 0)}</span>
               </button>
               {statsTipo.map(({ tipo, count, Icon }) => (
                 <button
@@ -308,7 +308,7 @@ export default function Repositorio() {
                 >
                   <Icon size={11} />
                   {tipo.charAt(0) + tipo.slice(1).toLowerCase()}
-                  <span className="font-black opacity-70">{count}</span>
+                  <span className="font-extrabold opacity-70">{count}</span>
                 </button>
               ))}
             </div>
@@ -333,7 +333,7 @@ export default function Repositorio() {
                   }}
                 >
                   {f.label}
-                  <span className="font-black opacity-80">{f.count}</span>
+                  <span className="font-extrabold opacity-80">{f.count}</span>
                 </button>
               ))}
             </div>
@@ -358,7 +358,7 @@ export default function Repositorio() {
                 <SlidersHorizontal size={12} />
                 Filtros
                 {activeCount > 0 && (
-                  <span className="w-4 h-4 rounded-full text-[10px] font-black flex items-center justify-center"
+                  <span className="w-4 h-4 rounded-full text-[10px] font-extrabold flex items-center justify-center"
                     style={{ background: '#02d47e', color: '#043941' }}>
                     {activeCount}
                   </span>
@@ -489,7 +489,7 @@ export default function Repositorio() {
                       style={{ background: active ? 'rgba(255,255,255,0.2)' : cat.bg }}>
                       <Icon size={16} style={{ color: active ? '#fff' : cat.color }} />
                     </div>
-                    <span className="text-xl font-black" style={{ color: active ? '#fff' : cat.color }}>
+                    <span className="text-xl font-extrabold" style={{ color: active ? '#fff' : cat.color }}>
                       {cat.count}
                     </span>
                   </div>
@@ -665,12 +665,12 @@ function VideoCard({ bien, slug, navigate }: {
           <PlayCircle size={24} style={{ color: 'rgba(255,255,255,0.7)' }} />
         </div>
         {bien.zona && (
-          <span className="absolute bottom-2 left-3 text-[9px] font-semibold px-2 py-0.5 rounded-full"
+          <span className="absolute bottom-2 left-3 text-[11px] font-semibold px-2 py-0.5 rounded-full"
             style={{ background: 'rgba(0,0,0,0.4)', color: 'rgba(255,255,255,0.7)' }}>
             {bien.zona.replace('ZONA DE ', '')}
           </span>
         )}
-        <span className="absolute top-2 right-2 text-[9px] font-bold px-2 py-0.5 rounded-full"
+        <span className="absolute top-2 right-2 text-[11px] font-bold px-2 py-0.5 rounded-full"
           style={{ background: 'rgba(8,145,178,0.8)', color: '#fff' }}>
           VIDEO
         </span>

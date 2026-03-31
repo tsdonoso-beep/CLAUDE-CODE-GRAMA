@@ -186,7 +186,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
               />
               <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(4,57,65,0.88) 100%)' }} />
               <div className="absolute top-3 left-3">
-                <span className="text-[10px] font-black px-2.5 py-1 rounded-full" style={{ background: `hsl(${t.color})`, color: '#fff' }}>
+                <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full" style={{ background: `hsl(${t.color})`, color: '#fff' }}>
                   T{String(t.numero).padStart(2, '0')}
                 </span>
               </div>
@@ -294,12 +294,12 @@ function TallerModal({
             {/* Info */}
             <div className={`absolute bottom-4 left-5 right-16 ${slideClass}`} key={`info-${taller.slug}`}>
               <span
-                className="text-[9px] font-black px-2.5 py-1 rounded-full inline-block mb-1.5"
+                className="text-[11px] font-extrabold px-2.5 py-1 rounded-full inline-block mb-1.5"
                 style={{ background: `hsl(${taller.color})`, color: '#fff' }}
               >
                 T{String(taller.numero).padStart(2, '0')} · {index + 1} de {talleresConfig.length}
               </span>
-              <h2 className="text-xl font-black text-white leading-tight">{taller.nombre}</h2>
+              <h2 className="text-xl font-extrabold text-white leading-tight">{taller.nombre}</h2>
             </div>
           </div>
 
@@ -311,7 +311,7 @@ function TallerModal({
             {/* Competencias */}
             {taller.competencias?.length > 0 && (
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.15em] mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
                   <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.2 7.8L9 2.5" stroke="#02d47e" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   Competencias que desarrollarás
                 </p>
@@ -328,7 +328,7 @@ function TallerModal({
 
             {/* Ruta de aprendizaje */}
             <div>
-              <p className="text-[10px] font-black uppercase tracking-[0.15em] mb-2.5 flex items-center gap-2" style={{ color: '#02d47e' }}>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] mb-2.5 flex items-center gap-2" style={{ color: '#02d47e' }}>
                 <BookOpen size={11} /> Ruta de aprendizaje · 7 módulos · 150h
               </p>
               <div className="space-y-1.5">
@@ -338,7 +338,7 @@ function TallerModal({
                     className="flex items-center gap-3 px-3 py-2 rounded-xl"
                     style={{ background: '#f0faf5' }}
                   >
-                    <span className="text-[10px] font-black w-5 shrink-0 text-center" style={{ color: '#94a3b8' }}>M{i}</span>
+                    <span className="text-[10px] font-extrabold w-5 shrink-0 text-center" style={{ color: '#94a3b8' }}>M{i}</span>
                     <span className="text-[11px] font-semibold flex-1" style={{ color: '#043941' }}>{m.nombre}</span>
                     <span className="text-[10px] shrink-0 font-medium" style={{ color: '#94a3b8' }}>{m.horasTotal}h</span>
                   </div>
@@ -349,7 +349,7 @@ function TallerModal({
             {/* Equipamiento */}
             {bienes.length > 0 && (
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.15em] mb-2.5 flex items-center gap-2" style={{ color: '#02d47e' }}>
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] mb-2.5 flex items-center gap-2" style={{ color: '#02d47e' }}>
                   <Wrench size={11} /> Equipamiento representativo
                 </p>
                 <div className="flex flex-wrap gap-1.5">
@@ -549,12 +549,12 @@ export default function Landing() {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 animate-fade-in-up stagger-1" style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.25)' }}>
                 <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
-                <span className="text-[10px] font-black uppercase tracking-[0.14em]" style={{ color: '#02d47e' }}>
+                <span className="text-[10px] font-extrabold uppercase tracking-[0.14em]" style={{ color: '#02d47e' }}>
                   Plataforma Nacional · Talleres EPT · MINEDU Perú
                 </span>
               </div>
 
-              <h1 className="font-black text-white leading-[1.05] mb-6 animate-fade-in-up stagger-2" style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.4rem)', letterSpacing: '-0.03em' }}>
+              <h1 className="font-extrabold text-white leading-[1.05] mb-6 animate-fade-in-up stagger-2" style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.4rem)', letterSpacing: '-0.03em' }}>
                 Potenciamos la{' '}
                 <span className="relative inline-block">
                   <span style={{ color: '#02d47e' }}>educación</span>
@@ -644,7 +644,7 @@ export default function Landing() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.07)' }}>
             {STATS.map(s => (
               <div key={s.value} className="flex flex-col items-center py-6 px-4" style={{ background: 'rgba(4,57,65,0.5)' }}>
-                <span className="font-black leading-none mb-1.5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', color: '#02d47e' }}>{s.value}</span>
+                <span className="font-extrabold leading-none mb-1.5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', color: '#02d47e' }}>{s.value}</span>
                 <span className="text-xs font-medium text-center" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.label}</span>
               </div>
             ))}
@@ -666,7 +666,7 @@ export default function Landing() {
             className="max-w-xl mb-16"
             style={{ opacity: featuresHeaderReveal.visible ? 1 : 0, transform: featuresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
           >
-            <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] mb-3" style={{ color: '#02d47e' }}>
+            <span className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] mb-3" style={{ color: '#02d47e' }}>
               <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
               ¿Por qué GRAMA?
             </span>
@@ -705,7 +705,7 @@ export default function Landing() {
                     style={{ background: 'rgba(2,212,126,0.18)', border: '1px solid rgba(2,212,126,0.2)' }}>
                     <f.icon size={22} style={{ color: '#02d47e' }} />
                   </div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.18em] mb-2 block" style={{ color: '#02d47e' }}>
+                  <span className="text-[10px] font-extrabold uppercase tracking-[0.18em] mb-2 block" style={{ color: '#02d47e' }}>
                     {f.overline}
                   </span>
                   <h3 className="text-base font-extrabold mb-3 leading-snug" style={{ color: '#043941' }}>{f.title}</h3>
@@ -742,7 +742,7 @@ export default function Landing() {
             className="text-center max-w-2xl mx-auto mb-16"
             style={{ opacity: talleresHeaderReveal.visible ? 1 : 0, transform: talleresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
           >
-            <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] mb-3" style={{ color: '#02d47e' }}>
+            <span className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] mb-3" style={{ color: '#02d47e' }}>
               <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
               Especialidades disponibles
             </span>
@@ -781,7 +781,7 @@ export default function Landing() {
 
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] mb-3" style={{ color: '#02d47e' }}>
+            <span className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] mb-3" style={{ color: '#02d47e' }}>
               <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
               Para toda la comunidad
             </span>

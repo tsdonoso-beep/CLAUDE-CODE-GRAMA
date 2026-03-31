@@ -101,7 +101,7 @@ export function RepositorioCard({ bien }: RepositorioCardProps) {
 
           {/* Quantity badge */}
           <span
-            className="shrink-0 text-xs font-black px-2 py-1 rounded-lg min-w-[2rem] text-center"
+            className="shrink-0 text-xs font-extrabold px-2 py-1 rounded-lg min-w-[2rem] text-center"
             style={{ background: accent + '12', color: accent }}
           >
             ×{bien.cantidad}

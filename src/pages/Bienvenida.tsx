@@ -42,7 +42,7 @@ function AnimatedStat({
 
   return (
     <div ref={ref} className="text-center animate-fade-in-up">
-      <p className="font-black leading-none" style={{ fontSize: 'clamp(2rem, 3.5vw, 2.8rem)', color: valueColor }}>
+      <p className="font-extrabold leading-none" style={{ fontSize: 'clamp(2rem, 3.5vw, 2.8rem)', color: valueColor }}>
         {typeof target === 'number' ? display : target}{suffix}
       </p>
       <p className="text-xs mt-1.5 font-semibold tracking-wide" style={{ color: labelColor }}>
@@ -227,7 +227,7 @@ export default function Bienvenida() {
             {/* Overline */}
             <div className="flex items-center gap-2.5 mb-6 animate-fade-in-up stagger-1">
               <div className="h-px w-10" style={{ background: '#02d47e' }} />
-              <span className="text-[10px] font-black tracking-[0.18em] uppercase" style={{ color: '#02d47e' }}>
+              <span className="text-[10px] font-extrabold tracking-[0.18em] uppercase" style={{ color: '#02d47e' }}>
                 Plataforma de Capacitación Docente
               </span>
             </div>
@@ -235,13 +235,13 @@ export default function Bienvenida() {
             {/* Headline */}
             <div className="mb-6">
               <h1
-                className="font-black leading-[0.88] tracking-tight text-white animate-fade-in-up stagger-2"
+                className="font-extrabold leading-[0.88] tracking-tight text-white animate-fade-in-up stagger-2"
                 style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)' }}
               >
                 Capacitación
               </h1>
               <h1
-                className="font-black leading-[0.88] tracking-tight mt-1 animate-fade-in-up stagger-3"
+                className="font-extrabold leading-[0.88] tracking-tight mt-1 animate-fade-in-up stagger-3"
                 style={{
                   fontSize: 'clamp(2.8rem, 6vw, 5rem)',
                   background: 'linear-gradient(100deg, #02d47e 0%, #00c16e 45%, #22d3ee 100%)',
@@ -331,7 +331,7 @@ export default function Bienvenida() {
           >
             {/* Badge */}
             <div
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase mb-5"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-extrabold tracking-widest uppercase mb-5"
               style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.2)' }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#02d47e] animate-pulse" />
@@ -357,7 +357,7 @@ export default function Bienvenida() {
                   style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}
                 >
                   <div>
-                    <p className="font-black text-lg leading-none" style={{ color: '#02d47e' }}>{s.value}</p>
+                    <p className="font-extrabold text-lg leading-none" style={{ color: '#02d47e' }}>{s.value}</p>
                     <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.label}</p>
                   </div>
                 </div>
@@ -373,7 +373,7 @@ export default function Bienvenida() {
                 {MODULOS_LABELS.map((label, i) => (
                   <div key={label} className="flex items-center gap-2.5">
                     <div
-                      className="h-5 w-5 rounded-full flex items-center justify-center text-[9px] font-black shrink-0"
+                      className="h-5 w-5 rounded-full flex items-center justify-center text-[11px] font-extrabold shrink-0"
                       style={{
                         background: i === 0 ? '#02d47e' : 'rgba(2,212,126,0.15)',
                         color: i === 0 ? '#043941' : 'rgba(2,212,126,0.7)',
@@ -389,7 +389,7 @@ export default function Bienvenida() {
                     </span>
                     {i === 0 && (
                       <span
-                        className="text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                        className="text-[11px] font-bold px-1.5 py-0.5 rounded-full"
                         style={{ background: 'rgba(2,212,126,0.15)', color: '#02d47e' }}
                       >
                         Inicio

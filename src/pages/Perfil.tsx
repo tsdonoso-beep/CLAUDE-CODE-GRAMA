@@ -100,7 +100,7 @@ function SectionHeader({
           <Icon size={15} style={{ color: iconColor }} />
         </div>
         <div>
-          <h2 className="text-base font-extrabold leading-tight" style={{ color: '#043941' }}>{title}</h2>
+          <h2 className="text-h3 font-extrabold leading-tight" style={{ color: '#043941' }}>{title}</h2>
           {subtitle && (
             <p className="text-xs mt-0.5" style={{ color: 'rgba(4,57,65,0.45)' }}>{subtitle}</p>
           )}
@@ -259,7 +259,7 @@ export default function Perfil() {
                   style={{ inset: -4, border: `1px solid ${accent}30`, borderRadius: '50%' }}
                 />
                 <div
-                  className="h-14 w-14 rounded-full flex items-center justify-center text-lg font-black relative z-10"
+                  className="h-14 w-14 rounded-full flex items-center justify-center text-lg font-extrabold relative z-10"
                   style={{
                     background: 'linear-gradient(135deg, rgba(2,212,126,0.22) 0%, rgba(4,95,108,0.38) 100%)',
                     border: `2px solid ${accent}40`,
@@ -286,7 +286,7 @@ export default function Perfil() {
                 {/* Overline badge */}
                 <div className="flex items-center gap-2 mb-2.5">
                   <span
-                    className="inline-flex items-center gap-1.5 text-[9px] font-black px-2.5 py-1 rounded-full tracking-[0.12em] uppercase"
+                    className="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-2.5 py-1 rounded-full tracking-[0.12em] uppercase"
                     style={{
                       background: `${accent}18`,
                       border: `1px solid ${accent}35`,
@@ -313,7 +313,7 @@ export default function Perfil() {
                 </div>
 
                 <h1
-                  className="font-black text-white leading-tight mb-2 animate-fade-in-up stagger-1"
+                  className="font-extrabold text-white leading-tight mb-2 animate-fade-in-up stagger-1"
                   style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)', letterSpacing: '-0.025em' }}
                 >
                   Hola, {firstName}
@@ -342,7 +342,7 @@ export default function Perfil() {
                       <stat.icon size={13} style={{ color: accent }} />
                       <div>
                         <p className="text-xs font-bold text-white leading-none">{stat.label}</p>
-                        <p className="text-[9px] mt-0.5 leading-none" style={{ color: 'rgba(255,255,255,0.4)' }}>{stat.sub}</p>
+                        <p className="text-[11px] mt-0.5 leading-none" style={{ color: 'rgba(255,255,255,0.4)' }}>{stat.sub}</p>
                       </div>
                     </div>
                   ))}
@@ -555,7 +555,7 @@ export default function Perfil() {
 
                     {/* Badge número */}
                     <span
-                      className="text-[10px] font-black px-2.5 py-1 rounded-full shrink-0"
+                      className="text-[10px] font-extrabold px-2.5 py-1 rounded-full shrink-0"
                       style={{
                         background: 'rgba(4,57,65,0.06)',
                         color: 'rgba(4,57,65,0.5)',
@@ -614,7 +614,7 @@ export default function Perfil() {
                     <item.Icon size={13} style={{ color: '#045f6c' }} />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-[10px] font-black uppercase tracking-widest mb-0.5" style={{ color: '#b0c4ca' }}>
+                    <p className="text-[10px] font-extrabold uppercase tracking-widest mb-0.5" style={{ color: '#b0c4ca' }}>
                       {item.label}
                     </p>
                     <p className="text-sm font-bold leading-snug break-words" style={{ color: '#043941' }}>

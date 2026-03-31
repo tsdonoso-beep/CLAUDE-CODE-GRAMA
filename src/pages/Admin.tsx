@@ -338,7 +338,7 @@ export default function Admin() {
                         </td>
                         <td className="px-5 py-3.5">
                           {d.moduloActual ? (
-                            <span className="text-xs font-black px-2.5 py-1 rounded-lg"
+                            <span className="text-xs font-extrabold px-2.5 py-1 rounded-lg"
                               style={{ background: 'rgba(34,211,238,0.12)', color: '#22d3ee' }}>
                               {d.moduloActual}
                             </span>
