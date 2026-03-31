@@ -414,7 +414,7 @@ export default function Perfil() {
                   >
                     <SectionHeader
                       icon={Play}
-                      title={isPrimario ? 'Continuar donde lo dejaste' : 'Taller activo'}
+                      title="Continuar donde lo dejaste"
                       subtitle={t.nombre}
                       iconColor={ta}
                       action={
