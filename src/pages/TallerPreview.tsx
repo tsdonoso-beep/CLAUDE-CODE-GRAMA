@@ -8,6 +8,7 @@ import {
 import { talleresConfig } from '@/data/talleresConfig'
 import { getBienesByTaller, getTotalBienesByTaller, type Bien } from '@/data/bienesData'
 import { GramaLogo } from '@/components/GramaLogo'
+import { useAuth } from '@/contexts/AuthContext'
 
 // ── Módulos ruta (150h total) ────────────────────────────────────────────────
 const MODULOS_RUTA = [
@@ -135,7 +136,9 @@ function BienCard({ bien, accent }: {
 export default function TallerPreview() {
   const { slug }   = useParams<{ slug: string }>()
   const navigate   = useNavigate()
+  const { user }   = useAuth()
   const taller     = talleresConfig.find(t => t.slug === slug)
+  const destino    = user ? `/taller/${slug}` : '/login'
 
   const [activeTab,   setActiveTab]   = useState<'bienes' | 'manuales' | 'videos'>('bienes')
   const [search,      setSearch]      = useState('')
@@ -211,10 +214,10 @@ export default function TallerPreview() {
             Todas las especialidades
           </button>
           <GramaLogo variant="dark" size="sm" />
-          <button onClick={() => navigate('/login')}
+          <button onClick={() => navigate(destino)}
             className="px-4 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-90"
             style={{ background: '#02d47e', color: '#043941' }}>
-            Acceder
+            {user ? 'Ir al taller' : 'Acceder'}
           </button>
         </div>
       </header>
@@ -293,12 +296,12 @@ export default function TallerPreview() {
                 <Mail size={14} />
                 Comunícate con nosotros
               </a>
-              <button onClick={() => navigate('/login')}
+              <button onClick={() => navigate(destino)}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all"
                 style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.14)' }}
                 onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.14)')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.08)')}>
-                Ya tengo cuenta <ChevronRight size={14} />
+                {user ? 'Ir al taller' : 'Ya tengo cuenta'} <ChevronRight size={14} />
               </button>
             </div>
           </div>
@@ -562,12 +565,12 @@ export default function TallerPreview() {
               <Mail size={15} />
               Comunícate con nosotros
             </a>
-            <button onClick={() => navigate('/login')}
+            <button onClick={() => navigate(destino)}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all"
               style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.65)', border: '1px solid rgba(255,255,255,0.12)' }}
               onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.13)')}
               onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.07)')}>
-              Ya tengo cuenta <ChevronRight size={15} />
+              {user ? 'Ir al taller' : 'Ya tengo cuenta'} <ChevronRight size={15} />
             </button>
           </div>
         </div>
