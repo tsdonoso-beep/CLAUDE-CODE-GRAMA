@@ -118,7 +118,7 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
             </div>
 
             {/* Descripción siempre visible */}
-            <p className="text-xs line-clamp-1" style={{ color: bloqueado ? '#b0bec5' : '#64748b' }}>
+            <p className="text-xs line-clamp-1" style={{ color: '#64748b' }}>
               {modulo.descripcion}
             </p>
           </div>
@@ -140,21 +140,21 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
         {expandido && (
           <div
             className="border-t px-5 py-4 space-y-5"
-            style={{ borderColor: '#f1f5f9', background: bloqueado ? '#f8fafc' : '#fafffe' }}
+            style={{ borderColor: '#f1f5f9', background: '#fafffe' }}
           >
             {modulo.subSecciones.map(sub => (
               <div key={sub.id}>
                 {/* Sección header */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold" style={{ color: bloqueado ? '#b0bec5' : '#94a3b8' }}>
+                  <span className="text-xs font-bold" style={{ color: '#94a3b8' }}>
                     {sub.numero}
                   </span>
-                  <span className="text-xs font-bold" style={{ color: bloqueado ? '#94a3b8' : '#043941' }}>
+                  <span className="text-xs font-bold" style={{ color: '#043941' }}>
                     {sub.titulo}
                   </span>
                   {sub.phaseBadge && (
                     <span className="text-[10px] font-semibold uppercase tracking-wide"
-                      style={{ color: bloqueado ? '#b0bec5' : '#02d47e' }}>
+                      style={{ color: '#02d47e' }}>
                       · {sub.phaseBadge}
                     </span>
                   )}
@@ -163,8 +163,7 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
                 {/* Contenidos */}
                 <div className="flex flex-col gap-1">
                   {sub.contenidos.map(c => (
-                    <div key={c.id} className="flex items-center gap-3 min-w-0 py-0.5"
-                      style={{ opacity: bloqueado ? 0.55 : 1 }}>
+                    <div key={c.id} className="flex items-center gap-3 min-w-0 py-0.5">
                       <ContenidoBadge tipo={c.tipo} size="list" />
                       <span className="text-xs truncate flex-1" style={{ color: '#64748b' }}>
                         {c.titulo}
