@@ -361,9 +361,9 @@ export default function Admin() {
                     onChange={e => { setFiltroAnalyticsDocente(e.target.value); setBusquedaDocente('') }}
                     className="px-3 py-2 rounded-xl border-2 text-sm outline-none min-w-[260px]"
                     style={{ borderColor: filtroAnalyticsDocente ? '#02d47e' : 'rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.08)', color: '#ffffff' }}>
-                    <option value="">Todos los docentes (global)</option>
+                    <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todos los docentes (global)</option>
                     {docentes.map(d => (
-                      <option key={d.id} value={d.id}>{d.nombre_completo} — {d.email}</option>
+                      <option key={d.id} value={d.id} style={{ background: '#0d2b31', color: '#ffffff' }}>{d.nombre_completo} — {d.email}</option>
                     ))}
                   </select>
                   {filtroAnalyticsDocente && (
@@ -502,16 +502,16 @@ export default function Admin() {
         <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
           <div className="flex gap-3 flex-wrap">
             <select value={filtroIE} onChange={e => setFiltroIE(e.target.value)} {...selectStyle}>
-              <option value="">Todas las IEs</option>
+              <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todas las IEs</option>
               {INSTITUCIONES_EDUCATIVAS.map(ie => (
-                <option key={ie.id} value={String(ie.id)}>{ie.nombre}</option>
+                <option key={ie.id} value={String(ie.id)} style={{ background: '#0d2b31', color: '#ffffff' }}>{ie.nombre}</option>
               ))}
             </select>
             <select value={filtroTaller} onChange={e => setFiltroTaller(e.target.value)} {...selectStyle}>
-              <option value="">Todos los talleres</option>
+              <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todos los talleres</option>
               {talleresEnUso.map(slug => {
                 const t = talleresConfig.find(t => t.slug === slug)
-                return <option key={slug} value={slug!}>{t?.nombre ?? slug}</option>
+                return <option key={slug} value={slug!} style={{ background: '#0d2b31', color: '#ffffff' }}>{t?.nombre ?? slug}</option>
               })}
             </select>
           </div>
