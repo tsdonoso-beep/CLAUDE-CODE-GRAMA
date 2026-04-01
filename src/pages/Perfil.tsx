@@ -1,5 +1,6 @@
 // src/pages/Perfil.tsx
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import {
   Mail, MapPin, Building2, Package, Clock,
   ChevronRight, Shield, LogOut, ArrowRight, Layers,
@@ -12,6 +13,7 @@ import { getTotalBienesByTaller } from '@/data/bienesData'
 import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
 import { GramaLogo } from '@/components/GramaLogo'
 import { ProgressRing } from '@/components/lxp/ProgressRing'
+import { trackNavegacion } from '@/lib/tracker'
 
 const TOTAL_HORAS   = 150
 const TOTAL_MODULOS = 7
@@ -126,6 +128,11 @@ export default function Perfil() {
     profile?.taller_slugs?.length
       ? profile.taller_slugs
       : tallerSlug ? [tallerSlug] : []
+
+  useEffect(() => {
+    if (!user?.id) return
+    trackNavegacion(user.id, 'perfil', tallerSlug)
+  }, [user?.id])
 
   const ie          = INSTITUCIONES_EDUCATIVAS.find(i => i.id === profile?.ie_id)
   const taller      = tallerSlug ? talleresConfig.find(t => t.slug === tallerSlug) : null

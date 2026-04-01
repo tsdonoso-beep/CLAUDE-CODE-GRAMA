@@ -74,6 +74,58 @@ export interface Database {
           respuestas: Record<string, number>
         }
       }
+      // ── Analytics ──────────────────────────────────────────────────────────
+      eventos_sesion: {
+        Row: {
+          id: string
+          usuario_id: string
+          taller_slug: string | null
+          created_at: string
+        }
+        Insert: {
+          usuario_id: string
+          taller_slug?: string | null
+          created_at?: string
+        }
+      }
+      eventos_navegacion: {
+        Row: {
+          id: string
+          usuario_id: string
+          pagina: string           // 'taller_hub' | 'repositorio' | 'ruta_aprendizaje' | 'modulo' | 'perfil'
+          taller_slug: string | null
+          referrer: string | null  // página anterior ('perfil', 'ruta_aprendizaje', 'directo')
+          created_at: string
+        }
+        Insert: {
+          usuario_id: string
+          pagina: string
+          taller_slug?: string | null
+          referrer?: string | null
+          created_at?: string
+        }
+      }
+      eventos_contenido: {
+        Row: {
+          id: string
+          usuario_id: string
+          bien_id: string
+          bien_nombre: string
+          tipo_evento: string      // 'apertura_manual' | 'reproduccion_video' | 'descarga' | 'apertura_ficha'
+          tipo_contenido: string   // 'manual' | 'video' | 'descargable' | 'ficha'
+          taller_slug: string | null
+          created_at: string
+        }
+        Insert: {
+          usuario_id: string
+          bien_id: string
+          bien_nombre: string
+          tipo_evento: string
+          tipo_contenido: string
+          taller_slug?: string | null
+          created_at?: string
+        }
+      }
     }
     Functions: Record<string, never>
     Enums: Record<string, never>

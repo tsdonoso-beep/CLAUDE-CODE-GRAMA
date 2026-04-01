@@ -1,6 +1,8 @@
 // src/pages/ModuloDetalle.tsx
 import { useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { useAuth } from '@/contexts/AuthContext'
+import { trackContenido } from '@/lib/tracker'
 import { toast } from 'sonner'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
 import {
@@ -39,6 +41,7 @@ export default function ModuloDetalle() {
   const { num } = useParams<{ num: string }>()
   const { slug } = useTaller()
   const navigate = useNavigate()
+  const { user } = useAuth()
   const { markContenidoCompleted, markContenidoInProgress, getEstadoModuloLXP, getContenidoEstado } = useProgress()
   const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set(['0']))
   const [diagnosticosOpen, setDiagnosticosOpen] = useState(false)
@@ -124,6 +127,7 @@ export default function ModuloDetalle() {
 
     if (contenido.tipo === 'DESCARGABLE') {
       if (contenido.descargableId) {
+        if (user?.id) trackContenido(user.id, contenido.id, contenido.titulo, 'apertura_ficha', 'descargable', slug)
         setDescargableAbierto({ descargableId: contenido.descargableId, contenidoId: contenido.id })
       } else {
         // Fallback: PDF básico para descargables sin datos ricos
@@ -146,6 +150,7 @@ export default function ModuloDetalle() {
         const lines = doc.splitTextToSize(contenido.descripcion || '', pageWidth - margin * 2)
         doc.text(lines, margin, 50)
         doc.save(`${contenido.titulo}.pdf`)
+        if (user?.id) trackContenido(user.id, contenido.id, contenido.titulo, 'descarga', 'descargable', slug)
         // Descargable sin visor → completar al descargar
         markContenidoCompleted(contenido.id)
       }
@@ -176,6 +181,7 @@ export default function ModuloDetalle() {
         toast.info('Próximamente disponible', { description: contenido.titulo })
       }
     } else if (contenido.tipo === 'VIDEO' && contenido.urlVideo) {
+      if (user?.id) trackContenido(user.id, contenido.id, contenido.titulo, 'reproduccion_video', 'video', slug)
       setVideoAbierto({
         titulo: contenido.titulo,
         descripcion: contenido.descripcion,
@@ -202,8 +208,10 @@ export default function ModuloDetalle() {
       }
     } else if (contenido.tipo === 'PDF') {
       if (contenido.manualId) {
+        if (user?.id) trackContenido(user.id, contenido.id, contenido.titulo, 'apertura_manual', 'manual', slug)
         setManualAbierto({ manualId: contenido.manualId, contenidoId: contenido.id })
       } else if (contenido.urlPDF) {
+        if (user?.id) trackContenido(user.id, contenido.id, contenido.titulo, 'apertura_manual', 'manual', slug)
         window.open(contenido.urlPDF, '_blank')
         markContenidoCompleted(contenido.id)
       }

@@ -1,6 +1,6 @@
 // src/pages/Admin.tsx
 import { useState, useEffect, useMemo } from 'react'
-import { Download, Users, RefreshCw, LogOut, Filter } from 'lucide-react'
+import { Download, Users, RefreshCw, LogOut, Filter, BarChart2, BookOpen, Video, FileDown, Globe, LogIn } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
 import { talleresConfig } from '@/data/talleresConfig'
@@ -9,6 +9,43 @@ import { useAuth } from '@/contexts/AuthContext'
 import { GramaLogo } from '@/components/GramaLogo'
 import type { Profile } from '@/types/database'
 import { useNavigate } from 'react-router-dom'
+
+// ── Analytics types ────────────────────────────────────────────────────────────
+interface ContenidoCount {
+  bien_nombre: string
+  tipo_contenido: string
+  tipo_evento: string
+  count: number
+}
+interface NavegacionCount {
+  pagina: string
+  referrer: string | null
+  count: number
+}
+interface AnalyticsData {
+  totalLogins: number
+  navegacion: NavegacionCount[]
+  contenidos: ContenidoCount[]
+}
+
+function buildMockAnalytics(): AnalyticsData {
+  return {
+    totalLogins: 47,
+    navegacion: [
+      { pagina: 'taller_hub',       referrer: null,              count: 38 },
+      { pagina: 'ruta_aprendizaje', referrer: null,              count: 31 },
+      { pagina: 'repositorio',      referrer: 'directo',         count: 14 },
+      { pagina: 'repositorio',      referrer: 'ruta_aprendizaje',count: 22 },
+      { pagina: 'perfil',           referrer: null,              count: 29 },
+    ],
+    contenidos: [
+      { bien_nombre: 'Manual de uso — Torno',               tipo_contenido: 'manual',      tipo_evento: 'apertura_manual',    count: 18 },
+      { bien_nombre: 'Manual de mantenimiento — Compresor', tipo_contenido: 'manual',      tipo_evento: 'apertura_manual',    count: 12 },
+      { bien_nombre: 'Video: Introducción al taller',       tipo_contenido: 'video',       tipo_evento: 'reproduccion_video', count: 27 },
+      { bien_nombre: 'Ficha técnica EPP',                   tipo_contenido: 'descargable', tipo_evento: 'descarga',           count: 9  },
+    ],
+  }
+}
 
 const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
   import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
@@ -122,12 +159,16 @@ function downloadCSV(rows: DocenteRow[]) {
 export default function Admin() {
   const { signOut, profile } = useAuth()
   const navigate = useNavigate()
+  const [tab, setTab] = useState<'docentes' | 'analytics'>('docentes')
   const [docentes, setDocentes] = useState<DocenteRow[]>([])
   const [loading, setLoading] = useState(true)
   const [filtroIE, setFiltroIE] = useState('')
   const [filtroTaller, setFiltroTaller] = useState('')
+  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null)
+  const [loadingAnalytics, setLoadingAnalytics] = useState(false)
 
   useEffect(() => { fetchData() }, [])
+  useEffect(() => { if (tab === 'analytics' && !analytics) fetchAnalytics() }, [tab])
 
   async function fetchData() {
     setLoading(true)
@@ -210,6 +251,40 @@ export default function Admin() {
     setLoading(false)
   }
 
+  async function fetchAnalytics() {
+    setLoadingAnalytics(true)
+    if (DEV_MODE) {
+      setAnalytics(buildMockAnalytics())
+      setLoadingAnalytics(false)
+      return
+    }
+    const [{ count: totalLogins }, { data: navRows }, { data: contRows }] = await Promise.all([
+      supabase.from('eventos_sesion').select('*', { count: 'exact', head: true }),
+      supabase.from('eventos_navegacion').select('pagina, referrer'),
+      supabase.from('eventos_contenido').select('bien_nombre, tipo_contenido, tipo_evento'),
+    ])
+    // Aggregate navegacion
+    const navMap: Record<string, number> = {}
+    navRows?.forEach(r => {
+      const key = `${r.pagina}||${r.referrer ?? ''}`
+      navMap[key] = (navMap[key] ?? 0) + 1
+    })
+    const navegacion: NavegacionCount[] = Object.entries(navMap).map(([key, count]) => {
+      const [pagina, referrer] = key.split('||')
+      return { pagina, referrer: referrer || null, count }
+    }).sort((a, b) => b.count - a.count)
+    // Aggregate contenidos
+    const contMap: Record<string, ContenidoCount> = {}
+    contRows?.forEach(r => {
+      const key = `${r.bien_nombre}||${r.tipo_contenido}||${r.tipo_evento}`
+      if (!contMap[key]) contMap[key] = { bien_nombre: r.bien_nombre, tipo_contenido: r.tipo_contenido, tipo_evento: r.tipo_evento, count: 0 }
+      contMap[key].count++
+    })
+    const contenidos = Object.values(contMap).sort((a, b) => b.count - a.count)
+    setAnalytics({ totalLogins: totalLogins ?? 0, navegacion, contenidos })
+    setLoadingAnalytics(false)
+  }
+
   const docentesFiltrados = useMemo(() => {
     return docentes.filter(d => {
       const matchIE = !filtroIE || String(d.ie_id) === filtroIE
@@ -249,6 +324,115 @@ export default function Admin() {
       </header>
 
       <main className="px-6 py-8 max-w-7xl mx-auto">
+        {/* Tab switcher */}
+        <div className="flex gap-2 mb-8">
+          {([['docentes', Users, 'Docentes'], ['analytics', BarChart2, 'Analytics']] as const).map(([key, Icon, label]) => (
+            <button
+              key={key}
+              onClick={() => setTab(key)}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all"
+              style={tab === key
+                ? { background: '#02d47e', color: '#043941' }
+                : { background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.55)' }}>
+              <Icon size={15} /> {label}
+            </button>
+          ))}
+        </div>
+
+        {tab === 'analytics' && (
+          <div>
+            {loadingAnalytics || !analytics ? (
+              <div className="flex items-center justify-center py-20">
+                <div className="h-7 w-7 rounded-full border-2 animate-spin"
+                  style={{ borderColor: '#02d47e', borderTopColor: 'transparent' }} />
+              </div>
+            ) : (
+              <div className="space-y-8">
+                {/* KPIs principales */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { label: 'Inicios de sesión', value: analytics.totalLogins, Icon: LogIn, color: '#02d47e' },
+                    { label: 'Visitas al repositorio', value: analytics.navegacion.filter(n => n.pagina === 'repositorio').reduce((a, n) => a + n.count, 0), Icon: Globe, color: '#22d3ee' },
+                    { label: 'Manuales abiertos', value: analytics.contenidos.filter(c => c.tipo_evento === 'apertura_manual').reduce((a, c) => a + c.count, 0), Icon: BookOpen, color: '#a78bfa' },
+                    { label: 'Videos reproducidos', value: analytics.contenidos.filter(c => c.tipo_evento === 'reproduccion_video').reduce((a, c) => a + c.count, 0), Icon: Video, color: '#f59e0b' },
+                  ].map(({ label, value, Icon, color }) => (
+                    <div key={label} className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                      <div className="flex items-center gap-2 mb-1">
+                        <Icon size={14} style={{ color }} />
+                        <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{label}</p>
+                      </div>
+                      <p className="text-2xl font-extrabold" style={{ color }}>{value}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Visitas por página */}
+                <div className="rounded-2xl p-6" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2"><Globe size={15} style={{ color: '#02d47e' }} /> Visitas por sección</h3>
+                  <div className="space-y-3">
+                    {analytics.navegacion.map((n, i) => {
+                      const maxCount = Math.max(...analytics.navegacion.map(x => x.count))
+                      return (
+                        <div key={i} className="flex items-center gap-3">
+                          <div className="w-36 text-xs text-right" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                            {n.pagina.replace('_', ' ')}
+                            {n.referrer && <span className="block text-[11px]" style={{ color: 'rgba(255,255,255,0.3)' }}>desde: {n.referrer}</span>}
+                          </div>
+                          <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
+                            <div className="h-full rounded-full transition-all" style={{ width: `${Math.round((n.count / maxCount) * 100)}%`, background: '#02d47e' }} />
+                          </div>
+                          <span className="text-xs font-bold w-8 text-right" style={{ color: 'rgba(255,255,255,0.6)' }}>{n.count}</span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* Top contenidos abiertos/reproducidos */}
+                <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  <div className="px-6 py-4 flex items-center gap-2" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                    <FileDown size={15} style={{ color: '#02d47e' }} />
+                    <h3 className="text-sm font-bold text-white">Contenidos más accedidos</h3>
+                  </div>
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                        {['Contenido', 'Tipo', 'Evento', 'Accesos'].map(h => (
+                          <th key={h} className="text-left px-5 py-3 text-xs font-bold" style={{ color: 'rgba(255,255,255,0.35)' }}>{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {analytics.contenidos.slice(0, 20).map((c, i) => {
+                        const eventoColor: Record<string, string> = {
+                          apertura_manual: '#a78bfa',
+                          reproduccion_video: '#f59e0b',
+                          descarga: '#22d3ee',
+                          apertura_ficha: '#02d47e',
+                        }
+                        const color = eventoColor[c.tipo_evento] ?? '#ffffff'
+                        return (
+                          <tr key={i} style={{ borderBottom: i < Math.min(analytics.contenidos.length, 20) - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
+                            <td className="px-5 py-3 text-white text-xs">{c.bien_nombre}</td>
+                            <td className="px-5 py-3 text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{c.tipo_contenido}</td>
+                            <td className="px-5 py-3">
+                              <span className="text-xs font-semibold px-2 py-0.5 rounded-lg" style={{ background: `${color}20`, color }}>
+                                {c.tipo_evento.replace(/_/g, ' ')}
+                              </span>
+                            </td>
+                            <td className="px-5 py-3 text-xs font-bold" style={{ color }}>{c.count}</td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === 'docentes' && <>
         {/* Stats resumen */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
@@ -400,6 +584,7 @@ export default function Admin() {
         <p className="text-xs mt-4 text-right" style={{ color: 'rgba(255,255,255,0.2)' }}>
           {docentesFiltrados.length} de {docentes.length} docentes
         </p>
+        </>}
       </main>
     </div>
   )

@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 import type { User, Session } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
+import { trackLogin } from '@/lib/tracker'
 import type { Profile } from '@/types/database'
 
 interface AuthContextType {
@@ -80,6 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const p = await fetchProfile(session.user.id)
           setProfile(p)
           touchLastSeen(session.user.id)
+          trackLogin(session.user.id, p?.taller_slug)
         } else if (DEV_MODE) {
           // Restaurar perfil de sesión de desarrollo
           setProfile(buildDevProfile())

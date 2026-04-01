@@ -1,5 +1,5 @@
 // src/pages/Repositorio.tsx
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import {
   Search, X, SlidersHorizontal, Package, Wrench as WrenchLucide, Sofa, BookOpen,
   HardHat, FileText, Video, PlayCircle, ChevronRight, BookMarked,
@@ -8,6 +8,8 @@ import {
 import { useTaller } from '@/hooks/useTaller'
 import { RepositorioCard } from '@/components/lxp/RepositorioCard'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useAuth } from '@/contexts/AuthContext'
+import { trackNavegacion } from '@/lib/tracker'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Bien = Record<string, any>
@@ -58,6 +60,16 @@ export default function Repositorio() {
   const { taller, bienes, totalBienes, slug } = useTaller()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const { user } = useAuth()
+
+  // Registrar visita al repositorio (captura accesos directos sin pasar por ruta de aprendizaje)
+  useEffect(() => {
+    if (!user?.id || !slug) return
+    const referrer = document.referrer.includes('/ruta') ? 'ruta_aprendizaje'
+      : document.referrer.includes('/perfil') ? 'perfil'
+      : 'directo'
+    trackNavegacion(user.id, 'repositorio', slug, referrer)
+  }, [user?.id, slug])
   const [tab, setTab] = useState<Tab>('bienes')
 
   // ── Catálogo ──────────────────────────────────────────────────────────────

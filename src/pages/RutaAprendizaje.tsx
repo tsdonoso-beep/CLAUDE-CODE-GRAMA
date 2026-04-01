@@ -1,4 +1,5 @@
 // src/pages/RutaAprendizaje.tsx
+import { useEffect } from 'react'
 import { BookOpen, Clock, Video, Award } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
@@ -7,10 +8,18 @@ import { ModuloCard } from '@/components/lxp/ModuloCard'
 import { ProgressRing } from '@/components/lxp/ProgressRing'
 import { LiveSessionCard } from '@/components/lxp/LiveSessionCard'
 import { useProgress } from '@/contexts/ProgressContext'
+import { useAuth } from '@/contexts/AuthContext'
+import { trackNavegacion } from '@/lib/tracker'
 
 export default function RutaAprendizaje() {
   const { taller, slug } = useTaller()
   const { getTallerProgreso, getModuloProgreso, getEstadoModuloLXP } = useProgress()
+  const { user } = useAuth()
+
+  useEffect(() => {
+    if (!user?.id || !slug) return
+    trackNavegacion(user.id, 'ruta_aprendizaje', slug)
+  }, [user?.id, slug])
   const progresoTaller = getTallerProgreso(slug ?? '')
 
   if (!taller) return null

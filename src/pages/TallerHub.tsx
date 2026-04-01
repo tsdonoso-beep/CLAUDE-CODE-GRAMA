@@ -11,6 +11,7 @@ import { mockProximaSesion } from '@/mock/mockEstados'
 import { useProgress } from '@/contexts/ProgressContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
+import { trackNavegacion } from '@/lib/tracker'
 import { LiveSessionCard } from '@/components/lxp/LiveSessionCard'
 import { ProgressRing } from '@/components/lxp/ProgressRing'
 
@@ -47,6 +48,12 @@ export default function TallerHub() {
     if (profile?.taller_slug === slug) return
     supabase.from('profiles').update({ taller_slug: slug }).eq('id', user.id)
   }, [user?.id, slug, profile?.taller_slug, profile?.role])
+
+  // Registrar visita al hub del taller
+  useEffect(() => {
+    if (!user?.id || !slug) return
+    trackNavegacion(user.id, 'taller_hub', slug)
+  }, [user?.id, slug])
 
   if (!taller) return null
 
