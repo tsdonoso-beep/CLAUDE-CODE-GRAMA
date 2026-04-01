@@ -166,9 +166,11 @@ export default function Admin() {
   const [filtroTaller, setFiltroTaller] = useState('')
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null)
   const [loadingAnalytics, setLoadingAnalytics] = useState(false)
+  const [filtroAnalyticsDocente, setFiltroAnalyticsDocente] = useState('')
+  const [busquedaDocente, setBusquedaDocente] = useState('')
 
   useEffect(() => { fetchData() }, [])
-  useEffect(() => { if (tab === 'analytics' && !analytics) fetchAnalytics() }, [tab])
+  useEffect(() => { if (tab === 'analytics') fetchAnalytics(filtroAnalyticsDocente || undefined) }, [tab, filtroAnalyticsDocente])
 
   async function fetchData() {
     setLoading(true)
@@ -251,17 +253,23 @@ export default function Admin() {
     setLoading(false)
   }
 
-  async function fetchAnalytics() {
+  async function fetchAnalytics(usuarioId?: string) {
     setLoadingAnalytics(true)
     if (DEV_MODE) {
       setAnalytics(buildMockAnalytics())
       setLoadingAnalytics(false)
       return
     }
+    let sesionQuery = supabase.from('eventos_sesion').select('*', { count: 'exact', head: true })
+    let navQuery    = supabase.from('eventos_navegacion').select('pagina, referrer')
+    let contQuery   = supabase.from('eventos_contenido').select('bien_nombre, tipo_contenido, tipo_evento')
+    if (usuarioId) {
+      sesionQuery = sesionQuery.eq('usuario_id', usuarioId)
+      navQuery    = navQuery.eq('usuario_id', usuarioId)
+      contQuery   = contQuery.eq('usuario_id', usuarioId)
+    }
     const [{ count: totalLogins }, { data: navRows }, { data: contRows }] = await Promise.all([
-      supabase.from('eventos_sesion').select('*', { count: 'exact', head: true }),
-      supabase.from('eventos_navegacion').select('pagina, referrer'),
-      supabase.from('eventos_contenido').select('bien_nombre, tipo_contenido, tipo_evento'),
+      sesionQuery, navQuery, contQuery,
     ])
     // Aggregate navegacion
     const navMap: Record<string, number> = {}
@@ -341,6 +349,48 @@ export default function Admin() {
 
         {tab === 'analytics' && (
           <div>
+            {/* Filtro por docente */}
+            <div className="mb-6 flex flex-wrap items-end gap-3">
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                  Filtrar por docente
+                </label>
+                <div className="flex gap-2">
+                  <select
+                    value={filtroAnalyticsDocente}
+                    onChange={e => { setFiltroAnalyticsDocente(e.target.value); setBusquedaDocente('') }}
+                    className="px-3 py-2 rounded-xl border-2 text-sm outline-none min-w-[260px]"
+                    style={{ borderColor: filtroAnalyticsDocente ? '#02d47e' : 'rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.08)', color: '#ffffff' }}>
+                    <option value="">Todos los docentes (global)</option>
+                    {docentes.map(d => (
+                      <option key={d.id} value={d.id}>{d.nombre_completo} — {d.email}</option>
+                    ))}
+                  </select>
+                  {filtroAnalyticsDocente && (
+                    <button
+                      onClick={() => setFiltroAnalyticsDocente('')}
+                      className="px-3 py-2 rounded-xl text-sm font-bold"
+                      style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.5)' }}>
+                      ✕ Ver global
+                    </button>
+                  )}
+                </div>
+              </div>
+              {filtroAnalyticsDocente && (() => {
+                const d = docentes.find(x => x.id === filtroAnalyticsDocente)
+                const ie = INSTITUCIONES_EDUCATIVAS.find(i => i.id === d?.ie_id)
+                return d ? (
+                  <div className="flex items-center gap-3 px-4 py-2 rounded-xl"
+                    style={{ background: 'rgba(2,212,126,0.08)', border: '1px solid rgba(2,212,126,0.2)' }}>
+                    <div>
+                      <p className="text-sm font-bold text-white">{d.nombre_completo}</p>
+                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{ie?.nombre ?? '—'} · {talleresConfig.find(t => t.slug === d.taller_slug)?.nombreCorto ?? d.taller_slug}</p>
+                    </div>
+                  </div>
+                ) : null
+              })()}
+            </div>
+
             {loadingAnalytics || !analytics ? (
               <div className="flex items-center justify-center py-20">
                 <div className="h-7 w-7 rounded-full border-2 animate-spin"
