@@ -89,11 +89,10 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
         className="flex-1 mb-6 rounded-2xl border overflow-hidden transition-all"
         style={{ borderColor: config.border, background: config.bg }}
       >
-        {/* Header */}
+        {/* Header — siempre expandible para ver el contenido */}
         <button
-          onClick={() => !bloqueado && setExpandido(!expandido)}
-          disabled={bloqueado}
-          className="w-full text-left px-5 py-4 flex items-center gap-4 transition-colors disabled:cursor-not-allowed"
+          onClick={() => setExpandido(!expandido)}
+          className="w-full text-left px-5 py-4 flex items-center gap-4 transition-colors"
           style={{ background: 'transparent' }}
         >
           <div className="flex-1 min-w-0">
@@ -106,7 +105,7 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
               >
                 M{modulo.numero} · {modulo.nombre}
               </h3>
-              {/* Estado: dot + texto, sin pill */}
+              {/* Estado: dot + texto */}
               <span className="inline-flex items-center gap-1.5">
                 <span
                   className="h-1.5 w-1.5 rounded-full shrink-0"
@@ -118,17 +117,10 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
               </span>
             </div>
 
-            {/* Descripción */}
-            {!bloqueado && (
-              <p className="text-xs line-clamp-1" style={{ color: '#64748b' }}>
-                {modulo.descripcion}
-              </p>
-            )}
-            {bloqueado && (
-              <p className="text-xs" style={{ color: '#94a3b8' }}>
-                Completa el módulo anterior para desbloquear
-              </p>
-            )}
+            {/* Descripción siempre visible */}
+            <p className="text-xs line-clamp-1" style={{ color: bloqueado ? '#b0bec5' : '#64748b' }}>
+              {modulo.descripcion}
+            </p>
           </div>
 
           {/* Horas + chevron */}
@@ -137,33 +129,32 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
               <Clock size={12} />
               <span className="text-xs font-semibold">{modulo.horasTotal}h</span>
             </div>
-            {!bloqueado && (
-              expandido
-                ? <ChevronDown size={16} style={{ color: '#64748b' }} />
-                : <ChevronRight size={16} style={{ color: '#64748b' }} />
-            )}
-            {bloqueado && <Lock size={14} style={{ color: '#cbd5e1' }} />}
+            {expandido
+              ? <ChevronDown size={16} style={{ color: bloqueado ? '#cbd5e1' : '#64748b' }} />
+              : <ChevronRight size={16} style={{ color: bloqueado ? '#cbd5e1' : '#64748b' }} />
+            }
           </div>
         </button>
 
-        {/* Expanded: sub-secciones */}
-        {expandido && !bloqueado && (
+        {/* Expanded: sub-secciones — visible para todos los estados */}
+        {expandido && (
           <div
             className="border-t px-5 py-4 space-y-5"
-            style={{ borderColor: '#f1f5f9', background: '#fafffe' }}
+            style={{ borderColor: '#f1f5f9', background: bloqueado ? '#f8fafc' : '#fafffe' }}
           >
             {modulo.subSecciones.map(sub => (
               <div key={sub.id}>
                 {/* Sección header */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold" style={{ color: '#94a3b8' }}>
+                  <span className="text-xs font-bold" style={{ color: bloqueado ? '#b0bec5' : '#94a3b8' }}>
                     {sub.numero}
                   </span>
-                  <span className="text-xs font-bold" style={{ color: '#043941' }}>
+                  <span className="text-xs font-bold" style={{ color: bloqueado ? '#94a3b8' : '#043941' }}>
                     {sub.titulo}
                   </span>
                   {sub.phaseBadge && (
-                    <span className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: '#02d47e' }}>
+                    <span className="text-[10px] font-semibold uppercase tracking-wide"
+                      style={{ color: bloqueado ? '#b0bec5' : '#02d47e' }}>
                       · {sub.phaseBadge}
                     </span>
                   )}
@@ -172,7 +163,8 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
                 {/* Contenidos */}
                 <div className="flex flex-col gap-1">
                   {sub.contenidos.map(c => (
-                    <div key={c.id} className="flex items-center gap-3 min-w-0 py-0.5">
+                    <div key={c.id} className="flex items-center gap-3 min-w-0 py-0.5"
+                      style={{ opacity: bloqueado ? 0.55 : 1 }}>
                       <ContenidoBadge tipo={c.tipo} size="list" />
                       <span className="text-xs truncate flex-1" style={{ color: '#64748b' }}>
                         {c.titulo}
@@ -188,17 +180,27 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
               </div>
             ))}
 
-            {/* CTA */}
+            {/* CTA: acceso real o candado */}
             <div className="pt-1">
-              <button
-                onClick={() => navigate(`/taller/${slug}/ruta/modulo/${modulo.numero}`)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold text-white transition-all hover:opacity-90"
-                style={{ background: '#02d47e' }}
-              >
-                <Icon size={14} />
-                Ir al módulo
-                <ChevronRight size={14} />
-              </button>
+              {bloqueado ? (
+                <div className="flex items-center gap-2 px-4 py-2 rounded-lg w-fit"
+                  style={{ background: '#f1f5f9' }}>
+                  <Lock size={13} style={{ color: '#94a3b8' }} />
+                  <span className="text-xs font-semibold" style={{ color: '#94a3b8' }}>
+                    Completa el módulo anterior para acceder
+                  </span>
+                </div>
+              ) : (
+                <button
+                  onClick={() => navigate(`/taller/${slug}/ruta/modulo/${modulo.numero}`)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold text-white transition-all hover:opacity-90"
+                  style={{ background: '#02d47e' }}
+                >
+                  <Icon size={14} />
+                  Ir al módulo
+                  <ChevronRight size={14} />
+                </button>
+              )}
             </div>
           </div>
         )}
