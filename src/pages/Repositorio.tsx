@@ -163,9 +163,9 @@ export default function Repositorio() {
 
   const hayFiltros = busqueda || filtroZona || filtroArea || filtroSubarea || filtroTipo
   const activeCount = [filtroZona, filtroArea, filtroSubarea, filtroTipo].filter(Boolean).length
-  const statsTipo = tipos.map(t => ({
+  const statsTipo = useMemo(() => tipos.map(t => ({
     tipo: t, count: bienes.filter((b: Bien) => b.tipo === t).length, Icon: TIPO_ICONS[t] ?? Package,
-  }))
+  })), [tipos, bienes])
 
   function resetFiltros() {
     setBusqueda(''); setFiltroZona(''); setFiltroArea(''); setFiltroSubarea(''); setFiltroTipo('')

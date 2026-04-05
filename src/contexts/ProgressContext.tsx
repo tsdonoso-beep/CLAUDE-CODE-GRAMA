@@ -1,8 +1,27 @@
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, useMemo, ReactNode } from 'react'
 import { modulosLXP } from '@/data/modulosLXP'
 import type { EstadoModulo } from '@/mock/mockEstados'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
+
+// ── Pre-cómputo estático ──────────────────────────────────────────────────────
+// Se ejecuta UNA sola vez al cargar el módulo (no en cada render ni en cada
+// llamada a las funciones del contexto). Elimina los flatMap/forEach repetidos.
+
+/** IDs de contenidos agrupados por índice de módulo */
+const MODULE_IDS: readonly string[][] = modulosLXP.map(m => {
+  const ids: string[] = []
+  m.subSecciones.forEach(s => s.contenidos.forEach(c => ids.push(c.id)))
+  return ids
+})
+
+/** IDs de todos los contenidos de todos los módulos (aplanado) */
+const ALL_IDS: readonly string[] = MODULE_IDS.flat()
+
+/** Mapa de moduloId → índice, para lookup O(1) */
+const MODULO_IDX: ReadonlyMap<string, number> = new Map(
+  modulosLXP.map((m, i) => [m.id, i])
+)
 
 interface ContenidoEstado {
   completed: boolean
@@ -51,19 +70,6 @@ function saveLocalRecords(records: Map<string, ProgressRecord>) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(obj))
 }
 
-/** Extrae todos los contenido IDs de un módulo LXP */
-function getIdsDeModuloLXP(moduloIdx: number): string[] {
-  const m = modulosLXP[moduloIdx]
-  if (!m) return []
-  const ids: string[] = []
-  m.subSecciones.forEach(s => s.contenidos.forEach(c => ids.push(c.id)))
-  return ids
-}
-
-/** Extrae todos los contenido IDs de todos los módulos LXP */
-function getTodosLosIdsLXP(): string[] {
-  return modulosLXP.flatMap((_, i) => getIdsDeModuloLXP(i))
-}
 
 export function ProgressProvider({ children }: { children: ReactNode }) {
   const { user, allUnlocked } = useAuth()
@@ -140,9 +146,9 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
    */
   const getModuloProgreso = useCallback((_tallerSlug: string, moduloNum: number) => {
     const idx = modulosLXP.findIndex(m => m.numero === moduloNum)
-    const allIds = getIdsDeModuloLXP(idx >= 0 ? idx : -1)
-    const total = allIds.length
-    const completados = allIds.filter(id => records.get(id)?.completed).length
+    const ids = idx >= 0 ? MODULE_IDS[idx] : []
+    const total = ids.length
+    const completados = ids.filter(id => records.get(id)?.completed).length
     const porcentaje = total > 0 ? Math.round((completados / total) * 100) : 0
     return { porcentaje, completados, total }
   }, [records])
@@ -153,9 +159,8 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
    * El tallerSlug se mantiene por compatibilidad pero no se usa.
    */
   const getTallerProgreso = useCallback((_tallerSlug: string) => {
-    const allIds = getTodosLosIdsLXP()
-    const total = allIds.length
-    const completados = allIds.filter(id => records.get(id)?.completed).length
+    const total = ALL_IDS.length
+    const completados = ALL_IDS.filter(id => records.get(id)?.completed).length
     const porcentaje = total > 0 ? Math.round((completados / total) * 100) : 0
     return { porcentaje, completados, total }
   }, [records])
@@ -167,29 +172,35 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
    * NO se bypasea en DEV_MODE — los bloqueos son reales para docentes.
    */
   const getEstadoModuloLXP = useCallback((moduloId: string): EstadoModulo => {
-    const idx = modulosLXP.findIndex(m => m.id === moduloId)
-    if (idx === -1) return 'bloqueado'
+    const idx = MODULO_IDX.get(moduloId)
+    if (idx === undefined) return 'bloqueado'
 
-    function porcentajeModulo(i: number): number {
-      const allIds = getIdsDeModuloLXP(i)
-      if (allIds.length === 0) return 0
-      const done = allIds.filter(id => records.get(id)?.completed).length
-      return Math.round((done / allIds.length) * 100)
+    function pct(ids: readonly string[]): number {
+      if (ids.length === 0) return 0
+      return Math.round(ids.filter(id => records.get(id)?.completed).length / ids.length * 100)
     }
 
     // Solo admins y la cuenta demo tienen acceso libre — nunca DEV_MODE genérico
-    if (idx > 0 && !allUnlocked && porcentajeModulo(idx - 1) < 100) return 'bloqueado'
+    if (idx > 0 && !allUnlocked && pct(MODULE_IDS[idx - 1]) < 100) return 'bloqueado'
 
-    const pct = porcentajeModulo(idx)
-    if (pct === 100) return 'completado'
-    if (pct > 0) return 'en_curso'
+    const p = pct(MODULE_IDS[idx])
+    if (p === 100) return 'completado'
+    if (p > 0) return 'en_curso'
     return 'disponible'
   }, [records, allUnlocked])
 
+  const contextValue = useMemo(() => ({
+    loading,
+    getContenidoEstado,
+    markContenidoCompleted,
+    markContenidoInProgress,
+    getModuloProgreso,
+    getTallerProgreso,
+    getEstadoModuloLXP,
+  }), [loading, getContenidoEstado, markContenidoCompleted, markContenidoInProgress, getModuloProgreso, getTallerProgreso, getEstadoModuloLXP])
+
   return (
-    <ProgressContext.Provider
-      value={{ loading, getContenidoEstado, markContenidoCompleted, markContenidoInProgress, getModuloProgreso, getTallerProgreso, getEstadoModuloLXP }}
-    >
+    <ProgressContext.Provider value={contextValue}>
       {children}
     </ProgressContext.Provider>
   )
