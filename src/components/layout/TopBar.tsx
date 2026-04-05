@@ -1,10 +1,10 @@
 // src/components/layout/TopBar.tsx
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
-import { ChevronRight, LogOut, Bell } from 'lucide-react'
+import { ChevronRight, LogOut, Bell, Menu } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { useAuth } from '@/contexts/AuthContext'
 
-export function TopBar() {
+export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
   const { slug, num } = useParams<{ slug: string; num: string }>()
   const location = useLocation()
   const taller = talleresConfig.find(t => t.slug === slug)
@@ -48,8 +48,20 @@ export function TopBar() {
         style={{ background: 'linear-gradient(90deg, transparent, #02d47e 40%, #02d47e 60%, transparent)' }}
       />
 
+      {/* Hamburger — mobile only */}
+      {onMenuClick && (
+        <button
+          onClick={onMenuClick}
+          className="md:hidden h-8 w-8 rounded-xl flex items-center justify-center mr-2 shrink-0 transition-all"
+          style={{ background: 'rgba(255,255,255,0.07)' }}
+          aria-label="Abrir menú"
+        >
+          <Menu size={16} style={{ color: 'rgba(255,255,255,0.7)' }} />
+        </button>
+      )}
+
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-1" aria-label="Breadcrumb">
+      <nav className="flex items-center gap-1 min-w-0 flex-1 overflow-hidden" aria-label="Breadcrumb">
         {crumbs.map((crumb, i) => (
           <span key={i} className="flex items-center gap-1">
             {i > 0 && <ChevronRight size={11} style={{ color: 'rgba(2,212,126,0.4)' }} />}
