@@ -262,10 +262,11 @@ function TallerModal({
       />
 
       {/* Panel */}
-      <div className="fixed inset-x-0 bottom-0 z-50 flex justify-center md:inset-0 md:items-center md:p-6">
+      <div className="fixed inset-x-0 bottom-0 z-50 flex justify-center md:inset-0 md:items-center md:p-6" onClick={onClose}>
         <div
           className="slide-up-modal bg-white w-full md:max-w-lg rounded-t-3xl md:rounded-3xl overflow-hidden flex flex-col shadow-2xl"
           style={{ maxHeight: '92vh' }}
+          onClick={e => e.stopPropagation()}
         >
           {/* Header imagen */}
           <div className="relative h-52 shrink-0 overflow-hidden">
