@@ -179,12 +179,25 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
             }
           >
             {({ isActive }) => (
-              <div
-                className="h-7 w-7 rounded-lg flex items-center justify-center shrink-0"
-                style={{ background: isActive ? `${accent}20` : 'rgba(255,255,255,0.06)' }}
-              >
-                <Icon size={13} style={{ color: isActive ? accent : 'rgba(255,255,255,0.5)' }} />
-              </div>
+              <>
+                <div
+                  className="h-7 w-7 rounded-lg flex items-center justify-center shrink-0"
+                  style={{ background: isActive ? `${accent}20` : 'rgba(255,255,255,0.06)' }}
+                >
+                  <Icon size={13} style={{ color: isActive ? accent : 'rgba(255,255,255,0.5)' }} />
+                </div>
+                {!collapsed && (
+                  <>
+                    {label}
+                    {isActive && (
+                      <span
+                        className="ml-auto w-1.5 h-1.5 rounded-full animate-pulse-soft"
+                        style={{ background: accent }}
+                      />
+                    )}
+                  </>
+                )}
+              </>
             )}
           </NavLink>
         ))}
