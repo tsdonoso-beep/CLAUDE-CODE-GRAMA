@@ -141,6 +141,7 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
           onMouseEnter={e => (e.currentTarget.style.background = 'rgba(239,68,68,0.15)')}
           onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
           title="Cerrar sesión"
+          aria-label="Cerrar sesión"
         >
           <LogOut size={13} style={{ color: 'rgba(255,255,255,0.4)' }} />
         </button>

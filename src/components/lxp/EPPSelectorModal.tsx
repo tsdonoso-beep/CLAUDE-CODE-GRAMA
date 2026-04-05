@@ -190,6 +190,7 @@ export function EPPSelectorModal({ tallerSlug, tallerNombre, onClose }: EPPSelec
           </div>
           <button
             onClick={onClose}
+            aria-label="Cerrar"
             className="shrink-0 h-8 w-8 rounded-lg flex items-center justify-center transition-colors"
             style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)' }}
             onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.15)')}

@@ -21,10 +21,10 @@ const ESTADO_CONFIG: Record<EstadoModulo, {
 }> = {
   completado: {
     bg: '#f0fdf9',
-    border: '#00c16e',
+    border: '#02d47e',
     badge: 'Completado',
     icon: CheckCircle2,
-    dotColor: '#00c16e',
+    dotColor: '#02d47e',
   },
   en_curso: {
     bg: '#ffffff',
@@ -92,7 +92,7 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
         {/* Header — siempre expandible para ver el contenido */}
         <button
           onClick={() => setExpandido(!expandido)}
-          className="w-full text-left px-5 py-4 flex items-center gap-4 transition-colors"
+          className="w-full text-left px-5 py-4 flex items-center gap-4 transition-colors hover:bg-black/[0.02]"
           style={{ background: 'transparent' }}
         >
           <div className="flex-1 min-w-0">

@@ -23,7 +23,7 @@ const CONFIG: Record<TipoContenido, {
   VIDEO: {
     label: 'Video',
     icon: Video,
-    bg: '#00c16e',
+    bg: '#02d47e',
     text: '#ffffff',
   },
   INTERACTIVO: {

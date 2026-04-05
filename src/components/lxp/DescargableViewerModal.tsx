@@ -360,8 +360,11 @@ export function DescargableViewerModal({ descargable: d, onClose }: DescargableV
           </div>
           <button
             onClick={onClose}
-            className="shrink-0 h-8 w-8 rounded-lg flex items-center justify-center"
-            style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)' }}
+            aria-label="Cerrar"
+            className="shrink-0 h-8 w-8 rounded-lg flex items-center justify-center transition-colors"
+            style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)' }}
+            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.15)')}
+            onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.08)')}
           >
             <X size={16} />
           </button>
