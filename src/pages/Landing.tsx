@@ -683,7 +683,7 @@ export default function Landing() {
             {FEATURES.map((f, i) => (
               <div
                 key={f.title}
-                className="group relative p-7 rounded-3xl border overflow-hidden transition-all hover:shadow-xl hover:-translate-y-2"
+                className="group relative p-7 rounded-3xl border overflow-hidden"
                 style={{
                   borderColor: 'rgba(2,212,126,0.25)',
                   background: 'linear-gradient(145deg, #f0fdf9 0%, #e8fdf2 100%)',
