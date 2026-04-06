@@ -33,7 +33,7 @@ function buildDevProfile(): Profile | null {
   return {
     id: 'dev-user',
     email,
-    nombre_completo: email.split('@')[0].replace(/[._]/g, ' '),
+    nombre_completo: ({ 'automotriz@grama.pe': 'Gloria Martínez' } as Record<string, string>)[email] ?? email.split('@')[0].replace(/[._]/g, ' '),
     role,
     ie_id: null,
     taller_slug: sessionStorage.getItem('grama-dev-taller') ?? null,
