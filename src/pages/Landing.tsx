@@ -504,72 +504,66 @@ export default function Landing() {
       </header>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden pt-16" style={{ background: '#043941' }}>
-        {/* Patrón GRAMA */}
-        <div className="absolute inset-0 grama-pattern opacity-30" />
+      <section className="relative overflow-hidden pt-16" style={{ background: '#f0faf5' }}>
+        {/* Patrón GRAMA — sutil sobre fondo claro */}
+        <div className="absolute inset-0 grama-pattern opacity-60" />
 
-        {/* Orbs de ambiente */}
-        <div className="absolute pointer-events-none" style={{ width: 700, height: 700, background: 'radial-gradient(circle, rgba(2,212,126,0.1) 0%, transparent 60%)', right: -150, top: -200 }} />
-        <div className="absolute pointer-events-none" style={{ width: 500, height: 500, background: 'radial-gradient(circle, rgba(4,95,108,0.25) 0%, transparent 60%)', left: -100, bottom: -100 }} />
+        {/* Tangram decorativo — esquinas fijas, opacidad reducida para fondo claro */}
+        <Tangram color="#02d47e" opacity={0.07} rotate={15}  className="absolute w-80 h-80 -top-8 -right-8" />
+        <Tangram color="#02d47e" opacity={0.05} rotate={-20} className="absolute w-64 h-64 bottom-16 -left-8" />
+        <Tangram color="#043941" opacity={0.03} rotate={45}  className="absolute w-48 h-48 top-1/2 left-1/3" />
 
-        {/* Tangram decorativo — esquinas fijas */}
-        <Tangram color="#02d47e" opacity={0.10} rotate={15}  className="absolute w-80 h-80 -top-8 -right-8" />
-        <Tangram color="#02d47e" opacity={0.06} rotate={-20} className="absolute w-64 h-64 bottom-16 -left-8" />
-        <Tangram color="#ffffff" opacity={0.03} rotate={45}  className="absolute w-48 h-48 top-1/2 left-1/3" />
-
-        {/* Piezas individuales del tangram flotando libremente */}
+        {/* Piezas individuales del tangram flotando — tonos suaves sobre claro */}
         <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:70, height:70, top:'12%', left:'6%', animationDuration:'14s' }}>
-          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.35} />
+          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.10} />
         </svg>
         <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:50, height:50, top:'48%', left:'12%', animationDuration:'18s' }}>
-          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.28} />
+          <polygon points="30,0 60,60 0,60" fill="#043941" fillOpacity={0.06} />
         </svg>
         <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:42, height:42, top:'6%', left:'40%', animationDuration:'11s' }}>
-          <rect x="4" y="4" width="42" height="42" transform="rotate(20 25 25)" fill="#ffffff" fillOpacity={0.18} />
+          <rect x="4" y="4" width="42" height="42" transform="rotate(20 25 25)" fill="#02d47e" fillOpacity={0.08} />
         </svg>
         <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:38, height:38, top:'20%', right:'20%', animationDuration:'9s' }}>
-          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.40} />
+          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.09} />
         </svg>
         <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-a" style={{ width:64, height:32, top:'58%', right:'15%', animationDuration:'16s' }}>
-          <polygon points="20,0 80,0 60,40 0,40" fill="#02d47e" fillOpacity={0.25} />
+          <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.05} />
         </svg>
         <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-b" style={{ width:58, height:58, bottom:'15%', right:'6%', animationDuration:'13s' }}>
-          <polygon points="0,0 80,40 0,80" fill="#ffffff" fillOpacity={0.15} />
+          <polygon points="0,0 80,40 0,80" fill="#02d47e" fillOpacity={0.07} />
         </svg>
         <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-c" style={{ width:34, height:34, bottom:'28%', left:'30%', animationDuration:'21s' }}>
-          <polygon points="20,0 40,40 0,40" fill="#02d47e" fillOpacity={0.32} />
+          <polygon points="20,0 40,40 0,40" fill="#043941" fillOpacity={0.06} />
         </svg>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-14 lg:pt-24 lg:pb-16">
           {/* Grid hero: texto izq, visual der */}
-          <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
 
             {/* Columna texto */}
             <div>
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 animate-fade-in-up stagger-1" style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.25)' }}>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 animate-fade-in-up stagger-1" style={{ background: 'rgba(2,212,126,0.10)', border: '1px solid rgba(2,212,126,0.22)' }}>
                 <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
                 <span className="overline-label font-extrabold" style={{ color: 'var(--grama-menta)' }}>
                   Plataforma Nacional · Talleres EPT · MINEDU Perú
                 </span>
               </div>
 
-              <h1 className="t-hero font-extrabold text-white leading-[1.05] mb-6 animate-fade-in-up stagger-2" style={{ letterSpacing: '-0.03em' }}>
+              <h1 className="t-hero font-extrabold leading-[1.05] mb-6 animate-fade-in-up stagger-2" style={{ letterSpacing: '-0.03em', color: 'var(--grama-oscuro)' }}>
                 Potenciamos la{' '}
-                <span className="relative inline-block">
-                  <span style={{ color: 'var(--grama-menta)' }}>educación</span>
-                </span>
-                <br />técnica del Perú
+                <span style={{ color: 'var(--grama-menta)' }}>educación técnica</span>
+                {' '}del Perú
               </h1>
 
-              <p className="text-sm leading-loose mb-10 max-w-lg animate-fade-in-up stagger-3" style={{ color: 'rgba(255,255,255,0.55)' }}>
+              <p className="text-sm leading-loose mb-10 max-w-lg animate-fade-in-up stagger-3" style={{ color: 'var(--tc-secondary)' }}>
                 GRAMA acompaña a docentes EPT en la implementación y dominio pedagógico de talleres técnicos especializados — desde cualquier lugar, a tu ritmo.
               </p>
 
               <div className="flex flex-wrap gap-3 animate-fade-in-up stagger-4">
                 <button
                   onClick={isLoggedIn ? goToApp : () => navigate('/login')}
-                  className="flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]"
+                  className="flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold transition-all hover:scale-[1.02] hover:shadow-lg"
                   style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
                 >
                   {isLoggedIn ? 'Ir a la plataforma' : 'Comenzar ahora'}
@@ -578,9 +572,9 @@ export default function Landing() {
                 <a
                   href="#talleres"
                   className="flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold transition-all"
-                  style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.14)' }}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.13)')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.08)')}
+                  style={{ background: 'transparent', color: 'var(--grama-oscuro)', border: '1.5px solid rgba(4,57,65,0.18)' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(4,57,65,0.05)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                 >
                   Explorar talleres
                   <ChevronRight size={15} />
@@ -588,64 +582,64 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Columna visual — composición geométrica pura, sin texto */}
-            <div className="hidden lg:block relative" style={{ minHeight: 380, width: '100%' }}>
-              {/* Aurora orb principal */}
-              <div className="absolute animate-aurora" style={{
-                width: 420, height: 420,
-                background: 'radial-gradient(circle, rgba(2,212,126,0.18) 0%, rgba(4,95,108,0.12) 40%, transparent 70%)',
-                top: '50%', left: '50%',
-                transform: 'translate(-50%, -50%)',
-                borderRadius: '50%',
-              }} />
-              {/* Aurora orb secundario */}
-              <div className="absolute animate-aurora-slow" style={{
-                width: 280, height: 280,
-                background: 'radial-gradient(circle, rgba(2,212,126,0.12) 0%, transparent 65%)',
-                top: '20%', right: '5%',
-                borderRadius: '50%',
-              }} />
-
-              {/* Tangram principal — grande, centrado */}
-              <div className="absolute" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                <Tangram color="#02d47e" opacity={0.30} rotate={8} className="w-72 h-72" />
+            {/* Columna visual — marco de plataforma */}
+            <div className="hidden lg:flex items-center justify-center animate-fade-in-up stagger-3">
+              <div
+                className="relative w-full rounded-2xl overflow-hidden"
+                style={{
+                  background: '#ffffff',
+                  border: '1.5px solid rgba(4,57,65,0.09)',
+                  boxShadow: '0 24px 64px rgba(4,57,65,0.10), 0 4px 16px rgba(4,57,65,0.06)',
+                  aspectRatio: '16/10',
+                }}
+              >
+                {/* Barra de navegador simulada */}
+                <div className="flex items-center gap-1.5 px-4 py-3 border-b" style={{ background: '#f8fafc', borderColor: 'rgba(4,57,65,0.07)' }}>
+                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#fca5a5' }} />
+                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#fde68a' }} />
+                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#bbf7d0' }} />
+                  <div className="ml-3 flex-1 h-5 rounded-md flex items-center px-3" style={{ background: '#f1f5f9', maxWidth: 200 }}>
+                    <span className="text-[10px] font-medium" style={{ color: '#94a3b8' }}>grama.edu.pe/taller/…</span>
+                  </div>
+                </div>
+                {/* Contenido — composición alusiva a la plataforma */}
+                <div className="flex h-full" style={{ background: '#f0faf5' }}>
+                  {/* Sidebar mini */}
+                  <div className="w-14 shrink-0 flex flex-col items-center py-4 gap-3" style={{ background: '#043941' }}>
+                    <div className="w-7 h-7 rounded-lg" style={{ background: 'rgba(2,212,126,0.25)' }} />
+                    {[0,1,2].map(i => (
+                      <div key={i} className="w-6 h-6 rounded-md" style={{ background: i === 0 ? 'rgba(2,212,126,0.18)' : 'rgba(255,255,255,0.06)' }} />
+                    ))}
+                  </div>
+                  {/* Content area */}
+                  <div className="flex-1 p-4 flex flex-col gap-3">
+                    <div className="h-4 rounded-md w-2/5" style={{ background: 'rgba(4,57,65,0.10)' }} />
+                    <div className="grid grid-cols-3 gap-2 flex-1">
+                      {[1,0,0,0,1,0].map((active, i) => (
+                        <div key={i} className="rounded-xl" style={{ background: active ? 'rgba(2,212,126,0.12)' : '#ffffff', border: `1.5px solid ${active ? 'rgba(2,212,126,0.25)' : 'rgba(4,57,65,0.07)'}` }} />
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      <div className="h-7 rounded-lg flex-1" style={{ background: '#02d47e' }} />
+                      <div className="h-7 rounded-lg w-20" style={{ background: 'rgba(4,57,65,0.07)' }} />
+                    </div>
+                  </div>
+                </div>
+                {/* Badge overlay */}
+                <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full" style={{ background: 'rgba(4,57,65,0.85)', backdropFilter: 'blur(8px)' }}>
+                  <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
+                  <span className="text-[10px] font-bold text-white">Plataforma activa</span>
+                </div>
               </div>
-
-              {/* Tangram secundario — detrás, rotado */}
-              <div className="absolute" style={{ top: '10%', right: '8%' }}>
-                <Tangram color="#02d47e" opacity={0.10} rotate={55} className="w-48 h-48" />
-              </div>
-
-              {/* Tangram terciario — esquina inferior */}
-              <div className="absolute" style={{ bottom: '5%', left: '6%' }}>
-                <Tangram color="#ffffff" opacity={0.05} rotate={-30} className="w-36 h-36" />
-              </div>
-
-              {/* Puntos decorativos — constelación */}
-              {[
-                { top: '18%', left: '12%',  size: 5,  op: 0.5 },
-                { top: '28%', right: '18%', size: 3,  op: 0.35 },
-                { top: '62%', left: '20%',  size: 4,  op: 0.4 },
-                { top: '75%', right: '12%', size: 6,  op: 0.25 },
-                { top: '45%', left: '8%',   size: 3,  op: 0.3 },
-              ].map((d, i) => (
-                <div key={i} className="absolute rounded-full animate-pulse-soft" style={{
-                  top: d.top, left: d.left, right: (d as any).right,
-                  width: d.size, height: d.size,
-                  background: '#02d47e',
-                  opacity: d.op,
-                  animationDelay: `${i * 0.4}s`,
-                }} />
-              ))}
             </div>
           </div>
 
-          {/* Stats band */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.07)' }}>
+          {/* Stats band — sobre fondo claro */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: 'rgba(4,57,65,0.06)', border: '1px solid rgba(4,57,65,0.07)' }}>
             {STATS.map(s => (
-              <div key={s.value} className="flex flex-col items-center py-6 px-4" style={{ background: 'rgba(4,57,65,0.5)' }}>
-                <span className="font-extrabold leading-none mb-1.5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', color: 'var(--grama-menta)' }}>{s.value}</span>
-                <span className="text-xs font-medium text-center" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.label}</span>
+              <div key={s.value} className="flex flex-col items-center py-6 px-4" style={{ background: '#ffffff' }}>
+                <span className="font-extrabold leading-none mb-1.5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', color: 'var(--grama-oscuro)' }}>{s.value}</span>
+                <span className="text-xs font-medium text-center" style={{ color: 'rgba(4,57,65,0.45)' }}>{s.label}</span>
               </div>
             ))}
           </div>
