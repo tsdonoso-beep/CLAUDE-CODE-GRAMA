@@ -11,8 +11,21 @@ import { useProgress } from '@/contexts/ProgressContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { trackNavegacion } from '@/lib/tracker'
 
+const TALLER_ACCENTS: Record<string, string> = {
+  'mecanica-automotriz':  '#3b82f6',
+  'industria-vestido':    '#ec4899',
+  'cocina-reposteria':    '#f97316',
+  'ebanisteria':          '#b8975a',
+  'comunicaciones':       '#a78bfa',
+  'computacion':          '#22d3ee',
+  'agropecuaria':         '#86efac',
+  'electricidad':         '#fde047',
+  'construccion':         '#94a3b8',
+}
+
 export default function RutaAprendizaje() {
   const { taller, slug } = useTaller()
+  const accent = TALLER_ACCENTS[slug ?? ''] ?? '#02d47e'
   const { getTallerProgreso, getModuloProgreso, getEstadoModuloLXP } = useProgress()
   const { user } = useAuth()
 
@@ -33,8 +46,12 @@ export default function RutaAprendizaje() {
   return (
     <div>
       {/* ── Hero ── */}
-      <div className="px-8 py-10 grama-pattern" style={{ background: '#043941' }}>
-        <div className="max-w-4xl">
+      <div className="relative overflow-hidden px-8 py-10 grama-pattern" style={{ background: '#043941' }}>
+        {/* Tinte del taller */}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: `linear-gradient(120deg, rgba(4,10,20,0.0) 0%, rgba(4,10,20,0.0) 45%, ${accent}22 100%)` }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse at 90% 50%, ${accent}20 0%, transparent 55%)` }} />
+        <div className="absolute pointer-events-none" style={{ width: 400, height: 400, background: `radial-gradient(circle, ${accent}22 0%, transparent 60%)`, right: -80, top: -80 }} />
+        <div className="relative z-10 max-w-4xl">
           <p className="overline-label font-semibold mb-2" style={{ color: 'var(--grama-menta)' }}>
             {taller.nombreCorto}
           </p>

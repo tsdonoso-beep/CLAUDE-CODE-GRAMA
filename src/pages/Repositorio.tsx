@@ -56,8 +56,21 @@ function esVideo(nombre: string) {
   return n.includes('video') || n.includes('tutorial') || n.includes('audiovisual')
 }
 
+const TALLER_ACCENTS: Record<string, string> = {
+  'mecanica-automotriz':  '#3b82f6',
+  'industria-vestido':    '#ec4899',
+  'cocina-reposteria':    '#f97316',
+  'ebanisteria':          '#b8975a',
+  'comunicaciones':       '#a78bfa',
+  'computacion':          '#22d3ee',
+  'agropecuaria':         '#86efac',
+  'electricidad':         '#fde047',
+  'construccion':         '#94a3b8',
+}
+
 export default function Repositorio() {
   const { taller, bienes, totalBienes, slug } = useTaller()
+  const accent = TALLER_ACCENTS[slug ?? ''] ?? '#02d47e'
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { user } = useAuth()
@@ -188,8 +201,10 @@ export default function Repositorio() {
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
       <div className="relative overflow-hidden" style={{ background: '#043941' }}>
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full opacity-10"
-            style={{ background: 'radial-gradient(circle, #02d47e 0%, transparent 70%)' }} />
+          {/* Tinte del taller */}
+          <div className="absolute inset-0" style={{ background: `linear-gradient(120deg, rgba(4,10,20,0.0) 0%, rgba(4,10,20,0.0) 45%, ${accent}22 100%)` }} />
+          <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at 90% 50%, ${accent}20 0%, transparent 55%)` }} />
+          <div className="absolute" style={{ width: 400, height: 400, background: `radial-gradient(circle, ${accent}22 0%, transparent 60%)`, right: -80, top: -80 }} />
           <div className="absolute bottom-0 left-1/3 w-56 h-56 rounded-full opacity-[0.06]"
             style={{ background: 'radial-gradient(circle, #ffffff 0%, transparent 70%)' }} />
         </div>
