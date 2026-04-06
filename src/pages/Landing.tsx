@@ -740,8 +740,6 @@ export default function Landing() {
           <polygon points="20,0 40,40 0,40" fill="#043941" fillOpacity={0.10} />
         </svg>
 
-        {/* Franja oscura al pie — ancla visual */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent, #043941 30%, #043941 70%, transparent)' }} />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 pt-6 pb-12 lg:pt-10 lg:pb-14">
           {/* Grid hero: texto izq, visual der */}
