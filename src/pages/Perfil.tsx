@@ -149,45 +149,44 @@ export default function Perfil() {
     <div className="min-h-screen" style={{ fontFamily: "'Manrope', sans-serif", background: '#f0faf5' }}>
 
       {/* ══ HERO ══════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ background: '#043941', minHeight: 340 }}>
+      <section className="relative overflow-hidden" style={{ background: '#f0faf5', minHeight: 300 }}>
 
         {/* Patrón GRAMA */}
-        <div className="absolute inset-0 grama-pattern opacity-30" />
+        <div className="absolute inset-0 grama-pattern opacity-60" />
 
-        {/* Orbs ambiente */}
-        <div className="absolute pointer-events-none" style={{ width: 600, height: 600, background: 'radial-gradient(circle, rgba(2,212,126,0.10) 0%, transparent 60%)', right: -120, top: -180 }} />
-        <div className="absolute pointer-events-none" style={{ width: 400, height: 400, background: 'radial-gradient(circle, rgba(4,95,108,0.22) 0%, transparent 60%)', left: -80, bottom: -80 }} />
+        {/* Orb sutil */}
+        <div className="absolute pointer-events-none" style={{ width: 500, height: 500, background: 'radial-gradient(circle, rgba(2,212,126,0.08) 0%, transparent 65%)', right: -80, top: -120 }} />
 
         {/* Tangrams fijos */}
-        <Tangram color="#02d47e" opacity={0.10} rotate={15}  className="absolute w-72 h-72 -top-6 -right-6" />
-        <Tangram color="#02d47e" opacity={0.06} rotate={-20} className="absolute w-56 h-56 bottom-10 -left-6" />
+        <Tangram color="#02d47e" opacity={0.13} rotate={15}  className="absolute w-80 h-80 -top-8 -right-8" />
+        <Tangram color="#043941" opacity={0.05} rotate={-20} className="absolute w-60 h-60 bottom-6 -left-8" />
 
-        {/* Piezas flotantes */}
-        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:60, height:60, top:'10%', left:'5%', animationDuration:'14s' }}>
-          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.30} />
+        {/* Piezas flotantes — suaves sobre claro */}
+        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:58, height:58, top:'12%', left:'5%', animationDuration:'16s' }}>
+          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.14} />
         </svg>
-        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:44, height:44, top:'50%', left:'10%', animationDuration:'18s' }}>
-          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.24} />
+        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:42, height:42, top:'55%', left:'9%', animationDuration:'20s' }}>
+          <polygon points="30,0 60,60 0,60" fill="#043941" fillOpacity={0.08} />
         </svg>
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:36, height:36, top:'18%', right:'22%', animationDuration:'9s' }}>
-          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.35} />
+        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:34, height:34, top:'20%', right:'22%', animationDuration:'11s' }}>
+          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.16} />
         </svg>
-        <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-a" style={{ width:56, height:28, top:'60%', right:'12%', animationDuration:'16s' }}>
-          <polygon points="20,0 80,0 60,40 0,40" fill="#02d47e" fillOpacity={0.22} />
+        <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-c" style={{ width:52, height:26, top:'62%', right:'10%', animationDuration:'18s' }}>
+          <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.07} />
         </svg>
 
         {/* ── Navbar integrada en el hero ── */}
-        <div className="relative z-20 border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+        <div className="relative z-20 border-b" style={{ borderColor: 'rgba(4,57,65,0.08)' }}>
           <div className="max-w-7xl mx-auto px-8 flex items-center justify-between" style={{ height: 52 }}>
             <button onClick={() => navigate('/')} className="transition-opacity hover:opacity-75">
-              <GramaLogo variant="light" size="sm" />
+              <GramaLogo variant="dark" size="sm" />
             </button>
             <div className="flex items-center gap-2">
               {isAdmin && (
                 <button
                   onClick={() => navigate('/admin')}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
-                  style={{ background: 'rgba(2,212,126,0.14)', color: 'var(--grama-menta)', border: '1px solid rgba(2,212,126,0.25)' }}
+                  style={{ background: 'rgba(2,212,126,0.14)', color: '#02a05a', border: '1px solid rgba(2,212,126,0.25)' }}
                 >
                   <Shield size={12} />
                   Panel de Admin
@@ -197,7 +196,7 @@ export default function Perfil() {
                 <button
                   onClick={() => navigate(`/taller/${taller.slug}`)}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
-                  style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.85)', border: '1px solid rgba(255,255,255,0.12)' }}
+                  style={{ background: 'rgba(4,57,65,0.07)', color: 'var(--grama-oscuro)', border: '1px solid rgba(4,57,65,0.12)' }}
                 >
                   Ir a mi taller <ChevronRight size={12} />
                 </button>
@@ -205,7 +204,7 @@ export default function Perfil() {
               <button
                 onClick={() => signOut()}
                 className="flex items-center gap-1.5 text-xs font-medium transition-opacity hover:opacity-60 px-2 py-1.5"
-                style={{ color: 'rgba(255,255,255,0.28)' }}
+                style={{ color: 'rgba(4,57,65,0.35)' }}
               >
                 <LogOut size={12} />
                 Salir
@@ -226,24 +225,23 @@ export default function Perfil() {
                   className="absolute rounded-full animate-pulse pointer-events-none"
                   style={{
                     inset: -10,
-                    border: `1px solid ${accent}25`,
-                    background: `radial-gradient(circle, ${accent}08 0%, transparent 70%)`,
+                    border: `1px solid ${accent}30`,
+                    background: `radial-gradient(circle, ${accent}10 0%, transparent 70%)`,
                     borderRadius: '50%',
                   }}
                 />
                 <div
                   className="absolute rounded-full pointer-events-none"
-                  style={{ inset: -4, border: `1px solid ${accent}30`, borderRadius: '50%' }}
+                  style={{ inset: -4, border: `1px solid ${accent}35`, borderRadius: '50%' }}
                 />
                 <div
                   className="h-14 w-14 rounded-full flex items-center justify-center text-lg font-extrabold relative z-10"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(2,212,126,0.22) 0%, rgba(4,95,108,0.38) 100%)',
-                    border: `2px solid ${accent}40`,
-                    color: 'var(--grama-menta)',
-                    boxShadow: `0 0 32px ${accent}18, inset 0 1px 0 rgba(255,255,255,0.1)`,
+                    background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)',
+                    border: `2px solid ${accent}50`,
+                    color: '#02d47e',
+                    boxShadow: `0 4px 20px rgba(4,57,65,0.18), 0 0 0 1px rgba(2,212,126,0.12)`,
                     letterSpacing: '-0.02em',
-                    backdropFilter: 'blur(8px)',
                   }}
                 >
                   {getInitials(displayName)}
@@ -251,7 +249,7 @@ export default function Perfil() {
                 {isAdmin && (
                   <div
                     className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full flex items-center justify-center z-20"
-                    style={{ background: '#02d47e', border: '2px solid rgba(4,10,20,0.8)', boxShadow: '0 2px 8px rgba(2,212,126,0.45)' }}
+                    style={{ background: '#02d47e', border: '2px solid #f0faf5', boxShadow: '0 2px 8px rgba(2,212,126,0.35)' }}
                   >
                     <Shield size={11} style={{ color: 'var(--grama-oscuro)' }} />
                   </div>
@@ -265,9 +263,9 @@ export default function Perfil() {
                   <span
                     className="inline-flex items-center gap-1.5 overline-label font-extrabold px-2.5 py-1 rounded-full"
                     style={{
-                      background: `${accent}18`,
-                      border: `1px solid ${accent}35`,
-                      color: accent,
+                      background: `${accent}15`,
+                      border: `1px solid ${accent}30`,
+                      color: accent === '#02d47e' ? '#02a05a' : accent,
                     }}
                   >
                     <span className="w-1 h-1 rounded-full animate-pulse" style={{ background: accent }} />
@@ -283,7 +281,7 @@ export default function Perfil() {
                     <button
                       onClick={() => navigate('/admin')}
                       className="hidden sm:flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full transition-opacity hover:opacity-80"
-                      style={{ background: 'rgba(2,212,126,0.14)', color: 'var(--grama-menta)', border: '1px solid rgba(2,212,126,0.25)' }}
+                      style={{ background: 'rgba(2,212,126,0.14)', color: '#02a05a', border: '1px solid rgba(2,212,126,0.25)' }}
                     >
                       <Shield size={10} />
                       Panel de Admin
@@ -292,13 +290,13 @@ export default function Perfil() {
                 </div>
 
                 <h1
-                  className="t-display font-extrabold text-white leading-tight mb-2 animate-fade-in-up stagger-1"
-                  style={{ letterSpacing: '-0.025em' }}
+                  className="t-display font-extrabold leading-tight mb-2 animate-fade-in-up stagger-1"
+                  style={{ letterSpacing: '-0.025em', color: 'var(--grama-oscuro)' }}
                 >
                   Hola, {firstName}
                 </h1>
 
-                <p className="text-base mb-4 animate-fade-in-up stagger-2" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                <p className="text-base mb-4 animate-fade-in-up stagger-2" style={{ color: '#64748b' }}>
                   {displayName !== firstName ? displayName : ''}{displayName !== firstName && displayEmail ? ' · ' : ''}{displayEmail}
                 </p>
 
@@ -313,15 +311,14 @@ export default function Perfil() {
                       key={stat.label}
                       className="flex items-center gap-2 px-3 py-1.5 rounded-xl"
                       style={{
-                        background: 'rgba(255,255,255,0.07)',
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        backdropFilter: 'blur(8px)',
+                        background: 'rgba(4,57,65,0.06)',
+                        border: '1px solid rgba(4,57,65,0.10)',
                       }}
                     >
                       <stat.icon size={13} style={{ color: accent }} />
                       <div>
-                        <p className="text-xs font-bold text-white leading-none">{stat.label}</p>
-                        <p className="text-[11px] mt-0.5 leading-none" style={{ color: 'rgba(255,255,255,0.4)' }}>{stat.sub}</p>
+                        <p className="text-xs font-bold leading-none" style={{ color: 'var(--grama-oscuro)' }}>{stat.label}</p>
+                        <p className="text-[11px] mt-0.5 leading-none" style={{ color: '#64748b' }}>{stat.sub}</p>
                       </div>
                     </div>
                   ))}
@@ -333,18 +330,18 @@ export default function Perfil() {
             {tallerSlugsAccesibles.length === 1 && taller ? (
               <div
                 className="hidden lg:flex flex-col items-center gap-3 p-5 rounded-2xl animate-fade-in-up stagger-4"
-                style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.1)', minWidth: 156 }}
+                style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.10)', boxShadow: '0 2px 12px rgba(4,57,65,0.06)', minWidth: 156 }}
               >
-                <p className="overline-label font-bold" style={{ color: 'rgba(255,255,255,0.5)' }}>Tu progreso</p>
-                <ProgressRing percentage={progreso.porcentaje} size={88} label={`${progreso.completados}/${progreso.total}`} sublabel="actividades" dark />
-                <p className="text-[10px] text-center" style={{ color: 'rgba(255,255,255,0.4)' }}>{progreso.porcentaje}% completado</p>
+                <p className="overline-label font-bold" style={{ color: '#64748b' }}>Tu progreso</p>
+                <ProgressRing percentage={progreso.porcentaje} size={88} label={`${progreso.completados}/${progreso.total}`} sublabel="actividades" dark={false} />
+                <p className="text-[10px] text-center" style={{ color: '#64748b' }}>{progreso.porcentaje}% completado</p>
               </div>
             ) : tallerSlugsAccesibles.length > 1 ? (
               <div
                 className="hidden lg:flex flex-col gap-2.5 p-4 rounded-2xl animate-fade-in-up stagger-4"
-                style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.1)', minWidth: 220 }}
+                style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.10)', boxShadow: '0 2px 12px rgba(4,57,65,0.06)', minWidth: 220 }}
               >
-                <p className="overline-label font-bold mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>Mis talleres</p>
+                <p className="overline-label font-bold mb-1" style={{ color: '#64748b' }}>Mis talleres</p>
                 {tallerSlugsAccesibles.map(s => {
                   const t = talleresConfig.find(x => x.slug === s)
                   if (!t) return null
@@ -354,13 +351,13 @@ export default function Perfil() {
                     <div key={s}>
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md"
-                          style={{ background: `${ta}25`, color: ta }}>
+                          style={{ background: `${ta}18`, color: ta }}>
                           T{String(t.numero).padStart(2, '0')}
                         </span>
-                        <span className="text-xs font-semibold truncate" style={{ color: 'rgba(255,255,255,0.8)' }}>{t.nombreCorto}</span>
+                        <span className="text-xs font-semibold truncate" style={{ color: 'var(--grama-oscuro)' }}>{t.nombreCorto}</span>
                         <span className="ml-auto text-[10px] font-bold shrink-0" style={{ color: ta }}>{p.porcentaje}%</span>
                       </div>
-                      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(4,57,65,0.08)' }}>
                         <div className="h-full rounded-full transition-all" style={{ width: `${p.porcentaje}%`, background: ta }} />
                       </div>
                     </div>
@@ -370,12 +367,6 @@ export default function Perfil() {
             ) : null}
           </div>
         </div>
-
-        {/* Fade al contenido claro */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, transparent, #f0faf5)' }}
-        />
       </section>
 
       {/* ══ CONTENIDO PRINCIPAL ════════════════════════════════════════════════ */}
