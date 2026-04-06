@@ -211,10 +211,10 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
 function TalleresMarquee() {
   const items = [...talleresConfig, ...talleresConfig]
   return (
-    <div className="overflow-hidden py-3" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+    <div className="overflow-hidden py-3" style={{ borderTop: '1px solid rgba(4,57,65,0.07)', borderBottom: '1px solid rgba(4,57,65,0.07)' }}>
       <div className="flex gap-8 animate-marquee whitespace-nowrap">
         {items.map((t, i) => (
-          <span key={i} className="inline-flex items-center gap-2 shrink-0 text-[11px] font-semibold" style={{ color: 'rgba(255,255,255,0.3)' }}>
+          <span key={i} className="inline-flex items-center gap-2 shrink-0 text-[11px] font-semibold" style={{ color: 'rgba(4,57,65,0.45)' }}>
             <span className="h-1 w-1 rounded-full" style={{ background: '#02d47e' }} />
             {t.nombre}
           </span>
@@ -650,14 +650,14 @@ export default function Landing() {
       </section>
 
       {/* ══ FEATURES ════════════════════════════════════════════════════════ */}
-      <section id="nosotros" className="py-28 px-6 relative overflow-hidden">
+      <section id="nosotros" className="py-16 px-6 relative overflow-hidden">
         {/* Tangram fondo sutil */}
         <Tangram color="#02d47e" opacity={0.035} rotate={30} className="absolute w-96 h-96 -right-20 top-0 pointer-events-none" />
 
         <div className="max-w-6xl mx-auto">
           <div
             ref={featuresHeaderReveal.ref}
-            className="max-w-xl mb-16"
+            className="max-w-xl mb-10"
             style={{ opacity: featuresHeaderReveal.visible ? 1 : 0, transform: featuresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
           >
             <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-3" style={{ color: 'var(--grama-menta)' }}>
@@ -727,13 +727,13 @@ export default function Landing() {
       </section>
 
       {/* ══ TALLERES ════════════════════════════════════════════════════════ */}
-      <section id="talleres" className="py-28 px-6 relative overflow-hidden" style={{ background: '#f0faf5' }}>
+      <section id="talleres" className="py-16 px-6 relative overflow-hidden" style={{ background: '#f0faf5' }}>
         <Tangram color="#043941" opacity={0.025} rotate={-15} className="absolute w-80 h-80 -left-10 bottom-10 pointer-events-none" />
 
         <div className="max-w-6xl mx-auto">
           <div
             ref={talleresHeaderReveal.ref}
-            className="text-center max-w-2xl mx-auto mb-16"
+            className="text-center max-w-2xl mx-auto mb-10"
             style={{ opacity: talleresHeaderReveal.visible ? 1 : 0, transform: talleresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
           >
             <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-3" style={{ color: 'var(--grama-menta)' }}>
@@ -770,11 +770,11 @@ export default function Landing() {
       </section>
 
       {/* ══ COMUNIDAD ═══════════════════════════════════════════════════════ */}
-      <section id="comunidad" className="py-28 px-6 relative overflow-hidden">
+      <section id="comunidad" className="py-16 px-6 relative overflow-hidden">
         <Tangram color="#02d47e" opacity={0.04} rotate={60} className="absolute w-72 h-72 -right-8 top-8 pointer-events-none" />
 
         <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-3" style={{ color: 'var(--grama-menta)' }}>
               <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
               Para toda la comunidad
@@ -819,7 +819,7 @@ export default function Landing() {
       </section>
 
       {/* ══ CTA FINAL ═══════════════════════════════════════════════════════ */}
-      <section id="contacto" className="py-20 px-6">
+      <section id="contacto" className="py-14 px-6">
         <div className="max-w-4xl mx-auto">
           <div
             className="rounded-3xl p-12 relative overflow-hidden"
