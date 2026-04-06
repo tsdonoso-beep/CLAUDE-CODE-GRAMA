@@ -600,7 +600,7 @@ export default function ModuloDetalle() {
           onClick={e => { if (e.target === e.currentTarget) setShowGradeModal(false) }}
         >
           <div className="bg-white rounded-2xl p-8 max-w-md mx-auto shadow-lg">
-            <h3 className="text-xl font-bold mb-2" style={{ color: '#043941' }}>
+            <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
               ¿Qué grado enseñas?
             </h3>
             <p className="text-sm text-muted-foreground mb-6">
@@ -612,7 +612,7 @@ export default function ModuloDetalle() {
                   key={grade}
                   onClick={() => handleGradeSelect(grade)}
                   className="w-full px-4 py-3 rounded-lg border-2 text-left font-semibold transition-all hover:bg-primary/10"
-                  style={{ borderColor: selectedGrade === grade ? '#02d47e' : '#e3f8fb', color: '#043941' }}
+                  style={{ borderColor: selectedGrade === grade ? '#02d47e' : '#e3f8fb', color: 'var(--grama-oscuro)' }}
                 >
                   {grade} grado de secundaria
                 </button>
