@@ -290,7 +290,7 @@ export default function Bienvenida() {
               >
                 <span className="text-xl">{tallerAsignado.icon ?? '🛠'}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[10px] font-bold tracking-widest uppercase" style={{ color: '#02d47e' }}>
+                  <p className="overline-label font-bold" style={{ color: 'var(--grama-menta)' }}>
                     Tu taller asignado
                   </p>
                   <p className="text-sm font-extrabold text-white truncate">{tallerAsignado.nombre}</p>
@@ -300,7 +300,7 @@ export default function Bienvenida() {
                     </p>
                   )}
                 </div>
-                <ArrowRight size={15} style={{ color: '#02d47e', flexShrink: 0 }} />
+                <ArrowRight size={15} style={{ color: 'var(--grama-menta)', flexShrink: 0 }} />
               </button>
             )}
 
