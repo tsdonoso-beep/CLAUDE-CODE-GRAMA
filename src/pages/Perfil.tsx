@@ -175,8 +175,8 @@ export default function Perfil() {
           <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.07} />
         </svg>
 
-        {/* ── Navbar integrada en el hero ── */}
-        <div className="relative z-20 border-b" style={{ borderColor: 'rgba(4,57,65,0.08)' }}>
+        {/* ── Navbar integrada en el hero — sticky ── */}
+        <div className="sticky top-0 z-20 border-b" style={{ borderColor: 'rgba(4,57,65,0.08)', background: 'rgba(240,250,245,0.92)', backdropFilter: 'blur(12px)' }}>
           <div className="max-w-7xl mx-auto px-8 flex items-center justify-between" style={{ height: 52 }}>
             <button onClick={() => navigate('/')} className="transition-opacity hover:opacity-75">
               <GramaLogo variant="dark" size="sm" />
@@ -671,35 +671,35 @@ export default function Perfil() {
             </section>
           )}
 
-          {/* Card inspiracional (mismo estilo que TallerHub) */}
+          {/* Card inspiracional */}
           <div
             className="rounded-2xl p-5 relative overflow-hidden animate-fade-in-up stagger-3"
             style={{
-              background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)',
-              border: '1px solid rgba(2,212,126,0.2)',
-              boxShadow: '0 4px 20px rgba(4,57,65,0.15)',
+              background: '#ffffff',
+              border: '1.5px solid rgba(2,212,126,0.25)',
+              boxShadow: '0 2px 12px rgba(4,57,65,0.07)',
             }}
           >
             <div
-              className="absolute pointer-events-none animate-aurora-slow"
+              className="absolute pointer-events-none"
               style={{
-                width: 160, height: 160,
-                background: `radial-gradient(circle, ${accent}22 0%, transparent 65%)`,
-                top: -30, right: -30,
+                width: 180, height: 180,
+                background: 'radial-gradient(circle, rgba(2,212,126,0.10) 0%, transparent 65%)',
+                top: -40, right: -40,
                 borderRadius: '50%',
               }}
             />
             <div className="relative z-10">
               <div
                 className="h-9 w-9 rounded-xl flex items-center justify-center mb-3"
-                style={{ background: `${accent}20`, border: `1px solid ${accent}30` }}
+                style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.22)' }}
               >
-                <Sparkles size={16} style={{ color: accent }} />
+                <Sparkles size={16} style={{ color: '#02a05a' }} />
               </div>
-              <p className="text-sm font-extrabold text-white leading-snug mb-1.5">
+              <p className="text-sm font-extrabold leading-snug mb-1.5" style={{ color: 'var(--grama-oscuro)' }}>
                 ¡Tus estudiantes te esperan!
               </p>
-              <p className="text-xs leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              <p className="text-xs leading-relaxed mb-4" style={{ color: '#64748b' }}>
                 Cada sesión que preparas con GRAMA es una competencia más para el futuro técnico de tus alumnos.
               </p>
               {taller ? (
