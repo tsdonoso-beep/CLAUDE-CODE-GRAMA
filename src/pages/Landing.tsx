@@ -781,26 +781,24 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Columna visual — carrusel con tabs + tilt 3D */}
+            {/* Columna visual — carrusel con tabs */}
             <div
               className="hidden lg:flex flex-col items-stretch animate-fade-in-up stagger-3"
               onMouseEnter={() => { heroHovered.current = true }}
               onMouseLeave={() => { heroHovered.current = false }}
             >
-              {/* Tabs de navegación — encima del frame */}
-              <div className="flex">
+              {/* Tabs de navegación */}
+              <div className="flex rounded-t-2xl overflow-hidden" style={{ border: '1.5px solid rgba(4,57,65,0.15)', borderBottom: 'none' }}>
                 {(['Hub', 'Ruta', 'Repositorio'] as const).map((label, i) => (
                   <button
                     key={label}
                     onClick={() => setHeroSlide(i)}
                     className="flex-1 py-2 text-xs font-bold transition-all duration-200"
                     style={{
-                      background: heroSlide === i ? '#043941' : 'rgba(4,57,65,0.05)',
+                      background: heroSlide === i ? '#043941' : '#f0faf5',
                       color: heroSlide === i ? '#ffffff' : 'rgba(4,57,65,0.45)',
-                      border: '1px solid',
-                      borderColor: heroSlide === i ? 'rgba(2,212,126,0.2)' : 'rgba(4,57,65,0.09)',
-                      borderBottom: heroSlide === i ? '2px solid #02d47e' : '1px solid transparent',
-                      borderRadius: i === 0 ? '10px 0 0 0' : i === 2 ? '0 10px 0 0' : '0',
+                      borderRight: i < 2 ? '1px solid rgba(4,57,65,0.10)' : 'none',
+                      borderBottom: heroSlide === i ? '2px solid #02d47e' : '1px solid rgba(4,57,65,0.10)',
                     }}
                   >
                     {label}
@@ -808,46 +806,42 @@ export default function Landing() {
                 ))}
               </div>
 
-              {/* Tilt wrapper — perspective en padre, transform en hijo */}
-              <div style={{ perspective: '1200px', perspectiveOrigin: 'center center' }}>
-                <div style={{ transform: 'rotateY(-7deg) rotateX(2deg)', transformOrigin: 'center center', transformStyle: 'preserve-3d', willChange: 'transform' }}>
-                  <div
-                    className="relative w-full rounded-b-2xl overflow-hidden"
-                    style={{
-                      background: '#ffffff',
-                      border: '1.5px solid rgba(4,57,65,0.18)',
-                      borderTop: 'none',
-                      boxShadow: '0 28px 70px rgba(4,57,65,0.22), 0 4px 16px rgba(4,57,65,0.12), 12px 20px 48px rgba(4,57,65,0.16)',
-                      aspectRatio: '16/10',
-                    }}
-                  >
-                    {/* Chrome oscuro on-brand */}
-                    <div className="flex items-center gap-1.5 px-4 py-2.5 border-b shrink-0" style={{ background: '#043941', borderColor: 'rgba(2,212,126,0.15)' }}>
-                      <span className="w-2 h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.2)' }} />
-                      <span className="w-2 h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }} />
-                      <span className="w-2 h-2 rounded-full" style={{ background: '#02d47e', opacity: 0.7 }} />
-                      <div className="ml-3 flex-1 h-4 rounded-md flex items-center px-2.5" style={{ background: 'rgba(255,255,255,0.08)', maxWidth: 240 }}>
-                        <span className="text-[9px] font-medium transition-all duration-500" style={{ color: 'rgba(2,212,126,0.75)' }}>{SLIDE_URLS[heroSlide]}</span>
-                      </div>
-                    </div>
+              {/* Frame — plano, sin tilt */}
+              <div
+                className="relative w-full rounded-b-2xl overflow-hidden"
+                style={{
+                  background: '#ffffff',
+                  border: '1.5px solid rgba(4,57,65,0.15)',
+                  borderTop: 'none',
+                  boxShadow: '0 20px 60px rgba(4,57,65,0.18), 0 4px 16px rgba(4,57,65,0.10)',
+                  aspectRatio: '16/10',
+                }}
+              >
+                {/* Chrome oscuro on-brand */}
+                <div className="flex items-center gap-1.5 px-4 py-2.5 border-b shrink-0" style={{ background: '#043941', borderColor: 'rgba(2,212,126,0.15)' }}>
+                  <span className="w-2 h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.2)' }} />
+                  <span className="w-2 h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }} />
+                  <span className="w-2 h-2 rounded-full" style={{ background: '#02d47e', opacity: 0.7 }} />
+                  <div className="ml-3 flex-1 h-4 rounded-md flex items-center px-2.5" style={{ background: 'rgba(255,255,255,0.08)', maxWidth: 240 }}>
+                    <span className="text-[9px] font-medium transition-all duration-500" style={{ color: 'rgba(2,212,126,0.75)' }}>{SLIDE_URLS[heroSlide]}</span>
+                  </div>
+                </div>
 
-                    {/* Área de slides */}
-                    <div className="relative" style={{ height: 'calc(100% - 38px)' }}>
-                      {HERO_SLIDES.map((SlideComp, i) => (
-                        <div
-                          key={i}
-                          className="absolute inset-0 transition-opacity duration-700"
-                          style={{ opacity: heroSlide === i ? 1 : 0, pointerEvents: heroSlide === i ? 'auto' : 'none', willChange: 'opacity' }}
-                        >
-                          <SlideComp />
-                        </div>
-                      ))}
-                      {/* Badge */}
-                      <div className="absolute bottom-2.5 right-2.5 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background: 'rgba(4,57,65,0.82)', backdropFilter: 'blur(8px)' }}>
-                        <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
-                        <span className="text-[9px] font-bold text-white">{SLIDE_LABELS[heroSlide]}</span>
-                      </div>
+                {/* Área de slides */}
+                <div className="relative" style={{ height: 'calc(100% - 38px)' }}>
+                  {HERO_SLIDES.map((SlideComp, i) => (
+                    <div
+                      key={i}
+                      className="absolute inset-0 transition-opacity duration-700"
+                      style={{ opacity: heroSlide === i ? 1 : 0, pointerEvents: heroSlide === i ? 'auto' : 'none', willChange: 'opacity' }}
+                    >
+                      <SlideComp />
                     </div>
+                  ))}
+                  {/* Badge */}
+                  <div className="absolute bottom-2.5 right-2.5 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background: 'rgba(4,57,65,0.82)', backdropFilter: 'blur(8px)' }}>
+                    <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
+                    <span className="text-[9px] font-bold text-white">{SLIDE_LABELS[heroSlide]}</span>
                   </div>
                 </div>
               </div>
