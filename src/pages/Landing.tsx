@@ -147,7 +147,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
 
       <button
         className="absolute left-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
-        style={{ background: '#043941', color: '#02d47e' }}
+        style={{ background: '#043941', color: 'var(--grama-menta)' }}
         onMouseEnter={() => { speedRef.current = -4; pausedRef.current = false }}
         onMouseLeave={() => { speedRef.current = 0.7 }}
       >
@@ -156,7 +156,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
 
       <button
         className="absolute right-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
-        style={{ background: '#043941', color: '#02d47e' }}
+        style={{ background: '#043941', color: 'var(--grama-menta)' }}
         onMouseEnter={() => { speedRef.current = 4; pausedRef.current = false }}
         onMouseLeave={() => { speedRef.current = 0.7 }}
       >
@@ -193,7 +193,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
               <Tangram color={`hsl(${t.color})`} opacity={0.3} rotate={15} className="absolute -bottom-3 -right-3 w-20 h-20" />
             </div>
             <div className="p-4.5" style={{ padding: '14px 16px 16px' }}>
-              <h3 className="text-sm font-extrabold mb-1.5 leading-snug" style={{ color: '#043941' }}>{t.nombre}</h3>
+              <h3 className="text-sm font-extrabold mb-1.5 leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{t.nombre}</h3>
               <p className="text-xs leading-relaxed line-clamp-2 mb-3.5" style={{ color: '#64748b' }}>{t.descripcion}</p>
               <div className="flex items-center gap-3" style={{ color: '#94a3b8' }}>
                 <span className="flex items-center gap-1 text-[10px] font-semibold"><BookOpen size={10} /> 7 módulos</span>
@@ -311,7 +311,7 @@ function TallerModal({
             {/* Competencias */}
             {taller.competencias?.length > 0 && (
               <div>
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
+                <p className="overline-label font-extrabold mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
                   <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.2 7.8L9 2.5" stroke="#02d47e" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   Competencias que desarrollarás
                 </p>
@@ -319,7 +319,7 @@ function TallerModal({
                   {taller.competencias.slice(0, 4).map((c, i) => (
                     <div key={i} className="flex items-start gap-1.5 px-2 py-1.5 rounded-lg" style={{ background: '#f0faf5' }}>
                       <span className="h-1.5 w-1.5 rounded-full shrink-0 mt-1" style={{ background: '#02d47e' }} />
-                      <span className="text-[10px] leading-snug" style={{ color: '#043941' }}>{c}</span>
+                      <span className="text-[10px] leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{c}</span>
                     </div>
                   ))}
                 </div>
@@ -328,7 +328,7 @@ function TallerModal({
 
             {/* Ruta de aprendizaje */}
             <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] mb-2.5 flex items-center gap-2" style={{ color: '#02d47e' }}>
+              <p className="overline-label font-extrabold mb-2.5 flex items-center gap-2" style={{ color: 'var(--grama-menta)' }}>
                 <BookOpen size={11} /> Ruta de aprendizaje · 7 módulos · 150h
               </p>
               <div className="space-y-1.5">
@@ -339,7 +339,7 @@ function TallerModal({
                     style={{ background: '#f0faf5' }}
                   >
                     <span className="text-[10px] font-extrabold w-5 shrink-0 text-center" style={{ color: '#94a3b8' }}>M{i}</span>
-                    <span className="text-[11px] font-semibold flex-1" style={{ color: '#043941' }}>{m.nombre}</span>
+                    <span className="text-[11px] font-semibold flex-1" style={{ color: 'var(--grama-oscuro)' }}>{m.nombre}</span>
                     <span className="text-[10px] shrink-0 font-medium" style={{ color: '#94a3b8' }}>{m.horasTotal}h</span>
                   </div>
                 ))}
@@ -349,7 +349,7 @@ function TallerModal({
             {/* Equipamiento */}
             {bienes.length > 0 && (
               <div>
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] mb-2.5 flex items-center gap-2" style={{ color: '#02d47e' }}>
+                <p className="overline-label font-extrabold mb-2.5 flex items-center gap-2" style={{ color: 'var(--grama-menta)' }}>
                   <Wrench size={11} /> Equipamiento representativo
                 </p>
                 <div className="flex flex-wrap gap-1.5">
@@ -392,7 +392,7 @@ function TallerModal({
                 onClick={onPrev}
                 disabled={isFirst}
                 className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all hover:bg-opacity-80 disabled:opacity-30"
-                style={{ background: '#f0faf5', color: '#043941' }}
+                style={{ background: '#f0faf5', color: 'var(--grama-oscuro)' }}
               >
                 <ChevronLeft size={13} /> Anterior
               </button>
@@ -400,7 +400,7 @@ function TallerModal({
                 onClick={onNext}
                 disabled={isLast}
                 className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all hover:bg-opacity-80 disabled:opacity-30"
-                style={{ background: '#f0faf5', color: '#043941' }}
+                style={{ background: '#f0faf5', color: 'var(--grama-oscuro)' }}
               >
                 Siguiente <ChevronRight size={13} />
               </button>
@@ -461,7 +461,7 @@ export default function Landing() {
           </button>
           <nav className="hidden md:flex items-center gap-6">
             {NAV_LINKS.map(l => (
-              <a key={l.label} href={l.href} className="text-xs font-semibold transition-opacity hover:opacity-60" style={{ color: '#043941' }}>
+              <a key={l.label} href={l.href} className="text-xs font-semibold transition-opacity hover:opacity-60" style={{ color: 'var(--grama-oscuro)' }}>
                 {l.label}
               </a>
             ))}
@@ -471,7 +471,7 @@ export default function Landing() {
               <button
                 onClick={goToApp}
                 className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-opacity hover:opacity-90"
-                style={{ background: '#02d47e', color: '#043941' }}
+                style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
               >
                 Ir a la plataforma <ChevronRight size={13} />
               </button>
@@ -479,12 +479,12 @@ export default function Landing() {
               <button
                 onClick={() => navigate('/login')}
                 className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-opacity hover:opacity-90"
-                style={{ background: '#02d47e', color: '#043941' }}
+                style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
               >
                 Iniciar sesión <ChevronRight size={13} />
               </button>
             )}
-            <button className="md:hidden p-1.5 rounded-lg" onClick={() => setMobileMenuOpen(o => !o)} style={{ color: '#043941' }}>
+            <button className="md:hidden p-1.5 rounded-lg" onClick={() => setMobileMenuOpen(o => !o)} style={{ color: 'var(--grama-oscuro)' }}>
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
@@ -492,11 +492,11 @@ export default function Landing() {
         {mobileMenuOpen && (
           <div className="md:hidden border-t px-6 py-4 space-y-3" style={{ borderColor: 'rgba(4,57,65,0.08)', background: '#ffffff' }}>
             {NAV_LINKS.map(l => (
-              <a key={l.label} href={l.href} className="block text-sm font-semibold" style={{ color: '#043941' }} onClick={() => setMobileMenuOpen(false)}>
+              <a key={l.label} href={l.href} className="block text-sm font-semibold" style={{ color: 'var(--grama-oscuro)' }} onClick={() => setMobileMenuOpen(false)}>
                 {l.label}
               </a>
             ))}
-            <button onClick={() => navigate('/login')} className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-sm font-bold" style={{ background: '#02d47e', color: '#043941' }}>
+            <button onClick={() => navigate('/login')} className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-sm font-bold" style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}>
               Iniciar sesión <ChevronRight size={14} />
             </button>
           </div>
@@ -549,15 +549,15 @@ export default function Landing() {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 animate-fade-in-up stagger-1" style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.25)' }}>
                 <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
-                <span className="text-[10px] font-extrabold uppercase tracking-[0.14em]" style={{ color: '#02d47e' }}>
+                <span className="overline-label font-extrabold" style={{ color: 'var(--grama-menta)' }}>
                   Plataforma Nacional · Talleres EPT · MINEDU Perú
                 </span>
               </div>
 
-              <h1 className="font-extrabold text-white leading-[1.05] mb-6 animate-fade-in-up stagger-2" style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.4rem)', letterSpacing: '-0.03em' }}>
+              <h1 className="t-hero font-extrabold text-white leading-[1.05] mb-6 animate-fade-in-up stagger-2" style={{ letterSpacing: '-0.03em' }}>
                 Potenciamos la{' '}
                 <span className="relative inline-block">
-                  <span style={{ color: '#02d47e' }}>educación</span>
+                  <span style={{ color: 'var(--grama-menta)' }}>educación</span>
                 </span>
                 <br />técnica del Perú
               </h1>
@@ -570,7 +570,7 @@ export default function Landing() {
                 <button
                   onClick={isLoggedIn ? goToApp : () => navigate('/login')}
                   className="flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]"
-                  style={{ background: '#02d47e', color: '#043941' }}
+                  style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
                 >
                   {isLoggedIn ? 'Ir a la plataforma' : 'Comenzar ahora'}
                   <ArrowRight size={15} />
@@ -644,7 +644,7 @@ export default function Landing() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.07)' }}>
             {STATS.map(s => (
               <div key={s.value} className="flex flex-col items-center py-6 px-4" style={{ background: 'rgba(4,57,65,0.5)' }}>
-                <span className="font-extrabold leading-none mb-1.5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', color: '#02d47e' }}>{s.value}</span>
+                <span className="font-extrabold leading-none mb-1.5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', color: 'var(--grama-menta)' }}>{s.value}</span>
                 <span className="text-xs font-medium text-center" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.label}</span>
               </div>
             ))}
@@ -666,11 +666,11 @@ export default function Landing() {
             className="max-w-xl mb-16"
             style={{ opacity: featuresHeaderReveal.visible ? 1 : 0, transform: featuresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
           >
-            <span className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] mb-3" style={{ color: '#02d47e' }}>
+            <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-3" style={{ color: 'var(--grama-menta)' }}>
               <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
               ¿Por qué GRAMA?
             </span>
-            <h2 className="font-extrabold leading-tight mb-3" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', color: '#043941' }}>
+            <h2 className="t-h1 font-extrabold leading-tight mb-3" style={{ color: 'var(--grama-oscuro)' }}>
               El conocimiento no debería perderse
             </h2>
             <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
@@ -703,12 +703,12 @@ export default function Landing() {
                 <div className="relative z-10">
                   <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-6"
                     style={{ background: 'rgba(2,212,126,0.18)', border: '1px solid rgba(2,212,126,0.2)' }}>
-                    <f.icon size={22} style={{ color: '#02d47e' }} />
+                    <f.icon size={22} style={{ color: 'var(--grama-menta)' }} />
                   </div>
-                  <span className="text-[10px] font-extrabold uppercase tracking-[0.18em] mb-2 block" style={{ color: '#02d47e' }}>
+                  <span className="overline-label font-extrabold mb-2 block" style={{ color: 'var(--grama-menta)' }}>
                     {f.overline}
                   </span>
-                  <h3 className="text-base font-extrabold mb-3 leading-snug" style={{ color: '#043941' }}>{f.title}</h3>
+                  <h3 className="text-base font-extrabold mb-3 leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{f.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>{f.desc}</p>
                 </div>
               </div>
@@ -720,7 +720,7 @@ export default function Landing() {
             {PRODUCTS.map(p => (
               <div key={p.title} className="flex items-center gap-4 px-6 py-5" style={{ background: '#043941' }}>
                 <div className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.15)' }}>
-                  <p.icon size={17} style={{ color: '#02d47e' }} />
+                  <p.icon size={17} style={{ color: 'var(--grama-menta)' }} />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-white">{p.title}</p>
@@ -742,11 +742,11 @@ export default function Landing() {
             className="text-center max-w-2xl mx-auto mb-16"
             style={{ opacity: talleresHeaderReveal.visible ? 1 : 0, transform: talleresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
           >
-            <span className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] mb-3" style={{ color: '#02d47e' }}>
+            <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-3" style={{ color: 'var(--grama-menta)' }}>
               <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
               Especialidades disponibles
             </span>
-            <h2 className="font-extrabold leading-tight mb-3" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', color: '#043941' }}>
+            <h2 className="t-h1 font-extrabold leading-tight mb-3" style={{ color: 'var(--grama-oscuro)' }}>
               {talleresConfig.length} especialidades técnicas
             </h2>
             <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
@@ -781,11 +781,11 @@ export default function Landing() {
 
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] mb-3" style={{ color: '#02d47e' }}>
+            <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-3" style={{ color: 'var(--grama-menta)' }}>
               <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
               Para toda la comunidad
             </span>
-            <h2 className="font-extrabold leading-tight mb-3" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', color: '#043941' }}>
+            <h2 className="t-h1 font-extrabold leading-tight mb-3" style={{ color: 'var(--grama-oscuro)' }}>
               Diseñado para toda la comunidad EPT
             </h2>
             <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
@@ -809,7 +809,7 @@ export default function Landing() {
                 <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-5" style={{ background: c.bg }}>
                   <c.icon size={22} style={{ color: c.color }} />
                 </div>
-                <h3 className="text-base font-extrabold mb-2" style={{ color: '#043941' }}>{c.title}</h3>
+                <h3 className="text-base font-extrabold mb-2" style={{ color: 'var(--grama-oscuro)' }}>{c.title}</h3>
                 <p className="text-sm leading-relaxed flex-1 mb-5" style={{ color: '#64748b' }}>{c.desc}</p>
                 <button
                   onClick={c.action === 'app' ? goToApp : () => window.location.href = 'mailto:contacto@grama.pe'}
@@ -839,9 +839,9 @@ export default function Landing() {
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
               <div className="text-center md:text-left max-w-lg">
                 <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl mb-6" style={{ background: 'rgba(2,212,126,0.15)', border: '1px solid rgba(2,212,126,0.25)' }}>
-                  <CheckCircle size={22} style={{ color: '#02d47e' }} />
+                  <CheckCircle size={22} style={{ color: 'var(--grama-menta)' }} />
                 </div>
-                <h2 className="font-extrabold text-white mb-3" style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>
+                <h2 className="t-h1 font-extrabold text-white mb-3">
                   Tu taller ya está equipado.<br />Ahora falta que lo domines.
                 </h2>
                 <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
@@ -852,7 +852,7 @@ export default function Landing() {
                 <button
                   onClick={goToApp}
                   className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]"
-                  style={{ background: '#02d47e', color: '#043941' }}
+                  style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
                 >
                   Ingresar a la plataforma <ArrowRight size={15} />
                 </button>

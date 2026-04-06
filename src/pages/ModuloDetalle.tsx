@@ -91,7 +91,7 @@ export default function ModuloDetalle() {
     return (
       <div className="flex flex-col items-center justify-center h-96 gap-4">
         <Lock size={40} style={{ color: '#94a3b8' }} />
-        <h2 className="text-xl font-bold" style={{ color: '#043941' }}>
+        <h2 className="text-xl font-bold" style={{ color: 'var(--grama-oscuro)' }}>
           Módulo bloqueado
         </h2>
         <p className="text-sm text-center max-w-xs" style={{ color: '#045f6c' }}>
@@ -245,10 +245,10 @@ export default function ModuloDetalle() {
         <div className="flex items-start gap-4">
           <span className="text-4xl">{modulo.icon}</span>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: '#02d47e' }}>
+            <p className="overline-label font-semibold mb-1" style={{ color: 'var(--grama-menta)' }}>
               M{modulo.numero} · {modulo.fase.charAt(0).toUpperCase() + modulo.fase.slice(1)}
             </p>
-            <h1 className="text-3xl font-extrabold text-white mb-2">
+            <h1 className="t-h1 font-extrabold text-white mb-2">
               {modulo.nombre}
             </h1>
             <p className="text-sm max-w-2xl" style={{ color: 'rgba(255,255,255,0.65)' }}>
@@ -310,11 +310,11 @@ export default function ModuloDetalle() {
                       <span className="text-xs" style={{ color: '#94a3b8' }}>
                         {sub.numero}
                       </span>
-                      <span className="text-sm font-semibold" style={{ color: '#043941' }}>
+                      <span className="text-sm font-semibold" style={{ color: 'var(--grama-oscuro)' }}>
                         {sub.titulo}
                       </span>
                       {sub.phaseBadge && (
-                        <span className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: '#02d47e' }}>
+                        <span className="overline-label font-semibold" style={{ color: 'var(--grama-menta)' }}>
                           · {sub.phaseBadge}
                         </span>
                       )}
@@ -373,7 +373,7 @@ export default function ModuloDetalle() {
                                       style={{ background: conocenosOpen ? 'linear-gradient(135deg,#043941 0%,#045f6c 100%)' : '#f0fdf9' }}
                                     >
                                       <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: conocenosOpen ? 'rgba(2,212,126,0.2)' : '#d2ffe1' }}>
-                                        <School size={16} style={{ color: '#02d47e' }} />
+                                        <School size={16} style={{ color: 'var(--grama-menta)' }} />
                                       </div>
                                       <div className="flex-1 min-w-0">
                                         <p className="text-sm font-bold" style={{ color: conocenosOpen ? '#ffffff' : '#043941' }}>
@@ -384,7 +384,7 @@ export default function ModuloDetalle() {
                                         </p>
                                       </div>
                                       {conocenosOpen
-                                        ? <ChevronDown size={15} style={{ color: '#02d47e' }} />
+                                        ? <ChevronDown size={15} style={{ color: 'var(--grama-menta)' }} />
                                         : <ChevronRight size={15} style={{ color: '#045f6c' }} />
                                       }
                                     </button>
@@ -421,7 +421,7 @@ export default function ModuloDetalle() {
                                       style={{ background: estado.completed ? 'rgba(2,212,126,0.12)' : '#f1f5f9' }}
                                     >
                                       {estado.completed
-                                        ? <CheckCircle2 size={16} style={{ color: '#02d47e' }} />
+                                        ? <CheckCircle2 size={16} style={{ color: 'var(--grama-menta)' }} />
                                         : <ContentIcon size={16} style={{ color: '#64748b' }} />
                                       }
                                     </div>

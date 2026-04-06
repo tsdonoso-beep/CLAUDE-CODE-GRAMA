@@ -114,6 +114,12 @@
     --sh-lg: 0 8px 32px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.07);
     --sh-glow-btn: 0 4px 20px hsla(152, 100%, 38%, .35);
 
+    /* Brand-tinted shadows (use on white cards with dark brand context) */
+    --sh-brand-xs: 0 1px 4px rgba(4,57,65,0.08), 0 1px 2px rgba(4,57,65,0.05);
+    --sh-brand-sm: 0 2px 6px rgba(4,57,65,0.06), 0 1px 3px rgba(4,57,65,0.04);
+    --sh-brand-md: 0 4px 16px rgba(4,57,65,0.10), 0 2px 6px rgba(4,57,65,0.06);
+    --sh-brand-lg: 0 8px 32px rgba(4,57,65,0.14), 0 4px 12px rgba(4,57,65,0.08);
+
     /* ── Transitions ── */
     --tf: 140ms ease;
     --tn: 220ms ease;
@@ -350,6 +356,7 @@
   --t-body:     0.875rem;   /* 14px */
   --t-label:    0.75rem;    /* 12px */
   --t-overline: 0.6875rem;  /* 11px — minimum */
+  --t-hero:     clamp(2.6rem, 5.5vw, 4.4rem); /* Landing hero */
 
   /* Color tokens — light surface */
   --tc-primary:    #043941;
@@ -369,6 +376,7 @@
 .t-body     { font-size: var(--t-body);     line-height: 1.55; }
 .t-label    { font-size: var(--t-label);    line-height: 1.4;  font-weight: 600; }
 .t-overline { font-size: var(--t-overline); line-height: 1;    letter-spacing: 0.12em; font-weight: 700; text-transform: uppercase; }
+.t-hero     { font-size: var(--t-hero);     line-height: 1.0;  letter-spacing: -0.04em;   font-weight: 800; }
 
 /* ── Piezas flotantes del tangram ────────────────────────────────────────── */
 @keyframes floatA {

@@ -12,7 +12,7 @@ type Tab = 'login' | 'register'
 
 const INPUT_STYLE = {
   base: 'w-full px-4 py-3 rounded-xl border-2 text-sm outline-none transition-all',
-  colors: { borderColor: '#e3f8fb', color: '#043941', background: '#fafffe' },
+  colors: { borderColor: '#e3f8fb', color: 'var(--grama-oscuro)', background: '#fafffe' },
   focus: '#02d47e',
   blur: '#e3f8fb',
 }
@@ -106,14 +106,14 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
       )}
 
       <div>
-        <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+        <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
           Correo electrónico
         </label>
         <GramaInput id="email" type="email" autoComplete="email" value={email} onChange={setEmail} placeholder="docente@colegio.pe" required />
       </div>
 
       <div>
-        <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+        <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
           Contraseña
         </label>
         <div className="relative">
@@ -143,7 +143,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 
       <button type="submit" disabled={loading}
         className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all disabled:opacity-70"
-        style={{ background: '#02d47e' }}
+        style={{ background: 'var(--grama-menta)' }}
         onMouseEnter={e => !loading && ((e.target as HTMLButtonElement).style.background = '#00c16e')}
         onMouseLeave={e => !loading && ((e.target as HTMLButtonElement).style.background = '#02d47e')}>
         {loading ? 'Ingresando...' : 'Ingresar'}
@@ -227,9 +227,9 @@ function RegisterForm() {
     return (
       <div className="text-center py-6 space-y-4">
         <div className="flex justify-center">
-          <CheckCircle size={48} style={{ color: '#02d47e' }} />
+          <CheckCircle size={48} style={{ color: 'var(--grama-menta)' }} />
         </div>
-        <h3 className="font-bold text-lg" style={{ color: '#043941' }}>¡Registro exitoso!</h3>
+        <h3 className="font-bold text-lg" style={{ color: 'var(--grama-oscuro)' }}>¡Registro exitoso!</h3>
         <p className="text-sm" style={{ color: '#045f6c' }}>
           Revisa tu correo para confirmar tu cuenta y luego inicia sesión.
         </p>
@@ -246,21 +246,21 @@ function RegisterForm() {
       )}
 
       <div>
-        <label htmlFor="nombre" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+        <label htmlFor="nombre" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
           Nombre completo
         </label>
         <GramaInput id="nombre" value={nombre} onChange={setNombre} placeholder="Prof. Ana García" required />
       </div>
 
       <div>
-        <label htmlFor="reg-email" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+        <label htmlFor="reg-email" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
           Correo electrónico
         </label>
         <GramaInput id="reg-email" type="email" autoComplete="email" value={email} onChange={setEmail} placeholder="docente@colegio.pe" required />
       </div>
 
       <div>
-        <label htmlFor="reg-password" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+        <label htmlFor="reg-password" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
           Contraseña
         </label>
         <div className="relative">
@@ -280,7 +280,7 @@ function RegisterForm() {
       </div>
 
       <div>
-        <label htmlFor="ie" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+        <label htmlFor="ie" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
           Institución Educativa
         </label>
         <select
@@ -301,15 +301,15 @@ function RegisterForm() {
       {/* Taller asignado — aparece cuando se selecciona una IE */}
       {talleresDeIE.length > 0 && (
         <div>
-          <label htmlFor="taller" className="block text-sm font-semibold mb-2" style={{ color: '#043941' }}>
+          <label htmlFor="taller" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
             Taller asignado
           </label>
           {talleresDeIE.length === 1 ? (
             <div
               className="w-full px-4 py-3 rounded-xl border-2 text-sm font-semibold flex items-center gap-2"
-              style={{ borderColor: '#02d47e', color: '#043941', background: '#f0fdf9' }}
+              style={{ borderColor: 'var(--grama-menta)', color: 'var(--grama-oscuro)', background: '#f0fdf9' }}
             >
-              <CheckCircle size={15} style={{ color: '#02d47e' }} />
+              <CheckCircle size={15} style={{ color: 'var(--grama-menta)' }} />
               {talleresDeIE[0].nombre}
             </div>
           ) : (
@@ -331,7 +331,7 @@ function RegisterForm() {
 
       <button type="submit" disabled={loading}
         className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all disabled:opacity-70"
-        style={{ background: '#02d47e' }}
+        style={{ background: 'var(--grama-menta)' }}
         onMouseEnter={e => !loading && ((e.target as HTMLButtonElement).style.background = '#00c16e')}
         onMouseLeave={e => !loading && ((e.target as HTMLButtonElement).style.background = '#02d47e')}>
         {loading ? 'Registrando...' : 'Crear cuenta'}
@@ -348,7 +348,7 @@ export default function Login() {
   const tabBase = 'flex-1 py-2.5 text-sm font-bold transition-all rounded-lg'
 
   return (
-    <div className="min-h-screen flex" style={{ background: '#043941' }}>
+    <div className="min-h-screen flex" style={{ background: 'var(--grama-oscuro)' }}>
 
       {/* ── Botón volver al landing ── */}
       <button
@@ -372,11 +372,11 @@ export default function Login() {
         <div className="relative z-10 text-center max-w-sm">
           <div className="flex justify-center mb-8"><GramaLogo variant="light" size="lg" /></div>
           <h2 className="text-2xl font-extrabold text-white mb-3">Plataforma de Capacitación Docente</h2>
-          <p className="text-sm font-medium" style={{ color: '#02d47e' }}>Talleres EPT · Programa MSE-SFT · MINEDU Perú</p>
+          <p className="text-sm font-medium" style={{ color: 'var(--grama-menta)' }}>Talleres EPT · Programa MSE-SFT · MINEDU Perú</p>
           <div className="mt-10 grid grid-cols-3 gap-4">
             {[{ value: '9', label: 'Talleres EPT' }, { value: '150h', label: 'de capacitación' }, { value: '7', label: 'módulos' }].map(s => (
               <div key={s.label} className="text-center">
-                <p className="text-2xl font-extrabold" style={{ color: '#02d47e' }}>{s.value}</p>
+                <p className="text-2xl font-extrabold" style={{ color: 'var(--grama-menta)' }}>{s.value}</p>
                 <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{s.label}</p>
               </div>
             ))}
@@ -388,7 +388,7 @@ export default function Login() {
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
         <div className="lg:hidden mb-8 text-center">
           <GramaLogo variant="light" size="md" className="mx-auto mb-3" />
-          <p className="text-xs font-medium" style={{ color: '#02d47e' }}>Plataforma de Capacitación Docente</p>
+          <p className="text-xs font-medium" style={{ color: 'var(--grama-menta)' }}>Plataforma de Capacitación Docente</p>
         </div>
 
         <div className="w-full max-w-sm">
@@ -399,7 +399,7 @@ export default function Login() {
                 onClick={() => setTab('login')}
                 className={tabBase}
                 style={tab === 'login'
-                  ? { background: '#ffffff', color: '#043941', boxShadow: '0 1px 4px rgba(4,57,65,0.12)' }
+                  ? { background: '#ffffff', color: 'var(--grama-oscuro)', boxShadow: 'var(--sh-brand-sm)' }
                   : { color: '#045f6c' }}>
                 Ingresar
               </button>
@@ -407,7 +407,7 @@ export default function Login() {
                 onClick={() => setTab('register')}
                 className={tabBase}
                 style={tab === 'register'
-                  ? { background: '#ffffff', color: '#043941', boxShadow: '0 1px 4px rgba(4,57,65,0.12)' }
+                  ? { background: '#ffffff', color: 'var(--grama-oscuro)', boxShadow: 'var(--sh-brand-sm)' }
                   : { color: '#045f6c' }}>
                 Regístrate
               </button>
@@ -417,13 +417,13 @@ export default function Login() {
             <div className="p-8" style={{ background: '#ffffff' }}>
               {tab === 'login' ? (
                 <>
-                  <h1 className="text-2xl font-extrabold mb-1" style={{ color: '#043941' }}>Iniciar sesión</h1>
+                  <h1 className="text-2xl font-extrabold mb-1" style={{ color: 'var(--grama-oscuro)' }}>Iniciar sesión</h1>
                   <p className="text-sm mb-8" style={{ color: '#045f6c' }}>Ingresa tus credenciales para acceder</p>
                   <LoginForm onSuccess={() => navigate('/perfil')} />
                 </>
               ) : (
                 <>
-                  <h1 className="text-2xl font-extrabold mb-1" style={{ color: '#043941' }}>Crear cuenta</h1>
+                  <h1 className="text-2xl font-extrabold mb-1" style={{ color: 'var(--grama-oscuro)' }}>Crear cuenta</h1>
                   <p className="text-sm mb-6" style={{ color: '#045f6c' }}>Regístrate con los datos de tu taller</p>
                   <RegisterForm />
                 </>

@@ -35,10 +35,10 @@ export default function RutaAprendizaje() {
       {/* ── Hero ── */}
       <div className="px-8 py-10 grama-pattern" style={{ background: '#043941' }}>
         <div className="max-w-4xl">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#02d47e' }}>
+          <p className="overline-label font-semibold mb-2" style={{ color: 'var(--grama-menta)' }}>
             {taller.nombreCorto}
           </p>
-          <h1 className="text-3xl font-extrabold text-white mb-3 leading-tight">
+          <h1 className="text-h1 font-extrabold text-white mb-3 leading-tight">
             Tu Ruta de Aprendizaje
           </h1>
           <p className="text-sm mb-6 max-w-2xl" style={{ color: 'rgba(255,255,255,0.65)' }}>
@@ -69,7 +69,7 @@ export default function RutaAprendizaje() {
       <div className="p-6 grid lg:grid-cols-3 gap-6">
         {/* Timeline de módulos (2/3) */}
         <div className="lg:col-span-2">
-          <h2 className="text-sm font-extrabold mb-6" style={{ color: '#043941' }}>
+          <h2 className="text-h3 font-extrabold mb-6" style={{ color: 'var(--grama-oscuro)' }}>
             Secuencia de módulos
           </h2>
 
@@ -102,7 +102,7 @@ export default function RutaAprendizaje() {
         <div className="space-y-5">
           {/* Progress ring */}
           <div className="p-5 rounded-2xl border-2 text-center" style={{ borderColor: '#e3f8fb', background: '#ffffff' }}>
-            <h3 className="text-sm font-extrabold mb-4" style={{ color: '#043941' }}>Progreso general</h3>
+            <h3 className="text-sm font-extrabold mb-4" style={{ color: 'var(--grama-oscuro)' }}>Progreso general</h3>
             <div className="flex justify-center mb-3">
               <ProgressRing
                 percentage={progresoTaller.porcentaje}
@@ -148,7 +148,7 @@ export default function RutaAprendizaje() {
 
           {/* Resumen de horas */}
           <div className="p-4 rounded-2xl border-2" style={{ borderColor: '#e3f8fb', background: '#ffffff' }}>
-            <h3 className="text-sm font-extrabold mb-3" style={{ color: '#043941' }}>
+            <h3 className="text-sm font-extrabold mb-3" style={{ color: 'var(--grama-oscuro)' }}>
               Desglose de horas
             </h3>
             <div className="space-y-2">
@@ -158,15 +158,15 @@ export default function RutaAprendizaje() {
                 { label: 'Presencial', hours: modulosLXP.reduce((a, m) => a + m.horasPresencial, 0), color: '#d2ffe1', text: '#00c16e' },
               ].map(h => (
                 <div key={h.label} className="flex items-center justify-between text-xs">
-                  <span className="font-medium" style={{ color: '#043941' }}>{h.label}</span>
+                  <span className="font-medium" style={{ color: 'var(--grama-oscuro)' }}>{h.label}</span>
                   <span className="font-extrabold px-2.5 py-0.5 rounded-full" style={{ background: h.color, color: h.text }}>
                     {h.hours}h
                   </span>
                 </div>
               ))}
               <div className="flex items-center justify-between text-xs pt-2 border-t" style={{ borderColor: '#e3f8fb' }}>
-                <span className="font-bold" style={{ color: '#043941' }}>Total</span>
-                <span className="font-extrabold" style={{ color: '#02d47e' }}>
+                <span className="font-bold" style={{ color: 'var(--grama-oscuro)' }}>Total</span>
+                <span className="font-extrabold" style={{ color: 'var(--grama-menta)' }}>
                   {modulosLXP.reduce((a, m) => a + m.horasTotal, 0)}h
                 </span>
               </div>

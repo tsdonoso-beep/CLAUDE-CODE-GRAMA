@@ -100,7 +100,7 @@ export default function TallerHub() {
           {/* Overline */}
           <div className="flex items-center gap-2 mb-5 animate-fade-in-up">
             <div
-              className="flex items-center gap-2 h-6 px-3 rounded-full text-[10px] font-extrabold tracking-[0.12em] uppercase"
+              className="flex items-center gap-2 h-6 px-3 rounded-full overline-label font-extrabold"
               style={{
                 background: `${accent}18`,
                 border: `1px solid ${accent}35`,
@@ -116,8 +116,8 @@ export default function TallerHub() {
             {/* Left */}
             <div>
               <h1
-                className="font-extrabold text-white leading-tight mb-3 animate-fade-in-up stagger-1"
-                style={{ fontSize: 'clamp(1.9rem, 4vw, 3rem)', letterSpacing: '-0.02em' }}
+                className="text-display font-extrabold text-white leading-tight mb-3 animate-fade-in-up stagger-1"
+                style={{ letterSpacing: '-0.02em' }}
               >
                 {taller.nombre}
               </h1>
@@ -164,7 +164,7 @@ export default function TallerHub() {
                 minWidth: 160,
               }}
             >
-              <p className="text-[10px] font-bold uppercase tracking-wider text-white/50">Tu progreso</p>
+              <p className="overline-label font-bold text-white/50">Tu progreso</p>
               <ProgressRing
                 percentage={progresoTaller.porcentaje}
                 size={80}
@@ -197,7 +197,7 @@ export default function TallerHub() {
               style={{
                 borderColor: 'rgba(4,57,65,0.08)',
                 background: 'rgba(4,57,65,0.05)',
-                boxShadow: '0 2px 6px rgba(4,57,65,0.06)',
+                boxShadow: 'var(--sh-brand-sm)',
               }}
             >
               <div className="flex items-center gap-2.5">
@@ -208,7 +208,7 @@ export default function TallerHub() {
                   <Layers size={15} style={{ color: accent }} />
                 </div>
                 <div>
-                  <h2 className="text-h3 font-extrabold" style={{ color: '#043941' }}>
+                  <h2 className="text-h3 font-extrabold" style={{ color: 'var(--grama-oscuro)' }}>
                     Tu Ruta de Aprendizaje
                   </h2>
                   <p className="text-[10px]" style={{ color: 'rgba(4,57,65,0.45)' }}>
@@ -269,7 +269,7 @@ export default function TallerHub() {
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
-                      <p className="font-bold text-sm" style={{ color: '#043941' }}>
+                      <p className="font-bold text-sm" style={{ color: 'var(--grama-oscuro)' }}>
                         {modulo.nombre}
                       </p>
                       <p className="text-[11px] mt-0.5" style={{ color: 'rgba(4,57,65,0.45)' }}>
@@ -296,7 +296,7 @@ export default function TallerHub() {
                 onClick={() => navigate(`/taller/${slug}/ruta`)}
                 className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all"
                 style={{
-                  color: '#043941',
+                  color: 'var(--grama-oscuro)',
                   border: `1px solid rgba(4,57,65,0.1)`,
                   background: 'rgba(4,57,65,0.03)',
                 }}
@@ -327,16 +327,16 @@ export default function TallerHub() {
               style={{
                 borderColor: 'rgba(4,57,65,0.08)',
                 background: 'rgba(4,57,65,0.05)',
-                boxShadow: '0 2px 6px rgba(4,57,65,0.06)',
+                boxShadow: 'var(--sh-brand-sm)',
               }}
             >
               <div className="flex items-center gap-2.5">
                 <div className="h-8 w-8 rounded-lg flex items-center justify-center"
                   style={{ background: 'rgba(2,212,126,0.12)' }}>
-                  <Package size={15} style={{ color: '#02d47e' }} />
+                  <Package size={15} style={{ color: 'var(--grama-menta)' }} />
                 </div>
                 <div>
-                  <h2 className="text-h3 font-extrabold" style={{ color: '#043941' }}>
+                  <h2 className="text-h3 font-extrabold" style={{ color: 'var(--grama-oscuro)' }}>
                     Repositorio de Recursos
                   </h2>
                   <p className="text-[10px]" style={{ color: 'rgba(4,57,65,0.45)' }}>
@@ -347,7 +347,7 @@ export default function TallerHub() {
               <button
                 onClick={() => navigate(`/taller/${slug}/repositorio`)}
                 className="flex items-center gap-1 text-xs font-bold"
-                style={{ color: '#02d47e' }}
+                style={{ color: 'var(--grama-menta)' }}
               >
                 Ver repositorio <ChevronRight size={13} />
               </button>
@@ -408,7 +408,7 @@ export default function TallerHub() {
             className="lg:hidden p-5 rounded-2xl border text-center animate-fade-in-up stagger-1"
             style={{ borderColor: 'rgba(4,57,65,0.08)', background: '#ffffff' }}
           >
-            <h3 className="text-xs font-extrabold mb-4" style={{ color: '#043941' }}>Tu progreso</h3>
+            <h3 className="text-xs font-extrabold mb-4" style={{ color: 'var(--grama-oscuro)' }}>Tu progreso</h3>
             <div className="flex justify-center mb-2">
               <ProgressRing
                 percentage={progresoTaller.porcentaje}
@@ -470,8 +470,8 @@ export default function TallerHub() {
             className="rounded-2xl overflow-hidden animate-fade-in-up stagger-4"
             style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}
           >
-            <div className="px-4 py-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.08)', background: 'rgba(4,57,65,0.05)', boxShadow: '0 2px 6px rgba(4,57,65,0.06)' }}>
-              <p className="text-[10px] font-extrabold uppercase tracking-wider" style={{ color: 'rgba(4,57,65,0.4)' }}>
+            <div className="px-4 py-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.08)', background: 'rgba(4,57,65,0.05)', boxShadow: 'var(--sh-brand-sm)' }}>
+              <p className="overline-label font-extrabold" style={{ color: 'rgba(4,57,65,0.4)' }}>
                 Acceso rápido
               </p>
             </div>
@@ -492,7 +492,7 @@ export default function TallerHub() {
                     <item.icon size={14} style={{ color: item.color }} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-xs font-bold" style={{ color: '#043941' }}>{item.label}</p>
+                    <p className="text-xs font-bold" style={{ color: 'var(--grama-oscuro)' }}>{item.label}</p>
                     <p className="text-[10px]" style={{ color: 'rgba(4,57,65,0.4)' }}>{item.sub}</p>
                   </div>
                   <Zap size={11} style={{ color: 'rgba(4,57,65,0.2)' }} />

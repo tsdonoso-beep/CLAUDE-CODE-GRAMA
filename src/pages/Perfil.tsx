@@ -91,7 +91,7 @@ function SectionHeader({
       style={{
         borderColor: 'rgba(4,57,65,0.08)',
         background: 'rgba(4,57,65,0.05)',
-        boxShadow: '0 2px 6px rgba(4,57,65,0.06)',
+        boxShadow: 'var(--sh-brand-sm)',
       }}
     >
       <div className="flex items-center gap-2.5">
@@ -102,7 +102,7 @@ function SectionHeader({
           <Icon size={15} style={{ color: iconColor }} />
         </div>
         <div>
-          <h2 className="text-h3 font-extrabold leading-tight" style={{ color: '#043941' }}>{title}</h2>
+          <h2 className="text-h3 font-extrabold leading-tight" style={{ color: 'var(--grama-oscuro)' }}>{title}</h2>
           {subtitle && (
             <p className="text-xs mt-0.5" style={{ color: 'rgba(4,57,65,0.45)' }}>{subtitle}</p>
           )}
@@ -187,7 +187,7 @@ export default function Perfil() {
                 <button
                   onClick={() => navigate('/admin')}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
-                  style={{ background: 'rgba(2,212,126,0.14)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.25)' }}
+                  style={{ background: 'rgba(2,212,126,0.14)', color: 'var(--grama-menta)', border: '1px solid rgba(2,212,126,0.25)' }}
                 >
                   <Shield size={12} />
                   Panel de Admin
@@ -240,7 +240,7 @@ export default function Perfil() {
                   style={{
                     background: 'linear-gradient(135deg, rgba(2,212,126,0.22) 0%, rgba(4,95,108,0.38) 100%)',
                     border: `2px solid ${accent}40`,
-                    color: '#02d47e',
+                    color: 'var(--grama-menta)',
                     boxShadow: `0 0 32px ${accent}18, inset 0 1px 0 rgba(255,255,255,0.1)`,
                     letterSpacing: '-0.02em',
                     backdropFilter: 'blur(8px)',
@@ -253,7 +253,7 @@ export default function Perfil() {
                     className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full flex items-center justify-center z-20"
                     style={{ background: '#02d47e', border: '2px solid rgba(4,10,20,0.8)', boxShadow: '0 2px 8px rgba(2,212,126,0.45)' }}
                   >
-                    <Shield size={11} style={{ color: '#043941' }} />
+                    <Shield size={11} style={{ color: 'var(--grama-oscuro)' }} />
                   </div>
                 )}
               </div>
@@ -263,7 +263,7 @@ export default function Perfil() {
                 {/* Overline badge */}
                 <div className="flex items-center gap-2 mb-2.5">
                   <span
-                    className="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-2.5 py-1 rounded-full tracking-[0.12em] uppercase"
+                    className="inline-flex items-center gap-1.5 overline-label font-extrabold px-2.5 py-1 rounded-full"
                     style={{
                       background: `${accent}18`,
                       border: `1px solid ${accent}35`,
@@ -283,7 +283,7 @@ export default function Perfil() {
                     <button
                       onClick={() => navigate('/admin')}
                       className="hidden sm:flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full transition-opacity hover:opacity-80"
-                      style={{ background: 'rgba(2,212,126,0.14)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.25)' }}
+                      style={{ background: 'rgba(2,212,126,0.14)', color: 'var(--grama-menta)', border: '1px solid rgba(2,212,126,0.25)' }}
                     >
                       <Shield size={10} />
                       Panel de Admin
@@ -292,8 +292,8 @@ export default function Perfil() {
                 </div>
 
                 <h1
-                  className="font-extrabold text-white leading-tight mb-2 animate-fade-in-up stagger-1"
-                  style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)', letterSpacing: '-0.025em' }}
+                  className="t-display font-extrabold text-white leading-tight mb-2 animate-fade-in-up stagger-1"
+                  style={{ letterSpacing: '-0.025em' }}
                 >
                   Hola, {firstName}
                 </h1>
@@ -335,7 +335,7 @@ export default function Perfil() {
                 className="hidden lg:flex flex-col items-center gap-3 p-5 rounded-2xl animate-fade-in-up stagger-4"
                 style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.1)', minWidth: 156 }}
               >
-                <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.5)' }}>Tu progreso</p>
+                <p className="overline-label font-bold" style={{ color: 'rgba(255,255,255,0.5)' }}>Tu progreso</p>
                 <ProgressRing percentage={progreso.porcentaje} size={88} label={`${progreso.completados}/${progreso.total}`} sublabel="actividades" dark />
                 <p className="text-[10px] text-center" style={{ color: 'rgba(255,255,255,0.4)' }}>{progreso.porcentaje}% completado</p>
               </div>
@@ -344,7 +344,7 @@ export default function Perfil() {
                 className="hidden lg:flex flex-col gap-2.5 p-4 rounded-2xl animate-fade-in-up stagger-4"
                 style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.1)', minWidth: 220 }}
               >
-                <p className="text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>Mis talleres</p>
+                <p className="overline-label font-bold mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>Mis talleres</p>
                 {tallerSlugsAccesibles.map(s => {
                   const t = talleresConfig.find(x => x.slug === s)
                   if (!t) return null
@@ -390,7 +390,7 @@ export default function Perfil() {
               className="lg:hidden p-5 rounded-2xl border text-center animate-fade-in-up"
               style={{ borderColor: 'rgba(4,57,65,0.08)', background: '#ffffff' }}
             >
-              <h3 className="text-xs font-extrabold mb-4" style={{ color: '#043941' }}>Tu progreso</h3>
+              <h3 className="text-xs font-extrabold mb-4" style={{ color: 'var(--grama-oscuro)' }}>Tu progreso</h3>
               <div className="flex justify-center mb-2">
                 <ProgressRing
                   percentage={progreso.porcentaje}
@@ -440,7 +440,7 @@ export default function Perfil() {
                           style={{ background: `${ta}18`, color: ta, border: `1px solid ${ta}25` }}>
                           T{String(t.numero).padStart(2, '0')}
                         </span>
-                        <p className="text-sm font-extrabold uppercase tracking-wide" style={{ color: '#043941', letterSpacing: '0.04em' }}>
+                        <p className="text-sm font-extrabold uppercase tracking-wide" style={{ color: 'var(--grama-oscuro)', letterSpacing: '0.04em' }}>
                           {t.nombre}
                         </p>
                       </div>
@@ -460,12 +460,12 @@ export default function Perfil() {
                       <div className="flex gap-2.5">
                         <button onClick={() => navigate(`/taller/${t.slug}`)}
                           className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold transition-opacity hover:opacity-90"
-                          style={{ background: '#043941', color: '#02d47e' }}>
+                          style={{ background: '#043941', color: 'var(--grama-menta)' }}>
                           <Play size={14} /> Continuar Ruta
                         </button>
                         <button onClick={() => navigate(`/taller/${t.slug}/repositorio`)}
                           className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-opacity hover:opacity-80"
-                          style={{ background: 'rgba(4,57,65,0.05)', color: '#043941', border: '1px solid rgba(4,57,65,0.1)' }}>
+                          style={{ background: 'rgba(4,57,65,0.05)', color: 'var(--grama-oscuro)', border: '1px solid rgba(4,57,65,0.1)' }}>
                           <Package size={13} /> Repositorio
                         </button>
                       </div>
@@ -490,9 +490,9 @@ export default function Perfil() {
                   className="inline-flex h-14 w-14 rounded-2xl items-center justify-center mb-4"
                   style={{ background: 'rgba(2,212,126,0.08)', border: '1px solid rgba(2,212,126,0.15)' }}
                 >
-                  <Layers size={24} style={{ color: '#02d47e' }} />
+                  <Layers size={24} style={{ color: 'var(--grama-menta)' }} />
                 </div>
-                <p className="text-sm font-bold mb-1.5" style={{ color: '#043941' }}>
+                <p className="text-sm font-bold mb-1.5" style={{ color: 'var(--grama-oscuro)' }}>
                   Aún no tienes taller asignado
                 </p>
                 <p className="text-xs leading-relaxed mb-4" style={{ color: '#94a3b8' }}>
@@ -501,7 +501,7 @@ export default function Perfil() {
                 <a
                   href="mailto:soporte@grama.pe"
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-opacity hover:opacity-90"
-                  style={{ background: '#02d47e', color: '#043941' }}
+                  style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
                 >
                   Contactar soporte <ArrowRight size={12} />
                 </a>
@@ -520,7 +520,7 @@ export default function Perfil() {
               subtitle={`${talleresConfig.length} talleres disponibles · Programa MSE-SFT`}
               iconColor="#045f6c"
               action={
-                <span className="text-[10px] font-bold" style={{ color: '#02d47e' }}>
+                <span className="text-[10px] font-bold" style={{ color: 'var(--grama-menta)' }}>
                   {talleresConfig.length} disponibles
                 </span>
               }
@@ -531,7 +531,7 @@ export default function Perfil() {
               <div className="px-5 py-3.5 border-b" style={{ borderColor: 'rgba(4,57,65,0.07)', background: 'rgba(4,57,65,0.025)' }}>
                 <p className="text-xs leading-relaxed" style={{ color: 'rgba(4,57,65,0.72)' }}>
                   Estos son los talleres de educación para el trabajo especializados disponibles en nuestra plataforma. Si deseas más información, escríbenos a{' '}
-                  <a href="mailto:contacto@grama.pe" className="font-semibold transition-opacity hover:opacity-70" style={{ color: '#02d47e' }}>
+                  <a href="mailto:contacto@grama.pe" className="font-semibold transition-opacity hover:opacity-70" style={{ color: 'var(--grama-menta)' }}>
                     contacto@grama.pe
                   </a>
                 </p>
@@ -613,10 +613,10 @@ export default function Perfil() {
                     <item.Icon size={13} style={{ color: '#045f6c' }} />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-[10px] font-extrabold uppercase tracking-widest mb-0.5" style={{ color: '#b0c4ca' }}>
+                    <p className="overline-label font-extrabold mb-0.5" style={{ color: '#b0c4ca' }}>
                       {item.label}
                     </p>
-                    <p className="text-sm font-bold leading-snug break-words" style={{ color: '#043941' }}>
+                    <p className="text-sm font-bold leading-snug break-words" style={{ color: 'var(--grama-oscuro)' }}>
                       {item.value}
                     </p>
                     {item.sub && (
@@ -670,7 +670,7 @@ export default function Perfil() {
                       <item.Icon size={15} style={{ color: item.color }} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold leading-none mb-0.5" style={{ color: '#043941' }}>{item.label}</p>
+                      <p className="text-sm font-bold leading-none mb-0.5" style={{ color: 'var(--grama-oscuro)' }}>{item.label}</p>
                       <p className="text-xs" style={{ color: '#94a3b8' }}>{item.sub}</p>
                     </div>
                     <ChevronRight size={13} style={{ color: 'rgba(4,57,65,0.2)' }} />
@@ -715,7 +715,7 @@ export default function Perfil() {
                 <button
                   onClick={() => navigate(`/taller/${taller.slug}`)}
                   className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-opacity hover:opacity-90"
-                  style={{ background: '#02d47e', color: '#043941' }}
+                  style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
                 >
                   Continuar aprendizaje <ArrowRight size={12} />
                 </button>
@@ -723,7 +723,7 @@ export default function Perfil() {
                 <a
                   href="mailto:soporte@grama.pe"
                   className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-opacity hover:opacity-90"
-                  style={{ background: '#02d47e', color: '#043941' }}
+                  style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
                 >
                   Contáctanos <ArrowRight size={12} />
                 </a>
