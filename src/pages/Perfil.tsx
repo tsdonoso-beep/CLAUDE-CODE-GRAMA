@@ -148,8 +148,46 @@ export default function Perfil() {
   return (
     <div className="min-h-screen" style={{ fontFamily: "'Manrope', sans-serif", background: '#f0faf5' }}>
 
+      {/* ── Navbar sticky — fuera del overflow-hidden ── */}
+      <div className="sticky top-0 z-30 border-b" style={{ borderColor: 'rgba(4,57,65,0.08)', background: 'rgba(240,250,245,0.92)', backdropFilter: 'blur(12px)' }}>
+        <div className="max-w-7xl mx-auto px-8 flex items-center justify-between" style={{ height: 52 }}>
+          <button onClick={() => navigate('/')} className="transition-opacity hover:opacity-75">
+            <GramaLogo variant="dark" size="sm" />
+          </button>
+          <div className="flex items-center gap-2">
+            {isAdmin && (
+              <button
+                onClick={() => navigate('/admin')}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
+                style={{ background: 'rgba(2,212,126,0.14)', color: '#02a05a', border: '1px solid rgba(2,212,126,0.25)' }}
+              >
+                <Shield size={12} />
+                Panel de Admin
+              </button>
+            )}
+            {taller && !isAdmin && (
+              <button
+                onClick={() => navigate(`/taller/${taller.slug}`)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
+                style={{ background: 'rgba(4,57,65,0.07)', color: 'var(--grama-oscuro)', border: '1px solid rgba(4,57,65,0.12)' }}
+              >
+                Ir a mi taller <ChevronRight size={12} />
+              </button>
+            )}
+            <button
+              onClick={() => signOut()}
+              className="flex items-center gap-1.5 text-xs font-medium transition-opacity hover:opacity-60 px-2 py-1.5"
+              style={{ color: 'rgba(4,57,65,0.35)' }}
+            >
+              <LogOut size={12} />
+              Salir
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* ══ HERO ══════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ background: '#f0faf5', minHeight: 300 }}>
+      <section className="relative overflow-hidden" style={{ background: '#f0faf5', minHeight: 260 }}>
 
         {/* Patrón GRAMA */}
         <div className="absolute inset-0 grama-pattern opacity-60" />
@@ -174,44 +212,6 @@ export default function Perfil() {
         <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-c" style={{ width:52, height:26, top:'62%', right:'10%', animationDuration:'18s' }}>
           <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.07} />
         </svg>
-
-        {/* ── Navbar integrada en el hero — sticky ── */}
-        <div className="sticky top-0 z-20 border-b" style={{ borderColor: 'rgba(4,57,65,0.08)', background: 'rgba(240,250,245,0.92)', backdropFilter: 'blur(12px)' }}>
-          <div className="max-w-7xl mx-auto px-8 flex items-center justify-between" style={{ height: 52 }}>
-            <button onClick={() => navigate('/')} className="transition-opacity hover:opacity-75">
-              <GramaLogo variant="dark" size="sm" />
-            </button>
-            <div className="flex items-center gap-2">
-              {isAdmin && (
-                <button
-                  onClick={() => navigate('/admin')}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
-                  style={{ background: 'rgba(2,212,126,0.14)', color: '#02a05a', border: '1px solid rgba(2,212,126,0.25)' }}
-                >
-                  <Shield size={12} />
-                  Panel de Admin
-                </button>
-              )}
-              {taller && !isAdmin && (
-                <button
-                  onClick={() => navigate(`/taller/${taller.slug}`)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
-                  style={{ background: 'rgba(4,57,65,0.07)', color: 'var(--grama-oscuro)', border: '1px solid rgba(4,57,65,0.12)' }}
-                >
-                  Ir a mi taller <ChevronRight size={12} />
-                </button>
-              )}
-              <button
-                onClick={() => signOut()}
-                className="flex items-center gap-1.5 text-xs font-medium transition-opacity hover:opacity-60 px-2 py-1.5"
-                style={{ color: 'rgba(4,57,65,0.35)' }}
-              >
-                <LogOut size={12} />
-                Salir
-              </button>
-            </div>
-          </div>
-        </div>
 
         {/* ── Hero content: horizontal layout ── */}
         <div className="relative z-10 max-w-7xl mx-auto px-8 pt-8 pb-10">
