@@ -712,32 +712,32 @@ export default function Landing() {
         {/* Orb oscuro esquina inferior derecha */}
         <div className="absolute pointer-events-none" style={{ width: 480, height: 480, background: 'radial-gradient(circle, rgba(4,57,65,0.07) 0%, transparent 65%)', right: -80, bottom: -80 }} />
 
-        {/* Tangrams fijos — mezcla verde oscuro + menta */}
-        <Tangram color="#043941" opacity={0.14} rotate={15}  className="absolute w-[26rem] h-[26rem] -top-10 -right-10" />
-        <Tangram color="#043941" opacity={0.12} rotate={-20} className="absolute w-80 h-80 bottom-4 -left-10" />
-        <Tangram color="#02d47e" opacity={0.12} rotate={45}  className="absolute w-60 h-60 top-1/2 left-1/3" />
+        {/* Tangrams fijos */}
+        <Tangram color="#02d47e" opacity={0.18} rotate={15}  className="absolute w-[26rem] h-[26rem] -top-10 -right-10" />
+        <Tangram color="#02d47e" opacity={0.14} rotate={-20} className="absolute w-80 h-80 bottom-4 -left-10" />
+        <Tangram color="#043941" opacity={0.07} rotate={45}  className="absolute w-60 h-60 top-1/2 left-1/3" />
 
-        {/* Piezas flotantes — más oscuras */}
+        {/* Piezas flotantes */}
         <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:78, height:78, top:'12%', left:'6%', animationDuration:'14s' }}>
-          <polygon points="0,80 40,0 80,80" fill="#043941" fillOpacity={0.18} />
+          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.20} />
         </svg>
         <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:56, height:56, top:'48%', left:'12%', animationDuration:'18s' }}>
-          <polygon points="30,0 60,60 0,60" fill="#043941" fillOpacity={0.14} />
+          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.13} />
         </svg>
         <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:48, height:48, top:'6%', left:'40%', animationDuration:'11s' }}>
           <rect x="4" y="4" width="42" height="42" transform="rotate(20 25 25)" fill="#02d47e" fillOpacity={0.16} />
         </svg>
         <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:44, height:44, top:'20%', right:'20%', animationDuration:'9s' }}>
-          <polygon points="25,0 50,50 0,50" fill="#043941" fillOpacity={0.13} />
+          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.18} />
         </svg>
         <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-a" style={{ width:70, height:36, top:'58%', right:'15%', animationDuration:'16s' }}>
-          <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.12} />
+          <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.10} />
         </svg>
         <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-b" style={{ width:64, height:64, bottom:'15%', right:'6%', animationDuration:'13s' }}>
           <polygon points="0,0 80,40 0,80" fill="#02d47e" fillOpacity={0.15} />
         </svg>
         <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-c" style={{ width:40, height:40, bottom:'28%', left:'30%', animationDuration:'21s' }}>
-          <polygon points="20,0 40,40 0,40" fill="#043941" fillOpacity={0.16} />
+          <polygon points="20,0 40,40 0,40" fill="#043941" fillOpacity={0.10} />
         </svg>
 
         {/* Franja oscura al pie — ancla visual */}
@@ -869,6 +869,29 @@ export default function Landing() {
 
         {/* Marquee tickers */}
         <TalleresMarquee />
+
+        {/* Banda oscura base del hero */}
+        <div className="relative" style={{ background: '#043941', padding: '28px 0' }}>
+          <div className="absolute inset-0 grama-pattern opacity-20" />
+          <div className="relative z-10 max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-6">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-widest mb-1" style={{ color: 'rgba(2,212,126,0.6)' }}>Plataforma GRAMA</p>
+              <p className="text-sm font-semibold text-white" style={{ color: 'rgba(255,255,255,0.75)' }}>Diseñada para docentes EPT del Perú — accesible, técnica y certificada.</p>
+            </div>
+            <div className="flex items-center gap-6">
+              {[
+                { value: '9', label: 'Talleres EPT' },
+                { value: '150h', label: 'formación' },
+                { value: '7', label: 'módulos' },
+              ].map(s => (
+                <div key={s.value} className="text-center">
+                  <p className="text-lg font-extrabold leading-none" style={{ color: '#02d47e' }}>{s.value}</p>
+                  <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ══ FEATURES ════════════════════════════════════════════════════════ */}
