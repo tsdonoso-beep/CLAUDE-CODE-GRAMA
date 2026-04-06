@@ -713,7 +713,7 @@ export default function ModuloDetalle() {
             <button
               onClick={closeTourSimulator}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors"
-              style={{ background: 'rgba(255,255,255,0.1)', color: '#02d47e' }}
+              style={{ background: 'rgba(255,255,255,0.1)', color: 'var(--grama-menta)' }}
               onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
               onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
             >

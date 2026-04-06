@@ -42,7 +42,7 @@ function AnimatedStat({
 
   return (
     <div ref={ref} className="text-center animate-fade-in-up">
-      <p className="font-extrabold leading-none" style={{ fontSize: 'clamp(2rem, 3.5vw, 2.8rem)', color: valueColor }}>
+      <p className="t-display font-extrabold leading-none" style={{ color: valueColor }}>
         {typeof target === 'number' ? display : target}{suffix}
       </p>
       <p className="text-xs mt-1.5 font-semibold tracking-wide" style={{ color: labelColor }}>
@@ -172,7 +172,7 @@ export default function Bienvenida() {
                 style={{
                   background: 'rgba(2,212,126,0.12)',
                   border: '1px solid rgba(2,212,126,0.25)',
-                  color: '#02d47e',
+                  color: 'var(--grama-menta)',
                 }}
               >
                 <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
@@ -227,7 +227,7 @@ export default function Bienvenida() {
             {/* Overline */}
             <div className="flex items-center gap-2.5 mb-6 animate-fade-in-up stagger-1">
               <div className="h-px w-10" style={{ background: '#02d47e' }} />
-              <span className="text-[10px] font-extrabold tracking-[0.18em] uppercase" style={{ color: '#02d47e' }}>
+              <span className="overline-label font-extrabold" style={{ color: 'var(--grama-menta)' }}>
                 Plataforma de Capacitación Docente
               </span>
             </div>
@@ -235,15 +235,13 @@ export default function Bienvenida() {
             {/* Headline */}
             <div className="mb-6">
               <h1
-                className="font-extrabold leading-[0.88] tracking-tight text-white animate-fade-in-up stagger-2"
-                style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)' }}
+                className="t-hero font-extrabold leading-[0.88] tracking-tight text-white animate-fade-in-up stagger-2"
               >
                 Capacitación
               </h1>
               <h1
-                className="font-extrabold leading-[0.88] tracking-tight mt-1 animate-fade-in-up stagger-3"
+                className="t-hero font-extrabold leading-[0.88] tracking-tight mt-1 animate-fade-in-up stagger-3"
                 style={{
-                  fontSize: 'clamp(2.8rem, 6vw, 5rem)',
                   background: 'linear-gradient(100deg, #02d47e 0%, #00c16e 45%, #22d3ee 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -272,7 +270,7 @@ export default function Bienvenida() {
                 'Certificación oficial Inroprin',
               ].map(item => (
                 <div key={item} className="flex items-center gap-2.5">
-                  <CheckCircle size={14} style={{ color: '#02d47e', flexShrink: 0 }} />
+                  <CheckCircle size={14} style={{ color: 'var(--grama-menta)', flexShrink: 0 }} />
                   <span className="text-sm" style={{ color: 'rgba(255,255,255,0.65)' }}>{item}</span>
                 </div>
               ))}
