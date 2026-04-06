@@ -184,7 +184,7 @@ export default function Bienvenida() {
               <button
                 onClick={() => navigate('/admin')}
                 className="text-xs font-semibold px-3.5 py-2 rounded-xl transition-all flex items-center gap-1.5"
-                style={{ color: '#02d47e', border: '1px solid rgba(2,212,126,0.3)', background: 'rgba(2,212,126,0.08)' }}
+                style={{ color: 'var(--grama-menta)', border: '1px solid rgba(2,212,126,0.3)', background: 'rgba(2,212,126,0.08)' }}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLElement).style.background = 'rgba(2,212,126,0.18)'
                   ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(2,212,126,0.5)'
@@ -445,7 +445,7 @@ export default function Bienvenida() {
                 >
                   <f.icon size={18} style={{ color: f.color }} />
                 </div>
-                <h3 className="text-sm font-extrabold mb-2" style={{ color: '#043941' }}>{f.title}</h3>
+                <h3 className="text-sm font-extrabold mb-2" style={{ color: 'var(--grama-oscuro)' }}>{f.title}</h3>
                 <p className="text-xs leading-relaxed" style={{ color: 'rgba(4,57,65,0.55)' }}>{f.desc}</p>
               </div>
             ))}
@@ -458,8 +458,8 @@ export default function Bienvenida() {
         <div className="max-w-6xl mx-auto px-6 sm:px-10 py-16">
           <div className="flex items-end justify-between gap-4 mb-8 animate-fade-in-up">
             <div>
-              <p className="overline-label mb-1" style={{ color: '#02d47e' }}>Elige tu taller</p>
-              <h2 className="text-xl font-extrabold" style={{ color: '#043941' }}>
+              <p className="overline-label mb-1" style={{ color: 'var(--grama-menta)' }}>Elige tu taller</p>
+              <h2 className="text-xl font-extrabold" style={{ color: 'var(--grama-oscuro)' }}>
                 {nTalleres} especialidad{nTalleres !== 1 ? 'es' : ''}{ie && !allUnlocked ? ' disponibles en tu IE' : ' técnicas'}
               </h2>
             </div>
