@@ -771,7 +771,14 @@ export default function Landing() {
 
       {/* ══ COMUNIDAD ═══════════════════════════════════════════════════════ */}
       <section id="comunidad" className="py-16 px-6 relative overflow-hidden">
-        <Tangram color="#02d47e" opacity={0.04} rotate={60} className="absolute w-72 h-72 -right-8 top-8 pointer-events-none" />
+        <Tangram color="#02d47e" opacity={0.07} rotate={60}  className="absolute w-80 h-80 -right-10 top-4 pointer-events-none" />
+        <Tangram color="#043941" opacity={0.04} rotate={-25} className="absolute w-56 h-56 -left-8 bottom-4 pointer-events-none" />
+        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:44, height:44, top:'15%', left:'8%', animationDuration:'20s', opacity:0.55 }}>
+          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.12} />
+        </svg>
+        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:36, height:36, bottom:'20%', right:'12%', animationDuration:'17s', opacity:0.55 }}>
+          <polygon points="25,0 50,50 0,50" fill="#043941" fillOpacity={0.09} />
+        </svg>
 
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-10">
