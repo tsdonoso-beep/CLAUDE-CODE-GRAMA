@@ -363,11 +363,39 @@ export default function Login() {
       </button>
 
       {/* ── Lado izquierdo (desktop) ── */}
-      <div className="hidden lg:flex flex-col items-center justify-center w-1/2 px-16 py-12 grama-pattern relative" style={{ background: '#052e35' }}>
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -bottom-16 -left-16 h-64 w-64 rotate-45" style={{ background: 'rgba(2,212,126,0.06)', borderRadius: '12px' }} />
-          <div className="absolute top-20 -right-8 h-40 w-40 rotate-12" style={{ background: 'rgba(2,212,126,0.05)', borderRadius: '8px' }} />
-          <div className="absolute top-1/2 left-1/4 h-24 w-24 -rotate-45" style={{ background: 'rgba(2,212,126,0.04)', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} />
+      <div className="hidden lg:flex flex-col items-center justify-center w-1/2 px-16 py-12 grama-pattern relative overflow-hidden" style={{ background: '#052e35' }}>
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Orb ambiente */}
+          <div className="absolute" style={{ width: 420, height: 420, background: 'radial-gradient(circle, rgba(2,212,126,0.10) 0%, transparent 65%)', right: -80, top: -80 }} />
+          <div className="absolute" style={{ width: 300, height: 300, background: 'radial-gradient(circle, rgba(4,95,108,0.18) 0%, transparent 65%)', left: -60, bottom: -60 }} />
+          {/* Tangrams fijos */}
+          <svg viewBox="0 0 160 160" className="absolute w-64 h-64 -bottom-10 -left-10" style={{ transform: 'rotate(-15deg)' }} xmlns="http://www.w3.org/2000/svg">
+            <polygon points="0,160 80,80 0,0"     fill="#02d47e" fillOpacity={0.12} />
+            <polygon points="160,0 80,80 160,160" fill="#02d47e" fillOpacity={0.08} />
+            <polygon points="0,160 80,160 80,80"  fill="#02d47e" fillOpacity={0.14} />
+            <rect x="70" y="30" width="40" height="40" transform="rotate(45 90 50)" fill="#02d47e" fillOpacity={0.10} />
+          </svg>
+          <svg viewBox="0 0 160 160" className="absolute w-48 h-48 -top-6 -right-6" style={{ transform: 'rotate(20deg)' }} xmlns="http://www.w3.org/2000/svg">
+            <polygon points="0,160 80,80 0,0"     fill="#02d47e" fillOpacity={0.10} />
+            <polygon points="160,0 80,80 160,160" fill="#02d47e" fillOpacity={0.07} />
+            <polygon points="80,80 120,80 120,120" fill="#02d47e" fillOpacity={0.09} />
+          </svg>
+          {/* Piezas flotantes */}
+          <svg viewBox="0 0 80 80" className="absolute float-a" style={{ width:64, height:64, top:'12%', left:'6%', animationDuration:'15s' }}>
+            <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.22} />
+          </svg>
+          <svg viewBox="0 0 60 60" className="absolute float-b" style={{ width:46, height:46, top:'52%', left:'8%', animationDuration:'19s' }}>
+            <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.18} />
+          </svg>
+          <svg viewBox="0 0 50 50" className="absolute float-c" style={{ width:38, height:38, top:'22%', right:'14%', animationDuration:'12s' }}>
+            <rect x="3" y="3" width="44" height="44" transform="rotate(15 25 25)" fill="#02d47e" fillOpacity={0.16} />
+          </svg>
+          <svg viewBox="0 0 60 60" className="absolute float-d" style={{ width:44, height:44, bottom:'20%', right:'10%', animationDuration:'10s' }}>
+            <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.20} />
+          </svg>
+          <svg viewBox="0 0 80 40" className="absolute float-a" style={{ width:58, height:30, bottom:'38%', left:'18%', animationDuration:'17s' }}>
+            <polygon points="20,0 80,0 60,40 0,40" fill="#02d47e" fillOpacity={0.14} />
+          </svg>
         </div>
         <div className="relative z-10 text-center max-w-sm">
           <div className="flex justify-center mb-8"><GramaLogo variant="light" size="lg" /></div>
