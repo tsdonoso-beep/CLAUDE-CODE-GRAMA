@@ -771,13 +771,23 @@ export default function Landing() {
 
       {/* ══ COMUNIDAD ═══════════════════════════════════════════════════════ */}
       <section id="comunidad" className="py-16 px-6 relative overflow-hidden">
-        <Tangram color="#02d47e" opacity={0.07} rotate={60}  className="absolute w-80 h-80 -right-10 top-4 pointer-events-none" />
-        <Tangram color="#043941" opacity={0.04} rotate={-25} className="absolute w-56 h-56 -left-8 bottom-4 pointer-events-none" />
-        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:44, height:44, top:'15%', left:'8%', animationDuration:'20s', opacity:0.55 }}>
-          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.12} />
+        {/* Tangramas fijos — laterales */}
+        <Tangram color="#02d47e" opacity={0.13} rotate={60}  className="absolute w-96 h-96 -right-12 -top-4 pointer-events-none" />
+        <Tangram color="#043941" opacity={0.08} rotate={-25} className="absolute w-72 h-72 -left-10 bottom-0 pointer-events-none" />
+        <Tangram color="#02d47e" opacity={0.06} rotate={10}  className="absolute w-48 h-48 left-4 top-4 pointer-events-none" />
+        {/* Piezas flotantes — izquierda */}
+        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:52, height:52, top:'18%', left:'4%', animationDuration:'20s' }}>
+          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.16} />
         </svg>
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:36, height:36, bottom:'20%', right:'12%', animationDuration:'17s', opacity:0.55 }}>
-          <polygon points="25,0 50,50 0,50" fill="#043941" fillOpacity={0.09} />
+        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-a" style={{ width:34, height:34, bottom:'25%', left:'7%', animationDuration:'14s' }}>
+          <rect x="3" y="3" width="34" height="34" transform="rotate(15 20 20)" fill="#043941" fillOpacity={0.10} />
+        </svg>
+        {/* Piezas flotantes — derecha */}
+        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:42, height:42, bottom:'22%', right:'5%', animationDuration:'17s' }}>
+          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.14} />
+        </svg>
+        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-d" style={{ width:46, height:46, top:'14%', right:'8%', animationDuration:'11s' }}>
+          <polygon points="0,60 30,0 60,60" fill="#043941" fillOpacity={0.08} />
         </svg>
 
         <div className="max-w-6xl mx-auto">
