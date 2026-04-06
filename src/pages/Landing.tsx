@@ -211,7 +211,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
 function TalleresMarquee() {
   const items = [...talleresConfig, ...talleresConfig]
   return (
-    <div className="overflow-hidden py-3" style={{ borderTop: '1px solid rgba(4,57,65,0.07)', borderBottom: '1px solid rgba(4,57,65,0.07)' }}>
+    <div className="overflow-hidden py-3" style={{ borderTop: '1px solid rgba(4,57,65,0.07)' }}>
       <div className="flex gap-8 animate-marquee whitespace-nowrap">
         {items.map((t, i) => (
           <span key={i} className="inline-flex items-center gap-2 shrink-0 text-[11px] font-semibold" style={{ color: 'rgba(4,57,65,0.45)' }}>
