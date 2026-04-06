@@ -428,12 +428,12 @@ export default function ModuloDetalle() {
                                     <div className="flex-1 min-w-0">
                                       <div className="flex flex-wrap items-center gap-2 mb-1">
                                         <ContenidoBadge tipo={contenido.tipo} size="sm" />
-                                        <h4 className="text-sm font-bold" style={{ color: '#043941' }}>
+                                        <h4 className="text-sm font-bold" style={{ color: 'var(--grama-oscuro)' }}>
                                           {contenido.titulo}
                                         </h4>
                                         {estado.completed && (
                                           <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-                                            style={{ background: 'rgba(2,212,126,0.15)', color: '#02d47e' }}>
+                                            style={{ background: 'rgba(2,212,126,0.15)', color: 'var(--grama-menta)' }}>
                                             ✓ Completado
                                           </span>
                                         )}
@@ -516,7 +516,7 @@ export default function ModuloDetalle() {
                                   <ClipboardList size={15} style={{ color: '#00c16e' }} />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-bold" style={{ color: '#043941' }}>
+                                  <p className="text-sm font-bold" style={{ color: 'var(--grama-oscuro)' }}>
                                     Diagnósticos de entrada
                                   </p>
                                   <p className="text-xs" style={{ color: '#045f6c' }}>
@@ -574,7 +574,7 @@ export default function ModuloDetalle() {
             <button
               onClick={() => navigate(`/taller/${slug}/ruta/modulo/${prevModulo.numero}`)}
               className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold border-2 transition-all"
-              style={{ borderColor: '#e3f8fb', color: '#043941', background: '#ffffff' }}
+              style={{ borderColor: '#e3f8fb', color: 'var(--grama-oscuro)', background: '#ffffff' }}
             >
               <ChevronLeft size={15} />
               {prevModulo.icon} M{prevModulo.numero}
