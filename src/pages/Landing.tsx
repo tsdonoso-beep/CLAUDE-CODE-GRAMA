@@ -797,7 +797,7 @@ export default function Landing() {
             >
               {/* Tabs de navegación */}
               <div className="flex rounded-t-2xl overflow-hidden" style={{ border: '1.5px solid rgba(4,57,65,0.15)', borderBottom: 'none' }}>
-                {(['Hub', 'Ruta', 'Repositorio'] as const).map((label, i) => (
+                {(['Taller', 'Ruta', 'Repositorio'] as const).map((label, i) => (
                   <button
                     key={label}
                     onClick={() => setHeroSlide(i)}
