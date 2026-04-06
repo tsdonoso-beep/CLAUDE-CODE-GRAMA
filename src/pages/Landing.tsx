@@ -753,7 +753,7 @@ export default function Landing() {
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5 animate-fade-in-up stagger-1" style={{ background: 'rgba(2,212,126,0.10)', border: '1px solid rgba(2,212,126,0.22)' }}>
                 <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
                 <span className="overline-label font-extrabold" style={{ color: 'var(--grama-menta)' }}>
-                  Plataforma Nacional · Talleres EPT · MINEDU Perú
+                  Plataforma Nacional · Talleres EPT · Perú
                 </span>
               </div>
 
@@ -870,28 +870,6 @@ export default function Landing() {
         {/* Marquee tickers */}
         <TalleresMarquee />
 
-        {/* Banda oscura base del hero */}
-        <div className="relative" style={{ background: '#043941', padding: '28px 0' }}>
-          <div className="absolute inset-0 grama-pattern opacity-20" />
-          <div className="relative z-10 max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-6">
-            <div>
-              <p className="text-xs font-extrabold uppercase tracking-widest mb-1" style={{ color: 'rgba(2,212,126,0.6)' }}>Plataforma GRAMA</p>
-              <p className="text-sm font-semibold text-white" style={{ color: 'rgba(255,255,255,0.75)' }}>Diseñada para docentes EPT del Perú — accesible, técnica y certificada.</p>
-            </div>
-            <div className="flex items-center gap-6">
-              {[
-                { value: '9', label: 'Talleres EPT' },
-                { value: '150h', label: 'formación' },
-                { value: '7', label: 'módulos' },
-              ].map(s => (
-                <div key={s.value} className="text-center">
-                  <p className="text-lg font-extrabold leading-none" style={{ color: '#02d47e' }}>{s.value}</p>
-                  <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* ══ FEATURES ════════════════════════════════════════════════════════ */}
@@ -1161,7 +1139,7 @@ export default function Landing() {
             <div>
               <GramaLogo variant="light" size="sm" />
               <p className="text-[11px] mt-2" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                Programa MSE-SFT · MINEDU Perú
+                Programa MSE-SFT · Perú
               </p>
             </div>
             <nav className="flex flex-wrap gap-6">
