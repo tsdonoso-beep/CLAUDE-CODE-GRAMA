@@ -509,9 +509,9 @@ export default function Landing() {
         <div className="absolute inset-0 grama-pattern opacity-60" />
 
         {/* Tangram decorativo — esquinas fijas */}
-        <Tangram color="#02d47e" opacity={0.14} rotate={15}  className="absolute w-80 h-80 -top-8 -right-8" />
-        <Tangram color="#02d47e" opacity={0.11} rotate={-20} className="absolute w-64 h-64 bottom-16 -left-8" />
-        <Tangram color="#043941" opacity={0.07} rotate={45}  className="absolute w-48 h-48 top-1/2 left-1/3" />
+        <Tangram color="#02d47e" opacity={0.18} rotate={15}  className="absolute w-[26rem] h-[26rem] -top-10 -right-10" />
+        <Tangram color="#02d47e" opacity={0.14} rotate={-20} className="absolute w-80 h-80 bottom-10 -left-10" />
+        <Tangram color="#043941" opacity={0.09} rotate={45}  className="absolute w-60 h-60 top-1/2 left-1/3" />
 
         {/* Piezas individuales del tangram flotando */}
         <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:78, height:78, top:'12%', left:'6%', animationDuration:'14s' }}>
@@ -536,14 +536,14 @@ export default function Landing() {
           <polygon points="20,0 40,40 0,40" fill="#043941" fillOpacity={0.12} />
         </svg>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-14 lg:pt-24 lg:pb-16">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-6 pb-12 lg:pt-10 lg:pb-14">
           {/* Grid hero: texto izq, visual der */}
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
 
             {/* Columna texto */}
             <div>
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 animate-fade-in-up stagger-1" style={{ background: 'rgba(2,212,126,0.10)', border: '1px solid rgba(2,212,126,0.22)' }}>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5 animate-fade-in-up stagger-1" style={{ background: 'rgba(2,212,126,0.10)', border: '1px solid rgba(2,212,126,0.22)' }}>
                 <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
                 <span className="overline-label font-extrabold" style={{ color: 'var(--grama-menta)' }}>
                   Plataforma Nacional · Talleres EPT · MINEDU Perú
