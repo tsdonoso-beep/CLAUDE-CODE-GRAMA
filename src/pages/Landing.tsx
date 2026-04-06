@@ -791,18 +791,18 @@ export default function Landing() {
                 className="relative w-full rounded-2xl overflow-hidden"
                 style={{
                   background: '#ffffff',
-                  border: '1.5px solid rgba(4,57,65,0.09)',
-                  boxShadow: '0 24px 64px rgba(4,57,65,0.12), 0 4px 16px rgba(4,57,65,0.07)',
+                  border: '1.5px solid rgba(4,57,65,0.18)',
+                  boxShadow: '0 28px 70px rgba(4,57,65,0.22), 0 4px 16px rgba(4,57,65,0.12), 0 0 0 1px rgba(4,57,65,0.08)',
                   aspectRatio: '16/10',
                 }}
               >
-                {/* Barra de navegador simulada */}
-                <div className="flex items-center gap-1.5 px-4 py-2.5 border-b shrink-0" style={{ background: '#f8fafc', borderColor: 'rgba(4,57,65,0.07)' }}>
-                  <span className="w-2 h-2 rounded-full" style={{ background: '#fca5a5' }} />
-                  <span className="w-2 h-2 rounded-full" style={{ background: '#fde68a' }} />
-                  <span className="w-2 h-2 rounded-full" style={{ background: '#bbf7d0' }} />
-                  <div className="ml-3 flex-1 h-4 rounded-md flex items-center px-2.5" style={{ background: '#f1f5f9', maxWidth: 240 }}>
-                    <span className="text-[9px] font-medium transition-all duration-500" style={{ color: '#94a3b8' }}>{SLIDE_URLS[heroSlide]}</span>
+                {/* Barra de navegador — chrome oscuro on-brand */}
+                <div className="flex items-center gap-1.5 px-4 py-2.5 border-b shrink-0" style={{ background: '#043941', borderColor: 'rgba(2,212,126,0.15)' }}>
+                  <span className="w-2 h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.2)' }} />
+                  <span className="w-2 h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }} />
+                  <span className="w-2 h-2 rounded-full" style={{ background: '#02d47e', opacity: 0.7 }} />
+                  <div className="ml-3 flex-1 h-4 rounded-md flex items-center px-2.5" style={{ background: 'rgba(255,255,255,0.08)', maxWidth: 240 }}>
+                    <span className="text-[9px] font-medium transition-all duration-500" style={{ color: 'rgba(2,212,126,0.75)' }}>{SLIDE_URLS[heroSlide]}</span>
                   </div>
                 </div>
 
