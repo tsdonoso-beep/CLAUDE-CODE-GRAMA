@@ -74,24 +74,41 @@ export default function TallerHub() {
           style={{ backgroundImage: `url(${taller.imagen})`, filter: 'brightness(0.35) saturate(0.8)' }}
         />
 
-        {/* Overlay degradado */}
+        {/* Overlay degradado — tintado con el acento del taller */}
         <div
           className="absolute inset-0"
           style={{
-            background: `linear-gradient(100deg, rgba(4,10,20,0.92) 0%, rgba(4,10,20,0.75) 50%, rgba(4,10,20,0.45) 100%)`,
+            background: `linear-gradient(120deg, rgba(4,10,20,0.92) 0%, rgba(4,10,20,0.78) 45%, ${accent}28 100%)`,
+          }}
+        />
+
+        {/* Capa de tinte adicional en la esquina del acento */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: `radial-gradient(ellipse at 85% 50%, ${accent}22 0%, transparent 55%)`,
           }}
         />
 
         {/* Patrón grid sutil */}
         <div className="absolute inset-0 grama-pattern-dense opacity-60" />
 
-        {/* Orb de acento */}
+        {/* Orb de acento — más visible */}
         <div
           className="absolute pointer-events-none animate-aurora-slow"
           style={{
-            width: 400, height: 400,
-            background: `radial-gradient(circle, ${accent}18 0%, transparent 65%)`,
-            right: '-60px', top: '-60px',
+            width: 500, height: 500,
+            background: `radial-gradient(circle, ${accent}28 0%, transparent 60%)`,
+            right: '-80px', top: '-100px',
+          }}
+        />
+        {/* Segundo orb inferior izquierdo — contra-balance */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            width: 280, height: 280,
+            background: `radial-gradient(circle, ${accent}12 0%, transparent 65%)`,
+            left: '-40px', bottom: '-40px',
           }}
         />
 
