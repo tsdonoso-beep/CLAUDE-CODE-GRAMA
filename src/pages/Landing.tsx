@@ -750,12 +750,6 @@ export default function Landing() {
             {/* Columna texto */}
             <div>
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5 animate-fade-in-up stagger-1" style={{ background: 'rgba(2,212,126,0.10)', border: '1px solid rgba(2,212,126,0.22)' }}>
-                <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
-                <span className="overline-label font-extrabold" style={{ color: 'var(--grama-menta)' }}>
-                  Plataforma Nacional · Talleres EPT · Perú
-                </span>
-              </div>
 
               <h1 className="t-hero font-extrabold leading-[1.05] mb-6 animate-fade-in-up stagger-2" style={{ letterSpacing: '-0.03em', color: 'var(--grama-oscuro)' }}>
                 Potenciamos la{' '}
