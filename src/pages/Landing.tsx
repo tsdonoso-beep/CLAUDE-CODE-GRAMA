@@ -825,10 +825,25 @@ export default function Landing() {
             className="rounded-3xl p-12 relative overflow-hidden"
             style={{ background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)' }}
           >
-            {/* Tangram decorativo en el CTA */}
-            <Tangram color="#02d47e" opacity={0.12} rotate={20}  className="absolute -top-10 -right-10 w-64 h-64 pointer-events-none" />
-            <Tangram color="#ffffff" opacity={0.04} rotate={-30} className="absolute -bottom-8 -left-8 w-48 h-48 pointer-events-none" />
-            <div className="absolute pointer-events-none" style={{ width: 400, height: 400, background: 'radial-gradient(circle, rgba(2,212,126,0.12) 0%, transparent 65%)', right: -80, top: -80 }} />
+            {/* Tangram decorativo en el CTA — fijos */}
+            <Tangram color="#02d47e" opacity={0.22} rotate={20}  className="absolute -top-10 -right-10 w-[22rem] h-[22rem] pointer-events-none" />
+            <Tangram color="#ffffff" opacity={0.09} rotate={-30} className="absolute -bottom-10 -left-10 w-64 h-64 pointer-events-none" />
+            <Tangram color="#02d47e" opacity={0.10} rotate={55}  className="absolute top-1/2 left-1/4 w-36 h-36 pointer-events-none" />
+            <div className="absolute pointer-events-none" style={{ width: 500, height: 500, background: 'radial-gradient(circle, rgba(2,212,126,0.14) 0%, transparent 65%)', right: -100, top: -100 }} />
+
+            {/* Piezas flotantes */}
+            <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:72, height:72, top:'10%', right:'28%', animationDuration:'15s' }}>
+              <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.22} />
+            </svg>
+            <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:52, height:52, bottom:'12%', right:'38%', animationDuration:'19s' }}>
+              <polygon points="30,0 60,60 0,60" fill="#ffffff" fillOpacity={0.10} />
+            </svg>
+            <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:44, height:44, top:'20%', left:'18%', animationDuration:'12s' }}>
+              <rect x="4" y="4" width="42" height="42" transform="rotate(20 25 25)" fill="#02d47e" fillOpacity={0.18} />
+            </svg>
+            <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:38, height:38, bottom:'18%', left:'38%', animationDuration:'10s' }}>
+              <polygon points="25,0 50,50 0,50" fill="#ffffff" fillOpacity={0.08} />
+            </svg>
 
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
               <div className="text-center md:text-left max-w-lg">
