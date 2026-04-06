@@ -388,7 +388,7 @@ export default function Bienvenida() {
                     {i === 0 && (
                       <span
                         className="text-[11px] font-bold px-1.5 py-0.5 rounded-full"
-                        style={{ background: 'rgba(2,212,126,0.15)', color: '#02d47e' }}
+                        style={{ background: 'rgba(2,212,126,0.15)', color: 'var(--grama-menta)' }}
                       >
                         Inicio
                       </span>
@@ -422,8 +422,8 @@ export default function Bienvenida() {
       <section style={{ background: '#f0faf5', borderBottom: '1px solid rgba(4,57,65,0.07)' }}>
         <div className="max-w-6xl mx-auto px-6 sm:px-10 py-16">
           <div className="mb-10">
-            <p className="overline-label mb-2" style={{ color: '#02d47e' }}>¿Qué incluye?</p>
-            <h2 className="text-2xl font-extrabold" style={{ color: '#043941' }}>
+            <p className="overline-label mb-2" style={{ color: 'var(--grama-menta)' }}>¿Qué incluye?</p>
+            <h2 className="text-2xl font-extrabold" style={{ color: 'var(--grama-oscuro)' }}>
               Todo lo que necesitas para el taller
             </h2>
           </div>
