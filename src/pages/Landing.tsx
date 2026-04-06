@@ -508,32 +508,32 @@ export default function Landing() {
         {/* Patrón GRAMA — sutil sobre fondo claro */}
         <div className="absolute inset-0 grama-pattern opacity-60" />
 
-        {/* Tangram decorativo — esquinas fijas, opacidad reducida para fondo claro */}
-        <Tangram color="#02d47e" opacity={0.07} rotate={15}  className="absolute w-80 h-80 -top-8 -right-8" />
-        <Tangram color="#02d47e" opacity={0.05} rotate={-20} className="absolute w-64 h-64 bottom-16 -left-8" />
-        <Tangram color="#043941" opacity={0.03} rotate={45}  className="absolute w-48 h-48 top-1/2 left-1/3" />
+        {/* Tangram decorativo — esquinas fijas */}
+        <Tangram color="#02d47e" opacity={0.14} rotate={15}  className="absolute w-80 h-80 -top-8 -right-8" />
+        <Tangram color="#02d47e" opacity={0.11} rotate={-20} className="absolute w-64 h-64 bottom-16 -left-8" />
+        <Tangram color="#043941" opacity={0.07} rotate={45}  className="absolute w-48 h-48 top-1/2 left-1/3" />
 
-        {/* Piezas individuales del tangram flotando — tonos suaves sobre claro */}
-        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:70, height:70, top:'12%', left:'6%', animationDuration:'14s' }}>
-          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.10} />
+        {/* Piezas individuales del tangram flotando */}
+        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:78, height:78, top:'12%', left:'6%', animationDuration:'14s' }}>
+          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.20} />
         </svg>
-        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:50, height:50, top:'48%', left:'12%', animationDuration:'18s' }}>
-          <polygon points="30,0 60,60 0,60" fill="#043941" fillOpacity={0.06} />
+        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:56, height:56, top:'48%', left:'12%', animationDuration:'18s' }}>
+          <polygon points="30,0 60,60 0,60" fill="#043941" fillOpacity={0.13} />
         </svg>
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:42, height:42, top:'6%', left:'40%', animationDuration:'11s' }}>
-          <rect x="4" y="4" width="42" height="42" transform="rotate(20 25 25)" fill="#02d47e" fillOpacity={0.08} />
+        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:48, height:48, top:'6%', left:'40%', animationDuration:'11s' }}>
+          <rect x="4" y="4" width="42" height="42" transform="rotate(20 25 25)" fill="#02d47e" fillOpacity={0.17} />
         </svg>
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:38, height:38, top:'20%', right:'20%', animationDuration:'9s' }}>
-          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.09} />
+        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:44, height:44, top:'20%', right:'20%', animationDuration:'9s' }}>
+          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.18} />
         </svg>
-        <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-a" style={{ width:64, height:32, top:'58%', right:'15%', animationDuration:'16s' }}>
-          <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.05} />
+        <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-a" style={{ width:70, height:36, top:'58%', right:'15%', animationDuration:'16s' }}>
+          <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.11} />
         </svg>
-        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-b" style={{ width:58, height:58, bottom:'15%', right:'6%', animationDuration:'13s' }}>
-          <polygon points="0,0 80,40 0,80" fill="#02d47e" fillOpacity={0.07} />
+        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-b" style={{ width:64, height:64, bottom:'15%', right:'6%', animationDuration:'13s' }}>
+          <polygon points="0,0 80,40 0,80" fill="#02d47e" fillOpacity={0.15} />
         </svg>
-        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-c" style={{ width:34, height:34, bottom:'28%', left:'30%', animationDuration:'21s' }}>
-          <polygon points="20,0 40,40 0,40" fill="#043941" fillOpacity={0.06} />
+        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-c" style={{ width:40, height:40, bottom:'28%', left:'30%', animationDuration:'21s' }}>
+          <polygon points="20,0 40,40 0,40" fill="#043941" fillOpacity={0.12} />
         </svg>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-14 lg:pt-24 lg:pb-16">

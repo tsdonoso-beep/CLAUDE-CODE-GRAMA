@@ -381,26 +381,26 @@
 /* ── Piezas flotantes del tangram ────────────────────────────────────────── */
 @keyframes floatA {
   0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
-  25%       { transform: translate(18px, -24px) rotate(22deg); }
-  50%       { transform: translate(-8px, -40px) rotate(10deg); }
-  75%       { transform: translate(24px, -16px) rotate(-14deg); }
+  25%       { transform: translate(32px, -44px) rotate(30deg); }
+  50%       { transform: translate(-16px, -68px) rotate(15deg); }
+  75%       { transform: translate(42px, -28px) rotate(-22deg); }
 }
 @keyframes floatB {
   0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
-  30%       { transform: translate(-20px, -30px) rotate(-18deg); }
-  60%       { transform: translate(14px, -50px) rotate(25deg); }
-  80%       { transform: translate(-10px, -20px) rotate(-8deg); }
+  30%       { transform: translate(-36px, -52px) rotate(-26deg); }
+  60%       { transform: translate(26px, -80px) rotate(36deg); }
+  80%       { transform: translate(-18px, -36px) rotate(-14deg); }
 }
 @keyframes floatC {
   0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
-  20%       { transform: translate(30px, -15px) rotate(30deg); }
-  50%       { transform: translate(10px, -35px) rotate(-20deg); }
-  80%       { transform: translate(-15px, -10px) rotate(15deg); }
+  20%       { transform: translate(50px, -28px) rotate(42deg); }
+  50%       { transform: translate(18px, -58px) rotate(-30deg); }
+  80%       { transform: translate(-26px, -18px) rotate(22deg); }
 }
 @keyframes floatD {
   0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
-  40%       { transform: translate(-25px, -20px) rotate(-25deg); }
-  70%       { transform: translate(20px, -45px) rotate(12deg); }
+  40%       { transform: translate(-44px, -36px) rotate(-36deg); }
+  70%       { transform: translate(36px, -72px) rotate(20deg); }
 }
 .float-a { animation: floatA var(--dur, 12s) ease-in-out infinite; }
 .float-b { animation: floatB var(--dur, 16s) ease-in-out infinite; }
