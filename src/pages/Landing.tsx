@@ -703,37 +703,45 @@ export default function Landing() {
       </header>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden pt-16" style={{ background: '#f0faf5' }}>
-        {/* Patrón GRAMA — sutil sobre fondo claro */}
+      <section className="relative overflow-hidden pt-16" style={{ background: 'linear-gradient(160deg, #f0faf5 0%, #e8f5ef 55%, #d4ece2 100%)' }}>
+        {/* Patrón GRAMA */}
         <div className="absolute inset-0 grama-pattern opacity-60" />
 
-        {/* Tangram decorativo — esquinas fijas */}
-        <Tangram color="#02d47e" opacity={0.18} rotate={15}  className="absolute w-[26rem] h-[26rem] -top-10 -right-10" />
-        <Tangram color="#02d47e" opacity={0.14} rotate={-20} className="absolute w-80 h-80 bottom-10 -left-10" />
-        <Tangram color="#043941" opacity={0.09} rotate={45}  className="absolute w-60 h-60 top-1/2 left-1/3" />
+        {/* Orb oscuro esquina superior izquierda */}
+        <div className="absolute pointer-events-none" style={{ width: 520, height: 520, background: 'radial-gradient(circle, rgba(4,57,65,0.09) 0%, transparent 65%)', left: -120, top: -120 }} />
+        {/* Orb oscuro esquina inferior derecha */}
+        <div className="absolute pointer-events-none" style={{ width: 480, height: 480, background: 'radial-gradient(circle, rgba(4,57,65,0.07) 0%, transparent 65%)', right: -80, bottom: -80 }} />
 
-        {/* Piezas individuales del tangram flotando */}
+        {/* Tangrams fijos — mezcla verde oscuro + menta */}
+        <Tangram color="#043941" opacity={0.14} rotate={15}  className="absolute w-[26rem] h-[26rem] -top-10 -right-10" />
+        <Tangram color="#043941" opacity={0.12} rotate={-20} className="absolute w-80 h-80 bottom-4 -left-10" />
+        <Tangram color="#02d47e" opacity={0.12} rotate={45}  className="absolute w-60 h-60 top-1/2 left-1/3" />
+
+        {/* Piezas flotantes — más oscuras */}
         <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:78, height:78, top:'12%', left:'6%', animationDuration:'14s' }}>
-          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.20} />
+          <polygon points="0,80 40,0 80,80" fill="#043941" fillOpacity={0.18} />
         </svg>
         <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:56, height:56, top:'48%', left:'12%', animationDuration:'18s' }}>
-          <polygon points="30,0 60,60 0,60" fill="#043941" fillOpacity={0.13} />
+          <polygon points="30,0 60,60 0,60" fill="#043941" fillOpacity={0.14} />
         </svg>
         <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:48, height:48, top:'6%', left:'40%', animationDuration:'11s' }}>
-          <rect x="4" y="4" width="42" height="42" transform="rotate(20 25 25)" fill="#02d47e" fillOpacity={0.17} />
+          <rect x="4" y="4" width="42" height="42" transform="rotate(20 25 25)" fill="#02d47e" fillOpacity={0.16} />
         </svg>
         <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:44, height:44, top:'20%', right:'20%', animationDuration:'9s' }}>
-          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.18} />
+          <polygon points="25,0 50,50 0,50" fill="#043941" fillOpacity={0.13} />
         </svg>
         <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-a" style={{ width:70, height:36, top:'58%', right:'15%', animationDuration:'16s' }}>
-          <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.11} />
+          <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.12} />
         </svg>
         <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-b" style={{ width:64, height:64, bottom:'15%', right:'6%', animationDuration:'13s' }}>
           <polygon points="0,0 80,40 0,80" fill="#02d47e" fillOpacity={0.15} />
         </svg>
         <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-c" style={{ width:40, height:40, bottom:'28%', left:'30%', animationDuration:'21s' }}>
-          <polygon points="20,0 40,40 0,40" fill="#043941" fillOpacity={0.12} />
+          <polygon points="20,0 40,40 0,40" fill="#043941" fillOpacity={0.16} />
         </svg>
+
+        {/* Franja oscura al pie — ancla visual */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent, #043941 30%, #043941 70%, transparent)' }} />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 pt-6 pb-12 lg:pt-10 lg:pb-14">
           {/* Grid hero: texto izq, visual der */}
