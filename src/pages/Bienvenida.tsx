@@ -308,7 +308,7 @@ export default function Bienvenida() {
             <a
               href="#talleres"
               className="inline-flex items-center gap-2 text-sm font-bold animate-fade-in-up stagger-6 transition-all"
-              style={{ color: '#02d47e' }}
+              style={{ color: 'var(--grama-menta)' }}
               onMouseEnter={e => ((e.currentTarget as HTMLElement).style.gap = '10px')}
               onMouseLeave={e => ((e.currentTarget as HTMLElement).style.gap = '8px')}
             >
@@ -330,7 +330,7 @@ export default function Bienvenida() {
             {/* Badge */}
             <div
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-extrabold tracking-widest uppercase mb-5"
-              style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.2)' }}
+              style={{ background: 'rgba(2,212,126,0.12)', color: 'var(--grama-menta)', border: '1px solid rgba(2,212,126,0.2)' }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#02d47e] animate-pulse" />
               Inroprin · 2026
@@ -355,7 +355,7 @@ export default function Bienvenida() {
                   style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}
                 >
                   <div>
-                    <p className="font-extrabold text-lg leading-none" style={{ color: '#02d47e' }}>{s.value}</p>
+                    <p className="font-extrabold text-lg leading-none" style={{ color: 'var(--grama-menta)' }}>{s.value}</p>
                     <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.label}</p>
                   </div>
                 </div>
