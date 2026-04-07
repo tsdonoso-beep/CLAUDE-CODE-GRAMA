@@ -183,3 +183,37 @@ export const manualesPDFPorBien: Record<string, Record<number, string>> = {
 export function getManualPDF(tallerSlug: string, bienN: number): string | null {
   return manualesPDFPorBien[tallerSlug]?.[bienN] ?? null
 }
+
+// ── Videos de operatividad y mantenimiento por taller y bien.n ────────────────
+// tallerSlug → bien.n → Drive URL (video)
+export const videosOperatividadPorBien: Record<string, Record<number, string>> = {
+  'taller-general-ept': {
+     1: 'https://drive.google.com/file/d/1-wMPPdxZLo2oOtNd8cS_dch3cvN8HQYx/view',  // EGP-01  · Equipo de grabación para reportero
+     2: 'https://drive.google.com/file/d/1QzcvxmUaoWN2YgG89TbblJzirpzTVPDB/view',  // CF-02   · Cámara fotográfica
+     3: 'https://drive.google.com/file/d/14JxUAuvCzo8y8XFa6pEIgm6kRHFqWw28/view',  // CFT-02  · Cámara de video con trípode
+     4: 'https://drive.google.com/file/d/1WnvX6ztLlfeFTBN-K673P9FAJzYZuPVt/view',  // TAB-02  · Tablet
+    10: 'https://drive.google.com/file/d/1lIqgr7Ta7qVyJ9H8Cxp4TlkUoZZ5rEeJ/view',  // MES-02  · Mesa de computadora para estudiante
+    12: 'https://drive.google.com/file/d/1z-Tmoa6IZIiEYNFB_rAUNDcQAEC-OoS3/view',  // IMP-01  · Impresora multifuncional
+    13: 'https://drive.google.com/file/d/1I9RCvVUl37fTk_dZIvxSnuLyUJHrSW-I/view',  // MB-01   · Mueble bajo
+    18: 'https://drive.google.com/file/d/1ShtCwqR_-QE5q59gr7ClgDz_WeKgMEVv/view',  // MDI-01  · Mesa discapacitado
+    20: 'https://drive.google.com/file/d/1nUTfrn4i5tFjmHWzEBOWC9LJ5PqzYk5f/view',  // ARM-01  · Armario de metal
+    21: 'https://drive.google.com/file/d/1IOS-wIoHJIaaFfV-h_MmiNUUplz45C5Y/view',  // LIE-01  · Lienzo magnético para metodologías de diseño
+    28: 'https://drive.google.com/file/d/1ZUEOWrD71atjn2dXWjfOgY_ZGrH5FmtE/view',  // KIT-01  · Kit electrónica (microcontroladores)
+    29: 'https://drive.google.com/file/d/15YEgIX92Bn-oOr_-Wh_i3bbBXmf6Kmgp/view',  // MS-01   · Máquina de sublimación 8 en 1
+    33: 'https://drive.google.com/file/d/1dgbtFCeiZU-blyae8XfIMNhl8nwM8kDg/view',  // IMP-3D  · Impresora 3D
+    35: 'https://drive.google.com/file/d/1zSDyKgkImFyXqznliet2DWBNflnpJ88z/view',  // MAC-01  · Máquina escáner y corte
+    36: 'https://drive.google.com/file/d/17MPHtCehkAevM63cQwSaiYyn3ryvp-_Y/view',  // ESC-01  · Escáner 3D
+    39: 'https://drive.google.com/file/d/1Fjpu6OnZcXWFRJkqVJm1PdzAuJdE9wzJ/view',  // MES-01  · Mesa de trabajo de acero
+    49: 'https://drive.google.com/file/d/18fYJpuQZs121UG3UT0MyX6ds7qXK8Jh5/view',  // ANA-01  · Anaquel de metal
+    50: 'https://drive.google.com/file/d/1OluNNNi8DNFa9J4feFnSDu7EszysTjU_/view',  // MAN-05  · Mandil
+    52: 'https://drive.google.com/file/d/1UdANPnhZWJF8sHIoKtc2IgbAWvausMGg/view',  // MAP-01  · Mesa de apoyo
+    56: 'https://drive.google.com/file/d/1DA1xwpUjvzqDGr-Mw4T2bAdNcRuqWTWw/view',  // EC-01   · Equipo de comunicación switch
+    57: 'https://drive.google.com/file/d/1YiKbWiTyTDjxrz4Srl6mAQeUbFw9-mnI/view',  // AMU-01  · Armario multimedia
+    63: 'https://drive.google.com/file/d/1zM4myoiUCO404H1j2dDQgDl7UOx6b6Vw/view',  // AML-01  · Armario móvil para laptop
+  },
+}
+
+// Busca el video de operatividad para un bien específico
+export function getVideoOperatividad(tallerSlug: string, bienN: number): string | null {
+  return videosOperatividadPorBien[tallerSlug]?.[bienN] ?? null
+}

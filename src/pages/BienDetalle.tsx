@@ -10,7 +10,7 @@ import {
 import { useTaller } from '@/hooks/useTaller'
 import { eppPorTaller } from '@/data/eppData'
 import type { EPPItem } from '@/data/eppData'
-import { getManualPDF, getDriveEmbedUrl, getDriveDownloadUrl, getDriveThumbnailUrl } from '@/data/manualesPDF'
+import { getManualPDF, getVideoOperatividad, getDriveEmbedUrl, getDriveDownloadUrl, getDriveThumbnailUrl } from '@/data/manualesPDF'
 
 type TabId = 'manual' | 'video'
 
@@ -50,6 +50,7 @@ export default function BienDetalle() {
 
   // Manual PDF
   const manualUrl = getManualPDF(slug ?? '', bien.n)
+  const videoUrl  = getVideoOperatividad(slug ?? '', bien.n)
 
   // Bienes relacionados (misma zona)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -127,20 +128,43 @@ export default function BienDetalle() {
             </div>
             <div className="p-8 flex flex-col items-center justify-center" style={{ background: '#ffffff', minHeight: '200px' }}>
               {activeTab === 'video' ? (
-                <>
-                  <div
-                    className="w-full aspect-video rounded-xl flex flex-col items-center justify-center mb-3"
-                    style={{ background: '#043941' }}
-                  >
-                    <Video size={36} style={{ color: 'rgba(255,255,255,0.2)' }} />
-                    <p className="text-sm mt-2 font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                      Video de operatividad
-                    </p>
+                videoUrl ? (
+                  <div className="w-full flex flex-col gap-3">
+                    <div className="w-full aspect-video rounded-xl overflow-hidden" style={{ background: '#043941' }}>
+                      <iframe
+                        src={getDriveEmbedUrl(videoUrl)}
+                        className="w-full h-full"
+                        allow="autoplay"
+                        allowFullScreen
+                        title={`Video operatividad — ${bien.nombre}`}
+                      />
+                    </div>
+                    <a
+                      href={videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all hover:scale-[1.02]"
+                      style={{ background: '#f0faf5', color: '#043941' }}
+                    >
+                      <Video size={13} /> Abrir en Google Drive
+                    </a>
                   </div>
-                  <p className="text-xs text-center" style={{ color: '#94a3b8' }}>
-                    Próximamente — Video del proveedor en preparación
-                  </p>
-                </>
+                ) : (
+                  <>
+                    <div
+                      className="w-full aspect-video rounded-xl flex flex-col items-center justify-center mb-3"
+                      style={{ background: '#043941' }}
+                    >
+                      <Video size={36} style={{ color: 'rgba(255,255,255,0.2)' }} />
+                      <p className="text-sm mt-2 font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                        Video de operatividad
+                      </p>
+                    </div>
+                    <p className="text-xs text-center" style={{ color: '#94a3b8' }}>
+                      Próximamente — Video del proveedor en preparación
+                    </p>
+                  </>
+                )
               ) : manualUrl ? (
                 <div className="w-full flex flex-col gap-3">
                   {/* Cover card — zoom al producto */}
