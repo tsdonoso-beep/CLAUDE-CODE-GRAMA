@@ -342,6 +342,15 @@ export const progresionConstruccionesMetalicas: ItemProgresion[] = [
 ]
 
 // ── Mapa principal ────────────────────────────────────────────────────────
+
+export const progresionTallerGeneralEPT: ItemProgresion[] = [
+  { grado:'1°', nivel:'Iniciación', color:'#10b981', complejidad:1, descripcionGrado:'Exploración de TICs y herramientas básicas del taller.', equiposFoco:['TICs y Recursos Pedagógicos'], habilidadesClave:['h1','h5'], proyectoEjemplo:'Diagnóstico del entorno con cámara y tablet', producto:'Informe fotográfico de necesidades' },
+  { grado:'2°', nivel:'Exploración', color:'#10b981', complejidad:2, descripcionGrado:'Primeras operaciones con equipos de fabricación digital.', equiposFoco:['Fabricación Digital'], habilidadesClave:['h3','h6'], proyectoEjemplo:'Prototipo básico con impresora 3D', producto:'Objeto funcional impreso' },
+  { grado:'3°', nivel:'Desarrollo', color:'#10b981', complejidad:3, descripcionGrado:'Diseño y fabricación de productos con metodología Design Thinking.', equiposFoco:['TICs y Recursos Pedagógicos','Fabricación Digital'], habilidadesClave:['h2','h9'], proyectoEjemplo:'Producto con lienzo magnético y corte láser', producto:'Prototipo validado' },
+  { grado:'4°', nivel:'Consolidación', color:'#10b981', complejidad:4, descripcionGrado:'Proyectos de emprendimiento con modelo de negocio LEAN CANVAS.', equiposFoco:['TICs y Recursos Pedagógicos'], habilidadesClave:['h8','h11'], proyectoEjemplo:'Plan de negocio con spot publicitario', producto:'Video + plan de negocio' },
+  { grado:'5°', nivel:'Proyecto', color:'#10b981', complejidad:5, descripcionGrado:'Proyecto integrador de emprendimiento con presentación profesional.', equiposFoco:['Fabricación Digital','TICs y Recursos Pedagógicos'], habilidadesClave:['h2','h3','h8','h11'], proyectoEjemplo:'Emprendimiento completo con prototipo y campaña', producto:'Producto + campaña + pitch' },
+]
+
 export const PROGRESION_POR_TALLER: Record<string, ItemProgresion[]> = {
   "ebanisteria":             progresionEbanisteria,
   "mecanica-automotriz":     progresionMecanicaAutomotriz,

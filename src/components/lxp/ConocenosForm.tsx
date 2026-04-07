@@ -32,6 +32,7 @@ const TALLER_ESPECIALIDAD: Record<string, string> = {
   'industria-alimentaria':  'INDUSTRIA ALIMENTARIA',
   'electricidad':           'ELECTRICIDAD',
   'construcciones-metalicas':'CONSTRUCCIONES METÁLICAS',
+  'taller-general-ept':     'TALLER GENERAL EPT',
 }
 
 // ─── Subcomponents ───────────────────────────────────────────────────────────

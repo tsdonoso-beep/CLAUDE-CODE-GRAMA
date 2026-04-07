@@ -370,6 +370,12 @@ const gruposConstruccionesMetalicas: GrupoEquipamiento[] = [
 ]
 
 // ── Mapa principal ────────────────────────────────────────────────────────
+
+const gruposTallerGeneralEPT: GrupoEquipamiento[] = [
+  { id: 'tge-inv', nombre: 'TICs y Recursos Pedagógicos', zona: 'investigacion', equiposEjemplo: ['Computadora', 'Tablet', 'Cámara fotográfica'], habilidades: ['h1','h2','h5','h8'] },
+  { id: 'tge-inn', nombre: 'Fabricación Digital', zona: 'innovacion', equiposEjemplo: ['Impresora 3D', 'Cortadora Láser', 'Escáner 3D'], habilidades: ['h3','h6','h9','h11'] },
+]
+
 export const GRUPOS_POR_TALLER: Record<string, GrupoEquipamiento[]> = {
   "ebanisteria":             gruposEbanisteria,
   "mecanica-automotriz":     gruposMecanicaAutomotriz,
