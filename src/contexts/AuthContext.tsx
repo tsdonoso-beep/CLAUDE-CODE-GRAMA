@@ -90,7 +90,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           touchLastSeen(session.user.id)
           trackLogin(session.user.id, p?.taller_slug)
         } else if (DEV_MODE) {
-          // Restaurar perfil de sesión de desarrollo
           setProfile(buildDevProfile())
         }
         setLoading(false)
@@ -101,12 +100,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      (_event, session) => {
         setSession(session)
         setUser(session?.user ?? null)
         if (session?.user) {
-          const p = await fetchProfile(session.user.id)
-          setProfile(p)
+          // Fire-and-forget: NO await dentro de onAuthStateChange (causa deadlock)
+          fetchProfile(session.user.id).then(p => setProfile(p))
           touchLastSeen(session.user.id)
         } else {
           setProfile(DEV_MODE ? buildDevProfile() : null)

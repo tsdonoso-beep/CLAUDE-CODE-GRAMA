@@ -1,5 +1,5 @@
 // src/pages/BienDetalle.tsx
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
 import {
@@ -11,6 +11,8 @@ import { useTaller } from '@/hooks/useTaller'
 import { eppPorTaller } from '@/data/eppData'
 import type { EPPItem } from '@/data/eppData'
 import { getManualPDF, getVideoOperatividad, getDriveEmbedUrl, getDriveDownloadUrl, getDriveThumbnailUrl } from '@/data/manualesPDF'
+import { useAuth } from '@/contexts/AuthContext'
+import { trackContenido } from '@/lib/tracker'
 
 type TabId = 'manual' | 'video'
 
@@ -18,13 +20,30 @@ export default function BienDetalle() {
   const { id } = useParams<{ id: string }>()
   const { taller, bienes, slug } = useTaller()
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [activeTab, setActiveTab] = useState<TabId>('manual')
   const [showPDFModal, setShowPDFModal] = useState(false)
   const closePDFModal = useCallback(() => setShowPDFModal(false), [])
   useEscapeKey(closePDFModal)
+  const trackedRef = useRef<Record<string, boolean>>({})
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const bien = bienes.find((b: any) => String(b.n) === id)
+
+  function trackOnce(tipo: 'manual' | 'video') {
+    const key = `${id}-${tipo}`
+    if (trackedRef.current[key]) return
+    trackedRef.current[key] = true
+    if (user?.id && slug && id) {
+      trackContenido(user.id, slug, id, tipo)
+    }
+  }
+
+  // Auto-track manual view on load
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (bien && user?.id) trackOnce('manual')
+  }, [bien?.n, user?.id])
 
   if (!taller || !bien) {
     return (
@@ -112,7 +131,7 @@ export default function BienDetalle() {
                 {tabs.map(tab => (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
+                    onClick={() => { setActiveTab(tab.id); if (tab.id === 'video') trackOnce('video') }}
                     className="flex items-center gap-2 px-5 py-3.5 text-xs font-semibold border-b-2 whitespace-nowrap transition-all"
                     style={{
                       borderColor: activeTab === tab.id ? '#02d47e' : 'transparent',

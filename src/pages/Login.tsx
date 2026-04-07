@@ -46,7 +46,7 @@ const DEV_USERS: Array<{ email: string; password: string; role: 'admin' | 'docen
   { email: 't.donoso@inroprin.com',    password: 'grama2026', role: 'admin' },
   { email: 'camila.gr@inroprin.com',   password: 'grama2026', role: 'admin' },
   { email: 'automotriz@grama.pe',      password: 'grama2026', role: 'docente', taller_slug: 'mecanica-automotriz', taller_slugs: ['mecanica-automotriz'] },
-  { email: 'generalept@grama.pe', password: 'grama2026', role: 'docente', taller_slug: 'taller-general-ept', taller_slugs: ['taller-general-ept'] },
+  { email: 'generalept@grama.pe',      password: 'grama2026', role: 'docente', taller_slug: 'taller-general-ept', taller_slugs: ['taller-general-ept'] },
   { email: 'dostalleres@grama.pe',     password: 'grama2026', role: 'docente', taller_slug: 'mecanica-automotriz', taller_slugs: ['mecanica-automotriz', 'electricidad'] },
 ]
 
@@ -91,12 +91,11 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
     }
 
     const { error: authError } = await supabase.auth.signInWithPassword({ email, password })
+    setLoading(false)
     if (authError) {
       setError('Credenciales incorrectas. Verifica tu correo y contraseña.')
-      setLoading(false)
-    } else {
-      onSuccess()
     }
+    // No navegar aquí — el useEffect en Login() detecta user y redirige
   }
 
   return (
@@ -209,7 +208,6 @@ function RegisterForm() {
     }
 
     // Upsert directo al perfil para garantizar que taller_slug quede guardado
-    // (complementa al trigger de Supabase si existe)
     if (data.user) {
       await supabase.from('profiles').upsert({
         id: data.user.id,
@@ -217,6 +215,7 @@ function RegisterForm() {
         nombre_completo: nombre.trim(),
         ie_id: Number(ieId),
         taller_slug: tallerSlug,
+        taller_slugs: [tallerSlug],
         role: 'docente',
       }, { onConflict: 'id' })
     }
@@ -345,7 +344,15 @@ function RegisterForm() {
 // ── Componente principal ────────────────────────────────────────────────────
 export default function Login() {
   const navigate = useNavigate()
+  const { user, loading } = useAuth()
   const [tab, setTab] = useState<Tab>('login')
+
+  // Si ya está autenticado, redirigir al perfil
+  useEffect(() => {
+    if (!loading && user) {
+      navigate('/perfil', { replace: true })
+    }
+  }, [loading, user, navigate])
 
   const tabBase = 'flex-1 py-2.5 text-sm font-bold transition-all rounded-lg'
 
@@ -367,10 +374,8 @@ export default function Login() {
       {/* ── Lado izquierdo (desktop) ── */}
       <div className="hidden lg:flex flex-col items-center justify-center w-1/2 px-16 py-12 grama-pattern relative overflow-hidden" style={{ background: '#052e35' }}>
         <div className="absolute inset-0 pointer-events-none">
-          {/* Orb ambiente */}
           <div className="absolute" style={{ width: 420, height: 420, background: 'radial-gradient(circle, rgba(2,212,126,0.10) 0%, transparent 65%)', right: -80, top: -80 }} />
           <div className="absolute" style={{ width: 300, height: 300, background: 'radial-gradient(circle, rgba(4,95,108,0.18) 0%, transparent 65%)', left: -60, bottom: -60 }} />
-          {/* Tangrams fijos */}
           <svg viewBox="0 0 160 160" className="absolute w-64 h-64 -bottom-10 -left-10" style={{ transform: 'rotate(-15deg)' }} xmlns="http://www.w3.org/2000/svg">
             <polygon points="0,160 80,80 0,0"     fill="#02d47e" fillOpacity={0.12} />
             <polygon points="160,0 80,80 160,160" fill="#02d47e" fillOpacity={0.08} />
@@ -382,7 +387,6 @@ export default function Login() {
             <polygon points="160,0 80,80 160,160" fill="#02d47e" fillOpacity={0.07} />
             <polygon points="80,80 120,80 120,120" fill="#02d47e" fillOpacity={0.09} />
           </svg>
-          {/* Piezas flotantes */}
           <svg viewBox="0 0 80 80" className="absolute float-a" style={{ width:64, height:64, top:'12%', left:'6%', animationDuration:'15s' }}>
             <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.22} />
           </svg>
@@ -404,7 +408,7 @@ export default function Login() {
           <h2 className="text-2xl font-extrabold text-white mb-3">Plataforma de Capacitación Docente</h2>
           <p className="text-sm font-medium" style={{ color: 'var(--grama-menta)' }}>Talleres EPT · Programa MSE-SFT · MINEDU Perú</p>
           <div className="mt-10 grid grid-cols-3 gap-4">
-            {[{ value: '9', label: 'Talleres EPT' }, { value: '150h', label: 'de capacitación' }, { value: '7', label: 'módulos' }].map(s => (
+            {[{ value: '10', label: 'Talleres EPT' }, { value: '150h', label: 'de capacitación' }, { value: '7', label: 'módulos' }].map(s => (
               <div key={s.label} className="text-center">
                 <p className="text-2xl font-extrabold" style={{ color: 'var(--grama-menta)' }}>{s.value}</p>
                 <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{s.label}</p>
@@ -449,7 +453,7 @@ export default function Login() {
                 <>
                   <h1 className="text-2xl font-extrabold mb-1" style={{ color: 'var(--grama-oscuro)' }}>Iniciar sesión</h1>
                   <p className="text-sm mb-8" style={{ color: '#045f6c' }}>Ingresa tus credenciales para acceder</p>
-                  <LoginForm onSuccess={() => navigate('/perfil')} />
+                  <LoginForm onSuccess={() => navigate('/perfil', { replace: true })} />
                 </>
               ) : (
                 <>

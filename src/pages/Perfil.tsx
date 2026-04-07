@@ -175,7 +175,7 @@ export default function Perfil() {
               </button>
             )}
             <button
-              onClick={() => signOut()}
+              onClick={async () => { await signOut(); navigate('/login', { replace: true }) }}
               className="flex items-center gap-1.5 text-xs font-medium transition-opacity hover:opacity-60 px-2 py-1.5"
               style={{ color: 'rgba(4,57,65,0.35)' }}
             >
