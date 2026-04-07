@@ -187,7 +187,7 @@ export default function TallerHub() {
         <div className="lg:col-span-2 space-y-5">
 
           {/* Ruta de Aprendizaje */}
-          <section
+          {slug !== 'taller-general-ept' && <section
             className="rounded-2xl overflow-hidden animate-fade-in-up stagger-1"
             style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}
           >
@@ -315,7 +315,7 @@ export default function TallerHub() {
                 <ArrowRight size={13} />
               </button>
             </div>
-          </section>
+          </section>}
 
           {/* Repositorio de Recursos */}
           <section
@@ -477,7 +477,7 @@ export default function TallerHub() {
             </div>
             <div className="divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
               {[
-                { label: 'Ruta de Aprendizaje', sub: '7 módulos', icon: Layers, to: `/taller/${slug}/ruta`, color: accent },
+                ...(slug !== 'taller-general-ept' ? [{ label: 'Ruta de Aprendizaje', sub: '7 módulos', icon: Layers, to: `/taller/${slug}/ruta`, color: accent }] : []),
                 { label: 'Repositorio', sub: `${totalBienes} bienes`, icon: Package, to: `/taller/${slug}/repositorio`, color: '#02d47e' },
               ].map(item => (
                 <button

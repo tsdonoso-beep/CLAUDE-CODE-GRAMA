@@ -14,7 +14,7 @@ import { modulosLXP } from '@/data/modulosLXP'
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const STATS = [
-  { value: '9',    label: 'Talleres EPT' },
+  { value: '10',   label: 'Talleres EPT' },
   { value: '36+',  label: 'Docentes capacitados' },
   { value: '200+', label: 'Fichas descargables' },
   { value: '150h', label: 'Formación híbrida' },
@@ -305,65 +305,108 @@ function TallerModal({
 
           {/* Cuerpo scrollable */}
           <div key={taller.slug} className={`flex-1 overflow-y-auto p-5 space-y-5 ${slideClass}`}>
-            {/* Descripción */}
-            <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>{taller.descripcion}</p>
-
-            {/* Competencias */}
-            {taller.competencias?.length > 0 && (
-              <div>
-                <p className="overline-label font-extrabold mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
-                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.2 7.8L9 2.5" stroke="#02d47e" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  Competencias que desarrollarás
-                </p>
-                <div className="grid grid-cols-2 gap-1">
-                  {taller.competencias.slice(0, 4).map((c, i) => (
-                    <div key={i} className="flex items-start gap-1.5 px-2 py-1.5 rounded-lg" style={{ background: '#f0faf5' }}>
-                      <span className="h-1.5 w-1.5 rounded-full shrink-0 mt-1" style={{ background: '#02d47e' }} />
-                      <span className="text-[10px] leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{c}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Ruta de aprendizaje */}
-            <div>
-              <p className="overline-label font-extrabold mb-2.5 flex items-center gap-2" style={{ color: 'var(--grama-menta)' }}>
-                <BookOpen size={11} /> Ruta de aprendizaje · 7 módulos · 150h
-              </p>
-              <div className="space-y-1.5">
-                {modulosLXP.map((m, i) => (
-                  <div
-                    key={m.id}
-                    className="flex items-center gap-3 px-3 py-2 rounded-xl"
-                    style={{ background: '#f0faf5' }}
-                  >
-                    <span className="text-[10px] font-extrabold w-5 shrink-0 text-center" style={{ color: '#94a3b8' }}>M{i}</span>
-                    <span className="text-[11px] font-semibold flex-1" style={{ color: 'var(--grama-oscuro)' }}>{m.nombre}</span>
-                    <span className="text-[10px] shrink-0 font-medium" style={{ color: '#94a3b8' }}>{m.horasTotal}h</span>
+            {taller.slug === 'taller-general-ept' ? (
+              <>
+                {/* Descripción extendida para Taller General EPT */}
+                <div className="space-y-3">
+                  <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>
+                    El <strong style={{ color: 'var(--grama-oscuro)' }}>Taller General EPT</strong> es un espacio transversal de aprendizaje equipado con tecnología de fabricación digital, TICs y recursos pedagógicos de vanguardia. Está diseñado para que los docentes desarrollen proyectos productivos aplicando el enfoque de Design Thinking e innovación.
+                  </p>
+                  <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>
+                    A diferencia de los talleres especializados, este espacio integra herramientas de múltiples disciplinas: desde la fabricación digital (impresión 3D, corte láser, sublimación) hasta la comunicación audiovisual y el emprendimiento. Es el hub donde convergen ideas, prototipos y aprendizajes de todos los talleres EPT.
+                  </p>
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {['Fabricación Digital', 'Design Thinking', 'Emprendimiento', 'Prototipado', 'Proyectos Productivos'].map(tag => (
+                      <span key={tag} className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ background: '#e3f8fb', color: '#045f6c' }}>{tag}</span>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Equipamiento */}
-            {bienes.length > 0 && (
-              <div>
-                <p className="overline-label font-extrabold mb-2.5 flex items-center gap-2" style={{ color: 'var(--grama-menta)' }}>
-                  <Wrench size={11} /> Equipamiento representativo
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {bienes.map(b => (
-                    <span
-                      key={b.nombre}
-                      className="text-[10px] font-medium px-2.5 py-1 rounded-full"
-                      style={{ background: '#e3f8fb', color: '#045f6c' }}
-                    >
-                      {b.nombre}
-                    </span>
-                  ))}
                 </div>
-              </div>
+
+                {/* Equipamiento representativo */}
+                <div>
+                  <p className="overline-label font-extrabold mb-2.5 flex items-center gap-2" style={{ color: 'var(--grama-menta)' }}>
+                    <Wrench size={11} /> Equipamiento representativo
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      'Impresora 3D FDM', 'Cortadora Láser CO₂', 'Escáner 3D', 'Máquina de Sublimación',
+                      'Kit de Electrónica', 'Computadoras de Escritorio', 'Cámara con Trípode',
+                      'Tablet con Stylus', 'Plotter de Corte', 'Estación de Soldadura',
+                    ].map(nombre => (
+                      <span
+                        key={nombre}
+                        className="text-[10px] font-medium px-2.5 py-1 rounded-full"
+                        style={{ background: '#e3f8fb', color: '#045f6c' }}
+                      >
+                        {nombre}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Descripción */}
+                <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>{taller.descripcion}</p>
+
+                {/* Competencias */}
+                {taller.competencias?.length > 0 && (
+                  <div>
+                    <p className="overline-label font-extrabold mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
+                      <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.2 7.8L9 2.5" stroke="#02d47e" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      Competencias que desarrollarás
+                    </p>
+                    <div className="grid grid-cols-2 gap-1">
+                      {taller.competencias.slice(0, 4).map((c, i) => (
+                        <div key={i} className="flex items-start gap-1.5 px-2 py-1.5 rounded-lg" style={{ background: '#f0faf5' }}>
+                          <span className="h-1.5 w-1.5 rounded-full shrink-0 mt-1" style={{ background: '#02d47e' }} />
+                          <span className="text-[10px] leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{c}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Ruta de aprendizaje */}
+                <div>
+                  <p className="overline-label font-extrabold mb-2.5 flex items-center gap-2" style={{ color: 'var(--grama-menta)' }}>
+                    <BookOpen size={11} /> Ruta de aprendizaje · 7 módulos · 150h
+                  </p>
+                  <div className="space-y-1.5">
+                    {modulosLXP.map((m, i) => (
+                      <div
+                        key={m.id}
+                        className="flex items-center gap-3 px-3 py-2 rounded-xl"
+                        style={{ background: '#f0faf5' }}
+                      >
+                        <span className="text-[10px] font-extrabold w-5 shrink-0 text-center" style={{ color: '#94a3b8' }}>M{i}</span>
+                        <span className="text-[11px] font-semibold flex-1" style={{ color: 'var(--grama-oscuro)' }}>{m.nombre}</span>
+                        <span className="text-[10px] shrink-0 font-medium" style={{ color: '#94a3b8' }}>{m.horasTotal}h</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Equipamiento */}
+                {bienes.length > 0 && (
+                  <div>
+                    <p className="overline-label font-extrabold mb-2.5 flex items-center gap-2" style={{ color: 'var(--grama-menta)' }}>
+                      <Wrench size={11} /> Equipamiento representativo
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {bienes.map(b => (
+                        <span
+                          key={b.nombre}
+                          className="text-[10px] font-medium px-2.5 py-1 rounded-full"
+                          style={{ background: '#e3f8fb', color: '#045f6c' }}
+                        >
+                          {b.nombre}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </div>
 
