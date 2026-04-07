@@ -31,9 +31,10 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
   const { getTallerProgreso } = useProgress()
   const progreso = slug ? getTallerProgreso(slug) : { porcentaje: 0, completados: 0, total: 0 }
 
+  const isRepoOnly = slug === 'taller-general-ept'
   const navItems = [
     { to: `/taller/${slug}`,             icon: Home,     label: 'Inicio' },
-    { to: `/taller/${slug}/ruta`,        icon: BookOpen, label: 'Ruta de Aprendizaje' },
+    ...(!isRepoOnly ? [{ to: `/taller/${slug}/ruta`, icon: BookOpen, label: 'Ruta de Aprendizaje' }] : []),
     { to: `/taller/${slug}/repositorio`, icon: Package,  label: 'Repositorio' },
   ]
 

@@ -207,8 +207,23 @@ export const videosOperatividadPorBien: Record<string, Record<number, string>> =
     49: 'https://drive.google.com/file/d/18fYJpuQZs121UG3UT0MyX6ds7qXK8Jh5/view',  // ANA-01  · Anaquel de metal
     50: 'https://drive.google.com/file/d/1OluNNNi8DNFa9J4feFnSDu7EszysTjU_/view',  // MAN-05  · Mandil
     52: 'https://drive.google.com/file/d/1UdANPnhZWJF8sHIoKtc2IgbAWvausMGg/view',  // MAP-01  · Mesa de apoyo
+    30: 'https://drive.google.com/file/d/1wS0d6gbm0BO2UQKSZ8qhrHsjAyHtIFd4/view',  // OTR-01  · Juego de tijera de acero
+    31: 'https://drive.google.com/file/d/1IGxirIue_4o1o6XSesWgYD8LE0S9JQs_/view',  // OTR-02  · Tijeras multiusos
+    32: 'https://drive.google.com/file/d/1gen0AZBOr57OQ-VmqR0ZDs10TfA2eCYz/view',  // OTR-03  · Kit de cúter
+    37: 'https://drive.google.com/file/d/1SMZ0J03ja4xUxtP1R0c01K7kUMpx_uD0/view',  // OTR-04  · Atornillador portátil
+    38: 'https://drive.google.com/file/d/1dKgF4s5FIwB41MSgNFPb9I526GUSIO2X/view',  // OTR-05  · Lijadora orbital
+    40: 'https://drive.google.com/file/d/1t5ttxge0w1S6nAqausD_6d0u53G6Bq2T/view',  // OTR-06  · Pirograbador con diversas puntas
+    41: 'https://drive.google.com/file/d/1WnAIr_PcfEMFBugaZh2wnLiMYBKR8K3O/view',  // OTR-07  · Pistola de silicona
+    42: 'https://drive.google.com/file/d/1xl_o3tpNIvInU6VLQhbJQcPx93-bdz-Y/view',  // OTR-08  · Wincha de 5 metros
+    43: 'https://drive.google.com/file/d/1k9B4mmlIiItvBlNqI4FEwRuhJQA4WtZf/view',  // OTR-09  · Escuadra de tope
+    44: 'https://drive.google.com/file/d/1P41YQF6lfto845vCP5vqzHSJaEgJ1F8m/view',  // OTR-10  · Falsa escuadra
+    45: 'https://drive.google.com/file/d/16vRXA4gAB5n8Itw0ilDzgESkQLjGunu7/view',  // OTR-13  · Juego de pinceles
+    46: 'https://drive.google.com/file/d/1EwV72Q6rg1o5LS5hg9u6lnKmq6W0hngw/view',  // OTR-14  · Juego de pinceles esponja
+    47: 'https://drive.google.com/file/d/1BMrnMnmb8_dMxc0fPVpcig3D5ZSBZcWk/view',  // OTR-15  · Cubeta lava pinceles
     56: 'https://drive.google.com/file/d/1DA1xwpUjvzqDGr-Mw4T2bAdNcRuqWTWw/view',  // EC-01   · Equipo de comunicación switch
     57: 'https://drive.google.com/file/d/1YiKbWiTyTDjxrz4Srl6mAQeUbFw9-mnI/view',  // AMU-01  · Armario multimedia
+    58: 'https://drive.google.com/file/d/1BLM2vtBbyZA7JOzSFYKLYJ9UYeyWzQzy/view',  // OTR-18  · Extintor CO2 (video agrupado extintores)
+    59: 'https://drive.google.com/file/d/1BLM2vtBbyZA7JOzSFYKLYJ9UYeyWzQzy/view',  // OTR-18  · Extintor PQS (mismo video agrupado)
     63: 'https://drive.google.com/file/d/1zM4myoiUCO404H1j2dDQgDl7UOx6b6Vw/view',  // AML-01  · Armario móvil para laptop
   },
 }

@@ -155,27 +155,29 @@ export default function TallerHub() {
             </div>
 
             {/* Right: progress ring flotante */}
-            <div
-              className="hidden lg:flex flex-col items-center gap-3 p-5 rounded-2xl animate-fade-in-up stagger-4"
-              style={{
-                background: 'rgba(255,255,255,0.07)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                minWidth: 160,
-              }}
-            >
-              <p className="overline-label font-bold text-white/50">Tu progreso</p>
-              <ProgressRing
-                percentage={progresoTaller.porcentaje}
-                size={80}
-                label={`${progresoTaller.completados}/${progresoTaller.total}`}
-                sublabel="actividades"
-                dark
-              />
-              <p className="text-[10px] text-white/40 text-center">
-                {progresoTaller.porcentaje}% completado
-              </p>
-            </div>
+            {slug !== 'taller-general-ept' && (
+              <div
+                className="hidden lg:flex flex-col items-center gap-3 p-5 rounded-2xl animate-fade-in-up stagger-4"
+                style={{
+                  background: 'rgba(255,255,255,0.07)',
+                  backdropFilter: 'blur(16px)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  minWidth: 160,
+                }}
+              >
+                <p className="overline-label font-bold text-white/50">Tu progreso</p>
+                <ProgressRing
+                  percentage={progresoTaller.porcentaje}
+                  size={80}
+                  label={`${progresoTaller.completados}/${progresoTaller.total}`}
+                  sublabel="actividades"
+                  dark
+                />
+                <p className="text-[10px] text-white/40 text-center">
+                  {progresoTaller.porcentaje}% completado
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -404,38 +406,42 @@ export default function TallerHub() {
         <div className="space-y-4">
 
           {/* Progress ring — móvil visible, desktop duplica el del hero */}
-          <div
-            className="lg:hidden p-5 rounded-2xl border text-center animate-fade-in-up stagger-1"
-            style={{ borderColor: 'rgba(4,57,65,0.08)', background: '#ffffff' }}
-          >
-            <h3 className="text-xs font-extrabold mb-4" style={{ color: 'var(--grama-oscuro)' }}>Tu progreso</h3>
-            <div className="flex justify-center mb-2">
-              <ProgressRing
-                percentage={progresoTaller.porcentaje}
-                size={88}
-                label={`${progresoTaller.completados}/${progresoTaller.total}`}
-                sublabel="actividades"
-                dark={false}
-              />
+          {slug !== 'taller-general-ept' && (
+            <div
+              className="lg:hidden p-5 rounded-2xl border text-center animate-fade-in-up stagger-1"
+              style={{ borderColor: 'rgba(4,57,65,0.08)', background: '#ffffff' }}
+            >
+              <h3 className="text-xs font-extrabold mb-4" style={{ color: 'var(--grama-oscuro)' }}>Tu progreso</h3>
+              <div className="flex justify-center mb-2">
+                <ProgressRing
+                  percentage={progresoTaller.porcentaje}
+                  size={88}
+                  label={`${progresoTaller.completados}/${progresoTaller.total}`}
+                  sublabel="actividades"
+                  dark={false}
+                />
+              </div>
+              <p className="text-xs" style={{ color: '#045f6c' }}>
+                {progresoTaller.porcentaje}% completado
+              </p>
             </div>
-            <p className="text-xs" style={{ color: '#045f6c' }}>
-              {progresoTaller.porcentaje}% completado
-            </p>
-          </div>
+          )}
 
           {/* Próxima sesión */}
-          <div className="animate-fade-in-up stagger-2">
-            <LiveSessionCard
-              titulo={mockProximaSesion.titulo}
-              moduloNombre={mockProximaSesion.moduloNombre}
-              fecha={mockProximaSesion.fecha}
-              duracionMin={mockProximaSesion.duracionMin}
-              formador={mockProximaSesion.formador}
-              plataforma={mockProximaSesion.plataforma}
-              urlAcceso={mockProximaSesion.urlAcceso}
-              compact
-            />
-          </div>
+          {slug !== 'taller-general-ept' && (
+            <div className="animate-fade-in-up stagger-2">
+              <LiveSessionCard
+                titulo={mockProximaSesion.titulo}
+                moduloNombre={mockProximaSesion.moduloNombre}
+                fecha={mockProximaSesion.fecha}
+                duracionMin={mockProximaSesion.duracionMin}
+                formador={mockProximaSesion.formador}
+                plataforma={mockProximaSesion.plataforma}
+                urlAcceso={mockProximaSesion.urlAcceso}
+                compact
+              />
+            </div>
+          )}
 
           {/* Card inspiracional */}
           <div

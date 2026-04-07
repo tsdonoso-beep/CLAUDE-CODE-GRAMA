@@ -203,29 +203,6 @@ export const talleresConfig: TallerConfig[] = [
     ]
   },
   {
-    id: "taller-general-ept",
-    slug: "taller-general-ept",
-    nombre: "Taller General EPT",
-    nombreCorto: "Taller General EPT",
-    numero: 10,
-    descripcion: "Espacio transversal de aprendizaje EPT equipado con TICs, herramientas de diseño, fabricación digital y recursos pedagógicos para desarrollar competencias de emprendimiento e innovación.",
-    competencias: [
-      "Identificación de necesidades y problemas del usuario",
-      "Diseño y prototipado de propuestas de valor",
-      "Fabricación digital: impresión 3D, corte láser y sublimación",
-      "Planificación y gestión de proyectos productivos",
-      "Uso de TICs para documentar, comunicar y emprender",
-    ],
-    color: "158 60% 38%",
-    icon: "Layers",
-    imagen: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
-    zonas: [
-      { id: "investigacion", nombre: "Zona Investigación", descripcion: "TICs y recursos pedagógicos para identificar necesidades" },
-      { id: "innovacion", nombre: "Zona Innovación", descripcion: "Equipos de fabricación digital y prototipado" },
-      { id: "seguridad", nombre: "Seguridad", descripcion: "Equipamiento de protección personal y emergencias" }
-    ]
-  },
-  {
     id: "construcciones-metalicas",
     slug: "construcciones-metalicas",
     nombre: "Const. Metálicas",
@@ -246,6 +223,29 @@ export const talleresConfig: TallerConfig[] = [
       { id: "investigacion", nombre: "Zona Investigación", descripcion: "Equipos para identificar necesidades y problemas" },
       { id: "innovacion", nombre: "Zona Innovación", descripcion: "Equipos para diseñar y crear prototipos" },
       { id: "seguridad", nombre: "Seguridad", descripcion: "Equipamiento de protección personal" }
+    ]
+  },
+  {
+    id: "taller-general-ept",
+    slug: "taller-general-ept",
+    nombre: "Taller General EPT",
+    nombreCorto: "Taller General EPT",
+    numero: 10,
+    descripcion: "Espacio transversal de aprendizaje EPT equipado con TICs, herramientas de diseño, fabricación digital y recursos pedagógicos para desarrollar competencias de emprendimiento e innovación.",
+    competencias: [
+      "Identificación de necesidades y problemas del usuario",
+      "Diseño y prototipado de propuestas de valor",
+      "Fabricación digital: impresión 3D, corte láser y sublimación",
+      "Planificación y gestión de proyectos productivos",
+      "Uso de TICs para documentar, comunicar y emprender",
+    ],
+    color: "158 60% 38%",
+    icon: "Layers",
+    imagen: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
+    zonas: [
+      { id: "investigacion", nombre: "Zona Investigación", descripcion: "TICs y recursos pedagógicos para identificar necesidades" },
+      { id: "innovacion", nombre: "Zona Innovación", descripcion: "Equipos de fabricación digital y prototipado" },
+      { id: "seguridad", nombre: "Seguridad", descripcion: "Equipamiento de protección personal y emergencias" }
     ]
   }
 ];

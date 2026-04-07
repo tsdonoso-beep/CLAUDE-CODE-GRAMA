@@ -1,5 +1,6 @@
 // src/pages/RutaAprendizaje.tsx
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { BookOpen, Clock, Video, Award } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
@@ -15,6 +16,13 @@ export default function RutaAprendizaje() {
   const { taller, slug } = useTaller()
   const { getTallerProgreso, getModuloProgreso, getEstadoModuloLXP } = useProgress()
   const { user } = useAuth()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (slug === 'taller-general-ept') {
+      navigate(`/taller/${slug}/repositorio`, { replace: true })
+    }
+  }, [slug, navigate])
 
   useEffect(() => {
     if (!user?.id || !slug) return
@@ -22,7 +30,7 @@ export default function RutaAprendizaje() {
   }, [user?.id, slug])
   const progresoTaller = getTallerProgreso(slug ?? '')
 
-  if (!taller) return null
+  if (!taller || slug === 'taller-general-ept') return null
 
   const sesionesEnVivo = modulosLXP.flatMap(m =>
     m.subSecciones.flatMap(s =>
