@@ -192,6 +192,7 @@ export const videosOperatividadPorBien: Record<string, Record<number, string>> =
      2: 'https://drive.google.com/file/d/1QzcvxmUaoWN2YgG89TbblJzirpzTVPDB/view',  // CF-02   · Cámara fotográfica
      3: 'https://drive.google.com/file/d/14JxUAuvCzo8y8XFa6pEIgm6kRHFqWw28/view',  // CFT-02  · Cámara de video con trípode
      4: 'https://drive.google.com/file/d/1WnvX6ztLlfeFTBN-K673P9FAJzYZuPVt/view',  // TAB-02  · Tablet
+     9: 'https://drive.google.com/file/d/1mux0bfhFfPyYhc5sbLcMVxJ5o54ycpv9/view',  // EGP-02  · Laptop
     10: 'https://drive.google.com/file/d/1lIqgr7Ta7qVyJ9H8Cxp4TlkUoZZ5rEeJ/view',  // MES-02  · Mesa de computadora para estudiante
     12: 'https://drive.google.com/file/d/1z-Tmoa6IZIiEYNFB_rAUNDcQAEC-OoS3/view',  // IMP-01  · Impresora multifuncional
     13: 'https://drive.google.com/file/d/1I9RCvVUl37fTk_dZIvxSnuLyUJHrSW-I/view',  // MB-01   · Mueble bajo
@@ -201,6 +202,7 @@ export const videosOperatividadPorBien: Record<string, Record<number, string>> =
     28: 'https://drive.google.com/file/d/1ZUEOWrD71atjn2dXWjfOgY_ZGrH5FmtE/view',  // KIT-01  · Kit electrónica (microcontroladores)
     29: 'https://drive.google.com/file/d/15YEgIX92Bn-oOr_-Wh_i3bbBXmf6Kmgp/view',  // MS-01   · Máquina de sublimación 8 en 1
     33: 'https://drive.google.com/file/d/1dgbtFCeiZU-blyae8XfIMNhl8nwM8kDg/view',  // IMP-3D  · Impresora 3D
+    34: 'https://drive.google.com/file/d/1S3XaosRpRLnA4pI0IDOJQp2KU1s7XHt2/view',  // MEC-01  · Cortadora láser CO2
     35: 'https://drive.google.com/file/d/1zSDyKgkImFyXqznliet2DWBNflnpJ88z/view',  // MAC-01  · Máquina escáner y corte
     36: 'https://drive.google.com/file/d/17MPHtCehkAevM63cQwSaiYyn3ryvp-_Y/view',  // ESC-01  · Escáner 3D
     39: 'https://drive.google.com/file/d/1Fjpu6OnZcXWFRJkqVJm1PdzAuJdE9wzJ/view',  // MES-01  · Mesa de trabajo de acero
