@@ -40,7 +40,8 @@ function GramaInput({
 const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
   import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
 const DEV_USERS: Array<{ email: string; password: string; role: 'admin' | 'docente'; taller_slug?: string; taller_slugs?: string[] }> = [
-  { email: 'admin@grama.pe',           password: 'grama2025', role: 'admin' },
+  { email: 'admin@grama.pe',           password: 'grama2026', role: 'admin' },
+  { email: 'roberto@grama.pe',         password: 'grama2026', role: 'admin' },
   { email: 'docente@grama.pe',         password: 'grama2026', role: 'docente' },
   { email: 't.donoso@inroprin.com',    password: 'grama2026', role: 'admin' },
   { email: 'camila.gr@inroprin.com',   password: 'grama2026', role: 'admin' },
@@ -119,7 +120,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
         </label>
         <div className="relative">
           <input
-            id="password" type={showPass ? 'text' : 'password'} autoComplete="current-password"
+            id="password" type={showPass ? 'text' : 'password'} autoComplete="off"
             value={password} onChange={e => setPassword(e.target.value)}
             placeholder="••••••••" required
             className={`${INPUT_STYLE.base} pr-12`}
@@ -266,7 +267,7 @@ function RegisterForm() {
         </label>
         <div className="relative">
           <input
-            id="reg-password" type={showPass ? 'text' : 'password'} autoComplete="new-password"
+            id="reg-password" type={showPass ? 'text' : 'password'} autoComplete="off"
             value={password} onChange={e => setPassword(e.target.value)}
             placeholder="Mín. 8 caracteres" required minLength={8}
             className={`${INPUT_STYLE.base} pr-12`} style={INPUT_STYLE.colors}
