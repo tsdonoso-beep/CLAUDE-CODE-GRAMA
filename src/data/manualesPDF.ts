@@ -177,6 +177,46 @@ export const manualesPDFPorBien: Record<string, Record<number, string>> = {
     113: 'https://drive.google.com/file/d/1ZfawBdyGNOTrL72Yu9I0XRcATr0INxpX/view',  // Extintor PQS
     115: 'https://drive.google.com/file/d/1_Gt_oQnOY-h6Yf3C18EVF-BC-irLlbnE/view',  // Guantes de electricista
   },
+  'taller-general-ept': {
+     1: 'https://drive.google.com/file/d/1yU0hclwAmfPK3q5VEuj0BEaOOY2GFidC/view',  // Equipo de grabación para reportero
+     2: 'https://drive.google.com/file/d/1WkfGJwoCmMg4xtJvcFLF7RzhoCEay1Jl/view',  // Cámara fotográfica
+     3: 'https://drive.google.com/file/d/1XN5eT8bMbtPRsbVAUSutnc4NofX_8Esy/view',  // Cámara de video con trípode
+    10: 'https://drive.google.com/file/d/1xIC45g_D7psg36m5yAK93VNjadxNBKy_/view',  // Mesa de computadora para estudiante
+    11: 'https://drive.google.com/file/d/17xCssc7MYYE25UM4GZvfBIfw2LtTzZ9I/view',  // Silla para estudiante
+    13: 'https://drive.google.com/file/d/1msCYBye2psMSdvWjFlkyoFOPECZqniaO/view',  // Mueble bajo (compartido n=13,19,51)
+    15: 'https://drive.google.com/file/d/1l3g2qbp7tLX2H4aI_YCl7VmJoFWk7hiL/view',  // Escritorio para el docente
+    16: 'https://drive.google.com/file/d/1F26vDWu9E1wFs18zTRzlItARBihql1ns/view',  // Silla para el docente
+    17: 'https://drive.google.com/file/d/1ucXM43_auEqPB29d5ZqLz3QQ_EK-PHtJ/view',  // Ecran
+    18: 'https://drive.google.com/file/d/1Lh3sMc2ej7JVtNK-hazZ_JUL6JHrGuws/view',  // Mesa para discapacitado
+    19: 'https://drive.google.com/file/d/1msCYBye2psMSdvWjFlkyoFOPECZqniaO/view',  // Mueble bajo (mismo manual)
+    20: 'https://drive.google.com/file/d/1DkaoX8t5t4miQld11i9_0XKtmsM_Xu8z/view',  // Armario de metal
+    21: 'https://drive.google.com/file/d/1ubidVh_TC9VzA0rZJML5cyO2PKIpAHQH/view',  // Lienzo magnético — metodologías de diseño
+    23: 'https://drive.google.com/file/d/1KyoGGQatcVj6vsr3unUMppdyLmXi6lP2/view',  // Lienzo magnético — modelos de negocios
+    24: 'https://drive.google.com/file/d/15t0xM9NWn1B72Lip42bxH7NHRbvcO5FR/view',  // Lienzo magnético — flujogramas DOP y DAP
+    30: 'https://drive.google.com/file/d/1AfUPh8n2Oa1iR3LmQ8u6iNcYh3yeT7gK/view',  // Juego de tijera de acero
+    31: 'https://drive.google.com/file/d/1WhffAEyMcmWXMjRnP9aZWDO7AnsQTLse/view',  // Tijeras multiusos
+    32: 'https://drive.google.com/file/d/1Z43_1Ae9CNPlGYN-XK_2Rf-SfGWWBKvN/view',  // Kit de cúter
+    37: 'https://drive.google.com/file/d/1J4BLrC76xDMVpBjpvjQVcFGZftYDuOaz/view',  // Atornillador portátil
+    38: 'https://drive.google.com/file/d/1rEgz_OIHPtd8Lfo3s_yEghyDNz9rF7Pt/view',  // Lijadora orbital
+    39: 'https://drive.google.com/file/d/1W3BuRDMb28dTni2X4vUugYNbtmhqUGV6/view',  // Mesa de trabajo de acero
+    41: 'https://drive.google.com/file/d/13PNa6B24hn3VPRr6Vhlg7DpyI-NJ7c6n/view',  // Pistola de silicona
+    42: 'https://drive.google.com/file/d/1flup27FgGaQain0WPzyQUsaAqp2p_eeL/view',  // Wincha de 5 metros
+    43: 'https://drive.google.com/file/d/1tRHmvCY9AK6arzf5AcxQ1-u1utsnTZ2h/view',  // Escuadra de tope
+    44: 'https://drive.google.com/file/d/1rmSyJQxGKoJd58EEQL2zZg0uW9qNbufZ/view',  // Falsa escuadra
+    45: 'https://drive.google.com/file/d/1xG4f0vK5MeVZNdNoqD78AO_8MkLNqiTm/view',  // Juego de pinceles
+    46: 'https://drive.google.com/file/d/1EkP3Vy7FCSBGUXV2U8k32HZaoP0heA7M/view',  // Juego de pinceles esponja
+    47: 'https://drive.google.com/file/d/13Cwc-6FqlPmsf1pUCu_swPmPIGncO86v/view',  // Cubeta lava pinceles
+    48: 'https://drive.google.com/file/d/1DkaoX8t5t4miQld11i9_0XKtmsM_Xu8z/view',  // Armario de metal (mismo manual)
+    49: 'https://drive.google.com/file/d/1x-1CQ5B5VsuzOAr0idOEXBNVsUENV4A_/view',  // Anaquel de metal
+    50: 'https://drive.google.com/file/d/1T-bqEQBFhmJL84v8yFYto5ld8bucV3Ji/view',  // Mandil
+    51: 'https://drive.google.com/file/d/1msCYBye2psMSdvWjFlkyoFOPECZqniaO/view',  // Mueble bajo (mismo manual)
+    52: 'https://drive.google.com/file/d/1oBgUKol2gvWWiWZtdu8EmSbFMbj6mKqI/view',  // Mesa de apoyo
+    57: 'https://drive.google.com/file/d/1ig_cRKJfuM_wNhW_mpr6WfH1ksdkbrzr/view',  // Armario multimedia
+    58: 'https://drive.google.com/file/d/1SR1PsfqLq-bSTq-NSXPtQLv6PgssGBeu/view',  // Extintor CO2
+    59: 'https://drive.google.com/file/d/18IoX3swBhOMPTT5LWLGZQ-RHu3JSmRZ7/view',  // Extintor PQS
+    60: 'https://drive.google.com/file/d/1h1GFCRcEBbQF4C79YhXxl_6_VxsDLz7p/view',  // Detector de humos
+    61: 'https://drive.google.com/file/d/11I-HnsBvYY50vlsaYQz0284iOI16MOOe/view',  // Botiquín
+  },
 }
 
 // Busca el manual PDF para un bien específico
