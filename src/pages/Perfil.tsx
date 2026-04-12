@@ -15,6 +15,7 @@ import { GramaLogo } from '@/components/GramaLogo'
 import { ProgressRing } from '@/components/lxp/ProgressRing'
 import { trackNavegacion } from '@/lib/tracker'
 import { getProximaSesion, formatFechaSesion, formatHoraSesion, diasParaSesion } from '@/data/sesionesLXP'
+import { AtencionDocente } from '@/components/lxp/AtencionDocente'
 
 const TOTAL_HORAS   = 150
 const TOTAL_MODULOS = 7
@@ -576,6 +577,15 @@ export default function Perfil() {
               })}
             </div>
           </section>
+
+          {/* ── Atención al Docente ── */}
+          <AtencionDocente
+            userId={user?.id ?? 'guest'}
+            tallerSlug={tallerSlug}
+            displayName={displayName}
+            tallerNombre={taller?.nombre}
+          />
+
         </div>
 
         {/* ── Sidebar (1/3) ───────────────────────────────────────────────── */}
