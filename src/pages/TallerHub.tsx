@@ -14,6 +14,8 @@ import { supabase } from '@/lib/supabase'
 import { trackNavegacion } from '@/lib/tracker'
 import { LiveSessionCard } from '@/components/lxp/LiveSessionCard'
 import { ProgressRing } from '@/components/lxp/ProgressRing'
+import { CalendarioSesiones } from '@/components/lxp/CalendarioSesiones'
+import { getSesionesPorTaller, getProximaSesion } from '@/data/sesionesLXP'
 
 const TALLER_ACCENTS: Record<string, string> = {
   'mecanica-automotriz':  '#3b82f6',
@@ -319,6 +321,50 @@ export default function TallerHub() {
             </div>
           </section>}
 
+          {/* Sesiones en Vivo */}
+          {slug !== 'taller-general-ept' && (
+          <section
+            className="rounded-2xl overflow-hidden animate-fade-in-up stagger-2"
+            style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}
+          >
+            <div
+              className="flex items-center justify-between px-5 py-4 border-b"
+              style={{ borderColor: 'rgba(4,57,65,0.08)', background: 'rgba(4,57,65,0.05)' }}
+            >
+              <div className="flex items-center gap-2.5">
+                <div className="h-8 w-8 rounded-lg flex items-center justify-center"
+                  style={{ background: 'rgba(2,212,126,0.12)' }}>
+                  <BookOpen size={15} style={{ color: '#02d47e' }} />
+                </div>
+                <div>
+                  <h2 className="text-h3 font-extrabold" style={{ color: '#043941' }}>
+                    Sesiones en Vivo
+                  </h2>
+                  <p className="text-[10px]" style={{ color: 'rgba(4,57,65,0.45)' }}>
+                    Agenda de capacitación sincrónica
+                  </p>
+                </div>
+              </div>
+              {getProximaSesion(slug ?? '') && (
+                <span
+                  className="text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5"
+                  style={{ background: 'rgba(2,212,126,0.12)', color: '#043941' }}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: '#02d47e' }} />
+                  Próxima en {
+                    Math.max(0, Math.ceil(
+                      (new Date(getProximaSesion(slug ?? '')!.fecha).getTime() - Date.now()) / 86400000
+                    ))
+                  } días
+                </span>
+              )}
+            </div>
+            <div className="p-5">
+              <CalendarioSesiones sesiones={getSesionesPorTaller(slug ?? '')} />
+            </div>
+          </section>
+          )}
+
           {/* Repositorio de Recursos */}
           <section
             className="rounded-2xl overflow-hidden animate-fade-in-up stagger-2"
@@ -427,21 +473,25 @@ export default function TallerHub() {
             </div>
           )}
 
-          {/* Próxima sesión */}
-          {slug !== 'taller-general-ept' && (
-            <div className="animate-fade-in-up stagger-2">
-              <LiveSessionCard
-                titulo={mockProximaSesion.titulo}
-                moduloNombre={mockProximaSesion.moduloNombre}
-                fecha={mockProximaSesion.fecha}
-                duracionMin={mockProximaSesion.duracionMin}
-                formador={mockProximaSesion.formador}
-                plataforma={mockProximaSesion.plataforma}
-                urlAcceso={mockProximaSesion.urlAcceso}
-                compact
-              />
-            </div>
-          )}
+          {/* Próxima sesión — sidebar compact */}
+          {slug !== 'taller-general-ept' && (() => {
+            const proxima = getProximaSesion(slug ?? '')
+            if (!proxima) return null
+            return (
+              <div className="animate-fade-in-up stagger-2">
+                <LiveSessionCard
+                  titulo={proxima.titulo}
+                  moduloNombre={proxima.moduloNombre}
+                  fecha={proxima.fecha}
+                  duracionMin={proxima.duracionMin}
+                  formador={proxima.facilitador}
+                  plataforma={proxima.modalidad === 'meet' ? 'Google Meet' : proxima.modalidad === 'zoom' ? 'Zoom' : 'Presencial'}
+                  urlAcceso={proxima.link}
+                  compact
+                />
+              </div>
+            )
+          })()}
 
           {/* Card inspiracional */}
           <div

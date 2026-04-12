@@ -14,6 +14,7 @@ import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
 import { GramaLogo } from '@/components/GramaLogo'
 import { ProgressRing } from '@/components/lxp/ProgressRing'
 import { trackNavegacion } from '@/lib/tracker'
+import { getProximaSesion, formatFechaSesion, formatHoraSesion, diasParaSesion } from '@/data/sesionesLXP'
 
 const TOTAL_HORAS   = 150
 const TOTAL_MODULOS = 7
@@ -618,6 +619,54 @@ export default function Perfil() {
               ))}
             </div>
           </section>
+
+          {/* Próxima sesión en vivo */}
+          {taller && taller.slug !== 'taller-general-ept' && (() => {
+            const proxima = getProximaSesion(taller.slug)
+            if (!proxima) return null
+            const dias = diasParaSesion(proxima.fecha)
+            return (
+              <section
+                className="rounded-2xl overflow-hidden animate-fade-in-up stagger-2"
+                style={{ background: '#043941', border: '1px solid rgba(2,212,126,0.2)' }}
+              >
+                <div className="px-5 py-4 flex items-start gap-3">
+                  <div
+                    className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
+                    style={{ background: 'rgba(2,212,126,0.15)' }}
+                  >
+                    <Play size={16} style={{ color: '#02d47e' }} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[10px] font-bold uppercase tracking-wider mb-0.5" style={{ color: '#02d47e' }}>
+                      Próxima sesión en vivo
+                    </p>
+                    <p className="text-sm font-bold text-white leading-tight truncate">
+                      {proxima.titulo}
+                    </p>
+                    <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                      {formatFechaSesion(proxima.fecha)} · {formatHoraSesion(proxima.fecha)}
+                    </p>
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <p className="text-2xl font-extrabold" style={{ color: '#02d47e' }}>{dias}</p>
+                    <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                      {dias === 1 ? 'día' : 'días'}
+                    </p>
+                  </div>
+                </div>
+                <div className="px-5 pb-4">
+                  <button
+                    onClick={() => navigate(`/taller/${taller.slug}`)}
+                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold text-white transition-all hover:opacity-90"
+                    style={{ background: 'rgba(2,212,126,0.2)', border: '1px solid rgba(2,212,126,0.3)' }}
+                  >
+                    Ver agenda completa <ArrowRight size={12} />
+                  </button>
+                </div>
+              </section>
+            )
+          })()}
 
           {/* Acceso rápido (solo si tiene taller) */}
           {taller && (
