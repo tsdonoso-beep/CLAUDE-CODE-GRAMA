@@ -28,7 +28,7 @@ export function getDriveThumbnailUrl(driveUrl: string, width = 400): string {
 // tallerSlug → bien.n → Drive URL
 export const manualesPDFPorBien: Record<string, Record<number, string>> = {
   'ebanisteria': {
-    76: '<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1182811717?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="MÁQUINA GARLOPA"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>',  // Máquina garlopa
+    76: 'https://drive.google.com/file/d/1cFqUm3WRjWUj6vD_kfO5saiGRDL1tdB8/view?usp=sharing',  // Máquina garlopa
   },
   'mecanica-automotriz': {
     // ── Herramientas manuales ──────────────────────────────────────────────
@@ -231,7 +231,7 @@ export function getManualPDF(tallerSlug: string, bienN: number): string | null {
 // tallerSlug → bien.n → Drive URL (video)
 export const videosOperatividadPorBien: Record<string, Record<number, string>> = {
   'ebanisteria': {
-    76: 'https://drive.google.com/file/d/1eUYTZmMia36rMM-k2PByOcz9a78NVcFN/view',  // Máquina garlopa
+    76: 'https://vimeo.com/1182811717?share=copy',  // Máquina garlopa
   },
   'taller-general-ept': {
      1: 'https://drive.google.com/file/d/1-wMPPdxZLo2oOtNd8cS_dch3cvN8HQYx/view',  // EGP-01  · Equipo de grabación para reportero
