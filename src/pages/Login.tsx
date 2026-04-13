@@ -45,7 +45,7 @@ const DEV_USERS: Array<{ email: string; password: string; role: 'admin' | 'docen
   { email: 'docente@grama.pe',         password: 'grama2026', role: 'docente' },
   { email: 't.donoso@inroprin.com',    password: 'grama2026', role: 'admin' },
   { email: 'camila.gr@inroprin.com',   password: 'grama2026', role: 'admin' },
-  { email: 'automotriz@grama.pe',      password: 'grama2026', role: 'docente', taller_slug: 'mecanica-automotriz', taller_slugs: ['mecanica-automotriz'] },
+  { email: 'automotriz@grama.pe',      password: 'grama2026', role: 'docente', taller_slug: 'mecanica-automotriz', taller_slugs: ['mecanica-automotriz', 'ebanisteria'] },
   { email: 'generalept@grama.pe',      password: 'grama2026', role: 'docente', taller_slug: 'taller-general-ept', taller_slugs: ['taller-general-ept'] },
   { email: 'dostalleres@grama.pe',     password: 'grama2026', role: 'docente', taller_slug: 'mecanica-automotriz', taller_slugs: ['mecanica-automotriz', 'electricidad'] },
 ]
