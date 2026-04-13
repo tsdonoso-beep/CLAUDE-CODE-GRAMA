@@ -268,6 +268,30 @@ export const videosOperatividadPorBien: Record<string, Record<number, string>> =
     59: 'https://drive.google.com/file/d/1BLM2vtBbyZA7JOzSFYKLYJ9UYeyWzQzy/view',  // OTR-18  · Extintor PQS (mismo video agrupado)
     63: 'https://drive.google.com/file/d/1zM4myoiUCO404H1j2dDQgDl7UOx6b6Vw/view',  // AML-01  · Armario móvil para laptop
   },
+  'mecanica-automotriz': {
+    // ── EPP y seguridad ────────────────────────────────────────────────────
+    148: 'https://drive.google.com/file/d/1-8l_wCdtpK-KSyIwoEdpI55UVIeJXU-U/view',  // Mandil de serraje
+    147: 'https://drive.google.com/file/d/1-8l_wCdtpK-KSyIwoEdpI55UVIeJXU-U/view',  // Guantes para soldar
+    144: 'https://drive.google.com/file/d/1-8l_wCdtpK-KSyIwoEdpI55UVIeJXU-U/view',  // Lentes de protección de policarbonato
+    150: 'https://drive.google.com/file/d/1-8l_wCdtpK-KSyIwoEdpI55UVIeJXU-U/view',  // Escarpines
+    149: 'https://drive.google.com/file/d/1-8l_wCdtpK-KSyIwoEdpI55UVIeJXU-U/view',  // Manga para soldar
+    146: 'https://drive.google.com/file/d/1-8l_wCdtpK-KSyIwoEdpI55UVIeJXU-U/view',  // Máscara electrónica para soldar
+
+    // ── Herramientas manuales ──────────────────────────────────────────────
+     66: 'https://drive.google.com/file/d/1PUXjv6NlsN37_iib42QpSDotnxSocLO1/view',  // Llave Stillson
+     75: 'https://drive.google.com/file/d/14VgPcwgUvBJkPwyR6YVv811CHP-ob2gj/view',  // Goniómetro digital
+    121: 'https://drive.google.com/file/d/1MZKDvnK-haQ1eL9WTtfAJMpaaWBw9MvT/view',  // Juego de lapeadores de válvula (video 1)
+     97: 'https://drive.google.com/file/d/1XlFEDekx47NKI5hxOZACdFUCLcM20Bqt/view',  // Mazo de goma
+     61: 'https://drive.google.com/file/d/1vAXVrakzfV45eWu-cQffDAO-l5PSe2Pr/view',  // Juego de llaves de ruedas (Llave de cruz)
+    133: 'https://drive.google.com/file/d/1vAXVrakzfV45eWu-cQffDAO-l5PSe2Pr/view',  // Bandeja para recolectar aceite
+    134: 'https://drive.google.com/file/d/1Su-GG1PcKs4w5KMuY4SibMwRh9DcV5sV/view',  // Embudo de uso industrial
+    131: 'https://drive.google.com/file/d/1IPKQMeNmxeEyOGQi-dCs6Tc1S6cqo0Ik/view',  // Juego de llaves para filtros de aceite
+    129: 'https://drive.google.com/file/d/1aUGxgSQECtKSfzmpOBiGet7DvGiWkctu/view',  // Aceitera
+     96: 'https://drive.google.com/file/d/1rdKUw7RhbauTQkxA2l-pgvzWbudBP6S_/view',  // Engrasadora
+     87: 'https://drive.google.com/file/d/1ZYlLLtr8TJDBZ_vZvY5I9BrvYZdscsMT/view',  // Juego de extractor de rodajes
+    105: 'https://drive.google.com/file/d/1KI2rWkXkiiJKPJO_8nK0k7ZfG0urmPLW/view',  // Batería
+    135: 'https://drive.google.com/file/d/1oKYmf26qAveZyv_5b39UF8DlNJvNEUHW/view',  // Galonera de gasolina
+  },
 }
 
 // Busca el video de operatividad para un bien específico
