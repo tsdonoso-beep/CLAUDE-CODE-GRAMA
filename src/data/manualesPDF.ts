@@ -51,7 +51,7 @@ export function getVideoSourceLabel(url: string): string {
 // tallerSlug → bien.n → Drive URL
 export const manualesPDFPorBien: Record<string, Record<number, string>> = {
   'ebanisteria': {
-    76: 'https://drive.google.com/file/d/1cFqUm3WRjWUj6vD_kfO5saiGRDL1tdB8/view?usp=sharing',  // Máquina garlopa
+    76: 'https://drive.google.com/file/d/1IEHUwvg12o_2BDBfP1KZmxxysfV-BwnT/view',  // Máquina garlopa
   },
   'mecanica-automotriz': {
     // ── Herramientas manuales ──────────────────────────────────────────────
