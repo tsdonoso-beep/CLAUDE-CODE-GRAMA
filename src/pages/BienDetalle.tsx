@@ -10,7 +10,7 @@ import {
 import { useTaller } from '@/hooks/useTaller'
 import { eppPorTaller } from '@/data/eppData'
 import type { EPPItem } from '@/data/eppData'
-import { getManualPDF, getVideoOperatividad, getDriveEmbedUrl, getDriveDownloadUrl, getDriveThumbnailUrl } from '@/data/manualesPDF'
+import { getManualPDF, getVideoOperatividad, getDriveEmbedUrl, getDriveDownloadUrl, getDriveThumbnailUrl, getVideoEmbedUrl, getVideoSourceLabel } from '@/data/manualesPDF'
 import { useAuth } from '@/contexts/AuthContext'
 import { trackContenido } from '@/lib/tracker'
 
@@ -151,9 +151,9 @@ export default function BienDetalle() {
                   <div className="w-full flex flex-col gap-3">
                     <div className="w-full aspect-video rounded-xl overflow-hidden" style={{ background: '#043941' }}>
                       <iframe
-                        src={getDriveEmbedUrl(videoUrl)}
+                        src={getVideoEmbedUrl(videoUrl)}
                         className="w-full h-full"
-                        allow="autoplay"
+                        allow="autoplay; fullscreen; picture-in-picture"
                         allowFullScreen
                         title={`Video operatividad — ${bien.nombre}`}
                       />
@@ -165,7 +165,7 @@ export default function BienDetalle() {
                       className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all hover:scale-[1.02]"
                       style={{ background: '#f0faf5', color: '#043941' }}
                     >
-                      <Video size={13} /> Abrir en Google Drive
+                      <Video size={13} /> {getVideoSourceLabel(videoUrl)}
                     </a>
                   </div>
                 ) : (

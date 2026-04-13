@@ -25,6 +25,29 @@ export function getDriveThumbnailUrl(driveUrl: string, width = 400): string {
   return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w${width}` : ''
 }
 
+// ── Vimeo helpers ────────────────────────────────────────────────────────────
+function getVimeoId(url: string): string | null {
+  return url.match(/vimeo\.com\/(\d+)/)?.[1] ?? null
+}
+
+export function isVimeoUrl(url: string): boolean {
+  return url.includes('vimeo.com')
+}
+
+// URL embed universal: detecta Vimeo o Drive automáticamente
+export function getVideoEmbedUrl(url: string): string {
+  if (isVimeoUrl(url)) {
+    const id = getVimeoId(url)
+    return id ? `https://player.vimeo.com/video/${id}?badge=0&autopause=0&player_id=0` : ''
+  }
+  return getDriveEmbedUrl(url)
+}
+
+// Etiqueta para el botón "Abrir en …"
+export function getVideoSourceLabel(url: string): string {
+  return isVimeoUrl(url) ? 'Abrir en Vimeo' : 'Abrir en Google Drive'
+}
+
 // tallerSlug → bien.n → Drive URL
 export const manualesPDFPorBien: Record<string, Record<number, string>> = {
   'ebanisteria': {
@@ -231,7 +254,7 @@ export function getManualPDF(tallerSlug: string, bienN: number): string | null {
 // tallerSlug → bien.n → Drive URL (video)
 export const videosOperatividadPorBien: Record<string, Record<number, string>> = {
   'ebanisteria': {
-    76: 'https://vimeo.com/1182811717?share=copy',  // Máquina garlopa
+    76: 'https://vimeo.com/1182811717',  // Máquina garlopa
   },
   'taller-general-ept': {
      1: 'https://drive.google.com/file/d/1-wMPPdxZLo2oOtNd8cS_dch3cvN8HQYx/view',  // EGP-01  · Equipo de grabación para reportero
