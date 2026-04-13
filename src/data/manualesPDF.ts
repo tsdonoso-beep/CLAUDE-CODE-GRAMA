@@ -27,6 +27,9 @@ export function getDriveThumbnailUrl(driveUrl: string, width = 400): string {
 
 // tallerSlug → bien.n → Drive URL
 export const manualesPDFPorBien: Record<string, Record<number, string>> = {
+  'ebanisteria': {
+    76: 'https://drive.google.com/file/d/1IEHUwvg12o_2BDBfP1KZmxxysfV-BwnT/view',  // Máquina garlopa
+  },
   'mecanica-automotriz': {
     // ── Herramientas manuales ──────────────────────────────────────────────
     129: 'https://drive.google.com/file/d/1AJWbait30iOj_ub5dKWiZs7ynEKr5qFp/view',  // Aceitera
@@ -227,6 +230,9 @@ export function getManualPDF(tallerSlug: string, bienN: number): string | null {
 // ── Videos de operatividad y mantenimiento por taller y bien.n ────────────────
 // tallerSlug → bien.n → Drive URL (video)
 export const videosOperatividadPorBien: Record<string, Record<number, string>> = {
+  'ebanisteria': {
+    76: 'https://drive.google.com/file/d/1eUYTZmMia36rMM-k2PByOcz9a78NVcFN/view',  // Máquina garlopa
+  },
   'taller-general-ept': {
      1: 'https://drive.google.com/file/d/1-wMPPdxZLo2oOtNd8cS_dch3cvN8HQYx/view',  // EGP-01  · Equipo de grabación para reportero
      2: 'https://drive.google.com/file/d/1QzcvxmUaoWN2YgG89TbblJzirpzTVPDB/view',  // CF-02   · Cámara fotográfica
