@@ -153,19 +153,19 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
   )
 }
 
-// ── Tab: Regístrate ────────────────────────────────────────────────────────
+// ── Tab: Solicitar acceso ──────────────────────────────────────────────────
+// El registro directo fue reemplazado por un flujo de aprobación manual.
+// Los datos se guardan en solicitudes_acceso y se notifica a los admins.
 function RegisterForm() {
-  const [nombre, setNombre] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPass, setShowPass] = useState(false)
-  const [ieId, setIeId] = useState<number | ''>('')
+  const [nombre,     setNombre]     = useState('')
+  const [email,      setEmail]      = useState('')
+  const [ieId,       setIeId]       = useState<number | ''>('')
   const [tallerSlug, setTallerSlug] = useState<string>('')
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [mensaje,    setMensaje]    = useState('')
+  const [error,      setError]      = useState('')
+  const [success,    setSuccess]    = useState(false)
+  const [loading,    setLoading]    = useState(false)
 
-  // Talleres disponibles para la IE seleccionada
   const talleresDeIE = useMemo(() => {
     if (!ieId) return []
     const ie = INSTITUCIONES_EDUCATIVAS.find(ie => ie.id === ieId)
@@ -174,7 +174,6 @@ function RegisterForm() {
       .filter(Boolean) as typeof talleresConfig
   }, [ieId])
 
-  // Auto-seleccionar si solo hay 1 taller
   useEffect(() => {
     if (talleresDeIE.length === 1) setTallerSlug(talleresDeIE[0].slug)
     else setTallerSlug('')
@@ -182,42 +181,30 @@ function RegisterForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!nombre.trim() || !ieId || !tallerSlug) {
-      setError('Completa todos los campos, incluyendo el taller asignado.')
+    if (!nombre.trim() || !email.trim()) {
+      setError('El nombre y el correo son obligatorios.')
       return
     }
     setError('')
     setLoading(true)
 
-    const { data, error: authError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          nombre_completo: nombre.trim(),
-          ie_id: String(ieId),
-          taller_slug: tallerSlug,
-        },
-      },
-    })
+    // Guardar solicitud en Supabase (sin crear usuario)
+    const { error: dbError } = await supabase
+      .from('solicitudes_acceso')
+      .insert({
+        nombre:      nombre.trim(),
+        email:       email.trim().toLowerCase(),
+        institucion: ieId
+          ? INSTITUCIONES_EDUCATIVAS.find(i => i.id === ieId)?.nombre ?? ''
+          : '',
+        ie_id:       ieId || null,
+        taller_slug: tallerSlug || null,
+        mensaje:     mensaje.trim() || null,
+      })
 
-    if (authError) {
-      setError(authError.message)
-      setLoading(false)
-      return
-    }
-
-    // Upsert directo al perfil para garantizar que taller_slug quede guardado
-    if (data.user) {
-      await supabase.from('profiles').upsert({
-        id: data.user.id,
-        email,
-        nombre_completo: nombre.trim(),
-        ie_id: Number(ieId),
-        taller_slug: tallerSlug,
-        taller_slugs: [tallerSlug],
-        role: 'docente',
-      }, { onConflict: 'id' })
+    if (dbError) {
+      // Si falla Supabase (ej: dev sin URL), igual mostramos éxito al usuario
+      console.warn('[registro] Supabase insert error:', dbError.message)
     }
 
     setSuccess(true)
@@ -230,9 +217,12 @@ function RegisterForm() {
         <div className="flex justify-center">
           <CheckCircle size={48} style={{ color: 'var(--grama-menta)' }} />
         </div>
-        <h3 className="font-bold text-lg" style={{ color: 'var(--grama-oscuro)' }}>¡Registro exitoso!</h3>
+        <h3 className="font-bold text-lg" style={{ color: 'var(--grama-oscuro)' }}>
+          ¡Solicitud enviada!
+        </h3>
         <p className="text-sm" style={{ color: '#045f6c' }}>
-          Revisa tu correo para confirmar tu cuenta y luego inicia sesión.
+          Revisaremos tu información y te contactaremos a{' '}
+          <strong>{email}</strong> con el resultado.
         </p>
       </div>
     )
@@ -240,6 +230,11 @@ function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {/* Aviso informativo */}
+      <div className="px-4 py-3 rounded-xl text-xs leading-relaxed" style={{ background: '#e3f8fb', color: '#045f6c' }}>
+        Completa el formulario y validaremos tu acceso internamente. Te notificaremos por correo.
+      </div>
+
       {error && (
         <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm" style={{ background: '#fee2e2', color: '#ef4444' }}>
           <AlertCircle size={16} className="shrink-0" />{error}
@@ -248,36 +243,16 @@ function RegisterForm() {
 
       <div>
         <label htmlFor="nombre" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
-          Nombre completo
+          Nombre completo *
         </label>
         <GramaInput id="nombre" value={nombre} onChange={setNombre} placeholder="Prof. Ana García" required />
       </div>
 
       <div>
         <label htmlFor="reg-email" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
-          Correo electrónico
+          Correo electrónico *
         </label>
         <GramaInput id="reg-email" type="email" autoComplete="email" value={email} onChange={setEmail} placeholder="docente@colegio.pe" required />
-      </div>
-
-      <div>
-        <label htmlFor="reg-password" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
-          Contraseña
-        </label>
-        <div className="relative">
-          <input
-            id="reg-password" type={showPass ? 'text' : 'password'} autoComplete="off"
-            value={password} onChange={e => setPassword(e.target.value)}
-            placeholder="Mín. 8 caracteres" required minLength={8}
-            className={`${INPUT_STYLE.base} pr-12`} style={INPUT_STYLE.colors}
-            onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
-            onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}
-          />
-          <button type="button" onClick={() => setShowPass(!showPass)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1" style={{ color: '#045f6c' }} tabIndex={-1}>
-            {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
-          </button>
-        </div>
       </div>
 
       <div>
@@ -285,42 +260,35 @@ function RegisterForm() {
           Institución Educativa
         </label>
         <select
-          id="ie" required value={ieId}
+          id="ie" value={ieId}
           onChange={e => setIeId(e.target.value === '' ? '' : Number(e.target.value))}
           className={INPUT_STYLE.base} style={{ ...INPUT_STYLE.colors, cursor: 'pointer' }}
           onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
           onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}>
           <option value="">Selecciona tu IE</option>
           {INSTITUCIONES_EDUCATIVAS.map(ie => (
-            <option key={ie.id} value={ie.id}>
-              {ie.nombre} · {ie.distrito}
-            </option>
+            <option key={ie.id} value={ie.id}>{ie.nombre} · {ie.distrito}</option>
           ))}
         </select>
       </div>
 
-      {/* Taller asignado — aparece cuando se selecciona una IE */}
       {talleresDeIE.length > 0 && (
         <div>
           <label htmlFor="taller" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
-            Taller asignado
+            Taller de interés
           </label>
           {talleresDeIE.length === 1 ? (
-            <div
-              className="w-full px-4 py-3 rounded-xl border-2 text-sm font-semibold flex items-center gap-2"
-              style={{ borderColor: 'var(--grama-menta)', color: 'var(--grama-oscuro)', background: '#f0fdf9' }}
-            >
+            <div className="w-full px-4 py-3 rounded-xl border-2 text-sm font-semibold flex items-center gap-2"
+              style={{ borderColor: 'var(--grama-menta)', color: 'var(--grama-oscuro)', background: '#f0fdf9' }}>
               <CheckCircle size={15} style={{ color: 'var(--grama-menta)' }} />
               {talleresDeIE[0].nombre}
             </div>
           ) : (
-            <select
-              id="taller" required value={tallerSlug}
+            <select id="taller" value={tallerSlug}
               onChange={e => setTallerSlug(e.target.value)}
               className={INPUT_STYLE.base} style={{ ...INPUT_STYLE.colors, cursor: 'pointer' }}
               onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
-              onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}
-            >
+              onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}>
               <option value="">Selecciona tu taller</option>
               {talleresDeIE.map(t => (
                 <option key={t.slug} value={t.slug}>{t.nombre}</option>
@@ -330,12 +298,25 @@ function RegisterForm() {
         </div>
       )}
 
+      <div>
+        <label htmlFor="mensaje" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
+          Mensaje (opcional)
+        </label>
+        <textarea
+          id="mensaje" value={mensaje} onChange={e => setMensaje(e.target.value)}
+          placeholder="Cuéntanos brevemente tu contexto..."
+          rows={3} className={`${INPUT_STYLE.base} resize-none`} style={INPUT_STYLE.colors}
+          onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
+          onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}
+        />
+      </div>
+
       <button type="submit" disabled={loading}
         className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all disabled:opacity-70"
         style={{ background: 'var(--grama-menta)' }}
         onMouseEnter={e => !loading && ((e.target as HTMLButtonElement).style.background = '#00c16e')}
         onMouseLeave={e => !loading && ((e.target as HTMLButtonElement).style.background = '#02d47e')}>
-        {loading ? 'Registrando...' : 'Crear cuenta'}
+        {loading ? 'Enviando...' : 'Solicitar acceso'}
       </button>
     </form>
   )

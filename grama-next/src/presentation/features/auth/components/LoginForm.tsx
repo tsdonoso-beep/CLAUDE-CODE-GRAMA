@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useAuth } from '@/presentation/providers/AuthProvider'
@@ -100,6 +101,13 @@ export function LoginForm() {
         {loading && <Loader2 size={15} className="animate-spin" />}
         {loading ? 'Ingresando...' : 'Ingresar →'}
       </button>
+
+      <p className="text-center text-xs pt-1" style={{ color: 'var(--color-muted-foreground)' }}>
+        ¿No tienes acceso aún?{' '}
+        <Link href="/registro" className="font-semibold hover:underline" style={{ color: 'var(--color-grama-verde)' }}>
+          Solicitar acceso
+        </Link>
+      </p>
     </form>
   )
 }
