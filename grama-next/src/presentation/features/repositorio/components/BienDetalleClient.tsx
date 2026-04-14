@@ -48,7 +48,7 @@ interface BienDetalleClientProps {
 const ZONA_SHORT: Record<string, string> = {
   'ZONA DE INNOVACIÓN':                      'INNOVACIÓN',
   'ZONA DE INVESTIGACIÓN, GESTIÓN Y DISEÑO': 'INVESTIGACIÓN',
-  'DEPÓSITO / ALMACÉN / SEGURIDAD':          'DEPÓSITO / EPP',
+  'DEPÓSITO / ALMACÉN / SEGURIDAD':          'DEPÓSITO',
 }
 
 export function BienDetalleClient({

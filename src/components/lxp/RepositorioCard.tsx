@@ -34,6 +34,10 @@ function zonaAccent(zona: string): string {
   return '#475569'
 }
 
+const AREA_LABEL: Record<string, string> = {
+  'DEPÓSITO / ALMACÉN': 'DEPÓSITO',
+}
+
 function zonaBreadcrumb(zona: string): string {
   if (!zona) return ''
   return zona
@@ -41,6 +45,10 @@ function zonaBreadcrumb(zona: string): string {
     .replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'DEPÓSITO')
     .split(',')[0]
     .trim()
+}
+
+function areaLabel(area: string): string {
+  return AREA_LABEL[area] ?? area
 }
 
 export function RepositorioCard({ bien }: RepositorioCardProps) {
@@ -122,7 +130,7 @@ export function RepositorioCard({ bien }: RepositorioCardProps) {
                       : { background: '#f1f5f9', color: '#64748b' }
                   }
                 >
-                  {i === 0 ? zonaBreadcrumb(seg) : seg}
+                  {i === 0 ? zonaBreadcrumb(seg) : areaLabel(seg)}
                 </span>
               </span>
             ))}
