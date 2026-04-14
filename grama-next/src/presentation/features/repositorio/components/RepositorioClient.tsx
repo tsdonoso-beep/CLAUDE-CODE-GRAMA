@@ -15,7 +15,7 @@ interface RepositorioClientProps {
 const ZONA_SHORT: Record<string, string> = {
   'ZONA DE INNOVACIÓN':                      'Innovación',
   'ZONA DE INVESTIGACIÓN, GESTIÓN Y DISEÑO': 'Investigación',
-  'DEPÓSITO / ALMACÉN / SEGURIDAD':          'Depósito / EPP',
+  'DEPÓSITO / ALMACÉN / SEGURIDAD':          'Depósito',
 }
 
 const TIPO_COLORS: Record<string, { bg: string; color: string }> = {
