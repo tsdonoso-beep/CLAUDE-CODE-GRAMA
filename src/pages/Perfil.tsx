@@ -411,7 +411,11 @@ export default function Perfil() {
                   <section
                     key={slug}
                     className={`rounded-2xl overflow-hidden animate-fade-in-up stagger-${idx + 1}`}
-                    style={{ background: '#ffffff', border: `1px solid ${isPrimario ? ta + '30' : 'rgba(4,57,65,0.07)'}` }}
+                    style={{
+                      background: '#ffffff',
+                      border: `1.5px solid ${ta}4d`,
+                      boxShadow: `0 0 0 5px ${ta}0d, 0 8px 28px rgba(4,57,65,0.07)`,
+                    }}
                   >
                     <SectionHeader
                       icon={Play}
