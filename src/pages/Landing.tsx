@@ -587,7 +587,7 @@ export default function Landing() {
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 pt-6 pb-12 lg:pt-10 lg:pb-14">
           {/* Grid hero: texto izq, visual der */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+          <div className="grid lg:grid-cols-[3fr_2fr] gap-12 items-center mb-16">
 
             {/* Columna texto */}
             <div>
@@ -655,7 +655,7 @@ export default function Landing() {
                   src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=900&q=85"
                   alt="Docente EPT trabajando en taller técnico"
                   className="w-full object-cover object-center"
-                  style={{ aspectRatio: '4/5', display: 'block', filter: 'brightness(0.82) saturate(1.1) contrast(1.04)' }}
+                  style={{ aspectRatio: '3/4', display: 'block', filter: 'brightness(0.82) saturate(1.1) contrast(1.04)' }}
                 />
                 {/* Vignette inferior */}
                 <div className="absolute inset-0" style={{
