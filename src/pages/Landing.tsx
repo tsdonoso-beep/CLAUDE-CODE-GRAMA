@@ -811,12 +811,11 @@ export default function Landing() {
               </div>
 
               {/* Foto: docente feliz / autónomo */}
-              <div className="rounded-2xl overflow-hidden flex-1 relative" style={{ minHeight: 240 }}>
+              <div className="rounded-2xl overflow-hidden relative" style={{ height: 200 }}>
                 <img
                   src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=700&q=80"
                   alt="Docente EPT logrando su autonomía formativa"
                   className="w-full h-full object-cover"
-                  style={{ minHeight: 240 }}
                 />
                 {/* Overlay sutil con quote */}
                 <div className="absolute inset-0 flex flex-col justify-end p-5"
