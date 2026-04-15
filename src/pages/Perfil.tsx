@@ -188,15 +188,20 @@ function CalendarioSidebar({ tallerSlugs, accent }: { tallerSlugs: string[]; acc
           {sesiones.length === 0 ? (
             <p className="text-xs text-center py-1" style={{ color: '#94a3b8' }}>Sin sesiones programadas</p>
           ) : sesiones.slice(0, 2).map(s => {
-            const dias = diasParaSesion(s.fecha)
+            const dias   = diasParaSesion(s.fecha)
             const tColor = TALLER_ACCENTS[s.tallerSlug] ?? accent
+            const tNombre = talleresConfig.find(t => t.slug === s.tallerSlug)?.nombreCorto ?? s.tallerSlug
             return (
               <div key={s.id} className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl"
                 style={{ background: `${tColor}08`, border: `1px solid ${tColor}18` }}>
-                <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: tColor }} />
+                <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-0.5" style={{ background: tColor }} />
                 <div className="flex-1 min-w-0">
                   <p className="text-[11px] font-semibold leading-snug truncate" style={{ color: 'var(--grama-oscuro)' }}>{s.titulo}</p>
-                  <p className="text-[10px]" style={{ color: '#94a3b8' }}>{formatFechaSesion(s.fecha)}</p>
+                  <p className="text-[10px]" style={{ color: '#94a3b8' }}>
+                    {formatFechaSesion(s.fecha)}
+                    <span className="mx-1">·</span>
+                    <span className="font-bold" style={{ color: tColor }}>{tNombre}</span>
+                  </p>
                 </div>
                 <span className="text-xs font-extrabold shrink-0" style={{ color: tColor }}>{dias}d</span>
               </div>
@@ -262,8 +267,9 @@ function CalendarioSidebar({ tallerSlugs, accent }: { tallerSlugs: string[]; acc
               <p className="text-[9px] font-extrabold uppercase tracking-widest mb-2.5" style={{ color: 'rgba(4,57,65,0.3)' }}>Próximas sesiones</p>
               <div className="space-y-2.5">
                 {sesiones.slice(0, 4).map(s => {
-                  const dias   = diasParaSesion(s.fecha)
-                  const tColor = TALLER_ACCENTS[s.tallerSlug] ?? accent
+                  const dias    = diasParaSesion(s.fecha)
+                  const tColor  = TALLER_ACCENTS[s.tallerSlug] ?? accent
+                  const tNombre = talleresConfig.find(t => t.slug === s.tallerSlug)?.nombreCorto ?? s.tallerSlug
                   return (
                     <div key={s.id} className="flex items-start gap-2">
                       <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5" style={{ background: tColor }} />
@@ -271,6 +277,8 @@ function CalendarioSidebar({ tallerSlugs, accent }: { tallerSlugs: string[]; acc
                         <p className="text-[11px] font-semibold leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{s.titulo}</p>
                         <p className="text-[10px]" style={{ color: '#94a3b8' }}>
                           {formatFechaSesion(s.fecha)} · {formatHoraSesion(s.fecha)}
+                          <span className="mx-1">·</span>
+                          <span className="font-bold" style={{ color: tColor }}>{tNombre}</span>
                         </p>
                       </div>
                       <span className="text-[10px] font-extrabold shrink-0 mt-0.5" style={{ color: tColor }}>{dias}d</span>
@@ -768,56 +776,6 @@ export default function Perfil() {
             <CalendarioSidebar tallerSlugs={tallerSlugsAccesibles} accent={accent} />
           )}
 
-          {/* Card inspiracional */}
-          <div
-            className="rounded-2xl p-5 relative overflow-hidden animate-fade-in-up stagger-3"
-            style={{
-              background: '#ffffff',
-              border: '1.5px solid rgba(2,212,126,0.25)',
-              boxShadow: '0 2px 12px rgba(4,57,65,0.07)',
-            }}
-          >
-            <div
-              className="absolute pointer-events-none"
-              style={{
-                width: 180, height: 180,
-                background: 'radial-gradient(circle, rgba(2,212,126,0.10) 0%, transparent 65%)',
-                top: -40, right: -40,
-                borderRadius: '50%',
-              }}
-            />
-            <div className="relative z-10">
-              <div
-                className="h-9 w-9 rounded-xl flex items-center justify-center mb-3"
-                style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.22)' }}
-              >
-                <Sparkles size={16} style={{ color: '#02a05a' }} />
-              </div>
-              <p className="text-sm font-extrabold leading-snug mb-1.5" style={{ color: 'var(--grama-oscuro)' }}>
-                ¡Tus estudiantes te esperan!
-              </p>
-              <p className="text-xs leading-relaxed mb-4" style={{ color: '#64748b' }}>
-                Cada sesión que preparas con GRAMA es una competencia más para el futuro técnico de tus alumnos.
-              </p>
-              {taller ? (
-                <button
-                  onClick={() => navigate(`/taller/${taller.slug}`)}
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-opacity hover:opacity-90"
-                  style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
-                >
-                  Continuar aprendizaje <ArrowRight size={12} />
-                </button>
-              ) : (
-                <a
-                  href="mailto:soporte@grama.pe"
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-opacity hover:opacity-90"
-                  style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
-                >
-                  Contáctanos <ArrowRight size={12} />
-                </a>
-              )}
-            </div>
-          </div>
 
         </div>
       </div>
