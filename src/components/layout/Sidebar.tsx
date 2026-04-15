@@ -1,6 +1,6 @@
 // src/components/layout/Sidebar.tsx
 import { NavLink, useParams, useNavigate } from 'react-router-dom'
-import { BookOpen, Package, ChevronLeft, ChevronRight, LayoutGrid, X } from 'lucide-react'
+import { BookOpen, Package, ChevronLeft, ChevronRight, LayoutGrid, X, User } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { useProgress } from '@/contexts/ProgressContext'
 import { GramaLogo } from '@/components/GramaLogo'
@@ -34,8 +34,13 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
   const isRepoOnly = slug === 'taller-general-ept'
   const navItems = [
     ...(!isRepoOnly ? [{ to: `/taller/${slug}/ruta`, icon: BookOpen, label: 'Ruta de Aprendizaje' }] : []),
-    { to: `/taller/${slug}/repositorio`, icon: Package,  label: 'Repositorio' },
+    { to: `/taller/${slug}/repositorio`, icon: Package, label: 'Repositorio' },
   ]
+
+  const progresoLabel =
+    progreso.porcentaje === 0   ? 'Listo para comenzar' :
+    progreso.porcentaje === 100 ? '¡Taller completado!' :
+    `${progreso.porcentaje}% completado`
 
   return (
     <aside
@@ -45,23 +50,17 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
         background: 'linear-gradient(180deg, #030e12 0%, #043941 40%, #032e34 100%)',
       }}
     >
-      {/* Orb de acento ambiente */}
-      <div
-        className="absolute pointer-events-none animate-aurora-slow"
-        style={{
-          width: 220, height: 220,
-          background: `radial-gradient(circle, ${accent}12 0%, transparent 65%)`,
-          bottom: 40, right: -60,
-        }}
-      />
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          width: 160, height: 160,
-          background: 'radial-gradient(circle, rgba(2,212,126,0.07) 0%, transparent 65%)',
-          top: -20, left: -30,
-        }}
-      />
+      {/* Orb acento — sutil, solo ambiente */}
+      <div className="absolute pointer-events-none animate-aurora-slow" style={{
+        width: 200, height: 200,
+        background: `radial-gradient(circle, ${accent}0f 0%, transparent 65%)`,
+        bottom: 50, right: -50,
+      }} />
+      <div className="absolute pointer-events-none" style={{
+        width: 140, height: 140,
+        background: 'radial-gradient(circle, rgba(2,212,126,0.06) 0%, transparent 65%)',
+        top: -20, left: -30,
+      }} />
 
       {/* ── Logo ── */}
       <div
@@ -71,10 +70,9 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
         <button
           onClick={() => navigate('/perfil')}
           className="transition-opacity hover:opacity-80 active:opacity-60 flex items-center"
-          title="Ver mi perfil"
+          title="Mi perfil"
         >
           {collapsed ? (
-            /* Solo el símbolo geométrico cuando está colapsado */
             <svg width={18} height={18} viewBox="0 0 24 24" fill="none" aria-hidden>
               <polygon points="2,22 12,2 12,22" fill="#02d47e" />
               <polygon points="12,2 22,12 12,12" fill="#ffffff" opacity="0.85" />
@@ -85,23 +83,18 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
           )}
         </button>
 
-        {/* Botón colapsar — solo tablet/desktop */}
         <button
           onClick={onCollapse}
-          className="hidden md:flex text-white/30 hover:text-white/70 transition-colors ml-1"
+          className="hidden md:flex text-white/25 hover:text-white/60 transition-colors ml-1"
           aria-label={collapsed ? 'Expandir sidebar' : 'Colapsar sidebar'}
         >
-          {collapsed
-            ? <ChevronRight size={14} />
-            : <ChevronLeft size={14} />
-          }
+          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
 
-        {/* Botón cerrar — solo mobile */}
         {onClose && (
           <button
             onClick={onClose}
-            className="md:hidden text-white/30 hover:text-white/70 transition-colors ml-1"
+            className="md:hidden text-white/25 hover:text-white/60 transition-colors ml-1"
             aria-label="Cerrar menú"
           >
             <X size={14} />
@@ -115,48 +108,42 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
           className="relative z-10 border-b"
           style={{
             borderColor: 'rgba(255,255,255,0.06)',
-            padding: collapsed ? '14px 0' : '14px 16px',
-            display: 'flex',
-            flexDirection: collapsed ? 'row' : 'column',
-            alignItems: collapsed ? 'center' : 'flex-start',
-            justifyContent: collapsed ? 'center' : 'flex-start',
+            // Franja izquierda de acento — solo como borde decorativo, muy sutil
+            boxShadow: collapsed ? undefined : `inset 3px 0 0 ${accent}22`,
           }}
         >
-          <span
-            className="text-[11px] font-extrabold px-2 py-0.5 rounded-full tracking-[0.12em]"
-            style={{
-              background: `${accent}1a`,
-              color: accent,
-              border: `1px solid ${accent}35`,
-            }}
-          >
-            T{String(taller.numero).padStart(2, '0')}
-          </span>
-
-          {!collapsed && (
-            <>
-              <div className="h-px w-full mt-2 mb-1.5" style={{ background: `${accent}25` }} />
-              <p className="text-white text-xs font-bold leading-tight">
+          {collapsed ? (
+            <div className="flex justify-center py-3.5">
+              <span
+                className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md tracking-[0.1em]"
+                style={{ background: `${accent}18`, color: 'rgba(255,255,255,0.6)', border: `1px solid ${accent}25` }}
+              >
+                T{String(taller.numero).padStart(2, '0')}
+              </span>
+            </div>
+          ) : (
+            <div className="px-4 py-3.5">
+              {/* Badge número */}
+              <span
+                className="inline-block text-[10px] font-extrabold px-2 py-0.5 rounded-full tracking-[0.12em] mb-2"
+                style={{ background: `${accent}18`, color: 'rgba(255,255,255,0.55)', border: `1px solid ${accent}28` }}
+              >
+                T{String(taller.numero).padStart(2, '0')}
+              </span>
+              {/* Nombre del taller — protagonista */}
+              <p className="text-sm font-extrabold text-white leading-snug">
                 {taller.nombreCorto}
               </p>
-              <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                Taller de Educación para el Trabajo
-              </p>
-            </>
+            </div>
           )}
         </div>
       )}
 
       {/* ── Navegación ── */}
-      <nav className="relative z-10 flex-1 py-4 space-y-1" style={{ padding: collapsed ? '16px 8px' : '16px 12px' }}>
-        {!collapsed && (
-          <p
-            className="text-[11px] font-extrabold uppercase tracking-[0.14em] px-3 mb-2"
-            style={{ color: 'rgba(255,255,255,0.2)' }}
-          >
-            Navegación
-          </p>
-        )}
+      <nav
+        className="relative z-10 flex-1 space-y-0.5"
+        style={{ padding: collapsed ? '12px 8px' : '12px 10px' }}
+      >
         {navItems.map(({ to, icon: Icon, label }) => (
           <NavLink
             key={to}
@@ -165,35 +152,28 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
             title={collapsed ? label : undefined}
             className={({ isActive }) =>
               collapsed
-                ? `flex justify-center p-2 rounded-xl transition-all relative ${isActive ? 'text-white' : 'text-white/50 hover:text-white/80'}`
-                : `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all relative ${isActive ? 'text-white' : 'text-white/50 hover:text-white/80'}`
+                ? `flex justify-center p-2.5 rounded-xl transition-all ${isActive ? 'text-white' : 'text-white/40 hover:text-white/70'}`
+                : `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${isActive ? 'text-white' : 'text-white/40 hover:text-white/70 hover:bg-white/[0.04]'}`
             }
-            style={({ isActive }) =>
-              isActive
-                ? {
-                    background: 'rgba(255,255,255,0.09)',
-                    boxShadow: collapsed ? undefined : `inset 3px 0 0 ${accent}`,
-                    backdropFilter: 'blur(4px)',
-                  }
-                : undefined
-            }
+            style={({ isActive }) => isActive ? {
+              background: 'rgba(255,255,255,0.08)',
+              boxShadow: collapsed ? undefined : `inset 3px 0 0 ${accent}`,
+              backdropFilter: 'blur(4px)',
+            } : undefined}
           >
             {({ isActive }) => (
               <>
                 <div
-                  className="h-7 w-7 rounded-lg flex items-center justify-center shrink-0"
-                  style={{ background: isActive ? `${accent}20` : 'rgba(255,255,255,0.06)' }}
+                  className="h-7 w-7 rounded-lg flex items-center justify-center shrink-0 transition-all"
+                  style={{ background: isActive ? `${accent}1c` : 'rgba(255,255,255,0.05)' }}
                 >
-                  <Icon size={13} style={{ color: isActive ? accent : 'rgba(255,255,255,0.5)' }} />
+                  <Icon size={13} style={{ color: isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)' }} />
                 </div>
                 {!collapsed && (
                   <>
-                    {label}
+                    <span className="flex-1">{label}</span>
                     {isActive && (
-                      <span
-                        className="ml-auto w-1.5 h-1.5 rounded-full animate-pulse-soft"
-                        style={{ background: accent }}
-                      />
+                      <span className="w-1.5 h-1.5 rounded-full animate-pulse-soft" style={{ background: accent }} />
                     )}
                   </>
                 )}
@@ -205,53 +185,67 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
 
       {/* ── Progreso ── */}
       <div
-        className="relative z-10 border-t"
+        className="relative z-10 border-t border-b"
         style={{
-          borderColor: 'rgba(255,255,255,0.06)',
+          borderColor: 'rgba(255,255,255,0.05)',
           padding: collapsed ? '10px 8px' : '12px 16px',
         }}
       >
-        <div className={`flex ${collapsed ? 'flex-col items-center gap-1' : 'items-center gap-2'}`}>
-          {!collapsed && (
-            <span className="text-[10px] font-bold flex-1" style={{ color: 'rgba(255,255,255,0.35)' }}>
-              {progreso.porcentaje}% completado
-            </span>
-          )}
-          {collapsed && (
-            <span className="text-[11px] font-extrabold" style={{ color: '#02d47e' }}>
+        {collapsed ? (
+          <div className="flex flex-col items-center gap-1.5">
+            <span className="text-[10px] font-extrabold" style={{ color: '#02d47e' }}>
               {progreso.porcentaje}%
             </span>
-          )}
-          <div
-            className={`rounded-full overflow-hidden ${collapsed ? 'w-6 h-1' : 'flex-1 h-1'}`}
-            style={{ background: 'rgba(255,255,255,0.08)' }}
-          >
-            <div
-              className="h-full rounded-full transition-all duration-1000"
-              style={{
+            <div className="w-5 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
+              <div className="h-full rounded-full" style={{
                 width: `${progreso.porcentaje}%`,
                 background: 'linear-gradient(90deg, #02d47e, #00c16e)',
-                boxShadow: progreso.porcentaje > 0 ? '0 0 6px rgba(2,212,126,0.35)' : 'none',
-              }}
-            />
+              }} />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[10px] font-semibold" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                {progresoLabel}
+              </span>
+              <span className="text-[10px] font-extrabold" style={{ color: '#02d47e' }}>
+                {progreso.porcentaje}%
+              </span>
+            </div>
+            <div className="h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.07)' }}>
+              <div
+                className="h-full rounded-full transition-all duration-1000"
+                style={{
+                  width: `${progreso.porcentaje}%`,
+                  background: 'linear-gradient(90deg, #02d47e, #00c16e)',
+                  boxShadow: progreso.porcentaje > 0 ? '0 0 6px rgba(2,212,126,0.4)' : 'none',
+                }}
+              />
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* ── Navegación secundaria ── */}
+      {/* ── Mi Perfil ── */}
       <div
-        className="relative z-10 pb-4"
-        style={{ padding: collapsed ? '0 8px 16px' : '0 12px 16px' }}
+        className="relative z-10"
+        style={{ padding: collapsed ? '10px 8px' : '10px 10px' }}
       >
         <button
           onClick={() => navigate('/perfil')}
           title={collapsed ? 'Mi Perfil' : undefined}
-          className={`w-full flex items-center rounded-xl transition-all text-xs text-white/30 hover:text-white/60 hover:bg-white/[0.06] ${
-            collapsed ? 'justify-center p-2' : 'gap-2 px-3 py-2.5'
+          className={`w-full flex items-center rounded-xl transition-all text-white/30 hover:text-white/60 hover:bg-white/[0.05] ${
+            collapsed ? 'justify-center p-2.5' : 'gap-2.5 px-3 py-2.5'
           }`}
         >
-          <LayoutGrid size={13} />
-          {!collapsed && 'Mi Perfil'}
+          <div className="h-6 w-6 rounded-full flex items-center justify-center shrink-0"
+            style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <User size={11} style={{ color: 'rgba(255,255,255,0.5)' }} />
+          </div>
+          {!collapsed && (
+            <span className="text-xs font-semibold">Mi Perfil</span>
+          )}
         </button>
       </div>
     </aside>
