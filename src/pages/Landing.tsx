@@ -625,63 +625,49 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Columna visual — foto docente técnico */}
-            <div className="hidden lg:block relative animate-fade-in-up stagger-3" style={{ perspective: 1000 }}>
+            {/* Columna visual — foto docente EPT */}
+            <div className="hidden lg:block relative animate-fade-in-up stagger-3">
 
-              {/* Blob verde detrás */}
+              {/* Blob glow verde detrás */}
               <div className="absolute pointer-events-none" style={{
-                width: 420, height: 420,
-                background: 'radial-gradient(circle, rgba(2,212,126,0.22) 0%, transparent 70%)',
+                width: 460, height: 460,
+                background: 'radial-gradient(circle, rgba(2,212,126,0.18) 0%, transparent 68%)',
                 top: '50%', left: '50%',
                 transform: 'translate(-50%, -50%)',
-                filter: 'blur(40px)',
+                filter: 'blur(48px)',
               }} />
 
-              {/* Marco de la foto — ligeramente inclinado */}
-              <div style={{ transform: 'rotate(2deg)', transformOrigin: 'center bottom' }}>
-                <div className="relative overflow-hidden" style={{
-                  borderRadius: 24,
-                  boxShadow: '0 32px 80px rgba(4,57,65,0.22), 0 8px 24px rgba(4,57,65,0.10)',
-                  border: '3px solid rgba(255,255,255,0.8)',
-                }}>
-                  <img
-                    src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=900&q=80"
-                    alt="Docente EPT en taller técnico"
-                    className="w-full object-cover"
-                    style={{ aspectRatio: '4/3', display: 'block', filter: 'brightness(0.88) saturate(1.05)' }}
-                  />
-                  {/* Vignette */}
-                  <div className="absolute inset-0" style={{
-                    background: 'linear-gradient(160deg, transparent 40%, rgba(4,57,65,0.5) 100%)',
-                  }} />
-                  {/* Label esquina inferior izquierda */}
-                  <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
-                    <span className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.85)' }}>
-                      Talleres EPT · Perú
-                    </span>
-                  </div>
-                </div>
-              </div>
+              {/* Tarjeta decorativa de fondo — profundidad */}
+              <div className="absolute rounded-[28px]" style={{
+                inset: '16px 10px 10px 16px',
+                transform: 'rotate(-4deg)',
+                background: 'linear-gradient(145deg, rgba(2,212,126,0.10) 0%, rgba(4,57,65,0.18) 100%)',
+                border: '1.5px solid rgba(2,212,126,0.2)',
+              }} />
 
-              {/* Badge flotante — arriba izquierda */}
-              <div className="absolute -top-3 -left-5 flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl"
-                style={{ background: '#ffffff', boxShadow: '0 8px 28px rgba(4,57,65,0.15)', border: '1px solid rgba(4,57,65,0.07)', zIndex: 10 }}>
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: 'rgba(2,212,126,0.12)' }}>
-                  <Award size={15} style={{ color: '#02a05a' }} />
+              {/* Marco principal — imagen del docente */}
+              <div className="relative overflow-hidden" style={{
+                borderRadius: 22,
+                boxShadow: '0 32px 72px rgba(4,57,65,0.28), 0 8px 24px rgba(4,57,65,0.14)',
+                border: '2.5px solid rgba(255,255,255,0.88)',
+              }}>
+                <img
+                  src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=900&q=85"
+                  alt="Docente EPT trabajando en taller técnico"
+                  className="w-full object-cover object-center"
+                  style={{ aspectRatio: '4/5', display: 'block', filter: 'brightness(0.82) saturate(1.1) contrast(1.04)' }}
+                />
+                {/* Vignette inferior */}
+                <div className="absolute inset-0" style={{
+                  background: 'linear-gradient(to bottom, transparent 48%, rgba(3,14,18,0.72) 100%)',
+                }} />
+                {/* Label inferior izquierda */}
+                <div className="absolute bottom-5 left-5 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full shrink-0 animate-pulse" style={{ background: '#02d47e' }} />
+                  <span className="text-sm font-bold tracking-wide" style={{ color: 'rgba(255,255,255,0.92)' }}>
+                    Talleres EPT · Perú
+                  </span>
                 </div>
-                <div>
-                  <p className="text-[11px] font-extrabold leading-none" style={{ color: '#043941' }}>Certificación</p>
-                  <p className="text-[10px] mt-0.5 leading-none" style={{ color: '#64748b' }}>Inroprin · MINEDU-TSF</p>
-                </div>
-              </div>
-
-              {/* Badge flotante — abajo derecha */}
-              <div className="absolute -bottom-3 -right-4 px-4 py-3 rounded-2xl"
-                style={{ background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)', boxShadow: '0 10px 32px rgba(4,57,65,0.28)', zIndex: 10 }}>
-                <p className="text-sm font-extrabold leading-none" style={{ color: '#02d47e' }}>36+ docentes</p>
-                <p className="text-[10px] mt-1 leading-none" style={{ color: 'rgba(255,255,255,0.5)' }}>ya en la plataforma</p>
               </div>
 
             </div>
