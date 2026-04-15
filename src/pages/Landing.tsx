@@ -25,35 +25,35 @@ const FEATURES = [
     icon: Package,
     overline: 'El problema',
     title: 'El conocimiento técnico se queda en las cajas',
-    desc: 'Los equipos llegan al taller pero los docentes no reciben formación para usarlos. El conocimiento es presencial, único e irrecuperable: cuando el docente rota, todo se pierde.',
+    desc: 'Los equipos llegan al taller pero sin formación para usarlos. Cuando el docente rota, todo se pierde.',
     accent: true,
   },
   {
     icon: Layers,
     overline: 'Nuestra solución',
     title: 'Una ruta de aprendizaje híbrida diseñada para ti',
-    desc: 'Accede a 7 módulos formativos con contenido asíncrono, sesiones en vivo y práctica presencial. Aprende sobre cada equipo a tu ritmo, desde cualquier lugar y cuando puedas.',
+    desc: '7 módulos con contenido asíncrono, sesiones en vivo y práctica presencial. A tu ritmo, desde cualquier lugar.',
     accent: false,
   },
   {
     icon: Award,
     overline: 'El resultado',
     title: 'Autonomía docente garantizada al finalizar',
-    desc: 'Al completar la ruta, dominas el uso pedagógico de cada equipo de tu taller y puedes replicar ese aprendizaje con tus estudiantes — con confianza y sin depender de nadie.',
+    desc: 'Dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes — con confianza.',
     accent: false,
   },
 ]
 
 const PRODUCTS = [
-  { icon: Video,    title: 'Acceso asíncrono',      desc: 'Videos + lecturas + fichas disponibles 24/7' },
+  { icon: Video,    title: 'Acceso asíncrono',      desc: 'Videos, lecturas y fichas disponibles 24/7' },
   { icon: FileText, title: 'Repositorio completo',   desc: 'Manuales, fichas IPRC y protocolos descargables' },
   { icon: Clock,    title: 'Acompañamiento en vivo', desc: 'Sesiones sincrónicas con expertos por taller' },
 ]
 
 const COMMUNITY = [
-  { icon: Users,     color: '#02d47e', bg: 'rgba(2,212,126,0.08)',   title: 'Docentes EPT',            desc: 'Accede a la ruta de aprendizaje, domina el uso pedagógico de los equipos y mejora tus competencias técnicas.', cta: 'Ingresar a la plataforma', action: 'app' },
-  { icon: Building2, color: '#045f6c', bg: 'rgba(4,95,108,0.08)',    title: 'Instituciones Educativas', desc: 'Si tu IE ya cuenta con talleres EPT equipados, GRAMA capacita a tus docentes para entender y aprovechar al máximo cada equipo especializado.', cta: 'Escribirnos',              action: 'mail' },
-  { icon: Briefcase, color: '#043941', bg: 'rgba(4,57,65,0.08)',     title: 'Coordinadores EPT',       desc: 'Gestiona el avance formativo de tu equipo docente, monitorea el progreso y garantiza la implementación pedagógica.', cta: 'Contactar',            action: 'mail' },
+  { icon: Users,     color: '#02d47e', bg: 'rgba(2,212,126,0.08)',   title: 'Docentes EPT',            desc: 'Domina el uso pedagógico de los equipos de tu taller y mejora tus competencias técnicas.',        cta: 'Ingresar a la plataforma', action: 'app'  },
+  { icon: Building2, color: '#045f6c', bg: 'rgba(4,95,108,0.08)',    title: 'Instituciones Educativas', desc: 'Capacitamos a tus docentes para aprovechar al máximo cada equipo EPT especializado.',              cta: 'Escribirnos',              action: 'mail' },
+  { icon: Briefcase, color: '#043941', bg: 'rgba(4,57,65,0.08)',     title: 'Coordinadores EPT',       desc: 'Monitorea el avance formativo de tu equipo y garantiza la implementación pedagógica.',             cta: 'Contactar',                action: 'mail' },
 ]
 
 const NAV_LINKS = [
@@ -799,7 +799,7 @@ export default function Landing() {
               </h1>
 
               <p className="text-sm leading-loose mb-10 max-w-lg animate-fade-in-up stagger-3" style={{ color: 'var(--tc-secondary)' }}>
-                GRAMA acompaña a docentes EPT en la implementación y dominio pedagógico de talleres técnicos especializados — desde cualquier lugar, a tu ritmo.
+                Plataforma de formación para docentes EPT. Aprende a dominar cada equipo de tu taller técnico, a tu ritmo.
               </p>
 
               <div className="flex flex-wrap gap-3 animate-fade-in-up stagger-4">
@@ -926,7 +926,7 @@ export default function Landing() {
               El conocimiento no debería perderse
             </h2>
             <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
-              Transformamos la capacitación presencial y efímera en un ecosistema híbrido de aprendizaje accesible, transferible y duradero.
+              Formación híbrida, accesible y transferible para docentes de talleres técnicos.
             </p>
           </div>
 
@@ -1058,7 +1058,7 @@ export default function Landing() {
               Diseñado para toda la comunidad EPT
             </h2>
             <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
-              Un ecosistema pensado para cada actor del programa formativo técnico.
+              GRAMA sirve a toda la comunidad EPT.
             </p>
           </div>
 
