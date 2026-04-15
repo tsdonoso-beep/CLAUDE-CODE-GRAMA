@@ -163,32 +163,39 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
             className="border-t px-5 py-4 space-y-5"
             style={{ borderColor: activo ? 'rgba(2,212,126,0.15)' : '#f1f5f9', background: 'rgba(255,255,255,0.7)' }}
           >
-            {modulo.subSecciones.map(sub => (
-              <div key={sub.id}>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold" style={{ color: '#94a3b8' }}>{sub.numero}</span>
-                  <span className="text-xs font-bold" style={{ color: '#043941' }}>{sub.titulo}</span>
-                  {sub.phaseBadge && (
-                    <span className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: '#02d47e' }}>
-                      · {sub.phaseBadge}
+            {modulo.sesiones.map(ses => {
+              const modalidadColor =
+                ses.modalidad === 'sincrono'   ? { bg: 'rgba(2,212,126,0.1)',  text: '#02d47e' } :
+                ses.modalidad === 'presencial' ? { bg: 'rgba(245,158,11,0.1)', text: '#b45309' } :
+                                                  { bg: 'rgba(4,57,65,0.07)',   text: '#045f6c' }
+              return (
+                <div key={ses.id}>
+                  <div className="flex items-center gap-2 mb-2 flex-wrap">
+                    <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md tracking-wide"
+                      style={{ background: modalidadColor.bg, color: modalidadColor.text }}>
+                      {ses.id}
                     </span>
-                  )}
+                    <span className="text-xs font-bold flex-1 min-w-0 truncate" style={{ color: '#043941' }}>{ses.nombre}</span>
+                    <span className="text-[10px] font-medium tabular-nums shrink-0" style={{ color: '#94a3b8' }}>
+                      {ses.duracionHoras}h
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1 pl-2">
+                    {ses.contenidos.map(c => (
+                      <div key={c.id} className="flex items-center gap-3 min-w-0 py-0.5">
+                        <ContenidoBadge tipo={c.tipo} size="list" />
+                        <span className="text-xs truncate flex-1" style={{ color: '#64748b' }}>{c.titulo}</span>
+                        {c.duracionMin && (
+                          <span className="text-[11px] shrink-0 tabular-nums" style={{ color: '#94a3b8' }}>
+                            {duracionLabel(c.duracionMin)}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex flex-col gap-1">
-                  {sub.contenidos.map(c => (
-                    <div key={c.id} className="flex items-center gap-3 min-w-0 py-0.5">
-                      <ContenidoBadge tipo={c.tipo} size="list" />
-                      <span className="text-xs truncate flex-1" style={{ color: '#64748b' }}>{c.titulo}</span>
-                      {c.duracionMin && (
-                        <span className="text-[11px] shrink-0 tabular-nums" style={{ color: '#94a3b8' }}>
-                          {duracionLabel(c.duracionMin)}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+              )
+            })}
 
             <div className="pt-1">
               {bloqueado ? (

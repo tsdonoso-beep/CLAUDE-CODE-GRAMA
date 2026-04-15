@@ -66,12 +66,12 @@ interface DocenteRow extends Profile {
  */
 function getTotalContenidosLXP(): number {
   return modulosLXP.reduce((acc, m) =>
-    acc + m.subSecciones.reduce((a, s) => a + s.contenidos.length, 0), 0)
+    acc + m.sesiones.reduce((a, s) => a + s.contenidos.length, 0), 0)
 }
 
 function getTotalQuizzesLXP(): number {
   return modulosLXP.reduce((acc, m) =>
-    acc + m.subSecciones.reduce((a, s) =>
+    acc + m.sesiones.reduce((a, s) =>
       a + s.contenidos.filter(c => c.tipo === 'QUIZ').length, 0), 0)
 }
 

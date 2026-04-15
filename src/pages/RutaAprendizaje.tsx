@@ -32,9 +32,7 @@ export default function RutaAprendizaje() {
   if (!taller || slug === 'taller-general-ept') return null
 
   const sesionesEnVivo = modulosLXP.flatMap(m =>
-    m.subSecciones.flatMap(s =>
-      s.contenidos.filter(c => c.tipo === 'EN_VIVO')
-    )
+    m.sesiones.filter(s => s.modalidad === 'sincrono')
   ).length
 
   // Módulo actual: el primero en_curso o el primero disponible

@@ -287,17 +287,22 @@ export default function ModuloDetalle() {
       {/* ── Sub-secciones (accordion) ── */}
       <div className="p-6 max-w-4xl">
         <div className="space-y-3">
-          {modulo.subSecciones.map((sub, idx) => {
-            const isOpen = expandedSubs.has(sub.id) || expandedSubs.has(String(idx))
+          {modulo.sesiones.map((ses, idx) => {
+            const isOpen = expandedSubs.has(ses.id) || expandedSubs.has(String(idx))
+            const modalidadBadge =
+              ses.esEvaluacion   ? { label: 'EVALUACIÓN', color: '#ca8a04', bg: 'rgba(245,158,11,0.1)' } :
+              ses.modalidad === 'sincrono'   ? { label: 'EN VIVO',    color: '#02d47e', bg: 'rgba(2,212,126,0.1)' } :
+              ses.modalidad === 'presencial' ? { label: 'PRESENCIAL', color: '#b45309', bg: 'rgba(245,158,11,0.1)' } :
+                                               { label: 'AUTÓNOMO',  color: '#045f6c', bg: 'rgba(4,95,108,0.08)' }
             return (
               <div
-                key={sub.id}
+                key={ses.id}
                 className="rounded-2xl border overflow-hidden transition-all"
                 style={{ borderColor: isOpen ? '#02d47e' : '#e3f8fb' }}
               >
                 {/* Accordion header */}
                 <button
-                  onClick={() => toggleSub(sub.id)}
+                  onClick={() => toggleSub(ses.id)}
                   className="w-full text-left px-6 py-4 flex items-center gap-4"
                   style={{ background: '#ffffff' }}
                 >
@@ -307,27 +312,26 @@ export default function ModuloDetalle() {
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-xs" style={{ color: '#94a3b8' }}>
-                        {sub.numero}
+                      <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md"
+                        style={{ background: modalidadBadge.bg, color: modalidadBadge.color }}>
+                        {ses.id}
                       </span>
                       <span className="text-sm font-semibold" style={{ color: 'var(--grama-oscuro)' }}>
-                        {sub.titulo}
+                        {ses.nombre}
                       </span>
-                      {sub.phaseBadge && (
-                        <span className="overline-label font-semibold" style={{ color: 'var(--grama-menta)' }}>
-                          · {sub.phaseBadge}
-                        </span>
-                      )}
+                      <span className="overline-label font-semibold" style={{ color: modalidadBadge.color }}>
+                        · {modalidadBadge.label}
+                      </span>
                     </div>
-                    {sub.descripcion && !isOpen && (
+                    {ses.descripcion && !isOpen && (
                       <p className="text-xs mt-0.5 line-clamp-1" style={{ color: '#045f6c' }}>
-                        {sub.descripcion}
+                        {ses.descripcion}
                       </p>
                     )}
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                     <span className="text-xs" style={{ color: '#045f6c' }}>
-                      {sub.contenidos.length} contenidos
+                      {ses.contenidos.length} contenidos · {ses.duracionHoras}h
                     </span>
                     {isOpen
                       ? <ChevronDown size={16} style={{ color: '#045f6c' }} />
@@ -339,18 +343,38 @@ export default function ModuloDetalle() {
                 {/* Expanded content */}
                 {isOpen && (
                   <div className="border-t px-6 py-5 space-y-4" style={{ borderColor: '#f1f5f9', background: '#ffffff' }}>
-                    {sub.descripcion && (
+                    {ses.descripcion && (
                       <p className="text-sm" style={{ color: '#045f6c' }}>
-                        {sub.descripcion}
+                        {ses.descripcion}
                       </p>
+                    )}
+                    {/* Agenda de momentos para sesiones sincrónicas */}
+                    {ses.momentos && ses.momentos.length > 0 && (
+                      <div className="rounded-xl overflow-hidden border" style={{ borderColor: '#e3f8fb' }}>
+                        <div className="px-4 py-2.5 flex items-center gap-2" style={{ background: '#f0fdf9' }}>
+                          <span className="overline-label font-extrabold" style={{ color: 'var(--grama-menta)' }}>Agenda de sesión</span>
+                        </div>
+                        <div className="divide-y" style={{ borderColor: '#f1f5f9' }}>
+                          {ses.momentos.map((m, mi) => (
+                            <div key={mi} className="flex items-center gap-3 px-4 py-2 text-xs"
+                              style={{ background: m.isBreak ? '#fafff8' : m.isActividad ? '#f0fdf9' : '#ffffff' }}>
+                              {m.horaInicio && <span className="tabular-nums font-mono shrink-0" style={{ color: '#94a3b8' }}>{m.horaInicio}</span>}
+                              <span className="tabular-nums font-semibold shrink-0 w-10" style={{ color: '#045f6c' }}>{m.duracionMin}min</span>
+                              <span className="flex-1 font-medium" style={{ color: m.isBreak ? '#94a3b8' : m.isActividad ? '#02d47e' : '#043941',
+                                fontStyle: m.isBreak ? 'italic' : 'normal' }}>{m.momento}</span>
+                              {m.materiales && <span className="shrink-0 text-[10px]" style={{ color: '#94a3b8' }}>{m.materiales}</span>}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     )}
 
                     {(() => {
                       // Separar diagnósticos (quiz con bancoPreguntas sin bloqueo) del resto
-                      const diagnosticos = sub.contenidos.filter(
+                      const diagnosticos = ses.contenidos.filter(
                         c => c.tipo === 'QUIZ' && !!c.bancoPreguntas && !c.bloqueaSiguiente
                       )
-                      const resto = sub.contenidos.filter(
+                      const resto = ses.contenidos.filter(
                         c => !(c.tipo === 'QUIZ' && !!c.bancoPreguntas && !c.bloqueaSiguiente)
                       )
                       const totalDiagMin = diagnosticos.reduce((acc, c) => acc + (c.duracionMin ?? 0), 0)
@@ -365,36 +389,7 @@ export default function ModuloDetalle() {
 
                             return (
                               <div key={contenido.id}>
-                                {contenido.id === 'm0-s1-c3' ? (
-                                  <div className="rounded-2xl border overflow-hidden" style={{ borderColor: '#d1e8eb' }}>
-                                    <button
-                                      onClick={() => setConocenosOpen(o => !o)}
-                                      className="w-full flex items-center gap-3 px-5 py-4 text-left transition-colors"
-                                      style={{ background: conocenosOpen ? 'linear-gradient(135deg,#043941 0%,#045f6c 100%)' : '#f0fdf9' }}
-                                    >
-                                      <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: conocenosOpen ? 'rgba(2,212,126,0.2)' : '#d2ffe1' }}>
-                                        <School size={16} style={{ color: 'var(--grama-menta)' }} />
-                                      </div>
-                                      <div className="flex-1 min-w-0">
-                                        <p className="text-sm font-bold" style={{ color: conocenosOpen ? '#ffffff' : '#043941' }}>
-                                          {contenido.titulo}
-                                        </p>
-                                        <p className="text-xs" style={{ color: conocenosOpen ? '#a8d8de' : '#045f6c' }}>
-                                          {contenido.descripcion}
-                                        </p>
-                                      </div>
-                                      {conocenosOpen
-                                        ? <ChevronDown size={15} style={{ color: 'var(--grama-menta)' }} />
-                                        : <ChevronRight size={15} style={{ color: '#045f6c' }} />
-                                      }
-                                    </button>
-                                    {conocenosOpen && (
-                                      <div className="border-t p-4" style={{ borderColor: '#d1e8eb', background: '#fafffd' }}>
-                                        <ConocenosForm onComplete={() => markContenidoCompleted('m0-s1-c3')} />
-                                      </div>
-                                    )}
-                                  </div>
-                                ) : isQuizBloqueante ? (
+                                {isQuizBloqueante ? (
                                   <QuizBlock
                                     contenidoId={contenido.id}
                                     titulo={contenido.titulo}

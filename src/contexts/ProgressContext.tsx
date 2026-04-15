@@ -11,7 +11,7 @@ import { useAuth } from '@/contexts/AuthContext'
 /** IDs de contenidos agrupados por índice de módulo */
 const MODULE_IDS: readonly string[][] = modulosLXP.map(m => {
   const ids: string[] = []
-  m.subSecciones.forEach(s => s.contenidos.forEach(c => ids.push(c.id)))
+  m.sesiones.forEach(s => s.contenidos.forEach(c => ids.push(c.id)))
   return ids
 })
 
