@@ -735,10 +735,10 @@ export default function Landing() {
             </h2>
           </div>
 
-          {/* Grid 2 columnas: [Problema + Resultado] | [Solución + Foto] */}
+          {/* Layout editorial: [timeline 3fr] | [foto tall 2fr] */}
           <div
             ref={featuresReveal.ref}
-            className="grid lg:grid-cols-2 gap-6 items-start"
+            className="grid lg:grid-cols-[3fr_2fr] gap-8 items-stretch"
             style={{
               opacity: featuresReveal.visible ? 1 : 0,
               transform: featuresReveal.visible ? 'none' : 'translateY(30px)',
@@ -746,7 +746,7 @@ export default function Landing() {
             }}
           >
 
-            {/* ── Columna izquierda: PROBLEMA + RESULTADO ── */}
+            {/* ── Columna izquierda: los 3 pasos del timeline ── */}
             <div className="flex flex-col gap-4">
 
               {/* EL PROBLEMA */}
@@ -756,7 +756,7 @@ export default function Landing() {
                     style={{ background: '#1e3a3f', border: '2px solid rgba(2,212,126,0.25)', boxShadow: '0 0 0 4px rgba(2,212,126,0.06)' }}>
                     🏫
                   </div>
-                  <div className="w-px flex-1 mt-2" style={{ background: 'linear-gradient(to bottom, rgba(4,57,65,0.18), transparent)', minHeight: 24 }} />
+                  <div className="w-px flex-1 mt-2" style={{ background: 'linear-gradient(to bottom, rgba(4,57,65,0.18), rgba(4,57,65,0.06))', minHeight: 28 }} />
                 </div>
                 <div className="flex-1 pb-2">
                   <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: 'rgba(4,57,65,0.45)' }}>
@@ -780,35 +780,6 @@ export default function Landing() {
                 </div>
               </div>
 
-              {/* EL RESULTADO */}
-              <div className="flex gap-4">
-                <div className="flex flex-col items-center shrink-0" style={{ width: 44 }}>
-                  <div className="w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0"
-                    style={{ background: '#fef3c7', border: '2px solid rgba(202,138,4,0.28)', boxShadow: '0 0 0 4px rgba(202,138,4,0.06)' }}>
-                    🎯
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: '#92400e' }}>
-                    <span className="w-1 h-1 rounded-full inline-block" style={{ background: '#ca8a04' }} />
-                  EL RESULTADO
-                  </p>
-                  <div className="rounded-2xl p-6" style={{ background: '#fef9e7', border: '1.5px solid rgba(202,138,4,0.18)' }}>
-                    <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
-                      Autonomía docente<br />garantizada
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#78350f' }}>
-                      Al terminar dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes — con confianza real.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-            </div>{/* ── fin columna izquierda ── */}
-
-            {/* ── Columna derecha: SOLUCIÓN + Foto docente ── */}
-            <div className="flex flex-col gap-4">
-
               {/* LA SOLUCIÓN */}
               <div className="flex gap-4">
                 <div className="flex flex-col items-center shrink-0" style={{ width: 44 }}>
@@ -816,7 +787,7 @@ export default function Landing() {
                     style={{ background: '#d0f0f5', border: '2px solid rgba(4,95,108,0.22)', boxShadow: '0 0 0 4px rgba(4,95,108,0.06)' }}>
                     💻
                   </div>
-                  <div className="w-px flex-1 mt-2" style={{ background: 'linear-gradient(to bottom, rgba(4,95,108,0.18), transparent)', minHeight: 24 }} />
+                  <div className="w-px flex-1 mt-2" style={{ background: 'linear-gradient(to bottom, rgba(4,95,108,0.18), rgba(4,95,108,0.04))', minHeight: 28 }} />
                 </div>
                 <div className="flex-1 pb-2">
                   <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
@@ -834,26 +805,48 @@ export default function Landing() {
                 </div>
               </div>
 
-              {/* Foto: docente feliz / autónomo */}
-              <div className="rounded-2xl overflow-hidden relative" style={{ height: 200 }}>
-                <img
-                  src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=700&q=80"
-                  alt="Docente EPT logrando su autonomía formativa"
-                  className="w-full h-full object-cover"
-                />
-                {/* Overlay sutil con quote */}
-                <div className="absolute inset-0 flex flex-col justify-end p-5"
-                  style={{ background: 'linear-gradient(to top, rgba(4,57,65,0.75) 0%, transparent 55%)' }}>
-                  <p className="text-sm font-semibold text-white leading-snug">
-                    "Ahora puedo enseñar con los equipos<br />— y mis estudiantes lo notan."
+              {/* EL RESULTADO */}
+              <div className="flex gap-4">
+                <div className="shrink-0" style={{ width: 44 }}>
+                  <div className="w-11 h-11 rounded-full flex items-center justify-center text-lg"
+                    style={{ background: '#fef3c7', border: '2px solid rgba(202,138,4,0.28)', boxShadow: '0 0 0 4px rgba(202,138,4,0.06)' }}>
+                    🎯
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: '#92400e' }}>
+                    <span className="w-1 h-1 rounded-full inline-block" style={{ background: '#ca8a04' }} />
+                    EL RESULTADO
                   </p>
-                  <p className="text-xs mt-1" style={{ color: 'rgba(2,212,126,0.85)' }}>
-                    Docente EPT · Lima Norte
-                  </p>
+                  <div className="rounded-2xl p-6" style={{ background: '#fef9e7', border: '1.5px solid rgba(202,138,4,0.18)' }}>
+                    <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
+                      Autonomía docente<br />garantizada
+                    </h3>
+                    <p className="text-sm leading-relaxed" style={{ color: '#78350f' }}>
+                      Al terminar dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes — con confianza real.
+                    </p>
+                  </div>
                 </div>
               </div>
 
-            </div>{/* ── fin columna derecha ── */}
+            </div>{/* ── fin columna timeline ── */}
+
+            {/* ── Columna derecha: foto tall editorial ── */}
+            <div className="hidden lg:block rounded-3xl overflow-hidden relative" style={{ minHeight: 420 }}>
+              <img
+                src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=700&q=80"
+                alt="Docente EPT logrando su autonomía formativa"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              {/* Overlay degradado inferior con quote */}
+              <div className="absolute inset-0 flex flex-col justify-end p-6"
+                style={{ background: 'linear-gradient(to top, rgba(4,57,65,0.82) 0%, rgba(4,57,65,0.2) 50%, transparent 100%)' }}>
+                <p className="text-sm font-semibold text-white leading-snug mb-1">
+                  "Ahora puedo enseñar con los equipos<br />— y mis estudiantes lo notan."
+                </p>
+                <p className="text-xs" style={{ color: 'rgba(2,212,126,0.85)' }}>Docente EPT · Lima Norte</p>
+              </div>
+            </div>
 
           </div>{/* ── fin grid ── */}
         </div>
