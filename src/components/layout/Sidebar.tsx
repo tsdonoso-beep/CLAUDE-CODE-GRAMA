@@ -1,6 +1,6 @@
 // src/components/layout/Sidebar.tsx
 import { NavLink, useParams, useNavigate } from 'react-router-dom'
-import { BookOpen, Package, ChevronLeft, ChevronRight, LayoutGrid, Globe, X } from 'lucide-react'
+import { BookOpen, Package, ChevronLeft, ChevronRight, LayoutGrid, X } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { useProgress } from '@/contexts/ProgressContext'
 import { GramaLogo } from '@/components/GramaLogo'
@@ -208,81 +208,50 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
         className="relative z-10 border-t"
         style={{
           borderColor: 'rgba(255,255,255,0.06)',
-          padding: collapsed ? '12px 8px' : '16px',
+          padding: collapsed ? '10px 8px' : '12px 16px',
         }}
       >
-        {collapsed ? (
-          <div className="flex flex-col items-center gap-1">
+        <div className={`flex ${collapsed ? 'flex-col items-center gap-1' : 'items-center gap-2'}`}>
+          {!collapsed && (
+            <span className="text-[10px] font-bold flex-1" style={{ color: 'rgba(255,255,255,0.35)' }}>
+              {progreso.porcentaje}% completado
+            </span>
+          )}
+          {collapsed && (
             <span className="text-[11px] font-extrabold" style={{ color: '#02d47e' }}>
               {progreso.porcentaje}%
             </span>
+          )}
+          <div
+            className={`rounded-full overflow-hidden ${collapsed ? 'w-6 h-1' : 'flex-1 h-1'}`}
+            style={{ background: 'rgba(255,255,255,0.08)' }}
+          >
             <div
-              className="w-6 h-1 rounded-full overflow-hidden"
-              style={{ background: 'rgba(255,255,255,0.08)' }}
-            >
-              <div
-                className="h-full rounded-full"
-                style={{
-                  width: `${progreso.porcentaje}%`,
-                  background: 'linear-gradient(90deg, #02d47e, #00c16e)',
-                }}
-              />
-            </div>
+              className="h-full rounded-full transition-all duration-1000"
+              style={{
+                width: `${progreso.porcentaje}%`,
+                background: 'linear-gradient(90deg, #02d47e, #00c16e)',
+                boxShadow: progreso.porcentaje > 0 ? '0 0 6px rgba(2,212,126,0.35)' : 'none',
+              }}
+            />
           </div>
-        ) : (
-          <>
-            <div className="flex items-center justify-between mb-2">
-              <p className="text-[10px] font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                Progreso general
-              </p>
-              <span className="text-[10px] font-extrabold" style={{ color: '#02d47e' }}>
-                {progreso.porcentaje}%
-              </span>
-            </div>
-            <div
-              className="h-1.5 rounded-full mb-2 overflow-hidden"
-              style={{ background: 'rgba(255,255,255,0.08)' }}
-            >
-              <div
-                className="h-full rounded-full transition-all duration-1000"
-                style={{
-                  width: `${progreso.porcentaje}%`,
-                  background: 'linear-gradient(90deg, #02d47e, #00c16e)',
-                  boxShadow: '0 0 8px rgba(2,212,126,0.4)',
-                }}
-              />
-            </div>
-            <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.3)' }}>
-              {progreso.completados}/{progreso.total} actividades completadas
-            </p>
-          </>
-        )}
+        </div>
       </div>
 
       {/* ── Navegación secundaria ── */}
       <div
-        className="relative z-10 pb-4 space-y-1"
+        className="relative z-10 pb-4"
         style={{ padding: collapsed ? '0 8px 16px' : '0 12px 16px' }}
       >
         <button
           onClick={() => navigate('/perfil')}
-          title={collapsed ? 'Ver todos los talleres' : undefined}
+          title={collapsed ? 'Mi Perfil' : undefined}
           className={`w-full flex items-center rounded-xl transition-all text-xs text-white/30 hover:text-white/60 hover:bg-white/[0.06] ${
             collapsed ? 'justify-center p-2' : 'gap-2 px-3 py-2.5'
           }`}
         >
           <LayoutGrid size={13} />
-          {!collapsed && 'Ver todos los talleres'}
-        </button>
-        <button
-          onClick={() => navigate('/')}
-          title={collapsed ? 'Página principal' : undefined}
-          className={`w-full flex items-center rounded-xl transition-all text-xs text-white/20 hover:text-white/50 hover:bg-white/[0.04] ${
-            collapsed ? 'justify-center p-2' : 'gap-2 px-3 py-2.5'
-          }`}
-        >
-          <Globe size={13} />
-          {!collapsed && 'Página principal'}
+          {!collapsed && 'Mi Perfil'}
         </button>
       </div>
     </aside>

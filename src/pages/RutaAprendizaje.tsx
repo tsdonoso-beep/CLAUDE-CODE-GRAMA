@@ -6,7 +6,6 @@ import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
 import { mockProximaSesion } from '@/mock/mockEstados'
 import { ModuloCard } from '@/components/lxp/ModuloCard'
-import { ProgressRing } from '@/components/lxp/ProgressRing'
 import { LiveSessionCard } from '@/components/lxp/LiveSessionCard'
 import { useProgress } from '@/contexts/ProgressContext'
 import { useAuth } from '@/contexts/AuthContext'
@@ -14,7 +13,7 @@ import { trackNavegacion } from '@/lib/tracker'
 
 export default function RutaAprendizaje() {
   const { taller, slug } = useTaller()
-  const { getTallerProgreso, getModuloProgreso, getEstadoModuloLXP } = useProgress()
+  const { getTallerProgreso, getEstadoModuloLXP } = useProgress()
   const { user } = useAuth()
   const navigate = useNavigate()
 
@@ -45,8 +44,19 @@ export default function RutaAprendizaje() {
   return (
     <div>
       {/* ── Hero ── */}
-      <div className="px-8 py-10 grama-pattern" style={{ background: '#043941' }}>
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-[3fr_2fr] gap-8 items-center">
+      <div className="px-8 py-10 relative overflow-hidden" style={{ background: '#043941' }}>
+        {/* Imagen de fondo del taller */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `url(${taller.imagen})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.18,
+        }} />
+        {/* Overlay + patrón */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(100deg, rgba(4,57,65,0.92) 45%, rgba(4,57,65,0.65) 100%)' }} />
+        <div className="absolute inset-0 grama-pattern opacity-40" />
+
+        <div className="relative z-10 max-w-6xl mx-auto grid lg:grid-cols-[3fr_2fr] gap-8 items-center">
 
           {/* Columna izquierda: info */}
           <div>
@@ -82,17 +92,17 @@ export default function RutaAprendizaje() {
           {/* Columna derecha: progreso prominente */}
           <div className="hidden lg:block">
             <div className="p-5 rounded-2xl" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
-              <p className="text-[10px] font-extrabold uppercase tracking-widest mb-4" style={{ color: 'rgba(2,212,126,0.7)' }}>
+              <p className="overline-label mb-4" style={{ color: 'rgba(2,212,126,0.7)' }}>
                 Tu Progreso
               </p>
 
-              {/* Número grande */}
+              {/* Número — usa t-display del sistema de tipografía */}
               <div className="flex items-end gap-2 mb-3">
-                <span className="font-extrabold leading-none" style={{ fontSize: '3.5rem', color: '#ffffff' }}>
+                <span className="t-display text-white leading-none">
                   {progresoTaller.porcentaje}
                 </span>
-                <span className="text-2xl font-bold mb-1" style={{ color: '#02d47e' }}>%</span>
-                <span className="text-sm mb-1.5 ml-1" style={{ color: 'rgba(255,255,255,0.4)' }}>completado</span>
+                <span className="t-h2 font-extrabold mb-1" style={{ color: 'var(--grama-menta)' }}>%</span>
+                <span className="t-body mb-2 ml-1" style={{ color: 'rgba(255,255,255,0.4)' }}>completado</span>
               </div>
 
               {/* Barra de progreso */}
@@ -101,12 +111,12 @@ export default function RutaAprendizaje() {
                   className="h-full rounded-full transition-all duration-700"
                   style={{
                     width: `${progresoTaller.porcentaje}%`,
-                    background: 'linear-gradient(90deg, #02d47e, #00c16e)',
+                    background: 'linear-gradient(90deg, var(--grama-menta), #00c16e)',
                     minWidth: progresoTaller.porcentaje > 0 ? 8 : 0,
                   }}
                 />
               </div>
-              <p className="text-xs mb-4" style={{ color: 'rgba(255,255,255,0.35)' }}>
+              <p className="t-body mb-4" style={{ color: 'rgba(255,255,255,0.35)' }}>
                 {progresoTaller.completados} de {progresoTaller.total} actividades
               </p>
 
@@ -115,12 +125,12 @@ export default function RutaAprendizaje() {
                 <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl"
                   style={{ background: 'rgba(2,212,126,0.10)', border: '1px solid rgba(2,212,126,0.2)' }}>
                   <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[11px] font-extrabold"
-                    style={{ background: '#02d47e', color: '#043941' }}>
+                    style={{ background: 'var(--grama-menta)', color: 'var(--grama-oscuro)' }}>
                     {String(moduloActual.numero).padStart(2, '0')}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-bold text-white truncate">{moduloActual.nombre}</p>
-                    <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                    <p className="t-body font-bold text-white truncate">{moduloActual.nombre}</p>
+                    <p className="overline-label mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>
                       {progresoTaller.porcentaje === 0 ? 'Comienza aquí' : 'Continúa aquí'}
                     </p>
                   </div>
@@ -167,40 +177,6 @@ export default function RutaAprendizaje() {
 
         {/* Sidebar derecho (1/3) */}
         <div className="space-y-5">
-          {/* Progress ring */}
-          <div className="p-5 rounded-2xl border-2 text-center" style={{ borderColor: '#e3f8fb', background: '#ffffff' }}>
-            <h3 className="text-sm font-extrabold mb-4" style={{ color: 'var(--grama-oscuro)' }}>Progreso general</h3>
-            <div className="flex justify-center mb-3">
-              <ProgressRing
-                percentage={progresoTaller.porcentaje}
-                size={100}
-                label={`${progresoTaller.completados} de ${progresoTaller.total}`}
-                sublabel="actividades"
-              />
-            </div>
-            <div className="space-y-2 mt-4">
-              {modulosLXP.map(modulo => {
-                const { porcentaje } = getModuloProgreso(slug ?? '', modulo.numero)
-                return (
-                  <div key={modulo.id} className="flex items-center gap-2">
-                    <div className="text-xs font-bold w-6 shrink-0" style={{ color: '#045f6c' }}>
-                      M{modulo.numero}
-                    </div>
-                    <div className="flex-1 h-1.5 rounded-full" style={{ background: '#f1f5f9' }}>
-                      <div
-                        className="h-full rounded-full transition-all duration-500"
-                        style={{ width: `${porcentaje}%`, background: porcentaje === 100 ? '#00c16e' : '#02d47e' }}
-                      />
-                    </div>
-                    <span className="text-xs w-6 text-right" style={{ color: '#045f6c' }}>
-                      {porcentaje}%
-                    </span>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
           {/* Próxima sesión */}
           <LiveSessionCard
             titulo={mockProximaSesion.titulo}
