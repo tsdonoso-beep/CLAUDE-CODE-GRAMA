@@ -689,80 +689,128 @@ export default function Landing() {
 
       </section>
 
-      {/* ══ FEATURES ════════════════════════════════════════════════════════ */}
-      <section id="nosotros" className="py-16 px-6 relative overflow-hidden">
-        {/* Tangram fondo sutil */}
-        <Tangram color="#02d47e" opacity={0.035} rotate={30} className="absolute w-96 h-96 -right-20 top-0 pointer-events-none" />
+      {/* ══ POR QUÉ GRAMA ═══════════════════════════════════════════════════ */}
+      <section id="nosotros" className="py-20 px-6 relative overflow-hidden">
+        <Tangram color="#02d47e" opacity={0.03} rotate={30} className="absolute w-96 h-96 -right-20 top-0 pointer-events-none" />
 
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-5xl mx-auto">
+
+          {/* Header */}
           <div
             ref={featuresHeaderReveal.ref}
-            className="max-w-xl mb-10"
+            className="mb-12"
             style={{ opacity: featuresHeaderReveal.visible ? 1 : 0, transform: featuresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
           >
-            <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-3" style={{ color: 'var(--grama-menta)' }}>
+            <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-4" style={{ color: 'var(--grama-menta)' }}>
               <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
               ¿Por qué GRAMA?
             </span>
-            <h2 className="t-h1 font-extrabold leading-tight mb-3" style={{ color: 'var(--grama-oscuro)' }}>
-              El conocimiento no debería perderse
+            <h2 className="t-h1 font-extrabold leading-tight" style={{ color: 'var(--grama-oscuro)' }}>
+              El conocimiento técnico<br />
+              <span style={{ color: 'var(--grama-menta)' }}>no debería perderse</span>
             </h2>
-            <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
-              Formación híbrida, accesible y transferible para docentes de talleres técnicos.
-            </p>
           </div>
 
-          {/* Features — 3 cards homologadas */}
-          <div ref={featuresReveal.ref} className="grid md:grid-cols-3 gap-5 mb-6">
-            {FEATURES.map((f, i) => (
-              <div
-                key={f.title}
-                className="group relative p-7 rounded-3xl border overflow-hidden"
-                style={{
-                  borderColor: 'rgba(2,212,126,0.25)',
-                  background: 'linear-gradient(145deg, #f0fdf9 0%, #e8fdf2 100%)',
-                  opacity: featuresReveal.visible ? 1 : 0,
-                  transform: featuresReveal.visible ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.97)',
-                  transition: `opacity 0.55s cubic-bezier(0.22,1,0.36,1) ${i * 0.14}s, transform 0.55s cubic-bezier(0.22,1,0.36,1) ${i * 0.14}s`,
-                }}
-              >
-                {/* Tangram flotante en card — animado */}
-                <div
-                  className={i === 0 ? 'float-c' : i === 1 ? 'float-a' : 'float-b'}
-                  style={{ position: 'absolute', bottom: -12, right: -12, '--dur': `${14 + i * 3}s` } as React.CSSProperties}
-                >
-                  <Tangram color="#02d47e" opacity={0.13} rotate={i * 35} className="w-28 h-28" />
-                </div>
+          {/* Grid asimétrico Problema / Solución + Resultado */}
+          <div
+            ref={featuresReveal.ref}
+            className="grid gap-4"
+            style={{
+              gridTemplateColumns: '3fr 2fr',
+              opacity: featuresReveal.visible ? 1 : 0,
+              transform: featuresReveal.visible ? 'none' : 'translateY(30px)',
+              transition: 'opacity 0.6s ease, transform 0.6s ease',
+            }}
+          >
 
-                <div className="relative z-10">
-                  <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-6"
-                    style={{ background: 'rgba(2,212,126,0.18)', border: '1px solid rgba(2,212,126,0.2)' }}>
-                    <f.icon size={22} style={{ color: 'var(--grama-menta)' }} />
+            {/* ─── Card izquierda: EL PROBLEMA (oscura, grande) ─── */}
+            <div className="relative rounded-[28px] overflow-hidden p-9 flex flex-col justify-between min-h-[420px]"
+              style={{ background: 'linear-gradient(145deg, #043941 0%, #032e34 100%)' }}>
+              {/* Glow circular decorativo */}
+              <div className="absolute pointer-events-none" style={{
+                width: 320, height: 320,
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(2,212,126,0.12) 0%, transparent 70%)',
+                bottom: -60, right: -60,
+              }} />
+
+              <div className="relative z-10">
+                <p className="text-xs font-extrabold tracking-widest mb-8 flex items-center gap-2" style={{ color: 'rgba(2,212,126,0.7)' }}>
+                  <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: '#02d47e' }} />
+                  EL PROBLEMA
+                </p>
+                <h3 className="font-extrabold leading-tight mb-6" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', color: '#ffffff' }}>
+                  Los equipos llegan.<br />
+                  La formación,<br />
+                  <span style={{ color: '#02d47e' }}>no.</span>
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)', maxWidth: 340 }}>
+                  Los talleres técnicos reciben equipos nuevos pero los docentes no tienen cómo aprender a usarlos. Cuando el profesor rota, el conocimiento desaparece con él.
+                </p>
+              </div>
+
+              {/* Stat badge inferior */}
+              <div className="relative z-10 mt-10">
+                <div className="inline-flex items-center gap-3 px-4 py-2.5 rounded-full"
+                  style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.25)' }}>
+                  <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.2)' }}>
+                    <span className="text-[10px]" style={{ color: '#02d47e' }}>●</span>
                   </div>
-                  <span className="overline-label font-extrabold mb-2 block" style={{ color: 'var(--grama-menta)' }}>
-                    {f.overline}
+                  <span className="text-xs font-semibold" style={{ color: 'rgba(2,212,126,0.85)' }}>
+                    Realidad de +300 talleres EPT en Lima Norte
                   </span>
-                  <h3 className="text-base font-extrabold mb-3 leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{f.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>{f.desc}</p>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* ─── Columna derecha: dos cards apiladas ─── */}
+            <div className="flex flex-col gap-4">
+
+              {/* LA SOLUCIÓN — card clara */}
+              <div className="relative rounded-[28px] p-7 flex-1"
+                style={{ background: '#edf7f8', border: '1.5px solid rgba(4,57,65,0.08)' }}>
+                <div className="flex items-start justify-between mb-5">
+                  <p className="text-xs font-extrabold tracking-widest flex items-center gap-2" style={{ color: '#64748b' }}>
+                    <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: '#64748b' }} />
+                    LA SOLUCIÓN
+                  </p>
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
+                    style={{ background: 'rgba(4,57,65,0.07)', border: '1px solid rgba(4,57,65,0.1)' }}>
+                    <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} style={{ color: '#043941' }}><polyline points="20 6 9 17 4 12" /></svg>
+                  </div>
+                </div>
+                <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.15rem', color: 'var(--grama-oscuro)' }}>
+                  Una ruta híbrida diseñada para tu taller
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
+                  7 módulos con video, fichas descargables y sesiones en vivo. A tu ritmo, desde cualquier dispositivo, adaptado a tu especialidad EPT.
+                </p>
+              </div>
+
+              {/* EL RESULTADO — card amarilla */}
+              <div className="relative rounded-[28px] p-7 flex-1"
+                style={{ background: '#fef9e7', border: '1.5px solid rgba(202,138,4,0.12)' }}>
+                <div className="flex items-start justify-between mb-5">
+                  <p className="text-xs font-extrabold tracking-widest flex items-center gap-2" style={{ color: '#92400e' }}>
+                    <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: '#ca8a04' }} />
+                    EL RESULTADO
+                  </p>
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
+                    style={{ background: 'rgba(202,138,4,0.1)', border: '1px solid rgba(202,138,4,0.18)' }}>
+                    <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} style={{ color: '#ca8a04' }}><polyline points="20 6 9 17 4 12" /></svg>
+                  </div>
+                </div>
+                <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.15rem', color: 'var(--grama-oscuro)' }}>
+                  Autonomía docente garantizada
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: '#78350f' }}>
+                  Al terminar dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes — con confianza real.
+                </p>
+              </div>
+
+            </div>
           </div>
 
-          {/* Product strip */}
-          <div className="rounded-3xl overflow-hidden grid md:grid-cols-3 gap-px" style={{ background: 'rgba(2,212,126,0.2)' }}>
-            {PRODUCTS.map(p => (
-              <div key={p.title} className="flex items-center gap-4 px-6 py-5" style={{ background: '#043941' }}>
-                <div className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.15)' }}>
-                  <p.icon size={17} style={{ color: 'var(--grama-menta)' }} />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-white">{p.title}</p>
-                  <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.4)' }}>{p.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
