@@ -450,6 +450,37 @@ export default function Perfil() {
                           </span>
                         ))}
                       </div>
+                      {/* Próxima sesión en vivo — contextual por taller */}
+                      {t.slug !== 'taller-general-ept' && (() => {
+                        const proxima = getProximaSesion(t.slug)
+                        if (!proxima) return null
+                        const dias = diasParaSesion(proxima.fecha)
+                        return (
+                          <div className="flex items-center gap-3 px-4 py-3 rounded-xl mb-4"
+                            style={{ background: `${ta}08`, border: `1px solid ${ta}1a` }}>
+                            <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
+                              style={{ background: `${ta}18` }}>
+                              <Sparkles size={13} style={{ color: ta }} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[10px] font-extrabold uppercase tracking-wider leading-none mb-0.5" style={{ color: ta }}>
+                                Próxima sesión en vivo
+                              </p>
+                              <p className="text-xs font-semibold truncate" style={{ color: 'var(--grama-oscuro)' }}>
+                                {proxima.titulo}
+                              </p>
+                              <p className="text-[11px] mt-0.5" style={{ color: '#64748b' }}>
+                                {formatFechaSesion(proxima.fecha)} · {formatHoraSesion(proxima.fecha)}
+                              </p>
+                            </div>
+                            <div className="text-right shrink-0 pl-3 border-l" style={{ borderColor: `${ta}25` }}>
+                              <p className="text-xl font-extrabold leading-none" style={{ color: ta }}>{dias}</p>
+                              <p className="text-[10px] mt-0.5" style={{ color: '#94a3b8' }}>{dias === 1 ? 'día' : 'días'}</p>
+                            </div>
+                          </div>
+                        )
+                      })()}
+
                       <div className="flex gap-2.5">
                         <button onClick={() => navigate(`/taller/${t.slug}`)}
                           className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold transition-opacity hover:opacity-90"
@@ -502,81 +533,6 @@ export default function Perfil() {
             </section>
           )}
 
-          {/* ── "Talleres EPT" section card ── */}
-          <section
-            className="rounded-2xl overflow-hidden animate-fade-in-up stagger-2"
-            style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}
-          >
-            <SectionHeader
-              icon={Layers}
-              title="Talleres EPT"
-              subtitle={`${talleresConfig.length} talleres disponibles · Programa MSE-SFT`}
-              iconColor="#045f6c"
-              action={
-                <span className="text-[10px] font-bold" style={{ color: 'var(--grama-menta)' }}>
-                  {talleresConfig.length} disponibles
-                </span>
-              }
-            />
-
-            {/* Intro — solo para docentes */}
-            {!isAdmin && (
-              <div className="px-5 py-3.5 border-b" style={{ borderColor: 'rgba(4,57,65,0.07)', background: 'rgba(4,57,65,0.025)' }}>
-                <p className="text-xs leading-relaxed" style={{ color: 'rgba(4,57,65,0.72)' }}>
-                  Estos son los talleres de educación para el trabajo especializados disponibles en nuestra plataforma. Si deseas más información, escríbenos a{' '}
-                  <a href="mailto:contacto@grama.pe" className="font-semibold transition-opacity hover:opacity-70" style={{ color: 'var(--grama-menta)' }}>
-                    contacto@grama.pe
-                  </a>
-                </p>
-              </div>
-            )}
-
-            <div className="grid grid-cols-2 divide-x divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
-              {talleresConfig.map(t => {
-                const esAccesible = isAdmin || tallerSlugsAccesibles.includes(t.slug)
-                const esPrimario  = t.slug === tallerSlug
-                const ta          = TALLER_ACCENTS[t.slug] ?? '#02d47e'
-                const bienesT     = getTotalBienesByTaller(t.slug)
-                return (
-                  <button
-                    key={t.slug}
-                    onClick={() => esAccesible ? navigate(`/taller/${t.slug}`) : undefined}
-                    className="w-full text-left flex items-center gap-3 px-5 py-4 transition-all"
-                    style={{ background: 'transparent', cursor: esAccesible ? 'pointer' : 'default' }}
-                    onMouseEnter={e => { if (esAccesible) (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.025)' }}
-                    onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = 'transparent')}
-                  >
-                    {/* Borde izquierdo — acento para accesibles */}
-                    <div className="w-0.5 self-stretch rounded-full shrink-0"
-                      style={{ background: esAccesible ? ta : 'transparent', minHeight: 36 }} />
-
-                    {/* Badge número */}
-                    <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full shrink-0"
-                      style={{ background: esAccesible ? `${ta}15` : 'rgba(4,57,65,0.06)', color: esAccesible ? ta : 'rgba(4,57,65,0.5)' }}>
-                      T{String(t.numero).padStart(2, '0')}
-                    </span>
-
-                    {/* Nombre + stats */}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold leading-snug truncate" style={{ color: esAccesible ? '#043941' : 'rgba(4,57,65,0.55)' }}>
-                        {t.nombre}
-                      </p>
-                      <p className="text-xs mt-0.5" style={{ color: 'rgba(4,57,65,0.38)' }}>
-                        {bienesT} bienes · {TOTAL_MODULOS} módulos
-                      </p>
-                    </div>
-
-                    {/* Estado */}
-                    {esPrimario ? (
-                      <span className="text-xs font-bold shrink-0" style={{ color: ta }}>✓ activo</span>
-                    ) : esAccesible ? (
-                      <ChevronRight size={14} style={{ color: ta, flexShrink: 0 }} />
-                    ) : null}
-                  </button>
-                )
-              })}
-            </div>
-          </section>
 
           {/* ── Atención al Docente ── */}
           <AtencionDocente
@@ -630,53 +586,6 @@ export default function Perfil() {
             </div>
           </section>
 
-          {/* Próxima sesión en vivo */}
-          {taller && taller.slug !== 'taller-general-ept' && (() => {
-            const proxima = getProximaSesion(taller.slug)
-            if (!proxima) return null
-            const dias = diasParaSesion(proxima.fecha)
-            return (
-              <section
-                className="rounded-2xl overflow-hidden animate-fade-in-up stagger-2"
-                style={{ background: '#043941', border: '1px solid rgba(2,212,126,0.2)' }}
-              >
-                <div className="px-5 py-4 flex items-start gap-3">
-                  <div
-                    className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
-                    style={{ background: 'rgba(2,212,126,0.15)' }}
-                  >
-                    <Play size={16} style={{ color: '#02d47e' }} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[10px] font-bold uppercase tracking-wider mb-0.5" style={{ color: '#02d47e' }}>
-                      Próxima sesión en vivo
-                    </p>
-                    <p className="text-sm font-bold text-white leading-tight truncate">
-                      {proxima.titulo}
-                    </p>
-                    <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                      {formatFechaSesion(proxima.fecha)} · {formatHoraSesion(proxima.fecha)}
-                    </p>
-                  </div>
-                  <div className="shrink-0 text-right">
-                    <p className="text-2xl font-extrabold" style={{ color: '#02d47e' }}>{dias}</p>
-                    <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                      {dias === 1 ? 'día' : 'días'}
-                    </p>
-                  </div>
-                </div>
-                <div className="px-5 pb-4">
-                  <button
-                    onClick={() => navigate(`/taller/${taller.slug}`)}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold text-white transition-all hover:opacity-90"
-                    style={{ background: 'rgba(2,212,126,0.2)', border: '1px solid rgba(2,212,126,0.3)' }}
-                  >
-                    Ver agenda completa <ArrowRight size={12} />
-                  </button>
-                </div>
-              </section>
-            )
-          })()}
 
           {/* Acceso rápido (solo si tiene taller) */}
           {taller && (
