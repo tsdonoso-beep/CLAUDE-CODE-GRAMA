@@ -1,6 +1,6 @@
 // src/components/layout/Sidebar.tsx
 import { NavLink, useParams, useNavigate } from 'react-router-dom'
-import { BookOpen, Package, ChevronLeft, ChevronRight, LayoutGrid, X, User } from 'lucide-react'
+import { BookOpen, Package, ChevronLeft, ChevronRight, LayoutGrid, X, User, Home } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { useProgress } from '@/contexts/ProgressContext'
 import { GramaLogo } from '@/components/GramaLogo'
@@ -33,7 +33,8 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
 
   const isRepoOnly = slug === 'taller-general-ept'
   const navItems = [
-    ...(!isRepoOnly ? [{ to: `/taller/${slug}/ruta`, icon: BookOpen, label: 'Ruta de Aprendizaje' }] : []),
+    ...(!isRepoOnly ? [{ to: `/taller/${slug}`,          icon: Home,     label: 'Inicio' }] : []),
+    ...(!isRepoOnly ? [{ to: `/taller/${slug}/ruta`,     icon: BookOpen, label: 'Ruta de Aprendizaje' }] : []),
     { to: `/taller/${slug}/repositorio`, icon: Package, label: 'Repositorio' },
   ]
 

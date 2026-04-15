@@ -16,7 +16,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary"
 const Landing        = lazy(() => import("./pages/Landing"))
 const Login           = lazy(() => import("./pages/Login"))
 const Bienvenida      = lazy(() => import("./pages/Bienvenida"))
-// TallerHub retired — /taller/:slug now redirects to /taller/:slug/ruta
+const TallerHub       = lazy(() => import("./pages/TallerHub"))
 const RutaAprendizaje = lazy(() => import("./pages/RutaAprendizaje"))
 const ModuloDetalle   = lazy(() => import("./pages/ModuloDetalle"))
 const Repositorio     = lazy(() => import("./pages/Repositorio"))
@@ -76,7 +76,7 @@ const App = () => (
 
                   {/* App con sidebar */}
                   <Route element={<AppShell />}>
-                    <Route path="/taller/:slug"                        element={<Navigate to="ruta" replace />} />
+                    <Route path="/taller/:slug"                        element={wrap(TallerHub)} />
                     <Route path="/taller/:slug/ruta"                   element={wrap(RutaAprendizaje)} />
                     <Route path="/taller/:slug/ruta/modulo/:num"       element={wrap(ModuloDetalle)} />
                     <Route path="/taller/:slug/repositorio"            element={wrap(Repositorio)} />
