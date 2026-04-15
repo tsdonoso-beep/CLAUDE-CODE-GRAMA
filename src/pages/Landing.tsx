@@ -464,195 +464,6 @@ function TallerModal({
   )
 }
 
-// ── Hero carousel: subcomponentes de pantallas de la app ──────────────────────
-const SLIDE_URLS = [
-  'grama.edu.pe/taller/mecanica',
-  'grama.edu.pe/taller/mecanica/ruta',
-  'grama.edu.pe/taller/mecanica/repositorio',
-]
-const SLIDE_LABELS = ['TallerHub', 'Ruta de Aprendizaje', 'Repositorio']
-
-function AppSidebarMini({ active }: { active: number }) {
-  return (
-    <div className="shrink-0 flex flex-col h-full" style={{ width: 52, background: 'linear-gradient(180deg, #030e12 0%, #043941 60%, #032e34 100%)' }}>
-      <div className="flex items-center justify-center py-2.5 border-b" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
-        <svg width={14} height={14} viewBox="0 0 24 24"><polygon points="2,22 12,2 12,22" fill="#02d47e" /><polygon points="12,2 22,12 12,12" fill="#ffffff" opacity="0.85" /></svg>
-      </div>
-      <div className="flex items-center justify-center py-2 border-b" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
-        <span className="text-[8px] font-extrabold px-1 py-0.5 rounded-full" style={{ background: 'rgba(59,130,246,0.18)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.3)' }}>T01</span>
-      </div>
-      <nav className="flex flex-col items-center gap-1 py-2 flex-1">
-        {[0,1,2].map(i => (
-          <div key={i} className="h-6 w-6 rounded-lg flex items-center justify-center"
-            style={{ background: active === i ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.04)' }}>
-            <div className="w-2.5 h-2.5 rounded-sm" style={{ background: active === i ? '#02d47e' : 'rgba(255,255,255,0.2)' }} />
-          </div>
-        ))}
-      </nav>
-      <div className="px-3 pb-3">
-        <div className="h-0.5 rounded-full overflow-hidden mb-1" style={{ background: 'rgba(255,255,255,0.08)' }}>
-          <div className="h-full rounded-full" style={{ width: '40%', background: '#02d47e' }} />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function AppTopBarMini({ crumb }: { crumb: string }) {
-  return (
-    <div className="shrink-0 flex items-center gap-1 px-3 border-b" style={{ height: 32, background: 'linear-gradient(90deg, #032e34, #043941)', borderColor: 'rgba(2,212,126,0.15)' }}>
-      <span className="text-[8px] font-semibold" style={{ color: 'rgba(255,255,255,0.35)' }}>Mi Perfil</span>
-      <span style={{ color: 'rgba(2,212,126,0.5)', fontSize: 8 }}>›</span>
-      <span className="text-[8px] font-semibold" style={{ color: 'rgba(255,255,255,0.35)' }}>Mecánica Automotriz</span>
-      {crumb && <><span style={{ color: 'rgba(2,212,126,0.5)', fontSize: 8 }}>›</span><span className="text-[8px] font-bold text-white">{crumb}</span></>}
-      <div className="ml-auto h-4 w-4 rounded-full shrink-0" style={{ background: 'linear-gradient(135deg, #02d47e, #059669)' }} />
-    </div>
-  )
-}
-
-function HeroSlide0() {
-  return (
-    <div className="flex h-full" style={{ background: '#f0faf5' }}>
-      <AppSidebarMini active={0} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <AppTopBarMini crumb="" />
-        {/* Hero oscuro del taller */}
-        <div className="shrink-0 relative px-4 pt-3 pb-2.5" style={{ background: 'linear-gradient(135deg, #0a1a1f 0%, #1a3a42 100%)', minHeight: 88 }}>
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(100deg, rgba(4,10,20,0.9) 0%, rgba(4,10,20,0.6) 100%)' }} />
-          <div className="relative z-10">
-            <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full mb-1.5" style={{ background: 'rgba(59,130,246,0.18)', border: '1px solid rgba(59,130,246,0.3)' }}>
-              <span className="w-1 h-1 rounded-full" style={{ background: '#3b82f6' }} />
-              <span className="text-[7px] font-extrabold" style={{ color: '#3b82f6' }}>T1 · MECÁNICA AUTOMOTRIZ</span>
-            </div>
-            <div className="text-white font-extrabold mb-1.5" style={{ fontSize: 13, letterSpacing: '-0.02em' }}>Mecánica Automotriz</div>
-            <div className="flex gap-1.5">
-              {['7 Módulos', '150h', 'Certificación'].map(s => (
-                <div key={s} className="flex items-center gap-1 px-1.5 py-0.5 rounded-md" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                  <span className="text-[7px] font-bold text-white">{s}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        {/* Contenido: módulos */}
-        <div className="flex-1 px-4 py-3 overflow-hidden">
-          <div className="text-[8px] font-extrabold mb-2" style={{ color: 'var(--grama-oscuro)' }}>Tu Ruta de Aprendizaje</div>
-          <div className="space-y-1.5">
-            {[
-              { num: '00', name: 'Inicio y Diagnóstico', estado: 'Disponible', color: '#02d47e' },
-              { num: '01', name: 'Conocimiento del Taller', estado: 'Bloqueado', color: '#94a3b8' },
-              { num: '02', name: 'Zona de Investigación', estado: 'Bloqueado', color: '#94a3b8' },
-              { num: '03', name: 'Zona de Innovación', estado: 'Bloqueado', color: '#94a3b8' },
-            ].map(m => (
-              <div key={m.num} className="flex items-center gap-2 px-2 py-1.5 rounded-lg" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.08)' }}>
-                <div className="text-[7px] font-extrabold w-5 text-center shrink-0" style={{ color: 'rgba(4,57,65,0.35)' }}>{m.num}</div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-[7.5px] font-semibold truncate" style={{ color: 'var(--grama-oscuro)' }}>{m.name}</div>
-                </div>
-                <div className="text-[6.5px] font-bold shrink-0 px-1.5 py-0.5 rounded-full" style={{ background: m.color === '#02d47e' ? 'rgba(2,212,126,0.12)' : 'rgba(148,163,184,0.12)', color: m.color }}>{m.estado}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function HeroSlide1() {
-  return (
-    <div className="flex h-full" style={{ background: '#f0faf5' }}>
-      <AppSidebarMini active={1} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <AppTopBarMini crumb="Ruta de Aprendizaje" />
-        {/* Hero oscuro ruta */}
-        <div className="shrink-0 px-4 pt-3 pb-2.5" style={{ background: '#043941', minHeight: 72 }}>
-          <div className="text-[7px] font-extrabold mb-1" style={{ color: 'var(--grama-menta)' }}>MECÁNICA AUTOMOTRIZ</div>
-          <div className="text-white font-extrabold mb-2" style={{ fontSize: 12, letterSpacing: '-0.02em' }}>Tu Ruta de Aprendizaje</div>
-          <div className="flex gap-2">
-            {[['7 módulos', 'M0→M6'], ['150 horas', 'híbrida'], ['8 sesiones', 'en vivo']].map(([v, s]) => (
-              <div key={v} className="flex items-center gap-1">
-                <div className="h-4 w-4 rounded-md flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.12)' }}>
-                  <div className="w-2 h-2 rounded-sm" style={{ background: '#02d47e' }} />
-                </div>
-                <div>
-                  <div className="text-[7px] font-bold text-white">{v}</div>
-                  <div className="text-[6px]" style={{ color: 'rgba(255,255,255,0.45)' }}>{s}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* Lista módulos */}
-        <div className="flex-1 px-4 py-2.5 overflow-hidden">
-          <div className="text-[8px] font-extrabold mb-2" style={{ color: 'var(--grama-oscuro)' }}>Secuencia de módulos</div>
-          <div className="space-y-1">
-            {[
-              { n: 'M0 · Inicio y Diagnóstico', estado: 'Disponible', dot: '#02d47e' },
-              { n: 'M1 · Conocimiento del Taller', estado: 'Bloqueado', dot: '#94a3b8' },
-              { n: 'M2 · Zona de Investigación', estado: 'Bloqueado', dot: '#94a3b8' },
-              { n: 'M3 · Zona de Innovación', estado: 'Bloqueado', dot: '#94a3b8' },
-              { n: 'M4 · Práctica Especializada', estado: 'Bloqueado', dot: '#94a3b8' },
-            ].map((m, i) => (
-              <div key={i} className="flex items-center gap-2 px-2 py-1.5 rounded-lg" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}>
-                <div className="w-2.5 h-2.5 rounded-full shrink-0 border-2" style={{ borderColor: m.dot, background: m.dot === '#02d47e' ? m.dot : 'transparent' }} />
-                <div className="flex-1 text-[7px] font-semibold truncate" style={{ color: m.dot === '#02d47e' ? 'var(--grama-oscuro)' : '#94a3b8' }}>{m.n}</div>
-                <div className="text-[6px] font-bold shrink-0" style={{ color: m.dot }}>{m.estado}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function HeroSlide2() {
-  return (
-    <div className="flex h-full" style={{ background: '#f0fdf8' }}>
-      <AppSidebarMini active={2} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <AppTopBarMini crumb="Repositorio" />
-        {/* Hero oscuro repositorio */}
-        <div className="shrink-0 px-4 pt-2.5 pb-2" style={{ background: '#043941' }}>
-          <div className="text-[7px] font-extrabold mb-0.5" style={{ color: 'var(--grama-menta)' }}>MECÁNICA AUTOMOTRIZ · REPOSITORIO</div>
-          <div className="text-white font-extrabold mb-1.5" style={{ fontSize: 11 }}>Recursos del Taller</div>
-          {/* Tabs */}
-          <div className="flex gap-1.5 mb-2">
-            {['Bienes', 'Manuales', 'Videos'].map((t, i) => (
-              <div key={t} className="px-2 py-0.5 rounded-full text-[7px] font-bold" style={{ background: i === 0 ? '#ffffff' : 'rgba(255,255,255,0.1)', color: i === 0 ? '#043941' : 'rgba(255,255,255,0.6)' }}>{t}</div>
-            ))}
-          </div>
-          {/* Search bar */}
-          <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
-            <div className="w-2 h-2 rounded-full shrink-0" style={{ background: '#02d47e' }} />
-            <div className="text-[7px]" style={{ color: 'rgba(255,255,255,0.35)' }}>Busca por nombre, marca, modelo…</div>
-          </div>
-        </div>
-        {/* Grid de cards */}
-        <div className="flex-1 px-3 py-2.5 overflow-hidden">
-          <div className="grid grid-cols-3 gap-1.5">
-            {[
-              'Equipo de grabación', 'Cámara fotográfica', 'Tablet Lenovo',
-              'Torno industrial', 'Multímetro digital', 'Soldadora MIG',
-            ].map((name, i) => (
-              <div key={i} className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(4,57,65,0.09)' }}>
-                <div className="h-8" style={{ background: 'linear-gradient(135deg, #0a1a1f, #1a3a42)' }} />
-                <div className="px-1.5 py-1" style={{ background: '#ffffff' }}>
-                  <div className="text-[6.5px] font-semibold leading-tight truncate" style={{ color: 'var(--grama-oscuro)' }}>{name}</div>
-                  <div className="text-[6px] mt-0.5" style={{ color: '#02d47e' }}>Equipo</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-const HERO_SLIDES = [HeroSlide0, HeroSlide1, HeroSlide2]
-
 // ── Componente principal ──────────────────────────────────────────────────────
 export default function Landing() {
   const navigate = useNavigate()
@@ -661,16 +472,6 @@ export default function Landing() {
   const isLoggedIn = !!profile
 
   const goToApp = () => navigate('/perfil')
-
-  // Hero carousel
-  const [heroSlide, setHeroSlide] = useState(0)
-  const heroHovered = useRef(false)
-  useEffect(() => {
-    const id = setInterval(() => {
-      if (!heroHovered.current) setHeroSlide(s => (s + 1) % 3)
-    }, 3500)
-    return () => clearInterval(id)
-  }, [])
 
   // Modal carrusel
   const [modalIndex, setModalIndex] = useState<number | null>(null)
@@ -824,70 +625,65 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Columna visual — carrusel con tabs */}
-            <div
-              className="hidden lg:flex flex-col items-stretch animate-fade-in-up stagger-3"
-              onMouseEnter={() => { heroHovered.current = true }}
-              onMouseLeave={() => { heroHovered.current = false }}
-            >
-              {/* Tabs de navegación */}
-              <div className="flex rounded-t-2xl overflow-hidden" style={{ border: '1.5px solid rgba(4,57,65,0.15)', borderBottom: 'none' }}>
-                {(['Taller', 'Ruta', 'Repositorio'] as const).map((label, i) => (
-                  <button
-                    key={label}
-                    onClick={() => setHeroSlide(i)}
-                    className="flex-1 py-2 text-xs font-bold transition-all duration-200"
-                    style={{
-                      background: heroSlide === i ? '#043941' : '#f0faf5',
-                      color: heroSlide === i ? '#ffffff' : 'rgba(4,57,65,0.45)',
-                      borderRight: i < 2 ? '1px solid rgba(4,57,65,0.10)' : 'none',
-                      borderBottom: heroSlide === i ? '2px solid #02d47e' : '1px solid rgba(4,57,65,0.10)',
-                    }}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
+            {/* Columna visual — foto docente técnico */}
+            <div className="hidden lg:block relative animate-fade-in-up stagger-3" style={{ perspective: 1000 }}>
 
-              {/* Frame — plano, sin tilt */}
-              <div
-                className="relative w-full rounded-b-2xl overflow-hidden"
-                style={{
-                  background: '#ffffff',
-                  border: '1.5px solid rgba(4,57,65,0.15)',
-                  borderTop: 'none',
-                  boxShadow: '0 20px 60px rgba(4,57,65,0.18), 0 4px 16px rgba(4,57,65,0.10)',
-                  aspectRatio: '16/10',
-                }}
-              >
-                {/* Chrome oscuro on-brand */}
-                <div className="flex items-center gap-1.5 px-4 py-2.5 border-b shrink-0" style={{ background: '#043941', borderColor: 'rgba(2,212,126,0.15)' }}>
-                  <span className="w-2 h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.2)' }} />
-                  <span className="w-2 h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }} />
-                  <span className="w-2 h-2 rounded-full" style={{ background: '#02d47e', opacity: 0.7 }} />
-                  <div className="ml-3 flex-1 h-4 rounded-md flex items-center px-2.5" style={{ background: 'rgba(255,255,255,0.08)', maxWidth: 240 }}>
-                    <span className="text-[9px] font-medium transition-all duration-500" style={{ color: 'rgba(2,212,126,0.75)' }}>{SLIDE_URLS[heroSlide]}</span>
-                  </div>
-                </div>
+              {/* Blob verde detrás */}
+              <div className="absolute pointer-events-none" style={{
+                width: 420, height: 420,
+                background: 'radial-gradient(circle, rgba(2,212,126,0.22) 0%, transparent 70%)',
+                top: '50%', left: '50%',
+                transform: 'translate(-50%, -50%)',
+                filter: 'blur(40px)',
+              }} />
 
-                {/* Área de slides */}
-                <div className="relative" style={{ height: 'calc(100% - 38px)' }}>
-                  {HERO_SLIDES.map((SlideComp, i) => (
-                    <div
-                      key={i}
-                      className="absolute inset-0 transition-opacity duration-700"
-                      style={{ opacity: heroSlide === i ? 1 : 0, pointerEvents: heroSlide === i ? 'auto' : 'none', willChange: 'opacity' }}
-                    >
-                      <SlideComp />
-                    </div>
-                  ))}
-                  {/* Badge */}
-                  <div className="absolute bottom-2.5 right-2.5 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background: 'rgba(4,57,65,0.82)', backdropFilter: 'blur(8px)' }}>
-                    <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
-                    <span className="text-[9px] font-bold text-white">{SLIDE_LABELS[heroSlide]}</span>
+              {/* Marco de la foto — ligeramente inclinado */}
+              <div style={{ transform: 'rotate(2deg)', transformOrigin: 'center bottom' }}>
+                <div className="relative overflow-hidden" style={{
+                  borderRadius: 24,
+                  boxShadow: '0 32px 80px rgba(4,57,65,0.22), 0 8px 24px rgba(4,57,65,0.10)',
+                  border: '3px solid rgba(255,255,255,0.8)',
+                }}>
+                  <img
+                    src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=900&q=80"
+                    alt="Docente EPT en taller técnico"
+                    className="w-full object-cover"
+                    style={{ aspectRatio: '4/3', display: 'block', filter: 'brightness(0.88) saturate(1.05)' }}
+                  />
+                  {/* Vignette */}
+                  <div className="absolute inset-0" style={{
+                    background: 'linear-gradient(160deg, transparent 40%, rgba(4,57,65,0.5) 100%)',
+                  }} />
+                  {/* Label esquina inferior izquierda */}
+                  <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#02d47e' }} />
+                    <span className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.85)' }}>
+                      Talleres EPT · Perú
+                    </span>
                   </div>
                 </div>
               </div>
+
+              {/* Badge flotante — arriba izquierda */}
+              <div className="absolute -top-3 -left-5 flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl"
+                style={{ background: '#ffffff', boxShadow: '0 8px 28px rgba(4,57,65,0.15)', border: '1px solid rgba(4,57,65,0.07)', zIndex: 10 }}>
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: 'rgba(2,212,126,0.12)' }}>
+                  <Award size={15} style={{ color: '#02a05a' }} />
+                </div>
+                <div>
+                  <p className="text-[11px] font-extrabold leading-none" style={{ color: '#043941' }}>Certificación</p>
+                  <p className="text-[10px] mt-0.5 leading-none" style={{ color: '#64748b' }}>Inroprin · MINEDU-TSF</p>
+                </div>
+              </div>
+
+              {/* Badge flotante — abajo derecha */}
+              <div className="absolute -bottom-3 -right-4 px-4 py-3 rounded-2xl"
+                style={{ background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)', boxShadow: '0 10px 32px rgba(4,57,65,0.28)', zIndex: 10 }}>
+                <p className="text-sm font-extrabold leading-none" style={{ color: '#02d47e' }}>36+ docentes</p>
+                <p className="text-[10px] mt-1 leading-none" style={{ color: 'rgba(255,255,255,0.5)' }}>ya en la plataforma</p>
+              </div>
+
             </div>
           </div>
 
