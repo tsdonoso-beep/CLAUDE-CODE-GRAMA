@@ -691,7 +691,31 @@ export default function Landing() {
 
       {/* ══ POR QUÉ GRAMA ═══════════════════════════════════════════════════ */}
       <section id="nosotros" className="py-20 px-6 relative overflow-hidden">
-        <Tangram color="#02d47e" opacity={0.03} rotate={30} className="absolute w-96 h-96 -right-20 top-0 pointer-events-none" />
+        {/* Tangramas estáticos de fondo */}
+        <Tangram color="#02d47e" opacity={0.04} rotate={30}  className="absolute w-96 h-96 -right-20 top-0 pointer-events-none" />
+        <Tangram color="#043941" opacity={0.05} rotate={-18} className="absolute w-72 h-72 -left-16 bottom-8 pointer-events-none" />
+
+        {/* Piezas flotantes — lateral izquierdo */}
+        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:44, height:44, top:'14%', left:'2%', animationDuration:'17s' }}>
+          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.13} />
+        </svg>
+        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-a" style={{ width:32, height:32, top:'55%', left:'3.5%', animationDuration:'13s' }}>
+          <rect x="3" y="3" width="44" height="44" transform="rotate(22 25 25)" fill="#043941" fillOpacity={0.08} />
+        </svg>
+        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-c" style={{ width:22, height:22, top:'78%', left:'1.5%', animationDuration:'20s' }}>
+          <polygon points="0,40 20,0 40,40" fill="#02d47e" fillOpacity={0.18} />
+        </svg>
+
+        {/* Piezas flotantes — lateral derecho */}
+        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-c" style={{ width:38, height:38, top:'10%', right:'2%', animationDuration:'15s' }}>
+          <polygon points="0,0 60,30 0,60" fill="#02d47e" fillOpacity={0.12} />
+        </svg>
+        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-a" style={{ width:28, height:28, top:'42%', right:'1.5%', animationDuration:'11s' }}>
+          <rect x="4" y="4" width="42" height="42" transform="rotate(-15 25 25)" fill="#043941" fillOpacity={0.07} />
+        </svg>
+        <svg viewBox="0 0 60 30" className="absolute pointer-events-none float-b" style={{ width:46, height:24, top:'70%', right:'3%', animationDuration:'19s' }}>
+          <polygon points="0,0 60,0 45,30 15,30" fill="#02d47e" fillOpacity={0.10} />
+        </svg>
 
         <div className="max-w-6xl mx-auto">
 
