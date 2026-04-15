@@ -373,7 +373,7 @@ export default function Perfil() {
             )}
             {taller && !isAdmin && (
               <button
-                onClick={() => navigate(`/taller/${taller.slug}`)}
+                onClick={() => navigate(`/taller/${taller.slug}/ruta`)}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
                 style={{ background: 'rgba(4,57,65,0.07)', color: 'var(--grama-oscuro)', border: '1px solid rgba(4,57,65,0.12)' }}
               >
@@ -677,7 +677,7 @@ export default function Perfil() {
                       iconColor={ta}
                       action={
                         <button
-                          onClick={() => navigate(`/taller/${t.slug}`)}
+                          onClick={() => navigate(`/taller/${t.slug}/ruta`)}
                           className="flex items-center gap-1 text-xs font-bold transition-all"
                           style={{ color: ta }}
                         >
@@ -740,7 +740,7 @@ export default function Perfil() {
                       })()}
 
                       <div className="flex gap-2.5">
-                        <button onClick={() => navigate(`/taller/${t.slug}`)}
+                        <button onClick={() => navigate(`/taller/${t.slug}/ruta`)}
                           className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold transition-opacity hover:opacity-90"
                           style={{ background: '#043941', color: 'var(--grama-menta)' }}>
                           <Play size={14} /> {progresoT.porcentaje === 0 ? 'Iniciar Ruta' : 'Seguir Ruta'}

@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { lazy, Suspense } from "react"
 import { AppShell } from "@/components/layout/AppShell"
 import { RequireAuth } from "@/components/RequireAuth"
@@ -16,7 +16,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary"
 const Landing        = lazy(() => import("./pages/Landing"))
 const Login           = lazy(() => import("./pages/Login"))
 const Bienvenida      = lazy(() => import("./pages/Bienvenida"))
-const TallerHub       = lazy(() => import("./pages/TallerHub"))
+// TallerHub retired — /taller/:slug now redirects to /taller/:slug/ruta
 const RutaAprendizaje = lazy(() => import("./pages/RutaAprendizaje"))
 const ModuloDetalle   = lazy(() => import("./pages/ModuloDetalle"))
 const Repositorio     = lazy(() => import("./pages/Repositorio"))
@@ -76,7 +76,7 @@ const App = () => (
 
                   {/* App con sidebar */}
                   <Route element={<AppShell />}>
-                    <Route path="/taller/:slug"                        element={wrap(TallerHub)} />
+                    <Route path="/taller/:slug"                        element={<Navigate to="ruta" replace />} />
                     <Route path="/taller/:slug/ruta"                   element={wrap(RutaAprendizaje)} />
                     <Route path="/taller/:slug/ruta/modulo/:num"       element={wrap(ModuloDetalle)} />
                     <Route path="/taller/:slug/repositorio"            element={wrap(Repositorio)} />
