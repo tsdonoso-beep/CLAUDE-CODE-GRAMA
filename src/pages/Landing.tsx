@@ -693,12 +693,12 @@ export default function Landing() {
       <section id="nosotros" className="py-20 px-6 relative overflow-hidden">
         <Tangram color="#02d47e" opacity={0.03} rotate={30} className="absolute w-96 h-96 -right-20 top-0 pointer-events-none" />
 
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
 
           {/* Header */}
           <div
             ref={featuresHeaderReveal.ref}
-            className="mb-14"
+            className="mb-12"
             style={{ opacity: featuresHeaderReveal.visible ? 1 : 0, transform: featuresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
           >
             <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-4" style={{ color: 'var(--grama-menta)' }}>
@@ -711,124 +711,128 @@ export default function Landing() {
             </h2>
           </div>
 
-          {/* Timeline vertical */}
+          {/* Grid 2 columnas: [Problema + Resultado] | [Solución + Foto] */}
           <div
             ref={featuresReveal.ref}
-            className="max-w-2xl"
+            className="grid lg:grid-cols-2 gap-6 items-start"
             style={{
               opacity: featuresReveal.visible ? 1 : 0,
               transform: featuresReveal.visible ? 'none' : 'translateY(30px)',
               transition: 'opacity 0.7s ease, transform 0.7s ease',
             }}
           >
-            {/* ─── EL PROBLEMA ─── */}
-            <div className="flex gap-5">
-              {/* Eje timeline */}
-              <div className="flex flex-col items-center" style={{ width: 44 }}>
-                <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0 text-lg"
-                  style={{ background: '#1e3a3f', border: '2px solid rgba(2,212,126,0.25)', boxShadow: '0 0 0 4px rgba(2,212,126,0.06)' }}>
-                  🏫
+
+            {/* ── Columna izquierda: PROBLEMA + RESULTADO ── */}
+            <div className="flex flex-col gap-4">
+
+              {/* EL PROBLEMA */}
+              <div className="flex gap-4">
+                <div className="flex flex-col items-center shrink-0" style={{ width: 44 }}>
+                  <div className="w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0"
+                    style={{ background: '#1e3a3f', border: '2px solid rgba(2,212,126,0.25)', boxShadow: '0 0 0 4px rgba(2,212,126,0.06)' }}>
+                    🏫
+                  </div>
+                  <div className="w-px flex-1 mt-2" style={{ background: 'linear-gradient(to bottom, rgba(4,57,65,0.18), transparent)', minHeight: 24 }} />
                 </div>
-                <div className="flex-1 w-px mt-2" style={{ background: 'linear-gradient(to bottom, rgba(4,57,65,0.2), rgba(4,57,65,0.06))', minHeight: 32 }} />
-              </div>
-              {/* Contenido */}
-              <div className="flex-1 pb-6">
-                <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: 'rgba(4,57,65,0.45)' }}>
-                  <span className="w-1 h-1 rounded-full inline-block" style={{ background: 'rgba(4,57,65,0.35)' }} />
-                  EL PROBLEMA
-                </p>
-                <div className="rounded-2xl p-6" style={{ background: '#ffffff', border: '1.5px solid rgba(4,57,65,0.14)', boxShadow: '0 2px 12px rgba(4,57,65,0.06)' }}>
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
-                        Los equipos llegan.<br />
-                        La formación, <span style={{ color: '#e11d48' }}>no.</span>
-                      </h3>
-                      <p className="text-sm leading-relaxed mb-4" style={{ color: '#64748b' }}>
-                        Los talleres técnicos reciben equipos nuevos pero los docentes no tienen cómo aprender a usarlos. Cuando el profesor rota, el conocimiento desaparece con él.
-                      </p>
-                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold"
-                        style={{ background: 'rgba(4,57,65,0.05)', border: '1px solid rgba(4,57,65,0.1)', color: 'var(--grama-oscuro)' }}>
-                        <Clock size={11} />
-                        +300 talleres EPT en Lima Norte
-                      </div>
+                <div className="flex-1 pb-2">
+                  <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: 'rgba(4,57,65,0.45)' }}>
+                    <span className="w-1 h-1 rounded-full inline-block" style={{ background: 'rgba(4,57,65,0.35)' }} />
+                    EL PROBLEMA
+                  </p>
+                  <div className="rounded-2xl p-6" style={{ background: '#ffffff', border: '1.5px solid rgba(4,57,65,0.14)', boxShadow: '0 2px 12px rgba(4,57,65,0.06)' }}>
+                    <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
+                      Los equipos llegan.<br />
+                      La formación, <span style={{ color: '#e11d48' }}>no.</span>
+                    </h3>
+                    <p className="text-sm leading-relaxed mb-4" style={{ color: '#64748b' }}>
+                      Los talleres técnicos reciben equipos nuevos pero los docentes no tienen cómo aprender a usarlos. Cuando el profesor rota, el conocimiento desaparece con él.
+                    </p>
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold"
+                      style={{ background: 'rgba(4,57,65,0.05)', border: '1px solid rgba(4,57,65,0.1)', color: 'var(--grama-oscuro)' }}>
+                      <Clock size={11} />
+                      +300 talleres EPT en Lima Norte
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* ─── LA SOLUCIÓN ─── */}
-            <div className="flex gap-5">
-              <div className="flex flex-col items-center" style={{ width: 44 }}>
-                <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0 text-lg"
-                  style={{ background: '#d0f0f5', border: '2px solid rgba(4,57,65,0.15)', boxShadow: '0 0 0 4px rgba(4,95,108,0.06)' }}>
-                  💻
-                </div>
-                <div className="flex-1 w-px mt-2" style={{ background: 'linear-gradient(to bottom, rgba(4,57,65,0.12), rgba(4,57,65,0.04))', minHeight: 32 }} />
-              </div>
-              <div className="flex-1 pb-6">
-                <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
-                  <span className="w-1 h-1 rounded-full inline-block" style={{ background: '#045f6c' }} />
-                  LA SOLUCIÓN
-                </p>
-                <div className="rounded-2xl p-6" style={{ background: '#edf7f8', border: '1.5px solid rgba(4,95,108,0.12)' }}>
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
-                        Una ruta híbrida diseñada<br />para tu taller
-                      </h3>
-                      <p className="text-sm leading-relaxed" style={{ color: '#4a7a82' }}>
-                        7 módulos con video, fichas descargables y sesiones en vivo. A tu ritmo, adaptado a tu especialidad EPT, desde cualquier dispositivo.
-                      </p>
-                    </div>
+              {/* EL RESULTADO */}
+              <div className="flex gap-4">
+                <div className="flex flex-col items-center shrink-0" style={{ width: 44 }}>
+                  <div className="w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0"
+                    style={{ background: '#fef3c7', border: '2px solid rgba(202,138,4,0.28)', boxShadow: '0 0 0 4px rgba(202,138,4,0.06)' }}>
+                    🎯
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* ─── EL RESULTADO ─── */}
-            <div className="flex gap-5">
-              <div className="flex flex-col items-center" style={{ width: 44 }}>
-                <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0 text-lg"
-                  style={{ background: '#fef3c7', border: '2px solid rgba(202,138,4,0.25)', boxShadow: '0 0 0 4px rgba(202,138,4,0.06)' }}>
-                  🎯
-                </div>
-              </div>
-              <div className="flex-1">
-                <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: '#92400e' }}>
-                  <span className="w-1 h-1 rounded-full inline-block" style={{ background: '#ca8a04' }} />
+                <div className="flex-1">
+                  <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: '#92400e' }}>
+                    <span className="w-1 h-1 rounded-full inline-block" style={{ background: '#ca8a04' }} />
                   EL RESULTADO
-                </p>
-                <div className="rounded-2xl p-6" style={{ background: '#fef9e7', border: '1.5px solid rgba(202,138,4,0.18)' }}>
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
-                        Autonomía docente<br />garantizada
-                      </h3>
-                      <p className="text-sm leading-relaxed" style={{ color: '#78350f' }}>
-                        Al terminar dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes — con confianza real.
-                      </p>
-                    </div>
+                  </p>
+                  <div className="rounded-2xl p-6" style={{ background: '#fef9e7', border: '1.5px solid rgba(202,138,4,0.18)' }}>
+                    <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
+                      Autonomía docente<br />garantizada
+                    </h3>
+                    <p className="text-sm leading-relaxed" style={{ color: '#78350f' }}>
+                      Al terminar dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes — con confianza real.
+                    </p>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* ─── Arrow down ─── */}
-            <div className="flex justify-center mt-8 ml-[52px]">
-              <a href="#talleres"
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                style={{ background: 'rgba(4,57,65,0.08)', border: '1px solid rgba(4,57,65,0.12)' }}
-                aria-label="Ver talleres"
-              >
-                <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} style={{ color: 'var(--grama-oscuro)' }}>
-                  <line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" />
-                </svg>
-              </a>
-            </div>
+            </div>{/* ── fin columna izquierda ── */}
 
-          </div>
+            {/* ── Columna derecha: SOLUCIÓN + Foto docente ── */}
+            <div className="flex flex-col gap-4">
+
+              {/* LA SOLUCIÓN */}
+              <div className="flex gap-4">
+                <div className="flex flex-col items-center shrink-0" style={{ width: 44 }}>
+                  <div className="w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0"
+                    style={{ background: '#d0f0f5', border: '2px solid rgba(4,95,108,0.22)', boxShadow: '0 0 0 4px rgba(4,95,108,0.06)' }}>
+                    💻
+                  </div>
+                  <div className="w-px flex-1 mt-2" style={{ background: 'linear-gradient(to bottom, rgba(4,95,108,0.18), transparent)', minHeight: 24 }} />
+                </div>
+                <div className="flex-1 pb-2">
+                  <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
+                    <span className="w-1 h-1 rounded-full inline-block" style={{ background: '#045f6c' }} />
+                    LA SOLUCIÓN
+                  </p>
+                  <div className="rounded-2xl p-6" style={{ background: '#edf7f8', border: '1.5px solid rgba(4,95,108,0.12)' }}>
+                    <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
+                      Una ruta híbrida diseñada<br />para tu taller
+                    </h3>
+                    <p className="text-sm leading-relaxed" style={{ color: '#4a7a82' }}>
+                      7 módulos con video, fichas descargables y sesiones en vivo. A tu ritmo, adaptado a tu especialidad EPT, desde cualquier dispositivo.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Foto: docente feliz / autónomo */}
+              <div className="rounded-2xl overflow-hidden flex-1 relative" style={{ minHeight: 240 }}>
+                <img
+                  src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=700&q=80"
+                  alt="Docente EPT logrando su autonomía formativa"
+                  className="w-full h-full object-cover"
+                  style={{ minHeight: 240 }}
+                />
+                {/* Overlay sutil con quote */}
+                <div className="absolute inset-0 flex flex-col justify-end p-5"
+                  style={{ background: 'linear-gradient(to top, rgba(4,57,65,0.75) 0%, transparent 55%)' }}>
+                  <p className="text-sm font-semibold text-white leading-snug">
+                    "Ahora puedo enseñar con los equipos<br />— y mis estudiantes lo notan."
+                  </p>
+                  <p className="text-xs mt-1" style={{ color: 'rgba(2,212,126,0.85)' }}>
+                    Docente EPT · Lima Norte
+                  </p>
+                </div>
+              </div>
+
+            </div>{/* ── fin columna derecha ── */}
+
+          </div>{/* ── fin grid ── */}
         </div>
       </section>
 
