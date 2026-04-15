@@ -511,7 +511,7 @@ export default function Perfil() {
                   {[
                     { icon: Layers,   label: `${TOTAL_MODULOS} Módulos`, sub: 'de formación' },
                     { icon: Clock,    label: `${TOTAL_HORAS}h`,          sub: 'híbrida' },
-                    { icon: Package,  label: 'Certificación',            sub: 'Inroprin' },
+                    { icon: Package,  label: 'Constancia',               sub: 'Inroprin' },
                   ].map(stat => (
                     <div
                       key={stat.label}
