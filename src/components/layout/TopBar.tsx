@@ -2,10 +2,11 @@
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
 import { ChevronRight, LogOut, Bell, Menu } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
+import { getBienesByTaller } from '@/data/bienesData'
 import { useAuth } from '@/contexts/AuthContext'
 
 export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
-  const { slug, num } = useParams<{ slug: string; num: string }>()
+  const { slug, num, id } = useParams<{ slug: string; num: string; id: string }>()
   const location = useLocation()
   const taller = talleresConfig.find(t => t.slug === slug)
   const { profile, signOut, user } = useAuth()
@@ -21,12 +22,19 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
 
   const crumbs: { label: string; to?: string }[] = [{ label: 'Mi Perfil', to: '/perfil' }]
   if (taller) {
-    crumbs.push({ label: taller.nombreCorto, to: `/taller/${slug}` })
+    crumbs.push({ label: taller.nombreCorto, to: `/taller/${slug}/ruta` })
     if (location.pathname.includes('/ruta')) {
       crumbs.push({ label: 'Ruta de Aprendizaje', to: num ? `/taller/${slug}/ruta` : undefined })
       if (num) crumbs.push({ label: `Módulo ${num}` })
     } else if (location.pathname.includes('/repositorio')) {
-      crumbs.push({ label: 'Repositorio' })
+      // Si estamos en el detalle de un bien, Repositorio es navegable
+      const enDetalle = id !== undefined
+      crumbs.push({ label: 'Repositorio', to: enDetalle ? `/taller/${slug}/repositorio` : undefined })
+      if (enDetalle && slug) {
+        const bienes = getBienesByTaller(slug)
+        const bien = bienes.find(b => String(b.n) === id)
+        if (bien) crumbs.push({ label: bien.nombre })
+      }
     }
   }
 
