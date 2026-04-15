@@ -38,38 +38,97 @@ export default function RutaAprendizaje() {
     )
   ).length
 
+  // Módulo actual: el primero en_curso o el primero disponible
+  const moduloActual = modulosLXP.find(m => getEstadoModuloLXP(m.id) === 'en_curso')
+    ?? modulosLXP.find(m => getEstadoModuloLXP(m.id) === 'disponible')
+
   return (
     <div>
       {/* ── Hero ── */}
       <div className="px-8 py-10 grama-pattern" style={{ background: '#043941' }}>
-        <div className="max-w-4xl">
-          <p className="overline-label font-semibold mb-2" style={{ color: 'var(--grama-menta)' }}>
-            {taller.nombreCorto}
-          </p>
-          <h1 className="text-h1 font-extrabold text-white mb-3 leading-tight">
-            Tu Ruta de Aprendizaje
-          </h1>
-          <p className="text-sm mb-6 max-w-2xl" style={{ color: 'rgba(255,255,255,0.65)' }}>
-            7 módulos secuenciados para dominar el equipamiento y el Programa Formativo EPT
-          </p>
-          <div className="flex flex-wrap gap-6">
-            {[
-              { icon: BookOpen, value: '7 módulos', sub: 'M0 → M6' },
-              { icon: Clock, value: '150 horas', sub: 'A + S + Presencial' },
-              { icon: Video, value: `${sesionesEnVivo} sesiones`, sub: 'en vivo' },
-              { icon: Award, value: 'Certificación', sub: 'Inroprin' },
-            ].map(s => (
-              <div key={s.value} className="flex items-center gap-2">
-                <div className="h-9 w-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(2,212,126,0.12)' }}>
-                  <s.icon size={16} color="#02d47e" />
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-[3fr_2fr] gap-8 items-center">
+
+          {/* Columna izquierda: info */}
+          <div>
+            <p className="overline-label font-semibold mb-2" style={{ color: 'var(--grama-menta)' }}>
+              {taller.nombreCorto}
+            </p>
+            <h1 className="text-h1 font-extrabold text-white mb-3 leading-tight">
+              Tu Ruta de Aprendizaje
+            </h1>
+            <p className="text-sm mb-6 max-w-2xl" style={{ color: 'rgba(255,255,255,0.65)' }}>
+              7 módulos secuenciados para dominar el equipamiento y el Programa Formativo EPT
+            </p>
+            <div className="flex flex-wrap gap-5">
+              {[
+                { icon: BookOpen, value: '7 módulos', sub: 'M0 → M6' },
+                { icon: Clock,    value: '150 horas',  sub: 'A + S + Presencial' },
+                { icon: Video,    value: `${sesionesEnVivo} sesiones`, sub: 'en vivo' },
+                { icon: Award,    value: 'Certificación', sub: 'Inroprin' },
+              ].map(s => (
+                <div key={s.value} className="flex items-center gap-2">
+                  <div className="h-9 w-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(2,212,126,0.12)' }}>
+                    <s.icon size={16} color="#02d47e" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-white">{s.value}</p>
+                    <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{s.sub}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-bold text-white">{s.value}</p>
-                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{s.sub}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+
+          {/* Columna derecha: progreso prominente */}
+          <div className="hidden lg:block">
+            <div className="p-5 rounded-2xl" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
+              <p className="text-[10px] font-extrabold uppercase tracking-widest mb-4" style={{ color: 'rgba(2,212,126,0.7)' }}>
+                Tu Progreso
+              </p>
+
+              {/* Número grande */}
+              <div className="flex items-end gap-2 mb-3">
+                <span className="font-extrabold leading-none" style={{ fontSize: '3.5rem', color: '#ffffff' }}>
+                  {progresoTaller.porcentaje}
+                </span>
+                <span className="text-2xl font-bold mb-1" style={{ color: '#02d47e' }}>%</span>
+                <span className="text-sm mb-1.5 ml-1" style={{ color: 'rgba(255,255,255,0.4)' }}>completado</span>
+              </div>
+
+              {/* Barra de progreso */}
+              <div className="h-2 rounded-full overflow-hidden mb-2" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                <div
+                  className="h-full rounded-full transition-all duration-700"
+                  style={{
+                    width: `${progresoTaller.porcentaje}%`,
+                    background: 'linear-gradient(90deg, #02d47e, #00c16e)',
+                    minWidth: progresoTaller.porcentaje > 0 ? 8 : 0,
+                  }}
+                />
+              </div>
+              <p className="text-xs mb-4" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                {progresoTaller.completados} de {progresoTaller.total} actividades
+              </p>
+
+              {/* Módulo actual / siguiente */}
+              {moduloActual && (
+                <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl"
+                  style={{ background: 'rgba(2,212,126,0.10)', border: '1px solid rgba(2,212,126,0.2)' }}>
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[11px] font-extrabold"
+                    style={{ background: '#02d47e', color: '#043941' }}>
+                    {String(moduloActual.numero).padStart(2, '0')}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold text-white truncate">{moduloActual.nombre}</p>
+                    <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                      {progresoTaller.porcentaje === 0 ? 'Comienza aquí' : 'Continúa aquí'}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
         </div>
       </div>
 
