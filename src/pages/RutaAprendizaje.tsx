@@ -44,7 +44,7 @@ export default function RutaAprendizaje() {
   return (
     <div>
       {/* ── Hero ── */}
-      <div className="px-8 py-10 relative overflow-hidden" style={{ background: '#043941' }}>
+      <div className="px-8 pt-10 pb-16 relative overflow-hidden" style={{ background: '#043941' }}>
         {/* Imagen de fondo del taller */}
         <div className="absolute inset-0" style={{
           backgroundImage: `url(${taller.imagen})`,
@@ -140,28 +140,22 @@ export default function RutaAprendizaje() {
           </div>
 
         </div>
+
+        {/* Ola de transición hero → contenido */}
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ lineHeight: 0 }}>
+          <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 48 }}>
+            <path d="M0,24 C360,52 1080,0 1440,28 L1440,48 L0,48 Z" fill="#f4f8f9" />
+          </svg>
+        </div>
       </div>
 
       {/* ── Content ── */}
-      <div className="p-6 grid lg:grid-cols-3 gap-6">
+      <div className="p-6 grid lg:grid-cols-3 gap-6" style={{ background: '#f4f8f9' }}>
         {/* Timeline de módulos (2/3) */}
         <div className="lg:col-span-2">
           <h2 className="text-h3 font-extrabold mb-6" style={{ color: 'var(--grama-oscuro)' }}>
             Secuencia de módulos
           </h2>
-
-          {/* Leyenda de modalidades */}
-          <div className="flex flex-wrap gap-3 mb-6">
-            {[
-              { label: 'A = Asíncrono (virtual)', bg: '#e3f8fb', text: '#045f6c' },
-              { label: 'S = Sincrónico (en vivo)', bg: '#fdf8da', text: '#ca8a04' },
-              { label: 'P = Presencial', bg: '#d2ffe1', text: '#00c16e' },
-            ].map(l => (
-              <span key={l.label} className="text-xs px-3 py-1 rounded-full font-medium" style={{ background: l.bg, color: l.text }}>
-                {l.label}
-              </span>
-            ))}
-          </div>
 
           <div>
             {modulosLXP.map((modulo, idx) => (
@@ -190,7 +184,7 @@ export default function RutaAprendizaje() {
           />
 
           {/* Resumen de horas */}
-          <div className="p-4 rounded-2xl border-2" style={{ borderColor: '#e3f8fb', background: '#ffffff' }}>
+          <div className="p-4 rounded-2xl" style={{ background: '#ffffff', boxShadow: '0 2px 12px rgba(4,57,65,0.07)' }}>
             <h3 className="text-sm font-extrabold mb-3" style={{ color: 'var(--grama-oscuro)' }}>
               Desglose de horas
             </h3>

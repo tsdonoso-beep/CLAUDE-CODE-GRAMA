@@ -48,38 +48,61 @@ export function LiveSessionCard({
   if (compact) {
     return (
       <div
-        className="rounded-xl p-4 border"
-        style={{ background: '#043941', borderColor: '#045f6c' }}
+        className="rounded-2xl overflow-hidden"
+        style={{
+          background: 'linear-gradient(145deg, #032e34 0%, #043941 100%)',
+          boxShadow: '0 4px 20px rgba(4,57,65,0.18)',
+        }}
       >
-        <div className="flex items-start gap-3">
-          <div
-            className="h-9 w-9 rounded-lg flex items-center justify-center shrink-0"
-            style={{ background: '#045f6c' }}
+        {/* Top bar con live indicator */}
+        <div className="px-4 pt-4 pb-3 flex items-center gap-2">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full animate-blink shrink-0" style={{ background: '#ef4444' }} />
+            <span className="text-[10px] font-bold tracking-widest uppercase" style={{ color: 'rgba(239,68,68,0.85)' }}>
+              En vivo próximamente
+            </span>
+          </span>
+          <span
+            className="ml-auto text-[11px] font-extrabold px-2.5 py-0.5 rounded-full"
+            style={{ background: 'rgba(2,212,126,0.15)', color: '#02d47e' }}
           >
-            <Video size={16} color="#02d47e" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold" style={{ color: '#02d47e' }}>
-              Próxima sesión en vivo
-            </p>
-            <p className="text-sm font-bold text-white leading-tight mt-0.5 truncate">
-              {titulo}
-            </p>
-            <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.5)' }}>
-              En {dias} días · {duracionMin} min
-            </p>
-          </div>
+            {dias === 0 ? 'Hoy' : `${dias}d`}
+          </span>
         </div>
-        {urlAcceso && (
-          <a
-            href={urlAcceso}
-            className="mt-3 w-full flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold text-white transition-all"
-            style={{ background: '#02d47e' }}
-          >
-            Unirse a la sesión
-            <ArrowRight size={12} />
-          </a>
-        )}
+
+        <div className="px-4 pb-4">
+          <div className="flex items-start gap-3">
+            <div
+              className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
+              style={{ background: 'rgba(2,212,126,0.15)', border: '1px solid rgba(2,212,126,0.2)' }}
+            >
+              <Video size={17} color="#02d47e" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[11px] font-semibold mb-0.5" style={{ color: 'rgba(2,212,126,0.75)' }}>
+                {moduloNombre}
+              </p>
+              <p className="text-sm font-bold text-white leading-snug">
+                {titulo}
+              </p>
+              <p className="text-[11px] mt-1.5 flex items-center gap-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                <Clock size={10} />
+                {formatHora(fecha)} · {duracionMin} min
+              </p>
+            </div>
+          </div>
+
+          {urlAcceso && (
+            <a
+              href={urlAcceso}
+              className="mt-4 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold text-white transition-all hover:opacity-90 hover:scale-[1.01]"
+              style={{ background: 'linear-gradient(90deg, #02d47e, #00c16e)' }}
+            >
+              Unirse a la sesión
+              <ArrowRight size={12} />
+            </a>
+          )}
+        </div>
       </div>
     )
   }
