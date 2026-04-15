@@ -406,6 +406,7 @@ export default function Perfil() {
                 const ta = TALLER_ACCENTS[t.slug] ?? '#02d47e'
                 const bienes = getTotalBienesByTaller(t.slug)
                 const isPrimario = slug === tallerSlug
+                const progresoT = getTallerProgreso(t.slug)
                 return (
                   <section
                     key={slug}
@@ -485,7 +486,7 @@ export default function Perfil() {
                         <button onClick={() => navigate(`/taller/${t.slug}`)}
                           className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold transition-opacity hover:opacity-90"
                           style={{ background: '#043941', color: 'var(--grama-menta)' }}>
-                          <Play size={14} /> Continuar Ruta
+                          <Play size={14} /> {progresoT.porcentaje === 0 ? 'Iniciar Ruta' : 'Seguir Ruta'}
                         </button>
                         <button onClick={() => navigate(`/taller/${t.slug}/repositorio`)}
                           className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-opacity hover:opacity-80"
