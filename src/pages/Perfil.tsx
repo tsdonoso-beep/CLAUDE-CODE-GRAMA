@@ -119,8 +119,8 @@ function SectionHeader({
 const MESES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
 const DIAS_ES  = ['Lu','Ma','Mi','Ju','Vi','Sa','Do']
 
-function CalendarioSidebar({ tallerSlugs, accent }: { tallerSlugs: string[]; accent: string }) {
-  const [open, setOpen] = useState(false)
+function CalendarioSidebar({ tallerSlugs, accent, defaultOpen = false }: { tallerSlugs: string[]; accent: string; defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(defaultOpen)
   const now = new Date()
   const [viewMonth, setViewMonth] = useState(now.getMonth())
   const [viewYear,  setViewYear]  = useState(now.getFullYear())
@@ -150,7 +150,11 @@ function CalendarioSidebar({ tallerSlugs, accent }: { tallerSlugs: string[]; acc
   return (
     <section
       className="rounded-2xl overflow-hidden animate-fade-in-up stagger-2"
-      style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)' }}
+      style={{
+        background: '#ffffff',
+        border: `1.5px solid ${accent}40`,
+        boxShadow: `0 0 0 4px ${accent}0c, 0 4px 16px rgba(4,57,65,0.06)`,
+      }}
     >
       {/* Header — clic para expandir */}
       <button
@@ -266,7 +270,7 @@ function CalendarioSidebar({ tallerSlugs, accent }: { tallerSlugs: string[]; acc
             <div className="mx-4 mb-4 pt-3 border-t" style={{ borderColor: 'rgba(4,57,65,0.07)' }}>
               <p className="text-[9px] font-extrabold uppercase tracking-widest mb-2.5" style={{ color: 'rgba(4,57,65,0.3)' }}>Próximas sesiones</p>
               <div className="space-y-2.5">
-                {sesiones.slice(0, 4).map(s => {
+                {sesiones.slice(0, defaultOpen ? 12 : 4).map(s => {
                   const dias    = diasParaSesion(s.fecha)
                   const tColor  = TALLER_ACCENTS[s.tallerSlug] ?? accent
                   const tNombre = talleresConfig.find(t => t.slug === s.tallerSlug)?.nombreCorto ?? s.tallerSlug
@@ -783,7 +787,11 @@ export default function Perfil() {
           {/* Mi información */}
           <section
             className="rounded-2xl overflow-hidden animate-fade-in-up stagger-1"
-            style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)' }}
+            style={{
+              background: '#ffffff',
+              border: `1.5px solid ${accent}40`,
+              boxShadow: `0 0 0 4px ${accent}0c, 0 4px 16px rgba(4,57,65,0.06)`,
+            }}
           >
             <SectionHeader
               icon={Mail}
@@ -821,8 +829,12 @@ export default function Perfil() {
 
 
           {/* Agenda de sesiones */}
-          {tallerSlugsAccesibles.length > 0 && (
-            <CalendarioSidebar tallerSlugs={tallerSlugsAccesibles} accent={accent} />
+          {(isAdmin || tallerSlugsAccesibles.length > 0) && (
+            <CalendarioSidebar
+              tallerSlugs={isAdmin ? talleresConfig.map(t => t.slug) : tallerSlugsAccesibles}
+              accent={accent}
+              defaultOpen={isAdmin}
+            />
           )}
 
 
