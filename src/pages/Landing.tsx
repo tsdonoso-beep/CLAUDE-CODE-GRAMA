@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   BookOpen, Clock, Award, Users, Building2, Briefcase,
-  Video, FileText, ChevronRight, ChevronLeft, ArrowRight,
+  Video, FileText, ChevronRight, ChevronLeft, ChevronDown, ArrowRight,
   Layers, Package, CheckCircle, Mail, Menu, X, Wrench,
 } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
@@ -461,6 +461,161 @@ function TallerModal({
         </div>
       </div>
     </>
+  )
+}
+
+// ── WhatsApp icon (lucide no lo incluye) ─────────────────────────────────────
+function WhatsAppIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.549 4.107 1.51 5.84L.057 23.269a.75.75 0 0 0 .921.921l5.43-1.453A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.655-.51-5.18-1.402l-.371-.221-3.853 1.031 1.031-3.854-.221-.371A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+    </svg>
+  )
+}
+
+// ── FAQ data ──────────────────────────────────────────────────────────────────
+const FAQ_ITEMS = [
+  {
+    q: '¿GRAMA es gratuito para los docentes EPT?',
+    a: 'Sí. GRAMA LXP está diseñado para ser accesible para todos los docentes de Educación para el Trabajo. El acceso a la plataforma y sus contenidos no tiene costo para el docente ni para la institución educativa.',
+  },
+  {
+    q: '¿Necesito internet todo el tiempo para usarlo?',
+    a: 'Necesitas conexión para ver videos y sesiones en vivo, pero puedes descargar fichas técnicas y manuales en PDF para consultarlos sin internet. La plataforma está optimizada para conexiones lentas.',
+  },
+  {
+    q: '¿Funciona en tablet o celular?',
+    a: 'Sí. GRAMA está diseñado para cualquier dispositivo — computadora, tablet o celular. Recomendamos tablet o PC para una mejor experiencia con los videos y fichas de equipamiento.',
+  },
+  {
+    q: '¿Cuánto tiempo toma completar un taller?',
+    a: 'Cada taller tiene 7 módulos con aproximadamente 150 horas en total (virtual asíncrono + sesiones en vivo + presencial). Puedes avanzar a tu propio ritmo — no hay fechas de vencimiento para el contenido asíncrono.',
+  },
+  {
+    q: '¿Cómo solicita acceso mi colegio o UGEL?',
+    a: 'El acceso institucional se gestiona directamente con nuestro equipo. Escríbenos por WhatsApp y coordinamos la incorporación de tu institución o red educativa en menos de 24 horas.',
+  },
+]
+
+// ── FAQ Section ───────────────────────────────────────────────────────────────
+function FAQSection() {
+  const [open, setOpen] = useState<number | null>(null)
+  const WA_URL = 'https://wa.me/51900000000?text=Hola%2C+soy+docente+EPT+y+tengo+una+consulta+sobre+GRAMA+LXP+%F0%9F%91%8B'
+
+  return (
+    <section className="py-20 px-6" style={{ background: '#f4f8f9' }}>
+      <div className="max-w-6xl mx-auto grid lg:grid-cols-[3fr_2fr] gap-14 items-start">
+
+        {/* Acordeón */}
+        <div>
+          <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-4" style={{ color: 'var(--grama-menta)' }}>
+            <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
+            Preguntas frecuentes
+          </span>
+          <h2 className="t-h1 font-extrabold leading-tight mb-10" style={{ color: 'var(--grama-oscuro)' }}>
+            Todo lo que necesitas<br />
+            <span style={{ color: 'var(--grama-menta)' }}>saber antes de empezar</span>
+          </h2>
+
+          <div className="space-y-3">
+            {FAQ_ITEMS.map((item, i) => (
+              <div
+                key={i}
+                className="rounded-2xl overflow-hidden transition-all"
+                style={{
+                  background: open === i ? '#ffffff' : '#ffffff',
+                  boxShadow: open === i
+                    ? '0 4px 20px rgba(4,57,65,0.10)'
+                    : '0 1px 4px rgba(4,57,65,0.05)',
+                }}
+              >
+                <button
+                  onClick={() => setOpen(open === i ? null : i)}
+                  className="w-full text-left px-6 py-4 flex items-center justify-between gap-4 transition-colors"
+                  style={{ background: 'transparent' }}
+                >
+                  <span
+                    className="text-sm font-bold leading-snug"
+                    style={{ color: open === i ? 'var(--grama-oscuro)' : '#334155' }}
+                  >
+                    {item.q}
+                  </span>
+                  <span
+                    className="shrink-0 h-7 w-7 rounded-full flex items-center justify-center transition-all"
+                    style={{
+                      background: open === i ? 'var(--grama-oscuro)' : '#f1f5f9',
+                      transform: open === i ? 'rotate(180deg)' : 'none',
+                    }}
+                  >
+                    <ChevronDown size={14} style={{ color: open === i ? '#02d47e' : '#94a3b8' }} />
+                  </span>
+                </button>
+                {open === i && (
+                  <div className="px-6 pb-5">
+                    <div className="h-px mb-4" style={{ background: 'rgba(4,57,65,0.07)' }} />
+                    <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
+                      {item.a}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Card WhatsApp — sticky */}
+        <div className="lg:sticky lg:top-8">
+          <div
+            className="rounded-3xl p-8 relative overflow-hidden"
+            style={{
+              background: 'linear-gradient(145deg, #043941 0%, #032e34 100%)',
+              boxShadow: '0 16px 48px rgba(4,57,65,0.22)',
+            }}
+          >
+            {/* Orb decorativo */}
+            <div className="absolute pointer-events-none" style={{
+              width: 220, height: 220,
+              background: 'radial-gradient(circle, rgba(37,211,102,0.12) 0%, transparent 65%)',
+              bottom: -40, right: -40,
+            }} />
+
+            <div className="relative z-10">
+              {/* Ícono */}
+              <div
+                className="h-12 w-12 rounded-2xl flex items-center justify-center mb-5"
+                style={{ background: 'rgba(37,211,102,0.15)', border: '1px solid rgba(37,211,102,0.2)' }}
+              >
+                <WhatsAppIcon size={22} />
+              </div>
+
+              <h3 className="text-lg font-extrabold text-white mb-2 leading-snug">
+                ¿Tienes una pregunta<br />que no está aquí?
+              </h3>
+              <p className="text-sm mb-6 leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                Escríbenos directamente y te respondemos en menos de 24 horas. Sin formularios, sin correos.
+              </p>
+
+              <a
+                href={WA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl text-sm font-bold transition-all hover:scale-[1.02] hover:opacity-95"
+                style={{ background: '#25d366', color: '#0a2e0f' }}
+              >
+                <WhatsAppIcon size={16} />
+                Escribir por WhatsApp
+              </a>
+
+              <p className="text-center text-[11px] mt-3" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                Respuesta típica en &lt; 24h · Lun–Vie
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
   )
 }
 
@@ -961,6 +1116,9 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ══ FAQ ═════════════════════════════════════════════════════════════ */}
+      <FAQSection />
+
       {/* ══ CTA FINAL ═══════════════════════════════════════════════════════ */}
       <section id="contacto" className="py-14 px-6">
         <div className="max-w-4xl mx-auto">
@@ -1009,13 +1167,15 @@ export default function Landing() {
                   Ingresar a la plataforma <ArrowRight size={15} />
                 </button>
                 <a
-                  href="mailto:contacto@grama.pe"
+                  href="https://wa.me/51900000000?text=Hola%2C+soy+docente+EPT+y+tengo+una+consulta+sobre+GRAMA+LXP+%F0%9F%91%8B"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all"
-                  style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.12)' }}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.14)')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.08)')}
+                  style={{ background: 'rgba(37,211,102,0.15)', color: '#25d366', border: '1px solid rgba(37,211,102,0.25)' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(37,211,102,0.25)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = 'rgba(37,211,102,0.15)')}
                 >
-                  <Mail size={14} /> contacto@grama.pe
+                  <WhatsAppIcon size={15} /> Escribir por WhatsApp
                 </a>
               </div>
             </div>
