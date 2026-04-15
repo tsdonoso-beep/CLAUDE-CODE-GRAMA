@@ -17,7 +17,7 @@ const TALLERES: Taller[] = [
     numero: 1,
     descripcion: 'Mantenimiento y reparación de vehículos motorizados. Diagnóstico, sistemas mecánicos, eléctricos y electrónicos del automóvil moderno.',
     competencias: ['Diagnóstico automotriz', 'Mantenimiento preventivo', 'Sistemas de frenos', 'Motor y transmisión'],
-    color: 'hsl(220 70% 50%)',
+    color: '#3b82f6',
     icon: 'Car',
     imagen: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1200',
     zonas: [
@@ -34,7 +34,7 @@ const TALLERES: Taller[] = [
     numero: 2,
     descripcion: 'Diseño, corte y confección textil. Moda, patronaje, costura industrial y técnicas de acabados en prendas de vestir.',
     competencias: ['Patronaje', 'Costura industrial', 'Diseño de moda', 'Control de calidad textil'],
-    color: 'hsl(330 70% 55%)',
+    color: '#ec4899',
     icon: 'Shirt',
     imagen: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200',
     zonas: [
@@ -51,7 +51,7 @@ const TALLERES: Taller[] = [
     numero: 3,
     descripcion: 'Arte culinario y pastelería. Técnicas de cocina profesional, repostería, panificación y gestión gastronómica.',
     competencias: ['Técnicas culinarias', 'Repostería y pastelería', 'Panificación', 'Gestión de cocina'],
-    color: 'hsl(25 90% 55%)',
+    color: '#f97316',
     icon: 'ChefHat',
     imagen: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200',
     zonas: [
@@ -68,7 +68,7 @@ const TALLERES: Taller[] = [
     numero: 4,
     descripcion: 'Diseño y fabricación de muebles finos y estructuras en madera. Formación en técnicas de torno, ensamble, lacado y acabados de alta calidad.',
     competencias: ['Diseño de muebles', 'Máquinas de carpintería', 'Acabados y lacado', 'Ensamble y estructura'],
-    color: 'hsl(28 60% 40%)',
+    color: '#b8975a',
     icon: 'Hammer',
     imagen: 'https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=1200',
     zonas: [
@@ -85,7 +85,7 @@ const TALLERES: Taller[] = [
     numero: 5,
     descripcion: 'Tecnologías de la información y comunicación. Programación, redes, mantenimiento de equipos y aplicaciones digitales.',
     competencias: ['Programación', 'Redes y conectividad', 'Mantenimiento de PC', 'Ofimática avanzada'],
-    color: 'hsl(210 80% 50%)',
+    color: '#22d3ee',
     icon: 'Monitor',
     imagen: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200',
     zonas: [
@@ -102,7 +102,7 @@ const TALLERES: Taller[] = [
     numero: 6,
     descripcion: 'Circuitos electrónicos, microcontroladores y sistemas embebidos. Soldadura, diagnóstico y reparación de equipos electrónicos.',
     competencias: ['Circuitos electrónicos', 'Microcontroladores', 'Soldadura SMD', 'Diagnóstico de equipos'],
-    color: 'hsl(260 70% 55%)',
+    color: '#a78bfa',
     icon: 'Cpu',
     imagen: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200',
     zonas: [
@@ -119,7 +119,7 @@ const TALLERES: Taller[] = [
     numero: 7,
     descripcion: 'Procesamiento y conservación de alimentos. BPM, HACCP, tecnología de alimentos y gestión de inocuidad alimentaria.',
     competencias: ['Procesamiento de alimentos', 'BPM y HACCP', 'Control de calidad', 'Envasado y conservación'],
-    color: 'hsl(135 60% 40%)',
+    color: '#22c55e',
     icon: 'Factory',
     imagen: 'https://images.unsplash.com/photo-1565787222888-e4a0b05c53a3?w=1200',
     zonas: [
@@ -136,7 +136,7 @@ const TALLERES: Taller[] = [
     numero: 8,
     descripcion: 'Instalaciones eléctricas residenciales e industriales. Automatización, tableros eléctricos y normativa NTP.',
     competencias: ['Instalaciones eléctricas', 'Automatización industrial', 'Tableros y control', 'Normativa NTP'],
-    color: 'hsl(45 95% 50%)',
+    color: '#fbbf24',
     icon: 'Zap',
     imagen: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200',
     zonas: [
@@ -153,7 +153,7 @@ const TALLERES: Taller[] = [
     numero: 9,
     descripcion: 'Soldadura, estructuras metálicas y fabricación de piezas. Oxicorte, TIG, MIG/MAG y diseño de estructuras.',
     competencias: ['Soldadura TIG/MIG', 'Oxicorte', 'Estructuras metálicas', 'Lectura de planos'],
-    color: 'hsl(200 30% 40%)',
+    color: '#94a3b8',
     icon: 'Wrench',
     imagen: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1200',
     zonas: [
@@ -170,7 +170,7 @@ const TALLERES: Taller[] = [
     numero: 10,
     descripcion: 'Espacio transversal de innovación, emprendimiento y tecnología. Impresión 3D, corte láser, electrónica maker y prototipado.',
     competencias: ['Prototipado 3D', 'Corte láser', 'Electrónica maker', 'Emprendimiento'],
-    color: 'hsl(155 98% 35%)',
+    color: '#02d47e',
     icon: 'Lightbulb',
     imagen: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200',
     zonas: [
