@@ -54,19 +54,16 @@ export function LiveSessionCard({
           boxShadow: '0 4px 20px rgba(4,57,65,0.18)',
         }}
       >
-        {/* Top bar con live indicator */}
-        <div className="px-4 pt-4 pb-3 flex items-center gap-2">
-          <span className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full animate-blink shrink-0" style={{ background: '#ef4444' }} />
-            <span className="text-[10px] font-bold tracking-widest uppercase" style={{ color: 'rgba(239,68,68,0.85)' }}>
-              En vivo próximamente
-            </span>
+        {/* Top bar */}
+        <div className="px-4 pt-4 pb-3 flex items-center justify-between gap-2">
+          <span className="overline-label" style={{ color: 'rgba(2,212,126,0.6)' }}>
+            Próxima sesión
           </span>
           <span
-            className="ml-auto text-[11px] font-extrabold px-2.5 py-0.5 rounded-full"
+            className="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full"
             style={{ background: 'rgba(2,212,126,0.15)', color: '#02d47e' }}
           >
-            {dias === 0 ? 'Hoy' : `${dias}d`}
+            {dias === 0 ? 'Hoy' : `En ${dias}d`}
           </span>
         </div>
 
