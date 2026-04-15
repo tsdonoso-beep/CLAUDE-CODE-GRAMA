@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import {
   Mail, MapPin, Building2, Package, Clock,
   ChevronRight, ChevronDown, Shield, LogOut, ArrowRight, Layers,
-  Play, Sparkles, Zap, CalendarDays,
+  Play, Sparkles, Zap, CalendarDays, Pencil, Check, X, Phone,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useProgress } from '@/contexts/ProgressContext'
@@ -330,6 +330,27 @@ export default function Perfil() {
 
   const progreso = taller ? getTallerProgreso(taller.slug) : { porcentaje: 0, completados: 0, total: 0 }
 
+  // ── Perfil editable (localStorage) ──────────────────────────────────────
+  const localKey = `grama:perfil:${user?.id ?? 'guest'}`
+  const loadLocal = () => {
+    try { return JSON.parse(localStorage.getItem(localKey) ?? '{}') } catch { return {} }
+  }
+  const [editMode, setEditMode] = useState(false)
+  const [localData, setLocalData] = useState<{ telefono?: string; correo_inst?: string }>(() => loadLocal())
+  const [draft, setDraft] = useState({ telefono: '', correo_inst: '' })
+
+  function startEdit() {
+    setDraft({ telefono: localData.telefono ?? '', correo_inst: localData.correo_inst ?? '' })
+    setEditMode(true)
+  }
+  function saveEdit() {
+    const next = { telefono: draft.telefono.trim(), correo_inst: draft.correo_inst.trim() }
+    setLocalData(next)
+    localStorage.setItem(localKey, JSON.stringify(next))
+    setEditMode(false)
+  }
+  function cancelEdit() { setEditMode(false) }
+
   return (
     <div className="min-h-screen" style={{ fontFamily: "'Manrope', sans-serif", background: '#f0faf5' }}>
 
@@ -555,7 +576,7 @@ export default function Perfil() {
       </section>
 
       {/* ══ CONTENIDO PRINCIPAL ════════════════════════════════════════════════ */}
-      <div className="p-6 grid lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+      <div className="p-6 grid lg:grid-cols-3 gap-6 max-w-7xl mx-auto items-start">
 
         {/* ── Col principal (2/3) ─────────────────────────────────────────── */}
         <div className="lg:col-span-2 space-y-5">
@@ -777,6 +798,7 @@ export default function Perfil() {
             tallerSlug={tallerSlug}
             displayName={displayName}
             tallerNombre={taller?.nombre}
+            accent={accent}
           />
 
         </div>
@@ -797,34 +819,108 @@ export default function Perfil() {
               icon={Mail}
               title="Mi información"
               iconColor="#045f6c"
-            />
-            <div className="divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
-              {[
-                { Icon: Mail,      label: 'Correo',      value: displayEmail, sub: null },
-                { Icon: Building2, label: 'Institución', value: ieLabel,      sub: distrito },
-                { Icon: MapPin,    label: 'Región',      value: region,       sub: null },
-              ].map(item => (
-                <div key={item.label} className="flex items-start gap-3 px-5 py-3.5">
-                  <div
-                    className="h-8 w-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
-                    style={{ background: 'rgba(4,57,65,0.05)' }}
+              action={
+                !editMode ? (
+                  <button
+                    onClick={startEdit}
+                    className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-75"
+                    style={{ background: `${accent}14`, color: accent, border: `1px solid ${accent}25` }}
                   >
-                    <item.Icon size={13} style={{ color: '#045f6c' }} />
+                    <Pencil size={11} /> Editar
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-1.5">
+                    <button onClick={saveEdit}
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
+                      style={{ background: accent, color: 'var(--grama-oscuro)' }}>
+                      <Check size={11} /> Guardar
+                    </button>
+                    <button onClick={cancelEdit}
+                      className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-70"
+                      style={{ color: 'rgba(4,57,65,0.4)' }}>
+                      <X size={11} />
+                    </button>
                   </div>
-                  <div className="min-w-0">
-                    <p className="overline-label font-extrabold mb-0.5" style={{ color: '#b0c4ca' }}>
-                      {item.label}
-                    </p>
-                    <p className="text-sm font-bold leading-snug break-words" style={{ color: 'var(--grama-oscuro)' }}>
-                      {item.value}
-                    </p>
-                    {item.sub && (
-                      <p className="text-xs mt-0.5" style={{ color: '#94a3b8' }}>{item.sub}</p>
-                    )}
+                )
+              }
+            />
+
+            {/* Vista normal */}
+            {!editMode && (
+              <div className="divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
+                {[
+                  { Icon: Mail,      label: 'Correo',      value: displayEmail,               sub: null    },
+                  { Icon: Building2, label: 'Institución', value: ieLabel,                    sub: distrito },
+                  { Icon: MapPin,    label: 'Región',      value: region,                     sub: null    },
+                  ...(localData.telefono    ? [{ Icon: Phone, label: 'Teléfono',           value: localData.telefono,    sub: null }] : []),
+                  ...(localData.correo_inst ? [{ Icon: Mail,  label: 'Correo institucional', value: localData.correo_inst, sub: null }] : []),
+                ].map(item => (
+                  <div key={item.label} className="flex items-start gap-3 px-5 py-3.5">
+                    <div className="h-8 w-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
+                      style={{ background: 'rgba(4,57,65,0.05)' }}>
+                      <item.Icon size={13} style={{ color: '#045f6c' }} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="overline-label font-extrabold mb-0.5" style={{ color: '#b0c4ca' }}>{item.label}</p>
+                      <p className="text-sm font-bold leading-snug break-words" style={{ color: 'var(--grama-oscuro)' }}>{item.value}</p>
+                      {item.sub && <p className="text-xs mt-0.5" style={{ color: '#94a3b8' }}>{item.sub}</p>}
+                    </div>
                   </div>
+                ))}
+              </div>
+            )}
+
+            {/* Formulario de edición */}
+            {editMode && (
+              <div className="px-5 py-4 space-y-4">
+                {/* Read-only: nombre + institución */}
+                {[
+                  { label: 'Nombre completo', value: displayName },
+                  { label: 'Institución educativa', value: ieLabel },
+                ].map(f => (
+                  <div key={f.label}>
+                    <p className="overline-label font-extrabold mb-1" style={{ color: '#b0c4ca' }}>{f.label}</p>
+                    <p className="text-sm font-semibold px-3 py-2 rounded-lg" style={{ color: 'rgba(4,57,65,0.45)', background: 'rgba(4,57,65,0.04)', border: '1px solid rgba(4,57,65,0.07)' }}>
+                      {f.value}
+                    </p>
+                  </div>
+                ))}
+                {/* Editable: teléfono */}
+                <div>
+                  <p className="overline-label font-extrabold mb-1" style={{ color: '#b0c4ca' }}>Teléfono</p>
+                  <input
+                    type="tel"
+                    placeholder="Ej. 987 654 321"
+                    value={draft.telefono}
+                    onChange={e => setDraft(d => ({ ...d, telefono: e.target.value }))}
+                    className="w-full text-sm font-semibold px-3 py-2 rounded-lg outline-none transition-all"
+                    style={{
+                      color: 'var(--grama-oscuro)',
+                      background: '#ffffff',
+                      border: `1.5px solid ${accent}35`,
+                      boxShadow: `0 0 0 3px ${accent}08`,
+                    }}
+                  />
                 </div>
-              ))}
-            </div>
+                {/* Editable: correo institucional */}
+                <div>
+                  <p className="overline-label font-extrabold mb-1" style={{ color: '#b0c4ca' }}>Correo institucional</p>
+                  <input
+                    type="email"
+                    placeholder="Ej. docente@ugel.gob.pe"
+                    value={draft.correo_inst}
+                    onChange={e => setDraft(d => ({ ...d, correo_inst: e.target.value }))}
+                    className="w-full text-sm font-semibold px-3 py-2 rounded-lg outline-none transition-all"
+                    style={{
+                      color: 'var(--grama-oscuro)',
+                      background: '#ffffff',
+                      border: `1.5px solid ${accent}35`,
+                      boxShadow: `0 0 0 3px ${accent}08`,
+                    }}
+                  />
+                </div>
+              </div>
+            )}
           </section>
 
 

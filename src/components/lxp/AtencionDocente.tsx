@@ -21,9 +21,10 @@ interface Props {
   tallerSlug: string | null
   displayName: string
   tallerNombre?: string
+  accent?: string
 }
 
-export function AtencionDocente({ userId, tallerSlug, displayName, tallerNombre }: Props) {
+export function AtencionDocente({ userId, tallerSlug, displayName, tallerNombre, accent = '#02d47e' }: Props) {
   const [tab, setTab]               = useState<'form' | 'historial'>('form')
   const [modulo, setModulo]         = useState<ModuloConsulta>('general')
   const [mensaje, setMensaje]       = useState('')
@@ -61,7 +62,11 @@ export function AtencionDocente({ userId, tallerSlug, displayName, tallerNombre 
   return (
     <section
       className="rounded-2xl overflow-hidden"
-      style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.04)' }}
+      style={{
+        background: '#ffffff',
+        border: `1.5px solid ${accent}40`,
+        boxShadow: `0 0 0 4px ${accent}0c, 0 4px 16px rgba(4,57,65,0.06)`,
+      }}
     >
       {/* ── Header ── */}
       <div
