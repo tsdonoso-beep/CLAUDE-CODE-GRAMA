@@ -698,7 +698,7 @@ export default function Landing() {
           {/* Header */}
           <div
             ref={featuresHeaderReveal.ref}
-            className="mb-12"
+            className="mb-14"
             style={{ opacity: featuresHeaderReveal.visible ? 1 : 0, transform: featuresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
           >
             <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-4" style={{ color: 'var(--grama-menta)' }}>
@@ -711,106 +711,124 @@ export default function Landing() {
             </h2>
           </div>
 
-          {/* Grid asimétrico Problema / Solución + Resultado */}
+          {/* Timeline vertical */}
           <div
             ref={featuresReveal.ref}
-            className="grid gap-4"
+            className="max-w-2xl"
             style={{
-              gridTemplateColumns: '3fr 2fr',
               opacity: featuresReveal.visible ? 1 : 0,
               transform: featuresReveal.visible ? 'none' : 'translateY(30px)',
-              transition: 'opacity 0.6s ease, transform 0.6s ease',
+              transition: 'opacity 0.7s ease, transform 0.7s ease',
             }}
           >
-
-            {/* ─── Card izquierda: EL PROBLEMA (oscura, grande) ─── */}
-            <div className="relative rounded-[28px] overflow-hidden p-9 flex flex-col justify-between min-h-[420px]"
-              style={{ background: 'linear-gradient(145deg, #043941 0%, #032e34 100%)' }}>
-              {/* Glow circular decorativo */}
-              <div className="absolute pointer-events-none" style={{
-                width: 320, height: 320,
-                borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(2,212,126,0.12) 0%, transparent 70%)',
-                bottom: -60, right: -60,
-              }} />
-
-              <div className="relative z-10">
-                <p className="text-xs font-extrabold tracking-widest mb-8 flex items-center gap-2" style={{ color: 'rgba(2,212,126,0.7)' }}>
-                  <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: '#02d47e' }} />
+            {/* ─── EL PROBLEMA ─── */}
+            <div className="flex gap-5">
+              {/* Eje timeline */}
+              <div className="flex flex-col items-center" style={{ width: 44 }}>
+                <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0 text-lg"
+                  style={{ background: '#1e3a3f', border: '2px solid rgba(2,212,126,0.25)', boxShadow: '0 0 0 4px rgba(2,212,126,0.06)' }}>
+                  🏫
+                </div>
+                <div className="flex-1 w-px mt-2" style={{ background: 'linear-gradient(to bottom, rgba(4,57,65,0.2), rgba(4,57,65,0.06))', minHeight: 32 }} />
+              </div>
+              {/* Contenido */}
+              <div className="flex-1 pb-6">
+                <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: 'rgba(4,57,65,0.45)' }}>
+                  <span className="w-1 h-1 rounded-full inline-block" style={{ background: 'rgba(4,57,65,0.35)' }} />
                   EL PROBLEMA
                 </p>
-                <h3 className="font-extrabold leading-tight mb-6" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', color: '#ffffff' }}>
-                  Los equipos llegan.<br />
-                  La formación,<br />
-                  <span style={{ color: '#02d47e' }}>no.</span>
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)', maxWidth: 340 }}>
-                  Los talleres técnicos reciben equipos nuevos pero los docentes no tienen cómo aprender a usarlos. Cuando el profesor rota, el conocimiento desaparece con él.
-                </p>
-              </div>
-
-              {/* Stat badge inferior */}
-              <div className="relative z-10 mt-10">
-                <div className="inline-flex items-center gap-3 px-4 py-2.5 rounded-full"
-                  style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.25)' }}>
-                  <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.2)' }}>
-                    <span className="text-[10px]" style={{ color: '#02d47e' }}>●</span>
+                <div className="rounded-2xl p-6" style={{ background: '#ffffff', border: '1.5px solid rgba(4,57,65,0.14)', boxShadow: '0 2px 12px rgba(4,57,65,0.06)' }}>
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
+                        Los equipos llegan.<br />
+                        La formación, <span style={{ color: '#e11d48' }}>no.</span>
+                      </h3>
+                      <p className="text-sm leading-relaxed mb-4" style={{ color: '#64748b' }}>
+                        Los talleres técnicos reciben equipos nuevos pero los docentes no tienen cómo aprender a usarlos. Cuando el profesor rota, el conocimiento desaparece con él.
+                      </p>
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold"
+                        style={{ background: 'rgba(4,57,65,0.05)', border: '1px solid rgba(4,57,65,0.1)', color: 'var(--grama-oscuro)' }}>
+                        <Clock size={11} />
+                        +300 talleres EPT en Lima Norte
+                      </div>
+                    </div>
                   </div>
-                  <span className="text-xs font-semibold" style={{ color: 'rgba(2,212,126,0.85)' }}>
-                    Realidad de +300 talleres EPT en Lima Norte
-                  </span>
                 </div>
               </div>
             </div>
 
-            {/* ─── Columna derecha: dos cards apiladas ─── */}
-            <div className="flex flex-col gap-4">
-
-              {/* LA SOLUCIÓN — card clara */}
-              <div className="relative rounded-[28px] p-7 flex-1"
-                style={{ background: '#edf7f8', border: '1.5px solid rgba(4,57,65,0.08)' }}>
-                <div className="flex items-start justify-between mb-5">
-                  <p className="text-xs font-extrabold tracking-widest flex items-center gap-2" style={{ color: '#64748b' }}>
-                    <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: '#64748b' }} />
-                    LA SOLUCIÓN
-                  </p>
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
-                    style={{ background: 'rgba(4,57,65,0.07)', border: '1px solid rgba(4,57,65,0.1)' }}>
-                    <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} style={{ color: '#043941' }}><polyline points="20 6 9 17 4 12" /></svg>
+            {/* ─── LA SOLUCIÓN ─── */}
+            <div className="flex gap-5">
+              <div className="flex flex-col items-center" style={{ width: 44 }}>
+                <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0 text-lg"
+                  style={{ background: '#d0f0f5', border: '2px solid rgba(4,57,65,0.15)', boxShadow: '0 0 0 4px rgba(4,95,108,0.06)' }}>
+                  💻
+                </div>
+                <div className="flex-1 w-px mt-2" style={{ background: 'linear-gradient(to bottom, rgba(4,57,65,0.12), rgba(4,57,65,0.04))', minHeight: 32 }} />
+              </div>
+              <div className="flex-1 pb-6">
+                <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
+                  <span className="w-1 h-1 rounded-full inline-block" style={{ background: '#045f6c' }} />
+                  LA SOLUCIÓN
+                </p>
+                <div className="rounded-2xl p-6" style={{ background: '#edf7f8', border: '1.5px solid rgba(4,95,108,0.12)' }}>
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
+                        Una ruta híbrida diseñada<br />para tu taller
+                      </h3>
+                      <p className="text-sm leading-relaxed" style={{ color: '#4a7a82' }}>
+                        7 módulos con video, fichas descargables y sesiones en vivo. A tu ritmo, adaptado a tu especialidad EPT, desde cualquier dispositivo.
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.15rem', color: 'var(--grama-oscuro)' }}>
-                  Una ruta híbrida diseñada para tu taller
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
-                  7 módulos con video, fichas descargables y sesiones en vivo. A tu ritmo, desde cualquier dispositivo, adaptado a tu especialidad EPT.
-                </p>
               </div>
-
-              {/* EL RESULTADO — card amarilla */}
-              <div className="relative rounded-[28px] p-7 flex-1"
-                style={{ background: '#fef9e7', border: '1.5px solid rgba(202,138,4,0.12)' }}>
-                <div className="flex items-start justify-between mb-5">
-                  <p className="text-xs font-extrabold tracking-widest flex items-center gap-2" style={{ color: '#92400e' }}>
-                    <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: '#ca8a04' }} />
-                    EL RESULTADO
-                  </p>
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
-                    style={{ background: 'rgba(202,138,4,0.1)', border: '1px solid rgba(202,138,4,0.18)' }}>
-                    <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} style={{ color: '#ca8a04' }}><polyline points="20 6 9 17 4 12" /></svg>
-                  </div>
-                </div>
-                <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.15rem', color: 'var(--grama-oscuro)' }}>
-                  Autonomía docente garantizada
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: '#78350f' }}>
-                  Al terminar dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes — con confianza real.
-                </p>
-              </div>
-
             </div>
+
+            {/* ─── EL RESULTADO ─── */}
+            <div className="flex gap-5">
+              <div className="flex flex-col items-center" style={{ width: 44 }}>
+                <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0 text-lg"
+                  style={{ background: '#fef3c7', border: '2px solid rgba(202,138,4,0.25)', boxShadow: '0 0 0 4px rgba(202,138,4,0.06)' }}>
+                  🎯
+                </div>
+              </div>
+              <div className="flex-1">
+                <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: '#92400e' }}>
+                  <span className="w-1 h-1 rounded-full inline-block" style={{ background: '#ca8a04' }} />
+                  EL RESULTADO
+                </p>
+                <div className="rounded-2xl p-6" style={{ background: '#fef9e7', border: '1.5px solid rgba(202,138,4,0.18)' }}>
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
+                        Autonomía docente<br />garantizada
+                      </h3>
+                      <p className="text-sm leading-relaxed" style={{ color: '#78350f' }}>
+                        Al terminar dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes — con confianza real.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ─── Arrow down ─── */}
+            <div className="flex justify-center mt-8 ml-[52px]">
+              <a href="#talleres"
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                style={{ background: 'rgba(4,57,65,0.08)', border: '1px solid rgba(4,57,65,0.12)' }}
+                aria-label="Ver talleres"
+              >
+                <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} style={{ color: 'var(--grama-oscuro)' }}>
+                  <line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" />
+                </svg>
+              </a>
+            </div>
+
           </div>
-
         </div>
       </section>
 
