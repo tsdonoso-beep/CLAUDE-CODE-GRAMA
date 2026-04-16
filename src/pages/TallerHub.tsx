@@ -142,14 +142,23 @@ export default function TallerHub() {
         {/* ── RUTA DE APRENDIZAJE ── */}
         <div className="bg-white rounded-2xl overflow-hidden"
           style={{ boxShadow: '0 2px 16px rgba(4,57,65,0.07)' }}>
-          <div className="px-6 pt-6 pb-3">
-            <p className="text-[11px] font-extrabold uppercase tracking-widest mb-1"
-              style={{ color: '#02d47e' }}>
-              Tu camino de aprendizaje
-            </p>
-            <h2 className="text-lg font-extrabold" style={{ color: '#043941' }}>
-              {modulosLXP.length} módulos · {totalHoras}h de formación
-            </h2>
+          <div
+            className="px-6 pt-6 pb-3 flex items-center justify-between cursor-pointer group"
+            onClick={() => navigate(`/taller/${slug}/ruta`)}
+          >
+            <div>
+              <p className="text-[11px] font-extrabold uppercase tracking-widest mb-1"
+                style={{ color: '#02d47e' }}>
+                Tu camino de aprendizaje
+              </p>
+              <h2 className="text-lg font-extrabold" style={{ color: '#043941' }}>
+                {modulosLXP.length} módulos · {totalHoras}h de formación
+              </h2>
+            </div>
+            <div className="h-8 w-8 rounded-full flex items-center justify-center shrink-0 transition-all group-hover:scale-110"
+              style={{ background: 'linear-gradient(90deg,#02d47e,#00c16e)' }}>
+              <ChevronRight size={15} color="#032e34" />
+            </div>
           </div>
 
           {/* Módulos como cards horizontales */}
@@ -201,30 +210,28 @@ export default function TallerHub() {
             ))}
           </div>
 
-          <div className="px-6 pb-6 pt-2">
-            <button
-              onClick={() => navigate(`/taller/${slug}/ruta`)}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all hover:opacity-90"
-              style={{ background: 'linear-gradient(90deg,#02d47e,#00c16e)', color: '#032e34' }}
-            >
-              <BookOpen size={14} />
-              Ver ruta completa
-              <ChevronRight size={13} />
-            </button>
-          </div>
         </div>
 
         {/* ── EQUIPAMIENTO DEL TALLER ── */}
         <div className="bg-white rounded-2xl overflow-hidden"
           style={{ boxShadow: '0 2px 16px rgba(4,57,65,0.07)' }}>
-          <div className="px-6 pt-6 pb-4">
-            <p className="text-[11px] font-extrabold uppercase tracking-widest mb-1"
-              style={{ color: '#02d47e' }}>
-              Con qué trabajarás
-            </p>
-            <h2 className="text-lg font-extrabold" style={{ color: '#043941' }}>
-              Equipamiento del taller
-            </h2>
+          <div
+            className="px-6 pt-6 pb-4 flex items-center justify-between cursor-pointer group"
+            onClick={() => navigate(`/taller/${slug}/repositorio`)}
+          >
+            <div>
+              <p className="text-[11px] font-extrabold uppercase tracking-widest mb-1"
+                style={{ color: '#02d47e' }}>
+                Con qué trabajarás
+              </p>
+              <h2 className="text-lg font-extrabold" style={{ color: '#043941' }}>
+                Equipamiento del taller
+              </h2>
+            </div>
+            <div className="h-8 w-8 rounded-full flex items-center justify-center shrink-0 transition-all group-hover:scale-110"
+              style={{ background: '#f0faf5', border: '1.5px solid rgba(4,57,65,0.1)' }}>
+              <ChevronRight size={15} color="#043941" />
+            </div>
           </div>
 
           <div className="px-6 pb-4 space-y-5">
@@ -255,17 +262,7 @@ export default function TallerHub() {
             ))}
           </div>
 
-          <div className="px-6 pb-6">
-            <button
-              onClick={() => navigate(`/taller/${slug}/repositorio`)}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all hover:bg-[#e8f4f0]"
-              style={{ background: '#f0faf5', color: '#043941', border: '1.5px solid rgba(4,57,65,0.1)' }}
-            >
-              <Package size={14} />
-              Ver repositorio completo
-              <ChevronRight size={13} />
-            </button>
-          </div>
+          <div className="pb-4" />
         </div>
 
       </div>
