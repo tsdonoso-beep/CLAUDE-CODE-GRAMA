@@ -765,7 +765,7 @@ export default function Perfil() {
         </div>
 
         {/* ── Sidebar (1/3) ───────────────────────────────────────────────── */}
-        <div className="space-y-4">
+        <div className="space-y-4 lg:sticky lg:top-6">
 
           {/* Mi información */}
           <section
