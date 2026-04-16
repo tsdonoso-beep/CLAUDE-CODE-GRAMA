@@ -4,7 +4,7 @@
 // Fase 2: migrar a Supabase tabla consultas_docentes
 
 export type EstadoConsulta = 'pendiente' | 'respondida'
-export type ModuloConsulta = 'M0' | 'M1' | 'M2' | 'M3' | 'M4' | 'M5' | 'M6' | 'B1' | 'general'
+export type ModuloConsulta = 'ruta' | 'sesiones_vivo' | 'repositorio'
 
 export interface ConsultaDocente {
   id: string
@@ -26,15 +26,9 @@ export interface NuevaConsulta {
 }
 
 export const MODULOS_CONSULTA: { value: ModuloConsulta; label: string }[] = [
-  { value: 'general', label: 'General / Sin módulo específico' },
-  { value: 'M0',      label: 'M0 · Inicio y Diagnóstico' },
-  { value: 'M1',      label: 'M1 · Reconocimiento del Taller' },
-  { value: 'M2',      label: 'M2 · Zona de Investigación' },
-  { value: 'M3',      label: 'M3 · Zona de Almacén' },
-  { value: 'M4',      label: 'M4 · Zona de Innovación' },
-  { value: 'M5',      label: 'M5 · Programa Formativo' },
-  { value: 'M6',      label: 'M6 · Proyecto Final' },
-  { value: 'B1',      label: 'B1 · Mantenimiento' },
+  { value: 'ruta',          label: 'Ruta de Aprendizaje' },
+  { value: 'sesiones_vivo', label: 'Sesiones en Vivo' },
+  { value: 'repositorio',   label: 'Repositorio' },
 ]
 
 const STORAGE_KEY = (userId: string) => `grama_consultas_${userId}`

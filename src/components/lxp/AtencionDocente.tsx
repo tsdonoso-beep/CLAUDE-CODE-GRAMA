@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import {
   MessageCircle, Send, Clock, CheckCircle2,
-  ChevronDown, ChevronUp, Phone, Mail, HelpCircle,
+  ChevronDown, ChevronUp, Phone, HelpCircle,
 } from 'lucide-react'
 import {
   type ConsultaDocente, type ModuloConsulta,
@@ -26,7 +26,7 @@ interface Props {
 
 export function AtencionDocente({ userId, tallerSlug, displayName, tallerNombre, accent = '#02d47e' }: Props) {
   const [tab, setTab]               = useState<'form' | 'historial'>('form')
-  const [modulo, setModulo]         = useState<ModuloConsulta>('general')
+  const [modulo, setModulo]         = useState<ModuloConsulta>('ruta')
   const [mensaje, setMensaje]       = useState('')
   const [enviado, setEnviado]       = useState(false)
   const [consultas, setConsultas]   = useState<ConsultaDocente[]>([])
@@ -46,7 +46,7 @@ export function AtencionDocente({ userId, tallerSlug, displayName, tallerNombre,
       const nueva = saveConsulta({ userId, tallerSlug, modulo, mensaje: mensaje.trim() })
       setConsultas(prev => [nueva, ...prev])
       setMensaje('')
-      setModulo('general')
+      setModulo('ruta')
       setEnviado(true)
       setSubmitting(false)
       setTimeout(() => setEnviado(false), 4000)
@@ -147,7 +147,7 @@ export function AtencionDocente({ userId, tallerSlug, displayName, tallerNombre,
             {/* Selector módulo */}
             <div>
               <label className="text-xs font-semibold block mb-1.5" style={{ color: '#043941' }}>
-                ¿Sobre qué módulo es tu consulta?
+                ¿Sobre qué es tu consulta?
               </label>
               <select
                 value={modulo}
@@ -234,28 +234,16 @@ export function AtencionDocente({ userId, tallerSlug, displayName, tallerNombre,
             </div>
 
             {/* Contacto directo */}
-            <div className="grid grid-cols-2 gap-2">
-              {/* WhatsApp */}
-              <a
-                href={waUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all hover:opacity-90"
-                style={{ background: '#25D36615', color: '#128C7E', border: '1px solid #25D36625' }}
-              >
-                <Phone size={13} />
-                WhatsApp
-              </a>
-              {/* Email */}
-              <a
-                href="mailto:soporte@grama.pe"
-                className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all hover:opacity-90"
-                style={{ background: 'rgba(4,57,65,0.05)', color: '#043941', border: '1px solid rgba(4,57,65,0.1)' }}
-              >
-                <Mail size={13} />
-                Correo
-              </a>
-            </div>
+            <a
+              href={waUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all hover:opacity-90"
+              style={{ background: '#25D36615', color: '#128C7E', border: '1px solid #25D36625' }}
+            >
+              <Phone size={13} />
+              WhatsApp
+            </a>
 
             <p className="text-[10px] text-center" style={{ color: 'rgba(4,57,65,0.3)' }}>
               Tiempo de respuesta estimado: 24–48 horas hábiles
