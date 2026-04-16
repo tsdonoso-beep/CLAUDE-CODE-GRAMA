@@ -2,6 +2,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BookOpen, Clock, Video, Award } from 'lucide-react'
+import { SidebarTrigger } from '@/components/ui/sidebar'
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
 import { mockProximaSesion } from '@/mock/mockEstados'
@@ -42,7 +43,7 @@ export default function RutaAprendizaje() {
   return (
     <div>
       {/* ── Hero ── */}
-      <div className="px-8 pt-10 pb-16 relative overflow-hidden" style={{ background: '#043941' }}>
+      <div className="px-8 pt-8 pb-16 relative overflow-hidden" style={{ background: '#043941' }}>
         {/* Imagen de fondo del taller */}
         <div className="absolute inset-0" style={{
           backgroundImage: `url(${taller.imagen})`,
@@ -54,13 +55,18 @@ export default function RutaAprendizaje() {
         <div className="absolute inset-0" style={{ background: 'linear-gradient(100deg, rgba(4,57,65,0.92) 45%, rgba(4,57,65,0.65) 100%)' }} />
         <div className="absolute inset-0 grama-pattern opacity-40" />
 
-        <div className="relative z-10 max-w-6xl mx-auto grid lg:grid-cols-[3fr_2fr] gap-8 items-center">
+        <div className="relative z-10">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 mb-5 text-[0.7rem] font-bold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.35)' }}>
+            <SidebarTrigger style={{ color: 'rgba(255,255,255,0.35)', flexShrink: 0 }} />
+            <span>{taller.nombreCorto.toUpperCase()}</span>
+            <span style={{ color: 'rgba(255,255,255,0.55)' }}>› RUTA DE APRENDIZAJE</span>
+          </div>
+
+          <div className="grid lg:grid-cols-[3fr_2fr] gap-8 items-center">
 
           {/* Columna izquierda: info */}
           <div>
-            <p className="overline-label font-semibold mb-2" style={{ color: 'var(--grama-menta)' }}>
-              {taller.nombreCorto}
-            </p>
             <h1 className="text-h1 font-extrabold text-white mb-3 leading-tight">
               Tu Ruta de Aprendizaje
             </h1>
@@ -137,7 +143,8 @@ export default function RutaAprendizaje() {
             </div>
           </div>
 
-        </div>
+          </div>{/* /grid cols */}
+        </div>{/* /relative z-10 */}
 
         {/* Ola de transición hero → contenido */}
         <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ lineHeight: 0 }}>

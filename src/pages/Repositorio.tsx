@@ -6,6 +6,7 @@ import {
   Wrench, GraduationCap,
 } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
+import { SidebarTrigger } from '@/components/ui/sidebar'
 import { RepositorioCard } from '@/components/lxp/RepositorioCard'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
@@ -194,10 +195,13 @@ export default function Repositorio() {
             style={{ background: 'radial-gradient(circle, #ffffff 0%, transparent 70%)' }} />
         </div>
 
-        <div className="relative px-6 pt-10 pb-0">
-          <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: '#02d47e' }}>
-            {taller.nombreCorto} · Repositorio
-          </p>
+        <div className="relative px-6 pt-8 pb-0">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 mb-5 text-[0.7rem] font-bold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.35)' }}>
+            <SidebarTrigger style={{ color: 'rgba(255,255,255,0.35)', flexShrink: 0 }} />
+            <span>{taller.nombreCorto.toUpperCase()}</span>
+            <span style={{ color: 'rgba(255,255,255,0.55)' }}>› REPOSITORIO</span>
+          </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white mb-1 leading-tight">
             Recursos del Taller
           </h1>
