@@ -562,6 +562,55 @@ export default function Perfil() {
             </div>
           )}
 
+          {/* ── Acceso a talleres (solo admin) ── */}
+          {isAdmin && (
+            <section
+              className="rounded-2xl overflow-hidden animate-fade-in-up stagger-1"
+              style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}
+            >
+              <SectionHeader
+                icon={Layers}
+                title="Talleres EPT"
+                subtitle={`${talleresConfig.length} talleres disponibles · Programa MSE-SFT`}
+                iconColor="#045f6c"
+                action={
+                  <span className="text-[10px] font-bold" style={{ color: 'var(--grama-menta)' }}>
+                    {talleresConfig.length} disponibles
+                  </span>
+                }
+              />
+              <div className="grid grid-cols-2 divide-x divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
+                {talleresConfig.map(t => {
+                  const ta      = TALLER_ACCENTS[t.slug] ?? '#02d47e'
+                  const bienesT = getTotalBienesByTaller(t.slug)
+                  return (
+                    <button
+                      key={t.slug}
+                      onClick={() => navigate(`/taller/${t.slug}`)}
+                      className="w-full text-left flex items-center gap-3 px-5 py-4 transition-all"
+                      style={{ background: 'transparent' }}
+                      onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.025)')}
+                      onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = 'transparent')}
+                    >
+                      <div className="w-0.5 self-stretch rounded-full shrink-0" style={{ background: ta, minHeight: 36 }} />
+                      <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full shrink-0"
+                        style={{ background: `${ta}15`, color: ta }}>
+                        T{String(t.numero).padStart(2, '0')}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-bold leading-snug truncate" style={{ color: '#043941' }}>{t.nombre}</p>
+                        <p className="text-xs mt-0.5" style={{ color: 'rgba(4,57,65,0.38)' }}>
+                          {bienesT} bienes · {TOTAL_MODULOS} módulos
+                        </p>
+                      </div>
+                      <ChevronRight size={14} style={{ color: ta, flexShrink: 0 }} />
+                    </button>
+                  )
+                })}
+              </div>
+            </section>
+          )}
+
           {/* ── Talleres activos del docente ── */}
           {tallerSlugsAccesibles.length > 0 ? (
             <>
@@ -703,55 +752,6 @@ export default function Perfil() {
             </section>
           )}
 
-
-          {/* ── Acceso a talleres (solo admin) ── */}
-          {isAdmin && (
-            <section
-              className="rounded-2xl overflow-hidden animate-fade-in-up stagger-1"
-              style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}
-            >
-              <SectionHeader
-                icon={Layers}
-                title="Talleres EPT"
-                subtitle={`${talleresConfig.length} talleres disponibles · Programa MSE-SFT`}
-                iconColor="#045f6c"
-                action={
-                  <span className="text-[10px] font-bold" style={{ color: 'var(--grama-menta)' }}>
-                    {talleresConfig.length} disponibles
-                  </span>
-                }
-              />
-              <div className="grid grid-cols-2 divide-x divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
-                {talleresConfig.map(t => {
-                  const ta      = TALLER_ACCENTS[t.slug] ?? '#02d47e'
-                  const bienesT = getTotalBienesByTaller(t.slug)
-                  return (
-                    <button
-                      key={t.slug}
-                      onClick={() => navigate(`/taller/${t.slug}`)}
-                      className="w-full text-left flex items-center gap-3 px-5 py-4 transition-all"
-                      style={{ background: 'transparent' }}
-                      onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.025)')}
-                      onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = 'transparent')}
-                    >
-                      <div className="w-0.5 self-stretch rounded-full shrink-0" style={{ background: ta, minHeight: 36 }} />
-                      <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full shrink-0"
-                        style={{ background: `${ta}15`, color: ta }}>
-                        T{String(t.numero).padStart(2, '0')}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-bold leading-snug truncate" style={{ color: '#043941' }}>{t.nombre}</p>
-                        <p className="text-xs mt-0.5" style={{ color: 'rgba(4,57,65,0.38)' }}>
-                          {bienesT} bienes · {TOTAL_MODULOS} módulos
-                        </p>
-                      </div>
-                      <ChevronRight size={14} style={{ color: ta, flexShrink: 0 }} />
-                    </button>
-                  )
-                })}
-              </div>
-            </section>
-          )}
 
           {/* ── Atención al Docente ── */}
           <AtencionDocente
