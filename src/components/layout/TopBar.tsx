@@ -20,7 +20,7 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
     'Docente'
   const displayEmail = profile?.email ?? user?.email ?? ''
 
-  const crumbs: { label: string; to?: string }[] = [{ label: 'Mi Perfil', to: '/perfil' }]
+  const crumbs: { label: string; to?: string }[] = []
   if (taller) {
     crumbs.push({ label: taller.nombreCorto, to: `/taller/${slug}/ruta` })
     if (location.pathname.includes('/ruta')) {
