@@ -35,10 +35,10 @@ export default function TallerHub() {
           backgroundImage: `url(${taller.imagen})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          filter: 'brightness(0.38) saturate(0.6)',
+          filter: 'brightness(0.55) saturate(0.8)',
         }} />
         <div className="absolute inset-0" style={{
-          background: 'linear-gradient(115deg, rgba(3,14,18,0.97) 35%, rgba(4,57,65,0.75) 100%)',
+          background: 'linear-gradient(115deg, rgba(3,14,18,0.88) 30%, rgba(4,57,65,0.55) 100%)',
         }} />
         <div className="absolute inset-0 grama-pattern opacity-20" />
 
@@ -67,8 +67,9 @@ export default function TallerHub() {
           <div className="flex flex-wrap gap-6 mb-8">
             {[
               { icon: BookOpen, value: `${modulosLXP.length} módulos`, sub: 'M0 → M6' },
-              { icon: Clock,    value: `${totalHoras}h`,              sub: 'Virtual + Presencial' },
-              { icon: Award,    value: 'Constancia',                  sub: 'Inroprin' },
+              { icon: Clock,    value: `${totalHoras}h`,               sub: 'Virtual + Presencial' },
+              { icon: Package,  value: `${todosLos.length} bienes`,    sub: `${taller.zonas.length} zonas` },
+              { icon: Award,    value: 'Constancia',                   sub: 'Inroprin' },
             ].map(s => (
               <div key={s.value} className="flex items-center gap-2.5">
                 <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0"

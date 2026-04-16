@@ -19,6 +19,9 @@ const TIPO_ICONS: Record<string, React.ElementType> = {
   EQUIPOS: Package, HERRAMIENTAS: WrenchLucide, MOBILIARIO: Sofa,
   PEDAGOGICO: BookOpen, SEGURIDAD: HardHat,
 }
+const TIPO_LABELS: Record<string, string> = {
+  SEGURIDAD: 'Almacén',
+}
 
 // Excluir del catálogo: manuales, videos, USB y capacitación (tienen sus propias pestañas)
 function esExcluidoDeCatalogo(nombre: string): boolean {
@@ -322,7 +325,7 @@ export default function Repositorio() {
                   }}
                 >
                   <Icon size={11} />
-                  {tipo.charAt(0) + tipo.slice(1).toLowerCase()}
+                  {TIPO_LABELS[tipo] ?? (tipo.charAt(0) + tipo.slice(1).toLowerCase())}
                   <span className="font-extrabold opacity-70">{count}</span>
                 </button>
               ))}
