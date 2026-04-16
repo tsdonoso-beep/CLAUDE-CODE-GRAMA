@@ -22,6 +22,9 @@ import { MapaHabilidadesModal } from '@/components/lxp/MapaHabilidadesModal'
 import { TablaProgresionModal } from '@/components/lxp/TablaProgresionModal'
 import { DescargableViewerModal } from '@/components/lxp/DescargableViewerModal'
 import { VideoPlayerModal } from '@/components/lxp/VideoPlayerModal'
+import { SimuladorEPPMecaModal } from '@/components/lxp/interactivos/SimuladorEPPMecaModal'
+import { ExploradorEquiposModal } from '@/components/lxp/interactivos/ExploradorEquiposModal'
+import { SeleccionadorConsumiblesModal } from '@/components/lxp/interactivos/SeleccionadorConsumiblesModal'
 import { descargablesLXP } from '@/data/descargablesLXP'
 import { useTaller } from '@/hooks/useTaller'
 import { getTallerBySlug } from '@/data/talleresConfig'
@@ -56,7 +59,10 @@ export default function ModuloDetalle() {
   const [showTablaProgresion, setShowTablaProgresion] = useState(false)
   const [descargableAbierto, setDescargableAbierto] = useState<{ descargableId: string; contenidoId: string } | null>(null)
   const [videoAbierto, setVideoAbierto] = useState<{ titulo: string; descripcion?: string; duracionMin?: number; urlVideo: string; contenidoId: string } | null>(null)
-  const [showTourSimulator, setShowTourSimulator] = useState(false)
+  const [showTourSimulator, setShowTourSimulator]           = useState(false)
+  const [showSimuladorEPP, setShowSimuladorEPP]             = useState(false)
+  const [showExploradorEquipos, setShowExploradorEquipos]   = useState(false)
+  const [showSelConsumibles, setShowSelConsumibles]         = useState<'investigacion' | 'almacen' | 'innovacion' | null>(null)
 
   const closeGradeModal = useCallback(() => setShowGradeModal(false), [])
   const closeTourSimulator = useCallback(() => {
@@ -166,15 +172,23 @@ export default function ModuloDetalle() {
       if (contenido.id === 'm0-s2-c2' && slug === 'mecanica-automotriz') {
         setShowTourSimulator(true)
       } else if (contenido.id === 'm1-s2-c2') {
-        // Catálogo Interactivo de Bienes → Repositorio del taller
         markContenidoCompleted(contenido.id)
         navigate(`/taller/${slug}/repositorio`)
       } else if (contenido.id === 'm1-s3-c2') {
         setShowEPPSelector(true)
+      } else if (contenido.id === 'm1-s11-c2') {
+        setShowExploradorEquipos(true)
+      } else if (contenido.id === 'm1-s13-c2') {
+        setShowSimuladorEPP(true)
       } else if (contenido.id === 'm2-s4-c1') {
-        // Explorador Zona Investigación → Repositorio pre-filtrado
         markContenidoCompleted(contenido.id)
         navigate(`/taller/${slug}/repositorio?zona=${encodeURIComponent('ZONA DE INVESTIGACIÓN, GESTIÓN Y DISEÑO')}`)
+      } else if (contenido.id === 'm2-s19-c3') {
+        setShowSelConsumibles('investigacion')
+      } else if (contenido.id === 'm3-s26-c3') {
+        setShowSelConsumibles('almacen')
+      } else if (contenido.id === 'm4-s34-c3') {
+        setShowSelConsumibles('innovacion')
       } else if (contenido.id === 'm5-s2-c1') {
         setShowMapaHabilidades(true)
       } else if (contenido.id === 'm5-s3-c2') {
@@ -682,6 +696,38 @@ export default function ModuloDetalle() {
           onClose={() => setVideoAbierto(null)}
           onComplete={() => {
             if (videoAbierto?.contenidoId) markContenidoCompleted(videoAbierto.contenidoId)
+          }}
+        />
+      )}
+
+      {/* Simulador EPP — m1-s13-c2 */}
+      {showSimuladorEPP && (
+        <SimuladorEPPMecaModal
+          onClose={() => setShowSimuladorEPP(false)}
+          onComplete={() => markContenidoCompleted('m1-s13-c2')}
+        />
+      )}
+
+      {/* Explorador de Equipos — m1-s11-c2 */}
+      {showExploradorEquipos && (
+        <ExploradorEquiposModal
+          onClose={() => setShowExploradorEquipos(false)}
+          onComplete={() => markContenidoCompleted('m1-s11-c2')}
+        />
+      )}
+
+      {/* Seleccionador de Consumibles — m2-s19-c3 / m3-s26-c3 / m4-s34-c3 */}
+      {showSelConsumibles && (
+        <SeleccionadorConsumiblesModal
+          zona={showSelConsumibles}
+          onClose={() => setShowSelConsumibles(null)}
+          onComplete={() => {
+            const ids: Record<string, string> = {
+              investigacion: 'm2-s19-c3',
+              almacen:       'm3-s26-c3',
+              innovacion:    'm4-s34-c3',
+            }
+            markContenidoCompleted(ids[showSelConsumibles])
           }}
         />
       )}
