@@ -1,5 +1,5 @@
 // src/components/lxp/ContenidoBadge.tsx
-import { FileText, Video, Zap, HelpCircle, Radio, Download, Activity } from 'lucide-react'
+import { FileText, Video, Monitor, Zap, HelpCircle, Radio, Download, Activity } from 'lucide-react'
 import type { TipoContenido } from '@/data/modulosLXP'
 
 interface ContenidoBadgeProps {
@@ -24,6 +24,12 @@ const CONFIG: Record<TipoContenido, {
     label: 'Video',
     icon: Video,
     bg: '#02d47e',
+    text: '#ffffff',
+  },
+  PRESENTACION: {
+    label: 'Slides',
+    icon: Monitor,
+    bg: '#7c3aed',
     text: '#ffffff',
   },
   INTERACTIVO: {

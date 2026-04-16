@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
 import {
   Clock, ChevronLeft, ChevronDown, ChevronRight,
-  FileText, Video, Zap, Download, Activity,
+  FileText, Video, Monitor, Zap, Download, Activity,
   ExternalLink, Lock, ClipboardList, School, CheckCircle2
 } from 'lucide-react'
 import { modulosLXP } from '@/data/modulosLXP'
@@ -30,6 +30,7 @@ import jsPDF from 'jspdf'
 const CONTENT_ICON: Record<string, React.ElementType> = {
   PDF: FileText,
   VIDEO: Video,
+  PRESENTACION: Monitor,
   INTERACTIVO: Zap,
   QUIZ: ChevronRight,
   EN_VIVO: Video,
@@ -153,6 +154,13 @@ export default function ModuloDetalle() {
         if (user?.id) trackContenido(user.id, contenido.id, contenido.titulo, 'descarga', 'descargable', slug)
         // Descargable sin visor → completar al descargar
         markContenidoCompleted(contenido.id)
+      }
+    } else if (contenido.tipo === 'PRESENTACION') {
+      if (contenido.urlInteractivo) {
+        window.open(contenido.urlInteractivo, '_blank')
+        markContenidoCompleted(contenido.id)
+      } else {
+        toast.info('Próximamente disponible', { description: contenido.titulo })
       }
     } else if (contenido.tipo === 'INTERACTIVO') {
       if (contenido.id === 'm0-s2-c2' && slug === 'mecanica-automotriz') {
@@ -348,27 +356,6 @@ export default function ModuloDetalle() {
                         {ses.descripcion}
                       </p>
                     )}
-                    {/* Agenda de momentos para sesiones sincrónicas */}
-                    {ses.momentos && ses.momentos.length > 0 && (
-                      <div className="rounded-xl overflow-hidden border" style={{ borderColor: '#e3f8fb' }}>
-                        <div className="px-4 py-2.5 flex items-center gap-2" style={{ background: '#f0fdf9' }}>
-                          <span className="overline-label font-extrabold" style={{ color: 'var(--grama-menta)' }}>Agenda de sesión</span>
-                        </div>
-                        <div className="divide-y" style={{ borderColor: '#f1f5f9' }}>
-                          {ses.momentos.map((m, mi) => (
-                            <div key={mi} className="flex items-center gap-3 px-4 py-2 text-xs"
-                              style={{ background: m.isBreak ? '#fafff8' : m.isActividad ? '#f0fdf9' : '#ffffff' }}>
-                              {m.horaInicio && <span className="tabular-nums font-mono shrink-0" style={{ color: '#94a3b8' }}>{m.horaInicio}</span>}
-                              <span className="tabular-nums font-semibold shrink-0 w-10" style={{ color: '#045f6c' }}>{m.duracionMin}min</span>
-                              <span className="flex-1 font-medium" style={{ color: m.isBreak ? '#94a3b8' : m.isActividad ? '#02d47e' : '#043941',
-                                fontStyle: m.isBreak ? 'italic' : 'normal' }}>{m.momento}</span>
-                              {m.materiales && <span className="shrink-0 text-[10px]" style={{ color: '#94a3b8' }}>{m.materiales}</span>}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
                     {(() => {
                       // Separar diagnósticos (quiz con bancoPreguntas sin bloqueo) del resto
                       const diagnosticos = ses.contenidos.filter(
@@ -481,6 +468,10 @@ export default function ModuloDetalle() {
                                         <>Ver PDF <ChevronRight size={11} /></>
                                       ) : contenido.tipo === 'VIDEO' ? (
                                         <>Ver video <ChevronRight size={11} /></>
+                                      ) : contenido.tipo === 'PRESENTACION' ? (
+                                        <>Ver slides <ChevronRight size={11} /></>
+                                      ) : contenido.tipo === 'INTERACTIVO' ? (
+                                        <>Abrir actividad <ChevronRight size={11} /></>
                                       ) : (
                                         <>Abrir <ChevronRight size={11} /></>
                                       )}
