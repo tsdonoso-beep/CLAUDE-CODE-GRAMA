@@ -240,7 +240,7 @@ export default function TallerHub() {
               <div key={grupo.zona}>
                 <p className="text-[10px] font-extrabold uppercase tracking-widest mb-2"
                   style={{ color: 'rgba(4,57,65,0.35)' }}>
-                  {grupo.zona}
+                  {grupo.zona.replace(/seguridad/i, 'Almacén')}
                 </p>
                 <div className="space-y-1.5">
                   {grupo.items.map((b, bi) => (
