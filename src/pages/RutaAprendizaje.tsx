@@ -2,7 +2,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BookOpen, Clock, Video, Award } from 'lucide-react'
-import { SidebarTrigger } from '@/components/ui/sidebar'
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
 import { mockProximaSesion } from '@/mock/mockEstados'
@@ -58,7 +57,6 @@ export default function RutaAprendizaje() {
         <div className="relative z-10">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 mb-5 text-[0.7rem] font-bold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.35)' }}>
-            <SidebarTrigger style={{ color: 'rgba(255,255,255,0.35)', flexShrink: 0 }} />
             <span>{taller.nombreCorto.toUpperCase()}</span>
             <span style={{ color: 'rgba(255,255,255,0.55)' }}>› RUTA DE APRENDIZAJE</span>
           </div>
