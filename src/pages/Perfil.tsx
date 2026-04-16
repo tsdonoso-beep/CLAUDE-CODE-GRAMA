@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import {
   Mail, MapPin, Building2, Package, Clock,
-  ChevronRight, ChevronDown, Shield, LogOut, ArrowRight, Layers,
+  ChevronRight, Shield, LogOut, ArrowRight, Layers,
   Play, Sparkles, Zap, CalendarDays, Pencil, Check, X, Phone,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
@@ -119,8 +119,7 @@ function SectionHeader({
 const MESES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
 const DIAS_ES  = ['Lu','Ma','Mi','Ju','Vi','Sa','Do']
 
-function CalendarioSidebar({ tallerSlugs, accent, defaultOpen = false }: { tallerSlugs: string[]; accent: string; defaultOpen?: boolean }) {
-  const [open, setOpen] = useState(defaultOpen)
+function CalendarioSidebar({ tallerSlugs, accent }: { tallerSlugs: string[]; accent: string }) {
   const now = new Date()
   const [viewMonth, setViewMonth] = useState(now.getMonth())
   const [viewYear,  setViewYear]  = useState(now.getFullYear())
@@ -130,19 +129,24 @@ function CalendarioSidebar({ tallerSlugs, accent, defaultOpen = false }: { talle
     .filter(s => new Date(s.fecha).getTime() > Date.now())
     .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
 
-  const sessionDays = new Set(
-    sesiones
-      .filter(s => {
-        const d = new Date(s.fecha)
-        return d.getMonth() === viewMonth && d.getFullYear() === viewYear
-      })
-      .map(s => new Date(s.fecha).getDate())
-  )
+  // Map: día → colores únicos de talleres con sesión ese día
+  const dayColors = new Map<number, string[]>()
+  sesiones
+    .filter(s => {
+      const d = new Date(s.fecha)
+      return d.getMonth() === viewMonth && d.getFullYear() === viewYear
+    })
+    .forEach(s => {
+      const day    = new Date(s.fecha).getDate()
+      const tColor = TALLER_ACCENTS[s.tallerSlug] ?? accent
+      const prev   = dayColors.get(day) ?? []
+      if (!prev.includes(tColor)) dayColors.set(day, [...prev, tColor])
+    })
 
-  const firstDay   = new Date(viewYear, viewMonth, 1).getDay()
-  const startOff   = (firstDay + 6) % 7          // semana lunes-first
-  const daysInMon  = new Date(viewYear, viewMonth + 1, 0).getDate()
-  const isThisMon  = now.getMonth() === viewMonth && now.getFullYear() === viewYear
+  const firstDay  = new Date(viewYear, viewMonth, 1).getDay()
+  const startOff  = (firstDay + 6) % 7
+  const daysInMon = new Date(viewYear, viewMonth + 1, 0).getDate()
+  const isThisMon = now.getMonth() === viewMonth && now.getFullYear() === viewYear
 
   const prevMonth = () => viewMonth === 0 ? (setViewMonth(11), setViewYear(y => y - 1)) : setViewMonth(m => m - 1)
   const nextMonth = () => viewMonth === 11 ? (setViewMonth(0), setViewYear(y => y + 1)) : setViewMonth(m => m + 1)
@@ -156,142 +160,99 @@ function CalendarioSidebar({ tallerSlugs, accent, defaultOpen = false }: { talle
         boxShadow: `0 0 0 4px ${accent}0c, 0 4px 16px rgba(4,57,65,0.06)`,
       }}
     >
-      {/* Header — clic para expandir */}
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-5 py-4 transition-colors hover:bg-black/[0.015]"
-        style={{ borderBottom: open ? '1px solid rgba(4,57,65,0.07)' : 'none' }}
+      {/* Header — estático, siempre visible */}
+      <div
+        className="px-5 py-4 border-b flex items-center gap-2.5"
+        style={{ borderColor: 'rgba(4,57,65,0.07)' }}
       >
-        <div className="flex items-center gap-2.5">
-          <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: `${accent}18` }}>
-            <CalendarDays size={15} style={{ color: accent }} />
-          </div>
-          <div className="text-left">
-            <p className="text-sm font-extrabold leading-none" style={{ color: 'var(--grama-oscuro)' }}>Agenda de Sesiones</p>
-            {!open && sesiones[0] && (
-              <p className="text-[11px] mt-0.5 leading-none" style={{ color: '#94a3b8' }}>
-                Próx: {formatFechaSesion(sesiones[0].fecha)}
-              </p>
-            )}
-          </div>
+        <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: `${accent}18` }}>
+          <CalendarDays size={15} style={{ color: accent }} />
         </div>
-        <ChevronDown
-          size={14}
-          style={{
-            color: 'rgba(4,57,65,0.3)',
-            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
-            transition: 'transform 0.2s ease',
-            flexShrink: 0,
-          }}
-        />
-      </button>
+        <div>
+          <p className="text-sm font-extrabold leading-none" style={{ color: 'var(--grama-oscuro)' }}>Agenda de Sesiones</p>
+          {sesiones[0] && (
+            <p className="text-[11px] mt-0.5 leading-none" style={{ color: '#94a3b8' }}>
+              Próx: {formatFechaSesion(sesiones[0].fecha)}
+            </p>
+          )}
+        </div>
+      </div>
 
-      {/* Colapsado: próximas 2 sesiones como pills */}
-      {!open && (
-        <div className="px-4 py-3 space-y-2">
-          {sesiones.length === 0 ? (
-            <p className="text-xs text-center py-1" style={{ color: '#94a3b8' }}>Sin sesiones programadas</p>
-          ) : sesiones.slice(0, 2).map(s => {
-            const dias   = diasParaSesion(s.fecha)
-            const tColor = TALLER_ACCENTS[s.tallerSlug] ?? accent
-            const tNombre = talleresConfig.find(t => t.slug === s.tallerSlug)?.nombreCorto ?? s.tallerSlug
+      {/* Navegación de mes */}
+      <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
+        <button onClick={prevMonth} className="h-6 w-6 rounded-lg flex items-center justify-center transition-colors hover:bg-black/[0.04]">
+          <ChevronRight size={12} style={{ color: 'rgba(4,57,65,0.4)', transform: 'rotate(180deg)' }} />
+        </button>
+        <p className="text-xs font-extrabold" style={{ color: 'var(--grama-oscuro)' }}>
+          {MESES_ES[viewMonth]} {viewYear}
+        </p>
+        <button onClick={nextMonth} className="h-6 w-6 rounded-lg flex items-center justify-center transition-colors hover:bg-black/[0.04]">
+          <ChevronRight size={12} style={{ color: 'rgba(4,57,65,0.4)' }} />
+        </button>
+      </div>
+
+      {/* Grilla del calendario */}
+      <div className="px-4 pt-3 pb-2">
+        <div className="grid grid-cols-7 mb-1.5">
+          {DIAS_ES.map(d => (
+            <div key={d} className="text-center text-[9px] font-extrabold uppercase tracking-wide" style={{ color: 'rgba(4,57,65,0.28)' }}>{d}</div>
+          ))}
+        </div>
+        <div className="grid grid-cols-7">
+          {Array.from({ length: startOff }).map((_, i) => <div key={`e-${i}`} />)}
+          {Array.from({ length: daysInMon }, (_, i) => i + 1).map(day => {
+            const isToday  = isThisMon && day === now.getDate()
+            const colors   = dayColors.get(day) ?? []
+            const hasSes   = colors.length > 0
             return (
-              <div key={s.id} className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl"
-                style={{ background: `${tColor}08`, border: `1px solid ${tColor}18` }}>
-                <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-0.5" style={{ background: tColor }} />
-                <div className="flex-1 min-w-0">
-                  <p className="text-[11px] font-semibold leading-snug truncate" style={{ color: 'var(--grama-oscuro)' }}>{s.titulo}</p>
-                  <p className="text-[10px]" style={{ color: '#94a3b8' }}>
-                    {formatFechaSesion(s.fecha)}
-                    <span className="mx-1">·</span>
-                    <span className="font-bold" style={{ color: tColor }}>{tNombre}</span>
-                  </p>
+              <div key={day} className="flex flex-col items-center py-0.5">
+                <div
+                  className="w-6 h-6 rounded-full flex items-center justify-center text-[10px]"
+                  style={{
+                    background: isToday ? accent : 'transparent',
+                    color: isToday ? '#fff' : hasSes ? 'var(--grama-oscuro)' : 'rgba(4,57,65,0.4)',
+                    fontWeight: (isToday || hasSes) ? 800 : 400,
+                  }}
+                >
+                  {day}
                 </div>
-                <span className="text-xs font-extrabold shrink-0" style={{ color: tColor }}>{dias}d</span>
+                {/* Un punto por cada taller con sesión ese día */}
+                <div className="h-1.5 flex items-center justify-center gap-px">
+                  {!isToday && colors.slice(0, 3).map((c, ci) => (
+                    <span key={ci} className="w-1 h-1 rounded-full block" style={{ background: c }} />
+                  ))}
+                </div>
               </div>
             )
           })}
         </div>
-      )}
+      </div>
 
-      {/* Expandido: mini calendario + lista */}
-      {open && (
-        <div>
-          {/* Navegación de mes */}
-          <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
-            <button onClick={prevMonth} className="h-6 w-6 rounded-lg flex items-center justify-center transition-colors hover:bg-black/[0.04]">
-              <ChevronRight size={12} style={{ color: 'rgba(4,57,65,0.4)', transform: 'rotate(180deg)' }} />
-            </button>
-            <p className="text-xs font-extrabold" style={{ color: 'var(--grama-oscuro)' }}>
-              {MESES_ES[viewMonth]} {viewYear}
-            </p>
-            <button onClick={nextMonth} className="h-6 w-6 rounded-lg flex items-center justify-center transition-colors hover:bg-black/[0.04]">
-              <ChevronRight size={12} style={{ color: 'rgba(4,57,65,0.4)' }} />
-            </button>
-          </div>
-
-          {/* Grilla del calendario */}
-          <div className="px-4 pt-3 pb-2">
-            <div className="grid grid-cols-7 mb-1.5">
-              {DIAS_ES.map(d => (
-                <div key={d} className="text-center text-[9px] font-extrabold uppercase tracking-wide" style={{ color: 'rgba(4,57,65,0.28)' }}>{d}</div>
-              ))}
-            </div>
-            <div className="grid grid-cols-7">
-              {Array.from({ length: startOff }).map((_, i) => <div key={`e-${i}`} />)}
-              {Array.from({ length: daysInMon }, (_, i) => i + 1).map(day => {
-                const isToday    = isThisMon && day === now.getDate()
-                const hasSession = sessionDays.has(day)
-                return (
-                  <div key={day} className="flex flex-col items-center py-0.5">
-                    <div
-                      className="w-6 h-6 rounded-full flex items-center justify-center text-[10px]"
-                      style={{
-                        background: isToday ? accent : 'transparent',
-                        color: isToday ? '#fff' : hasSession ? 'var(--grama-oscuro)' : 'rgba(4,57,65,0.4)',
-                        fontWeight: (isToday || hasSession) ? 800 : 400,
-                      }}
-                    >
-                      {day}
-                    </div>
-                    <div className="h-1.5 flex items-center justify-center">
-                      {hasSession && !isToday && (
-                        <span className="w-1 h-1 rounded-full block" style={{ background: accent }} />
-                      )}
-                    </div>
+      {/* Lista de próximas 4 sesiones */}
+      {sesiones.length > 0 && (
+        <div className="mx-4 mb-4 pt-3 border-t" style={{ borderColor: 'rgba(4,57,65,0.07)' }}>
+          <p className="text-[9px] font-extrabold uppercase tracking-widest mb-2.5" style={{ color: 'rgba(4,57,65,0.3)' }}>Próximas sesiones</p>
+          <div className="space-y-2.5">
+            {sesiones.slice(0, 4).map(s => {
+              const dias    = diasParaSesion(s.fecha)
+              const tColor  = TALLER_ACCENTS[s.tallerSlug] ?? accent
+              const tNombre = talleresConfig.find(t => t.slug === s.tallerSlug)?.nombreCorto ?? s.tallerSlug
+              return (
+                <div key={s.id} className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5" style={{ background: tColor }} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[11px] font-semibold leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{s.titulo}</p>
+                    <p className="text-[10px]" style={{ color: '#94a3b8' }}>
+                      {formatFechaSesion(s.fecha)} · {formatHoraSesion(s.fecha)}
+                      <span className="mx-1">·</span>
+                      <span className="font-bold" style={{ color: tColor }}>{tNombre}</span>
+                    </p>
                   </div>
-                )
-              })}
-            </div>
+                  <span className="text-[10px] font-extrabold shrink-0 mt-0.5" style={{ color: tColor }}>{dias}d</span>
+                </div>
+              )
+            })}
           </div>
-
-          {/* Lista de próximas sesiones */}
-          {sesiones.length > 0 && (
-            <div className="mx-4 mb-4 pt-3 border-t" style={{ borderColor: 'rgba(4,57,65,0.07)' }}>
-              <p className="text-[9px] font-extrabold uppercase tracking-widest mb-2.5" style={{ color: 'rgba(4,57,65,0.3)' }}>Próximas sesiones</p>
-              <div className="space-y-2.5">
-                {sesiones.slice(0, defaultOpen ? 12 : 4).map(s => {
-                  const dias    = diasParaSesion(s.fecha)
-                  const tColor  = TALLER_ACCENTS[s.tallerSlug] ?? accent
-                  const tNombre = talleresConfig.find(t => t.slug === s.tallerSlug)?.nombreCorto ?? s.tallerSlug
-                  return (
-                    <div key={s.id} className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5" style={{ background: tColor }} />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[11px] font-semibold leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{s.titulo}</p>
-                        <p className="text-[10px]" style={{ color: '#94a3b8' }}>
-                          {formatFechaSesion(s.fecha)} · {formatHoraSesion(s.fecha)}
-                          <span className="mx-1">·</span>
-                          <span className="font-bold" style={{ color: tColor }}>{tNombre}</span>
-                        </p>
-                      </div>
-                      <span className="text-[10px] font-extrabold shrink-0 mt-0.5" style={{ color: tColor }}>{dias}d</span>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          )}
         </div>
       )}
     </section>
@@ -929,7 +890,6 @@ export default function Perfil() {
             <CalendarioSidebar
               tallerSlugs={isAdmin ? talleresConfig.map(t => t.slug) : tallerSlugsAccesibles}
               accent={accent}
-              defaultOpen={isAdmin}
             />
           )}
 
