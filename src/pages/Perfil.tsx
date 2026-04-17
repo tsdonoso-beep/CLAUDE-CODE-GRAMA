@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import {
   Mail, MapPin, Building2, Package, Clock,
   ChevronRight, Shield, LogOut, ArrowRight, Layers,
-  Play, Sparkles, Zap, CalendarDays, Pencil, Check, X, Phone,
+  Play, Zap, CalendarDays, Pencil, Check, X, Phone,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useProgress } from '@/contexts/ProgressContext'
@@ -16,6 +16,7 @@ import { ProgressRing } from '@/components/lxp/ProgressRing'
 import { trackNavegacion } from '@/lib/tracker'
 import { getProximaSesion, getSesionesPorTaller, formatFechaSesion, formatHoraSesion, diasParaSesion } from '@/data/sesionesLXP'
 import { AtencionDocente } from '@/components/lxp/AtencionDocente'
+import { TallerCardDocente } from '@/components/lxp/TallerCardDocente'
 
 const TOTAL_HORAS   = 150
 const TOTAL_MODULOS = 7
@@ -617,103 +618,30 @@ export default function Perfil() {
               {tallerSlugsAccesibles.map((slug, idx) => {
                 const t = talleresConfig.find(x => x.slug === slug)
                 if (!t) return null
-                const ta = TALLER_ACCENTS[t.slug] ?? '#02d47e'
-                const bienes = getTotalBienesByTaller(t.slug)
-                const isPrimario = slug === tallerSlug
+                const ta       = TALLER_ACCENTS[t.slug] ?? '#02d47e'
+                const bienes   = getTotalBienesByTaller(t.slug)
                 const progresoT = getTallerProgreso(t.slug)
+                const proxima   = t.slug !== 'taller-general-ept' ? getProximaSesion(t.slug) : null
+                const proximaData = proxima ? {
+                  titulo: proxima.titulo,
+                  fechaFormateada: `${formatFechaSesion(proxima.fecha)} · ${formatHoraSesion(proxima.fecha)}`,
+                  dias: diasParaSesion(proxima.fecha),
+                } : null
                 return (
-                  <section
+                  <TallerCardDocente
                     key={slug}
-                    className={`rounded-2xl overflow-hidden animate-fade-in-up stagger-${idx + 1}`}
-                    style={{
-                      background: '#ffffff',
-                      border: `1.5px solid ${ta}4d`,
-                      boxShadow: `0 0 0 5px ${ta}0d, 0 8px 28px rgba(4,57,65,0.07)`,
-                    }}
-                  >
-                    <SectionHeader
-                      icon={Play}
-                      title="Continuar donde lo dejaste"
-                      subtitle={t.nombre}
-                      iconColor={ta}
-                      action={
-                        <button
-                          onClick={() => navigate(`/taller/${t.slug}/ruta`)}
-                          className="flex items-center gap-1 text-xs font-bold transition-all"
-                          style={{ color: ta }}
-                        >
-                          Ir al taller <ChevronRight size={13} />
-                        </button>
-                      }
-                    />
-                    <div className="p-5">
-                      <div className="flex items-center gap-3 mb-3 pb-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
-                        <span className="text-xs font-extrabold px-2.5 py-1 rounded-lg shrink-0"
-                          style={{ background: `${ta}18`, color: ta, border: `1px solid ${ta}25` }}>
-                          T{String(t.numero).padStart(2, '0')}
-                        </span>
-                        <p className="text-sm font-extrabold uppercase tracking-wide" style={{ color: 'var(--grama-oscuro)', letterSpacing: '0.04em' }}>
-                          {t.nombre}
-                        </p>
-                      </div>
-                      <p className="text-sm leading-relaxed mb-4" style={{ color: '#64748b' }}>{t.descripcion}</p>
-                      <div className="flex gap-2 mb-4">
-                        {[
-                          { label: `${TOTAL_MODULOS} Módulos`, color: ta },
-                          { label: `${TOTAL_HORAS}h Formación`, color: '#045f6c' },
-                          { label: `${bienes} Bienes`, color: '#02d47e' },
-                        ].map(chip => (
-                          <span key={chip.label} className="text-[10px] font-bold px-2.5 py-1 rounded-full"
-                            style={{ background: `${chip.color}12`, color: chip.color, border: `1px solid ${chip.color}20` }}>
-                            {chip.label}
-                          </span>
-                        ))}
-                      </div>
-                      {/* Próxima sesión en vivo — contextual por taller */}
-                      {t.slug !== 'taller-general-ept' && (() => {
-                        const proxima = getProximaSesion(t.slug)
-                        if (!proxima) return null
-                        const dias = diasParaSesion(proxima.fecha)
-                        return (
-                          <div className="flex items-center gap-3 px-4 py-3 rounded-xl mb-4"
-                            style={{ background: `${ta}08`, border: `1px solid ${ta}1a` }}>
-                            <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
-                              style={{ background: `${ta}18` }}>
-                              <Sparkles size={13} style={{ color: ta }} />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-[10px] font-extrabold uppercase tracking-wider leading-none mb-0.5" style={{ color: ta }}>
-                                Próxima sesión en vivo
-                              </p>
-                              <p className="text-xs font-semibold truncate" style={{ color: 'var(--grama-oscuro)' }}>
-                                {proxima.titulo}
-                              </p>
-                              <p className="text-[11px] mt-0.5" style={{ color: '#64748b' }}>
-                                {formatFechaSesion(proxima.fecha)} · {formatHoraSesion(proxima.fecha)}
-                              </p>
-                            </div>
-                            <div className="text-right shrink-0 pl-3 border-l" style={{ borderColor: `${ta}25` }}>
-                              <p className="text-xl font-extrabold leading-none" style={{ color: ta }}>{dias}</p>
-                              <p className="text-[10px] mt-0.5" style={{ color: '#94a3b8' }}>{dias === 1 ? 'día' : 'días'}</p>
-                            </div>
-                          </div>
-                        )
-                      })()}
-
-                      <div className="flex gap-2.5">
-                        <button onClick={() => navigate(`/taller/${t.slug}/ruta`)}
-                          className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold transition-opacity hover:opacity-90"
-                          style={{ background: '#043941', color: 'var(--grama-menta)' }}>
-                          <Play size={14} /> {progresoT.porcentaje === 0 ? 'Iniciar Ruta' : 'Seguir Ruta'}
-                        </button>
-                        <button onClick={() => navigate(`/taller/${t.slug}/repositorio`)}
-                          className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-opacity hover:opacity-80"
-                          style={{ background: 'rgba(4,57,65,0.05)', color: 'var(--grama-oscuro)', border: '1px solid rgba(4,57,65,0.1)' }}>
-                          <Package size={13} /> Repositorio
-                        </button>
-                      </div>
-                    </div>
-                  </section>
+                    slug={slug}
+                    numero={t.numero}
+                    nombre={t.nombre}
+                    descripcion={t.descripcion}
+                    accent={ta}
+                    bienes={bienes}
+                    progresoT={progresoT}
+                    proximaSesion={proximaData}
+                    onRuta={() => navigate(`/taller/${t.slug}/ruta`)}
+                    onRepositorio={() => navigate(`/taller/${t.slug}/repositorio`)}
+                    animDelay={`${0.1 + idx * 0.1}s`}
+                  />
                 )
               })}
             </>
