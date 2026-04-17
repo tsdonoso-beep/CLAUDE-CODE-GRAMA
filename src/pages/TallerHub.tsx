@@ -4,6 +4,19 @@ import { BookOpen, Package, ChevronRight, Clock, Award, ArrowRight } from 'lucid
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
 import { getBienesByTaller } from '@/data/bienesData'
+import {
+  SvgAutomotriz,
+  SvgEbanisteria,
+  SvgElectricidad,
+  SvgElectronica,
+} from '@/components/lxp/TallerCardDocente'
+
+const TALLER_SVG: Record<string, React.ReactNode> = {
+  'mecanica-automotriz': <SvgAutomotriz />,
+  'ebanisteria':         <SvgEbanisteria />,
+  'electricidad':        <SvgElectricidad />,
+  'electronica':         <SvgElectronica />,
+}
 
 export default function TallerHub() {
   const { taller, slug } = useTaller()
@@ -110,28 +123,51 @@ export default function TallerHub() {
       {/* ══ COMPETENCIAS ══════════════════════════════════════════════════════ */}
       {taller.competencias?.length > 0 && (
         <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.06)' }}>
-          <div className="px-8 py-10">
+          <div className="px-8 py-8">
             <p className="text-[11px] font-extrabold uppercase tracking-widest mb-1"
               style={{ color: '#02d47e' }}>
               Lo que lograrás
             </p>
-            <h2 className="text-xl font-extrabold mb-6" style={{ color: '#043941' }}>
+            <h2 className="text-xl font-extrabold mb-5" style={{ color: '#043941' }}>
               Competencias que desarrollarás
             </h2>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {taller.competencias.map((c, i) => (
-                <div key={i} className="flex items-start gap-4 p-4 rounded-2xl"
-                  style={{ background: '#f0faf5', border: '1px solid rgba(2,212,126,0.15)' }}>
-                  <span className="text-2xl font-extrabold shrink-0 leading-none mt-0.5 tabular-nums"
-                    style={{ color: 'rgba(2,212,126,0.35)', fontVariantNumeric: 'tabular-nums' }}>
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span className="text-sm font-semibold leading-snug" style={{ color: '#043941' }}>
-                    {c}
-                  </span>
+            <div className="rounded-2xl overflow-hidden"
+              style={{ border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.04)' }}>
+
+              {/* Banner ilustrado */}
+              {TALLER_SVG[slug] ? (
+                <div style={{ height: 140, overflow: 'hidden' }}>
+                  {TALLER_SVG[slug]}
                 </div>
-              ))}
+              ) : (
+                <div style={{ height: 10, background: `hsl(${taller.color})` }} />
+              )}
+
+              {/* Items horizontales */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: `repeat(${Math.min(taller.competencias.length, 5)}, 1fr)`,
+              }}>
+                {taller.competencias.map((c, i) => (
+                  <div key={i} style={{
+                    padding: '16px 18px',
+                    borderRight: i < taller.competencias.length - 1
+                      ? '1px solid rgba(4,57,65,0.06)' : 'none',
+                  }}>
+                    <span style={{
+                      display: 'block', fontSize: 22, fontWeight: 800,
+                      color: 'rgba(4,57,65,0.09)', lineHeight: 1, marginBottom: 7,
+                      fontFamily: "'DM Mono', monospace",
+                    }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#043941', lineHeight: 1.5 }}>
+                      {c}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

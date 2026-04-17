@@ -5,7 +5,7 @@ const TOTAL_HORAS   = 150
 const TOTAL_MODULOS = 7
 
 // ── SVG Automotriz ────────────────────────────────────────────────────────────
-function SvgAutomotriz() {
+export function SvgAutomotriz() {
   return (
     <svg width="100%" height="110" viewBox="0 0 560 110" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <rect x="0" y="0" width="560" height="110" fill="#162d5c"/>
@@ -86,7 +86,7 @@ function SvgAutomotriz() {
 }
 
 // ── SVG Ebanistería ───────────────────────────────────────────────────────────
-function SvgEbanisteria() {
+export function SvgEbanisteria() {
   return (
     <svg width="100%" height="110" viewBox="0 0 560 110" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <rect x="0" y="0" width="560" height="110" fill="#2a1a08"/>
@@ -163,7 +163,7 @@ function SvgEbanisteria() {
 }
 
 // ── SVG Electricidad ──────────────────────────────────────────────────────────
-function SvgElectricidad() {
+export function SvgElectricidad() {
   return (
     <svg width="100%" height="110" viewBox="0 0 560 110" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <rect x="0" y="0" width="560" height="110" fill="#131929"/>
@@ -262,7 +262,7 @@ function SvgElectricidad() {
 }
 
 // ── SVG Electrónica ───────────────────────────────────────────────────────────
-function SvgElectronica() {
+export function SvgElectronica() {
   return (
     <svg width="100%" height="110" viewBox="0 0 560 110" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <rect x="0" y="0" width="560" height="110" fill="#061520"/>
