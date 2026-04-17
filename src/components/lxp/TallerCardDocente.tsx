@@ -162,6 +162,250 @@ function SvgEbanisteria() {
   )
 }
 
+// ── SVG Electricidad ──────────────────────────────────────────────────────────
+function SvgElectricidad() {
+  return (
+    <svg width="100%" height="110" viewBox="0 0 560 110" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="560" height="110" fill="#131929"/>
+      <rect x="0" y="88" width="560" height="22" fill="#0d1120"/>
+      <line x1="280" y1="88" x2="0"   y2="110" stroke="#1e2d4e" strokeWidth="1"/>
+      <line x1="280" y1="88" x2="140" y2="110" stroke="#1e2d4e" strokeWidth="1"/>
+      <line x1="280" y1="88" x2="280" y2="110" stroke="#1e2d4e" strokeWidth="1"/>
+      <line x1="280" y1="88" x2="420" y2="110" stroke="#1e2d4e" strokeWidth="1"/>
+      <line x1="280" y1="88" x2="560" y2="110" stroke="#1e2d4e" strokeWidth="1"/>
+      {/* Electrical panel */}
+      <rect x="8" y="10" width="82" height="72" rx="3" fill="#1e2d4e"/>
+      <rect x="8" y="10" width="82" height="5" rx="2" fill="#2a3d5e"/>
+      <rect x="13" y="17" width="72" height="58" rx="2" fill="#162340" stroke="#2a3d5e" strokeWidth="1"/>
+      <rect x="17" y="22" width="14" height="8" rx="1" fill="#2563eb"/>
+      <rect x="17" y="32" width="14" height="8" rx="1" fill="#2563eb"/>
+      <rect x="17" y="42" width="14" height="8" rx="1" fill="#2563eb"/>
+      <rect x="17" y="52" width="14" height="8" rx="1" fill="#1d4ed8"/>
+      <rect x="17" y="62" width="14" height="8" rx="1" fill="#1d4ed8"/>
+      <rect x="35" y="22" width="14" height="8" rx="1" fill="#2563eb"/>
+      <rect x="35" y="32" width="14" height="8" rx="1" fill="#fde047" opacity=".9"/>
+      <rect x="35" y="42" width="14" height="8" rx="1" fill="#2563eb"/>
+      <rect x="35" y="52" width="14" height="8" rx="1" fill="#2563eb"/>
+      <rect x="35" y="62" width="14" height="8" rx="1" fill="#1d4ed8"/>
+      <rect x="19" y="24" width="10" height="3" rx="1" fill="#93c5fd" opacity=".7"/>
+      <rect x="19" y="34" width="10" height="3" rx="1" fill="#93c5fd" opacity=".7"/>
+      <rect x="19" y="44" width="10" height="3" rx="1" fill="#93c5fd" opacity=".6"/>
+      <rect x="19" y="54" width="10" height="3" rx="1" fill="#93c5fd" opacity=".5"/>
+      <rect x="19" y="64" width="10" height="3" rx="1" fill="#93c5fd" opacity=".5"/>
+      <rect x="37" y="24" width="10" height="3" rx="1" fill="#93c5fd" opacity=".7"/>
+      <rect x="37" y="34" width="10" height="3" rx="1" fill="#fef08a" opacity=".8"/>
+      <rect x="37" y="44" width="10" height="3" rx="1" fill="#93c5fd" opacity=".6"/>
+      <rect x="37" y="54" width="10" height="3" rx="1" fill="#93c5fd" opacity=".6"/>
+      <rect x="37" y="64" width="10" height="3" rx="1" fill="#93c5fd" opacity=".5"/>
+      <rect x="52" y="22" width="28" height="52" rx="1" fill="#111827" opacity=".6"/>
+      <line x1="54" y1="30" x2="78" y2="30" stroke="#2a3d5e" strokeWidth="1"/>
+      <line x1="54" y1="38" x2="78" y2="38" stroke="#2a3d5e" strokeWidth="1"/>
+      <line x1="54" y1="46" x2="78" y2="46" stroke="#2a3d5e" strokeWidth="1"/>
+      <line x1="54" y1="54" x2="78" y2="54" stroke="#2a3d5e" strokeWidth="1"/>
+      <line x1="54" y1="62" x2="78" y2="62" stroke="#2a3d5e" strokeWidth="1"/>
+      {/* Wall conduit */}
+      <rect x="105" y="12" width="250" height="76" rx="2" fill="#192033" opacity=".5"/>
+      <rect x="110" y="38" width="240" height="8" rx="3" fill="#374151"/>
+      <rect x="110" y="39" width="240" height="3" rx="1" fill="#4b5563" opacity=".6"/>
+      <rect x="148" y="46" width="8" height="36" rx="3" fill="#374151"/>
+      <rect x="230" y="46" width="8" height="36" rx="3" fill="#374151"/>
+      <rect x="312" y="46" width="8" height="36" rx="3" fill="#374151"/>
+      <rect x="143" y="34" width="18" height="14" rx="2" fill="#374151"/>
+      <rect x="225" y="34" width="18" height="14" rx="2" fill="#374151"/>
+      <rect x="307" y="34" width="18" height="14" rx="2" fill="#374151"/>
+      <rect x="143" y="78" width="18" height="12" rx="2" fill="#374151"/>
+      <rect x="146" y="80" width="5" height="4" rx="1" fill="#1f2937"/>
+      <rect x="153" y="80" width="5" height="4" rx="1" fill="#1f2937"/>
+      <rect x="225" y="78" width="18" height="12" rx="2" fill="#374151"/>
+      <rect x="228" y="80" width="5" height="4" rx="1" fill="#1f2937"/>
+      <rect x="235" y="80" width="5" height="4" rx="1" fill="#1f2937"/>
+      <line x1="112" y1="42" x2="348" y2="42" stroke="#fde047" strokeWidth="1" opacity=".3"/>
+      <line x1="112" y1="43" x2="348" y2="43" stroke="#f87171" strokeWidth="1" opacity=".25"/>
+      <line x1="112" y1="44" x2="348" y2="44" stroke="#6b7280" strokeWidth="1" opacity=".2"/>
+      {/* Hanging lightbulb */}
+      <line x1="280" y1="12" x2="280" y2="26" stroke="#4b5563" strokeWidth="2"/>
+      <rect x="274" y="26" width="12" height="4" rx="1" fill="#374151"/>
+      <ellipse cx="280" cy="34" rx="9" ry="11" fill="#1f2937" stroke="#374151" strokeWidth="1"/>
+      <ellipse cx="280" cy="32" rx="5" ry="7" fill="#fef08a" opacity=".6"/>
+      <ellipse cx="280" cy="32" rx="3" ry="4" fill="#fef9c3" opacity=".8"/>
+      <ellipse cx="280" cy="32" rx="20" ry="16" fill="#fde047" opacity=".06"/>
+      {/* Worker */}
+      <rect x="393" y="80" width="10" height="20" rx="5" fill="#1e3a5f"/>
+      <rect x="407" y="80" width="10" height="20" rx="5" fill="#1e3a5f"/>
+      <rect x="391" y="96" width="14" height="8" rx="3" fill="#111827"/>
+      <rect x="405" y="96" width="14" height="8" rx="3" fill="#111827"/>
+      <rect x="388" y="40" width="32" height="42" rx="8" fill="#1d4ed8"/>
+      <rect x="388" y="52" width="32" height="4" fill="#fde047" opacity=".7"/>
+      <rect x="388" y="64" width="32" height="4" fill="#fde047" opacity=".7"/>
+      <circle cx="404" cy="28" r="13" fill="#f5c4a0"/>
+      <ellipse cx="404" cy="20" rx="16" ry="8" fill="#fde047"/>
+      <rect x="389" y="18" width="30" height="6" rx="3" fill="#fde047"/>
+      <rect x="387" y="22" width="34" height="3" rx="1.5" fill="#f59e0b"/>
+      <ellipse cx="404" cy="25" rx="18" ry="4" fill="#f59e0b" opacity=".5"/>
+      <rect x="362" y="44" width="28" height="9" rx="4.5" fill="#f5c4a0"/>
+      <rect x="336" y="47" width="26" height="4" rx="2" fill="#9ca3af"/>
+      <rect x="332" y="46" width="6" height="6" rx="1" fill="#fde047"/>
+      <rect x="420" y="44" width="22" height="9" rx="4.5" fill="#f5c4a0"/>
+      <rect x="440" y="38" width="5" height="16" rx="2.5" fill="#f87171"/>
+      <rect x="441" y="36" width="3" height="4" rx="1" fill="#9ca3af"/>
+      {/* Lightning bolt bg */}
+      <polygon points="490,15 480,48 490,44 478,78 502,38 490,43" fill="#fde047" opacity=".12"/>
+      <defs>
+        <linearGradient id="elecA" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="75%" stopColor="#131929" stopOpacity="0"/>
+          <stop offset="100%" stopColor="#131929" stopOpacity=".4"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="560" height="110" fill="url(#elecA)"/>
+    </svg>
+  )
+}
+
+// ── SVG Electrónica ───────────────────────────────────────────────────────────
+function SvgElectronica() {
+  return (
+    <svg width="100%" height="110" viewBox="0 0 560 110" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="560" height="110" fill="#061520"/>
+      {/* PCB grid bg */}
+      <line x1="0" y1="20" x2="560" y2="20" stroke="#0d2a1a" strokeWidth="1"/>
+      <line x1="0" y1="40" x2="560" y2="40" stroke="#0d2a1a" strokeWidth="1"/>
+      <line x1="0" y1="60" x2="560" y2="60" stroke="#0d2a1a" strokeWidth="1"/>
+      <line x1="0" y1="80" x2="560" y2="80" stroke="#0d2a1a" strokeWidth="1"/>
+      <line x1="80"  y1="0" x2="80"  y2="110" stroke="#0d2a1a" strokeWidth="1"/>
+      <line x1="160" y1="0" x2="160" y2="110" stroke="#0d2a1a" strokeWidth="1"/>
+      <line x1="240" y1="0" x2="240" y2="110" stroke="#0d2a1a" strokeWidth="1"/>
+      <line x1="320" y1="0" x2="320" y2="110" stroke="#0d2a1a" strokeWidth="1"/>
+      <line x1="400" y1="0" x2="400" y2="110" stroke="#0d2a1a" strokeWidth="1"/>
+      <line x1="480" y1="0" x2="480" y2="110" stroke="#0d2a1a" strokeWidth="1"/>
+      <rect x="0" y="90" width="560" height="20" fill="#040e12"/>
+      <line x1="280" y1="90" x2="0"   y2="110" stroke="#0d2a2a" strokeWidth="1"/>
+      <line x1="280" y1="90" x2="140" y2="110" stroke="#0d2a2a" strokeWidth="1"/>
+      <line x1="280" y1="90" x2="280" y2="110" stroke="#0d2a2a" strokeWidth="1"/>
+      <line x1="280" y1="90" x2="420" y2="110" stroke="#0d2a2a" strokeWidth="1"/>
+      <line x1="280" y1="90" x2="560" y2="110" stroke="#0d2a2a" strokeWidth="1"/>
+      {/* Oscilloscope */}
+      <rect x="5" y="14" width="80" height="66" rx="5" fill="#0d1f2d"/>
+      <rect x="10" y="20" width="48" height="34" rx="3" fill="#000d0d"/>
+      <line x1="10" y1="28" x2="58" y2="28" stroke="#22d3ee" strokeWidth=".5" opacity=".2"/>
+      <line x1="10" y1="37" x2="58" y2="37" stroke="#22d3ee" strokeWidth=".5" opacity=".2"/>
+      <line x1="10" y1="45" x2="58" y2="45" stroke="#22d3ee" strokeWidth=".5" opacity=".2"/>
+      <line x1="22" y1="20" x2="22" y2="54" stroke="#22d3ee" strokeWidth=".5" opacity=".2"/>
+      <line x1="34" y1="20" x2="34" y2="54" stroke="#22d3ee" strokeWidth=".5" opacity=".2"/>
+      <line x1="46" y1="20" x2="46" y2="54" stroke="#22d3ee" strokeWidth=".5" opacity=".2"/>
+      <path d="M10,37 L18,37 L20,26 L24,48 L28,37 L36,37 L38,26 L42,48 L46,37 L58,37" stroke="#22d3ee" strokeWidth="1.5" fill="none" opacity=".9"/>
+      <path d="M10,37 L18,37 L20,26 L24,48 L28,37 L36,37 L38,26 L42,48 L46,37 L58,37" stroke="#22d3ee" strokeWidth="5" fill="none" opacity=".08"/>
+      <circle cx="65" cy="26" r="5" fill="#1a3a3a" stroke="#22d3ee" strokeWidth=".5" opacity=".7"/>
+      <circle cx="65" cy="26" r="2" fill="#22d3ee" opacity=".5"/>
+      <circle cx="65" cy="38" r="5" fill="#1a3a3a" stroke="#22d3ee" strokeWidth=".5" opacity=".7"/>
+      <circle cx="65" cy="38" r="2" fill="#34d399" opacity=".5"/>
+      <circle cx="65" cy="50" r="5" fill="#1a3a3a" stroke="#22d3ee" strokeWidth=".5" opacity=".7"/>
+      <circle cx="65" cy="50" r="2" fill="#60a5fa" opacity=".5"/>
+      <circle cx="20" cy="66" r="4" fill="#1a2a2a" stroke="#374151" strokeWidth="1"/>
+      <circle cx="20" cy="66" r="2" fill="#374151"/>
+      <circle cx="35" cy="66" r="4" fill="#1a2a2a" stroke="#374151" strokeWidth="1"/>
+      <circle cx="35" cy="66" r="2" fill="#374151"/>
+      <path d="M20 70 Q30 80 40 88" stroke="#22d3ee" strokeWidth="1.5" fill="none" opacity=".4"/>
+      <path d="M35 70 Q42 80 50 88" stroke="#34d399" strokeWidth="1.5" fill="none" opacity=".4"/>
+      {/* PCB board */}
+      <rect x="100" y="18" width="250" height="66" rx="4" fill="#0a2010"/>
+      <rect x="100" y="18" width="250" height="66" rx="4" fill="none" stroke="#1a4020" strokeWidth="1"/>
+      <path d="M110,40 H160 V30 H200 V50 H250 V35 H340" stroke="#22d3ee" strokeWidth="1" fill="none" opacity=".35"/>
+      <path d="M110,60 H140 V70 H180 V55 H240 V65 H345" stroke="#34d399" strokeWidth="1" fill="none" opacity=".3"/>
+      <path d="M150,78 V40 H170" stroke="#22d3ee" strokeWidth="1" fill="none" opacity=".25"/>
+      <path d="M300,78 V45 H280" stroke="#34d399" strokeWidth="1" fill="none" opacity=".25"/>
+      <circle cx="160" cy="40" r="2" fill="#22d3ee" opacity=".5"/>
+      <circle cx="200" cy="30" r="2" fill="#22d3ee" opacity=".5"/>
+      <circle cx="250" cy="50" r="2" fill="#22d3ee" opacity=".5"/>
+      <circle cx="140" cy="60" r="2" fill="#34d399" opacity=".5"/>
+      <circle cx="240" cy="65" r="2" fill="#34d399" opacity=".5"/>
+      {/* Large IC */}
+      <rect x="155" y="35" width="36" height="24" rx="2" fill="#0d1a0d" stroke="#22d3ee" strokeWidth=".5" opacity=".8"/>
+      <rect x="160" y="38" width="26" height="18" rx="1" fill="#111811"/>
+      <rect x="159" y="33" width="3" height="3" rx=".5" fill="#4b5563"/>
+      <rect x="164" y="33" width="3" height="3" rx=".5" fill="#4b5563"/>
+      <rect x="169" y="33" width="3" height="3" rx=".5" fill="#4b5563"/>
+      <rect x="174" y="33" width="3" height="3" rx=".5" fill="#4b5563"/>
+      <rect x="179" y="33" width="3" height="3" rx=".5" fill="#4b5563"/>
+      <rect x="159" y="58" width="3" height="3" rx=".5" fill="#4b5563"/>
+      <rect x="164" y="58" width="3" height="3" rx=".5" fill="#4b5563"/>
+      <rect x="169" y="58" width="3" height="3" rx=".5" fill="#4b5563"/>
+      <rect x="174" y="58" width="3" height="3" rx=".5" fill="#4b5563"/>
+      <rect x="179" y="58" width="3" height="3" rx=".5" fill="#4b5563"/>
+      <circle cx="158" cy="47" r="2" fill="#1a2a1a"/>
+      <rect x="155" y="35" width="36" height="24" rx="2" fill="#22d3ee" opacity=".04"/>
+      {/* Capacitors */}
+      <rect x="210" y="40" width="8" height="16" rx="2" fill="#1a3a3a" stroke="#22d3ee" strokeWidth=".5"/>
+      <rect x="210" y="40" width="8" height="5" rx="1" fill="#22d3ee" opacity=".3"/>
+      <rect x="222" y="42" width="8" height="14" rx="2" fill="#1a3030" stroke="#22d3ee" strokeWidth=".5"/>
+      {/* Resistors */}
+      <rect x="238" y="38" width="16" height="6" rx="2" fill="#7c3a0a"/>
+      <line x1="234" y1="41" x2="238" y2="41" stroke="#9ca3af" strokeWidth="1"/>
+      <line x1="254" y1="41" x2="258" y2="41" stroke="#9ca3af" strokeWidth="1"/>
+      <line x1="241" y1="38" x2="241" y2="44" stroke="#fde68a" strokeWidth="1"/>
+      <line x1="246" y1="38" x2="246" y2="44" stroke="#f87171" strokeWidth="1"/>
+      <line x1="251" y1="38" x2="251" y2="44" stroke="#fde68a" strokeWidth="1"/>
+      <rect x="238" y="52" width="16" height="6" rx="2" fill="#1a3a1a"/>
+      <line x1="234" y1="55" x2="238" y2="55" stroke="#9ca3af" strokeWidth="1"/>
+      <line x1="254" y1="55" x2="258" y2="55" stroke="#9ca3af" strokeWidth="1"/>
+      {/* Small IC 2 */}
+      <rect x="270" y="38" width="28" height="18" rx="2" fill="#0d1a0d" stroke="#34d399" strokeWidth=".5" opacity=".7"/>
+      <rect x="273" y="41" width="22" height="12" rx="1" fill="#111811"/>
+      <rect x="272" y="36" width="3" height="3" rx=".5" fill="#374151"/>
+      <rect x="277" y="36" width="3" height="3" rx=".5" fill="#374151"/>
+      <rect x="282" y="36" width="3" height="3" rx=".5" fill="#374151"/>
+      <rect x="287" y="36" width="3" height="3" rx=".5" fill="#374151"/>
+      <rect x="272" y="56" width="3" height="3" rx=".5" fill="#374151"/>
+      <rect x="277" y="56" width="3" height="3" rx=".5" fill="#374151"/>
+      <rect x="282" y="56" width="3" height="3" rx=".5" fill="#374151"/>
+      <circle cx="272" cy="47" r="1.5" fill="#1a2a1a"/>
+      {/* LEDs */}
+      <circle cx="310" cy="42" r="4" fill="#0d2a1a" stroke="#34d399" strokeWidth="1"/>
+      <circle cx="310" cy="42" r="2" fill="#34d399" opacity=".7"/>
+      <ellipse cx="310" cy="42" rx="8" ry="6" fill="#34d399" opacity=".08"/>
+      <circle cx="325" cy="42" r="4" fill="#2a0d0d" stroke="#f87171" strokeWidth="1"/>
+      <circle cx="325" cy="42" r="2" fill="#f87171" opacity=".7"/>
+      {/* Through-hole */}
+      <rect x="115" y="50" width="6" height="22" rx="1" fill="#1a3a3a" stroke="#22d3ee" strokeWidth=".5"/>
+      <rect x="113" y="56" width="10" height="10" rx="1" fill="#0a1f14" stroke="#22d3ee" strokeWidth=".5"/>
+      <rect x="125" y="52" width="6" height="20" rx="1" fill="#1a3a2a" stroke="#34d399" strokeWidth=".5"/>
+      {/* Worker */}
+      <rect x="393" y="80" width="10" height="22" rx="5" fill="#1a2a3a"/>
+      <rect x="407" y="80" width="10" height="22" rx="5" fill="#1a2a3a"/>
+      <rect x="391" y="96" width="14" height="8" rx="3" fill="#111827"/>
+      <rect x="405" y="96" width="14" height="8" rx="3" fill="#111827"/>
+      <rect x="388" y="40" width="32" height="42" rx="8" fill="#1a2a3a"/>
+      <rect x="395" y="42" width="18" height="36" rx="4" fill="#243040" opacity=".7"/>
+      <rect x="390" y="58" width="12" height="10" rx="2" fill="#111827" opacity=".5"/>
+      <path d="M392,61 H400 V63 H398 V67 H394 V63 H392Z" stroke="#22d3ee" strokeWidth=".5" fill="none" opacity=".6"/>
+      <circle cx="404" cy="28" r="13" fill="#d4956a"/>
+      <ellipse cx="404" cy="18" rx="13" ry="7" fill="#2c1a0a"/>
+      <rect x="391" y="18" width="26" height="6" rx="3" fill="#1a1208"/>
+      <rect x="396" y="27" width="7" height="5" rx="2" fill="#1a3a3a" stroke="#22d3ee" strokeWidth=".5" opacity=".8"/>
+      <rect x="405" y="27" width="7" height="5" rx="2" fill="#1a3a3a" stroke="#22d3ee" strokeWidth=".5" opacity=".8"/>
+      <line x1="403" y1="29" x2="405" y2="29" stroke="#22d3ee" strokeWidth=".5" opacity=".7"/>
+      <rect x="360" y="46" width="30" height="9" rx="4.5" fill="#d4956a"/>
+      {/* Soldering iron */}
+      <rect x="335" y="48" width="26" height="5" rx="2.5" fill="#6b7280"/>
+      <polygon points="335,48.5 328,52 335,53.5" fill="#9ca3af"/>
+      <ellipse cx="328" cy="51" rx="4" ry="3" fill="#fde68a" opacity=".4"/>
+      <path d="M328,47 Q326,43 328,40 Q330,37 328,34" stroke="#6b7280" strokeWidth="1" fill="none" opacity=".3" strokeLinecap="round"/>
+      <rect x="420" y="46" width="22" height="9" rx="4.5" fill="#d4956a"/>
+      {/* PCB in hand */}
+      <rect x="440" y="40" width="26" height="18" rx="2" fill="#0a2010" stroke="#34d399" strokeWidth=".5" opacity=".8"/>
+      <line x1="444" y1="46" x2="462" y2="46" stroke="#22d3ee" strokeWidth=".5" opacity=".5"/>
+      <line x1="444" y1="52" x2="462" y2="52" stroke="#34d399" strokeWidth=".5" opacity=".4"/>
+      <rect x="449" y="43" width="8" height="10" rx="1" fill="#0d1a0d" stroke="#22d3ee" strokeWidth=".3"/>
+      <defs>
+        <linearGradient id="elecB" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="75%" stopColor="#061520" stopOpacity="0"/>
+          <stop offset="100%" stopColor="#061520" stopOpacity=".35"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="560" height="110" fill="url(#elecB)"/>
+    </svg>
+  )
+}
+
 // ── Config per taller ─────────────────────────────────────────────────────────
 const CARD_CFG: Record<string, {
   bannerBg: string; labelBg: string; labelBorder: string; labelColor: string
@@ -178,6 +422,16 @@ const CARD_CFG: Record<string, {
     tagBg: '#fdf3e0', tagColor: '#7a5c28', btnBg: '#3d2208', btnColor: '#d4b87a',
     btnSecondaryColor: '#7a5c28', btnSecondaryBorder: '#e8d4b0', sesBg: '#fdf8f0', sesBorder: '#e8d4b0',
   },
+  'electricidad': {
+    bannerBg: '#131929', labelBg: 'rgba(253,224,71,.2)', labelBorder: 'rgba(253,224,71,.35)', labelColor: '#fde047',
+    tagBg: '#fffce7', tagColor: '#b45309', btnBg: '#1e2d4e', btnColor: '#fde047',
+    btnSecondaryColor: '#b45309', btnSecondaryBorder: '#fde68a', sesBg: '#fffce7', sesBorder: '#fde68a',
+  },
+  'electronica': {
+    bannerBg: '#061520', labelBg: 'rgba(34,211,238,.15)', labelBorder: 'rgba(34,211,238,.3)', labelColor: '#22d3ee',
+    tagBg: '#ecfeff', tagColor: '#0369a1', btnBg: '#061520', btnColor: '#22d3ee',
+    btnSecondaryColor: '#0369a1', btnSecondaryBorder: '#a5f3fc', sesBg: '#ecfeff', sesBorder: '#a5f3fc',
+  },
 }
 
 // ── Banner component ──────────────────────────────────────────────────────────
@@ -187,6 +441,8 @@ function TallerBanner({ slug, nombre, accent }: { slug: string; nombre: string; 
     <div style={{ background: cfg?.bannerBg ?? '#0f1a2e', overflow: 'hidden', position: 'relative', height: 110 }}>
       {slug === 'mecanica-automotriz' && <SvgAutomotriz />}
       {slug === 'ebanisteria'         && <SvgEbanisteria />}
+      {slug === 'electricidad'        && <SvgElectricidad />}
+      {slug === 'electronica'         && <SvgElectronica />}
       <div style={{
         position: 'absolute', top: 10, right: 12,
         background: cfg?.labelBg ?? 'rgba(2,212,126,.15)',

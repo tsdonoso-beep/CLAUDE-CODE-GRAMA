@@ -30,6 +30,7 @@ const TALLER_ACCENTS: Record<string, string> = {
   'computacion':         '#22d3ee',
   'agropecuaria':        '#86efac',
   'electricidad':        '#fde047',
+  'electronica':         '#22d3ee',
   'construccion':        '#94a3b8',
 }
 
