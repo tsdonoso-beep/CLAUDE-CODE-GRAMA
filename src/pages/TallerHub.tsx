@@ -27,7 +27,7 @@ export default function TallerHub() {
   const bienesFallback = todosLos.filter(b => b.tipo === 'EQUIPOS').slice(0, 8)
 
   return (
-    <div style={{ background: '#f0faf5', fontFamily: 'Manrope, sans-serif' }}>
+    <div style={{ background: '#f4f8f9', fontFamily: 'Manrope, sans-serif' }}>
 
       {/* ══ HERO ══════════════════════════════════════════════════════════════ */}
       <div className="relative overflow-hidden" style={{ minHeight: 300 }}>

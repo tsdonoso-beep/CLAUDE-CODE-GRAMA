@@ -184,18 +184,23 @@ export default function Repositorio() {
   }
 
   return (
-    <div style={{ background: '#f0fdf8', minHeight: '100vh' }}>
+    <div style={{ background: '#f4f8f9', minHeight: '100vh' }}>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
       <div className="relative overflow-hidden" style={{ background: '#043941' }}>
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full opacity-10"
-            style={{ background: 'radial-gradient(circle, #02d47e 0%, transparent 70%)' }} />
-          <div className="absolute bottom-0 left-1/3 w-56 h-56 rounded-full opacity-[0.06]"
-            style={{ background: 'radial-gradient(circle, #ffffff 0%, transparent 70%)' }} />
-        </div>
+        {/* Imagen del taller */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `url(${taller.imagen})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.08,
+        }} />
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(100deg, rgba(4,57,65,0.95) 45%, rgba(4,57,65,0.75) 100%)',
+        }} />
+        <div className="absolute inset-0 grama-pattern opacity-30" />
 
-        <div className="relative px-6 pt-8 pb-0">
+        <div className="relative px-6 pt-8 pb-14">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 mb-5 text-[0.7rem] font-bold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.35)' }}>
             <span>{taller.nombreCorto.toUpperCase()}</span>
@@ -353,6 +358,13 @@ export default function Repositorio() {
               ))}
             </div>
           )}
+        </div>
+
+        {/* Ola de transición hero → contenido */}
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ lineHeight: 0 }}>
+          <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 48 }}>
+            <path d="M0,24 C360,52 1080,0 1440,28 L1440,48 L0,48 Z" fill="#f4f8f9" />
+          </svg>
         </div>
       </div>
 
