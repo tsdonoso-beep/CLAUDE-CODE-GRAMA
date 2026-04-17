@@ -25,6 +25,8 @@ import { VideoPlayerModal } from '@/components/lxp/VideoPlayerModal'
 import { SimuladorEPPMecaModal } from '@/components/lxp/interactivos/SimuladorEPPMecaModal'
 import { ExploradorEquiposModal } from '@/components/lxp/interactivos/ExploradorEquiposModal'
 import { SeleccionadorConsumiblesModal } from '@/components/lxp/interactivos/SeleccionadorConsumiblesModal'
+import { ChecklistMantenimientoModal } from '@/components/lxp/interactivos/ChecklistMantenimientoModal'
+import { ActividadExternaModal, ACTIVIDADES_EXTERNAS, type ActividadExternaConfig } from '@/components/lxp/interactivos/ActividadExternaModal'
 import { descargablesLXP } from '@/data/descargablesLXP'
 import { useTaller } from '@/hooks/useTaller'
 import { getTallerBySlug } from '@/data/talleresConfig'
@@ -63,6 +65,8 @@ export default function ModuloDetalle() {
   const [showSimuladorEPP, setShowSimuladorEPP]             = useState(false)
   const [showExploradorEquipos, setShowExploradorEquipos]   = useState(false)
   const [showSelConsumibles, setShowSelConsumibles]         = useState<'investigacion' | 'almacen' | 'innovacion' | null>(null)
+  const [showChecklistMant, setShowChecklistMant]           = useState<'investigacion' | 'almacen' | null>(null)
+  const [actividadExterna, setActividadExterna]             = useState<ActividadExternaConfig | null>(null)
 
   const closeGradeModal = useCallback(() => setShowGradeModal(false), [])
   const closeTourSimulator = useCallback(() => {
@@ -189,6 +193,12 @@ export default function ModuloDetalle() {
         setShowSelConsumibles('almacen')
       } else if (contenido.id === 'm4-s34-c3') {
         setShowSelConsumibles('innovacion')
+      } else if (contenido.id === 'm2-s22-c3') {
+        setShowChecklistMant('investigacion')
+      } else if (contenido.id === 'm3-s29-c3') {
+        setShowChecklistMant('almacen')
+      } else if (ACTIVIDADES_EXTERNAS[contenido.id]) {
+        setActividadExterna(ACTIVIDADES_EXTERNAS[contenido.id])
       } else if (contenido.id === 'm5-s2-c1') {
         setShowMapaHabilidades(true)
       } else if (contenido.id === 'm5-s3-c2') {
@@ -697,6 +707,27 @@ export default function ModuloDetalle() {
           onComplete={() => {
             if (videoAbierto?.contenidoId) markContenidoCompleted(videoAbierto.contenidoId)
           }}
+        />
+      )}
+
+      {/* Checklist mantenimiento — m2-s22-c3 / m3-s29-c3 */}
+      {showChecklistMant && (
+        <ChecklistMantenimientoModal
+          zona={showChecklistMant}
+          onClose={() => setShowChecklistMant(null)}
+          onComplete={() => {
+            const id = showChecklistMant === 'investigacion' ? 'm2-s22-c3' : 'm3-s29-c3'
+            markContenidoCompleted(id)
+          }}
+        />
+      )}
+
+      {/* Actividad externa — m0-s03-c4 / m0-s05-c4 / m0-s06-c4 */}
+      {actividadExterna && (
+        <ActividadExternaModal
+          config={actividadExterna}
+          onClose={() => setActividadExterna(null)}
+          onComplete={() => markContenidoCompleted(actividadExterna.contenidoId)}
         />
       )}
 
