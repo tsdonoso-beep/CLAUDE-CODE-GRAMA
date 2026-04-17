@@ -355,187 +355,194 @@ export default function Perfil() {
       </div>
 
       {/* ══ HERO ══════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ background: '#f0faf5', minHeight: 260 }}>
+      {(() => {
+        const heroDark = !isAdmin
+        return (
+          <section className="relative overflow-hidden" style={{
+            background: heroDark
+              ? 'linear-gradient(135deg,#043941 0%,#045f6c 60%,rgba(0,193,110,0.13) 100%)'
+              : '#f0faf5',
+            minHeight: 260,
+          }}>
 
-        {/* Patrón GRAMA */}
-        <div className="absolute inset-0 grama-pattern opacity-60" />
+            {/* Patrón GRAMA */}
+            <div className={`absolute inset-0 grama-pattern ${heroDark ? 'opacity-20' : 'opacity-60'}`} />
 
-        {/* Orb sutil */}
-        <div className="absolute pointer-events-none" style={{ width: 500, height: 500, background: 'radial-gradient(circle, rgba(2,212,126,0.08) 0%, transparent 65%)', right: -80, top: -120 }} />
-
-        {/* Tangrams fijos */}
-        <Tangram color="#02d47e" opacity={0.13} rotate={15}  className="absolute w-80 h-80 -top-8 -right-8" />
-        <Tangram color="#043941" opacity={0.05} rotate={-20} className="absolute w-60 h-60 bottom-6 -left-8" />
-
-        {/* Piezas flotantes — suaves sobre claro */}
-        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:58, height:58, top:'12%', left:'5%', animationDuration:'16s' }}>
-          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.14} />
-        </svg>
-        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:42, height:42, top:'55%', left:'9%', animationDuration:'20s' }}>
-          <polygon points="30,0 60,60 0,60" fill="#043941" fillOpacity={0.08} />
-        </svg>
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:34, height:34, top:'20%', right:'22%', animationDuration:'11s' }}>
-          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.16} />
-        </svg>
-        <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-c" style={{ width:52, height:26, top:'62%', right:'10%', animationDuration:'18s' }}>
-          <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.07} />
-        </svg>
-
-        {/* ── Hero content: horizontal layout ── */}
-        <div className="relative z-10 max-w-7xl mx-auto px-8 pt-8 pb-10">
-          <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-center">
-
-            {/* Left: avatar + text */}
-            <div className="flex items-start gap-5 animate-fade-in-up">
-              {/* Avatar */}
-              <div className="relative shrink-0">
-                <div
-                  className="absolute rounded-full animate-pulse pointer-events-none"
-                  style={{
-                    inset: -10,
-                    border: `1px solid ${accent}30`,
-                    background: `radial-gradient(circle, ${accent}10 0%, transparent 70%)`,
-                    borderRadius: '50%',
-                  }}
-                />
-                <div
-                  className="absolute rounded-full pointer-events-none"
-                  style={{ inset: -4, border: `1px solid ${accent}35`, borderRadius: '50%' }}
-                />
-                <div
-                  className="h-14 w-14 rounded-full flex items-center justify-center text-lg font-extrabold relative z-10"
-                  style={{
-                    background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)',
-                    border: `2px solid ${accent}50`,
-                    color: '#02d47e',
-                    boxShadow: `0 4px 20px rgba(4,57,65,0.18), 0 0 0 1px rgba(2,212,126,0.12)`,
-                    letterSpacing: '-0.02em',
-                  }}
-                >
-                  {getInitials(displayName)}
-                </div>
-                {isAdmin && (
-                  <div
-                    className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full flex items-center justify-center z-20"
-                    style={{ background: '#02d47e', border: '2px solid #f0faf5', boxShadow: '0 2px 8px rgba(2,212,126,0.35)' }}
-                  >
-                    <Shield size={11} style={{ color: 'var(--grama-oscuro)' }} />
-                  </div>
-                )}
-              </div>
-
-              {/* Text block */}
-              <div className="min-w-0">
-                {/* Overline badge */}
-                <div className="flex items-center gap-2 mb-2.5">
-                  <span
-                    className="inline-flex items-center gap-1.5 overline-label font-extrabold px-2.5 py-1 rounded-full"
-                    style={{
-                      background: `${accent}15`,
-                      border: `1px solid ${accent}30`,
-                      color: accent === '#02d47e' ? '#02a05a' : accent,
-                    }}
-                  >
-                    <span className="w-1 h-1 rounded-full animate-pulse" style={{ background: accent }} />
-                    {isAdmin
-                      ? 'ADMINISTRADOR · GRAMA'
-                      : tallerSlugsAccesibles.length > 1
-                        ? `DOCENTE EPT · ${tallerSlugsAccesibles.length} TALLERES`
-                        : taller
-                          ? `DOCENTE EPT · T${String(taller.numero).padStart(2, '0')}`
-                          : 'DOCENTE EPT · PROGRAMA MSE-SFT'}
-                  </span>
-                  {isAdmin && (
-                    <button
-                      onClick={() => navigate('/admin')}
-                      className="hidden sm:flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full transition-opacity hover:opacity-80"
-                      style={{ background: 'rgba(2,212,126,0.14)', color: '#02a05a', border: '1px solid rgba(2,212,126,0.25)' }}
-                    >
-                      <Shield size={10} />
-                      Panel de Admin
-                    </button>
-                  )}
-                </div>
-
-                <h1
-                  className="t-display font-extrabold leading-tight mb-2 animate-fade-in-up stagger-1"
-                  style={{ letterSpacing: '-0.025em', color: 'var(--grama-oscuro)' }}
-                >
-                  Hola, {firstName}
-                </h1>
-
-                <p className="text-base mb-4 animate-fade-in-up stagger-2" style={{ color: '#64748b' }}>
-                  {displayName !== firstName ? displayName : ''}{displayName !== firstName && displayEmail ? ' · ' : ''}{displayEmail}
-                </p>
-
-                {/* Stat chips */}
-                <div className="flex flex-wrap gap-2.5 animate-fade-in-up stagger-3">
-                  {[
-                    { icon: Layers,   label: `${TOTAL_MODULOS} Módulos`, sub: 'de formación' },
-                    { icon: Clock,    label: `${TOTAL_HORAS}h`,          sub: 'híbrida' },
-                    { icon: Package,  label: 'Constancia',               sub: 'Inroprin' },
-                  ].map(stat => (
-                    <div
-                      key={stat.label}
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-xl"
-                      style={{
-                        background: 'rgba(4,57,65,0.06)',
-                        border: '1px solid rgba(4,57,65,0.10)',
-                      }}
-                    >
-                      <stat.icon size={13} style={{ color: accent }} />
-                      <div>
-                        <p className="text-xs font-bold leading-none" style={{ color: 'var(--grama-oscuro)' }}>{stat.label}</p>
-                        <p className="text-[11px] mt-0.5 leading-none" style={{ color: '#64748b' }}>{stat.sub}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Right: progreso — ProgressRing (1 taller) o barras (2+) */}
-            {tallerSlugsAccesibles.length === 1 && taller ? (
-              <div
-                className="hidden lg:flex flex-col items-center gap-3 p-5 rounded-2xl animate-fade-in-up stagger-4"
-                style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.10)', boxShadow: '0 2px 12px rgba(4,57,65,0.06)', minWidth: 156 }}
-              >
-                <p className="overline-label font-bold" style={{ color: '#64748b' }}>Tu progreso</p>
-                <ProgressRing percentage={progreso.porcentaje} size={88} label={`${progreso.completados}/${progreso.total}`} sublabel="actividades" dark={false} />
-                <p className="text-[10px] text-center" style={{ color: '#64748b' }}>{progreso.porcentaje}% completado</p>
-              </div>
-            ) : tallerSlugsAccesibles.length > 1 ? (
-              <div
-                className="hidden lg:flex flex-col gap-2.5 p-4 rounded-2xl animate-fade-in-up stagger-4"
-                style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.10)', boxShadow: '0 2px 12px rgba(4,57,65,0.06)', minWidth: 220 }}
-              >
-                <p className="overline-label font-bold mb-1" style={{ color: '#64748b' }}>Mis talleres</p>
-                {tallerSlugsAccesibles.map(s => {
-                  const t = talleresConfig.find(x => x.slug === s)
-                  if (!t) return null
-                  const ta = TALLER_ACCENTS[s] ?? '#02d47e'
-                  const p  = getTallerProgreso(s)
+            {heroDark ? (
+              /* Docentes: blobs con colores de talleres activos */
+              <>
+                {tallerSlugsAccesibles.map((s, i) => {
+                  const c = TALLER_ACCENTS[s] ?? '#02d47e'
                   return (
-                    <div key={s}>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md"
-                          style={{ background: `${ta}18`, color: ta }}>
-                          T{String(t.numero).padStart(2, '0')}
-                        </span>
-                        <span className="text-xs font-semibold truncate" style={{ color: 'var(--grama-oscuro)' }}>{t.nombreCorto}</span>
-                        <span className="ml-auto text-[10px] font-bold shrink-0" style={{ color: ta }}>{p.porcentaje}%</span>
-                      </div>
-                      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(4,57,65,0.08)' }}>
-                        <div className="h-full rounded-full transition-all" style={{ width: `${p.porcentaje}%`, background: ta }} />
-                      </div>
-                    </div>
+                    <div key={s} className="absolute pointer-events-none" style={{
+                      width: 420, height: 420,
+                      background: `radial-gradient(circle, ${c}28 0%, transparent 65%)`,
+                      right: i === 0 ? -60 : 180,
+                      top: i === 0 ? -110 : 60,
+                    }} />
                   )
                 })}
+              </>
+            ) : (
+              /* Admin: tangrams + floating shapes */
+              <>
+                <div className="absolute pointer-events-none" style={{ width: 500, height: 500, background: 'radial-gradient(circle, rgba(2,212,126,0.08) 0%, transparent 65%)', right: -80, top: -120 }} />
+                <Tangram color="#02d47e" opacity={0.13} rotate={15}  className="absolute w-80 h-80 -top-8 -right-8" />
+                <Tangram color="#043941" opacity={0.05} rotate={-20} className="absolute w-60 h-60 bottom-6 -left-8" />
+                <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:58, height:58, top:'12%', left:'5%', animationDuration:'16s' }}>
+                  <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.14} />
+                </svg>
+                <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:42, height:42, top:'55%', left:'9%', animationDuration:'20s' }}>
+                  <polygon points="30,0 60,60 0,60" fill="#043941" fillOpacity={0.08} />
+                </svg>
+                <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:34, height:34, top:'20%', right:'22%', animationDuration:'11s' }}>
+                  <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.16} />
+                </svg>
+                <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-c" style={{ width:52, height:26, top:'62%', right:'10%', animationDuration:'18s' }}>
+                  <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.07} />
+                </svg>
+              </>
+            )}
+
+            {/* ── Hero content ── */}
+            <div className="relative z-10 max-w-7xl mx-auto px-8 pt-8 pb-10">
+              <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-center">
+
+                {/* Left: avatar + text */}
+                <div className="flex items-start gap-5 animate-fade-in-up">
+                  {/* Avatar */}
+                  <div className="relative shrink-0">
+                    <div className="absolute rounded-full animate-pulse pointer-events-none" style={{
+                      inset: -10,
+                      border: `1px solid ${accent}30`,
+                      background: `radial-gradient(circle, ${accent}10 0%, transparent 70%)`,
+                      borderRadius: '50%',
+                    }} />
+                    <div className="absolute rounded-full pointer-events-none" style={{ inset: -4, border: `1px solid ${accent}35`, borderRadius: '50%' }} />
+                    <div className="h-14 w-14 rounded-full flex items-center justify-center text-lg font-extrabold relative z-10" style={{
+                      background: heroDark
+                        ? 'linear-gradient(135deg,#02d47e 0%,#00c16e 100%)'
+                        : 'linear-gradient(135deg, #043941 0%, #045f6c 100%)',
+                      border: `2px solid ${heroDark ? 'rgba(210,255,225,0.3)' : `${accent}50`}`,
+                      color: heroDark ? '#043941' : '#02d47e',
+                      boxShadow: `0 4px 20px rgba(4,57,65,0.18), 0 0 0 1px rgba(2,212,126,0.12)`,
+                      letterSpacing: '-0.02em',
+                    }}>
+                      {getInitials(displayName)}
+                    </div>
+                    {isAdmin && (
+                      <div className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full flex items-center justify-center z-20"
+                        style={{ background: '#02d47e', border: '2px solid #043941', boxShadow: '0 2px 8px rgba(2,212,126,0.35)' }}>
+                        <Shield size={11} style={{ color: 'var(--grama-oscuro)' }} />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Text block */}
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 mb-2.5">
+                      <span className="inline-flex items-center gap-1.5 overline-label font-extrabold px-2.5 py-1 rounded-full" style={{
+                        background: heroDark ? 'rgba(2,212,126,0.15)' : `${accent}15`,
+                        border: `1px solid ${heroDark ? 'rgba(2,212,126,0.3)' : `${accent}30`}`,
+                        color: heroDark ? '#02d47e' : (accent === '#02d47e' ? '#02a05a' : accent),
+                      }}>
+                        <span className="w-1 h-1 rounded-full animate-pulse" style={{ background: heroDark ? '#02d47e' : accent }} />
+                        {isAdmin
+                          ? 'ADMINISTRADOR · GRAMA'
+                          : tallerSlugsAccesibles.length > 1
+                            ? `DOCENTE EPT · ${tallerSlugsAccesibles.length} TALLERES`
+                            : taller
+                              ? `DOCENTE EPT · T${String(taller.numero).padStart(2, '0')}`
+                              : 'DOCENTE EPT · PROGRAMA MSE-SFT'}
+                      </span>
+                      {isAdmin && (
+                        <button onClick={() => navigate('/admin')}
+                          className="hidden sm:flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full transition-opacity hover:opacity-80"
+                          style={{ background: 'rgba(2,212,126,0.14)', color: '#02a05a', border: '1px solid rgba(2,212,126,0.25)' }}>
+                          <Shield size={10} /> Panel de Admin
+                        </button>
+                      )}
+                    </div>
+
+                    <h1 className="t-display font-extrabold leading-tight mb-2 animate-fade-in-up stagger-1"
+                      style={{ letterSpacing: '-0.025em', color: heroDark ? '#d2ffe1' : 'var(--grama-oscuro)' }}>
+                      Hola, {firstName}
+                    </h1>
+
+                    <p className="text-base mb-4 animate-fade-in-up stagger-2"
+                      style={{ color: heroDark ? 'rgba(210,255,225,0.55)' : '#64748b' }}>
+                      {displayName !== firstName ? displayName : ''}{displayName !== firstName && displayEmail ? ' · ' : ''}{displayEmail}
+                    </p>
+
+                    {/* Stat chips */}
+                    <div className="flex flex-wrap gap-2.5 animate-fade-in-up stagger-3">
+                      {[
+                        { icon: Layers,  label: `${TOTAL_MODULOS} Módulos`, sub: 'de formación' },
+                        { icon: Clock,   label: `${TOTAL_HORAS}h`,          sub: 'híbrida' },
+                        { icon: Package, label: 'Constancia',               sub: 'Inroprin' },
+                      ].map(stat => (
+                        <div key={stat.label} className="flex items-center gap-2 px-3 py-1.5 rounded-xl" style={{
+                          background: heroDark ? 'rgba(4,57,65,0.5)' : 'rgba(4,57,65,0.06)',
+                          border: `1px solid ${heroDark ? 'rgba(2,212,126,0.18)' : 'rgba(4,57,65,0.10)'}`,
+                        }}>
+                          <stat.icon size={13} style={{ color: heroDark ? '#02d47e' : accent }} />
+                          <div>
+                            <p className="text-xs font-bold leading-none" style={{ color: heroDark ? '#d2ffe1' : 'var(--grama-oscuro)' }}>{stat.label}</p>
+                            <p className="text-[11px] mt-0.5 leading-none" style={{ color: heroDark ? 'rgba(210,255,225,0.45)' : '#64748b' }}>{stat.sub}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: progreso / talleres box */}
+                {tallerSlugsAccesibles.length === 1 && taller ? (
+                  <div className="hidden lg:flex flex-col items-center gap-3 p-5 rounded-2xl animate-fade-in-up stagger-4" style={{
+                    background: heroDark ? 'rgba(255,255,255,0.06)' : '#ffffff',
+                    border: `1px solid ${heroDark ? 'rgba(255,255,255,0.1)' : 'rgba(4,57,65,0.10)'}`,
+                    boxShadow: heroDark ? 'none' : '0 2px 12px rgba(4,57,65,0.06)',
+                    minWidth: 156,
+                  }}>
+                    <p className="overline-label font-bold" style={{ color: heroDark ? 'rgba(210,255,225,0.5)' : '#64748b' }}>Tu progreso</p>
+                    <ProgressRing percentage={progreso.porcentaje} size={88} label={`${progreso.completados}/${progreso.total}`} sublabel="actividades" dark={heroDark} />
+                    <p className="text-[10px] text-center" style={{ color: heroDark ? 'rgba(210,255,225,0.4)' : '#64748b' }}>{progreso.porcentaje}% completado</p>
+                  </div>
+                ) : tallerSlugsAccesibles.length > 1 ? (
+                  <div className="hidden lg:flex flex-col gap-2.5 p-4 rounded-2xl animate-fade-in-up stagger-4" style={{
+                    background: heroDark ? 'rgba(255,255,255,0.06)' : '#ffffff',
+                    border: `1px solid ${heroDark ? 'rgba(255,255,255,0.1)' : 'rgba(4,57,65,0.10)'}`,
+                    boxShadow: heroDark ? 'none' : '0 2px 12px rgba(4,57,65,0.06)',
+                    minWidth: 220,
+                  }}>
+                    <p className="overline-label font-bold mb-1" style={{ color: heroDark ? 'rgba(210,255,225,0.5)' : '#64748b' }}>Mis talleres</p>
+                    {tallerSlugsAccesibles.map(s => {
+                      const t = talleresConfig.find(x => x.slug === s)
+                      if (!t) return null
+                      const ta = TALLER_ACCENTS[s] ?? '#02d47e'
+                      const p  = getTallerProgreso(s)
+                      return (
+                        <div key={s}>
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md" style={{ background: `${ta}25`, color: ta }}>
+                              T{String(t.numero).padStart(2, '0')}
+                            </span>
+                            <span className="text-xs font-semibold truncate" style={{ color: heroDark ? '#d2ffe1' : 'var(--grama-oscuro)' }}>{t.nombreCorto}</span>
+                            <span className="ml-auto text-[10px] font-bold shrink-0" style={{ color: ta }}>{p.porcentaje}%</span>
+                          </div>
+                          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: heroDark ? 'rgba(255,255,255,0.1)' : 'rgba(4,57,65,0.08)' }}>
+                            <div className="h-full rounded-full transition-all" style={{ width: `${p.porcentaje}%`, background: ta }} />
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                ) : null}
               </div>
-            ) : null}
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
+        )
+      })()}
 
       {/* ══ CONTENIDO PRINCIPAL ════════════════════════════════════════════════ */}
       <div className="p-6 grid lg:grid-cols-3 gap-6 max-w-7xl mx-auto items-start">
@@ -737,12 +744,24 @@ export default function Perfil() {
             {/* Vista normal */}
             {!editMode && (
               <div className="divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
-                {[
-                  { Icon: Mail,      label: 'Correo',      value: displayEmail,               sub: null    },
-                  { Icon: Building2, label: 'Institución', value: ieLabel,                    sub: distrito },
-                  { Icon: MapPin,    label: 'Región',      value: region,                     sub: null    },
-                  ...(localData.telefono    ? [{ Icon: Phone, label: 'Teléfono',           value: localData.telefono,    sub: null }] : []),
-                  ...(localData.correo_inst ? [{ Icon: Mail,  label: 'Correo institucional', value: localData.correo_inst, sub: null }] : []),
+                {/* Email — siempre visible */}
+                {[{ Icon: Mail, label: 'Correo', value: displayEmail, sub: null as string | null }].map(item => (
+                  <div key={item.label} className="flex items-start gap-3 px-5 py-3.5">
+                    <div className="h-8 w-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
+                      style={{ background: 'rgba(4,57,65,0.05)' }}>
+                      <item.Icon size={13} style={{ color: '#045f6c' }} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="overline-label font-extrabold mb-0.5" style={{ color: '#b0c4ca' }}>{item.label}</p>
+                      <p className="text-sm font-bold leading-snug break-words" style={{ color: 'var(--grama-oscuro)' }}>{item.value}</p>
+                    </div>
+                  </div>
+                ))}
+
+                {/* IE + región — solo cuando hay match */}
+                {ie && [
+                  { Icon: Building2, label: 'Institución', value: ieLabel, sub: distrito },
+                  { Icon: MapPin,    label: 'Región',      value: region,  sub: null as string | null },
                 ].map(item => (
                   <div key={item.label} className="flex items-start gap-3 px-5 py-3.5">
                     <div className="h-8 w-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
@@ -756,6 +775,56 @@ export default function Perfil() {
                     </div>
                   </div>
                 ))}
+
+                {/* Campos locales opcionales */}
+                {localData.telefono && (
+                  <div className="flex items-start gap-3 px-5 py-3.5">
+                    <div className="h-8 w-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
+                      style={{ background: 'rgba(4,57,65,0.05)' }}>
+                      <Phone size={13} style={{ color: '#045f6c' }} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="overline-label font-extrabold mb-0.5" style={{ color: '#b0c4ca' }}>Teléfono</p>
+                      <p className="text-sm font-bold leading-snug break-words" style={{ color: 'var(--grama-oscuro)' }}>{localData.telefono}</p>
+                    </div>
+                  </div>
+                )}
+                {localData.correo_inst && (
+                  <div className="flex items-start gap-3 px-5 py-3.5">
+                    <div className="h-8 w-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
+                      style={{ background: 'rgba(4,57,65,0.05)' }}>
+                      <Mail size={13} style={{ color: '#045f6c' }} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="overline-label font-extrabold mb-0.5" style={{ color: '#b0c4ca' }}>Correo institucional</p>
+                      <p className="text-sm font-bold leading-snug break-words" style={{ color: 'var(--grama-oscuro)' }}>{localData.correo_inst}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Onboarding prompt cuando el perfil está incompleto */}
+                {!ie && !localData.telefono && !localData.correo_inst && (
+                  <div className="px-5 py-4">
+                    <div className="p-4 rounded-xl" style={{
+                      background: `${accent}08`,
+                      border: `1px solid ${accent}22`,
+                    }}>
+                      <p className="text-xs font-extrabold mb-1" style={{ color: 'var(--grama-oscuro)' }}>
+                        Completa tu perfil
+                      </p>
+                      <p className="text-[11px] mb-3 leading-snug" style={{ color: '#5a8a92' }}>
+                        Agrega tu teléfono y correo institucional para que tu coordinador pueda ubicarte.
+                      </p>
+                      <button
+                        onClick={startEdit}
+                        className="w-full text-xs font-bold py-2 rounded-lg transition-opacity hover:opacity-90"
+                        style={{ background: accent, color: '#043941' }}
+                      >
+                        Completar perfil
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 

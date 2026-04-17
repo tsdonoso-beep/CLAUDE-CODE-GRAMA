@@ -209,7 +209,7 @@ interface TallerCardDocenteProps {
   descripcion: string
   accent: string
   bienes: number
-  progresoT: { porcentaje: number }
+  progresoT: { porcentaje: number; completados: number; total: number }
   proximaSesion: { titulo: string; fechaFormateada: string; dias: number } | null
   onRuta: () => void
   onRepositorio: () => void
@@ -258,8 +258,25 @@ export function TallerCardDocente({
         {/* Name */}
         <p style={{ fontSize: 15, fontWeight: 700, color: '#043941', marginBottom: 5 }}>{nombre}</p>
 
-        {/* Description */}
-        <p style={{ fontSize: 11, color: '#5a8a92', lineHeight: 1.6, marginBottom: 12 }}>{descripcion}</p>
+        {/* Progress */}
+        <div style={{ marginBottom: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}>
+            <span style={{ fontSize: 11, color: '#5a8a92' }}>
+              {progresoT.completados} de {progresoT.total} actividades
+            </span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: progresoT.porcentaje > 0 ? accent : '#94a3b8' }}>
+              {progresoT.porcentaje}%
+            </span>
+          </div>
+          <div style={{ height: 5, borderRadius: 100, background: 'rgba(4,57,65,0.07)', overflow: 'hidden' }}>
+            <div style={{
+              height: '100%', borderRadius: 100,
+              width: `${Math.max(progresoT.porcentaje, progresoT.porcentaje > 0 ? 4 : 0)}%`,
+              background: progresoT.porcentaje === 0 ? 'rgba(4,57,65,0.15)' : accent,
+              transition: 'width .6s ease',
+            }} />
+          </div>
+        </div>
 
         {/* Meta chips */}
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 12 }}>
