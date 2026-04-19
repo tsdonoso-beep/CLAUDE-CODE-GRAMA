@@ -2,6 +2,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BookOpen, Clock, Video, Award } from 'lucide-react'
+import { SvgAutomotriz, SvgEbanisteria, SvgElectricidad, SvgElectronica } from '@/components/lxp/TallerCardDocente'
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
 import { mockProximaSesion } from '@/mock/mockEstados'
@@ -10,6 +11,27 @@ import { LiveSessionCard } from '@/components/lxp/LiveSessionCard'
 import { useProgress } from '@/contexts/ProgressContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { trackNavegacion } from '@/lib/tracker'
+
+const TALLER_SVG: Record<string, React.ReactNode> = {
+  'mecanica-automotriz':     <SvgAutomotriz />,
+  'ebanisteria-carpinteria': <SvgEbanisteria />,
+  'electricidad':            <SvgElectricidad />,
+  'electronica':             <SvgElectronica />,
+}
+
+function Tangram() {
+  return (
+    <svg width="160" height="160" viewBox="0 0 160 160" fill="none" style={{ opacity: 0.07 }}>
+      <polygon points="80,8 152,80 80,80" fill="#02d47e" />
+      <polygon points="8,80 80,8 80,80" fill="#02d47e" />
+      <polygon points="80,80 116,116 44,116" fill="#02d47e" />
+      <rect x="44" y="80" width="36" height="36" fill="#02d47e" transform="rotate(45,62,98)" />
+      <polygon points="116,80 152,80 116,116" fill="#02d47e" />
+      <polygon points="8,80 44,116 8,152" fill="#02d47e" />
+      <rect x="8" y="116" width="36" height="36" fill="#02d47e" />
+    </svg>
+  )
+}
 
 export default function RutaAprendizaje() {
   const { taller, slug } = useTaller()
@@ -42,23 +64,39 @@ export default function RutaAprendizaje() {
   return (
     <div>
       {/* ── Hero ── */}
-      <div className="px-8 pt-8 pb-16 relative overflow-hidden" style={{ background: '#043941' }}>
-        {/* Imagen de fondo del taller */}
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url(${taller.imagen})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          opacity: 0.18,
-        }} />
-        {/* Overlay + patrón */}
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(100deg, rgba(4,57,65,0.92) 45%, rgba(4,57,65,0.65) 100%)' }} />
-        <div className="absolute inset-0 grama-pattern opacity-40" />
+      <div className="px-8 pt-8 pb-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg,#043941 0%,#0a3560 100%)' }}>
+        <div className="absolute inset-0 grama-pattern opacity-20" />
+        <div className="absolute -top-10 -right-10 w-72 h-72 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(2,212,126,0.12) 0%, transparent 70%)' }} />
+        {TALLER_SVG[slug ?? ''] && (
+          <div className="absolute inset-0 pointer-events-none overflow-hidden [&_svg]:w-full [&_svg]:h-full" style={{ opacity: 0.28 }}>
+            {TALLER_SVG[slug ?? '']}
+          </div>
+        )}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(100deg, rgba(4,57,65,0.97) 0%, rgba(4,57,65,0.88) 38%, rgba(4,57,65,0.55) 62%, rgba(4,57,65,0.1) 100%)' }} />
+        <div className="absolute bottom-4 right-8 pointer-events-none">
+          <Tangram />
+        </div>
 
         <div className="relative z-10">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 mb-5 text-[0.7rem] font-bold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.35)' }}>
-            <span>{taller.nombreCorto.toUpperCase()}</span>
-            <span style={{ color: 'rgba(255,255,255,0.55)' }}>› RUTA DE APRENDIZAJE</span>
+          <div className="flex items-center gap-1.5 mb-5 text-[0.7rem] font-bold uppercase tracking-widest">
+            <button
+              onClick={() => navigate('/perfil')}
+              className="transition-colors"
+              style={{ color: 'rgba(255,255,255,0.35)' }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.35)')}
+            >PERFIL</button>
+            <span style={{ color: 'rgba(255,255,255,0.2)' }}>›</span>
+            <button
+              onClick={() => navigate(`/taller/${slug}`)}
+              className="transition-colors"
+              style={{ color: 'rgba(255,255,255,0.35)' }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.35)')}
+            >{taller.nombreCorto.toUpperCase()}</button>
+            <span style={{ color: 'rgba(255,255,255,0.2)' }}>›</span>
+            <span style={{ color: 'rgba(255,255,255,0.7)' }}>RUTA DE APRENDIZAJE</span>
           </div>
 
           <div className="grid lg:grid-cols-[3fr_2fr] gap-8 items-center">
@@ -147,13 +185,13 @@ export default function RutaAprendizaje() {
         {/* Ola de transición hero → contenido */}
         <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ lineHeight: 0 }}>
           <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 48 }}>
-            <path d="M0,24 C360,52 1080,0 1440,28 L1440,48 L0,48 Z" fill="#f4f8f9" />
+            <path d="M0,24 C360,52 1080,0 1440,28 L1440,48 L0,48 Z" fill="var(--grama-bg)" />
           </svg>
         </div>
       </div>
 
       {/* ── Content ── */}
-      <div className="p-6 grid lg:grid-cols-3 gap-6" style={{ background: '#f4f8f9' }}>
+      <div className="p-6 grid lg:grid-cols-3 gap-6" style={{ background: 'var(--grama-bg)' }}>
         {/* Timeline de módulos (2/3) */}
         <div className="lg:col-span-2">
           <h2 className="text-h3 font-extrabold mb-6" style={{ color: 'var(--grama-oscuro)' }}>
