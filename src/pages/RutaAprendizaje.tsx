@@ -2,7 +2,11 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BookOpen, Clock, Video, Award } from 'lucide-react'
-import { SvgAutomotriz, SvgEbanisteria, SvgElectricidad, SvgElectronica } from '@/components/lxp/TallerCardDocente'
+import {
+  SvgAutomotriz, SvgEbanisteria, SvgElectricidad, SvgElectronica,
+  SvgIndustriaAlimentaria, SvgCocinaReposteria, SvgConstruccionesMetalicas,
+  SvgEptGeneral, SvgIndustriaVestido, SvgComputacion,
+} from '@/components/lxp/TallerCardDocente'
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
 import { mockProximaSesion } from '@/mock/mockEstados'
@@ -13,10 +17,16 @@ import { useAuth } from '@/contexts/AuthContext'
 import { trackNavegacion } from '@/lib/tracker'
 
 const TALLER_SVG: Record<string, React.ReactNode> = {
-  'mecanica-automotriz': <SvgAutomotriz />,
-  'ebanisteria':         <SvgEbanisteria />,
-  'electricidad':        <SvgElectricidad />,
-  'electronica':         <SvgElectronica />,
+  'mecanica-automotriz':      <SvgAutomotriz />,
+  'ebanisteria':              <SvgEbanisteria />,
+  'electricidad':             <SvgElectricidad />,
+  'electronica':              <SvgElectronica />,
+  'industria-alimentaria':    <SvgIndustriaAlimentaria />,
+  'cocina-reposteria':        <SvgCocinaReposteria />,
+  'construcciones-metalicas': <SvgConstruccionesMetalicas />,
+  'taller-general-ept':       <SvgEptGeneral />,
+  'industria-vestido':        <SvgIndustriaVestido />,
+  'computacion-informatica':  <SvgComputacion />,
 }
 
 function Tangram() {

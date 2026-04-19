@@ -9,6 +9,12 @@ import {
   SvgEbanisteria,
   SvgElectricidad,
   SvgElectronica,
+  SvgIndustriaAlimentaria,
+  SvgCocinaReposteria,
+  SvgConstruccionesMetalicas,
+  SvgEptGeneral,
+  SvgIndustriaVestido,
+  SvgComputacion,
 } from '@/components/lxp/TallerCardDocente'
 
 // ── Ilustración docente + alumnos ────────────────────────────────────────────
@@ -117,10 +123,16 @@ function SvgDocente() {
 }
 
 const TALLER_SVG: Record<string, React.ReactNode> = {
-  'mecanica-automotriz': <SvgAutomotriz />,
-  'ebanisteria':         <SvgEbanisteria />,
-  'electricidad':        <SvgElectricidad />,
-  'electronica':         <SvgElectronica />,
+  'mecanica-automotriz':      <SvgAutomotriz />,
+  'ebanisteria':              <SvgEbanisteria />,
+  'electricidad':             <SvgElectricidad />,
+  'electronica':              <SvgElectronica />,
+  'industria-alimentaria':    <SvgIndustriaAlimentaria />,
+  'cocina-reposteria':        <SvgCocinaReposteria />,
+  'construcciones-metalicas': <SvgConstruccionesMetalicas />,
+  'taller-general-ept':       <SvgEptGeneral />,
+  'industria-vestido':        <SvgIndustriaVestido />,
+  'computacion-informatica':  <SvgComputacion />,
 }
 
 function Tangram({

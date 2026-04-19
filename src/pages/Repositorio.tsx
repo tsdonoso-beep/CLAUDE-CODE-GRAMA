@@ -5,7 +5,11 @@ import {
   HardHat, FileText, Video, PlayCircle, ChevronRight, BookMarked,
   Wrench, GraduationCap,
 } from 'lucide-react'
-import { SvgAutomotriz, SvgEbanisteria, SvgElectricidad, SvgElectronica } from '@/components/lxp/TallerCardDocente'
+import {
+  SvgAutomotriz, SvgEbanisteria, SvgElectricidad, SvgElectronica,
+  SvgIndustriaAlimentaria, SvgCocinaReposteria, SvgConstruccionesMetalicas,
+  SvgEptGeneral, SvgIndustriaVestido, SvgComputacion,
+} from '@/components/lxp/TallerCardDocente'
 import { useTaller } from '@/hooks/useTaller'
 import { RepositorioCard } from '@/components/lxp/RepositorioCard'
 import { useNavigate, useSearchParams } from 'react-router-dom'
@@ -17,10 +21,16 @@ type Bien = Record<string, any>
 type Tab = 'bienes' | 'manuales' | 'videos'
 
 const TALLER_SVG: Record<string, React.ReactNode> = {
-  'mecanica-automotriz': <SvgAutomotriz />,
-  'ebanisteria':         <SvgEbanisteria />,
-  'electricidad':        <SvgElectricidad />,
-  'electronica':         <SvgElectronica />,
+  'mecanica-automotriz':      <SvgAutomotriz />,
+  'ebanisteria':              <SvgEbanisteria />,
+  'electricidad':             <SvgElectricidad />,
+  'electronica':              <SvgElectronica />,
+  'industria-alimentaria':    <SvgIndustriaAlimentaria />,
+  'cocina-reposteria':        <SvgCocinaReposteria />,
+  'construcciones-metalicas': <SvgConstruccionesMetalicas />,
+  'taller-general-ept':       <SvgEptGeneral />,
+  'industria-vestido':        <SvgIndustriaVestido />,
+  'computacion-informatica':  <SvgComputacion />,
 }
 
 function Tangram() {
