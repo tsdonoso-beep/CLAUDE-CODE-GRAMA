@@ -11,6 +11,82 @@ import {
   SvgElectronica,
 } from '@/components/lxp/TallerCardDocente'
 
+// ── SVG universal para sección de competencias ────────────────────────────────
+function SvgCompetencias() {
+  return (
+    <svg width="100%" height="120" viewBox="0 0 900 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <rect width="900" height="120" fill="#07131f"/>
+      {/* Dot grid */}
+      {Array.from({ length: 19 }, (_, col) =>
+        Array.from({ length: 7 }, (_, row) => (
+          <circle key={`${col}-${row}`} cx={col * 50 + 25} cy={row * 18 + 9} r="1" fill="#02d47e" opacity=".05"/>
+        ))
+      )}
+      {/* Ground strip */}
+      <rect x="0" y="100" width="900" height="20" fill="#040e18"/>
+      <line x1="450" y1="100" x2="0"   y2="120" stroke="#0b2030" strokeWidth="1"/>
+      <line x1="450" y1="100" x2="225" y2="120" stroke="#0b2030" strokeWidth="1"/>
+      <line x1="450" y1="100" x2="450" y2="120" stroke="#0b2030" strokeWidth="1"/>
+      <line x1="450" y1="100" x2="675" y2="120" stroke="#0b2030" strokeWidth="1"/>
+      <line x1="450" y1="100" x2="900" y2="120" stroke="#0b2030" strokeWidth="1"/>
+      {/* Learning path curve */}
+      <path d="M60,60 C150,30 200,82 300,58 C400,34 450,78 550,56 C650,34 720,76 840,52"
+        stroke="#02d47e" strokeWidth="1.5" fill="none" opacity=".18" strokeDasharray="5,5"/>
+      {/* 5 skill nodes */}
+      {([90, 225, 360, 495, 630, 765] as number[]).slice(0, 5).map((cx, i) => (
+        <g key={i}>
+          {i < 4 && (
+            <line x1={cx + 28} y1="58" x2={[225, 360, 495, 630][i] - 28} y2="58"
+              stroke="#02d47e" strokeWidth="0.8" opacity=".12"/>
+          )}
+          <circle cx={cx} cy="58" r="26" fill="#02d47e" opacity=".03"/>
+          <circle cx={cx} cy="58" r="18" fill="none" stroke="#02d47e" strokeWidth="0.8" opacity=".18"/>
+          <circle cx={cx} cy="58" r="11" fill="#0d2a1a" stroke="#02d47e" strokeWidth="1.2" opacity=".5"/>
+          <text x={cx} y="62" textAnchor="middle" fontSize="8" fontWeight="700"
+            fill="#02d47e" opacity=".65" fontFamily="DM Mono,monospace">
+            {String(i + 1).padStart(2, '0')}
+          </text>
+        </g>
+      ))}
+      {/* Decorative hexagons */}
+      {([[840,58],[858,46],[822,46]] as [number,number][]).map(([hx,hy],i) => (
+        <polygon key={i}
+          points={`${hx},${hy-10} ${hx+9},${hy-5} ${hx+9},${hy+5} ${hx},${hy+10} ${hx-9},${hy+5} ${hx-9},${hy-5}`}
+          fill="none" stroke="#02d47e" strokeWidth="0.5" opacity={0.12 - i * 0.03}/>
+      ))}
+      {([50,56,62] as number[]).map((hy, i) => (
+        <polygon key={i}
+          points={`32,${hy-10} 41,${hy-5} 41,${hy+5} 32,${hy+10} 23,${hy+5} 23,${hy-5}`}
+          fill="none" stroke="#045f6c" strokeWidth="0.5" opacity={0.14 - i * 0.04}/>
+      ))}
+      {/* Abstract book + gear silhouettes */}
+      <rect x="768" y="32" width="18" height="24" rx="2" fill="#043941" opacity=".35" stroke="#045f6c" strokeWidth="0.5"/>
+      <rect x="771" y="35" width="12" height="18" rx="1" fill="#02d47e" opacity=".05"/>
+      <line x1="773" y1="40" x2="781" y2="40" stroke="#02d47e" strokeWidth="0.7" opacity=".18"/>
+      <line x1="773" y1="44" x2="781" y2="44" stroke="#02d47e" strokeWidth="0.7" opacity=".12"/>
+      <line x1="773" y1="48" x2="779" y2="48" stroke="#02d47e" strokeWidth="0.7" opacity=".1"/>
+      <circle cx="800" cy="68" r="9" fill="none" stroke="#045f6c" strokeWidth="3" opacity=".18"/>
+      <circle cx="800" cy="68" r="4" fill="#02d47e" opacity=".08"/>
+      {/* Left: abstract certificate */}
+      <rect x="18" y="34" width="26" height="34" rx="3" fill="#043941" opacity=".4" stroke="#045f6c" strokeWidth="0.5"/>
+      <line x1="24" y1="43" x2="38" y2="43" stroke="#02d47e" strokeWidth="0.8" opacity=".2"/>
+      <line x1="24" y1="48" x2="38" y2="48" stroke="#02d47e" strokeWidth="0.8" opacity=".15"/>
+      <line x1="24" y1="53" x2="33" y2="53" stroke="#02d47e" strokeWidth="0.8" opacity=".12"/>
+      <polygon points="31,59 33.5,65 40,65 35,68.5 37,75 31,71 25,75 27,68.5 22,65 28.5,65" fill="#fde047" opacity=".12"/>
+      {/* Gradient fade left/right edges */}
+      <defs>
+        <linearGradient id="compEdge" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stopColor="#07131f" stopOpacity=".5"/>
+          <stop offset="8%"   stopColor="#07131f" stopOpacity="0"/>
+          <stop offset="92%"  stopColor="#07131f" stopOpacity="0"/>
+          <stop offset="100%" stopColor="#07131f" stopOpacity=".4"/>
+        </linearGradient>
+      </defs>
+      <rect width="900" height="120" fill="url(#compEdge)"/>
+    </svg>
+  )
+}
+
 const TALLER_SVG: Record<string, React.ReactNode> = {
   'mecanica-automotriz': <SvgAutomotriz />,
   'ebanisteria':         <SvgEbanisteria />,
@@ -80,21 +156,18 @@ export default function TallerHub() {
           right: -80, top: -120,
         }}/>
 
-        {/* SVG ilustración del taller */}
+        {/* SVG ilustración — full bleed con CSS override */}
         {TALLER_SVG[slug] && (
-          <div className="absolute inset-y-0 right-0 pointer-events-none overflow-hidden"
-            style={{ width: '55%', opacity: 0.38 }}>
-            <div style={{ position: 'absolute', bottom: 0, right: 0, width: '100%', height: '100%' }}>
-              {TALLER_SVG[slug]}
-            </div>
+          <div className="absolute inset-0 pointer-events-none overflow-hidden [&_svg]:w-full [&_svg]:h-full"
+            style={{ opacity: 0.32 }}>
+            {TALLER_SVG[slug]}
           </div>
         )}
 
-        {/* Tangram decorativo */}
-        <Tangram color="#02d47e" opacity={0.09} rotate={15}
-          className="absolute float-a"
-          style={{ width: 220, height: 220, top: -20, right: 320 }}
-        />
+        {/* Gradient izquierdo para legibilidad del texto */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: 'linear-gradient(100deg, rgba(4,57,65,0.97) 0%, rgba(4,57,65,0.88) 38%, rgba(4,57,65,0.55) 62%, rgba(4,57,65,0.1) 100%)',
+        }}/>
 
         {/* Contenido */}
         <div className="relative z-10 px-8 pt-10 pb-12" style={{ maxWidth: 860 }}>
@@ -184,14 +257,10 @@ export default function TallerHub() {
             <div className="rounded-2xl overflow-hidden"
               style={{ border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.04)' }}>
 
-              {/* Banner ilustrado */}
-              {TALLER_SVG[slug] ? (
-                <div style={{ height: 140, overflow: 'hidden' }}>
-                  {TALLER_SVG[slug]}
-                </div>
-              ) : (
-                <div style={{ height: 10, background: `hsl(${taller.color})` }} />
-              )}
+              {/* Banner universal — mismo para todos los talleres */}
+              <div style={{ height: 120, overflow: 'hidden' }}>
+                <SvgCompetencias />
+              </div>
 
               {/* Items horizontales */}
               <div style={{
