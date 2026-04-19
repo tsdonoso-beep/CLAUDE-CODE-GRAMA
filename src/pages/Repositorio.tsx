@@ -17,10 +17,10 @@ type Bien = Record<string, any>
 type Tab = 'bienes' | 'manuales' | 'videos'
 
 const TALLER_SVG: Record<string, React.ReactNode> = {
-  'mecanica-automotriz':     <SvgAutomotriz />,
-  'ebanisteria-carpinteria': <SvgEbanisteria />,
-  'electricidad':            <SvgElectricidad />,
-  'electronica':             <SvgElectronica />,
+  'mecanica-automotriz': <SvgAutomotriz />,
+  'ebanisteria':         <SvgEbanisteria />,
+  'electricidad':        <SvgElectricidad />,
+  'electronica':         <SvgElectronica />,
 }
 
 function Tangram() {
@@ -223,26 +223,6 @@ export default function Repositorio() {
         </div>
 
         <div className="relative px-6 pt-8 pb-14">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-1.5 mb-5 text-[0.7rem] font-bold uppercase tracking-widest">
-            <button
-              onClick={() => navigate('/perfil')}
-              className="transition-colors"
-              style={{ color: 'rgba(255,255,255,0.35)' }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.35)')}
-            >PERFIL</button>
-            <span style={{ color: 'rgba(255,255,255,0.2)' }}>›</span>
-            <button
-              onClick={() => navigate(`/taller/${slug}`)}
-              className="transition-colors"
-              style={{ color: 'rgba(255,255,255,0.35)' }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.35)')}
-            >{taller.nombreCorto.toUpperCase()}</button>
-            <span style={{ color: 'rgba(255,255,255,0.2)' }}>›</span>
-            <span style={{ color: 'rgba(255,255,255,0.7)' }}>REPOSITORIO</span>
-          </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white mb-1 leading-tight">
             Recursos del Taller
           </h1>
@@ -400,7 +380,7 @@ export default function Repositorio() {
         {/* Ola de transición hero → contenido */}
         <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ lineHeight: 0 }}>
           <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 48 }}>
-            <path d="M0,24 C360,52 1080,0 1440,28 L1440,48 L0,48 Z" fill="var(--grama-bg)" />
+            <path d="M0,24 C360,52 1080,0 1440,28 L1440,48 L0,48 Z" fill="#f0faf5" />
           </svg>
         </div>
       </div>

@@ -13,10 +13,10 @@ import { useAuth } from '@/contexts/AuthContext'
 import { trackNavegacion } from '@/lib/tracker'
 
 const TALLER_SVG: Record<string, React.ReactNode> = {
-  'mecanica-automotriz':     <SvgAutomotriz />,
-  'ebanisteria-carpinteria': <SvgEbanisteria />,
-  'electricidad':            <SvgElectricidad />,
-  'electronica':             <SvgElectronica />,
+  'mecanica-automotriz': <SvgAutomotriz />,
+  'ebanisteria':         <SvgEbanisteria />,
+  'electricidad':        <SvgElectricidad />,
+  'electronica':         <SvgElectronica />,
 }
 
 function Tangram() {
@@ -78,27 +78,6 @@ export default function RutaAprendizaje() {
         </div>
 
         <div className="relative z-10">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-1.5 mb-5 text-[0.7rem] font-bold uppercase tracking-widest">
-            <button
-              onClick={() => navigate('/perfil')}
-              className="transition-colors"
-              style={{ color: 'rgba(255,255,255,0.35)' }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.35)')}
-            >PERFIL</button>
-            <span style={{ color: 'rgba(255,255,255,0.2)' }}>›</span>
-            <button
-              onClick={() => navigate(`/taller/${slug}`)}
-              className="transition-colors"
-              style={{ color: 'rgba(255,255,255,0.35)' }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.35)')}
-            >{taller.nombreCorto.toUpperCase()}</button>
-            <span style={{ color: 'rgba(255,255,255,0.2)' }}>›</span>
-            <span style={{ color: 'rgba(255,255,255,0.7)' }}>RUTA DE APRENDIZAJE</span>
-          </div>
-
           <div className="grid lg:grid-cols-[3fr_2fr] gap-8 items-center">
 
           {/* Columna izquierda: info */}
@@ -185,7 +164,7 @@ export default function RutaAprendizaje() {
         {/* Ola de transición hero → contenido */}
         <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ lineHeight: 0 }}>
           <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 48 }}>
-            <path d="M0,24 C360,52 1080,0 1440,28 L1440,48 L0,48 Z" fill="var(--grama-bg)" />
+            <path d="M0,24 C360,52 1080,0 1440,28 L1440,48 L0,48 Z" fill="#f0faf5" />
           </svg>
         </div>
       </div>
