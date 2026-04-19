@@ -1,5 +1,5 @@
 // src/components/lxp/TallerCardDocente.tsx
-import { Play, Package } from 'lucide-react'
+import { Play, Package, CalendarDays } from 'lucide-react'
 
 const TOTAL_HORAS   = 150
 const TOTAL_MODULOS = 7
@@ -462,7 +462,7 @@ interface TallerCardDocenteProps {
   slug: string
   numero: number
   nombre: string
-  descripcion: string
+  descripcion?: string
   accent: string
   bienes: number
   progresoT: { porcentaje: number; completados: number; total: number }
@@ -473,145 +473,144 @@ interface TallerCardDocenteProps {
 }
 
 export function TallerCardDocente({
-  slug, numero, nombre, descripcion, accent,
+  slug, numero, nombre, accent,
   bienes, progresoT, proximaSesion,
   onRuta, onRepositorio, animDelay = '0s',
 }: TallerCardDocenteProps) {
   const cfg = CARD_CFG[slug]
+  const accentLight = cfg?.labelColor ?? '#d2ffe1'
+
+  const svgIlustracion =
+    slug === 'mecanica-automotriz' ? <SvgAutomotriz /> :
+    slug === 'ebanisteria'         ? <SvgEbanisteria /> :
+    slug === 'electricidad'        ? <SvgElectricidad /> :
+    slug === 'electronica'         ? <SvgElectronica /> :
+    null
 
   return (
     <div
       className="animate-fade-in-up"
       style={{
-        background: 'white', borderRadius: 16, marginBottom: 14,
-        border: '1px solid rgba(4,57,65,.07)', overflow: 'hidden',
+        borderRadius: 16, marginBottom: 14, overflow: 'hidden',
+        border: '1px solid rgba(4,57,65,.1)',
+        boxShadow: '0 4px 20px rgba(4,57,65,0.12)',
         transition: 'transform .28s cubic-bezier(.22,1,.36,1)',
         animationDelay: animDelay,
       }}
       onMouseEnter={e => (e.currentTarget.style.transform = 'translateY(-3px)')}
       onMouseLeave={e => (e.currentTarget.style.transform = 'translateY(0)')}
     >
-      {/* Top color bar */}
-      <div style={{ height: 4, background: accent }} />
+      {/* ── Header oscuro — espejo del hero del hub ── */}
+      <div className="relative overflow-hidden" style={{ minHeight: 120 }}>
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(135deg,#043941 0%,#0a3560 100%)',
+        }}/>
+        <div className="absolute inset-0 grama-pattern opacity-20"/>
 
-      {/* SVG banner */}
-      <TallerBanner slug={slug} nombre={nombre} accent={accent} />
+        {/* Accent blob */}
+        <div className="absolute pointer-events-none" style={{
+          width: 260, height: 260,
+          background: `radial-gradient(circle, ${accent}22 0%, transparent 65%)`,
+          right: -40, top: -70,
+        }}/>
 
-      {/* Card body */}
-      <div style={{ padding: '18px 20px' }}>
-
-        {/* Tag */}
-        <span style={{
-          display: 'inline-block', fontSize: 9, fontWeight: 700,
-          letterSpacing: '.08em', textTransform: 'uppercase',
-          padding: '2px 8px', borderRadius: 5, marginBottom: 7,
-          background: cfg?.tagBg ?? `${accent}15`,
-          color: cfg?.tagColor ?? accent,
-        }}>
-          T{String(numero).padStart(2, '0')}
-        </span>
-
-        {/* Name */}
-        <p style={{ fontSize: 15, fontWeight: 700, color: '#043941', marginBottom: 5 }}>{nombre}</p>
-
-        {/* Progress */}
-        <div style={{ marginBottom: 12 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}>
-            <span style={{ fontSize: 11, color: '#5a8a92' }}>
-              {progresoT.completados} de {progresoT.total} actividades
-            </span>
-            <span style={{ fontSize: 11, fontWeight: 700, color: progresoT.porcentaje > 0 ? accent : '#94a3b8' }}>
-              {progresoT.porcentaje}%
-            </span>
-          </div>
-          <div style={{ height: 5, borderRadius: 100, background: 'rgba(4,57,65,0.07)', overflow: 'hidden' }}>
-            <div style={{
-              height: '100%', borderRadius: 100,
-              width: `${Math.max(progresoT.porcentaje, progresoT.porcentaje > 0 ? 4 : 0)}%`,
-              background: progresoT.porcentaje === 0 ? 'rgba(4,57,65,0.15)' : accent,
-              transition: 'width .6s ease',
-            }} />
-          </div>
-        </div>
-
-        {/* Meta chips */}
-        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 12 }}>
-          {[`${TOTAL_MODULOS} módulos`, `${TOTAL_HORAS}h formación`, `${bienes} bienes`].map(label => (
-            <span key={label} style={{
-              background: '#f0faf5', color: '#045f6c', fontSize: 10, fontWeight: 500,
-              padding: '2px 8px', borderRadius: 100, border: '1px solid #cce8eb',
-            }}>
-              {label}
-            </span>
-          ))}
-        </div>
-
-        {/* Session box */}
-        {proximaSesion && (
-          <div style={{
-            background: cfg?.sesBg ?? '#f0faf5',
-            border: `1px solid ${cfg?.sesBorder ?? '#cce8eb'}`,
-            borderRadius: 10, padding: '10px 12px',
-            display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12,
-          }}>
-            <span className="animate-pulse" style={{
-              display: 'inline-block', width: 7, height: 7,
-              borderRadius: '50%', background: accent, flexShrink: 0,
-            }} />
-            <div style={{ flex: 1 }}>
-              <p style={{
-                fontSize: 8, fontWeight: 700, color: accent,
-                textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: 1,
-              }}>
-                Próxima sesión en vivo
-              </p>
-              <p style={{ fontSize: 11, fontWeight: 600, color: '#043941' }}>{proximaSesion.titulo}</p>
-              <p style={{ fontSize: 10, color: '#5a8a92', marginTop: 1 }}>{proximaSesion.fechaFormateada}</p>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: 20, fontWeight: 800, color: accent, lineHeight: 1 }}>{proximaSesion.dias}</p>
-              <p style={{ fontSize: 9, color: '#5a8a92', fontWeight: 500 }}>{proximaSesion.dias === 1 ? 'día' : 'días'}</p>
+        {/* SVG ilustración */}
+        {svgIlustracion && (
+          <div className="absolute inset-y-0 right-0 pointer-events-none overflow-hidden"
+            style={{ width: '60%', opacity: 0.38 }}>
+            <div style={{ position: 'absolute', bottom: 0, right: 0, width: '100%', height: '100%' }}>
+              {svgIlustracion}
             </div>
           </div>
         )}
 
-        {/* Primary CTA */}
-        <button
-          onClick={onRuta}
-          style={{
-            width: '100%', background: cfg?.btnBg ?? '#043941',
-            color: cfg?.btnColor ?? '#02d47e',
-            border: 'none', borderRadius: 100, padding: 10,
-            fontFamily: "'Manrope', sans-serif", fontSize: 12, fontWeight: 700,
-            cursor: 'pointer', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', gap: 7, marginBottom: 7,
-            transition: 'opacity .2s',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.opacity = '.85')}
-          onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-        >
-          <Play size={12} />
-          {progresoT.porcentaje === 0 ? 'Iniciar Ruta' : 'Seguir Ruta'}
-        </button>
+        {/* Contenido del header */}
+        <div className="relative z-10" style={{ padding: '14px 16px 12px' }}>
+          {/* Badge */}
+          <div className="inline-flex items-center gap-1.5 mb-2.5"
+            style={{
+              padding: '3px 10px', borderRadius: 100, fontSize: 9, fontWeight: 700,
+              background: `${accent}22`, border: `1px solid ${accent}35`, color: accentLight,
+            }}>
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: accent, display: 'inline-block' }}/>
+            T{String(numero).padStart(2, '0')} · TALLER EPT
+          </div>
 
-        {/* Secondary CTA */}
-        <button
-          onClick={onRepositorio}
-          style={{
-            width: '100%', background: 'transparent',
-            color: cfg?.btnSecondaryColor ?? '#045f6c',
-            border: `1px solid ${cfg?.btnSecondaryBorder ?? '#cce8eb'}`,
-            borderRadius: 100, padding: 8,
-            fontFamily: "'Manrope', sans-serif", fontSize: 11, fontWeight: 600,
-            cursor: 'pointer', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', gap: 5, transition: 'background .2s',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.background = '#f0faf5')}
-          onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-        >
-          <Package size={11} />
-          Repositorio
-        </button>
+          {/* Nombre */}
+          <p style={{ fontSize: 15, fontWeight: 800, color: '#d2ffe1', letterSpacing: '-0.02em', marginBottom: 3 }}>
+            {nombre}
+          </p>
+          <p style={{ fontSize: 10, color: 'rgba(210,255,225,0.4)', marginBottom: 10 }}>
+            {TOTAL_MODULOS} módulos · {TOTAL_HORAS}h · {bienes} bienes
+          </p>
+
+          {/* Barra de progreso */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ flex: 1, height: 4, borderRadius: 100, overflow: 'hidden', background: 'rgba(255,255,255,0.1)' }}>
+              <div style={{
+                height: '100%', borderRadius: 100,
+                width: `${Math.max(progresoT.porcentaje, progresoT.porcentaje > 0 ? 3 : 0)}%`,
+                background: `linear-gradient(90deg,${accent},${accentLight})`,
+                transition: 'width .6s ease',
+              }}/>
+            </div>
+            <span style={{ fontSize: 9, fontWeight: 800, color: accent, flexShrink: 0 }}>
+              {progresoT.porcentaje}%
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Acciones — fondo blanco ── */}
+      <div style={{
+        background: '#fff', padding: '10px 14px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8,
+        borderTop: '1px solid rgba(4,57,65,0.06)',
+      }}>
+        <div style={{ display: 'flex', gap: 7 }}>
+          <button onClick={onRuta}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 6,
+              padding: '7px 14px', borderRadius: 10, border: 'none', cursor: 'pointer',
+              background: 'linear-gradient(90deg,#02d47e,#00c16e)', color: '#032e34',
+              fontFamily: "'Manrope',sans-serif", fontSize: 11, fontWeight: 700,
+              transition: 'opacity .2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '.85')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
+            <Play size={11}/>
+            {progresoT.porcentaje === 0 ? 'Iniciar Ruta' : 'Seguir Ruta'}
+          </button>
+          <button onClick={onRepositorio}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 5,
+              padding: '7px 12px', borderRadius: 10, cursor: 'pointer',
+              background: 'rgba(4,57,65,0.05)', border: '1px solid rgba(4,57,65,0.1)',
+              color: '#043941', fontFamily: "'Manrope',sans-serif", fontSize: 11, fontWeight: 600,
+              transition: 'background .2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(4,57,65,0.09)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'rgba(4,57,65,0.05)')}
+          >
+            <Package size={11}/> Repositorio
+          </button>
+        </div>
+
+        {/* Chip próxima sesión */}
+        {proximaSesion && (
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 5,
+            padding: '6px 10px', borderRadius: 8, flexShrink: 0,
+            background: `${accent}08`, border: `1px solid ${accent}20`,
+          }}>
+            <CalendarDays size={10} style={{ color: accent }}/>
+            <div>
+              <p style={{ fontSize: 10, fontWeight: 800, color: accent, lineHeight: 1 }}>{proximaSesion.dias}d</p>
+              <p style={{ fontSize: 8, color: 'rgba(4,57,65,0.35)', lineHeight: 1.2 }}>próx. sesión</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

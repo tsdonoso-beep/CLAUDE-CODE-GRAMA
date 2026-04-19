@@ -18,6 +18,26 @@ const TALLER_SVG: Record<string, React.ReactNode> = {
   'electronica':         <SvgElectronica />,
 }
 
+function Tangram({
+  color = '#02d47e', opacity = 0.12, className = '', rotate = 0,
+  style = {} as React.CSSProperties,
+}: {
+  color?: string; opacity?: number; className?: string; rotate?: number; style?: React.CSSProperties
+}) {
+  return (
+    <svg viewBox="0 0 160 160" className={`pointer-events-none select-none ${className}`}
+      style={{ transform: `rotate(${rotate}deg)`, ...style }} xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,160 80,80 0,0"              fill={color} fillOpacity={opacity}/>
+      <polygon points="160,0 80,80 160,160"           fill={color} fillOpacity={opacity * 0.7}/>
+      <polygon points="0,160 80,160 80,80"            fill={color} fillOpacity={opacity * 1.2}/>
+      <rect x="70" y="30" width="40" height="40" transform="rotate(45 90 50)" fill={color} fillOpacity={opacity * 0.9}/>
+      <polygon points="80,80 120,80 120,120"          fill={color} fillOpacity={opacity * 0.8}/>
+      <polygon points="80,80 80,120 120,120"          fill={color} fillOpacity={opacity * 0.6}/>
+      <polygon points="120,80 160,80 160,120 120,120" fill={color} fillOpacity={opacity * 0.5}/>
+    </svg>
+  )
+}
+
 export default function TallerHub() {
   const { taller, slug } = useTaller()
   const navigate = useNavigate()
@@ -40,44 +60,73 @@ export default function TallerHub() {
   const bienesFallback = todosLos.filter(b => b.tipo === 'EQUIPOS').slice(0, 8)
 
   return (
-    <div style={{ background: '#f4f8f9', fontFamily: 'Manrope, sans-serif' }}>
+    <div style={{ background: '#f0faf5', fontFamily: 'Manrope, sans-serif' }}>
 
-      {/* ══ HERO ══════════════════════════════════════════════════════════════ */}
-      <div className="relative overflow-hidden" style={{ minHeight: 300 }}>
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url(${taller.imagen})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          filter: 'brightness(0.55) saturate(0.8)',
-        }} />
-        <div className="absolute inset-0" style={{
-          background: 'linear-gradient(115deg, rgba(3,14,18,0.88) 30%, rgba(4,57,65,0.55) 100%)',
-        }} />
-        <div className="absolute inset-0 grama-pattern opacity-20" />
+      {/* ══ HERO — oscuro unificado con Perfil ════════════════════════════════ */}
+      <div className="relative overflow-hidden" style={{ minHeight: 280 }}>
 
-        <div className="relative z-10 px-8 pt-10 pb-12">
+        {/* Gradiente oscuro */}
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(135deg,#043941 0%,#045f6c 55%,rgba(0,193,110,0.1) 100%)',
+        }}/>
+
+        {/* Patrón GRAMA */}
+        <div className="absolute inset-0 grama-pattern opacity-20"/>
+
+        {/* Blob accent del taller */}
+        <div className="absolute pointer-events-none" style={{
+          width: 480, height: 480,
+          background: `radial-gradient(circle, hsl(${taller.color} / 0.16) 0%, transparent 65%)`,
+          right: -80, top: -120,
+        }}/>
+
+        {/* SVG ilustración del taller */}
+        {TALLER_SVG[slug] && (
+          <div className="absolute inset-y-0 right-0 pointer-events-none overflow-hidden"
+            style={{ width: '55%', opacity: 0.38 }}>
+            <div style={{ position: 'absolute', bottom: 0, right: 0, width: '100%', height: '100%' }}>
+              {TALLER_SVG[slug]}
+            </div>
+          </div>
+        )}
+
+        {/* Tangram decorativo */}
+        <Tangram color="#02d47e" opacity={0.09} rotate={15}
+          className="absolute float-a"
+          style={{ width: 220, height: 220, top: -20, right: 320 }}
+        />
+
+        {/* Contenido */}
+        <div className="relative z-10 px-8 pt-10 pb-12" style={{ maxWidth: 860 }}>
+
           {/* Badge */}
           <div className="flex items-center gap-3 mb-5">
-            <span className="inline-block text-[11px] font-extrabold px-3 py-1 rounded-full"
-              style={{ background: `hsl(${taller.color})`, color: '#fff' }}>
-              T{String(taller.numero).padStart(2, '0')} · Taller EPT
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold px-3 py-1 rounded-full"
+              style={{
+                background: `hsl(${taller.color} / 0.18)`,
+                border: `1px solid hsl(${taller.color} / 0.35)`,
+                color: `hsl(${taller.color})`,
+              }}>
+              <span className="w-1 h-1 rounded-full" style={{ background: `hsl(${taller.color})` }}/>
+              T{String(taller.numero).padStart(2, '0')} · TALLER EPT
             </span>
-            <span className="text-[11px] font-semibold tracking-wide" style={{ color: 'rgba(255,255,255,0.3)' }}>
+            <span className="text-[10px] font-semibold tracking-widest uppercase"
+              style={{ color: 'rgba(255,255,255,0.28)' }}>
               Programa Formativo MINEDU
             </span>
           </div>
 
           {/* Título + descripción */}
-          <h1 className="font-extrabold text-white leading-tight mb-3"
-            style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', letterSpacing: '-0.02em' }}>
+          <h1 className="font-extrabold leading-tight mb-3"
+            style={{ fontSize: 'clamp(1.6rem,3vw,2.4rem)', letterSpacing: '-0.025em', color: '#d2ffe1' }}>
             {taller.nombre}
           </h1>
-          <p className="text-sm leading-relaxed mb-8" style={{ color: 'rgba(255,255,255,0.55)', maxWidth: 520 }}>
+          <p className="text-sm leading-relaxed mb-8" style={{ color: 'rgba(210,255,225,0.5)', maxWidth: 480 }}>
             {taller.descripcion}
           </p>
 
           {/* Stats row */}
-          <div className="flex flex-wrap gap-6 mb-8">
+          <div className="flex flex-wrap gap-5 mb-8">
             {[
               { icon: BookOpen, value: `${modulosLXP.length} módulos`, sub: 'M0 → M6' },
               { icon: Clock,    value: `${totalHoras}h`,               sub: 'Virtual + Presencial' },
@@ -86,34 +135,34 @@ export default function TallerHub() {
             ].map(s => (
               <div key={s.value} className="flex items-center gap-2.5">
                 <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.18)' }}>
-                  <s.icon size={15} color="#02d47e" />
+                  style={{ background: 'rgba(2,212,126,0.1)', border: '1px solid rgba(2,212,126,0.15)' }}>
+                  <s.icon size={15} color="#02d47e"/>
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-white">{s.value}</p>
-                  <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.sub}</p>
+                  <p className="text-sm font-bold" style={{ color: '#d2ffe1' }}>{s.value}</p>
+                  <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.3)' }}>{s.sub}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* CTAs principales en el hero */}
+          {/* CTAs */}
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => navigate(`/taller/${slug}/ruta`)}
-              className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold transition-all hover:opacity-90 active:scale-[0.98]"
-              style={{ background: 'linear-gradient(90deg,#02d47e,#00c16e)', color: '#032e34' }}
+              className="flex items-center gap-2 px-6 py-3 text-sm font-bold transition-all hover:opacity-90 active:scale-[0.98]"
+              style={{ background: 'linear-gradient(90deg,#02d47e,#00c16e)', color: '#032e34', borderRadius: 12 }}
             >
-              <BookOpen size={14} />
+              <BookOpen size={14}/>
               Iniciar Ruta de Aprendizaje
-              <ChevronRight size={14} />
+              <ChevronRight size={14}/>
             </button>
             <button
               onClick={() => navigate(`/taller/${slug}/repositorio`)}
-              className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold transition-all hover:bg-white/20 active:scale-[0.98]"
-              style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1.5px solid rgba(255,255,255,0.18)' }}
+              className="flex items-center gap-2 px-6 py-3 text-sm font-bold transition-all active:scale-[0.98]"
+              style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', border: '1.5px solid rgba(255,255,255,0.15)', borderRadius: 12 }}
             >
-              <Package size={14} />
+              <Package size={14}/>
               Ver Repositorio
             </button>
           </div>
