@@ -11,78 +11,107 @@ import {
   SvgElectronica,
 } from '@/components/lxp/TallerCardDocente'
 
-// ── SVG universal para sección de competencias ────────────────────────────────
-function SvgCompetencias() {
+// ── Ilustración docente + alumnos ────────────────────────────────────────────
+function SvgDocente() {
   return (
-    <svg width="100%" height="120" viewBox="0 0 900 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <rect width="900" height="120" fill="#07131f"/>
-      {/* Dot grid */}
-      {Array.from({ length: 19 }, (_, col) =>
-        Array.from({ length: 7 }, (_, row) => (
-          <circle key={`${col}-${row}`} cx={col * 50 + 25} cy={row * 18 + 9} r="1" fill="#02d47e" opacity=".05"/>
-        ))
-      )}
-      {/* Ground strip */}
-      <rect x="0" y="100" width="900" height="20" fill="#040e18"/>
-      <line x1="450" y1="100" x2="0"   y2="120" stroke="#0b2030" strokeWidth="1"/>
-      <line x1="450" y1="100" x2="225" y2="120" stroke="#0b2030" strokeWidth="1"/>
-      <line x1="450" y1="100" x2="450" y2="120" stroke="#0b2030" strokeWidth="1"/>
-      <line x1="450" y1="100" x2="675" y2="120" stroke="#0b2030" strokeWidth="1"/>
-      <line x1="450" y1="100" x2="900" y2="120" stroke="#0b2030" strokeWidth="1"/>
-      {/* Learning path curve */}
-      <path d="M60,60 C150,30 200,82 300,58 C400,34 450,78 550,56 C650,34 720,76 840,52"
-        stroke="#02d47e" strokeWidth="1.5" fill="none" opacity=".18" strokeDasharray="5,5"/>
-      {/* 5 skill nodes */}
-      {([90, 225, 360, 495, 630, 765] as number[]).slice(0, 5).map((cx, i) => (
-        <g key={i}>
-          {i < 4 && (
-            <line x1={cx + 28} y1="58" x2={[225, 360, 495, 630][i] - 28} y2="58"
-              stroke="#02d47e" strokeWidth="0.8" opacity=".12"/>
-          )}
-          <circle cx={cx} cy="58" r="26" fill="#02d47e" opacity=".03"/>
-          <circle cx={cx} cy="58" r="18" fill="none" stroke="#02d47e" strokeWidth="0.8" opacity=".18"/>
-          <circle cx={cx} cy="58" r="11" fill="#0d2a1a" stroke="#02d47e" strokeWidth="1.2" opacity=".5"/>
-          <text x={cx} y="62" textAnchor="middle" fontSize="8" fontWeight="700"
-            fill="#02d47e" opacity=".65" fontFamily="DM Mono,monospace">
-            {String(i + 1).padStart(2, '0')}
-          </text>
-        </g>
-      ))}
-      {/* Decorative hexagons */}
-      {([[840,58],[858,46],[822,46]] as [number,number][]).map(([hx,hy],i) => (
-        <polygon key={i}
-          points={`${hx},${hy-10} ${hx+9},${hy-5} ${hx+9},${hy+5} ${hx},${hy+10} ${hx-9},${hy+5} ${hx-9},${hy-5}`}
-          fill="none" stroke="#02d47e" strokeWidth="0.5" opacity={0.12 - i * 0.03}/>
-      ))}
-      {([50,56,62] as number[]).map((hy, i) => (
-        <polygon key={i}
-          points={`32,${hy-10} 41,${hy-5} 41,${hy+5} 32,${hy+10} 23,${hy+5} 23,${hy-5}`}
-          fill="none" stroke="#045f6c" strokeWidth="0.5" opacity={0.14 - i * 0.04}/>
-      ))}
-      {/* Abstract book + gear silhouettes */}
-      <rect x="768" y="32" width="18" height="24" rx="2" fill="#043941" opacity=".35" stroke="#045f6c" strokeWidth="0.5"/>
-      <rect x="771" y="35" width="12" height="18" rx="1" fill="#02d47e" opacity=".05"/>
-      <line x1="773" y1="40" x2="781" y2="40" stroke="#02d47e" strokeWidth="0.7" opacity=".18"/>
-      <line x1="773" y1="44" x2="781" y2="44" stroke="#02d47e" strokeWidth="0.7" opacity=".12"/>
-      <line x1="773" y1="48" x2="779" y2="48" stroke="#02d47e" strokeWidth="0.7" opacity=".1"/>
-      <circle cx="800" cy="68" r="9" fill="none" stroke="#045f6c" strokeWidth="3" opacity=".18"/>
-      <circle cx="800" cy="68" r="4" fill="#02d47e" opacity=".08"/>
-      {/* Left: abstract certificate */}
-      <rect x="18" y="34" width="26" height="34" rx="3" fill="#043941" opacity=".4" stroke="#045f6c" strokeWidth="0.5"/>
-      <line x1="24" y1="43" x2="38" y2="43" stroke="#02d47e" strokeWidth="0.8" opacity=".2"/>
-      <line x1="24" y1="48" x2="38" y2="48" stroke="#02d47e" strokeWidth="0.8" opacity=".15"/>
-      <line x1="24" y1="53" x2="33" y2="53" stroke="#02d47e" strokeWidth="0.8" opacity=".12"/>
-      <polygon points="31,59 33.5,65 40,65 35,68.5 37,75 31,71 25,75 27,68.5 22,65 28.5,65" fill="#fde047" opacity=".12"/>
-      {/* Gradient fade left/right edges */}
+    <svg viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto' }}>
       <defs>
-        <linearGradient id="compEdge" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%"   stopColor="#07131f" stopOpacity=".5"/>
-          <stop offset="8%"   stopColor="#07131f" stopOpacity="0"/>
-          <stop offset="92%"  stopColor="#07131f" stopOpacity="0"/>
-          <stop offset="100%" stopColor="#07131f" stopOpacity=".4"/>
+        <linearGradient id="svgDocBg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#edfaf4"/>
+          <stop offset="100%" stopColor="#daf2ea"/>
         </linearGradient>
       </defs>
-      <rect width="900" height="120" fill="url(#compEdge)"/>
+      <rect width="440" height="280" rx="16" fill="url(#svgDocBg)"/>
+      {/* Floor */}
+      <rect x="0" y="212" width="440" height="68" fill="rgba(4,57,65,0.04)"/>
+      <line x1="0" y1="212" x2="440" y2="212" stroke="rgba(4,57,65,0.07)" strokeWidth="1"/>
+
+      {/* ─── PIZARRÓN ─── */}
+      <rect x="22" y="26" width="154" height="108" rx="7" fill="#043941"/>
+      <rect x="28" y="32" width="142" height="96" rx="4" fill="#054a55"/>
+      {/* Engranaje */}
+      <circle cx="76" cy="70" r="19" fill="none" stroke="#02d47e" strokeWidth="2" opacity="0.62"/>
+      <circle cx="76" cy="70" r="8" fill="#02d47e" opacity="0.42"/>
+      <rect x="71" y="48" width="10" height="7" rx="2" fill="#02d47e" opacity="0.42"/>
+      <rect x="71" y="85" width="10" height="7" rx="2" fill="#02d47e" opacity="0.42"/>
+      <rect x="53" y="65" width="7" height="9" rx="2" fill="#02d47e" opacity="0.42"/>
+      <rect x="92" y="65" width="7" height="9" rx="2" fill="#02d47e" opacity="0.42"/>
+      {/* Flecha */}
+      <line x1="107" y1="70" x2="132" y2="70" stroke="#02d47e" strokeWidth="2.5" strokeLinecap="round" opacity="0.55"/>
+      <path d="M126 64 L134 70 L126 76" stroke="#02d47e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" opacity="0.55"/>
+      {/* Check */}
+      <path d="M142 57 L149 66 L161 50" stroke="#02d47e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" opacity="0.55"/>
+      {/* Líneas de texto */}
+      <line x1="40" y1="100" x2="154" y2="100" stroke="#02d47e" strokeWidth="1.5" opacity="0.27"/>
+      <line x1="40" y1="111" x2="138" y2="111" stroke="#02d47e" strokeWidth="1.5" opacity="0.18"/>
+      {/* Patas del pizarrón */}
+      <line x1="62" y1="134" x2="48" y2="212" stroke="#043941" strokeWidth="4" strokeLinecap="round" opacity="0.22"/>
+      <line x1="138" y1="134" x2="152" y2="212" stroke="#043941" strokeWidth="4" strokeLinecap="round" opacity="0.22"/>
+
+      {/* ─── DOCENTE ─── */}
+      <rect x="180" y="106" width="34" height="64" rx="12" fill="#043941" opacity="0.88"/>
+      <path d="M187 106 L197 122 L207 106" fill="#ddf5ee" opacity="0.72"/>
+      <circle cx="197" cy="83" r="22" fill="#c8956a"/>
+      <path d="M175 78 Q175 58 197 58 Q219 58 219 78" fill="#3d2616"/>
+      <ellipse cx="175" cy="84" rx="5" ry="7" fill="#b8855a"/>
+      <ellipse cx="219" cy="84" rx="5" ry="7" fill="#b8855a"/>
+      {/* Brazo señalando la pizarra */}
+      <path d="M180 124 Q157 117 146 107" stroke="#043941" strokeWidth="14" strokeLinecap="round" opacity="0.22"/>
+      <path d="M180 124 Q157 117 146 107" stroke="#c8956a" strokeWidth="10" strokeLinecap="round"/>
+      <circle cx="146" cy="107" r="6" fill="#c8956a"/>
+      {/* Brazo derecho */}
+      <path d="M214 118 Q222 138 220 155" stroke="#043941" strokeWidth="13" strokeLinecap="round" opacity="0.22"/>
+      <path d="M214 118 Q222 138 220 155" stroke="#c8956a" strokeWidth="9" strokeLinecap="round"/>
+      {/* Piernas */}
+      <rect x="183" y="168" width="13" height="42" rx="6" fill="#1a3545"/>
+      <rect x="200" y="168" width="13" height="42" rx="6" fill="#1a3545"/>
+      <ellipse cx="189" cy="210" rx="14" ry="7" fill="#0c2030"/>
+      <ellipse cx="206" cy="210" rx="14" ry="7" fill="#0c2030"/>
+
+      {/* ─── ESCRITORIO ─── */}
+      <rect x="252" y="170" width="130" height="13" rx="4" fill="#9cccc4"/>
+      <rect x="261" y="183" width="8" height="29" rx="3" fill="#9cccc4"/>
+      <rect x="366" y="183" width="8" height="29" rx="3" fill="#9cccc4"/>
+      {/* Cuaderno sobre el escritorio */}
+      <rect x="260" y="157" width="40" height="14" rx="2" fill="white" opacity="0.92"/>
+      <line x1="280" y1="159" x2="280" y2="169" stroke="#02d47e" strokeWidth="1.5" opacity="0.5"/>
+      <line x1="266" y1="163" x2="277" y2="163" stroke="#94a3b8" strokeWidth="0.8" opacity="0.45"/>
+      <line x1="283" y1="163" x2="293" y2="163" stroke="#94a3b8" strokeWidth="0.8" opacity="0.45"/>
+
+      {/* ─── ALUMNO 1 ─── */}
+      <rect x="268" y="121" width="30" height="53" rx="11" fill="#02d47e" opacity="0.62"/>
+      <circle cx="283" cy="107" r="18" fill="#d4a06a"/>
+      <path d="M265 102 Q265 87 283 87 Q301 87 301 102" fill="#5c3a1e"/>
+      <path d="M268 153 L256 168" stroke="#043941" strokeWidth="13" strokeLinecap="round" opacity="0.2"/>
+      <path d="M268 153 L256 168" stroke="#d4a06a" strokeWidth="9" strokeLinecap="round"/>
+      <rect x="272" y="172" width="11" height="22" rx="5" fill="#144a5a"/>
+      <rect x="285" y="172" width="11" height="22" rx="5" fill="#144a5a"/>
+
+      {/* ─── ALUMNO 2 ─── */}
+      <rect x="318" y="127" width="28" height="47" rx="10" fill="#045f6c" opacity="0.62"/>
+      <circle cx="332" cy="112" r="16" fill="#c89a5a"/>
+      <path d="M316 108 Q316 96 332 96 Q348 96 348 108" fill="#2c1a0e"/>
+      <path d="M318 157 L310 168" stroke="#043941" strokeWidth="12" strokeLinecap="round" opacity="0.2"/>
+      <path d="M318 157 L310 168" stroke="#c89a5a" strokeWidth="8" strokeLinecap="round"/>
+      <rect x="321" y="172" width="10" height="20" rx="4" fill="#144a5a"/>
+      <rect x="333" y="172" width="10" height="20" rx="4" fill="#144a5a"/>
+
+      {/* ─── MEDALLA (arriba derecha) ─── */}
+      <circle cx="392" cy="60" r="44" fill="rgba(255,255,255,0.78)" stroke="#02d47e" strokeWidth="1.5"/>
+      <circle cx="392" cy="60" r="35" fill="#f0faf5" stroke="#02d47e" strokeWidth="0.8" opacity="0.65"/>
+      <path d="M373 96 L382 86 L392 96 L402 86 L411 96" stroke="#02d47e" strokeWidth="2.5" fill="none" opacity="0.5"/>
+      <polygon points="392,34 398,50 415,50 402,60 407,77 392,67 377,77 382,60 369,50 386,50" fill="#fde047" opacity="0.9"/>
+      <rect x="380" y="82" width="24" height="3" rx="1.5" fill="#02d47e" opacity="0.44"/>
+      {/* Destellos */}
+      <line x1="392" y1="9" x2="392" y2="3" stroke="#fde047" strokeWidth="2" opacity="0.38"/>
+      <line x1="421" y1="27" x2="426" y2="21" stroke="#fde047" strokeWidth="2" opacity="0.32"/>
+      <line x1="363" y1="27" x2="358" y2="21" stroke="#fde047" strokeWidth="2" opacity="0.32"/>
+
+      {/* Puntos decorativos */}
+      <circle cx="16" cy="238" r="4" fill="#02d47e" opacity="0.12"/>
+      <circle cx="8" cy="224" r="3" fill="#02d47e" opacity="0.08"/>
+      <circle cx="426" cy="232" r="4" fill="#02d47e" opacity="0.1"/>
+      <circle cx="434" cy="248" r="3" fill="#02d47e" opacity="0.07"/>
     </svg>
   )
 }
@@ -245,47 +274,54 @@ export default function TallerHub() {
       {/* ══ COMPETENCIAS ══════════════════════════════════════════════════════ */}
       {taller.competencias?.length > 0 && (
         <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.06)' }}>
-          <div className="px-8 py-8">
-            <p className="text-[11px] font-extrabold uppercase tracking-widest mb-1"
-              style={{ color: '#02d47e' }}>
-              Lo que lograrás
-            </p>
-            <h2 className="text-xl font-extrabold mb-5" style={{ color: '#043941' }}>
-              Competencias que desarrollarás
-            </h2>
+          <div className="px-8 py-10">
 
-            <div className="rounded-2xl overflow-hidden"
-              style={{ border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.04)' }}>
+            {/* Header con descripción */}
+            <div className="mb-8">
+              <p className="text-[11px] font-extrabold uppercase tracking-widest mb-2"
+                style={{ color: '#02d47e' }}>
+                Lo que lograrás
+              </p>
+              <h2 className="text-xl font-extrabold mb-3" style={{ color: '#043941' }}>
+                Competencias que desarrollarás
+              </h2>
+              {taller.descripcion && (
+                <p className="text-sm leading-relaxed max-w-2xl"
+                  style={{ color: 'rgba(4,57,65,0.52)', lineHeight: 1.75 }}>
+                  {taller.descripcion}
+                </p>
+              )}
+            </div>
 
-              {/* Banner universal — mismo para todos los talleres */}
-              <div style={{ height: 120, overflow: 'hidden' }}>
-                <SvgCompetencias />
-              </div>
+            {/* Layout: competencias + ilustración */}
+            <div className="grid lg:grid-cols-[3fr_2fr] gap-10 items-center">
 
-              {/* Items horizontales */}
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: `repeat(${Math.min(taller.competencias.length, 5)}, 1fr)`,
-              }}>
+              {/* Competencias como tarjetas numeradas */}
+              <div className="grid sm:grid-cols-2 gap-3">
                 {taller.competencias.map((c, i) => (
-                  <div key={i} style={{
-                    padding: '16px 18px',
-                    borderRight: i < taller.competencias.length - 1
-                      ? '1px solid rgba(4,57,65,0.06)' : 'none',
-                  }}>
-                    <span style={{
-                      display: 'block', fontSize: 22, fontWeight: 800,
-                      color: 'rgba(4,57,65,0.09)', lineHeight: 1, marginBottom: 7,
-                      fontFamily: "'DM Mono', monospace",
-                    }}>
+                  <div key={i} className="flex items-start gap-3 p-4 rounded-xl"
+                    style={{ background: '#f4faf8', border: '1px solid rgba(4,57,65,0.06)' }}>
+                    <span className="leading-none shrink-0 mt-0.5"
+                      style={{
+                        fontSize: 22, fontWeight: 800, lineHeight: 1,
+                        color: 'rgba(2,212,126,0.28)',
+                        fontFamily: "'DM Mono', monospace",
+                      }}>
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: '#043941', lineHeight: 1.5 }}>
+                    <span className="text-sm font-semibold leading-snug"
+                      style={{ color: '#043941', lineHeight: 1.55 }}>
                       {c}
                     </span>
                   </div>
                 ))}
               </div>
+
+              {/* Ilustración docente */}
+              <div className="hidden lg:block">
+                <SvgDocente />
+              </div>
+
             </div>
           </div>
         </div>
