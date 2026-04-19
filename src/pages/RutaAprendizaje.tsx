@@ -64,7 +64,7 @@ export default function RutaAprendizaje() {
   return (
     <div>
       {/* ── Hero ── */}
-      <div className="px-8 pt-8 pb-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg,#043941 0%,#0a3560 100%)' }}>
+      <div className="px-8 pt-8 pb-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg,#043941 0%,#045f6c 55%,rgba(0,193,110,0.1) 100%)' }}>
         <div className="absolute inset-0 grama-pattern opacity-20" />
         <div className="absolute -top-10 -right-10 w-72 h-72 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(2,212,126,0.12) 0%, transparent 70%)' }} />
         {TALLER_SVG[slug ?? ''] && (
