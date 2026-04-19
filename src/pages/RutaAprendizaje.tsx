@@ -108,41 +108,25 @@ export default function RutaAprendizaje() {
             </div>
           </div>
 
-          {/* Columna derecha: progreso prominente */}
+          {/* Columna derecha: progreso */}
           <div className="hidden lg:block">
-            <div className="p-5 rounded-2xl" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <div className="p-5 rounded-2xl" style={{ background: 'rgba(4,57,65,0.55)', border: '1px solid rgba(255,255,255,0.14)', backdropFilter: 'blur(8px)' }}>
               <p className="overline-label mb-4" style={{ color: 'rgba(2,212,126,0.7)' }}>
                 Tu Progreso
               </p>
 
-              {/* Número — usa t-display del sistema de tipografía */}
-              <div className="flex items-end gap-2 mb-3">
+              <div className="flex items-end gap-2 mb-5">
                 <span className="t-display text-white leading-none">
                   {progresoTaller.porcentaje}
                 </span>
                 <span className="t-h2 font-extrabold mb-1" style={{ color: 'var(--grama-menta)' }}>%</span>
-                <span className="t-body mb-2 ml-1" style={{ color: 'rgba(255,255,255,0.4)' }}>completado</span>
+                <span className="t-body mb-2 ml-1" style={{ color: 'rgba(255,255,255,0.5)' }}>completado</span>
               </div>
-
-              {/* Barra de progreso */}
-              <div className="h-2 rounded-full overflow-hidden mb-2" style={{ background: 'rgba(255,255,255,0.1)' }}>
-                <div
-                  className="h-full rounded-full transition-all duration-700"
-                  style={{
-                    width: `${progresoTaller.porcentaje}%`,
-                    background: 'linear-gradient(90deg, var(--grama-menta), #00c16e)',
-                    minWidth: progresoTaller.porcentaje > 0 ? 8 : 0,
-                  }}
-                />
-              </div>
-              <p className="t-body mb-4" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                {progresoTaller.completados} de {progresoTaller.total} actividades
-              </p>
 
               {/* Módulo actual / siguiente */}
               {moduloActual && (
                 <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl"
-                  style={{ background: 'rgba(2,212,126,0.10)', border: '1px solid rgba(2,212,126,0.2)' }}>
+                  style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.22)' }}>
                   <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[11px] font-extrabold"
                     style={{ background: 'var(--grama-menta)', color: 'var(--grama-oscuro)' }}>
                     {String(moduloActual.numero).padStart(2, '0')}
