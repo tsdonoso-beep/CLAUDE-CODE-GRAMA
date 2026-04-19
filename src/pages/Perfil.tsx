@@ -459,9 +459,10 @@ export default function Perfil() {
                 {/* Right: progreso / talleres box */}
                 {tallerSlugsAccesibles.length === 1 && taller ? (
                   <div className="hidden lg:flex flex-col items-center gap-3 p-5 rounded-2xl animate-fade-in-up stagger-4" style={{
-                    background: heroDark ? 'rgba(255,255,255,0.06)' : '#ffffff',
-                    border: `1px solid ${heroDark ? 'rgba(255,255,255,0.1)' : 'rgba(4,57,65,0.10)'}`,
-                    boxShadow: heroDark ? 'none' : '0 2px 12px rgba(4,57,65,0.06)',
+                    background: heroDark ? 'rgba(4,57,65,0.58)' : '#ffffff',
+                    border: `1px solid ${heroDark ? 'rgba(255,255,255,0.14)' : 'rgba(4,57,65,0.10)'}`,
+                    boxShadow: heroDark ? '0 4px 24px rgba(0,0,0,0.25)' : '0 2px 12px rgba(4,57,65,0.06)',
+                    backdropFilter: heroDark ? 'blur(10px)' : 'none',
                     minWidth: 156,
                   }}>
                     <p className="overline-label font-bold" style={{ color: heroDark ? 'rgba(210,255,225,0.5)' : '#64748b' }}>Tu progreso</p>
@@ -470,12 +471,13 @@ export default function Perfil() {
                   </div>
                 ) : tallerSlugsAccesibles.length > 1 ? (
                   <div className="hidden lg:flex flex-col gap-2.5 p-4 rounded-2xl animate-fade-in-up stagger-4" style={{
-                    background: heroDark ? 'rgba(255,255,255,0.06)' : '#ffffff',
-                    border: `1px solid ${heroDark ? 'rgba(255,255,255,0.1)' : 'rgba(4,57,65,0.10)'}`,
-                    boxShadow: heroDark ? 'none' : '0 2px 12px rgba(4,57,65,0.06)',
+                    background: heroDark ? 'rgba(4,57,65,0.58)' : '#ffffff',
+                    border: `1px solid ${heroDark ? 'rgba(255,255,255,0.14)' : 'rgba(4,57,65,0.10)'}`,
+                    boxShadow: heroDark ? '0 4px 24px rgba(0,0,0,0.25)' : '0 2px 12px rgba(4,57,65,0.06)',
+                    backdropFilter: heroDark ? 'blur(10px)' : 'none',
                     minWidth: 220,
                   }}>
-                    <p className="overline-label font-bold mb-1" style={{ color: heroDark ? 'rgba(210,255,225,0.5)' : '#64748b' }}>Mis talleres</p>
+                    <p className="overline-label font-bold mb-1" style={{ color: heroDark ? 'rgba(2,212,126,0.75)' : '#64748b' }}>Mis talleres</p>
                     {tallerSlugsAccesibles.map(s => {
                       const t = talleresConfig.find(x => x.slug === s)
                       if (!t) return null
@@ -490,7 +492,7 @@ export default function Perfil() {
                             <span className="text-xs font-semibold truncate" style={{ color: heroDark ? '#d2ffe1' : 'var(--grama-oscuro)' }}>{t.nombreCorto}</span>
                             <span className="ml-auto text-[10px] font-bold shrink-0" style={{ color: ta }}>{p.porcentaje}%</span>
                           </div>
-                          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: heroDark ? 'rgba(255,255,255,0.1)' : 'rgba(4,57,65,0.08)' }}>
+                          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: heroDark ? 'rgba(255,255,255,0.18)' : 'rgba(4,57,65,0.08)' }}>
                             <div className="h-full rounded-full transition-all" style={{ width: `${p.porcentaje}%`, background: ta }} />
                           </div>
                         </div>
