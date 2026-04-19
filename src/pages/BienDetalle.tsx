@@ -82,16 +82,6 @@ export default function BienDetalle() {
     <div>
       {/* ── Hero ── */}
       <div className="px-8 py-10 grama-pattern" style={{ background: '#043941' }}>
-        <button
-          onClick={() => navigate(`/taller/${slug}/repositorio`)}
-          className="flex items-center gap-1.5 text-xs font-semibold mb-4 transition-colors"
-          style={{ color: 'rgba(255,255,255,0.5)' }}
-          onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.5)')}
-        >
-          <ChevronLeft size={13} />
-          Repositorio
-        </button>
         <div className="flex flex-col sm:flex-row items-start gap-5">
           <div
             className="h-16 w-16 rounded-2xl flex items-center justify-center shrink-0"
