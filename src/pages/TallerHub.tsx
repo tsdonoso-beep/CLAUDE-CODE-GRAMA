@@ -213,22 +213,6 @@ export default function TallerHub() {
         {/* Contenido */}
         <div className="relative z-10 px-8 pt-10 pb-12" style={{ maxWidth: 860 }}>
 
-          {/* Badge */}
-          <div className="flex items-center gap-3 mb-5">
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold px-3 py-1 rounded-full"
-              style={{
-                background: `hsl(${taller.color} / 0.18)`,
-                border: `1px solid hsl(${taller.color} / 0.35)`,
-                color: `hsl(${taller.color})`,
-              }}>
-              <span className="w-1 h-1 rounded-full" style={{ background: `hsl(${taller.color})` }}/>
-              T{String(taller.numero).padStart(2, '0')} · TALLER EPT
-            </span>
-            <span className="text-[10px] font-semibold tracking-widest uppercase"
-              style={{ color: 'rgba(255,255,255,0.28)' }}>
-              Programa Formativo MINEDU
-            </span>
-          </div>
 
           {/* Título + descripción */}
           <h1 className="font-extrabold leading-tight mb-3"
