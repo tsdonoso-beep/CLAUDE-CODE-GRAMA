@@ -11,6 +11,18 @@ import { useAuth } from '@/contexts/AuthContext'
 import { talleresConfig } from '@/data/talleresConfig'
 import { getBienesByTaller } from '@/data/bienesData'
 import { modulosLXP } from '@/data/modulosLXP'
+import {
+  SvgAutomotriz, SvgEbanisteria, SvgElectricidad, SvgElectronica,
+  SvgIndustriaAlimentaria, SvgCocinaReposteria, SvgConstruccionesMetalicas,
+  SvgEptGeneral, SvgIndustriaVestido, SvgComputacion,
+} from '@/components/lxp/TallerCardDocente'
+
+// ── SVG carousel data ─────────────────────────────────────────────────────────
+const CAROUSEL_SVGS = [
+  SvgAutomotriz, SvgElectricidad, SvgElectronica, SvgEbanisteria,
+  SvgIndustriaAlimentaria, SvgCocinaReposteria, SvgConstruccionesMetalicas,
+  SvgIndustriaVestido, SvgComputacion, SvgEptGeneral,
+]
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const STATS = [
@@ -628,6 +640,13 @@ export default function Landing() {
 
   const goToApp = () => navigate('/perfil')
 
+  // Hero SVG carousel
+  const [carouselIdx, setCarouselIdx] = useState(0)
+  useEffect(() => {
+    const id = setInterval(() => setCarouselIdx(i => (i + 1) % CAROUSEL_SVGS.length), 4000)
+    return () => clearInterval(id)
+  }, [])
+
   // Modal carrusel
   const [modalIndex, setModalIndex] = useState<number | null>(null)
   const [modalDir, setModalDir] = useState<'next' | 'prev'>('next')
@@ -800,28 +819,55 @@ export default function Landing() {
                 border: '1.5px solid rgba(2,212,126,0.2)',
               }} />
 
-              {/* Marco principal — imagen del docente */}
+              {/* Marco principal — carrusel SVG */}
               <div className="relative overflow-hidden" style={{
                 borderRadius: 22,
                 boxShadow: '0 32px 72px rgba(4,57,65,0.28), 0 8px 24px rgba(4,57,65,0.14)',
                 border: '2.5px solid rgba(255,255,255,0.88)',
               }}>
-                <img
-                  src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=900&q=85"
-                  alt="Docente EPT trabajando en taller técnico"
-                  className="w-full object-cover object-center"
-                  style={{ aspectRatio: '3/4', display: 'block', filter: 'brightness(0.82) saturate(1.1) contrast(1.04)' }}
-                />
+                {/* Carousel container */}
+                <div className="relative" style={{ aspectRatio: '4/3' }}>
+                  {CAROUSEL_SVGS.map((Svg, i) => (
+                    <div
+                      key={i}
+                      className="absolute inset-0 [&_svg]:w-full [&_svg]:h-full"
+                      style={{
+                        opacity: i === carouselIdx ? 1 : 0,
+                        transition: 'opacity 0.9s ease',
+                        background: '#f0faf5',
+                      }}
+                    >
+                      <Svg />
+                    </div>
+                  ))}
+                </div>
+
                 {/* Vignette inferior */}
-                <div className="absolute inset-0" style={{
-                  background: 'linear-gradient(to bottom, transparent 48%, rgba(3,14,18,0.72) 100%)',
+                <div className="absolute inset-0 pointer-events-none" style={{
+                  background: 'linear-gradient(to bottom, transparent 55%, rgba(3,20,24,0.65) 100%)',
                 }} />
+
                 {/* Label inferior izquierda */}
                 <div className="absolute bottom-5 left-5 flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full shrink-0 animate-pulse" style={{ background: '#02d47e' }} />
                   <span className="text-sm font-bold tracking-wide" style={{ color: 'rgba(255,255,255,0.92)' }}>
                     Talleres EPT · Perú
                   </span>
+                </div>
+
+                {/* Progress dots */}
+                <div className="absolute bottom-5 right-5 flex items-center gap-1">
+                  {CAROUSEL_SVGS.map((_, i) => (
+                    <span
+                      key={i}
+                      className="rounded-full transition-all duration-500"
+                      style={{
+                        width: i === carouselIdx ? 16 : 5,
+                        height: 5,
+                        background: i === carouselIdx ? '#02d47e' : 'rgba(255,255,255,0.38)',
+                      }}
+                    />
+                  ))}
                 </div>
               </div>
 
