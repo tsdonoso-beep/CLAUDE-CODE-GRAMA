@@ -96,16 +96,6 @@ export default function RutaAprendizaje() {
 
           {/* Columna izquierda: info */}
           <div>
-            {/* Overline badge */}
-            <div className="inline-flex items-center gap-2 mb-3" style={{
-              background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.22)',
-              borderRadius: 100, padding: '4px 12px',
-            }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#02d47e', display: 'inline-block', flexShrink: 0 }}/>
-              <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.75)', letterSpacing: '0.06em' }}>
-                T{String(taller.numero).padStart(2,'0')} · {taller.nombre}
-              </span>
-            </div>
             <h1 className="font-extrabold leading-tight mb-3"
               style={{ fontSize: 'clamp(1.5rem,2.8vw,2.2rem)', letterSpacing: '-0.02em', color: '#ffffff' }}>
               Tu Ruta de Aprendizaje
