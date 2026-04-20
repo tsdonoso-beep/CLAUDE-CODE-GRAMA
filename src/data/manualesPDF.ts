@@ -51,7 +51,114 @@ export function getVideoSourceLabel(url: string): string {
 // tallerSlug → bien.n → Drive URL
 export const manualesPDFPorBien: Record<string, Record<number, string>> = {
   'ebanisteria': {
+    // ── Equipos (existentes) ───────────────────────────────────────────────
     76: 'https://drive.google.com/file/d/1IEHUwvg12o_2BDBfP1KZmxxysfV-BwnT/view',  // Máquina garlopa
+
+    // ── Herramientas de medición ───────────────────────────────────────────
+    57: 'https://drive.google.com/file/d/1zDhbcKgBkPhCtypPj10A2dQ5tplg6REs/view',  // Calibrador digital
+    56: 'https://drive.google.com/file/d/1gdW1Sec0FEg1h6PBgR3Ic7eLfk4A2mi7/view',  // Distanciómetro laser de 20 M
+    61: 'https://drive.google.com/file/d/1ucYwWQeH2Wo6Ok0SC7hsVVkDUOAcot9G/view',  // Escuadra de combinación
+    62: 'https://drive.google.com/file/d/1GfnhZV3H1o82tFhiwhuuz7f5vxvXEvl-/view',  // Escuadra de plancha
+    60: 'https://drive.google.com/file/d/1qDyx7_aOd3wXtdqryaTiPV_4hbdSr_Ap/view',  // Escuadra de Tope
+    65: 'https://drive.google.com/file/d/16-Z2UOvqccQZ-Isu-_3MRTWp-Ym5yKjq/view',  // Falsa escuadra
+    64: 'https://drive.google.com/file/d/1d4rHbpHyqPWQBYTiezPgUTaLkBQBUOs9/view',  // Gramil digital
+    63: 'https://drive.google.com/file/d/1ZcDkgAZ1BmfsXd0FLx1cSnFxvwJA6r2S/view',  // Nivel de nivelación y medición ángulos digital
+    59: 'https://drive.google.com/file/d/1bVaYpuhnX-X-dJhIb58ulDAZyDlXjHHd/view',  // Juego de reglas metálicas 30/60/100 cm
+    66: 'https://drive.google.com/file/d/1BerXvtmgBDXAlTY4fpR2r7MckgL_pYQe/view',  // Transportador de ángulos
+    58: 'https://drive.google.com/file/d/1JfWeyPucRxquUIwyQ_0OArNyXaPAc_4z/view',  // Wincha Digital
+    50: 'https://drive.google.com/file/d/1IYo902VEpZFwJlprM7qfRJ7QyFYrLH35/view',  // Medidor de Humedad
+
+    // ── Herramientas de corte / máquinas (accesorios) ─────────────────────
+    70: 'https://drive.google.com/file/d/1Q6rfcknLKK-63Z8EnSDDJf7irrk2592Z/view',  // Disco de sierra circular
+    72: 'https://drive.google.com/file/d/1nssXlC5jEeMMpGe4S2o1syH6QMLwkAwc/view',  // Disco de sierra radial
+   110: 'https://drive.google.com/file/d/14VBL6fm9Ju5YjW4xU0rCykCz-QJpW-0i/view',  // Disco para Sierra Circular tableros melaminicos
+    92: 'https://drive.google.com/file/d/1S1McvHwrDh3EH_Zd0f2Wu8ufU_Sxq_Vu/view',  // Juego de cinta dentada para sierra cinta
+    79: 'https://drive.google.com/file/d/1BUCXmLXtVjxEhYe27MvHSP6clfpvDBIi/view',  // Juego de cuchillas de vuelta de base plana
+    99: 'https://drive.google.com/file/d/1VTUjukgSLduJoryZqX0rlBGktAV5Ey-v/view',  // Juego de fresas para ruteadora
+    94: 'https://drive.google.com/file/d/1rMdshIOsuLhV7QRRtrDZKzpUzOGyQm3P/view',  // Juego de hojas de sierra
+    97: 'https://drive.google.com/file/d/1m5mNdRMyZ5q8snlV231Bkek1hzSd_yJH/view',  // Juego de mechas/fresas ruteadora CNC
+   101: 'https://drive.google.com/file/d/1glURMFIIg21PfXPTe4s8ohEVNylTFVSQ/view',  // Juego de gubias para torno
+    78: 'https://drive.google.com/file/d/1JZ-nD4E4emaAgMYtTV0_-NwZ7fAplUO2/view',  // Juego de cepillos
+    95: 'https://drive.google.com/file/d/1lXSWAt8VPhzl0087sQPK48zbFSYMqYYk/view',  // Mesa Guia para Sierra Caladora
+
+    // ── Herramientas manuales ──────────────────────────────────────────────
+   138: 'https://drive.google.com/file/d/1E419Gi-pBL0EoDo6wvmgsl761tkJJO-8/view',  // Aceitera
+   118: 'https://drive.google.com/file/d/1UeTuze7skbZZTtibEKmMPTGSarBIPuno/view',  // Adaptador magnético para puntas
+   131: 'https://drive.google.com/file/d/129Ht1OBb-dDnUnxY4fw5MtOxs1EWkMwp/view',  // Alicate pelacable
+   141: 'https://drive.google.com/file/d/1NXZMdk0sZ99A_qpgsXmix8tYrkXMYM3l/view',  // Arco de Sierra
+   124: 'https://drive.google.com/file/d/1Ct2qd03ds2KE83I-Vku2Q_Bmg8Cg4srB/view',  // Caballetes
+   133: 'https://drive.google.com/file/d/1SLgr9GSCh5DWcNPZkXiXLEaZLgiDYB9T/view',  // Cúter
+   132: 'https://drive.google.com/file/d/1okSAH1zT_EETLQfvqViQbhTNqhuwttm0/view',  // Juego de alicates
+    82: 'https://drive.google.com/file/d/11i3jfFsdAyRhAxroC7q9BDiKYDsfWWoL/view',  // Juego de brocas de copa para madera
+   128: 'https://drive.google.com/file/d/1S09qifR00dNqKDPkSur3IGBEOZ6Cgtyz/view',  // Juego de brocas de paleta
+   115: 'https://drive.google.com/file/d/13MAFpbubFeG3botf5nfMSlTej5eqgV7X/view',  // Juego de brocas para bisagra de cangrejo
+    85: 'https://drive.google.com/file/d/1NOTQCiCr1sRwSF4ZHuN9d-2Cp3xLqx7Y/view',  // Juego de brocas para metal/madera/cemento
+   139: 'https://drive.google.com/file/d/1HM7SF5euxUbm7he3zgNvlz8Is7DZ_7fX/view',  // Juego de brochas carpintería
+   102: 'https://drive.google.com/file/d/1yUeVFUNG-woShHVhD6mG_W1dtPqmXSy7/view',  // Juego de compases
+   137: 'https://drive.google.com/file/d/1igHTbchWRxOtSQrEAebZau4folXvJlRW/view',  // Juego de dados
+   130: 'https://drive.google.com/file/d/1JpWnnBaL7J-gNRay5at6OeelniLpu9gw/view',  // Juego de destornilladores
+    88: 'https://drive.google.com/file/d/1ZL7-ISH0liUEuIpzHKoBjIrn_po4G4q4/view',  // Juego de escofina
+    87: 'https://drive.google.com/file/d/1XDUb-FzNyJL0-0wVG9xmroGpLI-Htjcp/view',  // Juego de formones
+   113: 'https://drive.google.com/file/d/1GrBOk7EQ-XwMBeQ-pMveXOI9BNESdwl1/view',  // Juego de guía para espigas o tarugos
+   127: 'https://drive.google.com/file/d/1bqEpLCO5JHZYdEsqLHJikjbRTOWPFXAd/view',  // Juego de llaves Allen
+   126: 'https://drive.google.com/file/d/1AcSVK7mGs6Ebol890MgNn47vPm3Pn_dW/view',  // Juego de llaves mixtas
+   107: 'https://drive.google.com/file/d/19K-kLvM7twPDXF-OmLS37KEbyEJbDvo2/view',  // Juego de prensas rápidas
+   117: 'https://drive.google.com/file/d/1wHsAIjxC1imeV1VOz2rL4LczwH5V25tN/view',  // Juego de puntas magnéticas para destornillador
+   112: 'https://drive.google.com/file/d/1fGP7leH7QKROd_Ha_Dlsvwn12a7iESNz/view',  // Kit de guía sistema ensamblaje invisible
+   136: 'https://drive.google.com/file/d/1PsYWqUZEPm_W0cM9o72MtiN9doWn5eu5/view',  // Llave francesa
+   104: 'https://drive.google.com/file/d/1gbhOb_94fI2aa53MBL8VtIO85q6glvSj/view',  // Martillo de uña
+    89: 'https://drive.google.com/file/d/1s1gUpLljL0SCc7rpCvr-0OBjJzYaSX8U/view',  // Mazo de goma
+   135: 'https://drive.google.com/file/d/1gzuIcrxDPohY2SU9ssc-lLgzxsGmPaRh/view',  // Piedra de asentar
+   106: 'https://drive.google.com/file/d/1S-5hTZq-8zrPO8hN9yB5eqkqIq0TwKpj/view',  // Prensa C
+   119: 'https://drive.google.com/file/d/1e7i_mL-qRr8riAGnNjLvu2zof3QDBYBL/view',  // Prensa esquinera
+   105: 'https://drive.google.com/file/d/1QxCvApADnBWXEW0I69T39cDpc08tz7Wm/view',  // Sargentas de 120 cm
+    86: 'https://drive.google.com/file/d/1MSE0rYt5K0lWD1HKjgTUS3wuQ2V1vfty/view',  // Serrucho de costilla
+   109: 'https://drive.google.com/file/d/1bMvGfauMT0o_iWo7sikTr7d8F4MqedBb/view',  // Tornillo de banco
+
+    // ── Mobiliario ─────────────────────────────────────────────────────────
+    19: 'https://drive.google.com/file/d/1ysE5od7MbwMX3mY5vAdxXwf0RQVnfBiS/view',  // Armario de metal (zona Investigación)
+    53: 'https://drive.google.com/file/d/1ysE5od7MbwMX3mY5vAdxXwf0RQVnfBiS/view',  // Armario de metal (mismo manual)
+    54: 'https://drive.google.com/file/d/1ysE5od7MbwMX3mY5vAdxXwf0RQVnfBiS/view',  // Armario de metal (mismo manual)
+    67: 'https://drive.google.com/file/d/1ysE5od7MbwMX3mY5vAdxXwf0RQVnfBiS/view',  // Armario de metal (mismo manual)
+   108: 'https://drive.google.com/file/d/1AqEswDLciXjuEoje6SraNl0-RsLlWwOE/view',  // Banco de trabajo (1800 x 900 x 850 mm)
+   125: 'https://drive.google.com/file/d/11ASHgkW8rSrJDDITRJO_uC0CQ6kQYP0y/view',  // Cabina de pintura
+    17: 'https://drive.google.com/file/d/1JfMWA-DUYUurvgtKEUlkOui-8B_R11E9/view',  // Escritorio para el docente
+    51: 'https://drive.google.com/file/d/1DbUIxrPJwQ2rNFKE8JuBSGpeB4fVsGVV/view',  // Estante metálico almacenamiento de madera
+    52: 'https://drive.google.com/file/d/1L_ZUZlCtzrcdXNZMjyg3i2Ie77mE8B7t/view',  // Estante móvil metálico almacenamiento de tableros
+    10: 'https://drive.google.com/file/d/1B-z-Qqgks7QSrsfloCfCTlDdafjhSxOU/view',  // Mesa de Computadora para estudiante
+    11: 'https://drive.google.com/file/d/12NIJBLhYU8ksokZ1q7GkLBSq1Zha-_g1/view',  // Mesa Discapacitado
+    27: 'https://drive.google.com/file/d/1k8StubILhdmZ3LGQhHZMDnhl9Vi07cjF/view',  // Mueble bajo
+    18: 'https://drive.google.com/file/d/1JW8fNN8rN5GWDdGSxIB0UoEiM5Kgja8g/view',  // Silla para el docente
+    12: 'https://drive.google.com/file/d/1Sbj1ChaE79-eqhdNxCbtiEwggWNCHfqt/view',  // Silla para Estudiante
+
+    // ── Material pedagógico ────────────────────────────────────────────────
+    55: 'https://drive.google.com/file/d/13PJJ4xP479DlSU1M0a0iVgCgMrRXFYsJ/view',  // Maqueta anatomía tronco de árbol
+    23: 'https://drive.google.com/file/d/1xRk3bW5GBPT5nnd19oyAs_spNv_LlCCr/view',  // Muestrario de especies madereras
+    24: 'https://drive.google.com/file/d/1mDCFRaAUuJrXe82wcBfZjlvlU-jck2se/view',  // Muestrario de tableros prefabricados
+    25: 'https://drive.google.com/file/d/1QO59UQfxumknHreKD79avycte4Ag2Bjb/view',  // Muestrario de tapacantos
+   154: 'https://drive.google.com/file/d/18M6zBwwyNxLdnGN6Ittsn_m23cORccen/view',  // Juego de fichas señalética y símbolos de seguridad
+    90: 'https://drive.google.com/file/d/1CD8I1gkuZHCajl3nwIfTGstTlN6Fsgrb/view',  // Juego de modelos de uniones desarmables (ensambles/juntas/empalmes)
+    22: 'https://drive.google.com/file/d/13x8bC6iFeM0DKlvBohRwbqJevdc-lF9L/view',  // Juego de modelos muebles a escala (proyecciones)
+    20: 'https://drive.google.com/file/d/1aTM2r1EAj9DTW6TUBNm1d6NGWCnIy6bV/view',  // Lienzo magnético metodologías de diseño
+    29: 'https://drive.google.com/file/d/18GaVNeuPBBO4gVjC1PdpWRIriNAlmgeQ/view',  // Lienzo magnético flujogramas DOP y DAP
+    28: 'https://drive.google.com/file/d/1l86GsU0sxdGvm_FHkiwB4qi6oCKt2Y2r/view',  // Lienzo magnético modelos de negocios
+    68: 'https://drive.google.com/file/d/10Iyure1650cz9GZSTOqJZl-tY6D1N4aK/view',  // Panel interactivo magnético (zona Innovación)
+    80: 'https://drive.google.com/file/d/10Iyure1650cz9GZSTOqJZl-tY6D1N4aK/view',  // Panel interactivo magnético (mismo manual)
+
+    // ── EPP y seguridad ────────────────────────────────────────────────────
+   153: 'https://drive.google.com/file/d/11pNjhgJymIU44KzzqFJog_edGkOWhaf3/view',  // Botiquín
+   150: 'https://drive.google.com/file/d/1ZADyQTn1QP2NPsFFeZytKq1vF5DN-llN/view',  // Careta facial
+   151: 'https://drive.google.com/file/d/1l2y2Zs_vETNDHjyDNKwKzF_HaOxsXRdS/view',  // Extintor CO2
+   152: 'https://drive.google.com/file/d/1o0DJRMhrAci1eZjXwMMtrTI7lg2KG4Ux/view',  // Extintor PQS
+   149: 'https://drive.google.com/file/d/1FTBSrlRjT5rcao5VWYkR3oootwl4tAuJ/view',  // Guardapolvo
+   148: 'https://drive.google.com/file/d/1gQZFO49KK6dcXlS0yzpa094v8A0KqhQn/view',  // Kit Respirador
+   146: 'https://drive.google.com/file/d/1G7TSaXmCc2tvkNZjQJBlYZGf-xQMarFB/view',  // Lentes de protección de plástico
+   143: 'https://drive.google.com/file/d/1pacB22lwIfIjbkIHs22v0xljVbvf5xPk/view',  // Lentes de protección de policarbonato
+   140: 'https://drive.google.com/file/d/1ThGEFYn3roqJF-kXnqPFm4qNABOJ718R/view',  // Linterna frontal
+   147: 'https://drive.google.com/file/d/1SU5NbCxq1-t3CELJFPa9s6WRC_t3Gn1X/view',  // Mameluco de protección para pintor
+   144: 'https://drive.google.com/file/d/1O3tTBQ1DC2RuYokwmZP91J6h46UPsWkc/view',  // Orejeras
+   142: 'https://drive.google.com/file/d/1XpaY3cVs2NhdGa1Z_clXTd0pYuKSD4pY/view',  // Par de guantes de cuero
+   145: 'https://drive.google.com/file/d/1LuhyDjGYWc8I34vHhclZjj8eFbocgHC8/view',  // Par de guantes para pintar
   },
   'mecanica-automotriz': {
     // ── Herramientas manuales ──────────────────────────────────────────────
