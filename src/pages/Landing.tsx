@@ -926,11 +926,6 @@ export default function Landing() {
                     <p className="text-sm leading-relaxed mb-4" style={{ color: '#64748b' }}>
                       Los talleres técnicos reciben equipos nuevos pero los docentes no tienen cómo aprender a usarlos. Cuando el profesor rota, el conocimiento desaparece con él.
                     </p>
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold"
-                      style={{ background: 'rgba(4,57,65,0.05)', border: '1px solid rgba(4,57,65,0.1)', color: 'var(--grama-oscuro)' }}>
-                      <Clock size={11} />
-                      +300 talleres EPT en Lima Norte
-                    </div>
                   </div>
                 </div>
               </div>
