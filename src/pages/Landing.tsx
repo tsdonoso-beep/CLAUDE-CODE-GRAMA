@@ -643,7 +643,7 @@ export default function Landing() {
   // Hero SVG carousel
   const [carouselIdx, setCarouselIdx] = useState(0)
   useEffect(() => {
-    const id = setInterval(() => setCarouselIdx(i => (i + 1) % CAROUSEL_SVGS.length), 4000)
+    const id = setInterval(() => setCarouselIdx(i => (i + 1) % CAROUSEL_SVGS.length), 3000)
     return () => clearInterval(id)
   }, [])
 
@@ -842,33 +842,6 @@ export default function Landing() {
                   ))}
                 </div>
 
-                {/* Vignette inferior */}
-                <div className="absolute inset-0 pointer-events-none" style={{
-                  background: 'linear-gradient(to bottom, transparent 55%, rgba(3,20,24,0.65) 100%)',
-                }} />
-
-                {/* Label inferior izquierda */}
-                <div className="absolute bottom-5 left-5 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full shrink-0 animate-pulse" style={{ background: '#02d47e' }} />
-                  <span className="text-sm font-bold tracking-wide" style={{ color: 'rgba(255,255,255,0.92)' }}>
-                    Talleres EPT · Perú
-                  </span>
-                </div>
-
-                {/* Progress dots */}
-                <div className="absolute bottom-5 right-5 flex items-center gap-1">
-                  {CAROUSEL_SVGS.map((_, i) => (
-                    <span
-                      key={i}
-                      className="rounded-full transition-all duration-500"
-                      style={{
-                        width: i === carouselIdx ? 16 : 5,
-                        height: 5,
-                        background: i === carouselIdx ? '#02d47e' : 'rgba(255,255,255,0.38)',
-                      }}
-                    />
-                  ))}
-                </div>
               </div>
 
             </div>
