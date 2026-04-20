@@ -825,8 +825,11 @@ export default function Landing() {
                 boxShadow: '0 32px 72px rgba(4,57,65,0.28), 0 8px 24px rgba(4,57,65,0.14)',
                 border: '2.5px solid rgba(255,255,255,0.88)',
               }}>
-                {/* Carousel container */}
-                <div className="relative" style={{ aspectRatio: '4/3' }}>
+                {/* Carousel container — spacer sizes the frame to SVG's natural ratio */}
+                <div className="relative [&_svg]:w-full">
+                  <div style={{ visibility: 'hidden', pointerEvents: 'none' }}>
+                    <SvgAutomotriz />
+                  </div>
                   {CAROUSEL_SVGS.map((Svg, i) => (
                     <div
                       key={i}
