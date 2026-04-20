@@ -799,8 +799,8 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Columna visual — foto docente EPT */}
-            <div className="hidden lg:block relative animate-fade-in-up stagger-3">
+            {/* Columna visual — stack de 3 carruseles SVG */}
+            <div className="hidden lg:flex flex-col gap-3 animate-fade-in-up stagger-3">
 
               {/* Blob glow verde detrás */}
               <div className="absolute pointer-events-none" style={{
@@ -811,41 +811,40 @@ export default function Landing() {
                 filter: 'blur(48px)',
               }} />
 
-              {/* Tarjeta decorativa de fondo — profundidad */}
-              <div className="absolute rounded-[28px]" style={{
-                inset: '16px 10px 10px 16px',
-                transform: 'rotate(-4deg)',
-                background: 'linear-gradient(145deg, rgba(2,212,126,0.10) 0%, rgba(4,57,65,0.18) 100%)',
-                border: '1.5px solid rgba(2,212,126,0.2)',
-              }} />
-
-              {/* Marco principal — carrusel SVG */}
-              <div className="relative overflow-hidden" style={{
-                borderRadius: 22,
-                boxShadow: '0 32px 72px rgba(4,57,65,0.28), 0 8px 24px rgba(4,57,65,0.14)',
-                border: '2.5px solid rgba(255,255,255,0.88)',
-              }}>
-                {/* Carousel container — spacer sizes the frame to SVG's natural ratio */}
-                <div className="relative [&_svg]:w-full">
-                  <div style={{ visibility: 'hidden', pointerEvents: 'none' }}>
-                    <SvgAutomotriz />
-                  </div>
-                  {CAROUSEL_SVGS.map((Svg, i) => (
-                    <div
-                      key={i}
-                      className="absolute inset-0 [&_svg]:w-full [&_svg]:h-full"
-                      style={{
-                        opacity: i === carouselIdx ? 1 : 0,
-                        transition: 'opacity 0.9s ease',
-                        background: '#f0faf5',
-                      }}
-                    >
-                      <Svg />
+              {[0, 1, 2].map(offset => {
+                const activeIdx = (carouselIdx + offset) % CAROUSEL_SVGS.length
+                return (
+                  <div
+                    key={offset}
+                    className="relative overflow-hidden [&_svg]:w-full"
+                    style={{
+                      borderRadius: 18,
+                      boxShadow: offset === 0
+                        ? '0 16px 40px rgba(4,57,65,0.22), 0 4px 12px rgba(4,57,65,0.10)'
+                        : '0 8px 24px rgba(4,57,65,0.14)',
+                      border: '2px solid rgba(255,255,255,0.88)',
+                    }}
+                  >
+                    {/* Spacer para tamaño natural del SVG */}
+                    <div style={{ visibility: 'hidden', pointerEvents: 'none' }}>
+                      <SvgAutomotriz />
                     </div>
-                  ))}
-                </div>
-
-              </div>
+                    {CAROUSEL_SVGS.map((Svg, i) => (
+                      <div
+                        key={i}
+                        className="absolute inset-0 [&_svg]:w-full [&_svg]:h-full"
+                        style={{
+                          opacity: i === activeIdx ? 1 : 0,
+                          transition: 'opacity 0.8s ease',
+                          background: '#f0faf5',
+                        }}
+                      >
+                        <Svg />
+                      </div>
+                    ))}
+                  </div>
+                )
+              })}
 
             </div>
           </div>
