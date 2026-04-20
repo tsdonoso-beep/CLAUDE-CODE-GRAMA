@@ -23,16 +23,16 @@ const TOTAL_HORAS   = 150
 const TOTAL_MODULOS = 7
 
 const TALLER_ACCENTS: Record<string, string> = {
-  'mecanica-automotriz': '#3b82f6',
-  'industria-vestido':   '#ec4899',
-  'cocina-reposteria':   '#f97316',
-  'ebanisteria':         '#b8975a',
-  'comunicaciones':      '#a78bfa',
-  'computacion':         '#22d3ee',
-  'agropecuaria':        '#86efac',
-  'electricidad':        '#fde047',
-  'electronica':         '#22d3ee',
-  'construccion':        '#94a3b8',
+  'mecanica-automotriz': '#02d47e',
+  'industria-vestido':   '#045f6c',
+  'cocina-reposteria':   '#02a05a',
+  'ebanisteria':         '#04768a',
+  'comunicaciones':      '#027b8a',
+  'computacion':         '#00c16e',
+  'agropecuaria':        '#019a6f',
+  'electricidad':        '#01b868',
+  'electronica':         '#038f6d',
+  'construccion':        '#043941',
 }
 
 function getInitials(name: string) {

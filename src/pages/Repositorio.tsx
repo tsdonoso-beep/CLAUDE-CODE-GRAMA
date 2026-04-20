@@ -207,11 +207,11 @@ export default function Repositorio() {
   // Función para obtener ícono y color de categoría de manual
   function getManualMeta(nombre: string) {
     if (esManualUso(nombre))
-      return { icon: BookMarked, color: '#059669', bg: '#d1fae5', label: 'Uso' }
+      return { icon: BookMarked, color: '#02d47e', bg: 'rgba(2,212,126,0.13)', label: 'Uso' }
     if (esManualMantenimiento(nombre))
-      return { icon: Wrench, color: '#d97706', bg: '#fef3c7', label: 'Mantenimiento' }
+      return { icon: Wrench, color: '#045f6c', bg: 'rgba(4,95,108,0.11)', label: 'Mantenimiento' }
     if (esManualPedagogico(nombre))
-      return { icon: GraduationCap, color: '#7c3aed', bg: '#ede9fe', label: 'Pedagógico' }
+      return { icon: GraduationCap, color: '#043941', bg: 'rgba(4,57,65,0.08)', label: 'Pedagógico' }
     return { icon: FileText, color: '#64748b', bg: '#f1f5f9', label: 'Documento' }
   }
 
@@ -370,9 +370,9 @@ export default function Repositorio() {
             <div className="flex flex-wrap gap-2 pb-5">
               {([
                 { id: 'todos',         label: 'Todos',         count: conteos.total,         color: '#02d47e' },
-                { id: 'uso',           label: 'Uso',           count: conteos.uso,           color: '#059669' },
-                { id: 'mantenimiento', label: 'Mantenimiento', count: conteos.mantenimiento, color: '#d97706' },
-                { id: 'pedagogico',    label: 'Pedagógico',    count: conteos.pedagogico,    color: '#7c3aed' },
+                { id: 'uso',           label: 'Uso',           count: conteos.uso,           color: '#02d47e' },
+                { id: 'mantenimiento', label: 'Mantenimiento', count: conteos.mantenimiento, color: '#045f6c' },
+                { id: 'pedagogico',    label: 'Pedagógico',    count: conteos.pedagogico,    color: '#043941' },
               ] as const).map(f => (
                 <button
                   key={f.id}
@@ -525,9 +525,9 @@ export default function Repositorio() {
           {/* Resumen categórico — tarjetas de acceso rápido */}
           <div className="grid grid-cols-3 gap-3 mb-6">
             {([
-              { id: 'uso',           label: 'Manual de Uso',        icon: BookMarked,    color: '#059669', bg: '#d1fae5', count: conteos.uso,           desc: 'Operación y manejo seguro del equipo' },
-              { id: 'mantenimiento', label: 'Mantenimiento',        icon: Wrench,        color: '#d97706', bg: '#fef3c7', count: conteos.mantenimiento, desc: 'Limpieza, revisión y mantenimiento preventivo' },
-              { id: 'pedagogico',    label: 'Material Pedagógico',  icon: GraduationCap, color: '#7c3aed', bg: '#ede9fe', count: conteos.pedagogico,    desc: 'Guías y sesiones para el docente' },
+              { id: 'uso',           label: 'Manual de Uso',        icon: BookMarked,    color: '#02d47e', bg: 'rgba(2,212,126,0.13)', count: conteos.uso,           desc: 'Operación y manejo seguro del equipo' },
+              { id: 'mantenimiento', label: 'Mantenimiento',        icon: Wrench,        color: '#045f6c', bg: 'rgba(4,95,108,0.11)',  count: conteos.mantenimiento, desc: 'Limpieza, revisión y mantenimiento preventivo' },
+              { id: 'pedagogico',    label: 'Material Pedagógico',  icon: GraduationCap, color: '#043941', bg: 'rgba(4,57,65,0.08)',   count: conteos.pedagogico,    desc: 'Guías y sesiones para el docente' },
             ] as const).map(cat => {
               const Icon = cat.icon
               const active = filtroManual === cat.id
@@ -705,9 +705,9 @@ function VideoCard({ bien, slug, navigate }: {
       style={{ borderColor: '#e2e8f0', background: '#ffffff' }}
       onMouseEnter={e => {
         const el = e.currentTarget as HTMLElement
-        el.style.borderColor = '#0891b2'
+        el.style.borderColor = '#045f6c'
         el.style.transform = 'translateY(-2px)'
-        el.style.boxShadow = '0 8px 20px rgba(8,145,178,0.12)'
+        el.style.boxShadow = '0 8px 20px rgba(4,95,108,0.15)'
       }}
       onMouseLeave={e => {
         const el = e.currentTarget as HTMLElement
@@ -742,7 +742,7 @@ function VideoCard({ bien, slug, navigate }: {
         </p>
         <div className="flex items-center justify-between">
           <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md"
-            style={{ background: '#cffafe', color: '#0891b2' }}>
+            style={{ background: 'rgba(4,95,108,0.1)', color: '#045f6c' }}>
             {bien.cantidad > 1 ? `${bien.cantidad} unidades` : 'Tutorial'}
           </span>
           <ChevronRight size={12} style={{ color: '#94a3b8' }} />

@@ -16,20 +16,20 @@ const TIPO_CONFIG: Record<string, {
   label: string
   accent: string
 }> = {
-  EQUIPOS:      { icon: Package,  color: '#059669', bg: '#d1fae5', label: 'Equipo',       accent: '#059669' },
-  HERRAMIENTAS: { icon: Wrench,   color: '#0284c7', bg: '#e0f2fe', label: 'Herramienta',  accent: '#0284c7' },
-  MOBILIARIO:   { icon: Sofa,     color: '#7c3aed', bg: '#ede9fe', label: 'Mobiliario',   accent: '#7c3aed' },
-  PEDAGOGICO:   { icon: BookOpen, color: '#b45309', bg: '#fef3c7', label: 'Pedagógico',   accent: '#d97706' },
-  'PRODUCCIÓN': { icon: Factory,  color: '#0891b2', bg: '#cffafe', label: 'Producción',   accent: '#0891b2' },
-  SEGURIDAD:    { icon: HardHat,  color: '#dc2626', bg: '#fee2e2', label: 'Seguridad',    accent: '#dc2626' },
-  '':           { icon: Package,  color: '#475569', bg: '#f1f5f9', label: 'Bien',         accent: '#475569' },
+  EQUIPOS:      { icon: Package,  color: '#02d47e', bg: 'rgba(2,212,126,0.12)',  label: 'Equipo',      accent: '#02d47e' },
+  HERRAMIENTAS: { icon: Wrench,   color: '#045f6c', bg: 'rgba(4,95,108,0.12)',   label: 'Herramienta', accent: '#045f6c' },
+  MOBILIARIO:   { icon: Sofa,     color: '#04768a', bg: 'rgba(4,118,138,0.12)',  label: 'Mobiliario',  accent: '#04768a' },
+  PEDAGOGICO:   { icon: BookOpen, color: '#043941', bg: 'rgba(4,57,65,0.09)',    label: 'Pedagógico',  accent: '#043941' },
+  'PRODUCCIÓN': { icon: Factory,  color: '#02a05a', bg: 'rgba(2,160,90,0.12)',   label: 'Producción',  accent: '#02a05a' },
+  SEGURIDAD:    { icon: HardHat,  color: '#dc2626', bg: '#fee2e2',              label: 'Seguridad',   accent: '#dc2626' },
+  '':           { icon: Package,  color: '#475569', bg: '#f1f5f9',              label: 'Bien',        accent: '#475569' },
 }
 
 function zonaAccent(zona: string): string {
   const z = zona?.toUpperCase() ?? ''
-  if (z.includes('INVESTIGAC')) return '#0891b2'
-  if (z.includes('INNOVAC'))    return '#059669'
-  if (z.includes('ALMAC') || z.includes('DEPÓSITO')) return '#d97706'
+  if (z.includes('INVESTIGAC')) return '#04768a'
+  if (z.includes('INNOVAC'))    return '#02d47e'
+  if (z.includes('ALMAC') || z.includes('DEPÓSITO')) return '#045f6c'
   if (z.includes('SEGURIDAD'))  return '#dc2626'
   return '#475569'
 }
@@ -153,7 +153,7 @@ export function RepositorioCard({ bien }: RepositorioCardProps) {
           {/* Recurso icons */}
           <div className="flex gap-1">
             <ResourceDot icon={FileText} color="#475569" title="Manual" />
-            <ResourceDot icon={Video}    color="#059669" title="Video" />
+            <ResourceDot icon={Video}    color="#02d47e" title="Video" />
             <ResourceDot icon={Shield}   color="#dc2626" title="IPERC" />
           </div>
         </div>
