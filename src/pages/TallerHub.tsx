@@ -348,13 +348,12 @@ export default function TallerHub() {
             </div>
           </div>
 
-          {/* Módulos como cards horizontales */}
+          {/* Módulos como cards horizontales — solo informativos */}
           <div className="px-4 pb-2">
             {modulosLXP.map((m, i) => (
               <div
                 key={m.id}
-                onClick={() => navigate(`/taller/${slug}/ruta`)}
-                className="flex items-center gap-4 px-3 py-3 rounded-xl cursor-pointer transition-all hover:bg-[#f0fdf9] group"
+                className="flex items-center gap-4 px-3 py-3 rounded-xl"
               >
                 {/* Indicador de línea + nodo */}
                 <div className="flex flex-col items-center shrink-0" style={{ width: 32 }}>
@@ -390,9 +389,6 @@ export default function TallerHub() {
                   style={{ background: 'rgba(4,57,65,0.05)', color: 'rgba(4,57,65,0.35)' }}>
                   {m.sesiones.length} sesiones
                 </span>
-
-                <ArrowRight size={12} className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                  style={{ color: '#02d47e' }} />
               </div>
             ))}
           </div>
