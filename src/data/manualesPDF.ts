@@ -166,6 +166,65 @@ export const manualesPDFPorBien: Record<string, Record<number, string>> = {
     85:  'https://drive.google.com/file/d/1M_8dPRO3-t7wvYN16WTzAAJYn1mPo-oK/view',  // Extintor PQS
     87:  'https://drive.google.com/file/d/1bRLJ5qjAHfdpGMMVHkX7osVQpnFnffzS/view',  // Guantes de electricista
   },
+  'construcciones-metalicas': {
+    // ── Equipos de soldadura ───────────────────────────────────────────────
+    36: 'https://drive.google.com/file/d/169haFFopVFSAB5GENpV40CLcNZN4OA8v/view',  // Cabina de soldar con mesa de trabajo
+    35: 'https://drive.google.com/file/d/1OZSgcxnVsSajeuiEl9zWAq7Ht61mFpOI/view',  // Regulador con flujo manómetro para CO2
+    34: 'https://drive.google.com/file/d/1uyDDvl-7VA1yHDwFl5lnnNfHAZKJ2Yr_/view',  // Regulador de Argón soldador TIG-MIG CO2
+
+    // ── Herramientas de medición ───────────────────────────────────────────
+    59: 'https://drive.google.com/file/d/1zXDkGOoVC8ngqiXq5HLwxPRkyOJrecev/view',  // Calibrador analógico
+    58: 'https://drive.google.com/file/d/1G5j-5A7L9VcgZpfmFSytMbhUdEkaP9Xi/view',  // Calibrador digital
+    61: 'https://drive.google.com/file/d/1HT1a3uGvDj9Py7xbHIRGFInT6J0QnQ1h/view',  // Goniómetro digital
+    60: 'https://drive.google.com/file/d/1S76U9YtMRFzWfDYMF3BhWfvQbsLVLi2t/view',  // Micrómetro digital
+    64: 'https://drive.google.com/file/d/1Gbse9EUu0uUQOrUZpaXTtKbEkDn-7zk1/view',  // Nivel de burbujas
+    57: 'https://drive.google.com/file/d/1XrVKNLLCtbEx7yWNz-Y-gOmS-KYl8fsN/view',  // Regla metálica de 30 cm
+    63: 'https://drive.google.com/file/d/1B-7sS4ByPH7mpSXMijKEZtg9TZfF6oXR/view',  // Escuadra de combinación
+    62: 'https://drive.google.com/file/d/1LgUB15tdIxkHM8zPOXp2VGofaAOFTmcH/view',  // Escuadra de Tope
+
+    // ── Herramientas manuales ──────────────────────────────────────────────
+    83: 'https://drive.google.com/file/d/129F6snkxRfB5TmE-l3VFcg6owMGLyCAm/view',  // Aceitera
+    67: 'https://drive.google.com/file/d/1siLBm7sW8uXpph0NHEmn-7p8I24RgYks/view',  // Arco de Sierra
+    40: 'https://drive.google.com/file/d/1mTop6iXBzIGlhzKXUow3rhsSm779sV2e/view',  // Cepillo de acero
+    79: 'https://drive.google.com/file/d/1XZVieQn83FsqdRidDSQ1FUBCQDm4O0-3/view',  // Comba de 5 lb
+    65: 'https://drive.google.com/file/d/1Kpjcbi1NvrNA-AbYx55FaooZTxa6hcxp/view',  // Granete
+    74: 'https://drive.google.com/file/d/1Y4ggGorYwm-CdeExwlpyIyrJywKH4iOO/view',  // Juego de alicates aislados
+    82: 'https://drive.google.com/file/d/1RdEaWdrO4u7AqT1UpC7_Fir6e9hjWm6Z/view',  // Juego de brocas HSS para metal
+    78: 'https://drive.google.com/file/d/1hFpq3mzIt3rF3RXYQ7qDzH-8r1pc1-3K/view',  // Juego de Cincel
+    80: 'https://drive.google.com/file/d/1F-MnCw-wWe_iYBzH3wU64XMrrWRHvlRi/view',  // Juego de Compas de punta
+    69: 'https://drive.google.com/file/d/10JKOdRHn0oHY6wqaPt1JD8CzyDwt_2P4/view',  // Juego de limas
+    73: 'https://drive.google.com/file/d/1S80_gLpJZj-udDqEVBpNsBhkVltpRw0B/view',  // Juego de llaves Allen milimétricas y pulgadas
+    72: 'https://drive.google.com/file/d/1nx9eGBLzTOUw70ituO7-5J4sUhlA9-yZ/view',  // Juego de llaves mixtas
+    70: 'https://drive.google.com/file/d/1EpFqTY4FX7Mavc2K49Zy2akkn_sldCva/view',  // Juego de martillo de bola
+    81: 'https://drive.google.com/file/d/1ZzSwXBu8YD99UTS75ev8aH9mG94NaYEk/view',  // Kit de machos y terrajas
+    41: 'https://drive.google.com/file/d/1NocoqqC1M4Gb3MYKCAzZZLg6jQ4vKC_F/view',  // Piqueta de soldador
+    66: 'https://drive.google.com/file/d/1pKL1vX4OmXL3_JZAoBiRyB0HZtS51zdy/view',  // Rayador mecánico
+    71: 'https://drive.google.com/file/d/1AKLi7K9Q3VtImaJIBVf5nCbOroCyKv7C/view',  // Set de destornilladores
+    55: 'https://drive.google.com/file/d/179jIXO9nPR7_4JnJ5sDgxpjYdZ_nrzAX/view',  // Wincha de 3 metros
+
+    // ── Mobiliario ─────────────────────────────────────────────────────────
+    56: 'https://drive.google.com/file/d/1Y4zmq6w1F2fRrB0xT9BZm-yx5yrE82JY/view',  // Anaquel de metal (1.00 x 0.40 x 1.80 m)
+    13: 'https://drive.google.com/file/d/1ZEXzf6IxfMgaUkUMZlcqm42UOnuGT7Mt/view',  // Armario de Metal
+    54: 'https://drive.google.com/file/d/1MwuXWSF9SirG_cuF4BfFwnocReUknoDz/view',  // Banco de trabajo con tornillo de banco
+    17: 'https://drive.google.com/file/d/12fk7SHJZmj8P6kU2d97Mv8FreCucBEQC/view',  // Escritorio para el docente
+    52: 'https://drive.google.com/file/d/1Dv4lT-B_oBTGXkFMjPW9U7tp5r9-9aLW/view',  // Escritorio rodable docente
+    19: 'https://drive.google.com/file/d/1kZIdhPLRMfpKlov-FclbJyp_NI7DQ9OA/view',  // Mesa de Computadora para estudiante
+    20: 'https://drive.google.com/file/d/1Dr39hnKCD1tlk5mwiPc0RZUsYI0OCjee/view',  // Mesa Discapacitado
+    30: 'https://drive.google.com/file/d/1ZtJoHmyKhtBWmLIx1dgn05HcVIeg_9IB/view',  // Mueble bajo
+    16: 'https://drive.google.com/file/d/1tzEp2TLDOefgRvHVjO_e7API8LiWortO/view',  // Silla para el docente
+    18: 'https://drive.google.com/file/d/1A8ZgJcYexY7th0qito7SLfg1NwUGlTXt/view',  // Silla para Estudiante
+    53: 'https://drive.google.com/file/d/1rJ2A-pUx8VOIMz4X_D4KkE07wtvxB2w1/view',  // Silla rodable para el docente
+
+    // ── Material pedagógico ────────────────────────────────────────────────
+    75: 'https://drive.google.com/file/d/1ZS3tpWW4zdKS8OH5mZqjEyfday4Fd9iN/view',  // Juego de fichas señalética y símbolos de seguridad
+    10: 'https://drive.google.com/file/d/1sx9JqAwV9VjaG_zsm0goTRzvHln9FWw2/view',  // Juego de Modelos de piezas
+    12: 'https://drive.google.com/file/d/1oovp1FncuaefgOqBmEKhnlCVvztjzrBr/view',  // Lienzo magnético para metodologías de diseño
+
+    // ── EPP y seguridad ────────────────────────────────────────────────────
+    84: 'https://drive.google.com/file/d/1V1vFlXtrM47usUpKeiFYd46jmTIROy9x/view',  // Botiquín
+    37: 'https://drive.google.com/file/d/1W6QqzFAk624NwrgwFIws0YPgnrI7Y88A/view',  // Careta de soldar fotosensible
+    76: 'https://drive.google.com/file/d/1YmIU4uCPkqeeNqk1V4hb6dY91p_4W-zG/view',  // Extintor PQS
+  },
   electronica: {
     49:  'https://drive.google.com/file/d/1JQ9neDsjKGwNuU_9qOXVFAOQXhxc0w2g/view', // Alicate de corte
     52:  'https://drive.google.com/file/d/1SbShRHVA1EazJTF7sKQ_h_mZlY9wYBB7/view', // Alicate de punta
