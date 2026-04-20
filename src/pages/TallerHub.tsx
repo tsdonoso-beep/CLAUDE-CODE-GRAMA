@@ -163,6 +163,7 @@ export default function TallerHub() {
 
   const todosLos   = getBienesByTaller(slug)
   const totalHoras = modulosLXP.reduce((a, m) => a + m.horasTotal, 0)
+  const isGeneralEpt = slug === 'taller-general-ept'
 
   // Top bienes por zona (máx 4 por zona, máx 3 zonas)
   const bienesporZona = taller.zonas.slice(0, 3).map(z => {
@@ -225,11 +226,11 @@ export default function TallerHub() {
           {/* Stats row */}
           <div className="flex flex-wrap gap-5 mb-8">
             {[
-              { icon: BookOpen, value: `${modulosLXP.length} módulos`, sub: 'M0 → M6' },
-              { icon: Clock,    value: `${totalHoras}h`,               sub: 'Virtual + Presencial' },
+              !isGeneralEpt && { icon: BookOpen, value: `${modulosLXP.length} módulos`, sub: 'M0 → M6' },
+              !isGeneralEpt && { icon: Clock,    value: `${totalHoras}h`,               sub: 'Virtual + Presencial' },
               { icon: Package,  value: `${todosLos.length} bienes`,    sub: `${taller.zonas.length} zonas` },
               { icon: Award,    value: 'Constancia',                   sub: 'Inroprin' },
-            ].map(s => (
+            ].filter(Boolean).map(s => (
               <div key={s.value} className="flex items-center gap-2.5">
                 <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0"
                   style={{ background: 'rgba(2,212,126,0.1)', border: '1px solid rgba(2,212,126,0.18)' }}>
@@ -245,15 +246,17 @@ export default function TallerHub() {
 
           {/* CTAs */}
           <div className="flex flex-wrap gap-3">
-            <button
-              onClick={() => navigate(`/taller/${slug}/ruta`)}
-              className="flex items-center gap-2 px-6 py-3 text-sm font-bold transition-all hover:opacity-90 active:scale-[0.98]"
-              style={{ background: 'linear-gradient(90deg,#02d47e,#00c16e)', color: '#032e34', borderRadius: 12 }}
-            >
-              <BookOpen size={14}/>
-              Iniciar Ruta de Aprendizaje
-              <ChevronRight size={14}/>
-            </button>
+            {!isGeneralEpt && (
+              <button
+                onClick={() => navigate(`/taller/${slug}/ruta`)}
+                className="flex items-center gap-2 px-6 py-3 text-sm font-bold transition-all hover:opacity-90 active:scale-[0.98]"
+                style={{ background: 'linear-gradient(90deg,#02d47e,#00c16e)', color: '#032e34', borderRadius: 12 }}
+              >
+                <BookOpen size={14}/>
+                Iniciar Ruta de Aprendizaje
+                <ChevronRight size={14}/>
+              </button>
+            )}
             <button
               onClick={() => navigate(`/taller/${slug}/repositorio`)}
               className="flex items-center gap-2 px-6 py-3 text-sm font-bold transition-all active:scale-[0.98]"
@@ -323,10 +326,10 @@ export default function TallerHub() {
       )}
 
       {/* ══ RUTA + REPOSITORIO ════════════════════════════════════════════════ */}
-      <div className="px-8 py-10 grid lg:grid-cols-[3fr_2fr] gap-8 items-start">
+      <div className={`px-8 py-10 grid gap-8 items-start ${isGeneralEpt ? '' : 'lg:grid-cols-[3fr_2fr]'}`}>
 
         {/* ── RUTA DE APRENDIZAJE ── */}
-        <div className="bg-white rounded-2xl overflow-hidden"
+        {!isGeneralEpt && <div className="bg-white rounded-2xl overflow-hidden"
           style={{ boxShadow: '0 2px 16px rgba(4,57,65,0.07)' }}>
           <div
             className="px-6 pt-6 pb-3 flex items-center justify-between cursor-pointer group"
@@ -392,7 +395,7 @@ export default function TallerHub() {
             ))}
           </div>
 
-        </div>
+        </div>}
 
         {/* ── EQUIPAMIENTO DEL TALLER ── */}
         <div className="bg-white rounded-2xl overflow-hidden"
