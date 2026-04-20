@@ -78,6 +78,8 @@ export default function BienDetalle() {
     .filter((b: any) => b.zona === bien.zona && b.n !== bien.n)
     .slice(0, 4)
 
+  const eppResult = getEPPForBien(bien, slug ?? '')
+
   return (
     <div>
       {/* ── Hero ── */}
@@ -349,104 +351,6 @@ export default function BienDetalle() {
             </section>
           )}
 
-          {/* EPP requerido */}
-          {(() => {
-            const eppResult = getEPPForBien(bien, slug ?? '')
-            const borderColor = eppResult.tipo === 'sin-epp' ? '#e3f8fb' : '#fecaca'
-            const bgHeader   = eppResult.tipo === 'sin-epp' ? '#f0faf5'  : '#fff5f5'
-            const iconColor  = eppResult.tipo === 'sin-epp' ? '#02d47e'  : '#ef4444'
-            return (
-              <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor }}>
-                <div className="px-6 py-4 border-b flex items-center gap-2" style={{ borderColor, background: bgHeader }}>
-                  <Shield size={16} style={{ color: iconColor }} />
-                  <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
-                    EPP requerido para este equipo
-                  </h2>
-                </div>
-                <div className="p-6" style={{ background: '#ffffff' }}>
-                  {/* Mensaje sin EPP */}
-                  {eppResult.tipo === 'sin-epp' && (
-                    <div className="flex items-center gap-2.5">
-                      <CheckCircle2 size={16} style={{ color: '#02d47e', flexShrink: 0 }} />
-                      <p className="text-sm" style={{ color: '#045f6c' }}>{eppResult.mensaje}</p>
-                    </div>
-                  )}
-
-                  {/* Items EPP */}
-                  {eppResult.tipo !== 'sin-epp' && eppResult.items.length > 0 && (
-                    <div className="space-y-4">
-                      {/* Advertencia NO guantes */}
-                      {eppResult.noGuantes && (
-                        <div className="flex items-start gap-2.5 p-3 rounded-xl" style={{ background: '#fef3c7', border: '1px solid #f59e0b33' }}>
-                          <XCircle size={15} style={{ color: '#d97706', flexShrink: 0, marginTop: 1 }} />
-                          <p className="text-xs font-bold" style={{ color: '#92400e' }}>
-                            PROHIBIDO usar guantes con este equipo (riesgo de atrapamiento)
-                          </p>
-                        </div>
-                      )}
-
-                      {/* Lista de EPP */}
-                      <div className="space-y-2">
-                        {eppResult.items.map((epp: EPPItem) => (
-                          <div
-                            key={epp.nombre}
-                            className="flex items-center gap-3 px-3 py-2.5 rounded-xl"
-                            style={{
-                              background: epp.nivel === 'obligatorio' ? '#fee2e2' : '#fef9c3',
-                              border: `1px solid ${epp.nivel === 'obligatorio' ? '#fecaca' : '#fde68a'}`,
-                            }}
-                          >
-                            <Shield
-                              size={13}
-                              style={{ color: epp.nivel === 'obligatorio' ? '#ef4444' : '#ca8a04', flexShrink: 0 }}
-                            />
-                            <span
-                              className="text-xs font-semibold flex-1"
-                              style={{ color: epp.nivel === 'obligatorio' ? '#b91c1c' : '#854d0e' }}
-                            >
-                              {epp.nombre}
-                            </span>
-                            <span
-                              className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                              style={{
-                                background: epp.nivel === 'obligatorio' ? '#fca5a5' : '#fde68a',
-                                color: epp.nivel === 'obligatorio' ? '#7f1d1d' : '#713f12',
-                              }}
-                            >
-                              {epp.nivel === 'obligatorio' ? 'Obligatorio' : 'Recomendado'}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Alertas */}
-                      {eppResult.alertas && eppResult.alertas.length > 0 && (
-                        <div className="space-y-2 pt-1">
-                          {eppResult.alertas.map((alerta: string) => (
-                            <div
-                              key={alerta}
-                              className="flex items-start gap-2.5 p-3 rounded-xl"
-                              style={{ background: '#fff7ed', border: '1px solid rgba(249,115,22,0.2)' }}
-                            >
-                              <AlertTriangle size={14} style={{ color: '#f97316', flexShrink: 0, marginTop: 1 }} />
-                              <p className="text-xs" style={{ color: '#9a3412' }}>{alerta}</p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* Nota genérica */}
-                      {eppResult.nota && (
-                        <p className="text-[11px] mt-2" style={{ color: 'rgba(4,57,65,0.4)' }}>
-                          {eppResult.nota}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </section>
-            )
-          })()}
         </div>
 
         {/* Sidebar */}
@@ -486,6 +390,61 @@ export default function BienDetalle() {
               </p>
             </div>
           </div>
+
+          {/* EPP requerido */}
+          {eppResult.tipo !== 'sin-epp' ? (
+            <div className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#fecaca' }}>
+              <div className="px-5 py-4 border-b flex items-center gap-2" style={{ borderColor: '#fecaca', background: '#fff5f5' }}>
+                <Shield size={15} style={{ color: '#ef4444' }} />
+                <h3 className="text-sm font-extrabold" style={{ color: '#043941' }}>EPP requerido</h3>
+                <span className="ml-auto text-[10px] font-bold px-2 py-0.5 rounded-md" style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444' }}>
+                  {eppResult.tipo === 'especifico' ? 'Específico' : 'Genérico'}
+                </span>
+              </div>
+              <div className="p-4 space-y-2" style={{ background: '#ffffff' }}>
+                {eppResult.items.map((item, i) => (
+                  <div key={i} className="flex items-center gap-2.5 py-2 px-3 rounded-xl"
+                    style={{ background: item.nivel === 'obligatorio' ? 'rgba(239,68,68,0.06)' : '#f0faf5' }}>
+                    {item.nivel === 'obligatorio'
+                      ? <AlertTriangle size={13} style={{ color: '#ef4444', flexShrink: 0 }} />
+                      : <CheckCircle2 size={13} style={{ color: '#02d47e', flexShrink: 0 }} />}
+                    <span className="text-xs font-semibold flex-1" style={{ color: '#043941' }}>{item.nombre}</span>
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded"
+                      style={item.nivel === 'obligatorio'
+                        ? { background: 'rgba(239,68,68,0.1)', color: '#ef4444' }
+                        : { background: 'rgba(2,212,126,0.12)', color: '#02a05a' }}>
+                      {item.nivel === 'obligatorio' ? 'Obligatorio' : 'Recomendado'}
+                    </span>
+                  </div>
+                ))}
+                {eppResult.noGuantes && (
+                  <div className="flex items-center gap-2 mt-1 px-3 py-2 rounded-xl" style={{ background: 'rgba(245,158,11,0.08)' }}>
+                    <XCircle size={13} style={{ color: '#d97706', flexShrink: 0 }} />
+                    <span className="text-xs font-semibold" style={{ color: '#92400e' }}>No usar guantes (riesgo de atrapamiento)</span>
+                  </div>
+                )}
+                {eppResult.alertas?.map((alerta, i) => (
+                  <div key={i} className="flex items-start gap-2 px-3 py-2 rounded-xl" style={{ background: 'rgba(239,68,68,0.06)' }}>
+                    <AlertTriangle size={12} className="mt-0.5 shrink-0" style={{ color: '#ef4444' }} />
+                    <span className="text-xs" style={{ color: '#7f1d1d' }}>{alerta}</span>
+                  </div>
+                ))}
+                {eppResult.nota && (
+                  <p className="text-[11px] pt-1 px-1" style={{ color: 'rgba(4,57,65,0.5)' }}>{eppResult.nota}</p>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
+              <div className="px-5 py-4 border-b flex items-center gap-2" style={{ borderColor: '#e3f8fb', background: '#f0faf5' }}>
+                <Shield size={15} style={{ color: '#02d47e' }} />
+                <h3 className="text-sm font-extrabold" style={{ color: '#043941' }}>EPP requerido</h3>
+              </div>
+              <div className="p-4" style={{ background: '#ffffff' }}>
+                <p className="text-xs" style={{ color: '#045f6c' }}>{eppResult.mensaje ?? 'No requiere EPP específico.'}</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
