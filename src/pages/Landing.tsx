@@ -806,7 +806,7 @@ export default function Landing() {
                 border: '2.5px solid rgba(255,255,255,0.88)',
               }}>
                 <img
-                  src="https://images.unsplash.com/photo-1573496358961-3c82861ab8f4?w=900&q=85"
+                  src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=700&q=80"
                   alt="Docentes EPT aprendiendo juntos en taller técnico"
                   className="w-full object-cover object-center"
                   style={{ aspectRatio: '3/4', display: 'block', filter: 'brightness(0.84) saturate(1.05)' }}
