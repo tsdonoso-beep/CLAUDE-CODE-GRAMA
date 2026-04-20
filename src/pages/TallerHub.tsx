@@ -190,17 +190,17 @@ export default function TallerHub() {
         {/* Patrón GRAMA */}
         <div className="absolute inset-0 grama-pattern opacity-20"/>
 
-        {/* Blob accent del taller */}
+        {/* Blob accent */}
         <div className="absolute pointer-events-none" style={{
-          width: 480, height: 480,
-          background: `radial-gradient(circle, hsl(${taller.color} / 0.16) 0%, transparent 65%)`,
-          right: -80, top: -120,
+          width: 400, height: 400, borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(2,212,126,0.14) 0%, transparent 65%)',
+          right: -60, top: -80,
         }}/>
 
         {/* SVG ilustración — full bleed con CSS override */}
         {TALLER_SVG[slug] && (
           <div className="absolute inset-0 pointer-events-none overflow-hidden [&_svg]:w-full [&_svg]:h-full"
-            style={{ opacity: 0.32 }}>
+            style={{ opacity: 0.30 }}>
             {TALLER_SVG[slug]}
           </div>
         )}
@@ -213,13 +213,23 @@ export default function TallerHub() {
         {/* Contenido */}
         <div className="relative z-10 px-8 pt-10 pb-12" style={{ maxWidth: 860 }}>
 
+          {/* Overline badge */}
+          <div className="inline-flex items-center gap-2 mb-3" style={{
+            background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.22)',
+            borderRadius: 100, padding: '4px 12px',
+          }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#02d47e', display: 'inline-block', flexShrink: 0 }}/>
+            <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.75)', letterSpacing: '0.06em' }}>
+              T{String(taller.numero).padStart(2,'0')} · TALLER EPT
+            </span>
+          </div>
 
           {/* Título + descripción */}
           <h1 className="font-extrabold leading-tight mb-3"
-            style={{ fontSize: 'clamp(1.6rem,3vw,2.4rem)', letterSpacing: '-0.025em', color: '#d2ffe1' }}>
+            style={{ fontSize: 'clamp(1.5rem,2.8vw,2.2rem)', letterSpacing: '-0.02em', color: '#ffffff' }}>
             {taller.nombre}
           </h1>
-          <p className="text-sm leading-relaxed mb-8" style={{ color: 'rgba(210,255,225,0.5)', maxWidth: 480 }}>
+          <p className="text-sm leading-relaxed mb-8" style={{ color: 'rgba(255,255,255,0.6)', maxWidth: 480 }}>
             {taller.descripcion}
           </p>
 
@@ -233,12 +243,12 @@ export default function TallerHub() {
             ].map(s => (
               <div key={s.value} className="flex items-center gap-2.5">
                 <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: 'rgba(2,212,126,0.1)', border: '1px solid rgba(2,212,126,0.15)' }}>
+                  style={{ background: 'rgba(2,212,126,0.1)', border: '1px solid rgba(2,212,126,0.18)' }}>
                   <s.icon size={15} color="#02d47e"/>
                 </div>
                 <div>
-                  <p className="text-sm font-bold" style={{ color: '#d2ffe1' }}>{s.value}</p>
-                  <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.3)' }}>{s.sub}</p>
+                  <p className="text-sm font-bold" style={{ color: '#ffffff' }}>{s.value}</p>
+                  <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.sub}</p>
                 </div>
               </div>
             ))}

@@ -221,9 +221,13 @@ export default function Repositorio() {
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
       <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg,#043941 0%,#045f6c 55%,rgba(0,193,110,0.1) 100%)' }}>
         <div className="absolute inset-0 grama-pattern opacity-20" />
-        <div className="absolute -top-10 -right-10 w-72 h-72 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(2,212,126,0.12) 0%, transparent 70%)' }} />
+        <div className="absolute pointer-events-none" style={{
+          width: 400, height: 400, borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(2,212,126,0.14) 0%, transparent 65%)',
+          right: -60, top: -80,
+        }} />
         {TALLER_SVG[slug ?? ''] && (
-          <div className="absolute inset-0 pointer-events-none overflow-hidden [&_svg]:w-full [&_svg]:h-full" style={{ opacity: 0.28 }}>
+          <div className="absolute inset-0 pointer-events-none overflow-hidden [&_svg]:w-full [&_svg]:h-full" style={{ opacity: 0.30 }}>
             {TALLER_SVG[slug ?? '']}
           </div>
         )}
@@ -232,11 +236,22 @@ export default function Repositorio() {
           <Tangram />
         </div>
 
-        <div className="relative px-6 pt-8 pb-14">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white mb-1 leading-tight">
-            Recursos del Taller
+        <div className="relative px-8 pt-10 pb-14">
+          {/* Overline badge */}
+          <div className="inline-flex items-center gap-2 mb-3" style={{
+            background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.22)',
+            borderRadius: 100, padding: '4px 12px',
+          }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#02d47e', display: 'inline-block', flexShrink: 0 }}/>
+            <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.75)', letterSpacing: '0.06em' }}>
+              T{String(taller.numero).padStart(2,'0')} · {taller.nombre}
+            </span>
+          </div>
+          <h1 className="font-extrabold leading-tight mb-2"
+            style={{ fontSize: 'clamp(1.5rem,2.8vw,2.2rem)', letterSpacing: '-0.02em', color: '#ffffff' }}>
+            Repositorio de Bienes
           </h1>
-          <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.5)' }}>
+          <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.6)' }}>
             {totalBienes} bienes catalogados · {zonas.length} zonas
           </p>
 
