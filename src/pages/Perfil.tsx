@@ -607,6 +607,7 @@ export default function Perfil() {
                     bienes={bienes}
                     progresoT={progresoT}
                     proximaSesion={proximaData}
+                    onHub={() => navigate(`/taller/${t.slug}`)}
                     onRuta={() => navigate(`/taller/${t.slug}/ruta`)}
                     onRepositorio={() => navigate(`/taller/${t.slug}/repositorio`)}
                     animDelay={`${0.1 + idx * 0.1}s`}

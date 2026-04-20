@@ -803,13 +803,14 @@ interface TallerCardDocenteProps {
   proximaSesion: { titulo: string; fechaFormateada: string; dias: number } | null
   onRuta: () => void
   onRepositorio: () => void
+  onHub?: () => void
   animDelay?: string
 }
 
 export function TallerCardDocente({
   slug, numero, nombre, accent,
   bienes, progresoT, proximaSesion,
-  onRuta, onRepositorio, animDelay = '0s',
+  onRuta, onRepositorio, onHub, animDelay = '0s',
 }: TallerCardDocenteProps) {
   const cfg = CARD_CFG[slug]
   const accentLight = cfg?.labelColor ?? '#d2ffe1'
@@ -835,7 +836,11 @@ export function TallerCardDocente({
       onMouseLeave={e => (e.currentTarget.style.transform = 'translateY(0)')}
     >
       {/* ── Header oscuro — espejo del hero del hub ── */}
-      <div className="relative overflow-hidden" style={{ minHeight: 120 }}>
+      <div
+        className="relative overflow-hidden"
+        style={{ minHeight: 120, cursor: onHub ? 'pointer' : 'default' }}
+        onClick={onHub}
+      >
         <div className="absolute inset-0" style={{
           background: 'linear-gradient(135deg,#043941 0%,#0a3560 100%)',
         }}/>
