@@ -557,10 +557,17 @@ function getEPPForBien(bien: any, tallerSlug: string): EPPResult {
   }
 
   // Sin match en eppData → EPP genérico por tipo y zona
+  // Zonas reales: 'ZONA DE INNOVACIÓN' | 'ZONA DE INVESTIGACIÓN, GESTIÓN Y DISEÑO'
+  //               'DEPÓSITO / ALMACÉN / SEGURIDAD' | 'ZONA INNOVACIÓN / ALMACEN'
+  // Investigación = aula/lab digital, ropa convencional, sin riesgo de maquinaria
+  // Innovación/Depósito = zona de equipos y herramientas, requiere EPP
   const zona = norm(bien.zona ?? '')
+  const esInvestigacion = zona.includes('investigacion') && !zona.includes('innovacion')
+  const esDeposito      = zona.includes('almacen') || zona.includes('deposito')
+  const esInnovacion    = zona.includes('innovacion')
 
   if (tipo === 'EQUIPOS') {
-    if (zona.includes('innovacion')) {
+    if (esInnovacion) {
       return {
         tipo: 'generico',
         items: [
@@ -570,11 +577,23 @@ function getEPPForBien(bien: any, tallerSlug: string): EPPResult {
         nota: 'EPP general para zona de maquinaria. Consultar manual del equipo para EPP específico.',
       }
     }
-    if (zona.includes('investigacion') || zona.includes('almacen')) {
+    if (esDeposito) {
+      // Equipos en almacén: riesgo de golpes y caídas en manipulación/traslado
       return {
         tipo: 'generico',
-        items: [{ nombre: 'Calzado de seguridad', nivel: 'recomendado' }],
-        nota: 'Zona de bajo riesgo. Verificar condiciones específicas del equipo.',
+        items: [
+          { nombre: 'Calzado de seguridad', nivel: 'recomendado' },
+          { nombre: 'Guantes de manejo', nivel: 'recomendado' },
+        ],
+        nota: 'EPP básico para manipulación y traslado de equipos en almacén.',
+      }
+    }
+    if (esInvestigacion) {
+      // Zona de investigación = entorno digital/administrativo, sin maquinaria de riesgo
+      return {
+        tipo: 'sin-epp',
+        items: [],
+        mensaje: 'Zona de investigación — entorno de bajo riesgo. No se requiere EPP para el uso normal de este equipo.',
       }
     }
     if (zona.includes('acabados')) {
@@ -593,6 +612,15 @@ function getEPPForBien(bien: any, tallerSlug: string): EPPResult {
   }
 
   if (tipo === 'HERRAMIENTAS') {
+    if (esInvestigacion) {
+      // Herramientas menores en zona administrativa/digital
+      return {
+        tipo: 'generico',
+        items: [{ nombre: 'Guantes de manejo', nivel: 'recomendado' }],
+        nota: 'Precaución básica en el manejo de herramientas.',
+      }
+    }
+    // Herramientas en Innovación o Depósito
     return {
       tipo: 'generico',
       items: [
