@@ -52,11 +52,11 @@ const TIPO_ICONS: Record<string, React.ElementType> = {
   PEDAGOGICO: BookOpen, SEGURIDAD: HardHat,
 }
 
-// Excluir del catálogo: manuales, videos, USB y capacitación (tienen sus propias pestañas)
+// Excluir del catálogo: manuales, videos y USB con manuales (el repositorio web los reemplaza)
 function esExcluidoDeCatalogo(nombre: string): boolean {
   const n = nombre.toLowerCase()
-  // Manuales y videos van a sus propias pestañas; los USB son bienes físicos y sí aparecen aquí
-  return n.startsWith('manual') || n.startsWith('video')
+  return n.startsWith('manual') || n.startsWith('video') ||
+    (n.includes('usb') && n.includes('manual'))
 }
 
 // ── Clasificadores por nombre ─────────────────────────────────────────────────
