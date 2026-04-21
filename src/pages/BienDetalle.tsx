@@ -10,7 +10,7 @@ import {
 import { useTaller } from '@/hooks/useTaller'
 import { eppPorTaller } from '@/data/eppData'
 import type { EPPItem } from '@/data/eppData'
-import { getManualPDF, getVideoOperatividad, getDriveEmbedUrl, getDriveDownloadUrl, getDriveThumbnailUrl, getVideoEmbedUrl, getVideoSourceLabel } from '@/data/manualesPDF'
+import { getManualPDF, getVideoOperatividad, getVideoByCodigoInterno, getDriveEmbedUrl, getDriveDownloadUrl, getDriveThumbnailUrl, getVideoEmbedUrl, getVideoSourceLabel } from '@/data/manualesPDF'
 import { useAuth } from '@/contexts/AuthContext'
 import { trackContenido } from '@/lib/tracker'
 
@@ -69,7 +69,7 @@ export default function BienDetalle() {
 
   // Manual PDF
   const manualUrl = getManualPDF(slug ?? '', bien.n)
-  const videoUrl  = getVideoOperatividad(slug ?? '', bien.n)
+  const videoUrl  = getVideoOperatividad(slug ?? '', bien.n) ?? getVideoByCodigoInterno(bien.codigoInterno)
 
   // Bienes relacionados (misma zona)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

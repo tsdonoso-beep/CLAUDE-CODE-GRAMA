@@ -489,7 +489,73 @@ export const videosOperatividadPorBien: Record<string, Record<number, string>> =
   },
 }
 
-// Busca el video de operatividad para un bien específico
+// Busca el video de operatividad para un bien específico (por n)
 export function getVideoOperatividad(tallerSlug: string, bienN: number): string | null {
   return videosOperatividadPorBien[tallerSlug]?.[bienN] ?? null
+}
+
+// ── Videos por código interno (cross-taller) ─────────────────────────────────
+// Clave: codigoInterno del bien  →  URL Vimeo
+export const videosPorCodigoInterno: Record<string, string> = {
+  'COM-103':   'https://vimeo.com/1185251862',
+  'COM-119':   'https://vimeo.com/1185250830',
+  'COM-124':   'https://vimeo.com/1185259814',
+  'COM-126-W': 'https://vimeo.com/1185259951',
+  'COM-126-X': 'https://vimeo.com/1185259951',
+  'COM-126-Y': 'https://vimeo.com/1185259951',
+  'COM-126-Z': 'https://vimeo.com/1185254941',
+  'COM-141':   'https://vimeo.com/1185251707',
+  'COM-153':   'https://vimeo.com/1185257581',
+  'COM-162':   'https://vimeo.com/1185258174',
+  'COM-163-X': 'https://vimeo.com/1185258174',
+  'COM-172-X': 'https://vimeo.com/1185260538',
+  'COM-172-Y': 'https://vimeo.com/1185260538',
+  'COM-176':   'https://vimeo.com/1185260360',
+  'COM-180':   'https://vimeo.com/1185254150',
+  'COM-182':   'https://vimeo.com/1185254150',
+  'COM-185':   'https://vimeo.com/1185255326',
+  'COM-187':   'https://vimeo.com/1185259490',
+  'COM-226':   'https://vimeo.com/1185261378',
+  'COM-231-X': 'https://vimeo.com/1185254678',
+  'COM-245':   'https://vimeo.com/1185261106',
+  'COM-246':   'https://vimeo.com/1185260538',
+  'COM-256':   'https://vimeo.com/1185249973',
+  'COM-257':   'https://vimeo.com/1185257063',
+  'COM-262':   'https://vimeo.com/1185259721',
+  'COM-271':   'https://vimeo.com/1185256861',
+  'COM-274':   'https://vimeo.com/1185259642',
+  'COM-276':   'https://vimeo.com/1185253980',
+  'COM-286':   'https://vimeo.com/1185260940',
+  'COM-296':   'https://vimeo.com/1185252144',
+  'COM-300':   'https://vimeo.com/1185252617',
+  'COM-301':   'https://vimeo.com/1185260787',
+  'COM-306':   'https://vimeo.com/1185258690',
+  'HER-102':   'https://vimeo.com/1185253351',
+  'HER-103':   'https://vimeo.com/1185252927',
+  'HER-106-X': 'https://vimeo.com/1185250373',
+  'HER-106-Y': 'https://vimeo.com/1185254547',
+  'HER-110-X': 'https://vimeo.com/1185261235',
+  'HER-110-Y': 'https://vimeo.com/1185261235',
+  'HER-133':   'https://vimeo.com/1185257232',
+  'HER-135-Z': 'https://vimeo.com/1185255187',
+  'HER-136':   'https://vimeo.com/1185260149',
+  'HER-137':   'https://vimeo.com/1185250639',
+  'HER-142':   'https://vimeo.com/1185256672',
+  'HER-143':   'https://vimeo.com/1185256436',
+  'HER-147':   'https://vimeo.com/1185255724',
+  'HER-148':   'https://vimeo.com/1185253640',
+  'HER-150-Y': 'https://vimeo.com/1185260706',
+  'HER-154':   'https://vimeo.com/1185255187',
+  'HER-155':   'https://vimeo.com/1185256219',
+  'HER-162-Y': 'https://vimeo.com/1185249853',
+  'HER-164':   'https://vimeo.com/1185249853',
+  'HER-165':   'https://vimeo.com/1185254393',
+  'HER-179':   'https://vimeo.com/1185251093',
+  'HER-184':   'https://vimeo.com/1185255575',
+  'HER-189':   'https://vimeo.com/1185252396',
+  'HER-203':   'https://vimeo.com/1185253157',
+}
+
+export function getVideoByCodigoInterno(codigoInterno: string): string | null {
+  return videosPorCodigoInterno[codigoInterno] ?? null
 }
