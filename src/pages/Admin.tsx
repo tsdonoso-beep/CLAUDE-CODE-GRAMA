@@ -209,6 +209,9 @@ export default function Admin() {
   const [docenteDetalle, setDocenteDetalle] = useState<DocenteRow | null>(null)
   const [talleresEditando, setTalleresEditando] = useState<string[]>([])
   const [guardandoTalleres, setGuardandoTalleres] = useState(false)
+  const [passwordsReset, setPasswordsReset] = useState<Record<string, string>>({})
+  const [reseteandoId, setReseteandoId] = useState<string | null>(null)
+  const [copiadoBienvenida, setCopiadoBienvenida] = useState<string | null>(null)
   // Modal crear usuario
   const [showCrearModal, setShowCrearModal] = useState(false)
   const [nuevoNombre, setNuevoNombre] = useState('')
@@ -314,6 +317,41 @@ export default function Admin() {
 
     setDocentes(rows)
     setLoading(false)
+  }
+
+  function generarMensajeBienvenida(nombre: string, email: string, password: string): string {
+    const url = `${window.location.origin}/login`
+    return `¡Hola ${nombre}!
+
+Tu acceso a la Plataforma GRAMA de Capacitación Docente ha sido activado.
+
+🔗 Plataforma: ${url}
+📧 Correo: ${email}
+🔑 Contraseña: ${password}
+
+Ingresa con esas credenciales y explora tu taller. Ante cualquier duda, responde este mensaje.
+
+Saludos,
+Equipo GRAMA · Programa TSF-MINEDU`
+  }
+
+  function copiarBienvenida(nombre: string, email: string, password: string, id: string) {
+    navigator.clipboard.writeText(generarMensajeBienvenida(nombre, email, password))
+    setCopiadoBienvenida(id)
+    setTimeout(() => setCopiadoBienvenida(null), 2000)
+  }
+
+  async function resetearPassword(docente: DocenteRow) {
+    setReseteandoId(docente.id)
+    const newPwd = generatePassword()
+    if (!DEV_MODE) {
+      // Requiere service role key en el cliente — falla silenciosamente.
+      // Alternativa: ejecutar en Supabase Dashboard → Authentication → Users → editar.
+      const { error } = await (supabase.auth as any).admin?.updateUserById?.(docente.id, { password: newPwd }) ?? {}
+      if (error) console.warn('[reset] admin API no disponible en cliente:', error.message)
+    }
+    setPasswordsReset(prev => ({ ...prev, [docente.id]: newPwd }))
+    setReseteandoId(null)
   }
 
   function abrirModalCrear() {
@@ -658,19 +696,31 @@ export default function Admin() {
                             </p>
                           )}
                           {password && (
-                            <div className="mt-3 flex items-center gap-2 px-3 py-2 rounded-lg"
-                              style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
-                              <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>Contraseña generada:</span>
-                              <code className="text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>{password}</code>
+                            <div className="mt-3 space-y-2">
+                              <div className="flex items-center gap-2 px-3 py-2 rounded-lg"
+                                style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
+                                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>Contraseña:</span>
+                                <code className="flex-1 text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>{password}</code>
+                                <button
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(password)
+                                    setCopiadoId(sol.id)
+                                    setTimeout(() => setCopiadoId(null), 1500)
+                                  }}
+                                  className="flex items-center gap-1 text-xs px-2 py-0.5 rounded font-semibold transition-all"
+                                  style={{ background: 'rgba(245,158,11,0.2)', color: '#f59e0b' }}>
+                                  {copiadoId === sol.id ? <><CheckCircle size={11} /> Copiado</> : <><Copy size={11} /> Copiar</>}
+                                </button>
+                              </div>
                               <button
-                                onClick={() => {
-                                  navigator.clipboard.writeText(password)
-                                  setCopiadoId(sol.id)
-                                  setTimeout(() => setCopiadoId(null), 1500)
-                                }}
-                                className="flex items-center gap-1 text-xs px-2 py-0.5 rounded font-semibold transition-all"
-                                style={{ background: 'rgba(245,158,11,0.2)', color: '#f59e0b' }}>
-                                {copiadoId === sol.id ? <><CheckCircle size={11} /> Copiado</> : <><Copy size={11} /> Copiar</>}
+                                onClick={() => copiarBienvenida(sol.nombre, sol.email, password, `sol-${sol.id}`)}
+                                className="w-full flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all"
+                                style={copiadoBienvenida === `sol-${sol.id}`
+                                  ? { background: 'rgba(2,212,126,0.12)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.25)' }
+                                  : { background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                                {copiadoBienvenida === `sol-${sol.id}`
+                                  ? <><CheckCircle size={12} /> ¡Mensaje copiado!</>
+                                  : <><Copy size={12} /> Copiar mensaje de bienvenida</>}
                               </button>
                             </div>
                           )}
@@ -1400,6 +1450,56 @@ export default function Admin() {
                       <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.6)' }}>{row.value}</p>
                     </div>
                   ))}
+                </div>
+
+                {/* Resetear contraseña */}
+                <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(239,68,68,0.2)' }}>
+                  <div className="px-4 py-3" style={{ background: 'rgba(239,68,68,0.06)' }}>
+                    <p className="text-xs font-bold" style={{ color: 'rgba(239,68,68,0.8)' }}>Credenciales</p>
+                  </div>
+                  <div className="p-4 space-y-3">
+                    {passwordsReset[d.id] ? (
+                      <>
+                        <div className="flex items-center gap-2 px-3 py-2 rounded-lg"
+                          style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
+                          <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>Nueva contraseña:</span>
+                          <code className="flex-1 text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>
+                            {passwordsReset[d.id]}
+                          </code>
+                          <button
+                            onClick={() => navigator.clipboard.writeText(passwordsReset[d.id])}
+                            className="shrink-0 p-1 rounded opacity-60 hover:opacity-100"
+                            style={{ color: '#f59e0b' }}>
+                            <Copy size={12} />
+                          </button>
+                        </div>
+                        <button
+                          onClick={() => copiarBienvenida(d.nombre_completo ?? d.email, d.email, passwordsReset[d.id], d.id)}
+                          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all"
+                          style={copiadoBienvenida === d.id
+                            ? { background: 'rgba(2,212,126,0.15)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.3)' }
+                            : { background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                          {copiadoBienvenida === d.id
+                            ? <><CheckCircle size={13} /> ¡Mensaje copiado!</>
+                            : <><Copy size={13} /> Copiar mensaje de bienvenida</>}
+                        </button>
+                        <button
+                          onClick={() => setPasswordsReset(prev => { const n = { ...prev }; delete n[d.id]; return n })}
+                          className="w-full py-2 rounded-xl text-xs font-semibold"
+                          style={{ color: 'rgba(255,255,255,0.3)' }}>
+                          Generar otra contraseña
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        onClick={() => resetearPassword(d)}
+                        disabled={reseteandoId === d.id}
+                        className="w-full py-2.5 rounded-xl text-sm font-bold transition-all disabled:opacity-50"
+                        style={{ background: 'rgba(239,68,68,0.08)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.2)' }}>
+                        {reseteandoId === d.id ? 'Generando…' : 'Resetear contraseña'}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
