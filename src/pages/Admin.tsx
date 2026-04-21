@@ -1,6 +1,6 @@
 // src/pages/Admin.tsx
 import { useState, useEffect, useMemo } from 'react'
-import { Download, Users, RefreshCw, LogOut, Filter, BarChart2, BookOpen, Video, FileDown, Globe, LogIn } from 'lucide-react'
+import { Download, Users, RefreshCw, LogOut, Filter, BarChart2, BookOpen, Video, FileDown, Globe, LogIn, AlertTriangle, Inbox, Copy, CheckCircle, XCircle } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
 import { talleresConfig } from '@/data/talleresConfig'
@@ -9,6 +9,41 @@ import { useAuth } from '@/contexts/AuthContext'
 import { GramaLogo } from '@/components/GramaLogo'
 import type { Profile } from '@/types/database'
 import { useNavigate } from 'react-router-dom'
+
+// ── Solicitudes types ──────────────────────────────────────────────────────────
+interface SolicitudAcceso {
+  id: string
+  nombre: string
+  email: string
+  institucion: string
+  ie_id: number | null
+  taller_slug: string | null
+  mensaje: string | null
+  estado: 'pendiente' | 'aprobada' | 'rechazada'
+  created_at: string
+}
+
+function buildMockSolicitudes(): SolicitudAcceso[] {
+  return [
+    { id: 'sol-1', nombre: 'María López Vargas', email: 'mlopez@colegio.pe', institucion: 'I.E. 7059 MELITÓN CARBAJAL - LINCE', ie_id: 3, taller_slug: 'mecanica-automotriz', mensaje: 'Soy docente EPT con especialidad en producción automotriz.', estado: 'pendiente', created_at: '2026-04-18T10:30:00Z' },
+    { id: 'sol-2', nombre: 'Juan Pérez Torres', email: 'jperez@edu.pe', institucion: 'I.E. 6049 RICARDO PALMA - SURQUILLO', ie_id: 5, taller_slug: 'ebanisteria', mensaje: null, estado: 'pendiente', created_at: '2026-04-19T14:00:00Z' },
+    { id: 'sol-3', nombre: 'Ana García Ríos', email: 'agarcia@ept.pe', institucion: 'I.E. 6006 - SAN JUAN DE MIRAFLORES', ie_id: 8, taller_slug: 'electricidad', mensaje: 'Tengo 5 años de experiencia en talleres EPT.', estado: 'aprobada', created_at: '2026-04-15T09:00:00Z' },
+    { id: 'sol-4', nombre: 'Luis Ramos Condori', email: 'lramos@colegio.edu.pe', institucion: 'I.E. 1278 - LA MOLINA', ie_id: 11, taller_slug: 'construcciones-metalicas', mensaje: null, estado: 'rechazada', created_at: '2026-04-14T08:00:00Z' },
+  ]
+}
+
+function generatePassword(): string {
+  const lower = 'abcdefghjkmnpqrstuvwxyz'
+  const upper = 'ABCDEFGHJKLMNPQRSTUVWXYZ'
+  const digits = '23456789'
+  const specials = '#@!'
+  let pwd = ''
+  for (let i = 0; i < 5; i++) pwd += lower[Math.floor(Math.random() * lower.length)]
+  pwd += upper[Math.floor(Math.random() * upper.length)]
+  pwd += digits[Math.floor(Math.random() * digits.length)]
+  pwd += specials[Math.floor(Math.random() * specials.length)]
+  return pwd.split('').sort(() => Math.random() - 0.5).join('')
+}
 
 // ── Analytics types ────────────────────────────────────────────────────────────
 interface ContenidoCount {
@@ -159,7 +194,13 @@ function downloadCSV(rows: DocenteRow[]) {
 export default function Admin() {
   const { signOut, profile } = useAuth()
   const navigate = useNavigate()
-  const [tab, setTab] = useState<'docentes' | 'analytics'>('docentes')
+  const [tab, setTab] = useState<'solicitudes' | 'usuarios' | 'analytics'>('solicitudes')
+  const [solicitudes, setSolicitudes] = useState<SolicitudAcceso[]>([])
+  const [loadingSolicitudes, setLoadingSolicitudes] = useState(true)
+  const [filtroEstado, setFiltroEstado] = useState<'pendiente' | 'aprobada' | 'rechazada' | 'todas'>('pendiente')
+  const [passwordsGeneradas, setPasswordsGeneradas] = useState<Record<string, string>>({})
+  const [aprobando, setAprobando] = useState<string | null>(null)
+  const [copiadoId, setCopiadoId] = useState<string | null>(null)
   const [docentes, setDocentes] = useState<DocenteRow[]>([])
   const [loading, setLoading] = useState(true)
   const [filtroIE, setFiltroIE] = useState('')
@@ -169,7 +210,7 @@ export default function Admin() {
   const [filtroAnalyticsDocente, setFiltroAnalyticsDocente] = useState('')
   const [busquedaDocente, setBusquedaDocente] = useState('')
 
-  useEffect(() => { fetchData() }, [])
+  useEffect(() => { fetchData(); fetchSolicitudes() }, [])
   useEffect(() => { if (tab === 'analytics') fetchAnalytics(filtroAnalyticsDocente || undefined) }, [tab, filtroAnalyticsDocente])
 
   async function fetchData() {
@@ -253,6 +294,61 @@ export default function Admin() {
     setLoading(false)
   }
 
+  async function fetchSolicitudes() {
+    setLoadingSolicitudes(true)
+    if (DEV_MODE) {
+      setSolicitudes(buildMockSolicitudes())
+      setLoadingSolicitudes(false)
+      return
+    }
+    const { data } = await supabase
+      .from('solicitudes_acceso')
+      .select('*')
+      .order('created_at', { ascending: false })
+    setSolicitudes((data as SolicitudAcceso[]) ?? [])
+    setLoadingSolicitudes(false)
+  }
+
+  async function aprobarSolicitud(sol: SolicitudAcceso) {
+    setAprobando(sol.id)
+    const password = generatePassword()
+    if (DEV_MODE) {
+      setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'aprobada' } : s))
+      setPasswordsGeneradas(prev => ({ ...prev, [sol.id]: password }))
+      setAprobando(null)
+      return
+    }
+    // Crear usuario en Supabase Auth
+    const { data: userData } = await supabase.auth.signUp({
+      email: sol.email,
+      password,
+      options: { data: { nombre_completo: sol.nombre } },
+    })
+    if (userData?.user) {
+      await supabase.from('profiles').upsert({
+        id: userData.user.id,
+        email: sol.email,
+        nombre_completo: sol.nombre,
+        role: 'docente',
+        ie_id: sol.ie_id,
+        taller_slug: sol.taller_slug,
+      })
+    }
+    await supabase.from('solicitudes_acceso').update({ estado: 'aprobada' }).eq('id', sol.id)
+    setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'aprobada' } : s))
+    setPasswordsGeneradas(prev => ({ ...prev, [sol.id]: password }))
+    setAprobando(null)
+  }
+
+  async function rechazarSolicitud(sol: SolicitudAcceso) {
+    if (DEV_MODE) {
+      setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'rechazada' } : s))
+      return
+    }
+    await supabase.from('solicitudes_acceso').update({ estado: 'rechazada' }).eq('id', sol.id)
+    setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'rechazada' } : s))
+  }
+
   async function fetchAnalytics(usuarioId?: string) {
     setLoadingAnalytics(true)
     if (DEV_MODE) {
@@ -301,6 +397,11 @@ export default function Admin() {
     })
   }, [docentes, filtroIE, filtroTaller])
 
+  const solicitudesFiltradas = useMemo(() => {
+    if (filtroEstado === 'todas') return solicitudes
+    return solicitudes.filter(s => s.estado === filtroEstado)
+  }, [solicitudes, filtroEstado])
+
   const talleresEnUso = useMemo(() =>
     [...new Set(docentes.map(d => d.taller_slug).filter(Boolean))], [docentes])
 
@@ -334,18 +435,174 @@ export default function Admin() {
       <main className="px-6 py-8 max-w-7xl mx-auto">
         {/* Tab switcher */}
         <div className="flex gap-2 mb-8">
-          {([['docentes', Users, 'Docentes'], ['analytics', BarChart2, 'Analytics']] as const).map(([key, Icon, label]) => (
-            <button
-              key={key}
-              onClick={() => setTab(key)}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all"
-              style={tab === key
-                ? { background: '#02d47e', color: '#043941' }
-                : { background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.55)' }}>
-              <Icon size={15} /> {label}
-            </button>
-          ))}
+          {([
+            ['solicitudes', Inbox, 'Solicitudes'],
+            ['usuarios', Users, 'Usuarios activos'],
+            ['analytics', BarChart2, 'Analytics'],
+          ] as const).map(([key, Icon, label]) => {
+            const pending = key === 'solicitudes' ? solicitudes.filter(s => s.estado === 'pendiente').length : 0
+            return (
+              <button
+                key={key}
+                onClick={() => setTab(key)}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all"
+                style={tab === key
+                  ? { background: '#02d47e', color: '#043941' }
+                  : { background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.55)' }}>
+                <Icon size={15} /> {label}
+                {pending > 0 && (
+                  <span className="text-xs font-extrabold px-1.5 py-0.5 rounded-full"
+                    style={{ background: tab === key ? 'rgba(4,57,65,0.3)' : 'rgba(239,68,68,0.25)', color: tab === key ? '#043941' : '#ef4444', lineHeight: 1 }}>
+                    {pending}
+                  </span>
+                )}
+              </button>
+            )
+          })}
         </div>
+
+        {tab === 'solicitudes' && (
+          <div>
+            {/* Sub-filtros + Recargar */}
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+              <div className="flex flex-wrap gap-2">
+                {([
+                  ['pendiente', 'Pendientes'],
+                  ['aprobada', 'Aprobadas'],
+                  ['rechazada', 'Rechazadas'],
+                  ['todas', 'Todas'],
+                ] as const).map(([estado, label]) => {
+                  const count = estado === 'todas' ? solicitudes.length : solicitudes.filter(s => s.estado === estado).length
+                  return (
+                    <button
+                      key={estado}
+                      onClick={() => setFiltroEstado(estado)}
+                      className="px-4 py-2 rounded-xl text-sm font-bold transition-all"
+                      style={filtroEstado === estado
+                        ? { background: '#f59e0b', color: '#043941' }
+                        : { background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)' }}>
+                      {label} ({count})
+                    </button>
+                  )
+                })}
+              </div>
+              <button
+                onClick={fetchSolicitudes}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
+                style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)' }}>
+                <RefreshCw size={14} /> Recargar
+              </button>
+            </div>
+
+            {/* Aviso contraseñas sensibles */}
+            <div className="flex items-start gap-3 px-5 py-4 rounded-2xl mb-6"
+              style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
+              <AlertTriangle size={16} style={{ color: '#f59e0b', flexShrink: 0, marginTop: 1 }} />
+              <div>
+                <p className="text-sm font-bold" style={{ color: '#f59e0b' }}>Información sensible</p>
+                <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                  Las contraseñas se muestran para que puedas hacer respaldo. Mantenlas en privado.
+                </p>
+              </div>
+            </div>
+
+            {/* Lista de solicitudes */}
+            {loadingSolicitudes ? (
+              <div className="flex items-center justify-center py-20">
+                <div className="h-7 w-7 rounded-full border-2 animate-spin"
+                  style={{ borderColor: '#02d47e', borderTopColor: 'transparent' }} />
+              </div>
+            ) : solicitudesFiltradas.length === 0 ? (
+              <div className="text-center py-20 rounded-2xl"
+                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <Inbox size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.15)' }} />
+                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                  No hay solicitudes en esta categoría.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {solicitudesFiltradas.map(sol => {
+                  const taller = talleresConfig.find(t => t.slug === sol.taller_slug)
+                  const password = passwordsGeneradas[sol.id]
+                  const borderColor = sol.estado === 'aprobada'
+                    ? 'rgba(2,212,126,0.25)'
+                    : sol.estado === 'rechazada'
+                    ? 'rgba(239,68,68,0.2)'
+                    : 'rgba(255,255,255,0.08)'
+                  return (
+                    <div key={sol.id} className="rounded-2xl p-5"
+                      style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${borderColor}` }}>
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 mb-1">
+                            <p className="font-bold text-white">{sol.nombre}</p>
+                            <span className="text-xs px-2 py-0.5 rounded-lg font-bold"
+                              style={sol.estado === 'pendiente'
+                                ? { background: 'rgba(245,158,11,0.15)', color: '#f59e0b' }
+                                : sol.estado === 'aprobada'
+                                ? { background: 'rgba(2,212,126,0.15)', color: '#02d47e' }
+                                : { background: 'rgba(239,68,68,0.15)', color: '#ef4444' }}>
+                              {sol.estado === 'pendiente' ? 'Pendiente' : sol.estado === 'aprobada' ? 'Aprobada' : 'Rechazada'}
+                            </span>
+                          </div>
+                          <p className="text-xs mb-2" style={{ color: 'rgba(255,255,255,0.45)' }}>{sol.email}</p>
+                          <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs mb-1" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                            {sol.institucion && <span>{sol.institucion}</span>}
+                            {taller && <span>Taller: <span style={{ color: '#02d47e' }}>{taller.nombreCorto ?? taller.nombre}</span></span>}
+                            <span>{formatDate(sol.created_at)}</span>
+                          </div>
+                          {sol.mensaje && (
+                            <p className="mt-2 text-xs px-3 py-2 rounded-lg italic"
+                              style={{ background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                              "{sol.mensaje}"
+                            </p>
+                          )}
+                          {password && (
+                            <div className="mt-3 flex items-center gap-2 px-3 py-2 rounded-lg"
+                              style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
+                              <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>Contraseña generada:</span>
+                              <code className="text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>{password}</code>
+                              <button
+                                onClick={() => {
+                                  navigator.clipboard.writeText(password)
+                                  setCopiadoId(sol.id)
+                                  setTimeout(() => setCopiadoId(null), 1500)
+                                }}
+                                className="flex items-center gap-1 text-xs px-2 py-0.5 rounded font-semibold transition-all"
+                                style={{ background: 'rgba(245,158,11,0.2)', color: '#f59e0b' }}>
+                                {copiadoId === sol.id ? <><CheckCircle size={11} /> Copiado</> : <><Copy size={11} /> Copiar</>}
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                        {sol.estado === 'pendiente' && (
+                          <div className="flex flex-col gap-2 shrink-0">
+                            <button
+                              onClick={() => aprobarSolicitud(sol)}
+                              disabled={aprobando === sol.id}
+                              className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+                              style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.3)' }}>
+                              <CheckCircle size={13} />
+                              {aprobando === sol.id ? 'Procesando…' : 'Aprobar'}
+                            </button>
+                            <button
+                              onClick={() => rechazarSolicitud(sol)}
+                              disabled={!!aprobando}
+                              className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all"
+                              style={{ background: 'rgba(239,68,68,0.08)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.2)' }}>
+                              <XCircle size={13} /> Rechazar
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        )}
 
         {tab === 'analytics' && (
           <div>
@@ -482,7 +739,7 @@ export default function Admin() {
           </div>
         )}
 
-        {tab === 'docentes' && <>
+        {tab === 'usuarios' && <>
         {/* Stats resumen */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
