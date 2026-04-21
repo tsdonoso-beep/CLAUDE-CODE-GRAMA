@@ -19,7 +19,7 @@ interface SolicitudAcceso {
   ie_id: number | null
   taller_slug: string | null
   mensaje: string | null
-  estado: 'pendiente' | 'aprobada' | 'rechazada'
+  estado: 'pendiente' | 'aprobado' | 'rechazado'
   created_at: string
 }
 
@@ -27,8 +27,8 @@ function buildMockSolicitudes(): SolicitudAcceso[] {
   return [
     { id: 'sol-1', nombre: 'María López Vargas', email: 'mlopez@colegio.pe', institucion: 'I.E. 7059 MELITÓN CARBAJAL - LINCE', ie_id: 3, taller_slug: 'mecanica-automotriz', mensaje: 'Soy docente EPT con especialidad en producción automotriz.', estado: 'pendiente', created_at: '2026-04-18T10:30:00Z' },
     { id: 'sol-2', nombre: 'Juan Pérez Torres', email: 'jperez@edu.pe', institucion: 'I.E. 6049 RICARDO PALMA - SURQUILLO', ie_id: 5, taller_slug: 'ebanisteria', mensaje: null, estado: 'pendiente', created_at: '2026-04-19T14:00:00Z' },
-    { id: 'sol-3', nombre: 'Ana García Ríos', email: 'agarcia@ept.pe', institucion: 'I.E. 6006 - SAN JUAN DE MIRAFLORES', ie_id: 8, taller_slug: 'electricidad', mensaje: 'Tengo 5 años de experiencia en talleres EPT.', estado: 'aprobada', created_at: '2026-04-15T09:00:00Z' },
-    { id: 'sol-4', nombre: 'Luis Ramos Condori', email: 'lramos@colegio.edu.pe', institucion: 'I.E. 1278 - LA MOLINA', ie_id: 11, taller_slug: 'construcciones-metalicas', mensaje: null, estado: 'rechazada', created_at: '2026-04-14T08:00:00Z' },
+    { id: 'sol-3', nombre: 'Ana García Ríos', email: 'agarcia@ept.pe', institucion: 'I.E. 6006 - SAN JUAN DE MIRAFLORES', ie_id: 8, taller_slug: 'electricidad', mensaje: 'Tengo 5 años de experiencia en talleres EPT.', estado: 'aprobado', created_at: '2026-04-15T09:00:00Z' },
+    { id: 'sol-4', nombre: 'Luis Ramos Condori', email: 'lramos@colegio.edu.pe', institucion: 'I.E. 1278 - LA MOLINA', ie_id: 11, taller_slug: 'construcciones-metalicas', mensaje: null, estado: 'rechazado', created_at: '2026-04-14T08:00:00Z' },
   ]
 }
 
@@ -197,7 +197,7 @@ export default function Admin() {
   const [tab, setTab] = useState<'solicitudes' | 'usuarios' | 'analytics'>('solicitudes')
   const [solicitudes, setSolicitudes] = useState<SolicitudAcceso[]>([])
   const [loadingSolicitudes, setLoadingSolicitudes] = useState(true)
-  const [filtroEstado, setFiltroEstado] = useState<'pendiente' | 'aprobada' | 'rechazada' | 'todas'>('pendiente')
+  const [filtroEstado, setFiltroEstado] = useState<'pendiente' | 'aprobado' | 'rechazado' | 'todas'>('pendiente')
   const [passwordsGeneradas, setPasswordsGeneradas] = useState<Record<string, string>>({})
   const [aprobando, setAprobando] = useState<string | null>(null)
   const [copiadoId, setCopiadoId] = useState<string | null>(null)
@@ -313,7 +313,7 @@ export default function Admin() {
     setAprobando(sol.id)
     const password = generatePassword()
     if (DEV_MODE) {
-      setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'aprobada' } : s))
+      setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'aprobado' } : s))
       setPasswordsGeneradas(prev => ({ ...prev, [sol.id]: password }))
       setAprobando(null)
       return
@@ -334,19 +334,27 @@ export default function Admin() {
         taller_slug: sol.taller_slug,
       })
     }
-    await supabase.from('solicitudes_acceso').update({ estado: 'aprobada' }).eq('id', sol.id)
-    setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'aprobada' } : s))
+    await supabase.from('solicitudes_acceso').update({
+      estado: 'aprobado',
+      reviewed_at: new Date().toISOString(),
+      reviewed_by: profile?.email ?? '',
+    }).eq('id', sol.id)
+    setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'aprobado' } : s))
     setPasswordsGeneradas(prev => ({ ...prev, [sol.id]: password }))
     setAprobando(null)
   }
 
   async function rechazarSolicitud(sol: SolicitudAcceso) {
     if (DEV_MODE) {
-      setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'rechazada' } : s))
+      setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'rechazado' } : s))
       return
     }
-    await supabase.from('solicitudes_acceso').update({ estado: 'rechazada' }).eq('id', sol.id)
-    setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'rechazada' } : s))
+    await supabase.from('solicitudes_acceso').update({
+      estado: 'rechazado',
+      reviewed_at: new Date().toISOString(),
+      reviewed_by: profile?.email ?? '',
+    }).eq('id', sol.id)
+    setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'rechazado' } : s))
   }
 
   async function fetchAnalytics(usuarioId?: string) {
@@ -468,8 +476,8 @@ export default function Admin() {
               <div className="flex flex-wrap gap-2">
                 {([
                   ['pendiente', 'Pendientes'],
-                  ['aprobada', 'Aprobadas'],
-                  ['rechazada', 'Rechazadas'],
+                  ['aprobado', 'Aprobadas'],
+                  ['rechazado', 'Rechazadas'],
                   ['todas', 'Todas'],
                 ] as const).map(([estado, label]) => {
                   const count = estado === 'todas' ? solicitudes.length : solicitudes.filter(s => s.estado === estado).length
@@ -525,9 +533,9 @@ export default function Admin() {
                 {solicitudesFiltradas.map(sol => {
                   const taller = talleresConfig.find(t => t.slug === sol.taller_slug)
                   const password = passwordsGeneradas[sol.id]
-                  const borderColor = sol.estado === 'aprobada'
+                  const borderColor = sol.estado === 'aprobado'
                     ? 'rgba(2,212,126,0.25)'
-                    : sol.estado === 'rechazada'
+                    : sol.estado === 'rechazado'
                     ? 'rgba(239,68,68,0.2)'
                     : 'rgba(255,255,255,0.08)'
                   return (
@@ -540,10 +548,10 @@ export default function Admin() {
                             <span className="text-xs px-2 py-0.5 rounded-lg font-bold"
                               style={sol.estado === 'pendiente'
                                 ? { background: 'rgba(245,158,11,0.15)', color: '#f59e0b' }
-                                : sol.estado === 'aprobada'
+                                : sol.estado === 'aprobado'
                                 ? { background: 'rgba(2,212,126,0.15)', color: '#02d47e' }
                                 : { background: 'rgba(239,68,68,0.15)', color: '#ef4444' }}>
-                              {sol.estado === 'pendiente' ? 'Pendiente' : sol.estado === 'aprobada' ? 'Aprobada' : 'Rechazada'}
+                              {sol.estado === 'pendiente' ? 'Pendiente' : sol.estado === 'aprobado' ? 'Aprobada' : 'Rechazada'}
                             </span>
                           </div>
                           <p className="text-xs mb-2" style={{ color: 'rgba(255,255,255,0.45)' }}>{sol.email}</p>
