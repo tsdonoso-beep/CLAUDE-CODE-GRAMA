@@ -205,6 +205,8 @@ export default function Admin() {
   const [loading, setLoading] = useState(true)
   const [filtroIE, setFiltroIE] = useState('')
   const [filtroTaller, setFiltroTaller] = useState('')
+  const [busquedaUsuario, setBusquedaUsuario] = useState('')
+  const [docenteDetalle, setDocenteDetalle] = useState<DocenteRow | null>(null)
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null)
   const [loadingAnalytics, setLoadingAnalytics] = useState(false)
   const [filtroAnalyticsDocente, setFiltroAnalyticsDocente] = useState('')
@@ -398,12 +400,16 @@ export default function Admin() {
   }
 
   const docentesFiltrados = useMemo(() => {
+    const q = busquedaUsuario.toLowerCase().trim()
     return docentes.filter(d => {
       const matchIE = !filtroIE || String(d.ie_id) === filtroIE
       const matchTaller = !filtroTaller || d.taller_slug === filtroTaller
-      return matchIE && matchTaller
+      const matchBusqueda = !q ||
+        d.nombre_completo?.toLowerCase().includes(q) ||
+        d.email?.toLowerCase().includes(q)
+      return matchIE && matchTaller && matchBusqueda
     })
-  }, [docentes, filtroIE, filtroTaller])
+  }, [docentes, filtroIE, filtroTaller, busquedaUsuario])
 
   const solicitudesFiltradas = useMemo(() => {
     if (filtroEstado === 'todas') return solicitudes
@@ -764,27 +770,43 @@ export default function Admin() {
         </div>
 
         {/* Controles */}
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-          <div className="flex gap-3 flex-wrap">
-            <select value={filtroIE} onChange={e => setFiltroIE(e.target.value)} {...selectStyle}>
-              <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todas las IEs</option>
-              {INSTITUCIONES_EDUCATIVAS.map(ie => (
-                <option key={ie.id} value={String(ie.id)} style={{ background: '#0d2b31', color: '#ffffff' }}>{ie.nombre}</option>
-              ))}
-            </select>
-            <select value={filtroTaller} onChange={e => setFiltroTaller(e.target.value)} {...selectStyle}>
-              <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todos los talleres</option>
-              {talleresEnUso.map(slug => {
-                const t = talleresConfig.find(t => t.slug === slug)
-                return <option key={slug} value={slug!} style={{ background: '#0d2b31', color: '#ffffff' }}>{t?.nombre ?? slug}</option>
-              })}
-            </select>
+        <div className="flex flex-col gap-3 mb-5">
+          {/* Buscador */}
+          <div className="relative">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 opacity-40" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input
+              value={busquedaUsuario}
+              onChange={e => setBusquedaUsuario(e.target.value)}
+              placeholder="Buscar por nombre o correo…"
+              className="w-full pl-9 pr-4 py-2.5 rounded-xl border-2 text-sm outline-none"
+              style={{ borderColor: busquedaUsuario ? '#02d47e' : 'rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.06)', color: '#ffffff' }}
+            />
+            {busquedaUsuario && (
+              <button onClick={() => setBusquedaUsuario('')} className="absolute right-3 top-1/2 -translate-y-1/2 opacity-40 hover:opacity-70 text-white text-sm">✕</button>
+            )}
           </div>
-          <button onClick={() => downloadCSV(docentesFiltrados)}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold"
-            style={{ background: '#02d47e', color: '#043941' }}>
-            <Download size={15} /> Descargar CSV
-          </button>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex gap-3 flex-wrap">
+              <select value={filtroIE} onChange={e => setFiltroIE(e.target.value)} {...selectStyle}>
+                <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todas las IEs</option>
+                {INSTITUCIONES_EDUCATIVAS.map(ie => (
+                  <option key={ie.id} value={String(ie.id)} style={{ background: '#0d2b31', color: '#ffffff' }}>{ie.nombre}</option>
+                ))}
+              </select>
+              <select value={filtroTaller} onChange={e => setFiltroTaller(e.target.value)} {...selectStyle}>
+                <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todos los talleres</option>
+                {talleresEnUso.map(slug => {
+                  const t = talleresConfig.find(t => t.slug === slug)
+                  return <option key={slug} value={slug!} style={{ background: '#0d2b31', color: '#ffffff' }}>{t?.nombre ?? slug}</option>
+                })}
+              </select>
+            </div>
+            <button onClick={() => downloadCSV(docentesFiltrados)}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold"
+              style={{ background: '#02d47e', color: '#043941' }}>
+              <Download size={15} /> Descargar CSV
+            </button>
+          </div>
         </div>
 
         {/* Tabla */}
@@ -819,7 +841,8 @@ export default function Admin() {
                     const taller = talleresConfig.find(t => t.slug === d.taller_slug)
                     return (
                       <tr key={d.id}
-                        style={{ borderBottom: i < docentesFiltrados.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}
+                        onClick={() => setDocenteDetalle(d)}
+                        style={{ borderBottom: i < docentesFiltrados.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none', cursor: 'pointer' }}
                         className="transition-colors hover:bg-white/5">
                         <td className="px-5 py-3.5">
                           <p className="font-semibold text-white">{d.nombre_completo}</p>
@@ -897,10 +920,140 @@ export default function Admin() {
         </div>
 
         <p className="text-xs mt-4 text-right" style={{ color: 'rgba(255,255,255,0.2)' }}>
-          {docentesFiltrados.length} de {docentes.length} docentes
+          {docentesFiltrados.length} de {docentes.length} docentes · haz clic en un usuario para ver detalles
         </p>
         </>}
       </main>
+
+      {/* ── Panel de detalle de usuario ─────────────────────────────────────── */}
+      {docenteDetalle && (() => {
+        const d = docenteDetalle
+        const ie = INSTITUCIONES_EDUCATIVAS.find(i => i.id === d.ie_id)
+        const taller = talleresConfig.find(t => t.slug === d.taller_slug)
+        const initials = (d.nombre_completo ?? d.email ?? '?')
+          .split(' ').slice(0, 2).map((w: string) => w[0]).join('').toUpperCase()
+        const horasCertificadas = Math.round((d.completados / Math.max(d.total, 1)) * 150)
+        return (
+          <>
+            {/* Backdrop */}
+            <div
+              className="fixed inset-0 z-40"
+              style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(2px)' }}
+              onClick={() => setDocenteDetalle(null)}
+            />
+            {/* Panel */}
+            <div className="fixed right-0 top-0 bottom-0 z-50 flex flex-col overflow-y-auto w-full max-w-md shadow-2xl"
+              style={{ background: '#052e35', borderLeft: '1px solid rgba(255,255,255,0.1)' }}>
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 py-4 shrink-0"
+                style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>Detalle de usuario</p>
+                <button
+                  onClick={() => setDocenteDetalle(null)}
+                  className="p-2 rounded-lg transition-opacity hover:opacity-70"
+                  style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  <XCircle size={18} />
+                </button>
+              </div>
+
+              <div className="flex-1 px-6 py-6 space-y-6">
+                {/* Avatar + info principal */}
+                <div className="flex items-start gap-4">
+                  <div className="shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-lg font-extrabold"
+                    style={{ background: 'rgba(2,212,126,0.15)', color: '#02d47e', border: '2px solid rgba(2,212,126,0.3)' }}>
+                    {initials}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-extrabold text-white text-lg leading-tight">{d.nombre_completo ?? '—'}</p>
+                    <p className="text-xs mt-0.5 truncate" style={{ color: 'rgba(255,255,255,0.45)' }}>{d.email}</p>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      <span className="text-xs px-2 py-0.5 rounded-lg font-bold"
+                        style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e' }}>
+                        {d.role === 'admin' ? 'Admin' : 'Docente'}
+                      </span>
+                      {taller && (
+                        <span className="text-xs px-2 py-0.5 rounded-lg font-bold"
+                          style={{ background: 'rgba(34,211,238,0.1)', color: '#22d3ee' }}>
+                          {taller.nombreCorto ?? taller.nombre}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* IE */}
+                {ie && (
+                  <div className="px-4 py-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                    <p className="text-xs mb-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>Institución Educativa</p>
+                    <p className="text-sm font-semibold text-white">{ie.nombre}</p>
+                    <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{ie.distrito} · {ie.region}</p>
+                  </div>
+                )}
+
+                {/* Stats */}
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { label: 'Completados', value: `${d.completados}/${d.total}`, color: '#02d47e' },
+                    { label: 'Progreso', value: `${d.porcentaje}%`, color: d.porcentaje >= 80 ? '#02d47e' : d.porcentaje >= 40 ? '#f59e0b' : '#ef4444' },
+                    { label: 'Horas est.', value: `${horasCertificadas}h`, color: '#22d3ee' },
+                  ].map(s => (
+                    <div key={s.label} className="rounded-xl p-3 text-center"
+                      style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                      <p className="text-xl font-extrabold" style={{ color: s.color }}>{s.value}</p>
+                      <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.label}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Barra de progreso */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>Progreso general</p>
+                    {d.moduloActual && (
+                      <span className="text-xs font-extrabold px-2 py-0.5 rounded-lg"
+                        style={{ background: 'rgba(34,211,238,0.12)', color: '#22d3ee' }}>
+                        Módulo actual: {d.moduloActual}
+                      </span>
+                    )}
+                  </div>
+                  <div className="h-3 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
+                    <div className="h-full rounded-full transition-all"
+                      style={{ width: `${d.porcentaje}%`, background: d.porcentaje >= 80 ? '#02d47e' : d.porcentaje >= 40 ? '#f59e0b' : '#ef4444' }} />
+                  </div>
+                  {d.visualizados > d.completados && (
+                    <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                      {d.visualizados} visualizados · {d.completados} completados
+                    </p>
+                  )}
+                </div>
+
+                {/* Quizzes */}
+                <div className="px-4 py-3 rounded-xl flex items-center justify-between"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                  <p className="text-sm font-semibold text-white">Quizzes aprobados</p>
+                  <span className="text-lg font-extrabold"
+                    style={{ color: d.quizzesAprobados === d.quizzesTotal && d.quizzesTotal > 0 ? '#02d47e' : '#f59e0b' }}>
+                    {d.quizzesAprobados}/{d.quizzesTotal}
+                  </span>
+                </div>
+
+                {/* Fechas */}
+                <div className="space-y-2">
+                  {[
+                    { label: 'Último acceso', value: formatDate(d.last_seen_at) },
+                    { label: 'Fecha de registro', value: formatDate(d.created_at) },
+                  ].map(row => (
+                    <div key={row.label} className="flex items-center justify-between">
+                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{row.label}</p>
+                      <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.6)' }}>{row.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </>
+        )
+      })()}
     </div>
   )
 }
