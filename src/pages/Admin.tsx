@@ -207,6 +207,17 @@ export default function Admin() {
   const [filtroTaller, setFiltroTaller] = useState('')
   const [busquedaUsuario, setBusquedaUsuario] = useState('')
   const [docenteDetalle, setDocenteDetalle] = useState<DocenteRow | null>(null)
+  // Modal crear usuario
+  const [showCrearModal, setShowCrearModal] = useState(false)
+  const [nuevoNombre, setNuevoNombre] = useState('')
+  const [nuevoEmail, setNuevoEmail] = useState('')
+  const [nuevoPassword, setNuevoPassword] = useState('')
+  const [nuevoRole, setNuevoRole] = useState<'docente' | 'admin'>('docente')
+  const [nuevoIeId, setNuevoIeId] = useState<number | ''>('')
+  const [nuevosTalleres, setNuevosTalleres] = useState<string[]>([])
+  const [creandoUsuario, setCreandoUsuario] = useState(false)
+  const [errCrear, setErrCrear] = useState('')
+  const [usuarioCreadoOk, setUsuarioCreadoOk] = useState<{ email: string; password: string } | null>(null)
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null)
   const [loadingAnalytics, setLoadingAnalytics] = useState(false)
   const [filtroAnalyticsDocente, setFiltroAnalyticsDocente] = useState('')
@@ -294,6 +305,67 @@ export default function Admin() {
 
     setDocentes(rows)
     setLoading(false)
+  }
+
+  function abrirModalCrear() {
+    setNuevoNombre(''); setNuevoEmail(''); setNuevoPassword(generatePassword())
+    setNuevoRole('docente'); setNuevoIeId(''); setNuevosTalleres([])
+    setErrCrear(''); setUsuarioCreadoOk(null)
+    setShowCrearModal(true)
+  }
+
+  async function crearUsuario() {
+    if (!nuevoNombre.trim() || !nuevoEmail.trim()) {
+      setErrCrear('Nombre y correo son obligatorios.')
+      return
+    }
+    setCreandoUsuario(true); setErrCrear('')
+    if (DEV_MODE) {
+      const total = getTotalContenidosLXP()
+      const mock: DocenteRow = {
+        id: `mock-${Date.now()}`, email: nuevoEmail.trim().toLowerCase(),
+        nombre_completo: nuevoNombre.trim(), display_name: nuevoNombre.trim(),
+        role: nuevoRole, ie_id: nuevoIeId ? String(nuevoIeId) : null,
+        taller_slug: nuevosTalleres[0] ?? null,
+        taller_slugs: nuevosTalleres.length ? nuevosTalleres : null,
+        created_at: new Date().toISOString(), last_seen_at: new Date().toISOString(), updated_at: new Date().toISOString(),
+        completados: 0, visualizados: 0, total, porcentaje: 0,
+        moduloActual: null, quizzesAprobados: 0, quizzesTotal: getTotalQuizzesLXP(),
+      } as DocenteRow
+      setDocentes(prev => [mock, ...prev])
+      setUsuarioCreadoOk({ email: nuevoEmail.trim().toLowerCase(), password: nuevoPassword })
+      setCreandoUsuario(false)
+      return
+    }
+    const { data: userData, error } = await supabase.auth.signUp({
+      email: nuevoEmail.trim().toLowerCase(),
+      password: nuevoPassword,
+      options: { data: { nombre_completo: nuevoNombre.trim() } },
+    })
+    if (error) { setErrCrear(error.message); setCreandoUsuario(false); return }
+    if (userData?.user) {
+      await supabase.from('profiles').update({
+        nombre_completo: nuevoNombre.trim(),
+        role: nuevoRole,
+        ie_id: nuevoIeId || null,
+        taller_slug: nuevosTalleres[0] ?? null,
+        taller_slugs: nuevosTalleres.length ? nuevosTalleres : null,
+      }).eq('id', userData.user.id)
+    }
+    setUsuarioCreadoOk({ email: nuevoEmail.trim().toLowerCase(), password: nuevoPassword })
+    fetchData()
+    setCreandoUsuario(false)
+  }
+
+  async function actualizarTalleresDocente(docente: DocenteRow, talleres: string[]) {
+    const updated = { ...docente, taller_slug: talleres[0] ?? null, taller_slugs: talleres.length ? talleres : null }
+    setDocentes(prev => prev.map(d => d.id === docente.id ? updated as DocenteRow : d))
+    setDocenteDetalle(updated as DocenteRow)
+    if (DEV_MODE) return
+    await supabase.from('profiles').update({
+      taller_slug: talleres[0] ?? null,
+      taller_slugs: talleres.length ? talleres : null,
+    }).eq('id', docente.id)
   }
 
   async function fetchSolicitudes() {
@@ -801,11 +873,18 @@ export default function Admin() {
                 })}
               </select>
             </div>
-            <button onClick={() => downloadCSV(docentesFiltrados)}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold"
-              style={{ background: '#02d47e', color: '#043941' }}>
-              <Download size={15} /> Descargar CSV
-            </button>
+            <div className="flex gap-2">
+              <button onClick={abrirModalCrear}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold"
+                style={{ background: 'rgba(2,212,126,0.15)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.3)' }}>
+                <Users size={15} /> + Nuevo usuario
+              </button>
+              <button onClick={() => downloadCSV(docentesFiltrados)}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold"
+                style={{ background: '#02d47e', color: '#043941' }}>
+                <Download size={15} /> Descargar CSV
+              </button>
+            </div>
           </div>
         </div>
 
@@ -925,6 +1004,174 @@ export default function Admin() {
         </>}
       </main>
 
+      {/* ── Modal: Crear nuevo usuario ──────────────────────────────────────── */}
+      {showCrearModal && (
+        <>
+          <div className="fixed inset-0 z-50" style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(3px)' }}
+            onClick={() => !creandoUsuario && setShowCrearModal(false)} />
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl"
+              style={{ background: '#052e35', border: '1px solid rgba(255,255,255,0.1)', maxHeight: '90vh', overflowY: 'auto' }}>
+
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 py-4"
+                style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                <div className="flex items-center gap-2">
+                  <Users size={16} style={{ color: '#02d47e' }} />
+                  <p className="font-bold text-white text-sm">Crear nuevo usuario</p>
+                </div>
+                {!creandoUsuario && !usuarioCreadoOk && (
+                  <button onClick={() => setShowCrearModal(false)} style={{ color: 'rgba(255,255,255,0.4)' }}>
+                    <XCircle size={18} />
+                  </button>
+                )}
+              </div>
+
+              <div className="px-6 py-6">
+                {/* Estado: éxito */}
+                {usuarioCreadoOk ? (
+                  <div className="space-y-5">
+                    <div className="flex flex-col items-center gap-3 py-4">
+                      <CheckCircle size={40} style={{ color: '#02d47e' }} />
+                      <p className="font-extrabold text-white text-lg">¡Usuario creado!</p>
+                      <p className="text-xs text-center" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                        Guarda estas credenciales antes de cerrar.
+                      </p>
+                    </div>
+                    <div className="rounded-xl p-4 space-y-3" style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>Correo</span>
+                        <code className="text-sm font-bold text-white">{usuarioCreadoOk.email}</code>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>Contraseña</span>
+                        <div className="flex items-center gap-2">
+                          <code className="text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>{usuarioCreadoOk.password}</code>
+                          <button
+                            onClick={() => navigator.clipboard.writeText(usuarioCreadoOk.password)}
+                            className="text-xs px-2 py-0.5 rounded font-semibold"
+                            style={{ background: 'rgba(245,158,11,0.2)', color: '#f59e0b' }}>
+                            <Copy size={11} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setShowCrearModal(false)}
+                      className="w-full py-2.5 rounded-xl font-bold text-sm"
+                      style={{ background: '#02d47e', color: '#043941' }}>
+                      Cerrar
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {errCrear && (
+                      <div className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm"
+                        style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444' }}>
+                        <AlertTriangle size={14} className="shrink-0" /> {errCrear}
+                      </div>
+                    )}
+
+                    {/* Nombre */}
+                    <div>
+                      <label className="block text-xs font-bold mb-1.5" style={{ color: 'rgba(255,255,255,0.5)' }}>Nombre completo *</label>
+                      <input value={nuevoNombre} onChange={e => setNuevoNombre(e.target.value)}
+                        placeholder="Prof. Ana García"
+                        className="w-full px-4 py-2.5 rounded-xl text-sm outline-none"
+                        style={{ background: 'rgba(255,255,255,0.07)', color: '#fff', border: '1px solid rgba(255,255,255,0.12)' }} />
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                      <label className="block text-xs font-bold mb-1.5" style={{ color: 'rgba(255,255,255,0.5)' }}>Correo electrónico *</label>
+                      <input value={nuevoEmail} onChange={e => setNuevoEmail(e.target.value)}
+                        type="email" placeholder="docente@colegio.pe"
+                        className="w-full px-4 py-2.5 rounded-xl text-sm outline-none"
+                        style={{ background: 'rgba(255,255,255,0.07)', color: '#fff', border: '1px solid rgba(255,255,255,0.12)' }} />
+                    </div>
+
+                    {/* Contraseña */}
+                    <div>
+                      <label className="block text-xs font-bold mb-1.5" style={{ color: 'rgba(255,255,255,0.5)' }}>Contraseña</label>
+                      <div className="flex gap-2">
+                        <input value={nuevoPassword} onChange={e => setNuevoPassword(e.target.value)}
+                          className="flex-1 px-4 py-2.5 rounded-xl text-sm outline-none font-mono"
+                          style={{ background: 'rgba(255,255,255,0.07)', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.25)', letterSpacing: '0.05em' }} />
+                        <button onClick={() => setNuevoPassword(generatePassword())}
+                          className="px-3 py-2 rounded-xl text-xs font-semibold shrink-0"
+                          style={{ background: 'rgba(245,158,11,0.12)', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.2)' }}>
+                          Regenerar
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Rol */}
+                    <div>
+                      <label className="block text-xs font-bold mb-1.5" style={{ color: 'rgba(255,255,255,0.5)' }}>Rol</label>
+                      <div className="flex gap-2">
+                        {(['docente', 'admin'] as const).map(r => (
+                          <button key={r} onClick={() => setNuevoRole(r)}
+                            className="flex-1 py-2 rounded-xl text-sm font-bold capitalize transition-all"
+                            style={nuevoRole === r
+                              ? { background: '#02d47e', color: '#043941' }
+                              : { background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)' }}>
+                            {r === 'docente' ? 'Docente' : 'Administrador'}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* IE */}
+                    <div>
+                      <label className="block text-xs font-bold mb-1.5" style={{ color: 'rgba(255,255,255,0.5)' }}>Institución Educativa</label>
+                      <select value={nuevoIeId} onChange={e => setNuevoIeId(e.target.value === '' ? '' : Number(e.target.value))}
+                        className="w-full px-4 py-2.5 rounded-xl text-sm outline-none"
+                        style={{ background: 'rgba(255,255,255,0.07)', color: '#fff', border: '1px solid rgba(255,255,255,0.12)' }}>
+                        <option value="" style={{ background: '#052e35' }}>Sin asignar</option>
+                        {INSTITUCIONES_EDUCATIVAS.map(ie => (
+                          <option key={ie.id} value={ie.id} style={{ background: '#052e35' }}>{ie.nombre} · {ie.distrito}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Talleres */}
+                    <div>
+                      <label className="block text-xs font-bold mb-1.5" style={{ color: 'rgba(255,255,255,0.5)' }}>Talleres asignados</label>
+                      <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.1)', maxHeight: 180, overflowY: 'auto' }}>
+                        {talleresConfig.map((t, i) => (
+                          <label key={t.slug}
+                            className="flex items-center gap-3 px-4 py-2.5 cursor-pointer transition-colors hover:bg-white/5"
+                            style={{ borderBottom: i < talleresConfig.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                            <input type="checkbox" checked={nuevosTalleres.includes(t.slug)}
+                              onChange={e => setNuevosTalleres(prev =>
+                                e.target.checked ? [...prev, t.slug] : prev.filter(s => s !== t.slug)
+                              )}
+                              className="rounded" />
+                            <span className="text-sm text-white">{t.nombre}</span>
+                          </label>
+                        ))}
+                      </div>
+                      {nuevosTalleres.length > 0 && (
+                        <p className="text-xs mt-1.5" style={{ color: '#02d47e' }}>
+                          {nuevosTalleres.length} taller{nuevosTalleres.length > 1 ? 'es' : ''} seleccionado{nuevosTalleres.length > 1 ? 's' : ''}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Botón crear */}
+                    <button onClick={crearUsuario} disabled={creandoUsuario}
+                      className="w-full py-3 rounded-xl font-extrabold text-sm mt-2 transition-all disabled:opacity-60"
+                      style={{ background: '#02d47e', color: '#043941' }}>
+                      {creandoUsuario ? 'Creando usuario…' : 'Crear usuario'}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       {/* ── Panel de detalle de usuario ─────────────────────────────────────── */}
       {docenteDetalle && (() => {
         const d = docenteDetalle
@@ -1036,6 +1283,58 @@ export default function Admin() {
                     {d.quizzesAprobados}/{d.quizzesTotal}
                   </span>
                 </div>
+
+                {/* Talleres asignados */}
+                {(() => {
+                  const talleresActivos: string[] = (d.taller_slugs && d.taller_slugs.length > 0)
+                    ? d.taller_slugs
+                    : d.taller_slug ? [d.taller_slug] : []
+                  const talleresDisponibles = talleresConfig.filter(t => !talleresActivos.includes(t.slug))
+                  return (
+                    <div className="rounded-xl p-4 space-y-3"
+                      style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                      <p className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>Talleres asignados</p>
+                      <div className="flex flex-wrap gap-2">
+                        {talleresActivos.length === 0 && (
+                          <span className="text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>Sin taller asignado</span>
+                        )}
+                        {talleresActivos.map(slug => {
+                          const t = talleresConfig.find(x => x.slug === slug)
+                          return (
+                            <span key={slug}
+                              className="flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg"
+                              style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.2)' }}>
+                              {t?.nombreCorto ?? slug}
+                              <button
+                                onClick={() => actualizarTalleresDocente(d, talleresActivos.filter(s => s !== slug))}
+                                className="opacity-60 hover:opacity-100 transition-opacity ml-0.5"
+                                style={{ color: '#02d47e' }}>
+                                ✕
+                              </button>
+                            </span>
+                          )
+                        })}
+                      </div>
+                      {talleresDisponibles.length > 0 && (
+                        <select
+                          defaultValue=""
+                          onChange={e => {
+                            if (e.target.value) {
+                              actualizarTalleresDocente(d, [...talleresActivos, e.target.value])
+                              e.target.value = ''
+                            }
+                          }}
+                          className="w-full px-3 py-2 rounded-xl text-xs outline-none"
+                          style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                          <option value="">+ Añadir taller…</option>
+                          {talleresDisponibles.map(t => (
+                            <option key={t.slug} value={t.slug} style={{ background: '#052e35' }}>{t.nombre}</option>
+                          ))}
+                        </select>
+                      )}
+                    </div>
+                  )
+                })()}
 
                 {/* Fechas */}
                 <div className="space-y-2">
