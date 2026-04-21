@@ -368,8 +368,26 @@ Saludos,
 Equipo GRAMA · Programa TSF-MINEDU`
   }
 
+  function copiarAlPortapapeles(texto: string) {
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(texto).catch(() => copiarFallback(texto))
+    } else {
+      copiarFallback(texto)
+    }
+  }
+
+  function copiarFallback(texto: string) {
+    const el = document.createElement('textarea')
+    el.value = texto
+    el.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none'
+    document.body.appendChild(el)
+    el.select()
+    document.execCommand('copy')
+    document.body.removeChild(el)
+  }
+
   function copiarBienvenida(nombre: string, email: string, password: string, id: string) {
-    navigator.clipboard.writeText(generarMensajeBienvenida(nombre, email, password))
+    copiarAlPortapapeles(generarMensajeBienvenida(nombre, email, password))
     setCopiadoBienvenida(id)
     setTimeout(() => setCopiadoBienvenida(null), 2000)
   }
@@ -473,6 +491,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
     if (DEV_MODE) {
       setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'aprobado' } : s))
       setPasswordsGeneradas(prev => ({ ...prev, [sol.id]: password }))
+      setFiltroEstado('aprobado')
       setAprobando(null)
       return
     }
@@ -499,6 +518,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
     }).eq('id', sol.id)
     setSolicitudes(prev => prev.map(s => s.id === sol.id ? { ...s, estado: 'aprobado' } : s))
     setPasswordsGeneradas(prev => ({ ...prev, [sol.id]: password }))
+    setFiltroEstado('aprobado')
     setAprobando(null)
   }
 
@@ -741,7 +761,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                                 <code className="flex-1 text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>{password}</code>
                                 <button
                                   onClick={() => {
-                                    navigator.clipboard.writeText(password)
+                                    copiarAlPortapapeles(password)
                                     setCopiadoId(sol.id)
                                     setTimeout(() => setCopiadoId(null), 1500)
                                   }}
@@ -1278,7 +1298,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         <div className="flex items-center gap-2">
                           <code className="text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>{usuarioCreadoOk.password}</code>
                           <button
-                            onClick={() => navigator.clipboard.writeText(usuarioCreadoOk.password)}
+                            onClick={() => copiarAlPortapapeles(usuarioCreadoOk.password)}
                             className="text-xs px-2 py-0.5 rounded font-semibold"
                             style={{ background: 'rgba(245,158,11,0.2)', color: '#f59e0b' }}>
                             <Copy size={11} />
@@ -1634,7 +1654,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                             {passwordsReset[d.id]}
                           </code>
                           <button
-                            onClick={() => navigator.clipboard.writeText(passwordsReset[d.id])}
+                            onClick={() => copiarAlPortapapeles(passwordsReset[d.id])}
                             className="shrink-0 p-1 rounded opacity-60 hover:opacity-100"
                             style={{ color: '#f59e0b' }}>
                             <Copy size={12} />
