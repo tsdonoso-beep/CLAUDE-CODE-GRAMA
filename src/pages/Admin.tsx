@@ -207,6 +207,8 @@ export default function Admin() {
   const [filtroTaller, setFiltroTaller] = useState('')
   const [busquedaUsuario, setBusquedaUsuario] = useState('')
   const [docenteDetalle, setDocenteDetalle] = useState<DocenteRow | null>(null)
+  const [talleresEditando, setTalleresEditando] = useState<string[]>([])
+  const [guardandoTalleres, setGuardandoTalleres] = useState(false)
   // Modal crear usuario
   const [showCrearModal, setShowCrearModal] = useState(false)
   const [nuevoNombre, setNuevoNombre] = useState('')
@@ -225,6 +227,13 @@ export default function Admin() {
 
   useEffect(() => { fetchData(); fetchSolicitudes() }, [])
   useEffect(() => { if (tab === 'analytics') fetchAnalytics(filtroAnalyticsDocente || undefined) }, [tab, filtroAnalyticsDocente])
+  useEffect(() => {
+    if (!docenteDetalle) return
+    const current = docenteDetalle.taller_slugs?.length
+      ? docenteDetalle.taller_slugs
+      : docenteDetalle.taller_slug ? [docenteDetalle.taller_slug] : []
+    setTalleresEditando(current)
+  }, [docenteDetalle?.id])
 
   async function fetchData() {
     setLoading(true)
@@ -358,14 +367,18 @@ export default function Admin() {
   }
 
   async function actualizarTalleresDocente(docente: DocenteRow, talleres: string[]) {
+    setGuardandoTalleres(true)
     const updated = { ...docente, taller_slug: talleres[0] ?? null, taller_slugs: talleres.length ? talleres : null }
+    if (!DEV_MODE) {
+      await supabase.from('profiles').update({
+        taller_slug: talleres[0] ?? null,
+        taller_slugs: talleres.length ? talleres : null,
+      }).eq('id', docente.id)
+    }
     setDocentes(prev => prev.map(d => d.id === docente.id ? updated as DocenteRow : d))
     setDocenteDetalle(updated as DocenteRow)
-    if (DEV_MODE) return
-    await supabase.from('profiles').update({
-      taller_slug: talleres[0] ?? null,
-      taller_slugs: talleres.length ? talleres : null,
-    }).eq('id', docente.id)
+    setTalleresEditando(talleres)
+    setGuardandoTalleres(false)
   }
 
   async function fetchSolicitudes() {
@@ -1284,53 +1297,93 @@ export default function Admin() {
                   </span>
                 </div>
 
-                {/* Talleres asignados */}
+                {/* Talleres asignados — edición con borrador local */}
                 {(() => {
-                  const talleresActivos: string[] = (d.taller_slugs && d.taller_slugs.length > 0)
-                    ? d.taller_slugs
-                    : d.taller_slug ? [d.taller_slug] : []
-                  const talleresDisponibles = talleresConfig.filter(t => !talleresActivos.includes(t.slug))
+                  const talleresOriginales: string[] = (d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : [])
+                  const hayPendientes = JSON.stringify([...talleresEditando].sort()) !== JSON.stringify([...talleresOriginales].sort())
+                  const talleresDisponibles = talleresConfig.filter(t => !talleresEditando.includes(t.slug))
                   return (
                     <div className="rounded-xl p-4 space-y-3"
-                      style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-                      <p className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>Talleres asignados</p>
-                      <div className="flex flex-wrap gap-2">
-                        {talleresActivos.length === 0 && (
+                      style={{
+                        background: 'rgba(255,255,255,0.04)',
+                        border: `1px solid ${hayPendientes ? 'rgba(245,158,11,0.35)' : 'rgba(255,255,255,0.07)'}`,
+                        transition: 'border-color 0.2s',
+                      }}>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                          Talleres asignados
+                          {hayPendientes && (
+                            <span className="ml-2 text-[10px] font-extrabold" style={{ color: '#f59e0b' }}>
+                              · cambios sin guardar
+                            </span>
+                          )}
+                        </p>
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-lg"
+                          style={{ background: 'rgba(2,212,126,0.1)', color: '#02d47e' }}>
+                          {talleresEditando.length} taller{talleresEditando.length !== 1 ? 'es' : ''}
+                        </span>
+                      </div>
+
+                      {/* Chips de talleres activos */}
+                      <div className="flex flex-wrap gap-2 min-h-[28px]">
+                        {talleresEditando.length === 0 && (
                           <span className="text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>Sin taller asignado</span>
                         )}
-                        {talleresActivos.map(slug => {
+                        {talleresEditando.map(slug => {
                           const t = talleresConfig.find(x => x.slug === slug)
+                          const esNuevo = !talleresOriginales.includes(slug)
                           return (
                             <span key={slug}
-                              className="flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg"
-                              style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.2)' }}>
+                              className="flex items-center gap-1.5 text-xs font-bold px-2.5 py-1.5 rounded-lg"
+                              style={{
+                                background: esNuevo ? 'rgba(245,158,11,0.15)' : 'rgba(2,212,126,0.12)',
+                                color: esNuevo ? '#f59e0b' : '#02d47e',
+                                border: `1px solid ${esNuevo ? 'rgba(245,158,11,0.3)' : 'rgba(2,212,126,0.2)'}`,
+                              }}>
+                              {esNuevo && <span className="text-[9px] font-extrabold mr-0.5">NUEVO</span>}
                               {t?.nombreCorto ?? slug}
                               <button
-                                onClick={() => actualizarTalleresDocente(d, talleresActivos.filter(s => s !== slug))}
-                                className="opacity-60 hover:opacity-100 transition-opacity ml-0.5"
-                                style={{ color: '#02d47e' }}>
+                                onClick={() => setTalleresEditando(prev => prev.filter(s => s !== slug))}
+                                className="opacity-50 hover:opacity-100 transition-opacity ml-0.5">
                                 ✕
                               </button>
                             </span>
                           )
                         })}
                       </div>
+
+                      {/* Añadir taller */}
                       {talleresDisponibles.length > 0 && (
                         <select
-                          defaultValue=""
-                          onChange={e => {
-                            if (e.target.value) {
-                              actualizarTalleresDocente(d, [...talleresActivos, e.target.value])
-                              e.target.value = ''
-                            }
-                          }}
+                          value=""
+                          onChange={e => { if (e.target.value) setTalleresEditando(prev => [...prev, e.target.value]) }}
                           className="w-full px-3 py-2 rounded-xl text-xs outline-none"
-                          style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                          style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.1)' }}>
                           <option value="">+ Añadir taller…</option>
                           {talleresDisponibles.map(t => (
                             <option key={t.slug} value={t.slug} style={{ background: '#052e35' }}>{t.nombre}</option>
                           ))}
                         </select>
+                      )}
+
+                      {/* Botón guardar — solo visible cuando hay cambios */}
+                      {hayPendientes && (
+                        <div className="flex gap-2 pt-1">
+                          <button
+                            onClick={() => actualizarTalleresDocente(d, talleresEditando)}
+                            disabled={guardandoTalleres}
+                            className="flex-1 py-2 rounded-xl text-xs font-extrabold transition-all disabled:opacity-60"
+                            style={{ background: '#02d47e', color: '#043941' }}>
+                            {guardandoTalleres ? 'Guardando…' : `Guardar (${talleresEditando.length} taller${talleresEditando.length !== 1 ? 'es' : ''})`}
+                          </button>
+                          <button
+                            onClick={() => setTalleresEditando(talleresOriginales)}
+                            disabled={guardandoTalleres}
+                            className="px-3 py-2 rounded-xl text-xs font-semibold transition-all"
+                            style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.4)' }}>
+                            Descartar
+                          </button>
+                        </div>
                       )}
                     </div>
                   )
