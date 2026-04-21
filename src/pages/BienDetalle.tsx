@@ -30,6 +30,12 @@ export default function BienDetalle() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const bien = bienes.find((b: any) => String(b.n) === id)
 
+  // Compute URLs early so the tab-selection effect can use them
+  const manualUrl = bien ? getManualPDF(slug ?? '', bien.n) : null
+  const videoUrl  = bien
+    ? (getVideoOperatividad(slug ?? '', bien.n) ?? getVideoByCodigoInterno(bien.codigoInterno))
+    : null
+
   function trackOnce(tipo: 'manual' | 'video') {
     const key = `${id}-${tipo}`
     if (trackedRef.current[key]) return
@@ -39,7 +45,12 @@ export default function BienDetalle() {
     }
   }
 
-  // Auto-track manual view on load
+  // Auto-select video tab when a video is available, otherwise manual
+  useEffect(() => {
+    setActiveTab(videoUrl ? 'video' : 'manual')
+  }, [bien?.n, videoUrl])
+
+  // Auto-track view on load
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (bien && user?.id) trackOnce('manual')
@@ -66,10 +77,6 @@ export default function BienDetalle() {
     { id: 'manual', label: 'Manual de uso y Mantenimiento', icon: FileText },
     { id: 'video',  label: 'Video operatividad',            icon: Video   },
   ]
-
-  // Manual PDF
-  const manualUrl = getManualPDF(slug ?? '', bien.n)
-  const videoUrl  = getVideoOperatividad(slug ?? '', bien.n) ?? getVideoByCodigoInterno(bien.codigoInterno)
 
   // Bienes relacionados (misma zona)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -144,10 +151,10 @@ export default function BienDetalle() {
                     <div className="w-full aspect-video rounded-xl overflow-hidden" style={{ background: '#043941' }}>
                       <iframe
                         src={getVideoEmbedUrl(videoUrl)}
-                        className="w-full h-full"
-                        allow="autoplay; fullscreen; picture-in-picture"
+                        className="w-full h-full border-0"
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
                         allowFullScreen
-                        title={`Video operatividad — ${bien.nombre}`}
+                        title={`Video — ${bien.nombre}`}
                       />
                     </div>
                     <a

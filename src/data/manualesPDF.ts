@@ -38,7 +38,7 @@ export function isVimeoUrl(url: string): boolean {
 export function getVideoEmbedUrl(url: string): string {
   if (isVimeoUrl(url)) {
     const id = getVimeoId(url)
-    return id ? `https://player.vimeo.com/video/${id}?badge=0&autopause=0&player_id=0` : ''
+    return id ? `https://player.vimeo.com/video/${id}?badge=0&autopause=0&player_id=0&app_id=58479` : ''
   }
   return getDriveEmbedUrl(url)
 }
