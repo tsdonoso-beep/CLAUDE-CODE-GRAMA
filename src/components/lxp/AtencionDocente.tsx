@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import {
   type ConsultaDocente, type ModuloConsulta,
-  MODULOS_CONSULTA, getConsultas, saveConsulta, formatFechaConsulta,
+  MODULOS_CONSULTA, loadConsultas, guardarConsulta, formatFechaConsulta,
 } from '@/data/consultasDocentes'
 
 const MAX_CHARS = 500
@@ -34,23 +34,21 @@ export function AtencionDocente({ userId, tallerSlug, displayName, tallerNombre,
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
-    setConsultas(getConsultas(userId))
+    loadConsultas(userId).then(setConsultas)
   }, [userId])
 
   const pendientes = consultas.filter(c => c.estado === 'pendiente').length
 
-  function handleEnviar() {
+  async function handleEnviar() {
     if (mensaje.trim().length < 10) return
     setSubmitting(true)
-    setTimeout(() => {
-      const nueva = saveConsulta({ userId, tallerSlug, modulo, mensaje: mensaje.trim() })
-      setConsultas(prev => [nueva, ...prev])
-      setMensaje('')
-      setModulo('ruta')
-      setEnviado(true)
-      setSubmitting(false)
-      setTimeout(() => setEnviado(false), 4000)
-    }, 600)
+    const nueva = await guardarConsulta({ userId, nombre: displayName, tallerSlug, modulo, mensaje: mensaje.trim() })
+    setConsultas(prev => [nueva, ...prev])
+    setMensaje('')
+    setModulo('ruta')
+    setEnviado(true)
+    setSubmitting(false)
+    setTimeout(() => setEnviado(false), 4000)
   }
 
   // WhatsApp pre-filled (placeholder — reemplazar número cuando esté disponible)

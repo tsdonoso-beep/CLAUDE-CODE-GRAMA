@@ -1,6 +1,7 @@
 // src/pages/Admin.tsx
 import { useState, useEffect, useMemo } from 'react'
-import { Download, Users, RefreshCw, LogOut, Filter, BarChart2, BookOpen, Video, FileDown, Globe, LogIn, AlertTriangle, Inbox, Copy, CheckCircle, XCircle } from 'lucide-react'
+import { Download, Users, RefreshCw, LogOut, Filter, BarChart2, BookOpen, Video, FileDown, Globe, LogIn, AlertTriangle, Inbox, Copy, CheckCircle, XCircle, MessageCircle, Send } from 'lucide-react'
+import { type ConsultaDB, getAllConsultasAdmin, responderConsultaDB, buildMockConsultas, MODULOS_CONSULTA, formatFechaConsulta } from '@/data/consultasDocentes'
 import { supabase } from '@/lib/supabase'
 import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
 import { talleresConfig } from '@/data/talleresConfig'
@@ -212,6 +213,12 @@ export default function Admin() {
   const [passwordsReset, setPasswordsReset] = useState<Record<string, string>>({})
   const [reseteandoId, setReseteandoId] = useState<string | null>(null)
   const [copiadoBienvenida, setCopiadoBienvenida] = useState<string | null>(null)
+  // Consultas
+  const [consultasAdmin, setConsultasAdmin] = useState<ConsultaDB[]>([])
+  const [loadingConsultas, setLoadingConsultas] = useState(true)
+  const [filtroConsultas, setFiltroConsultas] = useState<'pendiente' | 'respondida' | 'todas'>('pendiente')
+  const [respuestaTexto, setRespuestaTexto] = useState<Record<string, string>>({})
+  const [respondiendoId, setRespondiendoId] = useState<string | null>(null)
   // Modal crear usuario
   const [showCrearModal, setShowCrearModal] = useState(false)
   const [nuevoNombre, setNuevoNombre] = useState('')
@@ -228,7 +235,7 @@ export default function Admin() {
   const [filtroAnalyticsDocente, setFiltroAnalyticsDocente] = useState('')
   const [busquedaDocente, setBusquedaDocente] = useState('')
 
-  useEffect(() => { fetchData(); fetchSolicitudes() }, [])
+  useEffect(() => { fetchData(); fetchSolicitudes(); fetchConsultasAdmin() }, [])
   useEffect(() => { if (tab === 'analytics') fetchAnalytics(filtroAnalyticsDocente || undefined) }, [tab, filtroAnalyticsDocente])
   useEffect(() => {
     if (!docenteDetalle) return
@@ -317,6 +324,32 @@ export default function Admin() {
 
     setDocentes(rows)
     setLoading(false)
+  }
+
+  async function fetchConsultasAdmin() {
+    setLoadingConsultas(true)
+    if (DEV_MODE) {
+      setConsultasAdmin(buildMockConsultas())
+      setLoadingConsultas(false)
+      return
+    }
+    const data = await getAllConsultasAdmin()
+    setConsultasAdmin(data)
+    setLoadingConsultas(false)
+  }
+
+  async function responderConsulta(id: string) {
+    const texto = respuestaTexto[id]?.trim()
+    if (!texto) return
+    setRespondiendoId(id)
+    if (!DEV_MODE) {
+      await responderConsultaDB(id, texto, profile?.email ?? '')
+    }
+    setConsultasAdmin(prev => prev.map(c =>
+      c.id === id ? { ...c, estado: 'respondida', respuesta: texto, responded_at: new Date().toISOString(), responded_by: profile?.email ?? '' } : c
+    ))
+    setRespuestaTexto(prev => { const n = { ...prev }; delete n[id]; return n })
+    setRespondiendoId(null)
   }
 
   function generarMensajeBienvenida(nombre: string, email: string, password: string): string {
@@ -575,9 +608,14 @@ Equipo GRAMA · Programa TSF-MINEDU`
           {([
             ['solicitudes', Inbox, 'Solicitudes'],
             ['usuarios', Users, 'Usuarios activos'],
+            ['consultas', MessageCircle, 'Consultas'],
             ['analytics', BarChart2, 'Analytics'],
           ] as const).map(([key, Icon, label]) => {
-            const pending = key === 'solicitudes' ? solicitudes.filter(s => s.estado === 'pendiente').length : 0
+            const pending = key === 'solicitudes'
+              ? solicitudes.filter(s => s.estado === 'pendiente').length
+              : key === 'consultas'
+              ? consultasAdmin.filter(c => c.estado === 'pendiente').length
+              : 0
             return (
               <button
                 key={key}
@@ -752,6 +790,135 @@ Equipo GRAMA · Programa TSF-MINEDU`
             )}
           </div>
         )}
+
+        {tab === 'consultas' && (() => {
+          const consultasFiltradas = filtroConsultas === 'todas'
+            ? consultasAdmin
+            : consultasAdmin.filter(c => c.estado === filtroConsultas)
+          return (
+            <div>
+              {/* Sub-filtros */}
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+                <div className="flex gap-2">
+                  {([
+                    ['pendiente', 'Pendientes'],
+                    ['respondida', 'Respondidas'],
+                    ['todas', 'Todas'],
+                  ] as const).map(([estado, label]) => {
+                    const count = estado === 'todas' ? consultasAdmin.length : consultasAdmin.filter(c => c.estado === estado).length
+                    return (
+                      <button key={estado} onClick={() => setFiltroConsultas(estado)}
+                        className="px-4 py-2 rounded-xl text-sm font-bold transition-all"
+                        style={filtroConsultas === estado
+                          ? { background: '#02d47e', color: '#043941' }
+                          : { background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)' }}>
+                        {label} ({count})
+                      </button>
+                    )
+                  })}
+                </div>
+                <button onClick={fetchConsultasAdmin}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold"
+                  style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)' }}>
+                  <RefreshCw size={14} /> Recargar
+                </button>
+              </div>
+
+              {loadingConsultas ? (
+                <div className="flex items-center justify-center py-20">
+                  <div className="h-7 w-7 rounded-full border-2 animate-spin"
+                    style={{ borderColor: '#02d47e', borderTopColor: 'transparent' }} />
+                </div>
+              ) : consultasFiltradas.length === 0 ? (
+                <div className="text-center py-20 rounded-2xl"
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <MessageCircle size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.15)' }} />
+                  <p className="text-sm" style={{ color: 'rgba(255,255,255,0.3)' }}>No hay consultas en esta categoría.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {consultasFiltradas.map(c => {
+                    const taller = talleresConfig.find(t => t.slug === c.taller_slug)
+                    const moduloLabel = MODULOS_CONSULTA.find(m => m.value === c.modulo)?.label ?? c.modulo
+                    const respondida = c.estado === 'respondida'
+                    return (
+                      <div key={c.id} className="rounded-2xl overflow-hidden"
+                        style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${respondida ? 'rgba(2,212,126,0.2)' : 'rgba(255,255,255,0.08)'}` }}>
+                        {/* Header */}
+                        <div className="px-5 py-4 flex flex-wrap items-start justify-between gap-3"
+                          style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                          <div>
+                            <div className="flex flex-wrap items-center gap-2 mb-1">
+                              <p className="font-bold text-white text-sm">{c.nombre ?? 'Docente'}</p>
+                              <span className="text-xs px-2 py-0.5 rounded-lg font-bold"
+                                style={respondida
+                                  ? { background: 'rgba(2,212,126,0.15)', color: '#02d47e' }
+                                  : { background: 'rgba(245,158,11,0.15)', color: '#f59e0b' }}>
+                                {respondida ? 'Respondida' : 'Pendiente'}
+                              </span>
+                            </div>
+                            <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                              {taller && <span style={{ color: '#02d47e' }}>{taller.nombreCorto ?? taller.nombre}</span>}
+                              <span>{moduloLabel}</span>
+                              <span>{formatFechaConsulta(c.created_at)}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Mensaje del docente */}
+                        <div className="px-5 py-4">
+                          <p className="text-xs font-bold mb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>Consulta</p>
+                          <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)' }}>{c.mensaje}</p>
+                        </div>
+
+                        {/* Respuesta existente */}
+                        {c.respuesta && (
+                          <div className="px-5 py-4 border-t"
+                            style={{ borderColor: 'rgba(2,212,126,0.15)', background: 'rgba(2,212,126,0.04)' }}>
+                            <div className="flex items-center gap-2 mb-2">
+                              <CheckCircle size={13} style={{ color: '#02d47e' }} />
+                              <p className="text-xs font-bold" style={{ color: '#02d47e' }}>Tu respuesta</p>
+                              {c.responded_at && (
+                                <span className="text-xs ml-auto" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                                  {formatFechaConsulta(c.responded_at)}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>{c.respuesta}</p>
+                          </div>
+                        )}
+
+                        {/* Formulario de respuesta (solo pendientes) */}
+                        {!respondida && (
+                          <div className="px-5 py-4 border-t space-y-3"
+                            style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)' }}>
+                            <p className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>Tu respuesta</p>
+                            <textarea
+                              value={respuestaTexto[c.id] ?? ''}
+                              onChange={e => setRespuestaTexto(prev => ({ ...prev, [c.id]: e.target.value }))}
+                              placeholder="Escribe tu respuesta al docente…"
+                              rows={3}
+                              className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
+                              style={{ background: 'rgba(255,255,255,0.06)', color: '#fff', border: '1px solid rgba(255,255,255,0.12)', lineHeight: 1.6 }}
+                            />
+                            <button
+                              onClick={() => responderConsulta(c.id)}
+                              disabled={!respuestaTexto[c.id]?.trim() || respondiendoId === c.id}
+                              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all disabled:opacity-40"
+                              style={{ background: '#02d47e', color: '#043941' }}>
+                              <Send size={13} />
+                              {respondiendoId === c.id ? 'Enviando…' : 'Enviar respuesta'}
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
+          )
+        })()}
 
         {tab === 'analytics' && (
           <div>
