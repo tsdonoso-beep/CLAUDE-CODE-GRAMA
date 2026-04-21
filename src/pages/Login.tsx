@@ -51,7 +51,7 @@ const DEV_USERS: Array<{ email: string; password: string; role: 'admin' | 'docen
 ]
 
 // ── Tab: Ingresar ──────────────────────────────────────────────────────────
-function LoginForm({ onSuccess }: { onSuccess: () => void }) {
+function LoginForm({ onSuccess }: { onSuccess: (isAdmin: boolean) => void }) {
   const { refreshDevProfile } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -82,7 +82,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
           sessionStorage.removeItem('grama-dev-tallers')
         }
         refreshDevProfile()
-        onSuccess()
+        onSuccess(validDev.role === 'admin')
         return
       }
       setError('Modo dev — usa docente@grama.pe/grama2026 o t.donoso@inroprin.com/grama2026')
@@ -325,15 +325,15 @@ function RegisterForm() {
 // ── Componente principal ────────────────────────────────────────────────────
 export default function Login() {
   const navigate = useNavigate()
-  const { user, loading } = useAuth()
+  const { user, loading, isAdmin } = useAuth()
   const [tab, setTab] = useState<Tab>('login')
 
-  // Si ya está autenticado, redirigir al perfil
+  // Si ya está autenticado, redirigir según rol
   useEffect(() => {
     if (!loading && user) {
-      navigate('/perfil', { replace: true })
+      navigate(isAdmin ? '/admin' : '/perfil', { replace: true })
     }
-  }, [loading, user, navigate])
+  }, [loading, user, isAdmin, navigate])
 
   const tabBase = 'flex-1 py-2.5 text-sm font-bold transition-all rounded-lg'
 
@@ -434,7 +434,7 @@ export default function Login() {
                 <>
                   <h1 className="text-2xl font-extrabold mb-1" style={{ color: 'var(--grama-oscuro)' }}>Iniciar sesión</h1>
                   <p className="text-sm mb-8" style={{ color: '#045f6c' }}>Ingresa tus credenciales para acceder</p>
-                  <LoginForm onSuccess={() => navigate('/perfil', { replace: true })} />
+                  <LoginForm onSuccess={(adminLogin) => navigate(adminLogin ? '/admin' : '/perfil', { replace: true })} />
                 </>
               ) : (
                 <>
