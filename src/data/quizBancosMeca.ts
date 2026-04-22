@@ -1755,4 +1755,104 @@ export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
     }
   ],
 
+  // M5-S57 — Competencia docente 4: gestión pedagógica del taller automotriz (8 preguntas)
+  'm5-s57-c4': [
+    {
+      id: 'm5-s57-c4-q1',
+      enunciado: 'Tienes 28 estudiantes en el taller y 3 zonas activas simultáneamente (investigación, innovación, almacén). ¿Cuál es la estrategia de gestión más efectiva?',
+      opciones: [
+        'Supervisar solo la zona más peligrosa (innovación) y dejar las otras sin monitoreo',
+        'Designar un estudiante líder por zona con checklist de responsabilidades, establecer señales visuales de avance y hacer recorridos cortos cada 10 minutos entre zonas',
+        'Trabajar una zona a la vez para mantener el control total del docente',
+        'Dividir el grupo en días distintos para que el docente pueda atender a todos'
+      ],
+      correcta: 1,
+      explicacion: 'La gestión de taller con múltiples zonas simultáneas requiere: líderes estudiantiles que asuman responsabilidad (desarrollan competencia de liderazgo), checklists visuales que hacen visible el avance sin que el docente pregunte constantemente, y recorridos cortos pero frecuentes. Trabajar una zona a la vez desaprovecha la capacidad instalada del taller.'
+    },
+    {
+      id: 'm5-s57-c4-q2',
+      enunciado: 'Al iniciar la sesión práctica, ¿cuál es el protocolo mínimo de gestión antes de que los estudiantes toquen cualquier equipo?',
+      opciones: [
+        'Pasar lista y comenzar directamente para aprovechar el tiempo',
+        'Verificar EPP de todos los estudiantes, confirmar que los equipos están en estado operativo y repasar en 3 minutos el objetivo de la sesión y las normas de seguridad específicas de hoy',
+        'Hacer una prueba oral de los conocimientos previos antes de permitir el acceso a los equipos',
+        'El protocolo de inicio lo decide cada estudiante según su nivel de experiencia'
+      ],
+      correcta: 1,
+      explicacion: 'Los primeros 3-5 minutos de gestión preventiva evitan el 80% de los incidentes y confusiones de la sesión. Verificar EPP (no negociable), confirmar estado de equipos (un equipo "en reparación" que se usa genera accidentes) y orientar el objetivo (los estudiantes saben hacia dónde van) es la base de toda sesión de taller bien gestionada.'
+    },
+    {
+      id: 'm5-s57-c4-q3',
+      enunciado: 'Un estudiante llega sin sus lentes de seguridad el día de la práctica con el elevador. ¿Cuál es la respuesta de gestión correcta?',
+      opciones: [
+        'Permitirle participar con la condición de que tenga más cuidado',
+        'No puede ingresar a la zona de práctica hasta tener el EPP completo — ofrecerle actividades alternativas (análisis de datos, fichas de metrado) mientras espera o gestiona conseguirlos',
+        'Prestarle los lentes del docente para que no pierda la sesión',
+        'Anotarlo en el registro pero permitirle participar porque es solo una vez'
+      ],
+      correcta: 1,
+      explicacion: 'El EPP no es opcional ni negociable en ninguna circunstancia — esta postura protege al estudiante y establece la cultura de seguridad del taller. La alternativa pedagógica (actividades fuera de zona de riesgo) impide que pierda completamente la sesión. Hacer excepciones "una vez" destruye la norma para todos.'
+    },
+    {
+      id: 'm5-s57-c4-q4',
+      enunciado: 'El compresor del taller hace un ruido inusual al iniciar la sesión. ¿Qué decisión de gestión tomas?',
+      opciones: [
+        'Usarlo con precaución — probablemente es algo menor que no afecta el funcionamiento',
+        'Detener su uso inmediatamente, etiquetarlo como "NO USAR — en revisión", registrar la anomalía en la bitácora del equipo y planificar la sesión sin él',
+        'Pedir a un estudiante técnico avanzado que lo revise durante la sesión',
+        'Continuar la sesión y reportar el ruido al director después de clases'
+      ],
+      correcta: 1,
+      explicacion: 'Un equipo con comportamiento inusual es equipo fuera de servicio hasta que se diagnostique. La etiqueta visible evita que otro docente lo use sin saber. El registro en bitácora es la evidencia para la garantía o el mantenimiento. Operar un equipo sospechoso pone en riesgo a los estudiantes y puede invalidar la garantía del bien.'
+    },
+    {
+      id: 'm5-s57-c4-q5',
+      enunciado: 'Al cierre de cada sesión del taller, ¿qué práctica de gestión tiene mayor impacto en la siguiente sesión?',
+      opciones: [
+        'Calificar los trabajos del día antes de que los estudiantes se retiren',
+        'Aplicar 5S: cada equipo y herramienta a su lugar, zona limpia, anomalías registradas y checklist de cierre firmado — el taller debe quedar listo para quien llegue mañana',
+        'Hacer una evaluación oral rápida de lo aprendido en la sesión',
+        'Guardar solo los equipos más caros y dejar las herramientas menores donde están'
+      ],
+      correcta: 1,
+      explicacion: 'El cierre con 5S (Seiri, Seiton, Seiso, Seiketsu, Shitsuke) es el hábito de gestión de mayor retorno: el docente del día siguiente encuentra el taller operativo sin perder 15 minutos buscando herramientas o limpiando. En el taller automotriz real, este hábito separa a los técnicos profesionales de los improvisados — enseñarlo desde la formación es enseñar cultura de trabajo.'
+    },
+    {
+      id: 'm5-s57-c4-q6',
+      enunciado: 'Tienes que demostrar a la UGEL que el taller está siendo usado pedagógicamente. ¿Qué evidencias de gestión son más sólidas?',
+      opciones: [
+        'Fotos de los estudiantes en el taller tomadas durante las sesiones',
+        'Bitácora de uso del taller firmada por fecha y sesión, registros de estado de equipos, fichas de metrado actualizadas y portafolios de evaluación de estudiantes con retroalimentación',
+        'El número de estudiantes que aprobaron las evaluaciones escritas del módulo',
+        'Un informe narrativo del docente describiendo las actividades realizadas'
+      ],
+      correcta: 1,
+      explicacion: 'Las evidencias sólidas son sistemáticas y verificables, no narrativas. La bitácora (quién, cuándo, qué equipo, estado) demuestra uso real. Las fichas de metrado actualizadas demuestran gestión patrimonial. Los portafolios con retroalimentación demuestran evaluación formativa. Las fotos y narrativas son complementarias pero no suficientes por sí solas.'
+    },
+    {
+      id: 'm5-s57-c4-q7',
+      enunciado: 'Un estudiante termina su tarea 15 minutos antes que el resto del grupo. ¿Cuál es la mejor respuesta pedagógica de gestión?',
+      opciones: [
+        'Permitirle descansar — ya cumplió con la tarea asignada',
+        'Tener preparadas tareas de extensión: documentar el proceso realizado en la ficha técnica, revisar el manual del equipo para la siguiente sesión, o apoyar a un compañero como monitor técnico',
+        'Pedirle que repita la tarea para ganar más práctica',
+        'Asignarle tareas administrativas del taller como limpiar o ordenar'
+      ],
+      correcta: 1,
+      explicacion: 'El tiempo libre en taller es tiempo desperdiciado o tiempo de riesgo (el estudiante desocupado puede interferir en otras zonas). Las tareas de extensión bien diseñadas profundizan el aprendizaje: documentar refuerza la comprensión, leer el manual prepara la siguiente sesión, y el rol de monitor técnico desarrolla liderazgo y consolida lo aprendido enseñándolo.'
+    },
+    {
+      id: 'm5-s57-c4-q8',
+      enunciado: 'El director te pide abrir el taller para que otro docente use los equipos para una actividad no curricular. ¿Cuál es la respuesta de gestión correcta?',
+      opciones: [
+        'Autorizar inmediatamente — el director tiene autoridad sobre todos los espacios',
+        'Explicar que los equipos del taller TSF tienen protocolo de uso: requieren capacitación específica, registro en bitácora y supervisión de personal habilitado — ofrecer coordinar una sesión con las condiciones correctas',
+        'Negarse definitivamente — el taller es exclusivo para las clases del programa',
+        'Autorizar solo si el otro docente firma una carta de responsabilidad'
+      ],
+      correcta: 1,
+      explicacion: 'Los equipos del taller TSF-MINEDU tienen valor patrimonial, protocolos de uso y garantías que dependen del uso correcto. Autorizar uso sin protocolo puede dañar equipos, invalidar garantías o generar accidentes. La respuesta profesional no es negarse — es proponer las condiciones mínimas que protegen el bien y la seguridad: habilitación, registro y supervisión adecuada.'
+    }
+  ],
+
 }
