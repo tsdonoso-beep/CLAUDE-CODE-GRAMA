@@ -117,4 +117,243 @@ const ESCENARIOS: Escenario[] = [
     ],
     mejorIdx: 1
   },
+  {
+    necesidad: 'Traducir y resumir el manual técnico del escáner LAUNCH X431 (en inglés)',
+    contexto: 'Recibiste el manual del escáner LAUNCH X431 en inglés. Necesitas extraer los pasos de instalación del software y convertirlos en una lista de verificación en español para tus estudiantes.',
+    opciones: [
+      {
+        prompt: '"Traduce este manual."',
+        calidad: 'malo',
+        preview: '[Traducción literal del manual completo, incluyendo advertencias legales, especificaciones técnicas en detalle, información de garantía, índice completo, apéndices...]',
+        explicacion: 'Sin especificar qué parte traducir ni en qué formato, la IA traduce todo el documento. El resultado es tan extenso como el original — no resuelve el problema del docente que necesita algo concreto y usable en el aula.'
+      },
+      {
+        prompt: '"Lee el manual adjunto del escáner LAUNCH X431. Extrae SOLO los pasos de instalación del software de diagnóstico en Windows. Conviértelos en una lista de verificación numerada en español, con lenguaje simple para estudiantes de secundaria técnica. Máximo 15 pasos. Agrega una advertencia en rojo para el paso más crítico."',
+        calidad: 'bueno',
+        preview: 'CHECKLIST — Instalación Software LAUNCH X431\n\n□ 1. Conectar el adaptador OBD al puerto USB de la tablet antes de instalar\n□ 2. Descargar el instalador desde: [URL oficial]\n□ 3. Ejecutar como Administrador (clic derecho → Ejecutar como administrador)\n...\n⚠️ PASO CRÍTICO — Paso 7: NO conectar el adaptador OBD al vehículo durante la instalación del driver. Puede causar error de reconocimiento permanente.\n□ 8. Reiniciar el equipo antes de la primera conexión...',
+        explicacion: 'Especificó qué extraer (solo instalación del software), el formato (lista de verificación numerada), el idioma (español), el destinatario (estudiantes de secundaria técnica), el límite (15 pasos) y un elemento especial (advertencia para el paso crítico). El resultado es directamente imprimible y usable.'
+      },
+      {
+        prompt: '"Resume el manual del escáner LAUNCH en español para mis alumnos."',
+        calidad: 'regular',
+        preview: 'Resumen del Manual LAUNCH X431\n\nEl escáner LAUNCH X431 es una herramienta de diagnóstico automotriz. Para instalarlo:\n1. Instalar el software desde el CD o descarga\n2. Conectar el adaptador\n3. Seguir las instrucciones en pantalla\n\nFunciones principales:\n• Lectura de códigos OBD\n• Datos en tiempo real...',
+        explicacion: 'Mejor — pide resumen en español para alumnos. Pero "resume el manual" es ambiguo: ¿todo el manual o solo una parte? El resultado mezcla instalación con funciones sin estructura de checklist. Útil como punto de partida pero requiere edición para convertirse en una lista de verificación usable.'
+      }
+    ],
+    mejorIdx: 1
+  },
 ]
+
+// ─── Componente UI ────────────────────────────────────────────────────────────
+
+const CALIDAD_COLOR: Record<string, string> = { malo: '#f43f5e', regular: '#f59e0b', bueno: '#02d47e' }
+const CALIDAD_LABEL: Record<string, string> = { malo: 'Prompt débil', regular: 'Prompt mejorable', bueno: 'Prompt efectivo' }
+
+interface Props {
+  onClose: () => void
+  onComplete: () => void
+}
+
+export function LaboratorioPromptsModal({ onClose, onComplete }: Props) {
+  const [paso, setPaso] = useState<'intro' | number | 'final'>('intro')
+  const [selecciones, setSelecciones] = useState<(number | null)[]>(Array(ESCENARIOS.length).fill(null))
+  const [mostrandoFeedback, setMostrandoFeedback] = useState(false)
+  const [expandedPreview, setExpandedPreview] = useState<number | null>(null)
+
+  useEscapeKey(onClose)
+
+  const escenario = typeof paso === 'number' ? ESCENARIOS[paso] : null
+  const seleccionActual = typeof paso === 'number' ? selecciones[paso] : null
+  const aciertos = selecciones.filter((s, i) => s !== null && s === ESCENARIOS[i].mejorIdx).length
+
+  function seleccionar(idx: number) {
+    if (mostrandoFeedback || typeof paso !== 'number') return
+    const nuevas = [...selecciones]
+    nuevas[paso] = idx
+    setSelecciones(nuevas)
+    setMostrandoFeedback(true)
+    setExpandedPreview(null)
+  }
+
+  function avanzar() {
+    if (typeof paso !== 'number') return
+    setMostrandoFeedback(false)
+    setExpandedPreview(null)
+    if (paso + 1 < ESCENARIOS.length) setPaso(paso + 1)
+    else { setPaso('final'); onComplete() }
+  }
+
+  function reiniciar() {
+    setPaso('intro')
+    setSelecciones(Array(ESCENARIOS.length).fill(null))
+    setMostrandoFeedback(false)
+    setExpandedPreview(null)
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center p-4 overflow-y-auto"
+      style={{ background: 'rgba(4,57,65,0.65)', backdropFilter: 'blur(4px)' }}
+      onClick={e => { if (e.target === e.currentTarget) onClose() }}
+    >
+      <div className="relative w-full max-w-2xl my-8 rounded-2xl overflow-hidden shadow-2xl bg-white">
+
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-3" style={{ background: '#043941' }}>
+          <div className="flex items-center gap-2">
+            <Sparkles size={16} color="#02d47e" />
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#02d47e' }}>
+              Laboratorio de prompts — IA para el taller automotriz
+            </span>
+          </div>
+          <button onClick={onClose} className="rounded-full p-1 hover:bg-white/10">
+            <X size={18} color="white" />
+          </button>
+        </div>
+
+        {/* Progreso */}
+        {typeof paso === 'number' && (
+          <div className="flex gap-1 px-5 pt-4">
+            {ESCENARIOS.map((_, i) => (
+              <div key={i} className="h-1 flex-1 rounded-full transition-all"
+                style={{ background: i < paso ? '#02d47e' : i === paso ? '#043941' : '#e2e8f0' }} />
+            ))}
+          </div>
+        )}
+
+        <div className="px-6 py-5">
+
+          {/* INTRO */}
+          {paso === 'intro' && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-bold" style={{ color: '#043941' }}>
+                Laboratorio de prompts para docentes
+              </h2>
+              <p className="text-sm leading-relaxed" style={{ color: '#475569' }}>
+                Te presentaré <strong>{ESCENARIOS.length} necesidades reales</strong> del taller automotriz. Para cada una, elige el prompt que mejor le comunicaría tu necesidad a una IA como Claude o ChatGPT.
+              </p>
+              <div className="rounded-xl p-4 text-sm" style={{ background: '#f0fdf8', borderLeft: '4px solid #02d47e', color: '#043941' }}>
+                <p className="font-semibold mb-1">Un buen prompt tiene:</p>
+                <ul className="space-y-1 list-disc list-inside" style={{ color: '#475569' }}>
+                  <li>Contexto específico (taller, nivel, equipo)</li>
+                  <li>Tarea clara (qué debe producir la IA)</li>
+                  <li>Formato requerido (extensión, estructura)</li>
+                  <li>Destinatario (para quién es el resultado)</li>
+                </ul>
+              </div>
+              <button onClick={() => setPaso(0)}
+                className="w-full py-3 rounded-xl font-bold text-white flex items-center justify-center gap-2 hover:opacity-90"
+                style={{ background: '#043941' }}>
+                Iniciar laboratorio <ChevronRight size={18} />
+              </button>
+            </div>
+          )}
+
+          {/* ESCENARIO */}
+          {typeof paso === 'number' && escenario && (
+            <div className="space-y-4">
+              <div className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#64748b' }}>
+                Escenario {paso + 1} de {ESCENARIOS.length}
+              </div>
+              <div className="rounded-xl p-4 text-sm" style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                <p className="font-semibold mb-1" style={{ color: '#043941' }}>📋 {escenario.necesidad}</p>
+                <p style={{ color: '#64748b' }}>{escenario.contexto}</p>
+              </div>
+              <p className="text-sm font-semibold" style={{ color: '#043941' }}>¿Cuál prompt usarías?</p>
+
+              <div className="space-y-3">
+                {escenario.opciones.map((op, idx) => {
+                  const seleccionada = seleccionActual === idx
+                  const esMejor = idx === escenario.mejorIdx
+                  let borde = '#e2e8f0'; let fondo = '#f8fafc'
+                  if (mostrandoFeedback) {
+                    if (seleccionada && esMejor) { borde = '#02d47e'; fondo = '#f0fdf8' }
+                    else if (seleccionada && !esMejor) { borde = '#f43f5e'; fondo = '#fff1f2' }
+                    else if (!seleccionada && esMejor) { borde = '#02d47e'; fondo = '#f0fdf8' }
+                  }
+                  return (
+                    <div key={idx} className="rounded-xl border-2 overflow-hidden transition-all" style={{ borderColor: borde, background: fondo }}>
+                      <button onClick={() => seleccionar(idx)} disabled={mostrandoFeedback}
+                        className="w-full text-left px-4 py-3 text-sm font-mono leading-relaxed">
+                        <div className="flex items-start gap-2">
+                          {mostrandoFeedback && (seleccionada || esMejor) && (
+                            (esMejor)
+                              ? <CheckCircle2 size={15} className="mt-0.5 shrink-0" style={{ color: '#02d47e' }} />
+                              : <XCircle size={15} className="mt-0.5 shrink-0" style={{ color: '#f43f5e' }} />
+                          )}
+                          <span style={{ color: '#1e293b' }}>{op.prompt}</span>
+                        </div>
+                      </button>
+                      {mostrandoFeedback && (
+                        <div className="border-t px-4 pb-3" style={{ borderColor: borde }}>
+                          <button
+                            onClick={() => setExpandedPreview(expandedPreview === idx ? null : idx)}
+                            className="text-xs mt-2 flex items-center gap-1 font-semibold"
+                            style={{ color: CALIDAD_COLOR[op.calidad] }}>
+                            {CALIDAD_LABEL[op.calidad]} — {expandedPreview === idx ? 'Ocultar' : 'Ver resultado simulado'}
+                          </button>
+                          {expandedPreview === idx && (
+                            <div className="mt-2 space-y-2">
+                              <pre className="text-xs rounded-lg p-3 whitespace-pre-wrap leading-relaxed"
+                                style={{ background: '#1e293b', color: '#94a3b8', fontFamily: 'monospace' }}>
+                                {op.preview}
+                              </pre>
+                              <p className="text-xs leading-relaxed" style={{ color: '#475569' }}>{op.explicacion}</p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+
+              {mostrandoFeedback && (
+                <button onClick={avanzar}
+                  className="w-full py-3 rounded-xl font-bold text-white flex items-center justify-center gap-2 hover:opacity-90"
+                  style={{ background: '#043941' }}>
+                  {paso + 1 < ESCENARIOS.length ? 'Siguiente escenario' : 'Ver resultado'}
+                  <ChevronRight size={18} />
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* FINAL */}
+          {paso === 'final' && (
+            <div className="space-y-5">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full text-3xl font-bold mb-3"
+                  style={{
+                    background: aciertos >= 4 ? '#f0fdf8' : aciertos >= 3 ? '#fefce8' : '#fff1f2',
+                    color: aciertos >= 4 ? '#065f46' : aciertos >= 3 ? '#854d0e' : '#9f1239'
+                  }}>
+                  {aciertos}/{ESCENARIOS.length}
+                </div>
+                <h2 className="text-lg font-bold" style={{ color: '#043941' }}>
+                  {aciertos >= 4 ? '¡Excelente criterio para diseñar prompts!' : aciertos >= 3 ? 'Buen avance — sigue practicando' : 'Revisa los principios del buen prompt'}
+                </h2>
+              </div>
+              <div className="rounded-xl p-4 text-sm" style={{ background: '#f0fdf8', borderLeft: '4px solid #02d47e', color: '#043941' }}>
+                <p className="font-semibold mb-1">Recuerda</p>
+                <p>Un prompt efectivo no es más largo — es más específico. Contexto + tarea + formato + destinatario. Practicar el diseño de prompts es practicar el pensamiento claro.</p>
+              </div>
+              <div className="flex gap-3">
+                <button onClick={reiniciar}
+                  className="flex-1 py-2.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 border-2 hover:bg-slate-50"
+                  style={{ borderColor: '#043941', color: '#043941' }}>
+                  <RotateCcw size={15} /> Reintentar
+                </button>
+                <button onClick={onClose}
+                  className="flex-1 py-2.5 rounded-xl font-bold text-sm text-white hover:opacity-90"
+                  style={{ background: '#043941' }}>
+                  Continuar
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
