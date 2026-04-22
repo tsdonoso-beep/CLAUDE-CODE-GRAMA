@@ -29,6 +29,7 @@ import { SeleccionadorConsumiblesModal } from '@/components/lxp/interactivos/Sel
 import { ChecklistMantenimientoModal } from '@/components/lxp/interactivos/ChecklistMantenimientoModal'
 import { ActividadExternaModal, ACTIVIDADES_EXTERNAS, type ActividadExternaConfig } from '@/components/lxp/interactivos/ActividadExternaModal'
 import { EscenarioPedagogicoModal, ESCENARIO_COMP1, ESCENARIO_COMP2, ESCENARIO_COMP3, ESCENARIO_COMP4, type EscenarioConfig } from '@/components/lxp/interactivos/EscenarioPedagogicoModal'
+import { ClasificadorHerramientasModal } from '@/components/lxp/interactivos/ClasificadorHerramientasModal'
 import { descargablesLXP } from '@/data/descargablesLXP'
 import { quizBancosMeca } from '@/data/quizBancosMeca'
 import { descargablesMeca } from '@/data/descargablesMeca'
@@ -73,6 +74,7 @@ export default function ModuloDetalle() {
   const [showChecklistMant, setShowChecklistMant]           = useState<'investigacion' | 'almacen' | null>(null)
   const [actividadExterna, setActividadExterna]             = useState<ActividadExternaConfig | null>(null)
   const [escenarioPedagogico, setEscenarioPedagogico]       = useState<EscenarioConfig | null>(null)
+  const [showClasificador, setShowClasificador]             = useState(false)
 
   const closeGradeModal = useCallback(() => setShowGradeModal(false), [])
   const closeTourSimulator = useCallback(() => {
@@ -208,6 +210,8 @@ export default function ModuloDetalle() {
         setShowChecklistMant('investigacion')
       } else if (contenido.id === 'm3-s29-c3') {
         setShowChecklistMant('almacen')
+      } else if (contenido.id === 'm0-s02-c3') {
+        setShowClasificador(true)
       } else if (contenido.id === 'm5-s51-c3') {
         setEscenarioPedagogico(ESCENARIO_COMP1)
       } else if (contenido.id === 'm5-s53-c3') {
@@ -783,6 +787,14 @@ export default function ModuloDetalle() {
             const id = showChecklistMant === 'investigacion' ? 'm2-s22-c3' : 'm3-s29-c3'
             markContenidoCompleted(id)
           }}
+        />
+      )}
+
+      {/* Clasificador de herramientas — m0-s02-c3 */}
+      {showClasificador && (
+        <ClasificadorHerramientasModal
+          onClose={() => setShowClasificador(false)}
+          onComplete={() => markContenidoCompleted('m0-s02-c3')}
         />
       )}
 
