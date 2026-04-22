@@ -1655,4 +1655,104 @@ export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
     }
   ],
 
+  // M5-S55 — Competencia docente 3: evaluación por competencias, rúbricas, listas de cotejo (8 preguntas)
+  'm5-s55-c4': [
+    {
+      id: 'm5-s55-c4-q1',
+      enunciado: 'Un estudiante instala correctamente el elevador pero no verifica los seguros de seguridad al terminar. La rúbrica tiene el criterio "Sigue el protocolo de seguridad completo". ¿Qué calificación corresponde?',
+      opciones: [
+        'Logrado — instaló correctamente, el olvido de los seguros es un detalle menor',
+        'No logrado en ese criterio — omitir los seguros de seguridad es incumplimiento del protocolo, independientemente de la calidad técnica de la instalación',
+        'Logrado parcialmente — la rúbrica debe reconocer el trabajo técnico realizado',
+        'Depende del criterio del docente en el momento de la evaluación'
+      ],
+      correcta: 1,
+      explicacion: 'La rúbrica evalúa criterios específicos, no la impresión general. "Protocolo de seguridad completo" incluye explícitamente los seguros — omitirlos es No logrado en ese criterio. Esto no invalida el resto de la evaluación, pero sí ese criterio. La consistencia en seguridad es no negociable en el taller automotriz.'
+    },
+    {
+      id: 'm5-s55-c4-q2',
+      enunciado: '¿Cuál es la diferencia entre una lista de cotejo y una rúbrica en el contexto del taller automotriz?',
+      opciones: [
+        'Son equivalentes — ambas tienen criterios y niveles de desempeño',
+        'La lista de cotejo registra si algo ocurrió o no (sí/no); la rúbrica describe niveles cualitativos de desempeño (excelente/logrado/en proceso/no logrado)',
+        'La rúbrica es para evaluación sumativa; la lista de cotejo solo para formativa',
+        'La lista de cotejo la usa el docente; la rúbrica la usa el estudiante'
+      ],
+      correcta: 1,
+      explicacion: 'Lista de cotejo: binaria (¿verificó la presión del aceite? Sí/No). Rúbrica: descriptiva y graduada ("verifica la presión del aceite, registra el valor y lo compara con el manual" vs. "verifica la presión pero no registra"). Para procedimientos de seguridad, la lista de cotejo es ideal. Para competencias complejas, la rúbrica permite feedback más rico.'
+    },
+    {
+      id: 'm5-s55-c4-q3',
+      enunciado: 'Diseñas una rúbrica para evaluar el diagnóstico con escáner OBD-II. El descriptor del nivel "Logrado" dice: "Usa el escáner correctamente". ¿Cuál es el problema?',
+      opciones: [
+        'El nivel debería llamarse "Competente" en lugar de "Logrado"',
+        '"Correctamente" es ambiguo — no describe qué acciones concretas y observables definen ese nivel, haciendo la evaluación subjetiva e inconsistente entre docentes',
+        'El descriptor está bien — la subjetividad es parte de la evaluación por competencias',
+        'Debería incluir una calificación numérica junto al descriptor'
+      ],
+      correcta: 1,
+      explicacion: 'Los descriptores de rúbrica deben ser observables y específicos. "Usa correctamente" es opinable. Un descriptor útil dice: "Conecta el escáner al puerto OBD, lee los códigos activos, registra el freeze frame y borra solo tras anotar los datos." Cualquier docente que lea ese descriptor evaluará igual al mismo estudiante — eso es consistencia.'
+    },
+    {
+      id: 'm5-s55-c4-q4',
+      enunciado: 'Un estudiante solicita ver su rúbrica DESPUÉS de ser evaluado. ¿Cuándo debería haber accedido a ella?',
+      opciones: [
+        'La rúbrica es herramienta del docente — el estudiante no necesita verla',
+        'Antes de la actividad — la rúbrica compartida anticipadamente orienta el aprendizaje y permite la autoevaluación durante el proceso',
+        'Durante la evaluación para que pueda seguir los criterios en tiempo real',
+        'La rúbrica se entrega con la calificación para que el estudiante entienda su nota'
+      ],
+      correcta: 1,
+      explicacion: 'Compartir la rúbrica antes transforma la evaluación: el estudiante sabe exactamente qué se espera, puede autoevaluarse mientras practica y orienta su esfuerzo. Una rúbrica entregada solo al calificar es solo una herramienta de justificación de nota — pierde todo su potencial formativo.'
+    },
+    {
+      id: 'm5-s55-c4-q5',
+      enunciado: 'Tres docentes evalúan al mismo estudiante realizando el diagnóstico con multímetro. Docente A da 18/20, Docente B da 12/20, Docente C da 15/20. ¿Qué problema revela esto?',
+      opciones: [
+        'Los docentes tienen diferente nivel de exigencia — es normal y esperado',
+        'La rúbrica tiene baja confiabilidad — los criterios no son suficientemente claros para que diferentes evaluadores lleguen a resultados consistentes',
+        'El estudiante actuó diferente ante cada docente',
+        'Hay que promediar las tres notas — 15/20 es la calificación correcta'
+      ],
+      correcta: 1,
+      explicacion: 'La confiabilidad de un instrumento de evaluación se mide por la consistencia entre evaluadores (inter-rater reliability). Una variación de 6 puntos sobre 20 indica que los descriptores son demasiado vagos. La solución no es promediar — es revisar y precisar los criterios hasta que distintos docentes lleguen a calificaciones similares evaluando el mismo desempeño.'
+    },
+    {
+      id: 'm5-s55-c4-q6',
+      enunciado: 'Quieres que los estudiantes se autoevalúen después de la práctica de instalación del compresor. ¿Cuál es el mayor beneficio pedagógico de la autoevaluación?',
+      opciones: [
+        'Reduce la carga de trabajo del docente al compartir la evaluación',
+        'Desarrolla metacognición — el estudiante aprende a reconocer qué sabe, qué le falta y cómo mejorar, habilidad esencial para el aprendizaje autónomo en el oficio',
+        'Da una segunda calificación que se promedia con la del docente para mayor objetividad',
+        'Motiva a los estudiantes porque generalmente se ponen notas más altas'
+      ],
+      correcta: 1,
+      explicacion: 'La autoevaluación bien implementada desarrolla metacognición — la capacidad de monitorear el propio aprendizaje. Un técnico automotriz que sabe reconocer sus propios límites ("no tengo experiencia suficiente con este sistema — debo consultar") es más seguro y más competente. Ese hábito se construye desde la formación con autoevaluación honesta y frecuente.'
+    },
+    {
+      id: 'm5-s55-c4-q7',
+      enunciado: 'Al finalizar el módulo de seguridad, aplicas una prueba escrita con 20 preguntas de opción múltiple. Un estudiante obtiene 16/20. ¿Esto es suficiente evidencia de que logró la competencia de seguridad en el taller?',
+      opciones: [
+        'Sí — 80% en la prueba demuestra que el estudiante conoce las normas de seguridad',
+        'No — saber la norma en papel no equivale a aplicarla en el taller. La competencia de seguridad requiere evidencia de desempeño observable en situación real',
+        'Sí — si el examen incluye casos prácticos, es evidencia suficiente',
+        'Depende — si el estudiante estudió mucho, la prueba escrita es válida'
+      ],
+      correcta: 1,
+      explicacion: 'La competencia es saber actuar en contexto real, no recordar información. Un estudiante puede responder correctamente "¿cuál es el EPP para trabajar con fluidos?" y no usarlo en el taller. La evidencia de competencia en seguridad debe incluir observación directa del desempeño: ¿se pone los guantes antes de manipular el aceite? ¿Verifica los seguros del elevador? La prueba escrita evalúa conocimiento declarativo, no competencia.'
+    },
+    {
+      id: 'm5-s55-c4-q8',
+      enunciado: 'Diseñas la evaluación del módulo de instalación de equipos. ¿Qué combinación de instrumentos da la evidencia más completa de competencia?',
+      opciones: [
+        'Dos pruebas escritas — al inicio y al final del módulo',
+        'Lista de cotejo de procedimientos (observación directa) + rúbrica de producto (calidad de la instalación) + autoevaluación del estudiante',
+        'Una rúbrica muy detallada aplicada solo al producto final',
+        'Examen oral donde el estudiante explica los pasos de instalación'
+      ],
+      correcta: 1,
+      explicacion: 'La triangulación de evidencias da la imagen más completa: la lista de cotejo captura si siguió el proceso correcto (seguridad, pasos), la rúbrica evalúa la calidad del resultado (instalación funcional, acabados), y la autoevaluación revela la conciencia del propio aprendizaje. Ningún instrumento solo es suficiente para declarar competencia en un oficio técnico.'
+    }
+  ],
+
 }
