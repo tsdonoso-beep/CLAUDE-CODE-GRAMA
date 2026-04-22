@@ -1211,4 +1211,248 @@ export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
     }
   ],
 
+  // M2-RA2 — Zona Investigación: scanner OBD, multímetro, osciloscopio, códigos de falla (20 preguntas)
+  'm2-ra2-c1': [
+    {
+      id: 'm2-ra2-c1-q1',
+      enunciado: 'Conectas el escáner OBD-II al vehículo y aparece el código P0300. ¿Qué indica este código y cuál es el primer paso de diagnóstico?',
+      opciones: [
+        'Falla en el sensor de oxígeno — reemplazar el sensor O2 inmediatamente',
+        'Falla de encendido aleatoria/múltiple — registrar en qué cilindros ocurre con datos en tiempo real antes de intervenir',
+        'Presión de aceite baja — verificar nivel de aceite del motor',
+        'Falla en el sistema de combustible — revisar la bomba de combustible'
+      ],
+      correcta: 1,
+      explicacion: 'P0300 es "Random/Multiple Cylinder Misfire Detected". No indica un cilindro específico, por lo que el primer paso es usar los datos en tiempo real del escáner para identificar el patrón (¿ocurre en frío/caliente? ¿a cierta RPM?) antes de abrir el motor. Reemplazar piezas sin diagnóstico previo es el error más costoso en automotriz.'
+    },
+    {
+      id: 'm2-ra2-c1-q2',
+      enunciado: 'Un estudiante borra los códigos de falla con el escáner sin registrarlos primero. ¿Cuál es la consecuencia técnica de esta acción?',
+      opciones: [
+        'Ninguna — los códigos reaparecerán si la falla persiste',
+        'Se pierden los datos de freeze frame que registran las condiciones exactas del motor cuando ocurrió la falla, dificultando el diagnóstico',
+        'El escáner queda bloqueado y no puede volver a leer códigos',
+        'El vehículo entra en modo de emergencia limitando la velocidad'
+      ],
+      correcta: 1,
+      explicacion: 'El freeze frame captura: RPM, temperatura, carga del motor, presión de combustible en el momento exacto de la falla. Esta información es crítica para reproducir la condición de falla en el diagnóstico. Borrar sin registrar es destruir evidencia — práctica que los docentes deben corregir firmemente.'
+    },
+    {
+      id: 'm2-ra2-c1-q3',
+      enunciado: 'Al medir la resistencia de un inyector con el multímetro, obtienes 2.5 Ω. El manual especifica 11-15 Ω. ¿Qué conclusión técnica extraes?',
+      opciones: [
+        'El inyector está en perfecto estado — la resistencia baja indica mejor conductividad',
+        'El multímetro está descalibrado — repetir la medición con otro equipo',
+        'El inyector tiene un cortocircuito interno — la resistencia muy por debajo del rango indica devanado dañado',
+        'La medición es normal para inyectores diesel — los valores varían por tecnología'
+      ],
+      correcta: 2,
+      explicacion: 'Una resistencia de 2.5 Ω vs especificación de 11-15 Ω indica cortocircuito en el devanado del solenoides del inyector. Un inyector con cortocircuito consume corriente excesiva y puede dañar el módulo de control. Nunca interpretes una resistencia baja como "mejor" — en inductancias, significa daño.'
+    },
+    {
+      id: 'm2-ra2-c1-q4',
+      enunciado: 'El escáner muestra que el sensor MAP está enviando 4.8V de manera constante. El rango normal es 1.0-4.5V. ¿Qué indica esto?',
+      opciones: [
+        'El motor está funcionando a plena carga — lectura normal en aceleración',
+        'El sensor MAP probablemente tiene circuito abierto o está atascado en valor máximo — señal fuera de rango',
+        'Hay exceso de combustible en el múltiple — limpiar el sistema de admisión',
+        'La presión de sobrealimentación es demasiado alta — revisar la turbina'
+      ],
+      correcta: 1,
+      explicacion: 'Una señal constante en 4.8V (por encima del rango máximo) indica que el sensor está atascado o hay un cortocircuito a voltaje de referencia. El MAP debe variar con las condiciones del motor. Una señal plana y fuera de rango siempre apunta a falla del sensor o su circuito.'
+    },
+    {
+      id: 'm2-ra2-c1-q5',
+      enunciado: 'Usas el osciloscopio para medir la señal del sensor CKP (cigüeñal). La forma de onda muestra un diente faltante en el patrón. ¿Qué significa?',
+      opciones: [
+        'El osciloscopio está mal configurado — ajustar la escala de tiempo',
+        'Es la referencia del sensor — todos los sensores CKP tienen un espacio intencional para marcar el punto de referencia del ciclo',
+        'El sensor CKP está fallando — reemplazarlo inmediatamente',
+        'El cigüeñal tiene un diente físicamente roto — requiere reparación mayor'
+      ],
+      correcta: 1,
+      explicacion: 'El diente faltante (o grupo de dientes faltantes) en la rueda fónica es intencional: es la referencia absoluta que le indica al ECU cuándo empieza el ciclo. El sistema lo interpreta como la posición 0° del cigüeñal. Si el estudiante lo reporta como falla, no comprende el diseño del sensor.'
+    },
+    {
+      id: 'm2-ra2-c1-q6',
+      enunciado: 'Un escáner genérico OBD-II lee los códigos del sistema de motor. El técnico necesita también leer los módulos ABS y airbag. ¿Qué tipo de escáner necesita?',
+      opciones: [
+        'El mismo escáner OBD-II genérico — todos los módulos usan el mismo protocolo',
+        'Un escáner multimarca o de fabricante específico que acceda a protocolos propietarios (CAN, K-Line) de cada módulo',
+        'Dos escáneres diferentes — uno para ABS y otro para airbag',
+        'No es posible leer ABS y airbag con ningún escáner — requieren diagnóstico mecánico'
+      ],
+      correcta: 1,
+      explicacion: 'El protocolo OBD-II estándar solo accede al sistema de motor (Powertrain). ABS, airbag, transmisión y otros módulos usan protocolos propietarios del fabricante. Para diagnóstico completo se necesita un escáner que soporte los protocolos específicos de la marca del vehículo.'
+    },
+    {
+      id: 'm2-ra2-c1-q7',
+      enunciado: 'Mides la tensión de una batería de 12V con el multímetro en reposo y obtienes 11.8V. Con el motor encendido obtienes 12.1V. ¿Qué conclusión sacas?',
+      opciones: [
+        'Todo está correcto — 12V es el valor nominal esperado en ambas condiciones',
+        'La batería está en estado aceptable pero el alternador no está cargando correctamente — con motor en marcha debería entregar 13.8-14.4V',
+        'La batería está completamente descargada — cambiarla inmediatamente',
+        'El multímetro está midiendo mal — un alternador siempre entrega 12V exactos'
+      ],
+      correcta: 1,
+      explicacion: 'Una batería sana en reposo mide 12.6V (llena) o mínimo 12.4V. 11.8V indica descarga parcial. Con motor encendido, el alternador debe elevar a 13.8-14.4V. Si solo llega a 12.1V, el alternador no está cargando — puede fallar el regulador, el diodo o las escobillas. Diagnóstico en dos pasos: batería + sistema de carga.'
+    },
+    {
+      id: 'm2-ra2-c1-q8',
+      enunciado: 'El escáner muestra el código P0171 "System too lean Bank 1". ¿Cuáles son las causas más probables a investigar PRIMERO?',
+      opciones: [
+        'Reemplazar los inyectores — el código lean siempre indica inyectores obstruidos',
+        'Verificar entradas de aire no medidas (fugas de vacío, MAF sucio) y sensor O2 antes de revisar el sistema de combustible',
+        'Cambiar la sonda lambda — P0171 siempre es falla del sensor de oxígeno',
+        'Revisar la presión de combustible — lean siempre significa bomba débil'
+      ],
+      correcta: 1,
+      explicacion: 'P0171 (mezcla pobre banco 1) puede tener múltiples causas. El orden correcto: 1° fugas de vacío (aire no medido engaña al MAF), 2° MAF sucio (subestima el aire real), 3° sensor O2 defectuoso, 4° sistema de combustible. Comenzar reemplazando inyectores es el diagnóstico más costoso y menos probable de resolver el problema.'
+    },
+    {
+      id: 'm2-ra2-c1-q9',
+      enunciado: 'Al medir con osciloscopio la señal del sensor de oxígeno (O2) de banda estrecha, observas que la señal es plana en 0.45V. ¿Qué indica?',
+      opciones: [
+        'La mezcla es perfectamente estequiométrica — 0.45V es el valor ideal',
+        'El sensor está muerto o envenenado — una señal plana sin oscilación indica que no responde a cambios de mezcla',
+        'El motor está en mezcla rica — 0.45V indica exceso de combustible',
+        'Es normal durante el arranque en frío — esperar que el sensor alcance temperatura'
+      ],
+      correcta: 1,
+      explicacion: 'Un sensor O2 sano oscila continuamente entre 0.1V (lean) y 0.9V (rich) a una frecuencia visible en el osciloscopio. Una señal plana en cualquier voltaje significa que el sensor no responde — puede estar envenenado por silicio, viejo, o el circuito calefactor (HO2S) está fallando.'
+    },
+    {
+      id: 'm2-ra2-c1-q10',
+      enunciado: 'El manual del vehículo especifica que la compresión de cada cilindro debe ser 175 PSI ±10%. Un cilindro mide 120 PSI. ¿Qué diagnóstico es correcto?',
+      opciones: [
+        'El manómetro de compresión está descalibrado — repetir la prueba',
+        'Compresión baja severa (31% por debajo del mínimo). Realizar prueba de fuga para identificar si es válvulas, aros o juntas de culata',
+        'Es normal — los cilindros centrales siempre tienen menor compresión',
+        'Problema menor — agregar aceite de motor para aumentar la compresión'
+      ],
+      correcta: 1,
+      explicacion: '175 PSI ±10% = rango aceptable 157.5-192.5 PSI. 120 PSI está 37.5 PSI por debajo del mínimo — falla crítica. El siguiente paso es la prueba de fuga de cilindros (cylinder leak-down test) que identifica dónde escapa la compresión: si sale por el escape son válvulas; por el Carter son aros; por el radiador es junta de culata.'
+    },
+    {
+      id: 'm2-ra2-c1-q11',
+      enunciado: 'Un estudiante mide la resistencia de un cable de bujía con el multímetro y obtiene OL (overload/infinito). ¿Qué indica?',
+      opciones: [
+        'El cable tiene resistencia correcta — los cables de bujía de alta tensión tienen resistencia infinita por diseño',
+        'El cable tiene circuito abierto (rotura interna del conductor) — debe reemplazarse',
+        'El multímetro está en la escala incorrecta — cambiar a escala de megaohmios',
+        'OL significa "óptimo" en multímetros digitales modernos'
+      ],
+      correcta: 1,
+      explicacion: 'OL (Over Limit) en medición de resistencia significa circuito abierto — resistencia infinita. Un cable de bujía sano tiene entre 5,000-25,000 Ω (5-25 kΩ) de resistencia interna (supresora de interferencias). OL indica rotura del conductor interno, causa directa de falla de encendido.'
+    },
+    {
+      id: 'm2-ra2-c1-q12',
+      enunciado: 'El escáner muestra que el sensor de temperatura del motor (ECT) reporta -40°C con el motor caliente. ¿Cuál es el diagnóstico más probable?',
+      opciones: [
+        'El refrigerante está extremadamente frío — añadir anticongelante',
+        'Circuito abierto en el sensor ECT o su cableado — -40°C es el valor de falla por defecto cuando no hay señal',
+        'El sensor funciona bien — -40°C indica que el termostato está atascado abierto',
+        'El escáner tiene un error de comunicación — reiniciar el equipo'
+      ],
+      correcta: 1,
+      explicacion: '-40°C es el valor de falla por defecto (default value) que el ECU asigna cuando no recibe señal del sensor ECT. Causas: circuito abierto en el sensor, conector suelto o cable cortado. Con esta lectura, el ECU usa tablas de mapas abiertos y enriquece la mezcla innecesariamente, afectando consumo y emisiones.'
+    },
+    {
+      id: 'm2-ra2-c1-q13',
+      enunciado: 'Al interpretar datos en tiempo real del escáner, el valor de "Long Term Fuel Trim (LTFT)" muestra +22%. ¿Qué significa esto para el diagnóstico?',
+      opciones: [
+        'El sistema de combustible está funcionando perfectamente — LTFT positivo es lo esperado',
+        'El ECU está agregando 22% más de combustible para corregir una mezcla persistentemente pobre — indica fuga de vacío, MAF sucio o presión de combustible baja',
+        'El motor está usando 22% más de combustible que en condiciones normales — problema de consumo',
+        'LTFT de +22% indica que la sonda lambda está invertida — revisar el cableado'
+      ],
+      correcta: 1,
+      explicacion: 'LTFT (Long Term Fuel Trim) muestra la corrección acumulada de combustible del ECU. +22% significa que el ECU ha aprendido a agregar 22% más de combustible de forma persistente para mantener la mezcla estequiométrica — evidencia de que algo está causando mezcla pobre de manera crónica. Valor aceptable: ±10%.'
+    },
+    {
+      id: 'm2-ra2-c1-q14',
+      enunciado: 'Con el osciloscopio mides la señal de inyección de un inyector. El pulso de inyección muestra una duración de 8ms a ralentí. ¿Qué factor no afecta directamente este valor?',
+      opciones: [
+        'La temperatura del motor',
+        'La presión del riel de combustible',
+        'El color del vehículo',
+        'La carga del motor (posición del acelerador)'
+      ],
+      correcta: 2,
+      explicacion: 'El tiempo de apertura del inyector (ancho de pulso) es calculado por el ECU basándose en: temperatura del motor (más frío = más combustible), carga (más aceleración = más combustible), presión del riel (menor presión = pulso más largo), entre otros. El color del vehículo no tiene ningún efecto en los parámetros del motor.'
+    },
+    {
+      id: 'm2-ra2-c1-q15',
+      enunciado: 'Un estudiante afirma que "si el escáner no muestra códigos, el vehículo está en perfecto estado". ¿Es correcta esta afirmación?',
+      opciones: [
+        'Sí — el OBD-II monitorea todos los sistemas del vehículo',
+        'No — el OBD-II no monitorea: desgaste de frenos, holguras mecánicas, estado de amortiguadores, presión de neumáticos (salvo TPMS), ni muchas fallas intermitentes que aún no alcanzaron el umbral de código',
+        'Sí — si hubiera algún problema, el sistema lo detectaría automáticamente',
+        'No — pero solo porque los escáneres genéricos no leen todos los módulos'
+      ],
+      correcta: 1,
+      explicacion: 'El OBD-II monitorea principalmente emisiones y el tren motriz. No cubre: desgaste mecánico (frenos, amortiguadores, rodamientos), fallas eléctricas que aún no llegaron al umbral, ni muchos sistemas mecánicos. "Sin códigos" significa sin fallas registradas en los monitores del ECU — no equivale a vehículo perfecto.'
+    },
+    {
+      id: 'm2-ra2-c1-q16',
+      enunciado: 'Al medir continuidad con el multímetro entre masa del motor y carrocería, el resultado es OL. ¿Qué problema indica?',
+      opciones: [
+        'El motor está correctamente aislado de la carrocería — OL es el valor normal',
+        'Hay una falla en el cable de masa (ground strap) entre motor y carrocería — genera voltajes flotantes y fallas eléctricas intermitentes',
+        'El multímetro necesita calibración — repetir con un nuevo equipo',
+        'El motor tiene demasiada masa — instalar un condensador'
+      ],
+      correcta: 1,
+      explicacion: 'El motor debe tener continuidad directa (resistencia cercana a 0Ω) con la carrocería a través del cable de masa. OL (circuito abierto) indica que ese cable está cortado, corroído o mal conectado. Una masa deficiente es la causa de decenas de fallas eléctricas aparentemente inexplicables: actuadores que no responden, sensores con lecturas erráticas, luces que parpadean.'
+    },
+    {
+      id: 'm2-ra2-c1-q17',
+      enunciado: 'El escáner indica que el monitor de catalizador (Catalyst Monitor) muestra estado "Not Ready". ¿Qué significa para la inspección técnica vehicular?',
+      opciones: [
+        'El catalizador está en perfectas condiciones — "Not Ready" indica que no necesita ser revisado',
+        'El monitor no ha completado su ciclo de diagnóstico — el vehículo no pasará la inspección de emisiones hasta que todos los monitores estén "Ready"',
+        'El catalizador está dañado y debe reemplazarse antes de la inspección',
+        '"Not Ready" es el estado permanente en vehículos modernos con Euro 6'
+      ],
+      correcta: 1,
+      explicacion: '"Not Ready" significa que el ECU no ha podido ejecutar la prueba interna de ese monitor (generalmente porque los códigos fueron borrados recientemente o la batería fue desconectada). Para inspección técnica de emisiones, todos los monitores aplicables deben estar en "Complete/Ready". El vehículo necesita un ciclo de conducción completo para que los monitores se completen.'
+    },
+    {
+      id: 'm2-ra2-c1-q18',
+      enunciado: 'Con el osciloscopio comparas las señales de los sensores CMP (árbol de levas) y CKP (cigüeñal) en un motor con código P0016. ¿Qué buscas en las formas de onda?',
+      opciones: [
+        'Que ambas señales tengan la misma amplitud de voltaje',
+        'La correlación de fase entre ambas señales — P0016 indica que el árbol de levas y el cigüeñal están desfasados más allá de lo permitido',
+        'Que ambas señales sean senoidales perfectas sin ruido',
+        'Que la frecuencia de CMP sea exactamente el doble que la de CKP'
+      ],
+      correcta: 1,
+      explicacion: 'P0016 es "Camshaft/Crankshaft Position Correlation". Con el osciloscopio verificas la fase relativa entre CMP y CKP: deben tener una relación temporal específica definida por el fabricante. Un desfase excesivo indica: cadena de distribución estirada, actuador de árbol de levas (VVT) atascado, o sensor con señal errática.'
+    },
+    {
+      id: 'm2-ra2-c1-q19',
+      enunciado: 'Un docente enseña a sus estudiantes a medir voltaje en un circuito de 12V. Un estudiante conecta el multímetro en modo amperímetro (mA) directamente en paralelo al circuito. ¿Qué ocurre?',
+      opciones: [
+        'El multímetro muestra el voltaje correctamente — amperímetro y voltímetro funcionan igual',
+        'El multímetro crea un cortocircuito de baja resistencia, puede dañar el equipo, fundir el fusible interno del multímetro o dañar el circuito del vehículo',
+        'El multímetro simplemente no muestra lectura — no hay daño posible',
+        'El circuito se desconecta automáticamente por protección'
+      ],
+      correcta: 1,
+      explicacion: 'El amperímetro tiene resistencia interna casi nula (para no afectar el circuito en serie). Conectarlo en paralelo crea un cortocircuito directo: la corriente del circuito pasa completa por el multímetro. Resultado: funde el fusible interno del multímetro, puede dañar el equipo permanentemente o quemar cableado del vehículo. Error crítico de seguridad que los docentes deben prevenir activamente.'
+    },
+    {
+      id: 'm2-ra2-c1-q20',
+      enunciado: 'Al finalizar una sesión de diagnóstico con el escáner, ¿cuál es la práctica correcta antes de desconectarlo del vehículo?',
+      opciones: [
+        'Desconectarlo directamente — los puertos OBD-II soportan conexión/desconexión en caliente sin problemas',
+        'Con el motor apagado y llave fuera, salir del menú del escáner correctamente, esperar que la pantalla muestre estado de reposo y luego desconectar — evita corrupción de datos del ECU',
+        'Dejar el escáner conectado siempre — no hay razón para desconectarlo',
+        'Apagar el escáner con el botón de encendido mientras está conectado al puerto OBD'
+      ],
+      correcta: 1,
+      explicacion: 'El puerto OBD-II está conectado directamente al bus CAN del vehículo. Una desconexión abrupta durante comunicación activa puede interrumpir tramas de datos que el ECU está procesando. La práctica correcta: finalizar sesión en el software, apagar llave, desconectar. Parece menor pero protege la integridad del ECU, especialmente en vehículos modernos con múltiples módulos.'
+    }
+  ],
+
 }
