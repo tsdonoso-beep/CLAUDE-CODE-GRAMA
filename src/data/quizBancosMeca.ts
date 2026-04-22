@@ -250,6 +250,106 @@ export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
     }
   ],
 
+  // M1-S14 — Garantías y do's/don'ts (8 preguntas)
+  'm1-s14-c2': [
+    {
+      id: 'm1-s14-c2-q1',
+      enunciado: 'El escáner del taller falla a los 8 meses (garantía de 12). El técnico del taller ya lo abrió "para ver qué tiene". ¿Cuál es el problema?',
+      opciones: [
+        'Ninguno — el técnico tiene derecho a revisar el equipo del taller',
+        'Abrir el equipo sin autorización del fabricante probablemente anuló la garantía. El paso correcto es reportar al proveedor sin intervenir',
+        'El problema es que la garantía ya venció',
+        'Debería haberlo abierto antes para hacer mantenimiento preventivo'
+      ],
+      correcta: 1,
+      explicacion: 'Cualquier intervención no autorizada en el interior del equipo puede ser causal de anulación de garantía según el contrato. Ante cualquier falla en período de garantía: documentar y reportar al proveedor antes de tocar el equipo.'
+    },
+    {
+      id: 'm1-s14-c2-q2',
+      enunciado: '¿Por qué registrar el mantenimiento preventivo realizado es requisito para hacer valer la garantía?',
+      opciones: [
+        'Porque el MINEDU lo exige para auditorías anuales',
+        'Porque demuestra que el equipo fue operado dentro de las condiciones del fabricante y no por mal uso',
+        'Para calcular cuánto tiempo falta de garantía',
+        'Para evitar que el técnico realice mantenimiento no autorizado'
+      ],
+      correcta: 1,
+      explicacion: 'Sin registro, el fabricante puede argumentar que la falla se debe a mal uso o falta de mantenimiento, no a un defecto del equipo. El registro es la prueba de que se cumplieron las condiciones de la garantía.'
+    },
+    {
+      id: 'm1-s14-c2-q3',
+      enunciado: 'Un repuesto de la pistola de impacto neumática se desgastó. El docente compra un repuesto genérico de ferretería por ser más económico. ¿Qué riesgo asume?',
+      opciones: [
+        'Ninguno — los repuestos genéricos son iguales a los originales',
+        'Anulación de la garantía del equipo por uso de repuestos no autorizados por el fabricante',
+        'Solo pierde el descuento de cliente frecuente del proveedor',
+        'El repuesto genérico podría no ajustar correctamente pero la garantía no se ve afectada'
+      ],
+      correcta: 1,
+      explicacion: 'El uso de repuestos no originales o no aprobados es causal de anulación de garantía en la mayoría de contratos. Además, un repuesto de calidad inferior puede dañar otros componentes del equipo.'
+    },
+    {
+      id: 'm1-s14-c2-q4',
+      enunciado: 'El equipo falla claramente dentro del período de garantía. ¿Cuál es el orden correcto de acciones?',
+      opciones: [
+        'Intentar repararlo primero; si no se puede, llamar al proveedor',
+        'Documentar la falla con fotos y descripción → reportar al proveedor/empresa prestadora → esperar respuesta antes de cualquier intervención',
+        'Llamar a un técnico externo para tener un diagnóstico independiente primero',
+        'Reportar a la UGEL directamente sin pasar por el proveedor'
+      ],
+      correcta: 1,
+      explicacion: 'El protocolo correcto preserva los derechos de garantía: documentar, reportar al canal oficial y no intervenir. Actuar antes de reportar puede ser interpretado como aceptación de la falla y anular el derecho a garantía.'
+    },
+    {
+      id: 'm1-s14-c2-q5',
+      enunciado: 'La empresa prestadora del servicio no responde el reporte de falla después de 5 días hábiles. ¿Qué hace el docente?',
+      opciones: [
+        'Esperar indefinidamente — las empresas tienen sus propios tiempos',
+        'Reparar el equipo por cuenta propia para no perder tiempo pedagógico',
+        'Escalar el caso a la UGEL con copia del reporte inicial y el registro de los días transcurridos sin respuesta',
+        'Comprar un equipo nuevo de emergencia con fondos del taller'
+      ],
+      correcta: 2,
+      explicacion: 'Los contratos con proveedores MINEDU establecen tiempos máximos de respuesta. Si se incumplen, el canal de escalamiento es la UGEL, que tiene la relación contractual con el proveedor y puede exigir cumplimiento.'
+    },
+    {
+      id: 'm1-s14-c2-q6',
+      enunciado: '¿Cuál de estas acciones PRESERVA la garantía del elevador hidráulico?',
+      opciones: [
+        'Lubricar las guías con cualquier aceite disponible en el taller cuando se escucha ruido',
+        'Realizar el mantenimiento preventivo según el calendario del fabricante y registrarlo en la bitácora',
+        'Ajustar la presión hidráulica manualmente si el elevador sube muy lento',
+        'Usar el elevador con vehículos que excedan ligeramente la capacidad nominal si es solo por un momento'
+      ],
+      correcta: 1,
+      explicacion: 'El mantenimiento preventivo programado y registrado es la acción más importante para mantener la garantía vigente. Las otras opciones constituyen intervenciones no autorizadas o uso fuera de especificaciones.'
+    },
+    {
+      id: 'm1-s14-c2-q7',
+      enunciado: '¿Qué diferencia hay entre la garantía del fabricante y la garantía del proveedor/distribuidor MINEDU?',
+      opciones: [
+        'Son exactamente lo mismo — el proveedor solo revende lo que el fabricante garantiza',
+        'La garantía del fabricante cubre defectos de fabricación; la del proveedor puede incluir servicio técnico, tiempos de respuesta y reposición — revisa el contrato específico',
+        'La garantía MINEDU siempre es mayor que la del fabricante',
+        'Solo aplica una de las dos — no pueden coexistir'
+      ],
+      correcta: 1,
+      explicacion: 'Son garantías distintas que pueden complementarse. El fabricante cubre el equipo en sí; el proveedor puede añadir condiciones de servicio, tiempos de atención y procedimientos de reposición. El contrato específico con el proveedor MINEDU es el documento clave.'
+    },
+    {
+      id: 'm1-s14-c2-q8',
+      enunciado: '¿Por qué es importante conservar el manual técnico original y los accesorios en su empaque durante el período de garantía?',
+      opciones: [
+        'Para revenderlos si el equipo se da de baja antes de que venza la garantía',
+        'Porque sin el manual y accesorios originales el técnico del proveedor puede negarse a atender la garantía o cobrar por materiales que deberían estar incluidos',
+        'Es solo una buena práctica de orden, no tiene impacto real en la garantía',
+        'Para poder verificar el precio original del equipo en caso de robo'
+      ],
+      correcta: 1,
+      explicacion: 'El manual original acredita las condiciones de uso y el técnico del proveedor lo necesita para verificar si el equipo fue operado correctamente. Los accesorios originales evitan discusiones sobre si la falla se debe a uso de accesorios no autorizados.'
+    }
+  ],
+
   // M1-S13 — Seguridad EPP (BLOQUEANTE — mín 80%)
   'm1-s13-c3': [
     {
