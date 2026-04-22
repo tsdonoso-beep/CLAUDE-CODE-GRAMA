@@ -2,6 +2,82 @@ import type { PreguntaQuiz } from './modulosLXP'
 
 export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
 
+  // M0-S05 — Gamma, Teachy, Polypad, Meshy (6 preguntas)
+  'm0-s05-c5': [
+    {
+      id: 'm0-s05-c5-q1',
+      enunciado: 'El docente quiere que sus estudiantes visualicen en 3D cómo funciona el sistema de transmisión antes de la práctica con el vehículo real. ¿Qué herramienta es la más adecuada?',
+      opciones: [
+        'Gamma — para crear una presentación con imágenes del sistema de transmisión',
+        'Teachy — para generar una guía de estudio del tema',
+        'Meshy — permite generar o explorar modelos 3D de componentes mecánicos que los estudiantes pueden rotar y analizar antes de la práctica',
+        'Polypad — para visualizar las ecuaciones de la relación de transmisión'
+      ],
+      correcta: 2,
+      explicacion: 'Meshy genera modelos 3D a partir de texto o imágenes. Para el taller automotriz, permite que los estudiantes "vean por dentro" piezas que en el vehículo real están ensambladas y son difíciles de observar, antes de manipularlas físicamente.'
+    },
+    {
+      id: 'm0-s05-c5-q2',
+      enunciado: 'El docente necesita preparar una presentación pedagógica del sistema de frenos ABS con diseño profesional en menos de 10 minutos. ¿Qué herramienta usa?',
+      opciones: [
+        'Google Slides — más confiable para presentaciones técnicas',
+        'Gamma — genera presentaciones completas con diseño visual a partir de un prompt o esquema de contenido',
+        'Meshy — para crear diagramas 3D del sistema ABS',
+        'Teachy — genera presentaciones automáticamente con actividades incluidas'
+      ],
+      correcta: 1,
+      explicacion: 'Gamma usa IA para generar presentaciones visualmente atractivas desde un prompt o esquema en segundos. El docente describe el tema ("sistema de frenos ABS para estudiantes de secundaria") y Gamma produce slides con estructura, imágenes y texto.'
+    },
+    {
+      id: 'm0-s05-c5-q3',
+      enunciado: 'El docente quiere crear un quiz de 10 preguntas sobre diagnóstico de fallas en el sistema eléctrico del vehículo en menos de 5 minutos. ¿Qué herramienta es la más directa?',
+      opciones: [
+        'Gamma — tiene generador de preguntas integrado en las presentaciones',
+        'Meshy — puede generar ejercicios interactivos de diagnóstico',
+        'Teachy — genera actividades, evaluaciones y organizadores visuales a partir del tema y grado indicados',
+        'Polypad — tiene banco de ejercicios técnicos automotrices'
+      ],
+      correcta: 2,
+      explicacion: 'Teachy está diseñado específicamente para crear recursos pedagógicos: quizzes, listas de cotejo, organizadores visuales, planes de sesión. Con indicar el tema, el grado y el tipo de instrumento, genera el recurso en segundos.'
+    },
+    {
+      id: 'm0-s05-c5-q4',
+      enunciado: 'Un docente quiere usar Polypad en su taller automotriz. ¿Cuál es el uso más apropiado?',
+      opciones: [
+        'Modelar en 3D el motor del vehículo para que los estudiantes lo exploren',
+        'Generar una presentación visual del sistema de suspensión',
+        'Visualizar conceptos matemáticos relacionados al taller: calcular relaciones de transmisión, ángulos de inclinación de ruedas (camber/caster) o proporciones de mezcla aire-combustible',
+        'Crear actividades de evaluación sobre diagnóstico de fallas'
+      ],
+      correcta: 2,
+      explicacion: 'Polypad es una pizarra matemática interactiva. En el taller automotriz su valor está en visualizar y calcular conceptos técnicos con base matemática: relaciones de engranajes, proporciones, ángulos de geometría de dirección, conversiones de unidades.'
+    },
+    {
+      id: 'm0-s05-c5-q5',
+      enunciado: '¿Cuál es la diferencia principal entre Gamma y Teachy para el trabajo docente del taller automotriz?',
+      opciones: [
+        'Gamma es de pago y Teachy es gratuito — la diferencia es solo económica',
+        'Gamma crea presentaciones visuales para exponer contenido; Teachy crea actividades pedagógicas para que los estudiantes practiquen o sean evaluados',
+        'Son herramientas idénticas — solo cambia la interfaz de usuario',
+        'Gamma es para docentes de primaria y Teachy para secundaria técnica'
+      ],
+      correcta: 1,
+      explicacion: 'Gamma resuelve el problema del docente expositor (preparar materiales visuales para presentar). Teachy resuelve el problema del docente evaluador (crear actividades, quizzes, organizadores para los estudiantes). Son complementarias, no equivalentes.'
+    },
+    {
+      id: 'm0-s05-c5-q6',
+      enunciado: 'El docente quiere que los estudiantes vean el motor de un Toyota Corolla en 3D antes de desarmarlo. No tiene modelo 3D previo. ¿Qué puede hacer con Meshy?',
+      opciones: [
+        'Nada — Meshy solo trabaja con modelos 3D ya existentes en su biblioteca',
+        'Generar un modelo 3D del motor escribiendo una descripción textual o subiendo una foto de referencia, y luego compartirlo para que los estudiantes lo exploren desde sus dispositivos',
+        'Descargar el plano técnico oficial de Toyota y convertirlo en 3D automáticamente',
+        'Meshy solo genera objetos decorativos, no piezas técnicas mecánicas'
+      ],
+      correcta: 1,
+      explicacion: 'Meshy genera modelos 3D a partir de texto (text-to-3D) o imágenes (image-to-3D). Un docente puede describir "motor de 4 cilindros en línea, vista explodida" y obtener un modelo navegable. No es un plano técnico certificado, pero es una herramienta de exploración visual muy potente antes de la práctica.'
+    }
+  ],
+
   // M0-S04 — IA generativa: GPT, Claude, Gemini (6 preguntas)
   'm0-s04-c4': [
     {
