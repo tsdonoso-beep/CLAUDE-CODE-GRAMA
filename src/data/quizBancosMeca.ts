@@ -350,6 +350,255 @@ export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
     }
   ],
 
+  // M1-RA2 — Evaluación M1 global (20 preguntas — mín 80%)
+  'm1-ra2-c1': [
+    // Arquitectura y distribución del taller (4)
+    {
+      id: 'm1-ra2-c1-q1',
+      enunciado: 'El flujo de trabajo pedagógico correcto en el taller automotriz es:',
+      opciones: [
+        'Innovación → Investigación → Almacén',
+        'Almacén → Innovación → Investigación',
+        'Investigación → Innovación → Almacén (cuando aplica)',
+        'El orden no importa si el docente supervisa bien'
+      ],
+      correcta: 2,
+      explicacion: 'Primero se investiga y diagnostica (Investigación), luego se interviene el vehículo (Innovación), y el Almacén provee herramientas y consumibles a ambas zonas. Este flujo simula el proceso real de un taller profesional.'
+    },
+    {
+      id: 'm1-ra2-c1-q2',
+      enunciado: '¿Por qué el taller automotriz debe tener circuitos eléctricos separados por zona?',
+      opciones: [
+        'Por estética — cada zona tiene su propio panel de colores',
+        'Para aislar fallas eléctricas y manejar cargas diferenciadas sin afectar otras zonas',
+        'Es un requisito burocrático sin impacto técnico real',
+        'Solo si el taller tiene más de 3 equipos trifásicos'
+      ],
+      correcta: 1,
+      explicacion: 'Un elevador trifásico (220V) y un escáner (110V) tienen demandas eléctricas muy distintas. Circuitos separados evitan que una falla o sobrecarga en una zona afecte el funcionamiento de otra, mejorando seguridad y disponibilidad.'
+    },
+    {
+      id: 'm1-ra2-c1-q3',
+      enunciado: 'El taller no tiene ventilación adecuada. ¿Cuál es el riesgo principal al encender un vehículo dentro?',
+      opciones: [
+        'El ruido del motor molestará a las aulas vecinas',
+        'Intoxicación por monóxido de carbono — gas inodoro y mortal que se acumula en espacios cerrados',
+        'El calor del motor puede dañar el escáner si está cerca',
+        'La humedad del escape puede oxidar las herramientas del almacén'
+      ],
+      correcta: 1,
+      explicacion: 'El monóxido de carbono (CO) es inodoro, incoloro y mortal en concentraciones bajas. En un taller cerrado sin extracción forzada, encender un motor puede ser fatal. La ventilación activa es condición de seguridad no negociable.'
+    },
+    {
+      id: 'm1-ra2-c1-q4',
+      enunciado: '¿Cuántas salidas de aire comprimido se recomienda como mínimo en la Zona de Innovación de un taller automotriz?',
+      opciones: [
+        'Una central — con manguera larga alcanza a todos los puntos',
+        'Al menos una por cada puesto de trabajo activo para evitar mangueras cruzadas que generen riesgo de tropiezo',
+        'No se necesitan salidas fijas — el compresor con manguera es suficiente',
+        'Dos: una para neumáticos y otra para pistolas'
+      ],
+      correcta: 1,
+      explicacion: 'Las mangueras largas cruzando el piso son riesgo de tropiezo y accidente. Una salida por puesto de trabajo es la configuración segura, aunque en la práctica se adapta al número real de equipos neumáticos del taller.'
+    },
+    // Metrado (4)
+    {
+      id: 'm1-ra2-c1-q5',
+      enunciado: 'El osciloscopio automotriz del taller llegó sin código de bien MINEDU. ¿Qué hace el docente?',
+      opciones: [
+        'Instalarlo de inmediato y buscar el código después',
+        'Asignarle un código interno y usarlo normalmente',
+        'Separarlo, registrarlo como "bien sin identificar" y reportar a la UGEL antes de usarlo',
+        'Devolverlo al proveedor — sin código no puede ingresar al taller'
+      ],
+      correcta: 2,
+      explicacion: 'Un bien sin código oficial no puede incorporarse al inventario del taller ni usarse pedagógicamente. Debe regularizarse a través de la UGEL. Usarlo sin código pone en riesgo la garantía y el control patrimonial.'
+    },
+    {
+      id: 'm1-ra2-c1-q6',
+      enunciado: 'Un metrado incompleto (faltan equipos registrados) tiene como consecuencia principal:',
+      opciones: [
+        'Una observación menor en la auditoría anual',
+        'Los equipos no registrados no existen oficialmente: sin garantía, sin soporte y sin posibilidad de reposición',
+        'El taller pierde puntos en el ranking de talleres de la UGEL',
+        'Solo afecta si hay una inspección sorpresa del MINEDU'
+      ],
+      correcta: 1,
+      explicacion: 'El metrado es la existencia oficial del bien. Un equipo no registrado no puede reclamar garantía, no aparece en los sistemas de seguimiento del MINEDU y no puede reponerse formalmente si se daña o pierde.'
+    },
+    {
+      id: 'm1-ra2-c1-q7',
+      enunciado: 'En la ficha de metrado, el estado "Operativo con restricción" significa:',
+      opciones: [
+        'El equipo está dañado y no puede usarse',
+        'El equipo funciona pero solo puede usarse con limitaciones específicas documentadas (ej: carga máxima reducida)',
+        'El equipo está en garantía y no puede modificarse',
+        'Solo puede usarlo el docente, no los estudiantes'
+      ],
+      correcta: 1,
+      explicacion: '"Operativo con restricción" indica que el equipo funciona pero con condiciones de uso limitadas que deben estar documentadas. Sin documentar la restricción, el usuario no sabe qué puede y qué no puede hacer con él.'
+    },
+    {
+      id: 'm1-ra2-c1-q8',
+      enunciado: 'Un equipo se clasifica en una zona pedagógica según:',
+      opciones: [
+        'Su tamaño y peso — los pesados van en almacén',
+        'Su precio — los más caros en zonas más seguras',
+        'Su función pedagógica en el proceso de aprendizaje del taller',
+        'La preferencia del docente titular'
+      ],
+      correcta: 2,
+      explicacion: 'La zona refleja el rol del equipo en el proceso pedagógico: Investigación (diagnosticar), Innovación (intervenir/construir), Almacén (gestionar herramientas e insumos). El tamaño o precio no son criterios válidos.'
+    },
+    // Instalación (4)
+    {
+      id: 'm1-ra2-c1-q9',
+      enunciado: '¿Cuál es el prerequisito obligatorio antes de instalar cualquier equipo en el taller?',
+      opciones: [
+        'Que el director haya firmado el acta de recepción',
+        'Verificar que el espacio cumpla los requisitos del fabricante: eléctricos, estructurales, de ventilación y de acceso',
+        'Tener a los estudiantes presentes para que aprendan el proceso de instalación',
+        'Que el equipo haya sido activado en línea por el proveedor'
+      ],
+      correcta: 1,
+      explicacion: 'Instalar sin verificar requisitos puede resultar en daño al equipo (voltaje incorrecto), accidentes (piso sin resistencia) o anulación de garantía (condiciones de instalación no cumplidas). La verificación previa es la base de una instalación segura.'
+    },
+    {
+      id: 'm1-ra2-c1-q10',
+      enunciado: 'El software de diagnóstico instalado en el equipo del taller tiene 2 años sin actualizar. ¿Cuál es el impacto pedagógico?',
+      opciones: [
+        'Ninguno — los vehículos que existen en el mercado peruano ya están en la base de datos',
+        'Los vehículos de los últimos 2 años pueden no ser reconocidos, limitando las competencias que los estudiantes pueden desarrollar',
+        'Solo afecta la velocidad de conexión con el vehículo',
+        'El software desactualizado es más estable y confiable'
+      ],
+      correcta: 1,
+      explicacion: 'Cada año se fabrican vehículos con nuevos protocolos y sistemas. Un software desactualizado deja a los estudiantes sin herramientas para trabajar con equipos modernos, que son exactamente los que encontrarán en el mercado laboral.'
+    },
+    {
+      id: 'm1-ra2-c1-q11',
+      enunciado: '¿Qué documento certifica que el elevador quedó correctamente instalado y listo para uso pedagógico?',
+      opciones: [
+        'La factura de compra del elevador',
+        'El acta de instalación firmada por el técnico instalador y el docente responsable, con resultado de prueba funcional',
+        'El manual del fabricante con fecha de llegada anotada',
+        'Una fotografía del elevador instalado en el taller'
+      ],
+      correcta: 1,
+      explicacion: 'El acta de instalación con prueba funcional aprobada es el documento que certifica que el equipo fue instalado correctamente, respalda la garantía y autoriza el primer uso pedagógico.'
+    },
+    {
+      id: 'm1-ra2-c1-q12',
+      enunciado: '¿Por qué activar la garantía del equipo en el momento de la instalación y no después?',
+      opciones: [
+        'Para empezar a contar el período de garantía desde el primer día de uso real',
+        'Porque el proveedor puede negar la garantía si el equipo se activó tarde, argumentando daños durante el almacenamiento previo',
+        'Es solo un trámite administrativo sin consecuencias reales',
+        'Para que el MINEDU libere el siguiente desembolso al proveedor'
+      ],
+      correcta: 1,
+      explicacion: 'Activar tardíamente la garantía puede dejar sin cobertura el período entre la recepción y la activación. Si el equipo sufrió algún daño en ese intervalo, el proveedor puede rechazar el reclamo argumentando que ocurrió antes de la activación.'
+    },
+    // Seguridad (4)
+    {
+      id: 'm1-ra2-c1-q13',
+      enunciado: '¿Cuál es el EPP mínimo para ingresar a la Zona de Innovación del taller automotriz, incluso sin realizar trabajo directo?',
+      opciones: [
+        'Ninguno si solo se va a observar',
+        'Lentes de seguridad, overol o ropa de trabajo y calzado cerrado como mínimo',
+        'Solo calzado de seguridad',
+        'El mismo EPP completo que para trabajo activo'
+      ],
+      correcta: 1,
+      explicacion: 'En un espacio con equipos en operación, incluso los observadores están expuestos a proyecciones, derrames y riesgos de tropiezo. El EPP básico de ingreso protege ante lo imprevisible, no solo ante el trabajo propio.'
+    },
+    {
+      id: 'm1-ra2-c1-q14',
+      enunciado: 'El docente no revisa el estado de los extintores antes de iniciar una sesión práctica. ¿Qué riesgo asume?',
+      opciones: [
+        'Una observación administrativa en caso de inspección',
+        'Responsabilidad legal y riesgo real de no poder controlar un conato de incendio durante la sesión',
+        'Ninguno si los estudiantes ya conocen el protocolo de evacuación',
+        'Solo un riesgo menor si la sesión no involucra trabajo con combustibles'
+      ],
+      correcta: 1,
+      explicacion: 'Un extintor descargado o vencido es equivalente a no tener extintor. El docente tiene responsabilidad legal sobre la seguridad de la sesión. Verificar el extintor antes de cada sesión práctica es parte del checklist de apertura del taller.'
+    },
+    {
+      id: 'm1-ra2-c1-q15',
+      enunciado: 'Un estudiante va a conectar un cargador de batería sin verificar la ventilación del espacio. ¿Cuál es el riesgo específico?',
+      opciones: [
+        'La batería puede sobrecargarse y dañarse',
+        'El cargador puede causar un cortocircuito si hay humedad',
+        'La carga de una batería produce hidrógeno — gas inflamable que en espacios sin ventilación puede explotar ante una chispa',
+        'No hay riesgo si el cargador es de marca reconocida'
+      ],
+      correcta: 2,
+      explicacion: 'Durante la carga, las baterías de plomo-ácido liberan hidrógeno gaseoso. En un espacio cerrado, la concentración puede alcanzar niveles explosivos. La ventilación activa es obligatoria antes de iniciar la carga.'
+    },
+    {
+      id: 'm1-ra2-c1-q16',
+      enunciado: '¿Con qué frecuencia debe revisarse el protocolo de seguridad con los estudiantes del taller automotriz?',
+      opciones: [
+        'Una vez al año en la primera sesión del ciclo',
+        'Al inicio de cada ciclo y cada vez que ingrese un estudiante nuevo al taller',
+        'Solo cuando haya un accidente o incidente',
+        'No es necesario si los estudiantes ya cursaron el módulo anterior'
+      ],
+      correcta: 1,
+      explicacion: 'El protocolo se revisa al inicio de cada ciclo (porque el taller puede haber cambiado) y ante el ingreso de nuevos participantes (porque cada persona debe conocer las normas antes de su primera práctica). La seguridad no se presupone, se verifica.'
+    },
+    // Garantías (4)
+    {
+      id: 'm1-ra2-c1-q17',
+      enunciado: 'Un equipo falla a los 10 meses con garantía de 12. El docente lo repara con un técnico externo por urgencia pedagógica. ¿Qué ocurre con la garantía?',
+      opciones: [
+        'La garantía sigue vigente — la urgencia justifica la intervención',
+        'La garantía probablemente quedó anulada al intervenir el equipo sin autorización del proveedor',
+        'La garantía se extiende por el tiempo que el equipo estuvo fuera de servicio',
+        'Solo se anula si el técnico externo causó un daño adicional'
+      ],
+      correcta: 1,
+      explicacion: 'La urgencia pedagógica no es causal de excepción en los contratos de garantía. Intervenir el equipo sin autorización del proveedor es la causal más común de anulación. La alternativa correcta era reportar la falla y gestionar un equipo sustituto mientras se esperaba la atención en garantía.'
+    },
+    {
+      id: 'm1-ra2-c1-q18',
+      enunciado: 'No existe registro del mantenimiento preventivo del compresor. Ahora el compresor falla. ¿Qué dificultad enfrenta el docente al reclamar la garantía?',
+      opciones: [
+        'Ninguna — si el equipo está en período de garantía, el proveedor debe atenderlo sin condiciones',
+        'El proveedor puede argumentar que la falla se debe a falta de mantenimiento y rechazar el reclamo',
+        'Debe pagar una multa administrativa por no haber registrado el mantenimiento',
+        'La garantía se reduce proporcionalmente a los mantenimientos no registrados'
+      ],
+      correcta: 1,
+      explicacion: 'Sin registro de mantenimiento, el docente no puede demostrar que cumplió con las condiciones de la garantía. El proveedor tiene base para rechazar el reclamo argumentando mal uso por omisión de mantenimiento preventivo.'
+    },
+    {
+      id: 'm1-ra2-c1-q19',
+      enunciado: 'La empresa prestadora no atiende la falla reportada en 7 días hábiles (el contrato establece 5 días máximo). ¿Cuál es el paso correcto?',
+      opciones: [
+        'Esperar — pueden tener una emergencia interna',
+        'Escalar a la UGEL adjuntando el reporte inicial, fechas y el incumplimiento documentado del plazo contractual',
+        'Reparar el equipo por cuenta propia y descontar el costo al proveedor',
+        'Comprar un equipo nuevo y gestionar el reembolso después'
+      ],
+      correcta: 1,
+      explicacion: 'El incumplimiento del plazo contractual debe documentarse y escalarse a la UGEL, que tiene la relación contractual formal con el proveedor. La documentación (reporte inicial + fechas) es la prueba del incumplimiento.'
+    },
+    {
+      id: 'm1-ra2-c1-q20',
+      enunciado: '¿Cuál de estas acciones forma parte de las buenas prácticas para mantener las garantías vigentes de todos los equipos del taller?',
+      opciones: [
+        'Revisar los contratos de garantía solo cuando hay una falla',
+        'Llevar una bitácora unificada con fechas de garantía, contactos del proveedor, mantenimientos realizados y reportes de falla de todos los equipos',
+        'Delegar el seguimiento de garantías al auxiliar del taller',
+        'Guardar los contratos en un archivador y revisarlos anualmente'
+      ],
+      correcta: 1,
+      explicacion: 'Una bitácora unificada y actualizada permite actuar a tiempo: saber cuándo vence cada garantía, quién atiende cada equipo y cuáles mantenimientos están pendientes. Es la herramienta de gestión que convierte el conocimiento en acción.'
+    }
+  ],
+
   // M1-S13 — Seguridad EPP (BLOQUEANTE — mín 80%)
   'm1-s13-c3': [
     {
