@@ -30,6 +30,7 @@ import { ChecklistMantenimientoModal } from '@/components/lxp/interactivos/Check
 import { ActividadExternaModal, ACTIVIDADES_EXTERNAS, type ActividadExternaConfig } from '@/components/lxp/interactivos/ActividadExternaModal'
 import { descargablesLXP } from '@/data/descargablesLXP'
 import { quizBancosMeca } from '@/data/quizBancosMeca'
+import { descargablesMeca } from '@/data/descargablesMeca'
 import { useTaller } from '@/hooks/useTaller'
 import { getTallerBySlug } from '@/data/talleresConfig'
 import jsPDF from 'jspdf'
@@ -79,7 +80,12 @@ export default function ModuloDetalle() {
   useEscapeKey(showGradeModal ? closeGradeModal : showTourSimulator ? closeTourSimulator : () => {})
 
   const manualActivo = manualAbierto ? manualesRuta.find(m => m.id === manualAbierto.manualId) ?? null : null
-  const descargableActivo = descargableAbierto ? descargablesLXP.find(d => d.id === descargableAbierto.descargableId) ?? null : null
+  const todosDescargables = slug === 'mecanica-automotriz'
+    ? [...descargablesLXP, ...descargablesMeca]
+    : descargablesLXP
+  const descargableActivo = descargableAbierto
+    ? todosDescargables.find(d => d.id === descargableAbierto.descargableId) ?? null
+    : null
   const taller = getTallerBySlug(slug ?? '')
 
   const moduloNum = parseInt(num ?? '0', 10)
