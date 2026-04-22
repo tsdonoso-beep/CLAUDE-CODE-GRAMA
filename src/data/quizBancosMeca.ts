@@ -951,4 +951,80 @@ export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
     }
   ],
 
+  // M0-S06 — Miró, Mural, Figma: ideación colaborativa (6 preguntas)
+  'm0-s06-c5': [
+    {
+      id: 'm0-s06-c5-q1',
+      enunciado: 'Quieres que tus estudiantes de automotriz mapeen visualmente la secuencia de diagnóstico de un motor, trabajando en grupos desde sus tablets en tiempo real. ¿Qué herramienta usarías?',
+      opciones: [
+        'Miró — pizarra colaborativa infinita, ideal para diagramas de proceso en tiempo real',
+        'Google Docs — permite edición simultánea y tiene plantillas de diagramas',
+        'Gamma — genera presentaciones visuales rápidamente con IA',
+        'Teachy — crea actividades pedagógicas estructuradas para el aula'
+      ],
+      correcta: 0,
+      explicacion: 'Miró ofrece pizarra infinita con sticky notes, conectores y plantillas de mapas mentales. Es la opción más adecuada para mapeo de procesos colaborativo en tiempo real. Google Docs tiene edición simultánea pero no está diseñado para diagramas de flujo visual.'
+    },
+    {
+      id: 'm0-s06-c5-q2',
+      enunciado: 'Tu equipo de docentes necesita planificar juntos las 4 sesiones del módulo de instalación de equipos automotrices, distribuyendo responsabilidades y fechas. ¿Cuál herramienta facilita mejor esta coordinación visual?',
+      opciones: [
+        'Figma — permite diseñar wireframes de las sesiones con componentes reutilizables',
+        'Mural — tablero colaborativo con sticky notes, votación y temporizador para talleres de planificación',
+        'Miró — pizarra libre sin estructura de taller facilitada',
+        'Polypad — especializado en visualizaciones matemáticas, no en planificación'
+      ],
+      correcta: 1,
+      explicacion: 'Mural está diseñado específicamente para talleres de facilitación: incluye plantillas de planificación, votación anónima, temporizador y zonas estructuradas. Es la mejor opción cuando hay un facilitador guiando el proceso grupal.'
+    },
+    {
+      id: 'm0-s06-c5-q3',
+      enunciado: 'Quieres crear una guía visual del taller automotriz — plano de zonas, rutas de evacuación e identificación de equipos — que puedas entregar a estudiantes nuevos como material institucional. ¿Qué herramienta usarías?',
+      opciones: [
+        'Miró — porque tiene plantillas de planos y es fácil exportar como imagen',
+        'Figma — diseño vectorial profesional con capas, componentes y exportación en múltiples formatos',
+        'Mural — tablero colaborativo con mayor énfasis en facilitación que en diseño final',
+        'Gamma — genera documentos con IA, pero no permite edición precisa de planos'
+      ],
+      correcta: 1,
+      explicacion: 'Figma es software de diseño vectorial profesional. Para un material institucional (plano del taller, señalética) que necesita precisión, capas y exportación en alta calidad (PDF, PNG, SVG), Figma es la herramienta correcta. Miró y Mural son mejores para procesos colaborativos informales.'
+    },
+    {
+      id: 'm0-s06-c5-q4',
+      enunciado: 'Un colega diseñó en Figma el protocolo de seguridad del taller automotriz. Tú necesitas adaptarlo para tu institución cambiando logos y colores. ¿Qué implica trabajar en Figma para esta tarea?',
+      opciones: [
+        'No es posible — Figma solo permite ver diseños, no editarlos',
+        'Necesitas acceso al archivo Figma; con permiso de edición puedes modificar textos, colores y componentes directamente',
+        'Debes exportar a PDF y editar con Adobe Acrobat para cambiar contenido',
+        'Figma convierte automáticamente el diseño a Word para que puedas editarlo'
+      ],
+      correcta: 1,
+      explicacion: 'Figma es colaborativo: con el enlace y permiso de edición, puedes modificar cualquier elemento del diseño. Cambiar logos (reemplazar imagen), colores (paleta de estilos) y textos es directo en la interfaz. Es la ventaja clave sobre herramientas como PowerPoint o PDF.'
+    },
+    {
+      id: 'm0-s06-c5-q5',
+      enunciado: 'Estás facilitando una sesión de lluvia de ideas con 8 docentes para diseñar la zona de innovación del taller. La sesión dura 45 minutos. ¿Cuál característica de Mural es más valiosa en este contexto?',
+      opciones: [
+        'La capacidad de exportar el tablero a PowerPoint al terminar',
+        'El temporizador integrado y la votación anónima para priorizar ideas sin sesgo de autoridad',
+        'Los widgets de diseño profesional para crear entregables listos para imprimir',
+        'La integración directa con Google Drive para guardar automáticamente'
+      ],
+      correcta: 1,
+      explicacion: 'En sesiones de facilitación con jerarquía (hay jefes y docentes), el sesgo de autoridad puede inhibir ideas. El temporizador mantiene el ritmo, y la votación anónima permite que todos expresen preferencias sin presión social. Estas funciones son el diferenciador de Mural frente a una pizarra común.'
+    },
+    {
+      id: 'm0-s06-c5-q6',
+      enunciado: 'Comparando Miró y Mural para uso en el taller automotriz: ¿cuál es la distinción más relevante para decidir cuál usar?',
+      opciones: [
+        'Miró es de pago y Mural es gratuito, por lo que Mural siempre es mejor para instituciones educativas',
+        'Miró es más flexible y libre (ideal para diagramas técnicos por docentes), Mural incluye más herramientas de facilitación estructurada (ideal para talleres con múltiples participantes)',
+        'Son idénticos en funcionalidades; la elección depende solo de la preferencia personal',
+        'Miró funciona solo en computadora; Mural funciona en tablets y móviles'
+      ],
+      correcta: 1,
+      explicacion: 'Miró es excelente para trabajo individual o en equipo pequeño creando diagramas libres. Mural está más orientado a facilitación: tiene plantillas de Design Sprint, Retrospectiva, y herramientas de moderación. La decisión correcta depende de si hay un facilitador guiando o si el trabajo es más autónomo.'
+    }
+  ],
+
 }
