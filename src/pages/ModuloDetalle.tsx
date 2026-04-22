@@ -15,6 +15,7 @@ import { manualesRuta } from '@/data/manualesRuta'
 import { useProgress } from '@/contexts/ProgressContext'
 import { ContenidoBadge } from '@/components/lxp/ContenidoBadge'
 import { QuizBlock } from '@/components/lxp/QuizBlock'
+import { QuizModal } from '@/components/lxp/QuizModal'
 import { ConocenosForm } from '@/components/lxp/ConocenosForm'
 import { ManualViewerModal } from '@/components/lxp/ManualViewerModal'
 import { EPPSelectorModal } from '@/components/lxp/EPPSelectorModal'
@@ -61,6 +62,7 @@ export default function ModuloDetalle() {
   const [showMapaHabilidades, setShowMapaHabilidades] = useState(false)
   const [showTablaProgresion, setShowTablaProgresion] = useState(false)
   const [descargableAbierto, setDescargableAbierto] = useState<{ descargableId: string; contenidoId: string } | null>(null)
+  const [quizAbierto, setQuizAbierto] = useState<{ contenidoId: string; titulo: string; preguntas: any[]; puntajeMinimo: number; bloqueaSiguiente: boolean } | null>(null)
   const [videoAbierto, setVideoAbierto] = useState<{ titulo: string; descripcion?: string; duracionMin?: number; urlVideo: string; contenidoId: string } | null>(null)
   const [showTourSimulator, setShowTourSimulator]           = useState(false)
   const [showSimuladorEPP, setShowSimuladorEPP]             = useState(false)
@@ -408,17 +410,28 @@ export default function ModuloDetalle() {
                             return (
                               <div key={contenido.id}>
                                 {isQuizBloqueante ? (
-                                  <QuizBlock
-                                    contenidoId={contenido.id}
-                                    titulo={contenido.titulo}
-                                    preguntas={contenido.bancoPreguntas!}
-                                    puntajeMinimo={contenido.puntajeMinimo ?? 80}
-                                    bloqueaSiguiente={contenido.bloqueaSiguiente ?? false}
-                                    onAprobado={() => {
-                                      markContenidoCompleted(contenido.id)
-                                      toast.success('¡Quiz aprobado!', { description: 'Tu progreso ha sido guardado.' })
-                                    }}
-                                  />
+                                  <button
+                                    onClick={() => setQuizAbierto({
+                                      contenidoId: contenido.id,
+                                      titulo: contenido.titulo,
+                                      preguntas: contenido.bancoPreguntas!,
+                                      puntajeMinimo: contenido.puntajeMinimo ?? 80,
+                                      bloqueaSiguiente: true,
+                                    })}
+                                    className="w-full flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all hover:shadow-md"
+                                    style={{ borderColor: '#02d47e', background: '#f0fdf9' }}
+                                  >
+                                    <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.15)' }}>
+                                      <span className="text-lg">📝</span>
+                                    </div>
+                                    <div className="flex-1">
+                                      <p className="text-sm font-bold" style={{ color: '#043941' }}>{contenido.titulo}</p>
+                                      <p className="text-xs mt-0.5" style={{ color: '#045f6c' }}>
+                                        {contenido.bancoPreguntas!.length} preguntas · Mínimo {contenido.puntajeMinimo ?? 80}% · Requerido para continuar
+                                      </p>
+                                    </div>
+                                    <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ background: '#043941', color: '#02d47e' }}>Iniciar</span>
+                                  </button>
                                 ) : (() => {
                                   const estado = getContenidoEstado(contenido.id)
                                   return (
@@ -562,14 +575,25 @@ export default function ModuloDetalle() {
                                     Estas evaluaciones no tienen nota mínima. Solo sirven para que el programa se adapte a tu punto de partida.
                                   </p>
                                   {diagnosticos.map(contenido => (
-                                    <QuizBlock
+                                    <button
                                       key={contenido.id}
-                                      contenidoId={contenido.id}
-                                      titulo={contenido.titulo}
-                                      preguntas={contenido.bancoPreguntas!}
-                                      puntajeMinimo={0}
-                                      bloqueaSiguiente={false}
-                                    />
+                                      onClick={() => setQuizAbierto({
+                                        contenidoId: contenido.id,
+                                        titulo: contenido.titulo,
+                                        preguntas: contenido.bancoPreguntas!,
+                                        puntajeMinimo: 0,
+                                        bloqueaSiguiente: false,
+                                      })}
+                                      className="w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-all hover:shadow-sm"
+                                      style={{ borderColor: '#c8f0e8', background: '#ffffff' }}
+                                    >
+                                      <span className="text-base">📝</span>
+                                      <div className="flex-1">
+                                        <p className="text-sm font-semibold" style={{ color: '#043941' }}>{contenido.titulo}</p>
+                                        <p className="text-xs" style={{ color: '#045f6c' }}>{contenido.bancoPreguntas!.length} preguntas · Sin nota mínima</p>
+                                      </div>
+                                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: '#e3f8fb', color: '#043941' }}>Abrir</span>
+                                    </button>
                                   ))}
                                 </div>
                               )}
@@ -652,6 +676,23 @@ export default function ModuloDetalle() {
           onClose={() => {
             markContenidoCompleted(manualAbierto.contenidoId)
             setManualAbierto(null)
+          }}
+        />
+      )}
+
+      {/* Modal de quiz */}
+      {quizAbierto && (
+        <QuizModal
+          contenidoId={quizAbierto.contenidoId}
+          titulo={quizAbierto.titulo}
+          preguntas={quizAbierto.preguntas}
+          puntajeMinimo={quizAbierto.puntajeMinimo}
+          bloqueaSiguiente={quizAbierto.bloqueaSiguiente}
+          onClose={() => setQuizAbierto(null)}
+          onAprobado={() => {
+            markContenidoCompleted(quizAbierto.contenidoId)
+            toast.success('¡Quiz aprobado!', { description: 'Tu progreso ha sido guardado.' })
+            setQuizAbierto(null)
           }}
         />
       )}
