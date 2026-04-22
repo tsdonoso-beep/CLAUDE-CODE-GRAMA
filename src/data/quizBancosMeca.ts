@@ -2,6 +2,130 @@ import type { PreguntaQuiz } from './modulosLXP'
 
 export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
 
+  // M1-S11 — Metrado de equipos automotriz (10 preguntas)
+  'm1-s11-c3': [
+    {
+      id: 'm1-s11-c3-q1',
+      enunciado: '¿Qué es el "metrado" de equipos en el contexto del taller TSF-MINEDU?',
+      opciones: [
+        'El peso total de los equipos instalados en el taller',
+        'El registro sistemático de todos los bienes del taller con sus características, estado y zona asignada',
+        'El presupuesto anual para mantenimiento de equipos',
+        'El conteo rápido de cuántos equipos llegaron en el despacho'
+      ],
+      correcta: 1,
+      explicacion: 'El metrado es el inventario técnico oficial: identifica cada bien, lo ubica en una zona pedagógica, registra su estado y asigna el código MINEDU. Sin metrado, el equipo no existe oficialmente para efectos de garantía y soporte.'
+    },
+    {
+      id: 'm1-s11-c3-q2',
+      enunciado: 'El escáner OBD-II/CAN del taller de mecánica pertenece a la Zona de Investigación porque:',
+      opciones: [
+        'Es el equipo más caro y debe estar protegido en la zona más segura',
+        'Se usa solo al inicio del año escolar para diagnóstico general',
+        'Permite diagnosticar fallas del vehículo antes de intervenir — es el punto de partida del proceso técnico',
+        'Es demasiado delicado para usarlo en la Zona de Innovación'
+      ],
+      correcta: 2,
+      explicacion: 'La Zona de Investigación alberga equipos que permiten diagnosticar e investigar el problema antes de actuar. El escáner es la herramienta de diagnóstico por excelencia: primero investigo, luego intervengo en Innovación.'
+    },
+    {
+      id: 'm1-s11-c3-q3',
+      enunciado: 'Revisas el metrado anterior y ves que el multímetro digital está registrado en "Zona de Almacén — herramienta de mano". ¿Es correcto?',
+      opciones: [
+        'Sí — es una herramienta de mano y el almacén es el lugar correcto',
+        'No — el multímetro es un instrumento de diagnóstico y pertenece a la Zona de Investigación',
+        'Sí — el almacén guarda todos los equipos cuando no se usan',
+        'Depende — si se usa con frecuencia puede estar en cualquier zona'
+      ],
+      correcta: 1,
+      explicacion: 'El multímetro automotriz diagnostica problemas eléctricos del vehículo — misma función pedagógica que el escáner. Su zona es Investigación, no Almacén. Clasificarlo por tamaño físico confunde función pedagógica con forma.'
+    },
+    {
+      id: 'm1-s11-c3-q4',
+      enunciado: 'El taller recibe: 1 elevador tipo tijera, 2 pistolas de impacto neumáticas y 1 escáner LAUNCH X431. ¿Cómo se distribuyen por zona?',
+      opciones: [
+        'Todos en Zona de Innovación — son equipos de trabajo activo',
+        'Elevador e Innovación; escáner → Investigación; pistolas → Innovación',
+        'Elevador → Almacén (es pesado); escáner → Investigación; pistolas → Innovación',
+        'Escáner e Innovación comparten zona; elevador va donde haya espacio'
+      ],
+      correcta: 1,
+      explicacion: 'El escáner diagnostica → Investigación. El elevador y las pistolas son herramientas de trabajo activo sobre el vehículo → Innovación. El peso del elevador no determina su zona: su función pedagógica sí.'
+    },
+    {
+      id: 'm1-s11-c3-q5',
+      enunciado: 'La ficha de metrado requiere registrar torquímetros: el taller tiene 3 de ½" y 2 de 3/8". ¿Cómo se registran correctamente?',
+      opciones: [
+        'Como un solo ítem "Torquímetro — 5 unidades"',
+        'Como dos ítems separados: "Torquímetro ½\\" — 3 u." y "Torquímetro 3/8\\" — 2 u."',
+        'Solo se registra el más grande — el pequeño es accesorio',
+        'El torquímetro no se metrada — es herramienta de mano menor'
+      ],
+      correcta: 1,
+      explicacion: 'Cada especificación técnica diferente es un ítem de metrado independiente. El torquímetro ½" y el 3/8" tienen rangos de torque distintos y se usan en operaciones diferentes. Agruparlos impide conocer la capacidad real del taller.'
+    },
+    {
+      id: 'm1-s11-c3-q6',
+      enunciado: '¿Qué campo de la ficha técnica determina si el equipo puede usarse en la sesión de hoy?',
+      opciones: [
+        'El nombre del fabricante y el país de origen',
+        'La fecha de compra y el número de factura',
+        'El estado operativo actual y la fecha de la última revisión de seguridad',
+        'El código de bien asignado por el MINEDU'
+      ],
+      correcta: 2,
+      explicacion: 'El estado operativo ("Operativo", "Operativo con restricción", "En reparación — NO USAR") es el campo que autoriza o bloquea el uso del equipo. Sin esa información actualizada, no se puede tomar la decisión correcta.'
+    },
+    {
+      id: 'm1-s11-c3-q7',
+      enunciado: 'Al registrar la prensa hidráulica del taller, un docente la ubica en "Zona de Almacén" porque "es grande y pesada". ¿Qué error cometió?',
+      opciones: [
+        'Ninguno — los equipos pesados siempre van en almacén por seguridad',
+        'Confundió la función pedagógica del equipo con su tamaño físico. La prensa hidráulica es un equipo de trabajo activo → Zona de Innovación',
+        'Debería ir en Investigación porque se usa para medir presiones',
+        'El error es no haber consultado al director antes de ubicarla'
+      ],
+      correcta: 1,
+      explicacion: 'La zona se asigna por función pedagógica, no por tamaño ni peso. La prensa hidráulica se usa para operaciones mecánicas activas (desmontar rodamientos, alinear piezas) → Innovación.'
+    },
+    {
+      id: 'm1-s11-c3-q8',
+      enunciado: '¿Por qué es obligatorio registrar el código de bien MINEDU en la ficha de metrado?',
+      opciones: [
+        'Para que el director pueda auditar el taller anualmente',
+        'Porque sin ese código el equipo no existe oficialmente para efectos de garantía, soporte técnico y seguimiento patrimonial',
+        'Es solo un requisito burocrático sin impacto real en el funcionamiento del taller',
+        'Para poder vender el equipo al final de su vida útil'
+      ],
+      correcta: 1,
+      explicacion: 'El código de bien MINEDU es el identificador oficial del activo. Sin él, el equipo no puede ser incluido en garantías, no puede reportarse como falla al sistema y no puede darse de baja formalmente.'
+    },
+    {
+      id: 'm1-s11-c3-q9',
+      enunciado: 'El taller recibe 3 equipos nuevos el mismo día: compresor, soldadora MIG y banco de trabajo. ¿En qué momento deben registrarse en el metrado?',
+      opciones: [
+        'Después de instalarlos y probarlos — así se registra el estado real',
+        'Antes de ser instalados o usados — el registro previo es condición para que el bien exista oficialmente',
+        'Al finalizar el trimestre en el informe de gestión',
+        'Cuando llegue el técnico de la UGEL a verificarlos'
+      ],
+      correcta: 1,
+      explicacion: 'El metrado se hace al momento de recepción, antes de instalación. Registrar después de usar implica operar bienes sin identidad oficial, lo que invalida la garantía desde el primer uso.'
+    },
+    {
+      id: 'm1-s11-c3-q10',
+      enunciado: 'Durante el metrado, ¿qué acción es correcta al encontrar un equipo sin placa de código de bien ni documentación?',
+      opciones: [
+        'Instalarlo de todas formas y buscar el código después',
+        'Descartarlo — si no tiene código, no sirve',
+        'Separarlo, registrarlo como "bien sin identificar", reportar a la UGEL para regularización antes de usarlo',
+        'Asignarle un código interno del taller y continuar'
+      ],
+      correcta: 2,
+      explicacion: 'Un bien sin código oficial no puede incorporarse al taller directamente. Debe separarse, registrarse como pendiente de regularización y reportarse a la UGEL. Usarlo sin código pone en riesgo la garantía y el control patrimonial.'
+    }
+  ],
+
   // M1-S13 — Seguridad EPP (BLOQUEANTE — mín 80%)
   'm1-s13-c3': [
     {
