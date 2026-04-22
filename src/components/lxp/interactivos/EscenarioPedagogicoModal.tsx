@@ -273,6 +273,92 @@ export function EscenarioPedagogicoModal({ config, onClose, onComplete }: Props)
 
 // ─── Datos de los 4 escenarios ────────────────────────────────────────────────
 
+export const ESCENARIO_COMP4: EscenarioConfig = {
+  contenidoId: 'm5-s57-c3',
+  competencia: 'Gestión pedagógica del taller',
+  numero: 4,
+  titulo: '¿Cómo gestionas una sesión compleja en el taller automotriz?',
+  contexto: 'Eres docente del taller automotriz. Hoy tienes 28 estudiantes, 3 zonas activas simultáneamente (elevador, diagnóstico OBD, ficha de metrado) y 90 minutos de sesión. Al llegar al taller notas que el compresor hace un ruido inusual y un estudiante llega sin sus lentes de seguridad.',
+  reflexionFinal: 'La gestión pedagógica del taller no es improvisación — es anticipación. Los protocolos de inicio, las normas no negociables y los planes de contingencia no limitan la enseñanza: la hacen posible. Un taller bien gestionado es un taller donde los estudiantes aprenden con seguridad.',
+  decisions: [
+    {
+      situacion: 'Al llegar, notas que el compresor emite un ruido metálico inusual que no tenía antes. ¿Qué haces?',
+      opciones: [
+        {
+          texto: 'Lo enciendo igual — probablemente es algo menor. Si falla durante la sesión, lo apago y listo.',
+          correcta: false,
+          feedback: 'Operar un equipo con anomalía sonora es un riesgo real: puede ser un rodamiento en mal estado, una válvula de seguridad defectuosa o presión excesiva. Una falla durante la sesión con estudiantes cerca puede causar un accidente. El principio es claro: equipo con anomalía = equipo fuera de servicio.'
+        },
+        {
+          texto: 'Lo dejo apagado, coloco una etiqueta "NO USAR — en revisión", registro la anomalía en la bitácora del equipo y replanifico la sesión sin el compresor para hoy.',
+          correcta: true,
+          feedback: 'Respuesta correcta en todos los frentes: protege a los estudiantes, protege la garantía del equipo (usarlo dañado puede invalidarla), deja evidencia del problema en la bitácora y replanifico en lugar de cancelar. La gestión profesional convierte el obstáculo en decisión documentada.'
+        },
+        {
+          texto: 'Le pido a un estudiante técnico avanzado que lo revise antes de la sesión para ganar tiempo.',
+          correcta: false,
+          feedback: 'Un estudiante, por más avanzado que sea, no está habilitado para diagnosticar ni intervenir equipos del taller. Hacerlo podría invalidar la garantía, generar un accidente y crear un precedente peligroso. La revisión técnica es responsabilidad del docente o del servicio técnico autorizado.'
+        },
+        {
+          texto: 'Lo uso solo para la zona de diagnóstico OBD donde la presión es más baja, y evito usarlo en el elevador.',
+          correcta: false,
+          feedback: 'Un equipo con anomalía no es "uso reducido" — es fuera de servicio hasta diagnóstico. La presión "más baja" no elimina el riesgo si el problema es mecánico interno. Esta decisión pone en riesgo a los estudiantes y documenta mal uso del bien.'
+        }
+      ]
+    },
+    {
+      situacion: 'Un estudiante llega al taller sin sus lentes de seguridad justo cuando vas a iniciar la sesión práctica. Dice que se le olvidaron en casa. ¿Qué haces?',
+      opciones: [
+        {
+          texto: 'Lo dejo participar con la condición de que tenga más cuidado — no quiero que pierda la sesión por un olvido.',
+          correcta: false,
+          feedback: 'Esta excepción destruye la norma para todos. Si un estudiante puede participar sin EPP "con cuidado", los demás aprenden que el EPP es opcional cuando hay una buena excusa. En el taller automotriz, esa cultura cuesta accidentes.'
+        },
+        {
+          texto: 'No puede ingresar a la zona de práctica. Le asigno la actividad de la ficha de metrado en el área de escritorio, fuera de la zona de riesgo, mientras gestiona conseguir los lentes.',
+          correcta: true,
+          feedback: 'La norma se mantiene sin cancelar la sesión del estudiante. La actividad alternativa mantiene su participación activa en algo productivo. Esta respuesta además muestra a todo el grupo que el EPP es innegociable — y que hay consecuencias reales, no solo advertencias.'
+        },
+        {
+          texto: 'Le presto mis lentes de seguridad para que pueda participar — el docente siempre debe tener uno extra.',
+          correcta: false,
+          feedback: 'Prestar el EPP personal resuelve el problema puntual pero no desarrolla la responsabilidad del estudiante. Además, el docente queda sin su propio EPP en un taller activo. La responsabilidad del equipo de protección personal es individual e intransferible.'
+        },
+        {
+          texto: 'Lo anoto en el registro de incidencias y lo dejo participar esta vez — la primera falta se advierte, no se sanciona.',
+          correcta: false,
+          feedback: '"Primera falta se advierte" es un principio válido en conducta, no en seguridad física. Un accidente ocular no espera a que sea la segunda vez. El registro sin consecuencia inmediata no protege al estudiante ni establece la cultura de seguridad del taller.'
+        }
+      ]
+    },
+    {
+      situacion: 'A los 60 minutos, el Grupo A del elevador terminó su rotación 15 minutos antes de lo esperado. ¿Qué haces con ese tiempo?',
+      opciones: [
+        {
+          texto: 'Los dejo descansar — ya cumplieron su parte y merecen el tiempo libre.',
+          correcta: false,
+          feedback: 'El tiempo libre en el taller es tiempo de riesgo: estudiantes desocupados cerca de equipos activos pueden generar distracciones o accidentes. La gestión pedagógica planifica qué hacer cuando algo termina antes — no lo improvisa.'
+        },
+        {
+          texto: 'Les pido que completen la ficha técnica del elevador, registrando los valores medidos (nivel de aceite, presión, estado de seguros) — documentar el proceso es parte de la competencia.',
+          correcta: true,
+          feedback: 'Perfecto. Documentar el proceso es una competencia técnica real: los técnicos automotrices registran cada intervención. Esta actividad de extensión usa el tiempo productivamente, refuerza el aprendizaje de la sesión y produce un entregable evaluable.'
+        },
+        {
+          texto: 'Los adelanto a la siguiente zona de rotación para que ganen más práctica.',
+          correcta: false,
+          feedback: 'Adelantar la rotación rompe la planificación de los otros grupos. Si el Grupo B aún está en diagnóstico OBD, mover al Grupo A antes genera conflicto de espacio y recursos. La gestión de zonas simultáneas requiere que las rotaciones sean predecibles.'
+        },
+        {
+          texto: 'Les pido que ayuden al grupo que sigue más lento — así todos terminan al mismo tiempo.',
+          correcta: false,
+          feedback: 'Mezclar grupos durante la práctica puede confundir roles, generar dependencia y quitar tiempo al grupo más lento para resolver sus propios bloqueos. El peer teaching es válido como estrategia planificada, no como solución de emergencia a ritmos diferentes.'
+        }
+      ]
+    }
+  ]
+}
+
 export const ESCENARIO_COMP3: EscenarioConfig = {
   contenidoId: 'm5-s55-c3',
   competencia: 'Evaluación por competencias',
