@@ -273,6 +273,92 @@ export function EscenarioPedagogicoModal({ config, onClose, onComplete }: Props)
 
 // ─── Datos de los 4 escenarios ────────────────────────────────────────────────
 
+export const ESCENARIO_COMP3: EscenarioConfig = {
+  contenidoId: 'm5-s55-c3',
+  competencia: 'Evaluación por competencias',
+  numero: 3,
+  titulo: '¿Cómo evalúas la competencia de diagnóstico automotriz?',
+  contexto: 'Eres docente del taller automotriz. Acabas de terminar el módulo de diagnóstico con escáner OBD-II. Debes evaluar si tus 28 estudiantes lograron la competencia: "Diagnostica fallas en el sistema del motor aplicando el escáner OBD-II con procedimiento técnico correcto y actitud responsable."',
+  reflexionFinal: 'La evaluación por competencias es triangulación de evidencias: el proceso (lista de cotejo), el producto (rúbrica) y la conciencia del propio aprendizaje (autoevaluación). Ningún instrumento solo es suficiente. La retroalimentación específica, oportuna y orientada a la mejora es el motor de la competencia — no la nota.',
+  decisions: [
+    {
+      situacion: '¿Qué combinación de instrumentos de evaluación usarías para evidenciar la competencia?',
+      opciones: [
+        {
+          texto: 'Un examen escrito de 20 preguntas sobre los códigos OBD más comunes y su significado.',
+          correcta: false,
+          feedback: 'El examen escrito evalúa conocimiento declarativo, no competencia. Un estudiante puede responder qué es el código P0171 sin saber diagnosticarlo en un vehículo real. La competencia se evidencia en el desempeño, no en la memoria.'
+        },
+        {
+          texto: 'Lista de cotejo de procedimiento (observación directa) + rúbrica del informe de diagnóstico + autoevaluación del estudiante.',
+          correcta: true,
+          feedback: 'Triangulación perfecta. La lista de cotejo captura si siguió el procedimiento correcto (conectar escáner, leer códigos, registrar freeze frame). La rúbrica evalúa la calidad del informe. La autoevaluación desarrolla metacognición. Tres fuentes, tres dimensiones.'
+        },
+        {
+          texto: 'Solo observo durante la práctica y anoto mentalmente quién lo hizo bien y quién no.',
+          correcta: false,
+          feedback: 'La observación sin instrumento es subjetiva e inconsistente — dos docentes observando al mismo estudiante llegarán a conclusiones diferentes. Además, "mentalmente" no deja evidencia ni permite retroalimentación específica al estudiante.'
+        },
+        {
+          texto: 'Pido a cada estudiante que me explique oralmente el procedimiento al terminar la práctica.',
+          correcta: false,
+          feedback: 'La evaluación oral sobre el procedimiento evalúa la capacidad de explicar, no la competencia de hacer. Un estudiante puede describir perfectamente los pasos y cometer errores críticos al ejecutarlos. La evaluación de competencias requiere evidencia del desempeño real.'
+        }
+      ]
+    },
+    {
+      situacion: 'Al observar la práctica, un estudiante conecta el escáner correctamente, lee todos los códigos y los registra — pero no anota el freeze frame antes de borrar. Tu rúbrica tiene el criterio "Registra datos completos del diagnóstico". ¿Qué calificación le das en ese criterio?',
+      opciones: [
+        {
+          texto: 'Logrado — hizo casi todo bien, el freeze frame es un detalle menor.',
+          correcta: false,
+          feedback: 'El freeze frame no es un detalle — es la evidencia de las condiciones exactas cuando ocurrió la falla. Borrar sin registrarlo es destruir información crítica de diagnóstico. La rúbrica tiene ese criterio por una razón técnica real, no burocrática.'
+        },
+        {
+          texto: 'En proceso — registró los códigos pero no los datos completos del diagnóstico. Retroalimentación específica: "Faltó registrar el freeze frame antes de borrar. Esa información es clave para reproducir la condición de falla."',
+          correcta: true,
+          feedback: 'Correcto en la calificación y en la retroalimentación. "En proceso" es honesto — hizo parte del criterio. La retroalimentación específica le dice exactamente qué faltó y por qué importa técnicamente. Así la evaluación enseña, no solo mide.'
+        },
+        {
+          texto: 'No logrado — si no registró el freeze frame, el diagnóstico está incompleto y no merece aprobación.',
+          correcta: false,
+          feedback: '"No logrado" implica que no hubo evidencia del criterio. El estudiante sí registró códigos y procedimientos — solo omitió el freeze frame. La rúbrica evalúa criterios específicos con niveles graduados, no de forma binaria. No logrado debería reservarse para quien no intentó el criterio.'
+        },
+        {
+          texto: 'Le doy Logrado y le comento al final de la sesión que la próxima vez recuerde el freeze frame.',
+          correcta: false,
+          feedback: 'Calificar Logrado cuando el criterio no se cumplió completamente invalida la rúbrica. Un instrumento que no mide lo que dice medir pierde confiabilidad. La retroalimentación "al final de la sesión, para la próxima vez" es tardía y poco específica.'
+        }
+      ]
+    },
+    {
+      situacion: 'Tres colegas evaluaron al mismo estudiante haciendo el mismo diagnóstico: uno dio 16/20, otro 11/20 y tú diste 14/20. ¿Qué haces?',
+      opciones: [
+        {
+          texto: 'Promedio las tres notas y uso 13.7/20 como calificación final — así se compensa la subjetividad.',
+          correcta: false,
+          feedback: 'Promediar no resuelve el problema — oculta la inconsistencia. Si tres evaluadores llegan a resultados tan distintos evaluando lo mismo, el problema es el instrumento, no los evaluadores. Promediar tapa el síntoma sin tratar la causa.'
+        },
+        {
+          texto: 'Acepto mi calificación y descarto las otras — yo fui quien diseñó la rúbrica y la conozco mejor.',
+          correcta: false,
+          feedback: 'La confianza en el propio criterio no resuelve la inconsistencia entre evaluadores. Si la rúbrica fuera clara, los tres docentes deberían llegar a calificaciones similares. El problema no es quién evaluó — es que los descriptores admiten interpretaciones distintas.'
+        },
+        {
+          texto: 'Reunimos a los tres, comparamos qué descriptor interpretó cada uno para el criterio con mayor diferencia, y ajustamos la redacción para que sea observable y específica.',
+          correcta: true,
+          feedback: 'Esta es la respuesta de un equipo docente profesional. La variación entre evaluadores es señal de que los descriptores son ambiguos. Calibrar juntos — comparar interpretaciones, acordar criterios, precisar lenguaje — mejora la confiabilidad del instrumento para todos los grupos.'
+        },
+        {
+          texto: 'Le pido al estudiante que realice el diagnóstico de nuevo para que los tres lo veamos al mismo tiempo.',
+          correcta: false,
+          feedback: 'Repetir la evaluación simultánea puede mejorar la consistencia puntualmente, pero no resuelve el problema de fondo: los descriptores son ambiguos. La próxima vez que evalúen por separado, volverá la disparidad.'
+        }
+      ]
+    }
+  ]
+}
+
 export const ESCENARIO_COMP2: EscenarioConfig = {
   contenidoId: 'm5-s53-c3',
   competencia: 'Metodologías activas ABP/ABPr',
