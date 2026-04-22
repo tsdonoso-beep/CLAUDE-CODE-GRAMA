@@ -194,4 +194,86 @@ export const descargablesMeca: DescargableLXP[] = [
     ]
   },
 
+  // 3. PROTOCOLO DE SEGURIDAD DEL TALLER
+  {
+    id: 'desc-m1-meca-seguridad',
+    modulo: 'm1',
+    titulo: 'Protocolo de Seguridad del Taller Automotriz',
+    subtitulo: 'EPP por zona · Riesgos · Emergencias · Compromiso del estudiante',
+    descripcion: 'Ficha plastificable de seguridad para el taller automotriz. Cubre EPP obligatorio por zona de trabajo, verificación pre-sesión del elevador, protocolo de emergencias (derrame, incendio, atrapamiento) y compromiso firmado del estudiante.',
+    tipo: 'FICHA_PLASTIFICABLE',
+    formato: 'A4',
+    paginas: 10,
+    instrucciones: 'Plastificar. Colocar una copia en el panel de seguridad del taller y una copia junto a cada zona de riesgo (elevador, foso, zona de fluidos). Renovar anualmente o cuando haya cambios en el equipamiento.',
+    nota: 'El compromiso del estudiante (última sección) se firma al inicio del año escolar. Conservar los originales firmados en la carpeta del taller.',
+    secciones: [
+      {
+        id: 'seg-s1',
+        titulo: 'EPP Obligatorio por Zona de Trabajo',
+        descripcion: 'El docente verifica el EPP antes de permitir el ingreso a cada zona',
+        campos: [
+          { id: 'seg-epp-foso', etiqueta: 'Zona Foso / Elevador — EPP mínimo: lentes de seguridad + casco + overol sin partes sueltas + zapatos de punta de acero + verificación visual de seguros del elevador', tipo: 'check' },
+          { id: 'seg-epp-electrico', etiqueta: 'Zona Eléctrica / Diagnóstico — EPP mínimo: lentes de seguridad + guantes dieléctricos + calzado aislante + verificación de que la batería está desconectada antes de intervenir circuitos', tipo: 'check' },
+          { id: 'seg-epp-fluidos', etiqueta: 'Zona Fluidos (aceite, refrigerante, combustible) — EPP mínimo: lentes de seguridad + guantes de nitrilo + overol + delantal resistente a químicos + recipiente de residuos peligrosos disponible', tipo: 'check' },
+          { id: 'seg-epp-neumatico', etiqueta: 'Zona Neumática / Compresor — EPP mínimo: lentes de seguridad + protección auditiva + verificar presión del sistema antes de conectar herramientas', tipo: 'check' },
+          { id: 'seg-epp-general', etiqueta: 'Regla general: ningún estudiante ingresa a zona de trabajo sin EPP completo verificado por el docente', tipo: 'check' }
+        ]
+      },
+      {
+        id: 'seg-s2',
+        titulo: 'Verificación Pre-sesión del Elevador',
+        descripcion: 'Completar con marcador borrable en la ficha plastificada antes de cada sesión con el elevador',
+        campos: [
+          { id: 'seg-elev-v1', etiqueta: 'Nivel de aceite hidráulico verificado (mirilla en verde)', tipo: 'check' },
+          { id: 'seg-elev-v2', etiqueta: 'Seguros mecánicos de retención operativos (prueba manual)', tipo: 'check' },
+          { id: 'seg-elev-v3', etiqueta: 'Zona de seguridad delimitada (cinta + señales)', tipo: 'check' },
+          { id: 'seg-elev-v4', etiqueta: 'Piso libre de aceite, agua o residuos en la zona del elevador', tipo: 'check' },
+          { id: 'seg-elev-v5', etiqueta: 'Estudiantes con EPP completo verificado antes de acercarse al elevador', tipo: 'check' },
+          { id: 'seg-elev-v6', etiqueta: 'Solo un vehículo y el grupo asignado en la zona del elevador a la vez', tipo: 'check' },
+          { id: 'seg-elev-fecha', etiqueta: 'Fecha y firma del docente responsable de la verificación', tipo: 'firma', requerido: true }
+        ]
+      },
+      {
+        id: 'seg-s3',
+        titulo: 'Riesgos Específicos del Taller Automotriz',
+        descripcion: 'Identificación de riesgos por categoría — para lectura del estudiante',
+        campos: [
+          { id: 'seg-riesgo-mecanico', etiqueta: 'Riesgos mecánicos: atrapamiento en elevador, golpes con herramientas, caída de piezas pesadas. Prevención: EPP, zona despejada, verificación de seguros.', tipo: 'check' },
+          { id: 'seg-riesgo-electrico', etiqueta: 'Riesgos eléctricos: descarga de batería (hasta 900A en arranque), cortocircuito, quemadura por arco. Prevención: desconectar batería antes de intervenir, no usar herramientas metálicas cerca de bornes.', tipo: 'check' },
+          { id: 'seg-riesgo-quimico', etiqueta: 'Riesgos químicos: vapores de combustible (inflamable), aceite caliente (quemadura), refrigerante (tóxico por ingestión). Prevención: ventilación, guantes de nitrilo, recipientes cerrados.', tipo: 'check' },
+          { id: 'seg-riesgo-ergonomico', etiqueta: 'Riesgos ergonómicos: trabajo prolongado bajo el vehículo (postura forzada), levantamiento de piezas pesadas. Prevención: rotar posiciones, usar tecle o ayuda para piezas > 10 kg.', tipo: 'check' }
+        ]
+      },
+      {
+        id: 'seg-s4',
+        titulo: 'Protocolo de Emergencias',
+        descripcion: 'Acciones inmediatas ante cada tipo de emergencia',
+        campos: [
+          { id: 'seg-emerg-derrame', etiqueta: 'DERRAME DE FLUIDOS: 1) Alertar al docente. 2) Evacuar la zona. 3) Usar kit de absorción (aserrín o absorbente). 4) Recoger residuos en bolsa roja. 5) Ventilar el área. NUNCA usar agua sobre aceite o combustible.', tipo: 'check' },
+          { id: 'seg-emerg-incendio', etiqueta: 'CONATO DE INCENDIO: 1) Voz de alarma. 2) Evacuar por ruta marcada. 3) Si es pequeño y controlable: usar extintor tipo ABC desde 2 metros, nunca de espaldas a la salida. 4) Llamar al 116 (bomberos). NUNCA usar agua en fuego eléctrico o de aceite.', tipo: 'check' },
+          { id: 'seg-emerg-atrapamiento', etiqueta: 'ATRAPAMIENTO EN ELEVADOR: 1) NO mover el elevador sin evaluar. 2) Llamar al docente inmediatamente. 3) Si hay riesgo de caída del vehículo, evacuar el área. 4) Llamar al 116. 5) No intentar liberar a la persona sin asegurar primero el vehículo.', tipo: 'check' },
+          { id: 'seg-emerg-electrico', etiqueta: 'DESCARGA ELÉCTRICA: 1) NO tocar a la persona. 2) Cortar la alimentación eléctrica desde el tablero. 3) Usar material no conductor para separar a la persona. 4) Llamar al 117 (SAMU). 5) Aplicar RCP si la persona no responde.', tipo: 'check' },
+          { id: 'seg-extintor-tipo', etiqueta: 'Tipo de extintor instalado en el taller', tipo: 'select', opciones: ['ABC Polvo químico seco', 'CO2', 'Espuma AFFF', 'Otro'], requerido: true },
+          { id: 'seg-extintor-vence', etiqueta: 'Fecha de vencimiento de la recarga del extintor', tipo: 'fecha', requerido: true },
+          { id: 'seg-ruta-evacuacion', etiqueta: 'Ruta de evacuación verificada y señalizada', tipo: 'check' }
+        ]
+      },
+      {
+        id: 'seg-s5',
+        titulo: 'Compromiso de Seguridad del Estudiante',
+        descripcion: 'Firmar al inicio del año escolar — una firma por estudiante',
+        campos: [
+          { id: 'seg-comp-nombre', etiqueta: 'Nombre completo del estudiante', tipo: 'texto', requerido: true },
+          { id: 'seg-comp-grado', etiqueta: 'Grado y sección', tipo: 'texto', requerido: true },
+          { id: 'seg-comp-1', etiqueta: 'He leído y entiendo el protocolo de seguridad del taller automotriz', tipo: 'check' },
+          { id: 'seg-comp-2', etiqueta: 'Me comprometo a usar el EPP completo en todo momento dentro de las zonas de trabajo', tipo: 'check' },
+          { id: 'seg-comp-3', etiqueta: 'No operaré ningún equipo sin autorización y supervisión del docente', tipo: 'check' },
+          { id: 'seg-comp-4', etiqueta: 'Reportaré inmediatamente cualquier anomalía, falla o accidente al docente', tipo: 'check' },
+          { id: 'seg-comp-5', etiqueta: 'Entiendo que el incumplimiento del protocolo implica la suspensión de mi participación en las prácticas del taller', tipo: 'check' },
+          { id: 'seg-comp-firma', etiqueta: 'Firma del estudiante y fecha', tipo: 'firma', requerido: true }
+        ]
+      }
+    ]
+  },
+
 ]
