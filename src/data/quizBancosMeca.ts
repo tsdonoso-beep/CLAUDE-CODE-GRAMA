@@ -1455,4 +1455,104 @@ export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
     }
   ],
 
+  // M5-S51 — Competencia docente 1: planificación por competencias en el taller automotriz (8 preguntas)
+  'm5-s51-c4': [
+    {
+      id: 'm5-s51-c4-q1',
+      enunciado: 'Planificas una sesión donde los estudiantes diagnostican una falla en el sistema de frenos. ¿Cuál es la diferencia entre un objetivo de aprendizaje y una competencia?',
+      opciones: [
+        'Son lo mismo — competencia y objetivo son sinónimos en el currículo técnico',
+        'El objetivo describe qué hará el estudiante en la sesión; la competencia describe el desempeño integrado (saber + hacer + ser) que el estudiante desarrolla a lo largo del módulo',
+        'La competencia es más específica que el objetivo — se redacta para cada actividad',
+        'El objetivo es para el docente; la competencia es para el estudiante'
+      ],
+      correcta: 1,
+      explicacion: 'Un objetivo es puntual ("al terminar la sesión, el estudiante identificará los componentes del sistema de frenos"). Una competencia es integral y se construye en el tiempo ("diagnostica fallas en sistemas automotrices aplicando procedimientos técnicos con responsabilidad"). La planificación por competencias exige que cada sesión contribuya a esa competencia mayor.'
+    },
+    {
+      id: 'm5-s51-c4-q2',
+      enunciado: 'Diseñas la sesión de instalación del elevador tipo tijera. ¿Qué elemento de la planificación garantiza que los estudiantes sepan QUÉ se espera de ellos antes de empezar?',
+      opciones: [
+        'La lista de materiales y herramientas a usar en la sesión',
+        'Los criterios de evaluación compartidos con anticipación — los estudiantes deben conocer los indicadores de logro antes de la actividad',
+        'El tiempo asignado a cada actividad en la sesión',
+        'La biografía del docente que muestra su experiencia técnica'
+      ],
+      correcta: 1,
+      explicacion: 'Compartir los criterios de evaluación antes de la actividad (no después) es un principio clave de la evaluación formativa. En el taller automotriz, los estudiantes necesitan saber: ¿qué pasos deben seguir?, ¿qué nivel de precisión se espera?, ¿cuándo está "bien hecho"? Esto reduce la ansiedad y orienta el esfuerzo.'
+    },
+    {
+      id: 'm5-s51-c4-q3',
+      enunciado: 'Tu sesión tiene 90 minutos. Planificas: 30 min teoría + 45 min práctica + 15 min evaluación. Un colega sugiere invertir a 10 min teoría + 65 min práctica + 15 min evaluación. ¿Cuál es más coherente con la formación técnica por competencias?',
+      opciones: [
+        'La primera — sin base teórica sólida los estudiantes no pueden practicar correctamente',
+        'La segunda — en formación técnica el hacer es el centro; la teoría mínima necesaria se da justo antes de la práctica (just-in-time)',
+        'Son equivalentes — lo importante es cubrir el contenido, no el tiempo',
+        'Ninguna — la evaluación siempre debe ir al inicio para activar conocimientos previos'
+      ],
+      correcta: 1,
+      explicacion: 'La formación por competencias prioriza el saber-hacer. La teoría "just-in-time" (mínima, justo antes de necesitarla) es más efectiva que 30 minutos de exposición frontal. Los estudiantes técnicos aprenden haciendo — el taller automotriz debe ser zona de práctica, no aula extendida.'
+    },
+    {
+      id: 'm5-s51-c4-q4',
+      enunciado: 'Al planificar la secuencia de sesiones del módulo de instalación, ¿cuál orden es pedagógicamente correcto?',
+      opciones: [
+        'Instalación del elevador → Metrado de equipos → Normas de seguridad → Prueba funcional',
+        'Metrado de equipos → Normas de seguridad → Instalación del elevador → Prueba funcional',
+        'Normas de seguridad → Prueba funcional → Metrado de equipos → Instalación del elevador',
+        'Prueba funcional → Instalación del elevador → Metrado → Seguridad'
+      ],
+      correcta: 1,
+      explicacion: 'La secuencia correcta sigue la lógica técnica real: primero conocer qué hay (metrado), luego establecer las condiciones seguras (seguridad), luego instalar, luego verificar que funciona (prueba funcional). Este orden no es arbitrario — refleja el proceso real del técnico automotriz y da sentido a cada sesión.'
+    },
+    {
+      id: 'm5-s51-c4-q5',
+      enunciado: 'Tienes 28 estudiantes y solo 1 elevador tipo tijera. ¿Cómo planificas la práctica para que todos logren la competencia?',
+      opciones: [
+        'Solo 2-3 estudiantes usan el elevador — los demás observan y toman apuntes',
+        'Diseñar estaciones rotativas: grupo A en elevador, grupo B en diagnóstico con escáner, grupo C en ficha de metrado — todos rotan cada 20 minutos',
+        'Dividir el grupo en 14 pares y que cada par use el elevador 5 minutos',
+        'Solicitar a la UGEL más elevadores antes de dar la sesión práctica'
+      ],
+      correcta: 1,
+      explicacion: 'Las estaciones rotativas son la solución estándar para talleres con equipos únicos o escasos. Cada estación trabaja una competencia diferente pero complementaria — no hay tiempo muerto ni estudiantes pasivos. Cinco minutos por par no es suficiente para desarrollar competencia. Esperar más equipos paraliza el aprendizaje.'
+    },
+    {
+      id: 'm5-s51-c4-q6',
+      enunciado: 'Un colega planifica todas sus sesiones con la misma estructura: "explico → demuestro → replican". ¿Cuál es la limitación pedagógica de este modelo?',
+      opciones: [
+        'Ninguna — es el modelo más efectivo para formación técnica probado históricamente',
+        'Solo desarrolla el nivel más bajo de competencia (replicar procedimientos). No desarrolla autonomía, resolución de problemas ni transferencia a situaciones nuevas',
+        'Es demasiado complejo para estudiantes de secundaria técnica',
+        'El problema es la demostración — los estudiantes aprenden mejor solo leyendo el manual'
+      ],
+      correcta: 1,
+      explicacion: '"Explico → demuestro → replican" (modelado directo) es válido para introducir procedimientos nuevos, pero si es el ÚNICO método, los estudiantes solo aprenden a imitar — no a diagnosticar, decidir ni transferir. Una planificación competente varía las estrategias: resolución de casos, práctica autónoma, peer teaching, situaciones imprevistas.'
+    },
+    {
+      id: 'm5-s51-c4-q7',
+      enunciado: 'Redactas el indicador de logro: "El estudiante sabe sobre el sistema de frenos". ¿Cuál es el problema con este indicador?',
+      opciones: [
+        'Es muy técnico para el nivel del estudiante',
+        'No es observable ni medible — "saber sobre" no indica qué acción concreta realiza el estudiante ni en qué condiciones',
+        'Debería incluir el nombre de los componentes específicos',
+        'El indicador está bien — "saber" es el verbo adecuado para el nivel conceptual'
+      ],
+      correcta: 1,
+      explicacion: 'Los indicadores de logro deben ser observables y medibles. "Saber sobre" es invisible — no puedes ver ni medir si alguien "sabe sobre" algo. Un indicador correcto usa verbos de acción: "diagnostica fallas en el sistema de frenos siguiendo el protocolo OBD-II" — puedes observarlo, medirlo y dar retroalimentación específica.'
+    },
+    {
+      id: 'm5-s51-c4-q8',
+      enunciado: 'Al cierre de la planificación anual del taller, ¿qué pregunta verifica mejor que la planificación es coherente con el enfoque por competencias?',
+      opciones: [
+        '"¿Cubrí todos los contenidos del currículo?"',
+        '"¿Cada sesión contribuye a una competencia mayor que el estudiante puede demostrar al final del módulo en una situación real del taller?"',
+        '"¿Usé variedad de herramientas digitales en cada sesión?"',
+        '"¿Los estudiantes aprobaron las evaluaciones escritas?"'
+      ],
+      correcta: 1,
+      explicacion: 'La pregunta central del enfoque por competencias es sobre transferencia: ¿el estudiante puede actuar competentemente en una situación real? "Cubrir contenidos" es el enfoque tradicional. "Aprobar evaluaciones escritas" mide conocimiento declarativo. La competencia se demuestra haciendo, no recordando.'
+    }
+  ],
+
 }
