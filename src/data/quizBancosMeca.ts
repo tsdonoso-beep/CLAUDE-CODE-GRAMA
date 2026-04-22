@@ -126,6 +126,130 @@ export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
     }
   ],
 
+  // M1-S12 — Instalación y softwares automotrices (10 preguntas)
+  'm1-s12-c2': [
+    {
+      id: 'm1-s12-c2-q1',
+      enunciado: 'Al instalar el software LAUNCH X431 en el equipo del taller, el sistema pide activación en línea pero no hay internet. ¿Cuál es la acción correcta?',
+      opciones: [
+        'Cancelar la instalación y esperar hasta tener internet para instalar desde cero',
+        'Completar la instalación sin activar, guardar las credenciales en lugar seguro y activar cuando haya conexión disponible',
+        'Instalar en modo demo indefinidamente — con demo es suficiente para el taller',
+        'Pedir credenciales prestadas a otro docente para activar el equipo'
+      ],
+      correcta: 1,
+      explicacion: 'La mayoría de softwares de diagnóstico permiten instalación sin activación inmediata con funciones básicas disponibles. Pedir credenciales ajenas viola los términos de licencia y puede invalidar la garantía del software.'
+    },
+    {
+      id: 'm1-s12-c2-q2',
+      enunciado: 'El taller tiene vehículos de distintas marcas: Toyota, Hyundai, Volkswagen y Ford. ¿Qué tipo de escáner es más adecuado para el trabajo pedagógico?',
+      opciones: [
+        'Un escáner OEM dedicado a Toyota, ya que es la marca más común en Perú',
+        'Un escáner multimarca (LAUNCH, Autel, Snap-on) con actualización anual de protocolos',
+        'Cuatro escáneres OEM diferentes, uno por marca',
+        'El multímetro — es suficiente para diagnosticar cualquier vehículo'
+      ],
+      correcta: 1,
+      explicacion: 'Un escáner multimarca cubre múltiples fabricantes con un solo equipo y presupuesto. Los escáneres OEM son más precisos pero inviables económicamente para un taller pedagógico con parque vehicular diverso.'
+    },
+    {
+      id: 'm1-s12-c2-q3',
+      enunciado: '¿Por qué es importante actualizar la base de datos del escáner antes de usarlo con vehículos nuevos del taller?',
+      opciones: [
+        'Para que el escáner funcione más rápido',
+        'Porque sin actualización el escáner no enciende',
+        'Porque los vehículos nuevos tienen protocolos y códigos que versiones antiguas del software no reconocen',
+        'La actualización es opcional — los códigos OBD-II son estándar y no cambian'
+      ],
+      correcta: 2,
+      explicacion: 'Cada año se lanzan nuevos modelos con variantes de protocolos. Un escáner desactualizado puede no reconocer el vehículo o entregar diagnósticos incompletos. La actualización anual es parte del mantenimiento preventivo del equipo.'
+    },
+    {
+      id: 'm1-s12-c2-q4',
+      enunciado: 'Al instalar el elevador hidráulico, ¿cuál es el primer paso ANTES de comenzar el montaje?',
+      opciones: [
+        'Conectar el sistema hidráulico y probar si sube y baja',
+        'Verificar que el piso soporte la carga del elevador más el peso máximo del vehículo',
+        'Anclar la base con pernos para asegurar estabilidad',
+        'Leer el manual de instalación en caso de dudas durante el proceso'
+      ],
+      correcta: 1,
+      explicacion: 'Un elevador de 3.5 ton más un vehículo puede superar las 5 toneladas en un punto. Si el piso no tiene la resistencia adecuada, el equipo puede hundirse o colapsar. La verificación estructural es siempre el primer paso.'
+    },
+    {
+      id: 'm1-s12-c2-q5',
+      enunciado: 'El driver del escáner no se instala en Windows 11. ¿Cuál es la acción correcta?',
+      opciones: [
+        'Bajar a Windows 7 donde el driver sí funciona',
+        'Buscar en el sitio oficial del fabricante un driver actualizado compatible con Windows 11',
+        'Usar el escáner sin driver — igual conecta por OBD',
+        'Reportar el equipo como defectuoso a la UGEL'
+      ],
+      correcta: 1,
+      explicacion: 'Los fabricantes publican actualizaciones de drivers para nuevos sistemas operativos. Antes de declarar incompatibilidad, siempre revisar el sitio oficial del fabricante. Bajar el sistema operativo solo como último recurso y con el área técnica de la IE.'
+    },
+    {
+      id: 'm1-s12-c2-q6',
+      enunciado: '¿Qué es el protocolo CAN (Controller Area Network) en el contexto del diagnóstico automotriz?',
+      opciones: [
+        'Una marca de escáner automotriz profesional',
+        'El conector de 16 pines donde se conecta el escáner',
+        'Una red de comunicación interna del vehículo que permite que los módulos electrónicos se comuniquen entre sí',
+        'El software de actualización del escáner LAUNCH'
+      ],
+      correcta: 2,
+      explicacion: 'CAN es el bus de comunicación estándar en vehículos modernos. Permite que el módulo del motor, ABS, airbags y otros se comuniquen. El escáner "escucha" esta red para leer parámetros y códigos de falla.'
+    },
+    {
+      id: 'm1-s12-c2-q7',
+      enunciado: 'El taller solo tiene tomacorrientes de 110V pero el elevador requiere 220V. ¿Qué hace el docente?',
+      opciones: [
+        'Conectar con un adaptador de voltaje para poder probar el equipo',
+        'No conectar el elevador bajo ninguna circunstancia y gestionar la instalación eléctrica correcta con dirección antes del primer uso',
+        'Conectarlo brevemente para ver si funciona sin problemas',
+        'Usar el elevador de forma manual sin motor mientras se resuelve el tema eléctrico'
+      ],
+      correcta: 1,
+      explicacion: 'Conectar un equipo de 220V a 110V puede dañar el motor irreparablemente y anular la garantía. La instalación eléctrica adecuada es prerequisito no negociable para la puesta en marcha del elevador.'
+    },
+    {
+      id: 'm1-s12-c2-q8',
+      enunciado: '¿Quién debe realizar la calibración inicial del elevador hidráulico después de la instalación?',
+      opciones: [
+        'El docente, siguiendo las instrucciones del manual paso a paso',
+        'El técnico autorizado del fabricante o distribuidor, con el acta de calibración como documento de respaldo',
+        'Un estudiante avanzado bajo supervisión del docente',
+        'No requiere calibración — los elevadores vienen calibrados de fábrica'
+      ],
+      correcta: 1,
+      explicacion: 'La calibración inicial debe realizarla el técnico autorizado. El acta de calibración es documento de respaldo para la garantía y certifica que el equipo opera dentro de los parámetros de seguridad del fabricante.'
+    },
+    {
+      id: 'm1-s12-c2-q9',
+      enunciado: 'Al completar la instalación, ¿qué prueba es obligatoria antes de autorizar el primer uso pedagógico del elevador?',
+      opciones: [
+        'Solo verificar visualmente que esté bien anclado',
+        'Ciclo completo de subida y bajada sin carga, luego con carga nominal, verificando seguros mecánicos en ambas pruebas',
+        'Levantar un vehículo directamente en la primera sesión con estudiantes presentes',
+        'Encenderlo y apagarlo tres veces para asentar el sistema hidráulico'
+      ],
+      correcta: 1,
+      explicacion: 'La prueba funcional debe ir de menos a más: primero sin carga para verificar el ciclo hidráulico y los seguros, luego con carga nominal para certificar que opera de forma segura. Sin esta prueba, no hay autorización de uso.'
+    },
+    {
+      id: 'm1-s12-c2-q10',
+      enunciado: 'El software de diagnóstico del taller requiere una suscripción anual para actualizar protocolos. Un docente propone no renovarla para ahorrar. ¿Cuál es el impacto pedagógico?',
+      opciones: [
+        'Ninguno — los códigos OBD básicos no cambian y cubren el 90% de los diagnósticos',
+        'El escáner dejará de funcionar completamente sin suscripción activa',
+        'Los vehículos de años recientes no serán reconocidos y los estudiantes no podrán practicar diagnóstico en equipos modernos',
+        'Solo afecta la impresión de reportes, el diagnóstico en pantalla sigue funcionando'
+      ],
+      correcta: 2,
+      explicacion: 'Sin actualización, el escáner trabaja con una base de datos antigua. Los vehículos de los últimos 2-3 años pueden no ser reconocidos o mostrar parámetros incompletos. En un taller pedagógico, esto limita directamente las competencias que se pueden desarrollar.'
+    }
+  ],
+
   // M1-S13 — Seguridad EPP (BLOQUEANTE — mín 80%)
   'm1-s13-c3': [
     {
