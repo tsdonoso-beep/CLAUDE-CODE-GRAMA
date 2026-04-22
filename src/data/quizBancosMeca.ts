@@ -1555,4 +1555,104 @@ export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
     }
   ],
 
+  // M5-S53 — Competencia docente 2: metodologías activas ABP/ABPr en el taller automotriz (8 preguntas)
+  'm5-s53-c4': [
+    {
+      id: 'm5-s53-c4-q1',
+      enunciado: 'La diferencia clave entre Aprendizaje Basado en Problemas (ABP) y Aprendizaje Basado en Proyectos (ABPr) en el taller automotriz es:',
+      opciones: [
+        'ABP usa más tecnología; ABPr es más manual',
+        'ABP parte de un problema abierto para construir conocimiento; ABPr culmina en un producto o entregable concreto que resuelve una necesidad real',
+        'ABP es para estudiantes avanzados; ABPr para principiantes',
+        'Son idénticos — el nombre varía según la institución'
+      ],
+      correcta: 1,
+      explicacion: 'En ABP el problema es el detonante del aprendizaje — los estudiantes investigan para entender. En ABPr el proyecto es el eje — los estudiantes crean algo real (un protocolo, una instalación, un diagnóstico documentado). En automotriz: ABP = "¿por qué falla este motor?"; ABPr = "instala y certifica el equipo de diagnóstico del taller".'
+    },
+    {
+      id: 'm5-s53-c4-q2',
+      enunciado: 'Diseñas un ABP para el módulo de diagnóstico. El problema detonador es: "Un vehículo llega al taller con el testigo del motor encendido y el dueño no quiere gastar más de S/200". ¿Por qué este problema es pedagógicamente efectivo?',
+      opciones: [
+        'Porque menciona una cantidad de dinero que motiva a los estudiantes',
+        'Porque es auténtico, tiene restricciones reales (presupuesto), requiere integrar diagnóstico técnico y toma de decisiones — simula una situación real del oficio',
+        'Porque es simple y los estudiantes pueden resolverlo en una sola sesión',
+        'Porque el testigo del motor es el contenido más importante del módulo'
+      ],
+      correcta: 1,
+      explicacion: 'Un buen problema ABP tiene: autenticidad (ocurre en la vida real del técnico), complejidad suficiente (no tiene respuesta única), restricciones reales (presupuesto, tiempo) e integra múltiples saberes. La restricción de S/200 obliga a priorizar el diagnóstico antes de intervenir — exactamente lo que hace un buen técnico.'
+    },
+    {
+      id: 'm5-s53-c4-q3',
+      enunciado: 'Durante un ABPr de instalación de equipos, un grupo de estudiantes está atascado en la conexión eléctrica del compresor. ¿Cuál es el rol correcto del docente?',
+      opciones: [
+        'Explicar inmediatamente la solución para no perder tiempo de la sesión',
+        'Hacer preguntas que guíen el razonamiento: "¿Qué voltaje requiere el compresor? ¿Qué dice el manual sobre el calibre del cable? ¿Qué pasaría si usas un cable más delgado?"',
+        'Dejar que el grupo resuelva solo — la intervención del docente invalida el ABPr',
+        'Reasignar esa tarea a otro grupo que ya terminó'
+      ],
+      correcta: 1,
+      explicacion: 'En metodologías activas el docente es facilitador, no transmisor. Las preguntas socráticas mantienen el protagonismo del estudiante mientras los desbloquean. Dar la respuesta directa cancela el aprendizaje; ignorarlos completamente los frustra. El arte está en la pregunta correcta en el momento correcto.'
+    },
+    {
+      id: 'm5-s53-c4-q4',
+      enunciado: 'Quieres implementar ABPr en el módulo de seguridad del taller. ¿Cuál es el proyecto más adecuado?',
+      opciones: [
+        'Hacer un examen escrito sobre las normas de seguridad del taller',
+        'Diseñar, producir e instalar el panel de seguridad real del taller: protocolo EPP por zona, ruta de evacuación, ubicación del extintor — entregable que queda en el taller',
+        'Ver un documental sobre accidentes en talleres automotrices internacionales',
+        'Copiar el protocolo de seguridad de otro taller y adaptarlo teóricamente'
+      ],
+      correcta: 1,
+      explicacion: 'El ABPr requiere un producto real con destinatario real. Un panel de seguridad que queda instalado en el taller es el proyecto ideal: es auténtico, tiene impacto real, integra diseño + contenido técnico + trabajo colaborativo, y los estudiantes ven su trabajo usado por otros. Un examen escrito no es un proyecto.'
+    },
+    {
+      id: 'm5-s53-c4-q5',
+      enunciado: 'Al evaluar un ABP, un colega solo califica el informe escrito final. ¿Qué dimensión importante está ignorando?',
+      opciones: [
+        'La ortografía y redacción del informe',
+        'El proceso: la calidad del razonamiento durante la investigación, las decisiones tomadas, la colaboración y la metacognición — no solo el producto final',
+        'La extensión del informe — los mejores ABP producen informes más largos',
+        'La presentación visual del informe'
+      ],
+      correcta: 1,
+      explicacion: 'En ABP el aprendizaje ocurre en el proceso, no solo en el producto. Evaluar solo el informe final es como juzgar un partido de fútbol solo por el marcador final. Los instrumentos de evaluación ABP deben capturar: calidad de las preguntas que se hicieron, cómo buscaron información, cómo tomaron decisiones y qué aprendieron del error.'
+    },
+    {
+      id: 'm5-s53-c4-q6',
+      enunciado: 'Implementas ABP por primera vez en tu taller. Los estudiantes dicen: "profe, díganos qué hacer". ¿Cómo interpretas esta reacción y qué haces?',
+      opciones: [
+        'Es señal de que el ABP no es adecuado para este grupo — volver al método tradicional',
+        'Es una reacción normal al cambio de rol: los estudiantes están acostumbrados a recibir instrucciones. Responder con una pregunta que los reencamine: "¿Qué información necesitan para poder decidir el primer paso?"',
+        'Darles una guía paso a paso detallada para que puedan avanzar',
+        'Ignorar el comentario y esperar que el grupo se organice solo'
+      ],
+      correcta: 1,
+      explicacion: 'La dependencia del docente es un hábito adquirido en años de educación frontal. No indica que el grupo sea incapaz — indica que necesitan andamiaje para desarrollar autonomía progresivamente. La pregunta de reencaminamiento ("¿qué necesitan saber?") es más poderosa que dar la respuesta o la guía, porque activa el proceso metacognitivo.'
+    },
+    {
+      id: 'm5-s53-c4-q7',
+      enunciado: 'En un ABPr de diagnóstico automotriz, un grupo llega a una conclusión técnicamente incorrecta. ¿Cuál es la respuesta pedagógica correcta?',
+      opciones: [
+        'Corregir inmediatamente frente al grupo para que no aprendan lo incorrecto',
+        'Pedirles que expliquen su razonamiento paso a paso — el error se convierte en oportunidad de aprendizaje cuando el grupo lo descubre a través de sus propias preguntas',
+        'Ignorar el error y esperar que lo descubran solos cuando apliquen en la práctica',
+        'Reducir la calificación del grupo por llegar a una conclusión incorrecta'
+      ],
+      correcta: 1,
+      explicacion: 'El error en ABP/ABPr tiene valor pedagógico cuando se procesa. Pedir que expliquen el razonamiento ("¿cómo llegaron a esa conclusión?") permite identificar dónde está la falla lógica. El grupo que descubre su propio error aprende más profundamente que el que recibe la corrección externamente. El docente no debe robar ese momento de descubrimiento.'
+    },
+    {
+      id: 'm5-s53-c4-q8',
+      enunciado: '¿Cuál es la condición mínima para que una actividad en el taller automotriz sea genuinamente ABP o ABPr?',
+      opciones: [
+        'Que los estudiantes trabajen en grupos y entreguen un informe al final',
+        'Que exista un problema o desafío auténtico sin respuesta única predeterminada, que requiera investigar, decidir y actuar — no seguir pasos dados por el docente',
+        'Que el docente no intervenga durante toda la actividad',
+        'Que use tecnología digital como apoyo pedagógico'
+      ],
+      correcta: 1,
+      explicacion: 'La condición esencial del ABP/ABPr es la autenticidad del problema y la apertura de la solución. Si el docente ya sabe exactamente qué pasos seguirán los estudiantes, no es ABP — es una práctica guiada disfrazada. El verdadero ABP implica incertidumbre, investigación real y decisiones genuinas del estudiante.'
+    }
+  ],
+
 }
