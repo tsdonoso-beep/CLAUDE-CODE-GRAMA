@@ -67,4 +67,54 @@ const ESCENARIOS: Escenario[] = [
     ],
     mejorIdx: 0
   },
+  {
+    necesidad: 'Generar un plan de sesión para la instalación del compresor',
+    contexto: 'Tienes una sesión de 90 minutos para enseñar la instalación del compresor de aire. Quieres que la IA te ayude a estructurar la sesión con actividades concretas.',
+    opciones: [
+      {
+        prompt: '"Diseña una sesión de aprendizaje de 90 minutos para docentes de taller automotriz sobre: instalación y puesta en marcha del compresor de aire (50L, 3HP, 220V). Incluir: objetivo en términos de competencia observable, distribución de tiempo por momento (inicio/desarrollo/cierre), actividades prácticas por estación si hay más de 20 estudiantes, materiales necesarios y criterio de evaluación de cierre. Nivel: docentes de secundaria técnica EPT-MINEDU."',
+        calidad: 'bueno',
+        preview: 'PLAN DE SESIÓN — Instalación del Compresor de Aire\nDuración: 90 min | Modalidad: Presencial-práctica\n\nCOMPETENCIA: Instala y pone en marcha el compresor de aire siguiendo el manual del fabricante, verificando presión de trabajo y conexiones de seguridad.\n\nINICIO (15 min)\n• Verificación de EPP (5 min)\n• Pregunta detonadora: "¿Qué pasaría si conectamos el compresor sin verificar la válvula de seguridad?" (10 min)\n\nDESARROLLO (60 min) — 3 estaciones rotativas...',
+        explicacion: 'El prompt especificó duración, equipo exacto con sus especificaciones técnicas (50L, 3HP, 220V), estructura requerida (objetivo, distribución, estaciones, materiales, evaluación) y el contexto del docente. El resultado es un plan directamente aplicable.'
+      },
+      {
+        prompt: '"Plan de clase sobre el compresor."',
+        calidad: 'malo',
+        preview: 'Plan de Clase: El Compresor\n\nObjetivo: Que los estudiantes conozcan el compresor.\nTiempo: A definir\nActividades:\n1. Introducción teórica\n2. Demostración\n3. Práctica\nEvaluación: Observación del docente',
+        explicacion: '"El compresor" sin especificaciones genera un plan que aplica a cualquier máquina en cualquier contexto. Sin duración, sin nivel educativo, sin estructura requerida, el resultado es un esqueleto vacío que requiere rehacerse completo.'
+      },
+      {
+        prompt: '"Arma un plan de sesión de 90 minutos para enseñar a instalar un compresor en el taller automotriz, con actividades prácticas y evaluación."',
+        calidad: 'regular',
+        preview: 'PLAN DE SESIÓN — Instalación del Compresor (90 min)\n\nObjetivo: El estudiante instalará el compresor correctamente.\n\nInicio (10 min): Presentar el equipo y sus características\nDesarrollo (70 min): Demostración + práctica guiada\nCierre (10 min): Evaluación de lo aprendido\n\nMateriales: Compresor, manual, herramientas básicas',
+        explicacion: 'Mejor — tiene duración y contexto de taller. Pero "actividades prácticas" sin especificar cuántos estudiantes ni cómo organizarlos produce una sesión que asume un grupo pequeño con acceso simultáneo. En un grupo de 28, este plan no funciona sin adaptación mayor.'
+      }
+    ],
+    mejorIdx: 0
+  },
+  {
+    necesidad: 'Crear un quiz de EPP para que tus estudiantes practiquen antes de la sesión del elevador',
+    contexto: 'Mañana usarán el elevador por primera vez. Quieres enviarles un quiz corto por la plataforma para asegurarte de que lleguen sabiendo qué EPP necesitan y por qué.',
+    opciones: [
+      {
+        prompt: '"Quiz sobre EPP."',
+        calidad: 'malo',
+        preview: '1. ¿Qué significa EPP?\na) Equipo de Protección Personal\nb) Elemento de Prevención de Peligros\nc) Equipo de Primera Prioridad\n\n2. ¿Cuál es el EPP más importante?\na) El casco\nb) Los guantes\nc) Depende de la actividad...',
+        explicacion: 'Sin contexto, la IA genera un quiz de definiciones genéricas. "¿Qué significa EPP?" mide memoria, no criterio. Los estudiantes de automotriz necesitan saber qué EPP usar en cada situación del taller, no deletrear el acrónimo.'
+      },
+      {
+        prompt: '"Crea 5 preguntas de opción múltiple (4 opciones cada una) sobre EPP en el taller automotriz, enfocadas en situaciones reales de decisión: cuándo usar qué EPP y por qué. Contexto: estudiantes de 4° secundaria que usarán el elevador tipo tijera por primera vez. Incluir una pregunta sobre qué hacer si un compañero no tiene su EPP. Nivel de dificultad: aplicación, no memorización."',
+        calidad: 'bueno',
+        preview: '1. Vas a trabajar bajo un vehículo levantado con el elevador tipo tijera. ¿Cuál es el EPP mínimo obligatorio ANTES de ingresar al espacio bajo el vehículo?\na) Solo guantes de mecánico\nb) Lentes + casco + overol sin partes sueltas + zapatos punta de acero ✓\nc) Lentes y guantes son suficientes\nd) El docente decide caso por caso\n\n2. Tu compañero va a trabajar bajo el vehículo pero olvidó sus lentes de seguridad. ¿Qué haces?...',
+        explicacion: 'Especificó cantidad (5), formato (4 opciones), el tipo de situaciones (decisión real), el contexto exacto (elevador tipo tijera, primera vez), una pregunta específica (compañero sin EPP) y el nivel cognitivo (aplicación). El resultado es directamente usable en la plataforma.'
+      },
+      {
+        prompt: '"Hazme preguntas sobre el EPP que necesitan para usar el elevador del taller."',
+        calidad: 'regular',
+        preview: '1. ¿Qué EPP se necesita para usar el elevador?\na) Solo guantes\nb) Lentes, casco y overol\nc) No se necesita EPP si el elevador está en buen estado\nd) El docente decide\n\n2. ¿Por qué es importante usar lentes al trabajar bajo el elevador?\na) Por reglamento\nb) Para proteger los ojos de partículas y fluidos...',
+        explicacion: 'Mejor que el primero — menciona el elevador y el taller. Pero "hazme preguntas" sin especificar cantidad, formato ni nivel cognitivo produce un resultado variable. Este prompt genera algo útil pero incompleto: faltan situaciones de decisión real y la pregunta del compañero sin EPP, que es la más importante pedagógicamente.'
+      }
+    ],
+    mejorIdx: 1
+  },
 ]
