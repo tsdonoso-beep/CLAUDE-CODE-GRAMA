@@ -2,6 +2,106 @@ import type { PreguntaQuiz } from './modulosLXP'
 
 export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
 
+  // M0-S03 — Google Workspace para docentes (8 preguntas)
+  'm0-s03-c5': [
+    {
+      id: 'm0-s03-c5-q1',
+      enunciado: 'El docente necesita coordinar el horario de uso del foso de reparación entre 3 secciones distintas. ¿Qué herramienta de Google Workspace es la más adecuada?',
+      opciones: [
+        'Google Docs — para escribir el horario en un documento compartido',
+        'Google Calendar — permite crear eventos por bloque horario, asignarlos a cada sección y enviar invitaciones automáticas',
+        'Google Forms — para que cada sección solicite su turno',
+        'Google Chat — para coordinar informalmente por mensajes'
+      ],
+      correcta: 1,
+      explicacion: 'Google Calendar permite visualizar disponibilidad en tiempo real, crear eventos recurrentes por sección y enviar recordatorios automáticos. Es la herramienta ideal para gestionar recursos compartidos con restricción de horario.'
+    },
+    {
+      id: 'm0-s03-c5-q2',
+      enunciado: 'El docente quiere llevar el inventario de insumos del taller (aceites, filtros, bujías) con control de cantidades y alertas de stock mínimo. ¿Qué herramienta usa?',
+      opciones: [
+        'Google Docs — para listar los insumos en una tabla de texto',
+        'Google Slides — para crear una presentación visual del inventario',
+        'Google Sheets — permite tablas, fórmulas de cálculo y formato condicional para alertas de stock',
+        'Google Keep — para anotar los insumos como lista de tareas'
+      ],
+      correcta: 2,
+      explicacion: 'Google Sheets es la herramienta de datos de Google Workspace. Con fórmulas básicas y formato condicional se puede calcular stock disponible y resaltar automáticamente los insumos que deben reponerse.'
+    },
+    {
+      id: 'm0-s03-c5-q3',
+      enunciado: '¿Cuál es la principal ventaja pedagógica de usar Google Docs frente al papel para que los estudiantes redacten su informe de diagnóstico de fallas?',
+      opciones: [
+        'Google Docs tiene corrector ortográfico en terminología automotriz',
+        'El docente puede agregar comentarios directamente en el texto del estudiante sin necesidad de reimprimir, en tiempo real',
+        'El informe queda guardado automáticamente sin que el estudiante tenga que hacerlo',
+        'Google Docs genera el informe con inteligencia artificial sin que el estudiante tenga que escribir'
+      ],
+      correcta: 1,
+      explicacion: 'La retroalimentación en tiempo real con comentarios contextuales es el diferenciador clave. El docente señala exactamente qué parte del diagnóstico está incompleta o incorrecta, y el estudiante corrige sin reiniciar el documento.'
+    },
+    {
+      id: 'm0-s03-c5-q4',
+      enunciado: 'Google Tasks integrado con Google Calendar sirve principalmente para:',
+      opciones: [
+        'Chatear con otros docentes en tiempo real sobre el estado del taller',
+        'Almacenar manuales técnicos de los fabricantes de equipos',
+        'Registrar tareas pendientes con fechas límite y vincularlas al calendario de actividades del taller',
+        'Crear formularios de diagnóstico de vehículos para los estudiantes'
+      ],
+      correcta: 2,
+      explicacion: 'Tasks + Calendar es la combinación de productividad personal: Tasks captura la tarea (ej: "revisar extintor antes del lunes"), Calendar la ubica en el tiempo. Para el docente de mecánica: mantenimientos programados, entregas de fichas técnicas, revisiones de equipos.'
+    },
+    {
+      id: 'm0-s03-c5-q5',
+      enunciado: 'El docente quiere que sus estudiantes completen una ficha de evaluación de cada práctica y que los resultados se organicen automáticamente en una hoja de cálculo. ¿Qué flujo de trabajo usa?',
+      opciones: [
+        'Google Docs → copiar y pegar manualmente en Sheets',
+        'Google Forms (para capturar respuestas) + Google Sheets (las respuestas se vuelcan automáticamente en una hoja vinculada)',
+        'Google Slides con preguntas de opción múltiple y pantalla compartida',
+        'Google Chat con una encuesta rápida al final de la sesión'
+      ],
+      correcta: 1,
+      explicacion: 'Google Forms genera automáticamente una hoja de respuestas en Sheets. El docente diseña la ficha de evaluación una sola vez y todas las respuestas de los estudiantes se registran sin intervención manual.'
+    },
+    {
+      id: 'm0-s03-c5-q6',
+      enunciado: 'Un docente quiere compartir los manuales técnicos de los equipos del taller con todos sus estudiantes y que siempre tengan la versión más actualizada. ¿Qué hace?',
+      opciones: [
+        'Envía el PDF por WhatsApp cada vez que hay una actualización',
+        'Sube los manuales a Google Drive en una carpeta compartida — cualquier actualización del archivo es inmediatamente visible para todos los que tienen el enlace',
+        'Publica los manuales en Google Sites pero solo pueden verlos con cuenta Google',
+        'Los guarda en Google Photos para que sean fáciles de buscar'
+      ],
+      correcta: 1,
+      explicacion: 'Google Drive con carpeta compartida es el repositorio centralizado de Google Workspace. Un solo enlace, acceso controlado por el docente, y cualquier actualización del archivo (nueva versión del manual) es inmediatamente visible sin reenviar nada.'
+    },
+    {
+      id: 'm0-s03-c5-q7',
+      enunciado: 'Al final del ciclo, el docente necesita consolidar las notas de práctica de 28 estudiantes que cada uno ingresó en su propia hoja de Google Sheets. ¿Cuál es la forma más eficiente?',
+      opciones: [
+        'Copiar y pegar manualmente las notas de cada hoja en una hoja maestra',
+        'Usar la función IMPORTRANGE de Google Sheets para traer los datos de cada hoja de estudiante a una hoja maestra de consolidación automáticamente',
+        'Pedirle a cada estudiante que envíe su nota por correo',
+        'No es posible consolidar hojas separadas en Google Workspace'
+      ],
+      correcta: 1,
+      explicacion: 'IMPORTRANGE conecta hojas de Sheets entre sí. La hoja maestra del docente puede importar automáticamente los datos de cada estudiante, eliminando la consolidación manual y reduciendo errores de transcripción.'
+    },
+    {
+      id: 'm0-s03-c5-q8',
+      enunciado: 'Un colega docente no puede asistir a la reunión de coordinación. El docente quiere que pueda ver la presentación, hacer preguntas y revisarla después. ¿Qué herramienta de Google Workspace cubre las tres necesidades?',
+      opciones: [
+        'Google Slides (presentación) + Google Meet (reunión en vivo con grabación) + Google Drive (acceso posterior a la grabación y slides)',
+        'Solo Google Meet — es suficiente para todo',
+        'Google Docs para escribir los puntos de la reunión y enviárselos después',
+        'WhatsApp para la reunión y Google Drive solo para guardar el archivo'
+      ],
+      correcta: 0,
+      explicacion: 'La combinación Slides + Meet + Drive cubre los tres momentos: la presentación en vivo (Slides compartido en Meet), la participación remota (Meet con audio/video), y el acceso posterior (grabación de Meet y Slides guardados en Drive).'
+    }
+  ],
+
   // M1-S11 — Metrado de equipos automotriz (10 preguntas)
   'm1-s11-c3': [
     {
