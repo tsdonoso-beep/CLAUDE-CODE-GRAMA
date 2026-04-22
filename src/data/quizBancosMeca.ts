@@ -1027,4 +1027,832 @@ export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
     }
   ],
 
+  // M0-RA1 — Evaluación M0 global (15 preguntas, puntajeMinimo: 70)
+  'm0-ra1-c1': [
+    {
+      id: 'm0-ra1-c1-q1',
+      enunciado: 'Necesitas registrar el estado de 12 equipos del taller automotriz con sus fechas de mantenimiento y compartirlo con todo el equipo docente. ¿Qué herramienta de Google Workspace usarías y por qué?',
+      opciones: [
+        'Google Docs — permite texto libre y tablas para cualquier registro',
+        'Google Sheets — tabla estructurada, filtros, ordenamiento y edición simultánea ideal para inventarios',
+        'Google Calendar — para registrar las fechas de mantenimiento directamente',
+        'Google Tasks — para asignar a cada docente la revisión de un equipo'
+      ],
+      correcta: 1,
+      explicacion: 'Google Sheets es la herramienta correcta para inventarios: columnas fijas, filtros por estado, fórmulas de conteo y edición simultánea. Docs es para texto narrativo; Calendar para eventos; Tasks para pendientes individuales — cada herramienta tiene su rol.'
+    },
+    {
+      id: 'm0-ra1-c1-q2',
+      enunciado: 'Quieres que la IA te ayude a redactar el protocolo de uso seguro del elevador tipo tijera. ¿Cuál es el prompt más efectivo?',
+      opciones: [
+        '"Escribe un protocolo de seguridad"',
+        '"Redacta un protocolo de seguridad para elevador tipo tijera en taller automotriz escolar, incluyendo EPP obligatorio, pasos de verificación pre-uso y protocolo de emergencia por falla hidráulica. Extensión: 1 página A4."',
+        '"Hazme un texto sobre elevadores"',
+        '"¿Qué es un elevador tipo tijera?"'
+      ],
+      correcta: 1,
+      explicacion: 'Un prompt efectivo tiene: contexto específico (elevador tipo tijera, taller escolar), tarea clara (protocolo de seguridad), estructura requerida (EPP, verificación, emergencia) y restricción de formato (1 página A4). Prompts vagos producen respuestas genéricas inutilizables.'
+    },
+    {
+      id: 'm0-ra1-c1-q3',
+      enunciado: 'Un docente usa Google Calendar para el taller. Crea el evento "Práctica motor" pero no agrega participantes ni sala. ¿Qué consecuencia real tiene este error?',
+      opciones: [
+        'El evento igual aparece en los calendarios de todos los docentes del taller',
+        'Ninguna — Calendar es solo un recordatorio personal',
+        'Los otros docentes no saben de la práctica y el espacio puede estar ocupado por otra sección ese día',
+        'Calendar envía notificación automática a todos de todas formas'
+      ],
+      correcta: 2,
+      explicacion: 'Sin invitados ni recurso de sala, el evento es invisible para los demás. Resultado: conflictos de horario, docentes sin aviso y estudiantes sin espacio. La coordinación efectiva del taller requiere invitar a colegas y reservar el espacio físico desde el mismo Calendar.'
+    },
+    {
+      id: 'm0-ra1-c1-q4',
+      enunciado: 'Quieres crear una presentación sobre el ciclo Otto para tus estudiantes de automotriz. Tienes 20 minutos. ¿Qué herramienta produce el resultado más rápido con calidad visual aceptable?',
+      opciones: [
+        'Google Slides — conocida y confiable, aunque requiere diseñar diapositiva por diapositiva',
+        'Gamma — genera una presentación completa desde un prompt en menos de 2 minutos, con diseño automático',
+        'Figma — diseño profesional pero requiere más tiempo de configuración',
+        'Polypad — visualizaciones interactivas pero no genera presentaciones de diapositivas'
+      ],
+      correcta: 1,
+      explicacion: 'Gamma genera presentaciones completas desde texto en segundos. Para 20 minutos, es la única opción que deja tiempo para revisar y ajustar. Google Slides es más control pero mucho más lento. Figma y Polypad no son herramientas de presentación de diapositivas.'
+    },
+    {
+      id: 'm0-ra1-c1-q5',
+      enunciado: 'Quieres que tus estudiantes practiquen identificar ángulos en los componentes de la dirección del vehículo. ¿Qué herramienta digital es más adecuada para esta actividad?',
+      opciones: [
+        'Gamma — genera una presentación visual de los componentes de dirección',
+        'Polypad — permite construir visualizaciones geométricas interactivas con ángulos y medidas reales',
+        'Miró — pizarra colaborativa donde los estudiantes pueden dibujar libremente',
+        'Teachy — genera actividades de quiz sobre componentes de dirección'
+      ],
+      correcta: 1,
+      explicacion: 'Polypad es una herramienta de matemáticas visuales: transportadores, geoplanos, geometría dinámica. Para trabajar ángulos de dirección (camber, caster, convergencia) con precisión visual e interactividad, Polypad es la opción correcta.'
+    },
+    {
+      id: 'm0-ra1-c1-q6',
+      enunciado: 'Tu equipo de 6 docentes necesita decidir colectivamente qué zona del taller remodelar primero. Tienes 30 minutos de reunión. ¿Qué herramienta y técnica usarías?',
+      opciones: [
+        'Google Sheets compartido — cada docente vota en su celda',
+        'Mural con tablero de lluvia de ideas + votación anónima por puntos, facilitado con temporizador',
+        'WhatsApp — encuesta rápida en el grupo del taller',
+        'Figma — diseñar una propuesta visual de cada zona para votar'
+      ],
+      correcta: 1,
+      explicacion: 'Mural combina generación de ideas (sticky notes), votación anónima (elimina sesgo de autoridad) y temporizador (respeta los 30 minutos). WhatsApp no es colaborativo ni anónimo. Google Sheets es técnicamente posible pero no tiene las herramientas de facilitación integradas.'
+    },
+    {
+      id: 'm0-ra1-c1-q7',
+      enunciado: 'Usas Claude (IA) para diseñar una rúbrica de evaluación de diagnóstico automotriz. El resultado tiene criterios muy genéricos. ¿Cuál es la causa más probable?',
+      opciones: [
+        'Claude no puede crear rúbricas de evaluación técnica',
+        'El prompt no especificó el nivel educativo, la competencia específica ni los indicadores esperados del estudiante',
+        'Las rúbricas de automotriz son demasiado técnicas para cualquier IA',
+        'Hay que usar GPT en lugar de Claude para tareas pedagógicas'
+      ],
+      correcta: 1,
+      explicacion: 'La calidad del output de IA es directamente proporcional a la especificidad del prompt. Una rúbrica genérica proviene de un prompt genérico. Para obtener criterios específicos de automotriz, el prompt debe incluir: nivel (secundaria técnica), competencia (diagnóstico de motor), indicadores observables y escala.'
+    },
+    {
+      id: 'm0-ra1-c1-q8',
+      enunciado: 'Tienes el manual de instalación del escáner LAUNCH en PDF (en inglés). ¿Cómo usarías IA para aprovechar este documento en tu planificación?',
+      opciones: [
+        'No es posible — la IA no puede procesar documentos técnicos en inglés',
+        'Subir el PDF a Claude o ChatGPT y pedir: "Resume los pasos de instalación, tradúcelos al español y genera una lista de verificación imprimible"',
+        'Traducir manualmente el PDF y luego pedirle a la IA que lo resuma',
+        'Usar Google Translate en el PDF y guardar el resultado como está'
+      ],
+      correcta: 1,
+      explicacion: 'Las IAs modernas (Claude, GPT-4) pueden procesar PDFs directamente. Un solo prompt puede: traducir, resumir y reformatear en lista de verificación. Hacerlo manualmente en pasos separados es ineficiente. Esta capacidad es uno de los usos más valiosos de IA para docentes técnicos.'
+    },
+    {
+      id: 'm0-ra1-c1-q9',
+      enunciado: 'Quieres visualizar en 3D el sistema de frenos ABS para mostrarlo en clase. ¿Cuál es la ruta más directa?',
+      opciones: [
+        'Buscar en YouTube un video del sistema ABS y proyectarlo',
+        'Usar Meshy con el prompt "sistema de frenos ABS automotriz, vista explodida, componentes etiquetados" para generar un modelo 3D',
+        'Dibujar el sistema en Figma con formas vectoriales',
+        'Pedirle a Gamma que genere una presentación con imágenes del ABS'
+      ],
+      correcta: 1,
+      explicacion: 'Meshy es una herramienta de generación de modelos 3D por texto (text-to-3D). Permite rotar, explorar y exportar. Para visualización técnica de sistemas mecánicos en clase, un modelo 3D interactivo es más didáctico que un video o imagen estática.'
+    },
+    {
+      id: 'm0-ra1-c1-q10',
+      enunciado: 'Google Tasks y Google Calendar: ¿cuándo usas cada uno en la gestión del taller automotriz?',
+      opciones: [
+        'Son la misma herramienta — Tasks es la versión móvil de Calendar',
+        'Tasks para pendientes personales y listas de verificación (ej: "completar metrado"); Calendar para eventos con hora, lugar y participantes (ej: "Práctica elevador — Sección B — Sala 3")',
+        'Calendar es solo para reuniones; Tasks para todo lo demás',
+        'Tasks para el equipo docente; Calendar solo para uso personal'
+      ],
+      correcta: 1,
+      explicacion: 'Tasks y Calendar tienen funciones complementarias distintas: Tasks es lista de pendientes sin fecha/hora fija, ideal para to-do lists personales. Calendar es para compromisos con tiempo definido, espacio y participantes. Usar ambos correctamente evita que los pendientes se mezclen con los eventos programados.'
+    },
+    {
+      id: 'm0-ra1-c1-q11',
+      enunciado: 'Un colega diseñó en Miró el mapa de procesos del taller. Tú necesitas convertirlo en un documento institucional para entregar a la UGEL. ¿Cuál es el flujo correcto?',
+      opciones: [
+        'Exportar el tablero Miró como imagen PNG e insertarlo en Google Docs con texto explicativo',
+        'Recrear todo el mapa en Figma desde cero para mayor calidad',
+        'Enviar el enlace de Miró directamente a la UGEL',
+        'Imprimir una captura de pantalla del tablero'
+      ],
+      correcta: 0,
+      explicacion: 'El flujo correcto es: Miró para ideación/mapeo → exportar como imagen de alta resolución → insertar en Google Docs → agregar contexto textual → entregar como documento formal. Cada herramienta tiene su etapa: Miró para pensar, Docs para documentar.'
+    },
+    {
+      id: 'm0-ra1-c1-q12',
+      enunciado: 'Teachy generó una actividad de "identificar herramientas del taller" para tus estudiantes. Al revisarla, ves que incluye herramientas de carpintería. ¿Cuál es la causa y solución?',
+      opciones: [
+        'Teachy no puede crear actividades específicas de automotriz — hay que hacerlo manualmente',
+        'El prompt no especificó el contexto automotriz. Solución: regenerar indicando "taller de mecánica automotriz, herramientas de diagnóstico y reparación de vehículos"',
+        'Hay un error en Teachy que mezcla talleres — reportar al soporte',
+        'Aceptar la actividad y corregir manualmente cada herramienta incorrecta'
+      ],
+      correcta: 1,
+      explicacion: 'Las IAs generativas no asumen contexto que no se les da. "Taller" sin calificativo genera contenido de cualquier taller. La solución siempre es mejorar el prompt, no corregir el output manualmente — eso es ineficiente. Buen prompt = buen output desde el inicio.'
+    },
+    {
+      id: 'm0-ra1-c1-q13',
+      enunciado: '¿Cuál es la diferencia clave entre usar GPT-4, Claude y Gemini para preparar materiales del taller automotriz?',
+      opciones: [
+        'Son idénticos — producen exactamente el mismo resultado con el mismo prompt',
+        'GPT-4 tiene mejor razonamiento técnico; Claude es mejor para documentos largos y análisis; Gemini se integra nativamente con Google Workspace',
+        'Solo GPT-4 puede trabajar con contenido técnico automotriz',
+        'Claude no puede procesar imágenes; los otros dos sí'
+      ],
+      correcta: 1,
+      explicacion: 'Cada modelo tiene fortalezas: GPT-4 destacó históricamente en razonamiento técnico y código; Claude en análisis de documentos largos y redacción matizada; Gemini en integración con Google Workspace (Docs, Sheets, Drive). Para un docente, conocer esto permite elegir la herramienta correcta según la tarea.'
+    },
+    {
+      id: 'm0-ra1-c1-q14',
+      enunciado: 'Quieres crear un diagrama del flujo de trabajo del taller (recepción del vehículo → diagnóstico → reparación → entrega) para mostrar en la sesión de inducción. ¿Qué herramienta usarías?',
+      opciones: [
+        'Google Sheets — con celdas formateadas como cajas del proceso',
+        'Miró — pizarra con conectores de flechas y sticky notes para el flujo de proceso',
+        'Teachy — genera diagramas de flujo automáticamente desde texto',
+        'Google Calendar — para visualizar el tiempo de cada etapa'
+      ],
+      correcta: 1,
+      explicacion: 'Miró tiene herramientas nativas para diagramas de flujo: figuras geométricas, conectores con flechas, etiquetas y colores por zona. Para un docente que necesita un diagrama visual rápido y editable, Miró es la opción más directa. Teachy no genera diagramas de flujo.'
+    },
+    {
+      id: 'm0-ra1-c1-q15',
+      enunciado: 'Tienes 3 semanas para dominar las herramientas digitales del módulo 0. ¿Cuál es la estrategia de aprendizaje más efectiva?',
+      opciones: [
+        'Ver todos los tutoriales de YouTube disponibles antes de usar cualquier herramienta',
+        'Usar cada herramienta en una tarea real del taller: crear el metrado en Sheets, el protocolo en Docs, planificar la instalación en Calendar — aprender haciendo con propósito real',
+        'Practicar primero con ejemplos genéricos hasta dominarlos, luego aplicar al taller',
+        'Elegir solo 1 herramienta por semana y dominarla completamente antes de seguir'
+      ],
+      correcta: 1,
+      explicacion: 'El aprendizaje más efectivo para docentes adultos es el aprendizaje situado: usar la herramienta para una tarea real e inmediata del taller. El propósito real genera motivación intrínseca y retención duradera. Los tutoriales sin aplicación inmediata se olvidan en días.'
+    }
+  ],
+
+  // M2-RA2 — Zona Investigación: scanner OBD, multímetro, osciloscopio, códigos de falla (20 preguntas)
+  'm2-ra2-c1': [
+    {
+      id: 'm2-ra2-c1-q1',
+      enunciado: 'Conectas el escáner OBD-II al vehículo y aparece el código P0300. ¿Qué indica este código y cuál es el primer paso de diagnóstico?',
+      opciones: [
+        'Falla en el sensor de oxígeno — reemplazar el sensor O2 inmediatamente',
+        'Falla de encendido aleatoria/múltiple — registrar en qué cilindros ocurre con datos en tiempo real antes de intervenir',
+        'Presión de aceite baja — verificar nivel de aceite del motor',
+        'Falla en el sistema de combustible — revisar la bomba de combustible'
+      ],
+      correcta: 1,
+      explicacion: 'P0300 es "Random/Multiple Cylinder Misfire Detected". No indica un cilindro específico, por lo que el primer paso es usar los datos en tiempo real del escáner para identificar el patrón (¿ocurre en frío/caliente? ¿a cierta RPM?) antes de abrir el motor. Reemplazar piezas sin diagnóstico previo es el error más costoso en automotriz.'
+    },
+    {
+      id: 'm2-ra2-c1-q2',
+      enunciado: 'Un estudiante borra los códigos de falla con el escáner sin registrarlos primero. ¿Cuál es la consecuencia técnica de esta acción?',
+      opciones: [
+        'Ninguna — los códigos reaparecerán si la falla persiste',
+        'Se pierden los datos de freeze frame que registran las condiciones exactas del motor cuando ocurrió la falla, dificultando el diagnóstico',
+        'El escáner queda bloqueado y no puede volver a leer códigos',
+        'El vehículo entra en modo de emergencia limitando la velocidad'
+      ],
+      correcta: 1,
+      explicacion: 'El freeze frame captura: RPM, temperatura, carga del motor, presión de combustible en el momento exacto de la falla. Esta información es crítica para reproducir la condición de falla en el diagnóstico. Borrar sin registrar es destruir evidencia — práctica que los docentes deben corregir firmemente.'
+    },
+    {
+      id: 'm2-ra2-c1-q3',
+      enunciado: 'Al medir la resistencia de un inyector con el multímetro, obtienes 2.5 Ω. El manual especifica 11-15 Ω. ¿Qué conclusión técnica extraes?',
+      opciones: [
+        'El inyector está en perfecto estado — la resistencia baja indica mejor conductividad',
+        'El multímetro está descalibrado — repetir la medición con otro equipo',
+        'El inyector tiene un cortocircuito interno — la resistencia muy por debajo del rango indica devanado dañado',
+        'La medición es normal para inyectores diesel — los valores varían por tecnología'
+      ],
+      correcta: 2,
+      explicacion: 'Una resistencia de 2.5 Ω vs especificación de 11-15 Ω indica cortocircuito en el devanado del solenoides del inyector. Un inyector con cortocircuito consume corriente excesiva y puede dañar el módulo de control. Nunca interpretes una resistencia baja como "mejor" — en inductancias, significa daño.'
+    },
+    {
+      id: 'm2-ra2-c1-q4',
+      enunciado: 'El escáner muestra que el sensor MAP está enviando 4.8V de manera constante. El rango normal es 1.0-4.5V. ¿Qué indica esto?',
+      opciones: [
+        'El motor está funcionando a plena carga — lectura normal en aceleración',
+        'El sensor MAP probablemente tiene circuito abierto o está atascado en valor máximo — señal fuera de rango',
+        'Hay exceso de combustible en el múltiple — limpiar el sistema de admisión',
+        'La presión de sobrealimentación es demasiado alta — revisar la turbina'
+      ],
+      correcta: 1,
+      explicacion: 'Una señal constante en 4.8V (por encima del rango máximo) indica que el sensor está atascado o hay un cortocircuito a voltaje de referencia. El MAP debe variar con las condiciones del motor. Una señal plana y fuera de rango siempre apunta a falla del sensor o su circuito.'
+    },
+    {
+      id: 'm2-ra2-c1-q5',
+      enunciado: 'Usas el osciloscopio para medir la señal del sensor CKP (cigüeñal). La forma de onda muestra un diente faltante en el patrón. ¿Qué significa?',
+      opciones: [
+        'El osciloscopio está mal configurado — ajustar la escala de tiempo',
+        'Es la referencia del sensor — todos los sensores CKP tienen un espacio intencional para marcar el punto de referencia del ciclo',
+        'El sensor CKP está fallando — reemplazarlo inmediatamente',
+        'El cigüeñal tiene un diente físicamente roto — requiere reparación mayor'
+      ],
+      correcta: 1,
+      explicacion: 'El diente faltante (o grupo de dientes faltantes) en la rueda fónica es intencional: es la referencia absoluta que le indica al ECU cuándo empieza el ciclo. El sistema lo interpreta como la posición 0° del cigüeñal. Si el estudiante lo reporta como falla, no comprende el diseño del sensor.'
+    },
+    {
+      id: 'm2-ra2-c1-q6',
+      enunciado: 'Un escáner genérico OBD-II lee los códigos del sistema de motor. El técnico necesita también leer los módulos ABS y airbag. ¿Qué tipo de escáner necesita?',
+      opciones: [
+        'El mismo escáner OBD-II genérico — todos los módulos usan el mismo protocolo',
+        'Un escáner multimarca o de fabricante específico que acceda a protocolos propietarios (CAN, K-Line) de cada módulo',
+        'Dos escáneres diferentes — uno para ABS y otro para airbag',
+        'No es posible leer ABS y airbag con ningún escáner — requieren diagnóstico mecánico'
+      ],
+      correcta: 1,
+      explicacion: 'El protocolo OBD-II estándar solo accede al sistema de motor (Powertrain). ABS, airbag, transmisión y otros módulos usan protocolos propietarios del fabricante. Para diagnóstico completo se necesita un escáner que soporte los protocolos específicos de la marca del vehículo.'
+    },
+    {
+      id: 'm2-ra2-c1-q7',
+      enunciado: 'Mides la tensión de una batería de 12V con el multímetro en reposo y obtienes 11.8V. Con el motor encendido obtienes 12.1V. ¿Qué conclusión sacas?',
+      opciones: [
+        'Todo está correcto — 12V es el valor nominal esperado en ambas condiciones',
+        'La batería está en estado aceptable pero el alternador no está cargando correctamente — con motor en marcha debería entregar 13.8-14.4V',
+        'La batería está completamente descargada — cambiarla inmediatamente',
+        'El multímetro está midiendo mal — un alternador siempre entrega 12V exactos'
+      ],
+      correcta: 1,
+      explicacion: 'Una batería sana en reposo mide 12.6V (llena) o mínimo 12.4V. 11.8V indica descarga parcial. Con motor encendido, el alternador debe elevar a 13.8-14.4V. Si solo llega a 12.1V, el alternador no está cargando — puede fallar el regulador, el diodo o las escobillas. Diagnóstico en dos pasos: batería + sistema de carga.'
+    },
+    {
+      id: 'm2-ra2-c1-q8',
+      enunciado: 'El escáner muestra el código P0171 "System too lean Bank 1". ¿Cuáles son las causas más probables a investigar PRIMERO?',
+      opciones: [
+        'Reemplazar los inyectores — el código lean siempre indica inyectores obstruidos',
+        'Verificar entradas de aire no medidas (fugas de vacío, MAF sucio) y sensor O2 antes de revisar el sistema de combustible',
+        'Cambiar la sonda lambda — P0171 siempre es falla del sensor de oxígeno',
+        'Revisar la presión de combustible — lean siempre significa bomba débil'
+      ],
+      correcta: 1,
+      explicacion: 'P0171 (mezcla pobre banco 1) puede tener múltiples causas. El orden correcto: 1° fugas de vacío (aire no medido engaña al MAF), 2° MAF sucio (subestima el aire real), 3° sensor O2 defectuoso, 4° sistema de combustible. Comenzar reemplazando inyectores es el diagnóstico más costoso y menos probable de resolver el problema.'
+    },
+    {
+      id: 'm2-ra2-c1-q9',
+      enunciado: 'Al medir con osciloscopio la señal del sensor de oxígeno (O2) de banda estrecha, observas que la señal es plana en 0.45V. ¿Qué indica?',
+      opciones: [
+        'La mezcla es perfectamente estequiométrica — 0.45V es el valor ideal',
+        'El sensor está muerto o envenenado — una señal plana sin oscilación indica que no responde a cambios de mezcla',
+        'El motor está en mezcla rica — 0.45V indica exceso de combustible',
+        'Es normal durante el arranque en frío — esperar que el sensor alcance temperatura'
+      ],
+      correcta: 1,
+      explicacion: 'Un sensor O2 sano oscila continuamente entre 0.1V (lean) y 0.9V (rich) a una frecuencia visible en el osciloscopio. Una señal plana en cualquier voltaje significa que el sensor no responde — puede estar envenenado por silicio, viejo, o el circuito calefactor (HO2S) está fallando.'
+    },
+    {
+      id: 'm2-ra2-c1-q10',
+      enunciado: 'El manual del vehículo especifica que la compresión de cada cilindro debe ser 175 PSI ±10%. Un cilindro mide 120 PSI. ¿Qué diagnóstico es correcto?',
+      opciones: [
+        'El manómetro de compresión está descalibrado — repetir la prueba',
+        'Compresión baja severa (31% por debajo del mínimo). Realizar prueba de fuga para identificar si es válvulas, aros o juntas de culata',
+        'Es normal — los cilindros centrales siempre tienen menor compresión',
+        'Problema menor — agregar aceite de motor para aumentar la compresión'
+      ],
+      correcta: 1,
+      explicacion: '175 PSI ±10% = rango aceptable 157.5-192.5 PSI. 120 PSI está 37.5 PSI por debajo del mínimo — falla crítica. El siguiente paso es la prueba de fuga de cilindros (cylinder leak-down test) que identifica dónde escapa la compresión: si sale por el escape son válvulas; por el Carter son aros; por el radiador es junta de culata.'
+    },
+    {
+      id: 'm2-ra2-c1-q11',
+      enunciado: 'Un estudiante mide la resistencia de un cable de bujía con el multímetro y obtiene OL (overload/infinito). ¿Qué indica?',
+      opciones: [
+        'El cable tiene resistencia correcta — los cables de bujía de alta tensión tienen resistencia infinita por diseño',
+        'El cable tiene circuito abierto (rotura interna del conductor) — debe reemplazarse',
+        'El multímetro está en la escala incorrecta — cambiar a escala de megaohmios',
+        'OL significa "óptimo" en multímetros digitales modernos'
+      ],
+      correcta: 1,
+      explicacion: 'OL (Over Limit) en medición de resistencia significa circuito abierto — resistencia infinita. Un cable de bujía sano tiene entre 5,000-25,000 Ω (5-25 kΩ) de resistencia interna (supresora de interferencias). OL indica rotura del conductor interno, causa directa de falla de encendido.'
+    },
+    {
+      id: 'm2-ra2-c1-q12',
+      enunciado: 'El escáner muestra que el sensor de temperatura del motor (ECT) reporta -40°C con el motor caliente. ¿Cuál es el diagnóstico más probable?',
+      opciones: [
+        'El refrigerante está extremadamente frío — añadir anticongelante',
+        'Circuito abierto en el sensor ECT o su cableado — -40°C es el valor de falla por defecto cuando no hay señal',
+        'El sensor funciona bien — -40°C indica que el termostato está atascado abierto',
+        'El escáner tiene un error de comunicación — reiniciar el equipo'
+      ],
+      correcta: 1,
+      explicacion: '-40°C es el valor de falla por defecto (default value) que el ECU asigna cuando no recibe señal del sensor ECT. Causas: circuito abierto en el sensor, conector suelto o cable cortado. Con esta lectura, el ECU usa tablas de mapas abiertos y enriquece la mezcla innecesariamente, afectando consumo y emisiones.'
+    },
+    {
+      id: 'm2-ra2-c1-q13',
+      enunciado: 'Al interpretar datos en tiempo real del escáner, el valor de "Long Term Fuel Trim (LTFT)" muestra +22%. ¿Qué significa esto para el diagnóstico?',
+      opciones: [
+        'El sistema de combustible está funcionando perfectamente — LTFT positivo es lo esperado',
+        'El ECU está agregando 22% más de combustible para corregir una mezcla persistentemente pobre — indica fuga de vacío, MAF sucio o presión de combustible baja',
+        'El motor está usando 22% más de combustible que en condiciones normales — problema de consumo',
+        'LTFT de +22% indica que la sonda lambda está invertida — revisar el cableado'
+      ],
+      correcta: 1,
+      explicacion: 'LTFT (Long Term Fuel Trim) muestra la corrección acumulada de combustible del ECU. +22% significa que el ECU ha aprendido a agregar 22% más de combustible de forma persistente para mantener la mezcla estequiométrica — evidencia de que algo está causando mezcla pobre de manera crónica. Valor aceptable: ±10%.'
+    },
+    {
+      id: 'm2-ra2-c1-q14',
+      enunciado: 'Con el osciloscopio mides la señal de inyección de un inyector. El pulso de inyección muestra una duración de 8ms a ralentí. ¿Qué factor no afecta directamente este valor?',
+      opciones: [
+        'La temperatura del motor',
+        'La presión del riel de combustible',
+        'El color del vehículo',
+        'La carga del motor (posición del acelerador)'
+      ],
+      correcta: 2,
+      explicacion: 'El tiempo de apertura del inyector (ancho de pulso) es calculado por el ECU basándose en: temperatura del motor (más frío = más combustible), carga (más aceleración = más combustible), presión del riel (menor presión = pulso más largo), entre otros. El color del vehículo no tiene ningún efecto en los parámetros del motor.'
+    },
+    {
+      id: 'm2-ra2-c1-q15',
+      enunciado: 'Un estudiante afirma que "si el escáner no muestra códigos, el vehículo está en perfecto estado". ¿Es correcta esta afirmación?',
+      opciones: [
+        'Sí — el OBD-II monitorea todos los sistemas del vehículo',
+        'No — el OBD-II no monitorea: desgaste de frenos, holguras mecánicas, estado de amortiguadores, presión de neumáticos (salvo TPMS), ni muchas fallas intermitentes que aún no alcanzaron el umbral de código',
+        'Sí — si hubiera algún problema, el sistema lo detectaría automáticamente',
+        'No — pero solo porque los escáneres genéricos no leen todos los módulos'
+      ],
+      correcta: 1,
+      explicacion: 'El OBD-II monitorea principalmente emisiones y el tren motriz. No cubre: desgaste mecánico (frenos, amortiguadores, rodamientos), fallas eléctricas que aún no llegaron al umbral, ni muchos sistemas mecánicos. "Sin códigos" significa sin fallas registradas en los monitores del ECU — no equivale a vehículo perfecto.'
+    },
+    {
+      id: 'm2-ra2-c1-q16',
+      enunciado: 'Al medir continuidad con el multímetro entre masa del motor y carrocería, el resultado es OL. ¿Qué problema indica?',
+      opciones: [
+        'El motor está correctamente aislado de la carrocería — OL es el valor normal',
+        'Hay una falla en el cable de masa (ground strap) entre motor y carrocería — genera voltajes flotantes y fallas eléctricas intermitentes',
+        'El multímetro necesita calibración — repetir con un nuevo equipo',
+        'El motor tiene demasiada masa — instalar un condensador'
+      ],
+      correcta: 1,
+      explicacion: 'El motor debe tener continuidad directa (resistencia cercana a 0Ω) con la carrocería a través del cable de masa. OL (circuito abierto) indica que ese cable está cortado, corroído o mal conectado. Una masa deficiente es la causa de decenas de fallas eléctricas aparentemente inexplicables: actuadores que no responden, sensores con lecturas erráticas, luces que parpadean.'
+    },
+    {
+      id: 'm2-ra2-c1-q17',
+      enunciado: 'El escáner indica que el monitor de catalizador (Catalyst Monitor) muestra estado "Not Ready". ¿Qué significa para la inspección técnica vehicular?',
+      opciones: [
+        'El catalizador está en perfectas condiciones — "Not Ready" indica que no necesita ser revisado',
+        'El monitor no ha completado su ciclo de diagnóstico — el vehículo no pasará la inspección de emisiones hasta que todos los monitores estén "Ready"',
+        'El catalizador está dañado y debe reemplazarse antes de la inspección',
+        '"Not Ready" es el estado permanente en vehículos modernos con Euro 6'
+      ],
+      correcta: 1,
+      explicacion: '"Not Ready" significa que el ECU no ha podido ejecutar la prueba interna de ese monitor (generalmente porque los códigos fueron borrados recientemente o la batería fue desconectada). Para inspección técnica de emisiones, todos los monitores aplicables deben estar en "Complete/Ready". El vehículo necesita un ciclo de conducción completo para que los monitores se completen.'
+    },
+    {
+      id: 'm2-ra2-c1-q18',
+      enunciado: 'Con el osciloscopio comparas las señales de los sensores CMP (árbol de levas) y CKP (cigüeñal) en un motor con código P0016. ¿Qué buscas en las formas de onda?',
+      opciones: [
+        'Que ambas señales tengan la misma amplitud de voltaje',
+        'La correlación de fase entre ambas señales — P0016 indica que el árbol de levas y el cigüeñal están desfasados más allá de lo permitido',
+        'Que ambas señales sean senoidales perfectas sin ruido',
+        'Que la frecuencia de CMP sea exactamente el doble que la de CKP'
+      ],
+      correcta: 1,
+      explicacion: 'P0016 es "Camshaft/Crankshaft Position Correlation". Con el osciloscopio verificas la fase relativa entre CMP y CKP: deben tener una relación temporal específica definida por el fabricante. Un desfase excesivo indica: cadena de distribución estirada, actuador de árbol de levas (VVT) atascado, o sensor con señal errática.'
+    },
+    {
+      id: 'm2-ra2-c1-q19',
+      enunciado: 'Un docente enseña a sus estudiantes a medir voltaje en un circuito de 12V. Un estudiante conecta el multímetro en modo amperímetro (mA) directamente en paralelo al circuito. ¿Qué ocurre?',
+      opciones: [
+        'El multímetro muestra el voltaje correctamente — amperímetro y voltímetro funcionan igual',
+        'El multímetro crea un cortocircuito de baja resistencia, puede dañar el equipo, fundir el fusible interno del multímetro o dañar el circuito del vehículo',
+        'El multímetro simplemente no muestra lectura — no hay daño posible',
+        'El circuito se desconecta automáticamente por protección'
+      ],
+      correcta: 1,
+      explicacion: 'El amperímetro tiene resistencia interna casi nula (para no afectar el circuito en serie). Conectarlo en paralelo crea un cortocircuito directo: la corriente del circuito pasa completa por el multímetro. Resultado: funde el fusible interno del multímetro, puede dañar el equipo permanentemente o quemar cableado del vehículo. Error crítico de seguridad que los docentes deben prevenir activamente.'
+    },
+    {
+      id: 'm2-ra2-c1-q20',
+      enunciado: 'Al finalizar una sesión de diagnóstico con el escáner, ¿cuál es la práctica correcta antes de desconectarlo del vehículo?',
+      opciones: [
+        'Desconectarlo directamente — los puertos OBD-II soportan conexión/desconexión en caliente sin problemas',
+        'Con el motor apagado y llave fuera, salir del menú del escáner correctamente, esperar que la pantalla muestre estado de reposo y luego desconectar — evita corrupción de datos del ECU',
+        'Dejar el escáner conectado siempre — no hay razón para desconectarlo',
+        'Apagar el escáner con el botón de encendido mientras está conectado al puerto OBD'
+      ],
+      correcta: 1,
+      explicacion: 'El puerto OBD-II está conectado directamente al bus CAN del vehículo. Una desconexión abrupta durante comunicación activa puede interrumpir tramas de datos que el ECU está procesando. La práctica correcta: finalizar sesión en el software, apagar llave, desconectar. Parece menor pero protege la integridad del ECU, especialmente en vehículos modernos con múltiples módulos.'
+    }
+  ],
+
+  // M5-S51 — Competencia docente 1: planificación por competencias en el taller automotriz (8 preguntas)
+  'm5-s51-c4': [
+    {
+      id: 'm5-s51-c4-q1',
+      enunciado: 'Planificas una sesión donde los estudiantes diagnostican una falla en el sistema de frenos. ¿Cuál es la diferencia entre un objetivo de aprendizaje y una competencia?',
+      opciones: [
+        'Son lo mismo — competencia y objetivo son sinónimos en el currículo técnico',
+        'El objetivo describe qué hará el estudiante en la sesión; la competencia describe el desempeño integrado (saber + hacer + ser) que el estudiante desarrolla a lo largo del módulo',
+        'La competencia es más específica que el objetivo — se redacta para cada actividad',
+        'El objetivo es para el docente; la competencia es para el estudiante'
+      ],
+      correcta: 1,
+      explicacion: 'Un objetivo es puntual ("al terminar la sesión, el estudiante identificará los componentes del sistema de frenos"). Una competencia es integral y se construye en el tiempo ("diagnostica fallas en sistemas automotrices aplicando procedimientos técnicos con responsabilidad"). La planificación por competencias exige que cada sesión contribuya a esa competencia mayor.'
+    },
+    {
+      id: 'm5-s51-c4-q2',
+      enunciado: 'Diseñas la sesión de instalación del elevador tipo tijera. ¿Qué elemento de la planificación garantiza que los estudiantes sepan QUÉ se espera de ellos antes de empezar?',
+      opciones: [
+        'La lista de materiales y herramientas a usar en la sesión',
+        'Los criterios de evaluación compartidos con anticipación — los estudiantes deben conocer los indicadores de logro antes de la actividad',
+        'El tiempo asignado a cada actividad en la sesión',
+        'La biografía del docente que muestra su experiencia técnica'
+      ],
+      correcta: 1,
+      explicacion: 'Compartir los criterios de evaluación antes de la actividad (no después) es un principio clave de la evaluación formativa. En el taller automotriz, los estudiantes necesitan saber: ¿qué pasos deben seguir?, ¿qué nivel de precisión se espera?, ¿cuándo está "bien hecho"? Esto reduce la ansiedad y orienta el esfuerzo.'
+    },
+    {
+      id: 'm5-s51-c4-q3',
+      enunciado: 'Tu sesión tiene 90 minutos. Planificas: 30 min teoría + 45 min práctica + 15 min evaluación. Un colega sugiere invertir a 10 min teoría + 65 min práctica + 15 min evaluación. ¿Cuál es más coherente con la formación técnica por competencias?',
+      opciones: [
+        'La primera — sin base teórica sólida los estudiantes no pueden practicar correctamente',
+        'La segunda — en formación técnica el hacer es el centro; la teoría mínima necesaria se da justo antes de la práctica (just-in-time)',
+        'Son equivalentes — lo importante es cubrir el contenido, no el tiempo',
+        'Ninguna — la evaluación siempre debe ir al inicio para activar conocimientos previos'
+      ],
+      correcta: 1,
+      explicacion: 'La formación por competencias prioriza el saber-hacer. La teoría "just-in-time" (mínima, justo antes de necesitarla) es más efectiva que 30 minutos de exposición frontal. Los estudiantes técnicos aprenden haciendo — el taller automotriz debe ser zona de práctica, no aula extendida.'
+    },
+    {
+      id: 'm5-s51-c4-q4',
+      enunciado: 'Al planificar la secuencia de sesiones del módulo de instalación, ¿cuál orden es pedagógicamente correcto?',
+      opciones: [
+        'Instalación del elevador → Metrado de equipos → Normas de seguridad → Prueba funcional',
+        'Metrado de equipos → Normas de seguridad → Instalación del elevador → Prueba funcional',
+        'Normas de seguridad → Prueba funcional → Metrado de equipos → Instalación del elevador',
+        'Prueba funcional → Instalación del elevador → Metrado → Seguridad'
+      ],
+      correcta: 1,
+      explicacion: 'La secuencia correcta sigue la lógica técnica real: primero conocer qué hay (metrado), luego establecer las condiciones seguras (seguridad), luego instalar, luego verificar que funciona (prueba funcional). Este orden no es arbitrario — refleja el proceso real del técnico automotriz y da sentido a cada sesión.'
+    },
+    {
+      id: 'm5-s51-c4-q5',
+      enunciado: 'Tienes 28 estudiantes y solo 1 elevador tipo tijera. ¿Cómo planificas la práctica para que todos logren la competencia?',
+      opciones: [
+        'Solo 2-3 estudiantes usan el elevador — los demás observan y toman apuntes',
+        'Diseñar estaciones rotativas: grupo A en elevador, grupo B en diagnóstico con escáner, grupo C en ficha de metrado — todos rotan cada 20 minutos',
+        'Dividir el grupo en 14 pares y que cada par use el elevador 5 minutos',
+        'Solicitar a la UGEL más elevadores antes de dar la sesión práctica'
+      ],
+      correcta: 1,
+      explicacion: 'Las estaciones rotativas son la solución estándar para talleres con equipos únicos o escasos. Cada estación trabaja una competencia diferente pero complementaria — no hay tiempo muerto ni estudiantes pasivos. Cinco minutos por par no es suficiente para desarrollar competencia. Esperar más equipos paraliza el aprendizaje.'
+    },
+    {
+      id: 'm5-s51-c4-q6',
+      enunciado: 'Un colega planifica todas sus sesiones con la misma estructura: "explico → demuestro → replican". ¿Cuál es la limitación pedagógica de este modelo?',
+      opciones: [
+        'Ninguna — es el modelo más efectivo para formación técnica probado históricamente',
+        'Solo desarrolla el nivel más bajo de competencia (replicar procedimientos). No desarrolla autonomía, resolución de problemas ni transferencia a situaciones nuevas',
+        'Es demasiado complejo para estudiantes de secundaria técnica',
+        'El problema es la demostración — los estudiantes aprenden mejor solo leyendo el manual'
+      ],
+      correcta: 1,
+      explicacion: '"Explico → demuestro → replican" (modelado directo) es válido para introducir procedimientos nuevos, pero si es el ÚNICO método, los estudiantes solo aprenden a imitar — no a diagnosticar, decidir ni transferir. Una planificación competente varía las estrategias: resolución de casos, práctica autónoma, peer teaching, situaciones imprevistas.'
+    },
+    {
+      id: 'm5-s51-c4-q7',
+      enunciado: 'Redactas el indicador de logro: "El estudiante sabe sobre el sistema de frenos". ¿Cuál es el problema con este indicador?',
+      opciones: [
+        'Es muy técnico para el nivel del estudiante',
+        'No es observable ni medible — "saber sobre" no indica qué acción concreta realiza el estudiante ni en qué condiciones',
+        'Debería incluir el nombre de los componentes específicos',
+        'El indicador está bien — "saber" es el verbo adecuado para el nivel conceptual'
+      ],
+      correcta: 1,
+      explicacion: 'Los indicadores de logro deben ser observables y medibles. "Saber sobre" es invisible — no puedes ver ni medir si alguien "sabe sobre" algo. Un indicador correcto usa verbos de acción: "diagnostica fallas en el sistema de frenos siguiendo el protocolo OBD-II" — puedes observarlo, medirlo y dar retroalimentación específica.'
+    },
+    {
+      id: 'm5-s51-c4-q8',
+      enunciado: 'Al cierre de la planificación anual del taller, ¿qué pregunta verifica mejor que la planificación es coherente con el enfoque por competencias?',
+      opciones: [
+        '"¿Cubrí todos los contenidos del currículo?"',
+        '"¿Cada sesión contribuye a una competencia mayor que el estudiante puede demostrar al final del módulo en una situación real del taller?"',
+        '"¿Usé variedad de herramientas digitales en cada sesión?"',
+        '"¿Los estudiantes aprobaron las evaluaciones escritas?"'
+      ],
+      correcta: 1,
+      explicacion: 'La pregunta central del enfoque por competencias es sobre transferencia: ¿el estudiante puede actuar competentemente en una situación real? "Cubrir contenidos" es el enfoque tradicional. "Aprobar evaluaciones escritas" mide conocimiento declarativo. La competencia se demuestra haciendo, no recordando.'
+    }
+  ],
+
+  // M5-S53 — Competencia docente 2: metodologías activas ABP/ABPr en el taller automotriz (8 preguntas)
+  'm5-s53-c4': [
+    {
+      id: 'm5-s53-c4-q1',
+      enunciado: 'La diferencia clave entre Aprendizaje Basado en Problemas (ABP) y Aprendizaje Basado en Proyectos (ABPr) en el taller automotriz es:',
+      opciones: [
+        'ABP usa más tecnología; ABPr es más manual',
+        'ABP parte de un problema abierto para construir conocimiento; ABPr culmina en un producto o entregable concreto que resuelve una necesidad real',
+        'ABP es para estudiantes avanzados; ABPr para principiantes',
+        'Son idénticos — el nombre varía según la institución'
+      ],
+      correcta: 1,
+      explicacion: 'En ABP el problema es el detonante del aprendizaje — los estudiantes investigan para entender. En ABPr el proyecto es el eje — los estudiantes crean algo real (un protocolo, una instalación, un diagnóstico documentado). En automotriz: ABP = "¿por qué falla este motor?"; ABPr = "instala y certifica el equipo de diagnóstico del taller".'
+    },
+    {
+      id: 'm5-s53-c4-q2',
+      enunciado: 'Diseñas un ABP para el módulo de diagnóstico. El problema detonador es: "Un vehículo llega al taller con el testigo del motor encendido y el dueño no quiere gastar más de S/200". ¿Por qué este problema es pedagógicamente efectivo?',
+      opciones: [
+        'Porque menciona una cantidad de dinero que motiva a los estudiantes',
+        'Porque es auténtico, tiene restricciones reales (presupuesto), requiere integrar diagnóstico técnico y toma de decisiones — simula una situación real del oficio',
+        'Porque es simple y los estudiantes pueden resolverlo en una sola sesión',
+        'Porque el testigo del motor es el contenido más importante del módulo'
+      ],
+      correcta: 1,
+      explicacion: 'Un buen problema ABP tiene: autenticidad (ocurre en la vida real del técnico), complejidad suficiente (no tiene respuesta única), restricciones reales (presupuesto, tiempo) e integra múltiples saberes. La restricción de S/200 obliga a priorizar el diagnóstico antes de intervenir — exactamente lo que hace un buen técnico.'
+    },
+    {
+      id: 'm5-s53-c4-q3',
+      enunciado: 'Durante un ABPr de instalación de equipos, un grupo de estudiantes está atascado en la conexión eléctrica del compresor. ¿Cuál es el rol correcto del docente?',
+      opciones: [
+        'Explicar inmediatamente la solución para no perder tiempo de la sesión',
+        'Hacer preguntas que guíen el razonamiento: "¿Qué voltaje requiere el compresor? ¿Qué dice el manual sobre el calibre del cable? ¿Qué pasaría si usas un cable más delgado?"',
+        'Dejar que el grupo resuelva solo — la intervención del docente invalida el ABPr',
+        'Reasignar esa tarea a otro grupo que ya terminó'
+      ],
+      correcta: 1,
+      explicacion: 'En metodologías activas el docente es facilitador, no transmisor. Las preguntas socráticas mantienen el protagonismo del estudiante mientras los desbloquean. Dar la respuesta directa cancela el aprendizaje; ignorarlos completamente los frustra. El arte está en la pregunta correcta en el momento correcto.'
+    },
+    {
+      id: 'm5-s53-c4-q4',
+      enunciado: 'Quieres implementar ABPr en el módulo de seguridad del taller. ¿Cuál es el proyecto más adecuado?',
+      opciones: [
+        'Hacer un examen escrito sobre las normas de seguridad del taller',
+        'Diseñar, producir e instalar el panel de seguridad real del taller: protocolo EPP por zona, ruta de evacuación, ubicación del extintor — entregable que queda en el taller',
+        'Ver un documental sobre accidentes en talleres automotrices internacionales',
+        'Copiar el protocolo de seguridad de otro taller y adaptarlo teóricamente'
+      ],
+      correcta: 1,
+      explicacion: 'El ABPr requiere un producto real con destinatario real. Un panel de seguridad que queda instalado en el taller es el proyecto ideal: es auténtico, tiene impacto real, integra diseño + contenido técnico + trabajo colaborativo, y los estudiantes ven su trabajo usado por otros. Un examen escrito no es un proyecto.'
+    },
+    {
+      id: 'm5-s53-c4-q5',
+      enunciado: 'Al evaluar un ABP, un colega solo califica el informe escrito final. ¿Qué dimensión importante está ignorando?',
+      opciones: [
+        'La ortografía y redacción del informe',
+        'El proceso: la calidad del razonamiento durante la investigación, las decisiones tomadas, la colaboración y la metacognición — no solo el producto final',
+        'La extensión del informe — los mejores ABP producen informes más largos',
+        'La presentación visual del informe'
+      ],
+      correcta: 1,
+      explicacion: 'En ABP el aprendizaje ocurre en el proceso, no solo en el producto. Evaluar solo el informe final es como juzgar un partido de fútbol solo por el marcador final. Los instrumentos de evaluación ABP deben capturar: calidad de las preguntas que se hicieron, cómo buscaron información, cómo tomaron decisiones y qué aprendieron del error.'
+    },
+    {
+      id: 'm5-s53-c4-q6',
+      enunciado: 'Implementas ABP por primera vez en tu taller. Los estudiantes dicen: "profe, díganos qué hacer". ¿Cómo interpretas esta reacción y qué haces?',
+      opciones: [
+        'Es señal de que el ABP no es adecuado para este grupo — volver al método tradicional',
+        'Es una reacción normal al cambio de rol: los estudiantes están acostumbrados a recibir instrucciones. Responder con una pregunta que los reencamine: "¿Qué información necesitan para poder decidir el primer paso?"',
+        'Darles una guía paso a paso detallada para que puedan avanzar',
+        'Ignorar el comentario y esperar que el grupo se organice solo'
+      ],
+      correcta: 1,
+      explicacion: 'La dependencia del docente es un hábito adquirido en años de educación frontal. No indica que el grupo sea incapaz — indica que necesitan andamiaje para desarrollar autonomía progresivamente. La pregunta de reencaminamiento ("¿qué necesitan saber?") es más poderosa que dar la respuesta o la guía, porque activa el proceso metacognitivo.'
+    },
+    {
+      id: 'm5-s53-c4-q7',
+      enunciado: 'En un ABPr de diagnóstico automotriz, un grupo llega a una conclusión técnicamente incorrecta. ¿Cuál es la respuesta pedagógica correcta?',
+      opciones: [
+        'Corregir inmediatamente frente al grupo para que no aprendan lo incorrecto',
+        'Pedirles que expliquen su razonamiento paso a paso — el error se convierte en oportunidad de aprendizaje cuando el grupo lo descubre a través de sus propias preguntas',
+        'Ignorar el error y esperar que lo descubran solos cuando apliquen en la práctica',
+        'Reducir la calificación del grupo por llegar a una conclusión incorrecta'
+      ],
+      correcta: 1,
+      explicacion: 'El error en ABP/ABPr tiene valor pedagógico cuando se procesa. Pedir que expliquen el razonamiento ("¿cómo llegaron a esa conclusión?") permite identificar dónde está la falla lógica. El grupo que descubre su propio error aprende más profundamente que el que recibe la corrección externamente. El docente no debe robar ese momento de descubrimiento.'
+    },
+    {
+      id: 'm5-s53-c4-q8',
+      enunciado: '¿Cuál es la condición mínima para que una actividad en el taller automotriz sea genuinamente ABP o ABPr?',
+      opciones: [
+        'Que los estudiantes trabajen en grupos y entreguen un informe al final',
+        'Que exista un problema o desafío auténtico sin respuesta única predeterminada, que requiera investigar, decidir y actuar — no seguir pasos dados por el docente',
+        'Que el docente no intervenga durante toda la actividad',
+        'Que use tecnología digital como apoyo pedagógico'
+      ],
+      correcta: 1,
+      explicacion: 'La condición esencial del ABP/ABPr es la autenticidad del problema y la apertura de la solución. Si el docente ya sabe exactamente qué pasos seguirán los estudiantes, no es ABP — es una práctica guiada disfrazada. El verdadero ABP implica incertidumbre, investigación real y decisiones genuinas del estudiante.'
+    }
+  ],
+
+  // M5-S55 — Competencia docente 3: evaluación por competencias, rúbricas, listas de cotejo (8 preguntas)
+  'm5-s55-c4': [
+    {
+      id: 'm5-s55-c4-q1',
+      enunciado: 'Un estudiante instala correctamente el elevador pero no verifica los seguros de seguridad al terminar. La rúbrica tiene el criterio "Sigue el protocolo de seguridad completo". ¿Qué calificación corresponde?',
+      opciones: [
+        'Logrado — instaló correctamente, el olvido de los seguros es un detalle menor',
+        'No logrado en ese criterio — omitir los seguros de seguridad es incumplimiento del protocolo, independientemente de la calidad técnica de la instalación',
+        'Logrado parcialmente — la rúbrica debe reconocer el trabajo técnico realizado',
+        'Depende del criterio del docente en el momento de la evaluación'
+      ],
+      correcta: 1,
+      explicacion: 'La rúbrica evalúa criterios específicos, no la impresión general. "Protocolo de seguridad completo" incluye explícitamente los seguros — omitirlos es No logrado en ese criterio. Esto no invalida el resto de la evaluación, pero sí ese criterio. La consistencia en seguridad es no negociable en el taller automotriz.'
+    },
+    {
+      id: 'm5-s55-c4-q2',
+      enunciado: '¿Cuál es la diferencia entre una lista de cotejo y una rúbrica en el contexto del taller automotriz?',
+      opciones: [
+        'Son equivalentes — ambas tienen criterios y niveles de desempeño',
+        'La lista de cotejo registra si algo ocurrió o no (sí/no); la rúbrica describe niveles cualitativos de desempeño (excelente/logrado/en proceso/no logrado)',
+        'La rúbrica es para evaluación sumativa; la lista de cotejo solo para formativa',
+        'La lista de cotejo la usa el docente; la rúbrica la usa el estudiante'
+      ],
+      correcta: 1,
+      explicacion: 'Lista de cotejo: binaria (¿verificó la presión del aceite? Sí/No). Rúbrica: descriptiva y graduada ("verifica la presión del aceite, registra el valor y lo compara con el manual" vs. "verifica la presión pero no registra"). Para procedimientos de seguridad, la lista de cotejo es ideal. Para competencias complejas, la rúbrica permite feedback más rico.'
+    },
+    {
+      id: 'm5-s55-c4-q3',
+      enunciado: 'Diseñas una rúbrica para evaluar el diagnóstico con escáner OBD-II. El descriptor del nivel "Logrado" dice: "Usa el escáner correctamente". ¿Cuál es el problema?',
+      opciones: [
+        'El nivel debería llamarse "Competente" en lugar de "Logrado"',
+        '"Correctamente" es ambiguo — no describe qué acciones concretas y observables definen ese nivel, haciendo la evaluación subjetiva e inconsistente entre docentes',
+        'El descriptor está bien — la subjetividad es parte de la evaluación por competencias',
+        'Debería incluir una calificación numérica junto al descriptor'
+      ],
+      correcta: 1,
+      explicacion: 'Los descriptores de rúbrica deben ser observables y específicos. "Usa correctamente" es opinable. Un descriptor útil dice: "Conecta el escáner al puerto OBD, lee los códigos activos, registra el freeze frame y borra solo tras anotar los datos." Cualquier docente que lea ese descriptor evaluará igual al mismo estudiante — eso es consistencia.'
+    },
+    {
+      id: 'm5-s55-c4-q4',
+      enunciado: 'Un estudiante solicita ver su rúbrica DESPUÉS de ser evaluado. ¿Cuándo debería haber accedido a ella?',
+      opciones: [
+        'La rúbrica es herramienta del docente — el estudiante no necesita verla',
+        'Antes de la actividad — la rúbrica compartida anticipadamente orienta el aprendizaje y permite la autoevaluación durante el proceso',
+        'Durante la evaluación para que pueda seguir los criterios en tiempo real',
+        'La rúbrica se entrega con la calificación para que el estudiante entienda su nota'
+      ],
+      correcta: 1,
+      explicacion: 'Compartir la rúbrica antes transforma la evaluación: el estudiante sabe exactamente qué se espera, puede autoevaluarse mientras practica y orienta su esfuerzo. Una rúbrica entregada solo al calificar es solo una herramienta de justificación de nota — pierde todo su potencial formativo.'
+    },
+    {
+      id: 'm5-s55-c4-q5',
+      enunciado: 'Tres docentes evalúan al mismo estudiante realizando el diagnóstico con multímetro. Docente A da 18/20, Docente B da 12/20, Docente C da 15/20. ¿Qué problema revela esto?',
+      opciones: [
+        'Los docentes tienen diferente nivel de exigencia — es normal y esperado',
+        'La rúbrica tiene baja confiabilidad — los criterios no son suficientemente claros para que diferentes evaluadores lleguen a resultados consistentes',
+        'El estudiante actuó diferente ante cada docente',
+        'Hay que promediar las tres notas — 15/20 es la calificación correcta'
+      ],
+      correcta: 1,
+      explicacion: 'La confiabilidad de un instrumento de evaluación se mide por la consistencia entre evaluadores (inter-rater reliability). Una variación de 6 puntos sobre 20 indica que los descriptores son demasiado vagos. La solución no es promediar — es revisar y precisar los criterios hasta que distintos docentes lleguen a calificaciones similares evaluando el mismo desempeño.'
+    },
+    {
+      id: 'm5-s55-c4-q6',
+      enunciado: 'Quieres que los estudiantes se autoevalúen después de la práctica de instalación del compresor. ¿Cuál es el mayor beneficio pedagógico de la autoevaluación?',
+      opciones: [
+        'Reduce la carga de trabajo del docente al compartir la evaluación',
+        'Desarrolla metacognición — el estudiante aprende a reconocer qué sabe, qué le falta y cómo mejorar, habilidad esencial para el aprendizaje autónomo en el oficio',
+        'Da una segunda calificación que se promedia con la del docente para mayor objetividad',
+        'Motiva a los estudiantes porque generalmente se ponen notas más altas'
+      ],
+      correcta: 1,
+      explicacion: 'La autoevaluación bien implementada desarrolla metacognición — la capacidad de monitorear el propio aprendizaje. Un técnico automotriz que sabe reconocer sus propios límites ("no tengo experiencia suficiente con este sistema — debo consultar") es más seguro y más competente. Ese hábito se construye desde la formación con autoevaluación honesta y frecuente.'
+    },
+    {
+      id: 'm5-s55-c4-q7',
+      enunciado: 'Al finalizar el módulo de seguridad, aplicas una prueba escrita con 20 preguntas de opción múltiple. Un estudiante obtiene 16/20. ¿Esto es suficiente evidencia de que logró la competencia de seguridad en el taller?',
+      opciones: [
+        'Sí — 80% en la prueba demuestra que el estudiante conoce las normas de seguridad',
+        'No — saber la norma en papel no equivale a aplicarla en el taller. La competencia de seguridad requiere evidencia de desempeño observable en situación real',
+        'Sí — si el examen incluye casos prácticos, es evidencia suficiente',
+        'Depende — si el estudiante estudió mucho, la prueba escrita es válida'
+      ],
+      correcta: 1,
+      explicacion: 'La competencia es saber actuar en contexto real, no recordar información. Un estudiante puede responder correctamente "¿cuál es el EPP para trabajar con fluidos?" y no usarlo en el taller. La evidencia de competencia en seguridad debe incluir observación directa del desempeño: ¿se pone los guantes antes de manipular el aceite? ¿Verifica los seguros del elevador? La prueba escrita evalúa conocimiento declarativo, no competencia.'
+    },
+    {
+      id: 'm5-s55-c4-q8',
+      enunciado: 'Diseñas la evaluación del módulo de instalación de equipos. ¿Qué combinación de instrumentos da la evidencia más completa de competencia?',
+      opciones: [
+        'Dos pruebas escritas — al inicio y al final del módulo',
+        'Lista de cotejo de procedimientos (observación directa) + rúbrica de producto (calidad de la instalación) + autoevaluación del estudiante',
+        'Una rúbrica muy detallada aplicada solo al producto final',
+        'Examen oral donde el estudiante explica los pasos de instalación'
+      ],
+      correcta: 1,
+      explicacion: 'La triangulación de evidencias da la imagen más completa: la lista de cotejo captura si siguió el proceso correcto (seguridad, pasos), la rúbrica evalúa la calidad del resultado (instalación funcional, acabados), y la autoevaluación revela la conciencia del propio aprendizaje. Ningún instrumento solo es suficiente para declarar competencia en un oficio técnico.'
+    }
+  ],
+
+  // M5-S57 — Competencia docente 4: gestión pedagógica del taller automotriz (8 preguntas)
+  'm5-s57-c4': [
+    {
+      id: 'm5-s57-c4-q1',
+      enunciado: 'Tienes 28 estudiantes en el taller y 3 zonas activas simultáneamente (investigación, innovación, almacén). ¿Cuál es la estrategia de gestión más efectiva?',
+      opciones: [
+        'Supervisar solo la zona más peligrosa (innovación) y dejar las otras sin monitoreo',
+        'Designar un estudiante líder por zona con checklist de responsabilidades, establecer señales visuales de avance y hacer recorridos cortos cada 10 minutos entre zonas',
+        'Trabajar una zona a la vez para mantener el control total del docente',
+        'Dividir el grupo en días distintos para que el docente pueda atender a todos'
+      ],
+      correcta: 1,
+      explicacion: 'La gestión de taller con múltiples zonas simultáneas requiere: líderes estudiantiles que asuman responsabilidad (desarrollan competencia de liderazgo), checklists visuales que hacen visible el avance sin que el docente pregunte constantemente, y recorridos cortos pero frecuentes. Trabajar una zona a la vez desaprovecha la capacidad instalada del taller.'
+    },
+    {
+      id: 'm5-s57-c4-q2',
+      enunciado: 'Al iniciar la sesión práctica, ¿cuál es el protocolo mínimo de gestión antes de que los estudiantes toquen cualquier equipo?',
+      opciones: [
+        'Pasar lista y comenzar directamente para aprovechar el tiempo',
+        'Verificar EPP de todos los estudiantes, confirmar que los equipos están en estado operativo y repasar en 3 minutos el objetivo de la sesión y las normas de seguridad específicas de hoy',
+        'Hacer una prueba oral de los conocimientos previos antes de permitir el acceso a los equipos',
+        'El protocolo de inicio lo decide cada estudiante según su nivel de experiencia'
+      ],
+      correcta: 1,
+      explicacion: 'Los primeros 3-5 minutos de gestión preventiva evitan el 80% de los incidentes y confusiones de la sesión. Verificar EPP (no negociable), confirmar estado de equipos (un equipo "en reparación" que se usa genera accidentes) y orientar el objetivo (los estudiantes saben hacia dónde van) es la base de toda sesión de taller bien gestionada.'
+    },
+    {
+      id: 'm5-s57-c4-q3',
+      enunciado: 'Un estudiante llega sin sus lentes de seguridad el día de la práctica con el elevador. ¿Cuál es la respuesta de gestión correcta?',
+      opciones: [
+        'Permitirle participar con la condición de que tenga más cuidado',
+        'No puede ingresar a la zona de práctica hasta tener el EPP completo — ofrecerle actividades alternativas (análisis de datos, fichas de metrado) mientras espera o gestiona conseguirlos',
+        'Prestarle los lentes del docente para que no pierda la sesión',
+        'Anotarlo en el registro pero permitirle participar porque es solo una vez'
+      ],
+      correcta: 1,
+      explicacion: 'El EPP no es opcional ni negociable en ninguna circunstancia — esta postura protege al estudiante y establece la cultura de seguridad del taller. La alternativa pedagógica (actividades fuera de zona de riesgo) impide que pierda completamente la sesión. Hacer excepciones "una vez" destruye la norma para todos.'
+    },
+    {
+      id: 'm5-s57-c4-q4',
+      enunciado: 'El compresor del taller hace un ruido inusual al iniciar la sesión. ¿Qué decisión de gestión tomas?',
+      opciones: [
+        'Usarlo con precaución — probablemente es algo menor que no afecta el funcionamiento',
+        'Detener su uso inmediatamente, etiquetarlo como "NO USAR — en revisión", registrar la anomalía en la bitácora del equipo y planificar la sesión sin él',
+        'Pedir a un estudiante técnico avanzado que lo revise durante la sesión',
+        'Continuar la sesión y reportar el ruido al director después de clases'
+      ],
+      correcta: 1,
+      explicacion: 'Un equipo con comportamiento inusual es equipo fuera de servicio hasta que se diagnostique. La etiqueta visible evita que otro docente lo use sin saber. El registro en bitácora es la evidencia para la garantía o el mantenimiento. Operar un equipo sospechoso pone en riesgo a los estudiantes y puede invalidar la garantía del bien.'
+    },
+    {
+      id: 'm5-s57-c4-q5',
+      enunciado: 'Al cierre de cada sesión del taller, ¿qué práctica de gestión tiene mayor impacto en la siguiente sesión?',
+      opciones: [
+        'Calificar los trabajos del día antes de que los estudiantes se retiren',
+        'Aplicar 5S: cada equipo y herramienta a su lugar, zona limpia, anomalías registradas y checklist de cierre firmado — el taller debe quedar listo para quien llegue mañana',
+        'Hacer una evaluación oral rápida de lo aprendido en la sesión',
+        'Guardar solo los equipos más caros y dejar las herramientas menores donde están'
+      ],
+      correcta: 1,
+      explicacion: 'El cierre con 5S (Seiri, Seiton, Seiso, Seiketsu, Shitsuke) es el hábito de gestión de mayor retorno: el docente del día siguiente encuentra el taller operativo sin perder 15 minutos buscando herramientas o limpiando. En el taller automotriz real, este hábito separa a los técnicos profesionales de los improvisados — enseñarlo desde la formación es enseñar cultura de trabajo.'
+    },
+    {
+      id: 'm5-s57-c4-q6',
+      enunciado: 'Tienes que demostrar a la UGEL que el taller está siendo usado pedagógicamente. ¿Qué evidencias de gestión son más sólidas?',
+      opciones: [
+        'Fotos de los estudiantes en el taller tomadas durante las sesiones',
+        'Bitácora de uso del taller firmada por fecha y sesión, registros de estado de equipos, fichas de metrado actualizadas y portafolios de evaluación de estudiantes con retroalimentación',
+        'El número de estudiantes que aprobaron las evaluaciones escritas del módulo',
+        'Un informe narrativo del docente describiendo las actividades realizadas'
+      ],
+      correcta: 1,
+      explicacion: 'Las evidencias sólidas son sistemáticas y verificables, no narrativas. La bitácora (quién, cuándo, qué equipo, estado) demuestra uso real. Las fichas de metrado actualizadas demuestran gestión patrimonial. Los portafolios con retroalimentación demuestran evaluación formativa. Las fotos y narrativas son complementarias pero no suficientes por sí solas.'
+    },
+    {
+      id: 'm5-s57-c4-q7',
+      enunciado: 'Un estudiante termina su tarea 15 minutos antes que el resto del grupo. ¿Cuál es la mejor respuesta pedagógica de gestión?',
+      opciones: [
+        'Permitirle descansar — ya cumplió con la tarea asignada',
+        'Tener preparadas tareas de extensión: documentar el proceso realizado en la ficha técnica, revisar el manual del equipo para la siguiente sesión, o apoyar a un compañero como monitor técnico',
+        'Pedirle que repita la tarea para ganar más práctica',
+        'Asignarle tareas administrativas del taller como limpiar o ordenar'
+      ],
+      correcta: 1,
+      explicacion: 'El tiempo libre en taller es tiempo desperdiciado o tiempo de riesgo (el estudiante desocupado puede interferir en otras zonas). Las tareas de extensión bien diseñadas profundizan el aprendizaje: documentar refuerza la comprensión, leer el manual prepara la siguiente sesión, y el rol de monitor técnico desarrolla liderazgo y consolida lo aprendido enseñándolo.'
+    },
+    {
+      id: 'm5-s57-c4-q8',
+      enunciado: 'El director te pide abrir el taller para que otro docente use los equipos para una actividad no curricular. ¿Cuál es la respuesta de gestión correcta?',
+      opciones: [
+        'Autorizar inmediatamente — el director tiene autoridad sobre todos los espacios',
+        'Explicar que los equipos del taller TSF tienen protocolo de uso: requieren capacitación específica, registro en bitácora y supervisión de personal habilitado — ofrecer coordinar una sesión con las condiciones correctas',
+        'Negarse definitivamente — el taller es exclusivo para las clases del programa',
+        'Autorizar solo si el otro docente firma una carta de responsabilidad'
+      ],
+      correcta: 1,
+      explicacion: 'Los equipos del taller TSF-MINEDU tienen valor patrimonial, protocolos de uso y garantías que dependen del uso correcto. Autorizar uso sin protocolo puede dañar equipos, invalidar garantías o generar accidentes. La respuesta profesional no es negarse — es proponer las condiciones mínimas que protegen el bien y la seguridad: habilitación, registro y supervisión adecuada.'
+    }
+  ],
+
 }
