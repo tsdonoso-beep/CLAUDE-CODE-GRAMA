@@ -28,7 +28,7 @@ import { ExploradorEquiposModal } from '@/components/lxp/interactivos/Explorador
 import { SeleccionadorConsumiblesModal } from '@/components/lxp/interactivos/SeleccionadorConsumiblesModal'
 import { ChecklistMantenimientoModal } from '@/components/lxp/interactivos/ChecklistMantenimientoModal'
 import { ActividadExternaModal, ACTIVIDADES_EXTERNAS, type ActividadExternaConfig } from '@/components/lxp/interactivos/ActividadExternaModal'
-import { EscenarioPedagogicoModal, ESCENARIO_COMP1, type EscenarioConfig } from '@/components/lxp/interactivos/EscenarioPedagogicoModal'
+import { EscenarioPedagogicoModal, ESCENARIO_COMP1, ESCENARIO_COMP2, type EscenarioConfig } from '@/components/lxp/interactivos/EscenarioPedagogicoModal'
 import { descargablesLXP } from '@/data/descargablesLXP'
 import { quizBancosMeca } from '@/data/quizBancosMeca'
 import { descargablesMeca } from '@/data/descargablesMeca'
@@ -210,6 +210,8 @@ export default function ModuloDetalle() {
         setShowChecklistMant('almacen')
       } else if (contenido.id === 'm5-s51-c3') {
         setEscenarioPedagogico(ESCENARIO_COMP1)
+      } else if (contenido.id === 'm5-s53-c3') {
+        setEscenarioPedagogico(ESCENARIO_COMP2)
       } else if (ACTIVIDADES_EXTERNAS[contenido.id]) {
         setActividadExterna(ACTIVIDADES_EXTERNAS[contenido.id])
       } else if (contenido.id === 'm5-s2-c1') {

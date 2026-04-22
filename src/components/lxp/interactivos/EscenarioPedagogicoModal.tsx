@@ -273,6 +273,92 @@ export function EscenarioPedagogicoModal({ config, onClose, onComplete }: Props)
 
 // ─── Datos de los 4 escenarios ────────────────────────────────────────────────
 
+export const ESCENARIO_COMP2: EscenarioConfig = {
+  contenidoId: 'm5-s53-c3',
+  competencia: 'Metodologías activas ABP/ABPr',
+  numero: 2,
+  titulo: '¿Cómo aplicas ABP en el diagnóstico automotriz?',
+  contexto: 'Eres docente del taller automotriz. Decides implementar ABP por primera vez con tu grupo de 4° secundaria. El caso: un vehículo llega al taller con el testigo del motor encendido, consumo de combustible elevado y arrancada difícil en frío. El dueño no quiere gastar más de S/200.',
+  reflexionFinal: 'El ABP no es dejar al estudiante solo — es diseñar el andamiaje correcto. El problema auténtico genera motivación, la pregunta socrática mantiene el protagonismo del estudiante, y el error procesado produce aprendizaje más profundo que la corrección directa. El rol del docente es más exigente, no menos.',
+  decisions: [
+    {
+      situacion: 'Presentas el caso del vehículo al grupo. Los estudiantes te preguntan: "¿Por dónde empezamos, profe?". ¿Qué respondes?',
+      opciones: [
+        {
+          texto: 'Les doy una guía paso a paso: primero conectar el escáner, luego revisar el sensor MAF, luego verificar la presión de combustible.',
+          correcta: false,
+          feedback: 'Si das los pasos, conviertes el ABP en una práctica guiada disfrazada. Los estudiantes siguen instrucciones en lugar de pensar. El valor del ABP está en que ellos decidan el primer paso — aunque se equivoquen en el camino.'
+        },
+        {
+          texto: 'Respondo con una pregunta: "¿Qué información necesitan antes de decidir por dónde empezar? ¿Qué haría un técnico real al recibir este vehículo?"',
+          correcta: true,
+          feedback: 'La pregunta de reencaminamiento devuelve el protagonismo al estudiante sin dejarlo sin apoyo. "¿Qué haría un técnico real?" conecta el problema con el oficio y activa el conocimiento previo. Es la respuesta de un facilitador, no de un instructor.'
+        },
+        {
+          texto: 'Les digo que el ABP es libre — que busquen en internet y lleguen a sus propias conclusiones.',
+          correcta: false,
+          feedback: 'El ABP libre sin andamiaje produce frustración y aprendizajes superficiales. El docente debe diseñar el nivel de ayuda correcto para cada momento. "Busquen en internet" sin guía de búsqueda es abandono pedagógico, no autonomía.'
+        },
+        {
+          texto: 'Hago yo mismo el diagnóstico inicial con el escáner para que vean el procedimiento correcto antes de que ellos intenten.',
+          correcta: false,
+          feedback: 'Demostrar primero en un ABP cancela el proceso de investigación. Si ya saben la respuesta antes de investigar, ¿qué están resolviendo? La demostración tiene su lugar, pero no al inicio de un ABP.'
+        }
+      ]
+    },
+    {
+      situacion: 'Después de 20 minutos, un grupo está paralizado: "No sabemos qué código OBD leer primero, hay muchos". ¿Cómo actúas?',
+      opciones: [
+        {
+          texto: 'Me siento con ellos y les explico cómo priorizar los códigos según su categoría (P0xxx = motor, B = carrocería, etc.).',
+          correcta: false,
+          feedback: 'Dar la explicación directa resuelve el bloqueo pero roba el momento de descubrimiento. El grupo que encuentra la respuesta preguntando al manual o al manual del escáner aprende más que el que la recibe explicada.'
+        },
+        {
+          texto: 'Los ignoro — el ABP requiere que resuelvan solos, cualquier ayuda invalida la metodología.',
+          correcta: false,
+          feedback: 'El andamiaje no invalida el ABP — lo hace posible. Ignorar a un grupo paralizado durante 20 minutos genera frustración que destruye la motivación. El facilitador interviene en el momento justo, no nunca.'
+        },
+        {
+          texto: 'Les pregunto: "¿Tienen el manual del escáner cerca? ¿Qué dice sobre cómo leer los códigos activos vs. pendientes? ¿Cuáles creen que son más urgentes para el síntoma que describe el dueño?"',
+          correcta: true,
+          feedback: 'Perfecto. Tres preguntas encadenadas que desbloquean sin dar la respuesta: la primera dirige al recurso correcto, la segunda activa el análisis técnico, la tercera conecta el síntoma del cliente con el diagnóstico. Esto es andamiaje efectivo.'
+        },
+        {
+          texto: 'Les doy 5 minutos más y si no avanzan, los fusiono con otro grupo que ya encontró los códigos.',
+          correcta: false,
+          feedback: 'Fusionar grupos al primer bloqueo evita que enfrenten el proceso de resolución de problemas. El bloqueo es parte del aprendizaje — el objetivo es ayudarlos a superarlo, no saltarlo. Un grupo que nunca se atascó no desarrolló resiliencia.'
+        }
+      ]
+    },
+    {
+      situacion: 'Al final, un grupo concluye: "El problema es el sensor MAF — hay que reemplazarlo". Tú sabes que la causa real es una fuga de vacío. ¿Qué haces?',
+      opciones: [
+        {
+          texto: 'Corrijo inmediatamente frente a todos: "No, están equivocados — la causa real es una fuga de vacío". Explico el diagnóstico correcto.',
+          correcta: false,
+          feedback: 'La corrección directa frente al grupo puede funcionar para transferir información, pero hace al docente el protagonista del cierre. El grupo no procesa su error — lo recibe corregido. El aprendizaje es superficial.'
+        },
+        {
+          texto: 'Acepto su conclusión sin corregirla para no desmotivarlos — lo importante es que participaron.',
+          correcta: false,
+          feedback: 'No corregir un error técnico en el taller automotriz no es pedagogía — es negligencia. Un estudiante que sale creyendo que el MAF sucio no puede confundirse con una fuga de vacío tomará decisiones incorrectas con vehículos reales.'
+        },
+        {
+          texto: 'Les pregunto que expliquen su razonamiento paso a paso: "¿Qué valor tenía el MAF en tiempo real? ¿Revisaron si hay diferencia entre el STFT y el LTFT? ¿Hicieron la prueba de fuga de vacío?" — el error emerge de su propio análisis.',
+          correcta: true,
+          feedback: 'El error procesado es el aprendizaje más poderoso del ABP. Cuando el grupo descubre su propio error a través de las preguntas del docente, la corrección es suya — no recibida. Ese momento de "¡ah, claro!" no se olvida.'
+        },
+        {
+          texto: 'Dejo que propongan el reemplazo del MAF y recién corrijo cuando lo intenten físicamente — el error práctico enseña más.',
+          correcta: false,
+          feedback: 'Dejar que realicen un diagnóstico incorrecto sobre un vehículo real puede generar costos innecesarios y daños. El ABP tiene límites éticos — el error conceptual se corrige antes de la intervención física.'
+        }
+      ]
+    }
+  ]
+}
+
 export const ESCENARIO_COMP1: EscenarioConfig = {
   contenidoId: 'm5-s51-c3',
   competencia: 'Planificación por competencias',
