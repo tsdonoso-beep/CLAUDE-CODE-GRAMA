@@ -28,6 +28,7 @@ import { SeleccionadorConsumiblesModal } from '@/components/lxp/interactivos/Sel
 import { ChecklistMantenimientoModal } from '@/components/lxp/interactivos/ChecklistMantenimientoModal'
 import { ActividadExternaModal, ACTIVIDADES_EXTERNAS, type ActividadExternaConfig } from '@/components/lxp/interactivos/ActividadExternaModal'
 import { descargablesLXP } from '@/data/descargablesLXP'
+import { quizBancosMeca } from '@/data/quizBancosMeca'
 import { useTaller } from '@/hooks/useTaller'
 import { getTallerBySlug } from '@/data/talleresConfig'
 import jsPDF from 'jspdf'
@@ -381,11 +382,17 @@ export default function ModuloDetalle() {
                       </p>
                     )}
                     {(() => {
+                      // Inyectar banco de preguntas para mecanica-automotriz
+                      const contenidosConBanco = ses.contenidos.map(c =>
+                        slug === 'mecanica-automotriz' && c.tipo === 'QUIZ' && !c.bancoPreguntas && quizBancosMeca[c.id]
+                          ? { ...c, bancoPreguntas: quizBancosMeca[c.id] }
+                          : c
+                      )
                       // Separar diagnósticos (quiz con bancoPreguntas sin bloqueo) del resto
-                      const diagnosticos = ses.contenidos.filter(
+                      const diagnosticos = contenidosConBanco.filter(
                         c => c.tipo === 'QUIZ' && !!c.bancoPreguntas && !c.bloqueaSiguiente
                       )
-                      const resto = ses.contenidos.filter(
+                      const resto = contenidosConBanco.filter(
                         c => !(c.tipo === 'QUIZ' && !!c.bancoPreguntas && !c.bloqueaSiguiente)
                       )
                       const totalDiagMin = diagnosticos.reduce((acc, c) => acc + (c.duracionMin ?? 0), 0)
