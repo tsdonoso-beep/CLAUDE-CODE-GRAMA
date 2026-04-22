@@ -28,6 +28,7 @@ import { ExploradorEquiposModal } from '@/components/lxp/interactivos/Explorador
 import { SeleccionadorConsumiblesModal } from '@/components/lxp/interactivos/SeleccionadorConsumiblesModal'
 import { ChecklistMantenimientoModal } from '@/components/lxp/interactivos/ChecklistMantenimientoModal'
 import { ActividadExternaModal, ACTIVIDADES_EXTERNAS, type ActividadExternaConfig } from '@/components/lxp/interactivos/ActividadExternaModal'
+import { EscenarioPedagogicoModal, ESCENARIO_COMP1, ESCENARIO_COMP2, ESCENARIO_COMP3, ESCENARIO_COMP4, type EscenarioConfig } from '@/components/lxp/interactivos/EscenarioPedagogicoModal'
 import { descargablesLXP } from '@/data/descargablesLXP'
 import { quizBancosMeca } from '@/data/quizBancosMeca'
 import { descargablesMeca } from '@/data/descargablesMeca'
@@ -71,6 +72,7 @@ export default function ModuloDetalle() {
   const [showSelConsumibles, setShowSelConsumibles]         = useState<'investigacion' | 'almacen' | 'innovacion' | null>(null)
   const [showChecklistMant, setShowChecklistMant]           = useState<'investigacion' | 'almacen' | null>(null)
   const [actividadExterna, setActividadExterna]             = useState<ActividadExternaConfig | null>(null)
+  const [escenarioPedagogico, setEscenarioPedagogico]       = useState<EscenarioConfig | null>(null)
 
   const closeGradeModal = useCallback(() => setShowGradeModal(false), [])
   const closeTourSimulator = useCallback(() => {
@@ -206,6 +208,14 @@ export default function ModuloDetalle() {
         setShowChecklistMant('investigacion')
       } else if (contenido.id === 'm3-s29-c3') {
         setShowChecklistMant('almacen')
+      } else if (contenido.id === 'm5-s51-c3') {
+        setEscenarioPedagogico(ESCENARIO_COMP1)
+      } else if (contenido.id === 'm5-s53-c3') {
+        setEscenarioPedagogico(ESCENARIO_COMP2)
+      } else if (contenido.id === 'm5-s55-c3') {
+        setEscenarioPedagogico(ESCENARIO_COMP3)
+      } else if (contenido.id === 'm5-s57-c3') {
+        setEscenarioPedagogico(ESCENARIO_COMP4)
       } else if (ACTIVIDADES_EXTERNAS[contenido.id]) {
         setActividadExterna(ACTIVIDADES_EXTERNAS[contenido.id])
       } else if (contenido.id === 'm5-s2-c1') {
@@ -773,6 +783,15 @@ export default function ModuloDetalle() {
             const id = showChecklistMant === 'investigacion' ? 'm2-s22-c3' : 'm3-s29-c3'
             markContenidoCompleted(id)
           }}
+        />
+      )}
+
+      {/* Escenario pedagógico — m5-s51-c3 y siguientes */}
+      {escenarioPedagogico && (
+        <EscenarioPedagogicoModal
+          config={escenarioPedagogico}
+          onClose={() => setEscenarioPedagogico(null)}
+          onComplete={() => markContenidoCompleted(escenarioPedagogico.contenidoId)}
         />
       )}
 
