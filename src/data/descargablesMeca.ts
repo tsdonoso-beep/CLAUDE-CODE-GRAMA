@@ -92,4 +92,106 @@ export const descargablesMeca: DescargableLXP[] = [
     ]
   },
 
+  // 2. CHECKLIST DE INSTALACIÓN DE EQUIPOS
+  {
+    id: 'desc-m1-meca-instalacion',
+    modulo: 'm1',
+    titulo: 'Checklist de Instalación de Equipos del Taller',
+    subtitulo: 'Guía paso a paso para la instalación segura y certificada',
+    descripcion: 'Plantilla de verificación para la instalación completa del taller automotriz: pre-instalación eléctrica, elevador tipo tijera, sistema neumático, software de diagnóstico y prueba funcional. Cada etapa requiere firma de conformidad.',
+    tipo: 'PLANTILLA',
+    formato: 'A4',
+    paginas: 8,
+    instrucciones: 'Completar en orden secuencial. No avanzar a la siguiente sección si hay ítems sin marcar. Firmar cada sección al completarla. El documento firmado es el acta de instalación oficial.',
+    nota: 'Este checklist es requisito para activar la garantía de los equipos instalados. Conservar copia firmada en la carpeta del taller.',
+    secciones: [
+      {
+        id: 'inst-s1',
+        titulo: 'Pre-instalación: Verificación del Espacio',
+        descripcion: 'Completar ANTES de desempacar cualquier equipo',
+        campos: [
+          { id: 'inst-pre-ie', etiqueta: 'Institución Educativa', tipo: 'texto', requerido: true },
+          { id: 'inst-pre-fecha', etiqueta: 'Fecha de inicio de instalación', tipo: 'fecha', requerido: true },
+          { id: 'inst-pre-tecnico', etiqueta: 'Técnico responsable de la instalación', tipo: 'texto', requerido: true },
+          { id: 'inst-pre-e1', etiqueta: 'El piso del taller soporta la carga del elevador (mín. 3 ton/m²)', tipo: 'check' },
+          { id: 'inst-pre-e2', etiqueta: 'Existe toma trifásica 220V cerca de la zona del elevador', tipo: 'check' },
+          { id: 'inst-pre-e3', etiqueta: 'El circuito eléctrico tiene disyuntor diferencial instalado', tipo: 'check' },
+          { id: 'inst-pre-e4', etiqueta: 'La altura del techo es suficiente (mín. 3.5m sobre el elevador)', tipo: 'check' },
+          { id: 'inst-pre-e5', etiqueta: 'Existe ventilación adecuada (ventanas o extractor) en el foso/zona elevador', tipo: 'check' },
+          { id: 'inst-pre-e6', etiqueta: 'La zona del compresor está a menos de 15m del punto de uso más lejano', tipo: 'check' },
+          { id: 'inst-pre-obs', etiqueta: 'Observaciones de la pre-instalación', tipo: 'area' },
+          { id: 'inst-pre-firma', etiqueta: 'Firma de conformidad — Pre-instalación', tipo: 'firma', requerido: true }
+        ]
+      },
+      {
+        id: 'inst-s2',
+        titulo: 'Instalación del Elevador Tipo Tijera',
+        descripcion: 'Seguir en estricto orden. Verificar cada paso antes de continuar.',
+        campos: [
+          { id: 'inst-elev-1', etiqueta: '1. Posicionar el elevador en la zona marcada del piso', tipo: 'check' },
+          { id: 'inst-elev-2', etiqueta: '2. Anclar los pernos de fijación al piso (mín. 4 puntos)', tipo: 'check' },
+          { id: 'inst-elev-3', etiqueta: '3. Conectar el sistema hidráulico (verificar nivel de aceite hidráulico)', tipo: 'check' },
+          { id: 'inst-elev-4', etiqueta: '4. Conectar la alimentación eléctrica 220V trifásica', tipo: 'check' },
+          { id: 'inst-elev-5', etiqueta: '5. Prueba de elevación SIN CARGA — verificar que sube y baja suavemente', tipo: 'check' },
+          { id: 'inst-elev-6', etiqueta: '6. Verificar activación de todos los seguros mecánicos de retención', tipo: 'check' },
+          { id: 'inst-elev-7', etiqueta: '7. Prueba CON CARGA mínima (vehículo ligero < 1,500 kg)', tipo: 'check' },
+          { id: 'inst-elev-8', etiqueta: '8. Verificar que los seguros se activan automáticamente bajo carga', tipo: 'check' },
+          { id: 'inst-elev-9', etiqueta: '9. Señalizar la zona de peligro alrededor del elevador (cinta + panel)', tipo: 'check' },
+          { id: 'inst-elev-carga-max', etiqueta: 'Capacidad de carga máxima del elevador instalado (kg)', tipo: 'numero', requerido: true },
+          { id: 'inst-elev-obs', etiqueta: 'Observaciones de la instalación del elevador', tipo: 'area' },
+          { id: 'inst-elev-firma', etiqueta: 'Firma de conformidad — Instalación del elevador', tipo: 'firma', requerido: true }
+        ]
+      },
+      {
+        id: 'inst-s3',
+        titulo: 'Sistema Neumático (Compresor y Red de Aire)',
+        campos: [
+          { id: 'inst-neum-1', etiqueta: '1. Compresor instalado sobre base antivibración', tipo: 'check' },
+          { id: 'inst-neum-2', etiqueta: '2. Mangueras de alta presión fijadas a la pared (sin contacto con piso)', tipo: 'check' },
+          { id: 'inst-neum-3', etiqueta: '3. Válvulas de cierre instaladas en cada punto de toma', tipo: 'check' },
+          { id: 'inst-neum-4', etiqueta: '4. Presión de trabajo del compresor verificada (mín. 90 PSI — máx. 120 PSI)', tipo: 'check' },
+          { id: 'inst-neum-5', etiqueta: '5. Manómetro de control instalado y legible desde el punto de uso', tipo: 'check' },
+          { id: 'inst-neum-6', etiqueta: '6. Purga del depósito realizada antes de la primera prueba de carga', tipo: 'check' },
+          { id: 'inst-neum-presion', etiqueta: 'Presión de trabajo calibrada (PSI)', tipo: 'numero' },
+          { id: 'inst-neum-obs', etiqueta: 'Observaciones del sistema neumático', tipo: 'area' },
+          { id: 'inst-neum-firma', etiqueta: 'Firma de conformidad — Sistema neumático', tipo: 'firma', requerido: true }
+        ]
+      },
+      {
+        id: 'inst-s4',
+        titulo: 'Software de Diagnóstico Automotriz',
+        campos: [
+          { id: 'inst-sw-equipo', etiqueta: 'Equipo donde se instala el software', tipo: 'texto', requerido: true, placeholder: 'Ej: Tablet LAUNCH X431, PC de la zona de investigación' },
+          { id: 'inst-sw-nombre', etiqueta: 'Nombre del software instalado', tipo: 'texto', requerido: true },
+          { id: 'inst-sw-version', etiqueta: 'Versión del software', tipo: 'texto', requerido: true },
+          { id: 'inst-sw-1', etiqueta: '1. Licencia activada correctamente con código de activación del fabricante', tipo: 'check' },
+          { id: 'inst-sw-2', etiqueta: '2. Base de datos de vehículos actualizada a la versión más reciente', tipo: 'check' },
+          { id: 'inst-sw-3', etiqueta: '3. Drivers del adaptador OBD instalados (verificar en Administrador de dispositivos)', tipo: 'check' },
+          { id: 'inst-sw-4', etiqueta: '4. Primer scan de prueba realizado con vehículo disponible', tipo: 'check' },
+          { id: 'inst-sw-5', etiqueta: '5. Lectura de códigos confirmada — el software detectó el VIN del vehículo de prueba', tipo: 'check' },
+          { id: 'inst-sw-vehiculo-prueba', etiqueta: 'Vehículo usado en prueba (marca, modelo, año)', tipo: 'texto' },
+          { id: 'inst-sw-obs', etiqueta: 'Observaciones de la instalación del software', tipo: 'area' },
+          { id: 'inst-sw-firma', etiqueta: 'Firma de conformidad — Software de diagnóstico', tipo: 'firma', requerido: true }
+        ]
+      },
+      {
+        id: 'inst-s5',
+        titulo: 'Prueba Integral y Firma de Entrega',
+        descripcion: 'Completar solo cuando todas las secciones anteriores estén firmadas',
+        campos: [
+          { id: 'inst-final-1', etiqueta: 'Todos los equipos instalados funcionan correctamente en prueba simultánea', tipo: 'check' },
+          { id: 'inst-final-2', etiqueta: 'Panel de seguridad instalado y visible desde todas las zonas del taller', tipo: 'check' },
+          { id: 'inst-final-3', etiqueta: 'Extintor recargado y ubicado en zona accesible', tipo: 'check' },
+          { id: 'inst-final-4', etiqueta: 'Botiquín de primeros auxilios disponible en el taller', tipo: 'check' },
+          { id: 'inst-final-5', etiqueta: 'Fichas de metrado completadas para todos los equipos instalados', tipo: 'check' },
+          { id: 'inst-final-obs', etiqueta: 'Observaciones finales y pendientes', tipo: 'area' },
+          { id: 'inst-final-fecha', etiqueta: 'Fecha de finalización de la instalación', tipo: 'fecha', requerido: true },
+          { id: 'inst-final-firma-docente', etiqueta: 'Firma del docente responsable del taller', tipo: 'firma', requerido: true },
+          { id: 'inst-final-firma-director', etiqueta: 'Firma del director de la IE', tipo: 'firma', requerido: true },
+          { id: 'inst-final-firma-tecnico', etiqueta: 'Firma del técnico instalador', tipo: 'firma', requerido: true }
+        ]
+      }
+    ]
+  },
+
 ]
