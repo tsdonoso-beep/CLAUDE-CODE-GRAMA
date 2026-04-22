@@ -2,6 +2,258 @@ import type { PreguntaQuiz } from './modulosLXP'
 
 export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
 
+  // M0-S05 — Gamma, Teachy, Polypad, Meshy (6 preguntas)
+  'm0-s05-c5': [
+    {
+      id: 'm0-s05-c5-q1',
+      enunciado: 'El docente quiere que sus estudiantes visualicen en 3D cómo funciona el sistema de transmisión antes de la práctica con el vehículo real. ¿Qué herramienta es la más adecuada?',
+      opciones: [
+        'Gamma — para crear una presentación con imágenes del sistema de transmisión',
+        'Teachy — para generar una guía de estudio del tema',
+        'Meshy — permite generar o explorar modelos 3D de componentes mecánicos que los estudiantes pueden rotar y analizar antes de la práctica',
+        'Polypad — para visualizar las ecuaciones de la relación de transmisión'
+      ],
+      correcta: 2,
+      explicacion: 'Meshy genera modelos 3D a partir de texto o imágenes. Para el taller automotriz, permite que los estudiantes "vean por dentro" piezas que en el vehículo real están ensambladas y son difíciles de observar, antes de manipularlas físicamente.'
+    },
+    {
+      id: 'm0-s05-c5-q2',
+      enunciado: 'El docente necesita preparar una presentación pedagógica del sistema de frenos ABS con diseño profesional en menos de 10 minutos. ¿Qué herramienta usa?',
+      opciones: [
+        'Google Slides — más confiable para presentaciones técnicas',
+        'Gamma — genera presentaciones completas con diseño visual a partir de un prompt o esquema de contenido',
+        'Meshy — para crear diagramas 3D del sistema ABS',
+        'Teachy — genera presentaciones automáticamente con actividades incluidas'
+      ],
+      correcta: 1,
+      explicacion: 'Gamma usa IA para generar presentaciones visualmente atractivas desde un prompt o esquema en segundos. El docente describe el tema ("sistema de frenos ABS para estudiantes de secundaria") y Gamma produce slides con estructura, imágenes y texto.'
+    },
+    {
+      id: 'm0-s05-c5-q3',
+      enunciado: 'El docente quiere crear un quiz de 10 preguntas sobre diagnóstico de fallas en el sistema eléctrico del vehículo en menos de 5 minutos. ¿Qué herramienta es la más directa?',
+      opciones: [
+        'Gamma — tiene generador de preguntas integrado en las presentaciones',
+        'Meshy — puede generar ejercicios interactivos de diagnóstico',
+        'Teachy — genera actividades, evaluaciones y organizadores visuales a partir del tema y grado indicados',
+        'Polypad — tiene banco de ejercicios técnicos automotrices'
+      ],
+      correcta: 2,
+      explicacion: 'Teachy está diseñado específicamente para crear recursos pedagógicos: quizzes, listas de cotejo, organizadores visuales, planes de sesión. Con indicar el tema, el grado y el tipo de instrumento, genera el recurso en segundos.'
+    },
+    {
+      id: 'm0-s05-c5-q4',
+      enunciado: 'Un docente quiere usar Polypad en su taller automotriz. ¿Cuál es el uso más apropiado?',
+      opciones: [
+        'Modelar en 3D el motor del vehículo para que los estudiantes lo exploren',
+        'Generar una presentación visual del sistema de suspensión',
+        'Visualizar conceptos matemáticos relacionados al taller: calcular relaciones de transmisión, ángulos de inclinación de ruedas (camber/caster) o proporciones de mezcla aire-combustible',
+        'Crear actividades de evaluación sobre diagnóstico de fallas'
+      ],
+      correcta: 2,
+      explicacion: 'Polypad es una pizarra matemática interactiva. En el taller automotriz su valor está en visualizar y calcular conceptos técnicos con base matemática: relaciones de engranajes, proporciones, ángulos de geometría de dirección, conversiones de unidades.'
+    },
+    {
+      id: 'm0-s05-c5-q5',
+      enunciado: '¿Cuál es la diferencia principal entre Gamma y Teachy para el trabajo docente del taller automotriz?',
+      opciones: [
+        'Gamma es de pago y Teachy es gratuito — la diferencia es solo económica',
+        'Gamma crea presentaciones visuales para exponer contenido; Teachy crea actividades pedagógicas para que los estudiantes practiquen o sean evaluados',
+        'Son herramientas idénticas — solo cambia la interfaz de usuario',
+        'Gamma es para docentes de primaria y Teachy para secundaria técnica'
+      ],
+      correcta: 1,
+      explicacion: 'Gamma resuelve el problema del docente expositor (preparar materiales visuales para presentar). Teachy resuelve el problema del docente evaluador (crear actividades, quizzes, organizadores para los estudiantes). Son complementarias, no equivalentes.'
+    },
+    {
+      id: 'm0-s05-c5-q6',
+      enunciado: 'El docente quiere que los estudiantes vean el motor de un Toyota Corolla en 3D antes de desarmarlo. No tiene modelo 3D previo. ¿Qué puede hacer con Meshy?',
+      opciones: [
+        'Nada — Meshy solo trabaja con modelos 3D ya existentes en su biblioteca',
+        'Generar un modelo 3D del motor escribiendo una descripción textual o subiendo una foto de referencia, y luego compartirlo para que los estudiantes lo exploren desde sus dispositivos',
+        'Descargar el plano técnico oficial de Toyota y convertirlo en 3D automáticamente',
+        'Meshy solo genera objetos decorativos, no piezas técnicas mecánicas'
+      ],
+      correcta: 1,
+      explicacion: 'Meshy genera modelos 3D a partir de texto (text-to-3D) o imágenes (image-to-3D). Un docente puede describir "motor de 4 cilindros en línea, vista explodida" y obtener un modelo navegable. No es un plano técnico certificado, pero es una herramienta de exploración visual muy potente antes de la práctica.'
+    }
+  ],
+
+  // M0-S04 — IA generativa: GPT, Claude, Gemini (6 preguntas)
+  'm0-s04-c4': [
+    {
+      id: 'm0-s04-c4-q1',
+      enunciado: 'Un docente quiere generar una rúbrica para evaluar el "cambio de pastillas de freno". ¿Cuál prompt produce el resultado más útil?',
+      opciones: [
+        '"Hazme una rúbrica de mecánica"',
+        '"Crea una rúbrica básica para evaluar estudiantes de taller"',
+        '"Crea una rúbrica analítica con 4 criterios (seguridad EPP, procedimiento técnico, calidad del resultado, orden del área) y 4 niveles (inicio, proceso, logrado, destacado) para evaluar: cambio de pastillas de freno en vehículo real. Contexto: estudiantes de 4° secundaria, taller automotriz EPT-MINEDU."',
+        '"Dame una rúbrica para mecánica automotriz con niveles"'
+      ],
+      correcta: 2,
+      explicacion: 'Un prompt efectivo especifica el tipo de instrumento, los criterios exactos, los niveles de desempeño, la tarea concreta y el contexto del grupo. Cuanto más específico, más útil el resultado y menos revisión requiere.'
+    },
+    {
+      id: 'm0-s04-c4-q2',
+      enunciado: 'Un estudiante verifica en ChatGPT si el código OBD-II P0301 corresponde a "fallo de encendido en cilindro 1". La IA responde correctamente. ¿Qué precaución debe tomar el docente?',
+      opciones: [
+        'Ninguna — si la IA responde correctamente, la información es confiable para diagnóstico',
+        'Verificar siempre en el manual técnico oficial del fabricante del vehículo, ya que la IA puede tener datos desactualizados o imprecisos para modelos específicos',
+        'Prohibir el uso de IA para diagnóstico — solo el escáner físico es válido en el taller',
+        'Pedir al estudiante que use Gemini en lugar de ChatGPT para tener una segunda opinión'
+      ],
+      correcta: 1,
+      explicacion: 'La IA puede ser un punto de partida útil, pero no reemplaza la fuente técnica oficial. Los manuales de fabricante tienen información específica por año/modelo/motor que la IA puede no tener actualizada o puede generalizar incorrectamente.'
+    },
+    {
+      id: 'm0-s04-c4-q3',
+      enunciado: 'El docente tiene un manual técnico de 120 páginas en PDF del escáner nuevo del taller. ¿Qué herramienta de IA es más adecuada para extraer información específica de ese documento?',
+      opciones: [
+        'ChatGPT — tiene más conocimiento técnico automotriz en su entrenamiento',
+        'Gemini — está integrado con Google Drive y puede leer el PDF directamente',
+        'NotebookLM — permite subir el PDF y hacerle preguntas específicas basadas exclusivamente en el contenido del documento',
+        'Claude — genera respuestas más largas y detalladas sobre documentos técnicos'
+      ],
+      correcta: 2,
+      explicacion: 'NotebookLM está diseñado específicamente para analizar documentos que el usuario sube. Sus respuestas se basan en el contenido del documento, no en conocimiento general de entrenamiento, lo que lo hace ideal para manuales técnicos específicos.'
+    },
+    {
+      id: 'm0-s04-c4-q4',
+      enunciado: '¿Cuál es la limitación más importante a considerar al usar IA generativa para planificar sesiones de aprendizaje del taller automotriz?',
+      opciones: [
+        'La IA solo puede generar texto, no imágenes de procedimientos técnicos',
+        'Las herramientas de IA son de pago y no están disponibles para docentes públicos',
+        'La IA puede generar contenido plausible pero incorrecto técnicamente — todo lo generado debe ser revisado por el docente antes de usarlo con estudiantes',
+        'La IA no conoce el currículo peruano y sus sugerencias siempre son de otros países'
+      ],
+      correcta: 2,
+      explicacion: 'Las IAs generativas pueden "alucinar" — producir información técnica que suena correcta pero es errónea. En un taller automotriz, un procedimiento incorrecto puede causar accidentes. El docente es el filtro de calidad técnica indispensable.'
+    },
+    {
+      id: 'm0-s04-c4-q5',
+      enunciado: 'El docente quiere usar IA para adaptar una explicación del sistema ABS para estudiantes de 3° de secundaria que nunca han visto el interior de un freno. ¿Cuál prompt es más efectivo?',
+      opciones: [
+        '"Explícame el sistema ABS"',
+        '"¿Cómo funciona el ABS en los autos modernos?"',
+        '"Explica cómo funciona el sistema ABS usando una analogía simple, para estudiantes de 15 años sin conocimiento previo de frenos. Usa máximo 3 párrafos cortos y termina con una pregunta de reflexión para el aula."',
+        '"Dame información técnica del sistema ABS para enseñar en el taller"'
+      ],
+      correcta: 2,
+      explicacion: 'Un buen prompt pedagógico especifica el nivel del público, pide una estrategia didáctica concreta (analogía), limita la extensión y solicita un elemento de cierre (pregunta de reflexión). El resultado es directamente usable en el aula.'
+    },
+    {
+      id: 'm0-s04-c4-q6',
+      enunciado: '¿En qué se diferencia usar Claude de usar ChatGPT para preparar materiales del taller automotriz?',
+      opciones: [
+        'Claude solo funciona en inglés — para español es mejor ChatGPT',
+        'ChatGPT es gratuito, Claude siempre es de pago',
+        'Son herramientas similares en propósito; la diferencia principal está en el estilo de respuesta, los límites de contexto y las capacidades específicas de cada versión — lo más importante es aprender a escribir buenos prompts independientemente de la herramienta',
+        'Claude no puede generar rúbricas ni listas de cotejo como ChatGPT'
+      ],
+      correcta: 2,
+      explicacion: 'GPT, Claude y Gemini son todas IAs generativas de texto con capacidades similares para el trabajo docente. La habilidad clave es el diseño de prompts — un buen prompt produce buenos resultados en cualquiera de ellas. Ninguna reemplaza el juicio técnico del docente.'
+    }
+  ],
+
+  // M0-S03 — Google Workspace para docentes (8 preguntas)
+  'm0-s03-c5': [
+    {
+      id: 'm0-s03-c5-q1',
+      enunciado: 'El docente necesita coordinar el horario de uso del foso de reparación entre 3 secciones distintas. ¿Qué herramienta de Google Workspace es la más adecuada?',
+      opciones: [
+        'Google Docs — para escribir el horario en un documento compartido',
+        'Google Calendar — permite crear eventos por bloque horario, asignarlos a cada sección y enviar invitaciones automáticas',
+        'Google Forms — para que cada sección solicite su turno',
+        'Google Chat — para coordinar informalmente por mensajes'
+      ],
+      correcta: 1,
+      explicacion: 'Google Calendar permite visualizar disponibilidad en tiempo real, crear eventos recurrentes por sección y enviar recordatorios automáticos. Es la herramienta ideal para gestionar recursos compartidos con restricción de horario.'
+    },
+    {
+      id: 'm0-s03-c5-q2',
+      enunciado: 'El docente quiere llevar el inventario de insumos del taller (aceites, filtros, bujías) con control de cantidades y alertas de stock mínimo. ¿Qué herramienta usa?',
+      opciones: [
+        'Google Docs — para listar los insumos en una tabla de texto',
+        'Google Slides — para crear una presentación visual del inventario',
+        'Google Sheets — permite tablas, fórmulas de cálculo y formato condicional para alertas de stock',
+        'Google Keep — para anotar los insumos como lista de tareas'
+      ],
+      correcta: 2,
+      explicacion: 'Google Sheets es la herramienta de datos de Google Workspace. Con fórmulas básicas y formato condicional se puede calcular stock disponible y resaltar automáticamente los insumos que deben reponerse.'
+    },
+    {
+      id: 'm0-s03-c5-q3',
+      enunciado: '¿Cuál es la principal ventaja pedagógica de usar Google Docs frente al papel para que los estudiantes redacten su informe de diagnóstico de fallas?',
+      opciones: [
+        'Google Docs tiene corrector ortográfico en terminología automotriz',
+        'El docente puede agregar comentarios directamente en el texto del estudiante sin necesidad de reimprimir, en tiempo real',
+        'El informe queda guardado automáticamente sin que el estudiante tenga que hacerlo',
+        'Google Docs genera el informe con inteligencia artificial sin que el estudiante tenga que escribir'
+      ],
+      correcta: 1,
+      explicacion: 'La retroalimentación en tiempo real con comentarios contextuales es el diferenciador clave. El docente señala exactamente qué parte del diagnóstico está incompleta o incorrecta, y el estudiante corrige sin reiniciar el documento.'
+    },
+    {
+      id: 'm0-s03-c5-q4',
+      enunciado: 'Google Tasks integrado con Google Calendar sirve principalmente para:',
+      opciones: [
+        'Chatear con otros docentes en tiempo real sobre el estado del taller',
+        'Almacenar manuales técnicos de los fabricantes de equipos',
+        'Registrar tareas pendientes con fechas límite y vincularlas al calendario de actividades del taller',
+        'Crear formularios de diagnóstico de vehículos para los estudiantes'
+      ],
+      correcta: 2,
+      explicacion: 'Tasks + Calendar es la combinación de productividad personal: Tasks captura la tarea (ej: "revisar extintor antes del lunes"), Calendar la ubica en el tiempo. Para el docente de mecánica: mantenimientos programados, entregas de fichas técnicas, revisiones de equipos.'
+    },
+    {
+      id: 'm0-s03-c5-q5',
+      enunciado: 'El docente quiere que sus estudiantes completen una ficha de evaluación de cada práctica y que los resultados se organicen automáticamente en una hoja de cálculo. ¿Qué flujo de trabajo usa?',
+      opciones: [
+        'Google Docs → copiar y pegar manualmente en Sheets',
+        'Google Forms (para capturar respuestas) + Google Sheets (las respuestas se vuelcan automáticamente en una hoja vinculada)',
+        'Google Slides con preguntas de opción múltiple y pantalla compartida',
+        'Google Chat con una encuesta rápida al final de la sesión'
+      ],
+      correcta: 1,
+      explicacion: 'Google Forms genera automáticamente una hoja de respuestas en Sheets. El docente diseña la ficha de evaluación una sola vez y todas las respuestas de los estudiantes se registran sin intervención manual.'
+    },
+    {
+      id: 'm0-s03-c5-q6',
+      enunciado: 'Un docente quiere compartir los manuales técnicos de los equipos del taller con todos sus estudiantes y que siempre tengan la versión más actualizada. ¿Qué hace?',
+      opciones: [
+        'Envía el PDF por WhatsApp cada vez que hay una actualización',
+        'Sube los manuales a Google Drive en una carpeta compartida — cualquier actualización del archivo es inmediatamente visible para todos los que tienen el enlace',
+        'Publica los manuales en Google Sites pero solo pueden verlos con cuenta Google',
+        'Los guarda en Google Photos para que sean fáciles de buscar'
+      ],
+      correcta: 1,
+      explicacion: 'Google Drive con carpeta compartida es el repositorio centralizado de Google Workspace. Un solo enlace, acceso controlado por el docente, y cualquier actualización del archivo (nueva versión del manual) es inmediatamente visible sin reenviar nada.'
+    },
+    {
+      id: 'm0-s03-c5-q7',
+      enunciado: 'Al final del ciclo, el docente necesita consolidar las notas de práctica de 28 estudiantes que cada uno ingresó en su propia hoja de Google Sheets. ¿Cuál es la forma más eficiente?',
+      opciones: [
+        'Copiar y pegar manualmente las notas de cada hoja en una hoja maestra',
+        'Usar la función IMPORTRANGE de Google Sheets para traer los datos de cada hoja de estudiante a una hoja maestra de consolidación automáticamente',
+        'Pedirle a cada estudiante que envíe su nota por correo',
+        'No es posible consolidar hojas separadas en Google Workspace'
+      ],
+      correcta: 1,
+      explicacion: 'IMPORTRANGE conecta hojas de Sheets entre sí. La hoja maestra del docente puede importar automáticamente los datos de cada estudiante, eliminando la consolidación manual y reduciendo errores de transcripción.'
+    },
+    {
+      id: 'm0-s03-c5-q8',
+      enunciado: 'Un colega docente no puede asistir a la reunión de coordinación. El docente quiere que pueda ver la presentación, hacer preguntas y revisarla después. ¿Qué herramienta de Google Workspace cubre las tres necesidades?',
+      opciones: [
+        'Google Slides (presentación) + Google Meet (reunión en vivo con grabación) + Google Drive (acceso posterior a la grabación y slides)',
+        'Solo Google Meet — es suficiente para todo',
+        'Google Docs para escribir los puntos de la reunión y enviárselos después',
+        'WhatsApp para la reunión y Google Drive solo para guardar el archivo'
+      ],
+      correcta: 0,
+      explicacion: 'La combinación Slides + Meet + Drive cubre los tres momentos: la presentación en vivo (Slides compartido en Meet), la participación remota (Meet con audio/video), y el acceso posterior (grabación de Meet y Slides guardados en Drive).'
+    }
+  ],
+
   // M1-S11 — Metrado de equipos automotriz (10 preguntas)
   'm1-s11-c3': [
     {
@@ -696,6 +948,82 @@ export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
       ],
       correcta: 2,
       explicacion: 'El EPP protege de fallas inesperadas del equipo, errores de otros, y condiciones imprevistas — no solo del propio descuido. "Saber el procedimiento" no elimina el riesgo mecánico. En el taller, el EPP es condición no negociable para participar en cualquier práctica.'
+    }
+  ],
+
+  // M0-S06 — Miró, Mural, Figma: ideación colaborativa (6 preguntas)
+  'm0-s06-c5': [
+    {
+      id: 'm0-s06-c5-q1',
+      enunciado: 'Quieres que tus estudiantes de automotriz mapeen visualmente la secuencia de diagnóstico de un motor, trabajando en grupos desde sus tablets en tiempo real. ¿Qué herramienta usarías?',
+      opciones: [
+        'Miró — pizarra colaborativa infinita, ideal para diagramas de proceso en tiempo real',
+        'Google Docs — permite edición simultánea y tiene plantillas de diagramas',
+        'Gamma — genera presentaciones visuales rápidamente con IA',
+        'Teachy — crea actividades pedagógicas estructuradas para el aula'
+      ],
+      correcta: 0,
+      explicacion: 'Miró ofrece pizarra infinita con sticky notes, conectores y plantillas de mapas mentales. Es la opción más adecuada para mapeo de procesos colaborativo en tiempo real. Google Docs tiene edición simultánea pero no está diseñado para diagramas de flujo visual.'
+    },
+    {
+      id: 'm0-s06-c5-q2',
+      enunciado: 'Tu equipo de docentes necesita planificar juntos las 4 sesiones del módulo de instalación de equipos automotrices, distribuyendo responsabilidades y fechas. ¿Cuál herramienta facilita mejor esta coordinación visual?',
+      opciones: [
+        'Figma — permite diseñar wireframes de las sesiones con componentes reutilizables',
+        'Mural — tablero colaborativo con sticky notes, votación y temporizador para talleres de planificación',
+        'Miró — pizarra libre sin estructura de taller facilitada',
+        'Polypad — especializado en visualizaciones matemáticas, no en planificación'
+      ],
+      correcta: 1,
+      explicacion: 'Mural está diseñado específicamente para talleres de facilitación: incluye plantillas de planificación, votación anónima, temporizador y zonas estructuradas. Es la mejor opción cuando hay un facilitador guiando el proceso grupal.'
+    },
+    {
+      id: 'm0-s06-c5-q3',
+      enunciado: 'Quieres crear una guía visual del taller automotriz — plano de zonas, rutas de evacuación e identificación de equipos — que puedas entregar a estudiantes nuevos como material institucional. ¿Qué herramienta usarías?',
+      opciones: [
+        'Miró — porque tiene plantillas de planos y es fácil exportar como imagen',
+        'Figma — diseño vectorial profesional con capas, componentes y exportación en múltiples formatos',
+        'Mural — tablero colaborativo con mayor énfasis en facilitación que en diseño final',
+        'Gamma — genera documentos con IA, pero no permite edición precisa de planos'
+      ],
+      correcta: 1,
+      explicacion: 'Figma es software de diseño vectorial profesional. Para un material institucional (plano del taller, señalética) que necesita precisión, capas y exportación en alta calidad (PDF, PNG, SVG), Figma es la herramienta correcta. Miró y Mural son mejores para procesos colaborativos informales.'
+    },
+    {
+      id: 'm0-s06-c5-q4',
+      enunciado: 'Un colega diseñó en Figma el protocolo de seguridad del taller automotriz. Tú necesitas adaptarlo para tu institución cambiando logos y colores. ¿Qué implica trabajar en Figma para esta tarea?',
+      opciones: [
+        'No es posible — Figma solo permite ver diseños, no editarlos',
+        'Necesitas acceso al archivo Figma; con permiso de edición puedes modificar textos, colores y componentes directamente',
+        'Debes exportar a PDF y editar con Adobe Acrobat para cambiar contenido',
+        'Figma convierte automáticamente el diseño a Word para que puedas editarlo'
+      ],
+      correcta: 1,
+      explicacion: 'Figma es colaborativo: con el enlace y permiso de edición, puedes modificar cualquier elemento del diseño. Cambiar logos (reemplazar imagen), colores (paleta de estilos) y textos es directo en la interfaz. Es la ventaja clave sobre herramientas como PowerPoint o PDF.'
+    },
+    {
+      id: 'm0-s06-c5-q5',
+      enunciado: 'Estás facilitando una sesión de lluvia de ideas con 8 docentes para diseñar la zona de innovación del taller. La sesión dura 45 minutos. ¿Cuál característica de Mural es más valiosa en este contexto?',
+      opciones: [
+        'La capacidad de exportar el tablero a PowerPoint al terminar',
+        'El temporizador integrado y la votación anónima para priorizar ideas sin sesgo de autoridad',
+        'Los widgets de diseño profesional para crear entregables listos para imprimir',
+        'La integración directa con Google Drive para guardar automáticamente'
+      ],
+      correcta: 1,
+      explicacion: 'En sesiones de facilitación con jerarquía (hay jefes y docentes), el sesgo de autoridad puede inhibir ideas. El temporizador mantiene el ritmo, y la votación anónima permite que todos expresen preferencias sin presión social. Estas funciones son el diferenciador de Mural frente a una pizarra común.'
+    },
+    {
+      id: 'm0-s06-c5-q6',
+      enunciado: 'Comparando Miró y Mural para uso en el taller automotriz: ¿cuál es la distinción más relevante para decidir cuál usar?',
+      opciones: [
+        'Miró es de pago y Mural es gratuito, por lo que Mural siempre es mejor para instituciones educativas',
+        'Miró es más flexible y libre (ideal para diagramas técnicos por docentes), Mural incluye más herramientas de facilitación estructurada (ideal para talleres con múltiples participantes)',
+        'Son idénticos en funcionalidades; la elección depende solo de la preferencia personal',
+        'Miró funciona solo en computadora; Mural funciona en tablets y móviles'
+      ],
+      correcta: 1,
+      explicacion: 'Miró es excelente para trabajo individual o en equipo pequeño creando diagramas libres. Mural está más orientado a facilitación: tiene plantillas de Design Sprint, Retrospectiva, y herramientas de moderación. La decisión correcta depende de si hay un facilitador guiando o si el trabajo es más autónomo.'
     }
   ],
 
