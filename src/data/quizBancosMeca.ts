@@ -1027,4 +1027,188 @@ export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
     }
   ],
 
+  // M0-RA1 — Evaluación M0 global (15 preguntas, puntajeMinimo: 70)
+  'm0-ra1-c1': [
+    {
+      id: 'm0-ra1-c1-q1',
+      enunciado: 'Necesitas registrar el estado de 12 equipos del taller automotriz con sus fechas de mantenimiento y compartirlo con todo el equipo docente. ¿Qué herramienta de Google Workspace usarías y por qué?',
+      opciones: [
+        'Google Docs — permite texto libre y tablas para cualquier registro',
+        'Google Sheets — tabla estructurada, filtros, ordenamiento y edición simultánea ideal para inventarios',
+        'Google Calendar — para registrar las fechas de mantenimiento directamente',
+        'Google Tasks — para asignar a cada docente la revisión de un equipo'
+      ],
+      correcta: 1,
+      explicacion: 'Google Sheets es la herramienta correcta para inventarios: columnas fijas, filtros por estado, fórmulas de conteo y edición simultánea. Docs es para texto narrativo; Calendar para eventos; Tasks para pendientes individuales — cada herramienta tiene su rol.'
+    },
+    {
+      id: 'm0-ra1-c1-q2',
+      enunciado: 'Quieres que la IA te ayude a redactar el protocolo de uso seguro del elevador tipo tijera. ¿Cuál es el prompt más efectivo?',
+      opciones: [
+        '"Escribe un protocolo de seguridad"',
+        '"Redacta un protocolo de seguridad para elevador tipo tijera en taller automotriz escolar, incluyendo EPP obligatorio, pasos de verificación pre-uso y protocolo de emergencia por falla hidráulica. Extensión: 1 página A4."',
+        '"Hazme un texto sobre elevadores"',
+        '"¿Qué es un elevador tipo tijera?"'
+      ],
+      correcta: 1,
+      explicacion: 'Un prompt efectivo tiene: contexto específico (elevador tipo tijera, taller escolar), tarea clara (protocolo de seguridad), estructura requerida (EPP, verificación, emergencia) y restricción de formato (1 página A4). Prompts vagos producen respuestas genéricas inutilizables.'
+    },
+    {
+      id: 'm0-ra1-c1-q3',
+      enunciado: 'Un docente usa Google Calendar para el taller. Crea el evento "Práctica motor" pero no agrega participantes ni sala. ¿Qué consecuencia real tiene este error?',
+      opciones: [
+        'El evento igual aparece en los calendarios de todos los docentes del taller',
+        'Ninguna — Calendar es solo un recordatorio personal',
+        'Los otros docentes no saben de la práctica y el espacio puede estar ocupado por otra sección ese día',
+        'Calendar envía notificación automática a todos de todas formas'
+      ],
+      correcta: 2,
+      explicacion: 'Sin invitados ni recurso de sala, el evento es invisible para los demás. Resultado: conflictos de horario, docentes sin aviso y estudiantes sin espacio. La coordinación efectiva del taller requiere invitar a colegas y reservar el espacio físico desde el mismo Calendar.'
+    },
+    {
+      id: 'm0-ra1-c1-q4',
+      enunciado: 'Quieres crear una presentación sobre el ciclo Otto para tus estudiantes de automotriz. Tienes 20 minutos. ¿Qué herramienta produce el resultado más rápido con calidad visual aceptable?',
+      opciones: [
+        'Google Slides — conocida y confiable, aunque requiere diseñar diapositiva por diapositiva',
+        'Gamma — genera una presentación completa desde un prompt en menos de 2 minutos, con diseño automático',
+        'Figma — diseño profesional pero requiere más tiempo de configuración',
+        'Polypad — visualizaciones interactivas pero no genera presentaciones de diapositivas'
+      ],
+      correcta: 1,
+      explicacion: 'Gamma genera presentaciones completas desde texto en segundos. Para 20 minutos, es la única opción que deja tiempo para revisar y ajustar. Google Slides es más control pero mucho más lento. Figma y Polypad no son herramientas de presentación de diapositivas.'
+    },
+    {
+      id: 'm0-ra1-c1-q5',
+      enunciado: 'Quieres que tus estudiantes practiquen identificar ángulos en los componentes de la dirección del vehículo. ¿Qué herramienta digital es más adecuada para esta actividad?',
+      opciones: [
+        'Gamma — genera una presentación visual de los componentes de dirección',
+        'Polypad — permite construir visualizaciones geométricas interactivas con ángulos y medidas reales',
+        'Miró — pizarra colaborativa donde los estudiantes pueden dibujar libremente',
+        'Teachy — genera actividades de quiz sobre componentes de dirección'
+      ],
+      correcta: 1,
+      explicacion: 'Polypad es una herramienta de matemáticas visuales: transportadores, geoplanos, geometría dinámica. Para trabajar ángulos de dirección (camber, caster, convergencia) con precisión visual e interactividad, Polypad es la opción correcta.'
+    },
+    {
+      id: 'm0-ra1-c1-q6',
+      enunciado: 'Tu equipo de 6 docentes necesita decidir colectivamente qué zona del taller remodelar primero. Tienes 30 minutos de reunión. ¿Qué herramienta y técnica usarías?',
+      opciones: [
+        'Google Sheets compartido — cada docente vota en su celda',
+        'Mural con tablero de lluvia de ideas + votación anónima por puntos, facilitado con temporizador',
+        'WhatsApp — encuesta rápida en el grupo del taller',
+        'Figma — diseñar una propuesta visual de cada zona para votar'
+      ],
+      correcta: 1,
+      explicacion: 'Mural combina generación de ideas (sticky notes), votación anónima (elimina sesgo de autoridad) y temporizador (respeta los 30 minutos). WhatsApp no es colaborativo ni anónimo. Google Sheets es técnicamente posible pero no tiene las herramientas de facilitación integradas.'
+    },
+    {
+      id: 'm0-ra1-c1-q7',
+      enunciado: 'Usas Claude (IA) para diseñar una rúbrica de evaluación de diagnóstico automotriz. El resultado tiene criterios muy genéricos. ¿Cuál es la causa más probable?',
+      opciones: [
+        'Claude no puede crear rúbricas de evaluación técnica',
+        'El prompt no especificó el nivel educativo, la competencia específica ni los indicadores esperados del estudiante',
+        'Las rúbricas de automotriz son demasiado técnicas para cualquier IA',
+        'Hay que usar GPT en lugar de Claude para tareas pedagógicas'
+      ],
+      correcta: 1,
+      explicacion: 'La calidad del output de IA es directamente proporcional a la especificidad del prompt. Una rúbrica genérica proviene de un prompt genérico. Para obtener criterios específicos de automotriz, el prompt debe incluir: nivel (secundaria técnica), competencia (diagnóstico de motor), indicadores observables y escala.'
+    },
+    {
+      id: 'm0-ra1-c1-q8',
+      enunciado: 'Tienes el manual de instalación del escáner LAUNCH en PDF (en inglés). ¿Cómo usarías IA para aprovechar este documento en tu planificación?',
+      opciones: [
+        'No es posible — la IA no puede procesar documentos técnicos en inglés',
+        'Subir el PDF a Claude o ChatGPT y pedir: "Resume los pasos de instalación, tradúcelos al español y genera una lista de verificación imprimible"',
+        'Traducir manualmente el PDF y luego pedirle a la IA que lo resuma',
+        'Usar Google Translate en el PDF y guardar el resultado como está'
+      ],
+      correcta: 1,
+      explicacion: 'Las IAs modernas (Claude, GPT-4) pueden procesar PDFs directamente. Un solo prompt puede: traducir, resumir y reformatear en lista de verificación. Hacerlo manualmente en pasos separados es ineficiente. Esta capacidad es uno de los usos más valiosos de IA para docentes técnicos.'
+    },
+    {
+      id: 'm0-ra1-c1-q9',
+      enunciado: 'Quieres visualizar en 3D el sistema de frenos ABS para mostrarlo en clase. ¿Cuál es la ruta más directa?',
+      opciones: [
+        'Buscar en YouTube un video del sistema ABS y proyectarlo',
+        'Usar Meshy con el prompt "sistema de frenos ABS automotriz, vista explodida, componentes etiquetados" para generar un modelo 3D',
+        'Dibujar el sistema en Figma con formas vectoriales',
+        'Pedirle a Gamma que genere una presentación con imágenes del ABS'
+      ],
+      correcta: 1,
+      explicacion: 'Meshy es una herramienta de generación de modelos 3D por texto (text-to-3D). Permite rotar, explorar y exportar. Para visualización técnica de sistemas mecánicos en clase, un modelo 3D interactivo es más didáctico que un video o imagen estática.'
+    },
+    {
+      id: 'm0-ra1-c1-q10',
+      enunciado: 'Google Tasks y Google Calendar: ¿cuándo usas cada uno en la gestión del taller automotriz?',
+      opciones: [
+        'Son la misma herramienta — Tasks es la versión móvil de Calendar',
+        'Tasks para pendientes personales y listas de verificación (ej: "completar metrado"); Calendar para eventos con hora, lugar y participantes (ej: "Práctica elevador — Sección B — Sala 3")',
+        'Calendar es solo para reuniones; Tasks para todo lo demás',
+        'Tasks para el equipo docente; Calendar solo para uso personal'
+      ],
+      correcta: 1,
+      explicacion: 'Tasks y Calendar tienen funciones complementarias distintas: Tasks es lista de pendientes sin fecha/hora fija, ideal para to-do lists personales. Calendar es para compromisos con tiempo definido, espacio y participantes. Usar ambos correctamente evita que los pendientes se mezclen con los eventos programados.'
+    },
+    {
+      id: 'm0-ra1-c1-q11',
+      enunciado: 'Un colega diseñó en Miró el mapa de procesos del taller. Tú necesitas convertirlo en un documento institucional para entregar a la UGEL. ¿Cuál es el flujo correcto?',
+      opciones: [
+        'Exportar el tablero Miró como imagen PNG e insertarlo en Google Docs con texto explicativo',
+        'Recrear todo el mapa en Figma desde cero para mayor calidad',
+        'Enviar el enlace de Miró directamente a la UGEL',
+        'Imprimir una captura de pantalla del tablero'
+      ],
+      correcta: 0,
+      explicacion: 'El flujo correcto es: Miró para ideación/mapeo → exportar como imagen de alta resolución → insertar en Google Docs → agregar contexto textual → entregar como documento formal. Cada herramienta tiene su etapa: Miró para pensar, Docs para documentar.'
+    },
+    {
+      id: 'm0-ra1-c1-q12',
+      enunciado: 'Teachy generó una actividad de "identificar herramientas del taller" para tus estudiantes. Al revisarla, ves que incluye herramientas de carpintería. ¿Cuál es la causa y solución?',
+      opciones: [
+        'Teachy no puede crear actividades específicas de automotriz — hay que hacerlo manualmente',
+        'El prompt no especificó el contexto automotriz. Solución: regenerar indicando "taller de mecánica automotriz, herramientas de diagnóstico y reparación de vehículos"',
+        'Hay un error en Teachy que mezcla talleres — reportar al soporte',
+        'Aceptar la actividad y corregir manualmente cada herramienta incorrecta'
+      ],
+      correcta: 1,
+      explicacion: 'Las IAs generativas no asumen contexto que no se les da. "Taller" sin calificativo genera contenido de cualquier taller. La solución siempre es mejorar el prompt, no corregir el output manualmente — eso es ineficiente. Buen prompt = buen output desde el inicio.'
+    },
+    {
+      id: 'm0-ra1-c1-q13',
+      enunciado: '¿Cuál es la diferencia clave entre usar GPT-4, Claude y Gemini para preparar materiales del taller automotriz?',
+      opciones: [
+        'Son idénticos — producen exactamente el mismo resultado con el mismo prompt',
+        'GPT-4 tiene mejor razonamiento técnico; Claude es mejor para documentos largos y análisis; Gemini se integra nativamente con Google Workspace',
+        'Solo GPT-4 puede trabajar con contenido técnico automotriz',
+        'Claude no puede procesar imágenes; los otros dos sí'
+      ],
+      correcta: 1,
+      explicacion: 'Cada modelo tiene fortalezas: GPT-4 destacó históricamente en razonamiento técnico y código; Claude en análisis de documentos largos y redacción matizada; Gemini en integración con Google Workspace (Docs, Sheets, Drive). Para un docente, conocer esto permite elegir la herramienta correcta según la tarea.'
+    },
+    {
+      id: 'm0-ra1-c1-q14',
+      enunciado: 'Quieres crear un diagrama del flujo de trabajo del taller (recepción del vehículo → diagnóstico → reparación → entrega) para mostrar en la sesión de inducción. ¿Qué herramienta usarías?',
+      opciones: [
+        'Google Sheets — con celdas formateadas como cajas del proceso',
+        'Miró — pizarra con conectores de flechas y sticky notes para el flujo de proceso',
+        'Teachy — genera diagramas de flujo automáticamente desde texto',
+        'Google Calendar — para visualizar el tiempo de cada etapa'
+      ],
+      correcta: 1,
+      explicacion: 'Miró tiene herramientas nativas para diagramas de flujo: figuras geométricas, conectores con flechas, etiquetas y colores por zona. Para un docente que necesita un diagrama visual rápido y editable, Miró es la opción más directa. Teachy no genera diagramas de flujo.'
+    },
+    {
+      id: 'm0-ra1-c1-q15',
+      enunciado: 'Tienes 3 semanas para dominar las herramientas digitales del módulo 0. ¿Cuál es la estrategia de aprendizaje más efectiva?',
+      opciones: [
+        'Ver todos los tutoriales de YouTube disponibles antes de usar cualquier herramienta',
+        'Usar cada herramienta en una tarea real del taller: crear el metrado en Sheets, el protocolo en Docs, planificar la instalación en Calendar — aprender haciendo con propósito real',
+        'Practicar primero con ejemplos genéricos hasta dominarlos, luego aplicar al taller',
+        'Elegir solo 1 herramienta por semana y dominarla completamente antes de seguir'
+      ],
+      correcta: 1,
+      explicacion: 'El aprendizaje más efectivo para docentes adultos es el aprendizaje situado: usar la herramienta para una tarea real e inmediata del taller. El propósito real genera motivación intrínseca y retención duradera. Los tutoriales sin aplicación inmediata se olvidan en días.'
+    }
+  ],
+
 }
