@@ -276,4 +276,85 @@ export const descargablesMeca: DescargableLXP[] = [
     ]
   },
 
+  // 4. GUÍA DE GARANTÍAS Y MANTENIMIENTO
+  {
+    id: 'desc-m1-meca-garantias',
+    modulo: 'm1',
+    titulo: 'Guía de Garantías y Mantenimiento de Equipos',
+    subtitulo: 'Registro de cobertura · Do\'s & Don\'ts · Intervenciones en garantía',
+    descripcion: 'Bitácora de gestión de garantías para los equipos del taller automotriz. Registra la cobertura de cada equipo, las acciones que preservan o anulan la garantía, y el historial de reportes e intervenciones durante el período de garantía.',
+    tipo: 'BITACORA',
+    formato: 'A4',
+    paginas: 6,
+    instrucciones: 'Completar la sección de registro al recibir cada equipo. Marcar el checklist de Do\'s y Don\'ts en la primera sesión del módulo de instalación. Registrar cada intervención o falla en la bitácora de seguimiento.',
+    nota: 'Una garantía no reclamada a tiempo es garantía perdida. Ante cualquier falla dentro del período, reportar en máximo 48 horas a la empresa prestadora.',
+    secciones: [
+      {
+        id: 'gar-s1',
+        titulo: 'Registro de Equipos en Garantía',
+        descripcion: 'Completar un registro por cada equipo al momento de recepción',
+        campos: [
+          { id: 'gar-nombre-equipo', etiqueta: 'Nombre del equipo', tipo: 'texto', requerido: true },
+          { id: 'gar-marca', etiqueta: 'Marca y modelo', tipo: 'texto', requerido: true },
+          { id: 'gar-codigo-minedu', etiqueta: 'Código de bien MINEDU', tipo: 'texto', requerido: true },
+          { id: 'gar-serie', etiqueta: 'N° de serie', tipo: 'texto', requerido: true },
+          { id: 'gar-empresa', etiqueta: 'Empresa prestadora de la garantía', tipo: 'texto', requerido: true },
+          { id: 'gar-contacto', etiqueta: 'Teléfono / email de soporte técnico', tipo: 'texto', requerido: true },
+          { id: 'gar-fecha-inicio', etiqueta: 'Fecha de inicio de garantía', tipo: 'fecha', requerido: true },
+          { id: 'gar-fecha-fin', etiqueta: 'Fecha de vencimiento de garantía', tipo: 'fecha', requerido: true },
+          { id: 'gar-meses', etiqueta: 'Meses de cobertura', tipo: 'numero', requerido: true },
+          { id: 'gar-cobertura-desc', etiqueta: 'Qué cubre la garantía (según contrato)', tipo: 'area', requerido: true, placeholder: 'Ej: Defectos de fabricación, fallas eléctricas, piezas hidráulicas' },
+          { id: 'gar-excluye-desc', etiqueta: 'Qué NO cubre la garantía (exclusiones explícitas)', tipo: 'area', placeholder: 'Ej: Daños por mal uso, desgaste natural, modificaciones no autorizadas' }
+        ]
+      },
+      {
+        id: 'gar-s2',
+        titulo: 'Do\'s — Acciones que PRESERVAN la Garantía',
+        descripcion: 'Marcar como leído y comprendido al inicio del módulo',
+        campos: [
+          { id: 'gar-do-1', etiqueta: 'Usar el equipo solo para el fin para el que fue diseñado y según el manual del fabricante', tipo: 'check' },
+          { id: 'gar-do-2', etiqueta: 'Realizar el mantenimiento preventivo en los plazos indicados por el fabricante', tipo: 'check' },
+          { id: 'gar-do-3', etiqueta: 'Registrar cada uso del equipo en la bitácora del taller', tipo: 'check' },
+          { id: 'gar-do-4', etiqueta: 'Reportar cualquier anomalía o falla a la empresa prestadora dentro de las 48 horas', tipo: 'check' },
+          { id: 'gar-do-5', etiqueta: 'Conservar el embalaje original durante los primeros 3 meses (facilita el retorno en garantía)', tipo: 'check' },
+          { id: 'gar-do-6', etiqueta: 'Guardar y archivar: factura, acta de entrega MINEDU, manual de usuario y certificado de garantía', tipo: 'check' },
+          { id: 'gar-do-7', etiqueta: 'Solicitar constancia escrita de cada intervención de soporte técnico realizada en garantía', tipo: 'check' },
+          { id: 'gar-do-firma-lectura', etiqueta: 'Firma del docente — He leído y comprendo los Do\'s de garantía', tipo: 'firma', requerido: true }
+        ]
+      },
+      {
+        id: 'gar-s3',
+        titulo: 'Don\'ts — Acciones que ANULAN la Garantía',
+        descripcion: 'Leer con atención — cualquiera de estas acciones puede anular la garantía del bien',
+        campos: [
+          { id: 'gar-dont-1', etiqueta: 'NO modificar ni adaptar el equipo sin autorización escrita del fabricante', tipo: 'check' },
+          { id: 'gar-dont-2', etiqueta: 'NO permitir que personal no autorizado (estudiantes o externos) realice reparaciones al equipo', tipo: 'check' },
+          { id: 'gar-dont-3', etiqueta: 'NO usar el equipo con voltaje o presión fuera de las especificaciones del manual', tipo: 'check' },
+          { id: 'gar-dont-4', etiqueta: 'NO retirar ni alterar las etiquetas de identificación, series o sellos de garantía del equipo', tipo: 'check' },
+          { id: 'gar-dont-5', etiqueta: 'NO exponer el equipo a condiciones ambientales extremas (humedad excesiva, polvo, corrosión) sin las protecciones indicadas', tipo: 'check' },
+          { id: 'gar-dont-6', etiqueta: 'NO continuar usando el equipo si presenta falla evidente — operar un equipo dañado puede invalidar la reclamación de garantía', tipo: 'check' },
+          { id: 'gar-dont-7', etiqueta: 'NO desechar o perder los documentos de garantía, acta de entrega o factura original', tipo: 'check' },
+          { id: 'gar-dont-firma-lectura', etiqueta: 'Firma del docente — He leído, comprendo y me comprometo a cumplir los Don\'ts de garantía', tipo: 'firma', requerido: true }
+        ]
+      },
+      {
+        id: 'gar-s4',
+        titulo: 'Bitácora de Reportes e Intervenciones en Garantía',
+        descripcion: 'Registrar cada vez que se reporta una falla o se realiza una intervención técnica durante el período de garantía',
+        campos: [
+          { id: 'gar-bit-fecha', etiqueta: 'Fecha del reporte', tipo: 'fecha', requerido: true },
+          { id: 'gar-bit-equipo', etiqueta: 'Equipo afectado', tipo: 'texto', requerido: true },
+          { id: 'gar-bit-falla', etiqueta: 'Descripción de la falla o anomalía observada', tipo: 'area', requerido: true },
+          { id: 'gar-bit-reportado-a', etiqueta: 'Reportado a (nombre de la empresa y contacto)', tipo: 'texto', requerido: true },
+          { id: 'gar-bit-medio', etiqueta: 'Medio de reporte', tipo: 'select', opciones: ['Llamada telefónica', 'Correo electrónico', 'Plataforma web del fabricante', 'Visita técnica presencial'] },
+          { id: 'gar-bit-nro-ticket', etiqueta: 'N° de ticket o caso asignado por el soporte', tipo: 'texto' },
+          { id: 'gar-bit-resolucion', etiqueta: 'Resolución o acción tomada por la empresa', tipo: 'area' },
+          { id: 'gar-bit-fecha-cierre', etiqueta: 'Fecha de cierre del caso', tipo: 'fecha' },
+          { id: 'gar-bit-conforme', etiqueta: 'La falla fue resuelta satisfactoriamente', tipo: 'check' },
+          { id: 'gar-bit-firma', etiqueta: 'Firma del docente responsable del reporte', tipo: 'firma', requerido: true }
+        ]
+      }
+    ]
+  },
+
 ]
