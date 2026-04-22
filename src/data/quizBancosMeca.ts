@@ -2,6 +2,82 @@ import type { PreguntaQuiz } from './modulosLXP'
 
 export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
 
+  // M0-S04 — IA generativa: GPT, Claude, Gemini (6 preguntas)
+  'm0-s04-c4': [
+    {
+      id: 'm0-s04-c4-q1',
+      enunciado: 'Un docente quiere generar una rúbrica para evaluar el "cambio de pastillas de freno". ¿Cuál prompt produce el resultado más útil?',
+      opciones: [
+        '"Hazme una rúbrica de mecánica"',
+        '"Crea una rúbrica básica para evaluar estudiantes de taller"',
+        '"Crea una rúbrica analítica con 4 criterios (seguridad EPP, procedimiento técnico, calidad del resultado, orden del área) y 4 niveles (inicio, proceso, logrado, destacado) para evaluar: cambio de pastillas de freno en vehículo real. Contexto: estudiantes de 4° secundaria, taller automotriz EPT-MINEDU."',
+        '"Dame una rúbrica para mecánica automotriz con niveles"'
+      ],
+      correcta: 2,
+      explicacion: 'Un prompt efectivo especifica el tipo de instrumento, los criterios exactos, los niveles de desempeño, la tarea concreta y el contexto del grupo. Cuanto más específico, más útil el resultado y menos revisión requiere.'
+    },
+    {
+      id: 'm0-s04-c4-q2',
+      enunciado: 'Un estudiante verifica en ChatGPT si el código OBD-II P0301 corresponde a "fallo de encendido en cilindro 1". La IA responde correctamente. ¿Qué precaución debe tomar el docente?',
+      opciones: [
+        'Ninguna — si la IA responde correctamente, la información es confiable para diagnóstico',
+        'Verificar siempre en el manual técnico oficial del fabricante del vehículo, ya que la IA puede tener datos desactualizados o imprecisos para modelos específicos',
+        'Prohibir el uso de IA para diagnóstico — solo el escáner físico es válido en el taller',
+        'Pedir al estudiante que use Gemini en lugar de ChatGPT para tener una segunda opinión'
+      ],
+      correcta: 1,
+      explicacion: 'La IA puede ser un punto de partida útil, pero no reemplaza la fuente técnica oficial. Los manuales de fabricante tienen información específica por año/modelo/motor que la IA puede no tener actualizada o puede generalizar incorrectamente.'
+    },
+    {
+      id: 'm0-s04-c4-q3',
+      enunciado: 'El docente tiene un manual técnico de 120 páginas en PDF del escáner nuevo del taller. ¿Qué herramienta de IA es más adecuada para extraer información específica de ese documento?',
+      opciones: [
+        'ChatGPT — tiene más conocimiento técnico automotriz en su entrenamiento',
+        'Gemini — está integrado con Google Drive y puede leer el PDF directamente',
+        'NotebookLM — permite subir el PDF y hacerle preguntas específicas basadas exclusivamente en el contenido del documento',
+        'Claude — genera respuestas más largas y detalladas sobre documentos técnicos'
+      ],
+      correcta: 2,
+      explicacion: 'NotebookLM está diseñado específicamente para analizar documentos que el usuario sube. Sus respuestas se basan en el contenido del documento, no en conocimiento general de entrenamiento, lo que lo hace ideal para manuales técnicos específicos.'
+    },
+    {
+      id: 'm0-s04-c4-q4',
+      enunciado: '¿Cuál es la limitación más importante a considerar al usar IA generativa para planificar sesiones de aprendizaje del taller automotriz?',
+      opciones: [
+        'La IA solo puede generar texto, no imágenes de procedimientos técnicos',
+        'Las herramientas de IA son de pago y no están disponibles para docentes públicos',
+        'La IA puede generar contenido plausible pero incorrecto técnicamente — todo lo generado debe ser revisado por el docente antes de usarlo con estudiantes',
+        'La IA no conoce el currículo peruano y sus sugerencias siempre son de otros países'
+      ],
+      correcta: 2,
+      explicacion: 'Las IAs generativas pueden "alucinar" — producir información técnica que suena correcta pero es errónea. En un taller automotriz, un procedimiento incorrecto puede causar accidentes. El docente es el filtro de calidad técnica indispensable.'
+    },
+    {
+      id: 'm0-s04-c4-q5',
+      enunciado: 'El docente quiere usar IA para adaptar una explicación del sistema ABS para estudiantes de 3° de secundaria que nunca han visto el interior de un freno. ¿Cuál prompt es más efectivo?',
+      opciones: [
+        '"Explícame el sistema ABS"',
+        '"¿Cómo funciona el ABS en los autos modernos?"',
+        '"Explica cómo funciona el sistema ABS usando una analogía simple, para estudiantes de 15 años sin conocimiento previo de frenos. Usa máximo 3 párrafos cortos y termina con una pregunta de reflexión para el aula."',
+        '"Dame información técnica del sistema ABS para enseñar en el taller"'
+      ],
+      correcta: 2,
+      explicacion: 'Un buen prompt pedagógico especifica el nivel del público, pide una estrategia didáctica concreta (analogía), limita la extensión y solicita un elemento de cierre (pregunta de reflexión). El resultado es directamente usable en el aula.'
+    },
+    {
+      id: 'm0-s04-c4-q6',
+      enunciado: '¿En qué se diferencia usar Claude de usar ChatGPT para preparar materiales del taller automotriz?',
+      opciones: [
+        'Claude solo funciona en inglés — para español es mejor ChatGPT',
+        'ChatGPT es gratuito, Claude siempre es de pago',
+        'Son herramientas similares en propósito; la diferencia principal está en el estilo de respuesta, los límites de contexto y las capacidades específicas de cada versión — lo más importante es aprender a escribir buenos prompts independientemente de la herramienta',
+        'Claude no puede generar rúbricas ni listas de cotejo como ChatGPT'
+      ],
+      correcta: 2,
+      explicacion: 'GPT, Claude y Gemini son todas IAs generativas de texto con capacidades similares para el trabajo docente. La habilidad clave es el diseño de prompts — un buen prompt produce buenos resultados en cualquiera de ellas. Ninguna reemplaza el juicio técnico del docente.'
+    }
+  ],
+
   // M0-S03 — Google Workspace para docentes (8 preguntas)
   'm0-s03-c5': [
     {
