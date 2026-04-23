@@ -32,6 +32,7 @@ import { EscenarioPedagogicoModal, ESCENARIO_COMP1, ESCENARIO_COMP2, ESCENARIO_C
 import { ClasificadorHerramientasModal } from '@/components/lxp/interactivos/ClasificadorHerramientasModal'
 import { LaboratorioPromptsModal } from '@/components/lxp/interactivos/LaboratorioPromptsModal'
 import { VerificacionFuncionamientoModal } from '@/components/lxp/interactivos/VerificacionFuncionamientoModal'
+import { VerificacionAlmacenModal } from '@/components/lxp/interactivos/VerificacionAlmacenModal'
 import { descargablesLXP } from '@/data/descargablesLXP'
 import { quizBancosMeca } from '@/data/quizBancosMeca'
 import { descargablesMeca } from '@/data/descargablesMeca'
@@ -79,6 +80,7 @@ export default function ModuloDetalle() {
   const [showClasificador, setShowClasificador]             = useState(false)
   const [showLaboratorio, setShowLaboratorio]               = useState(false)
   const [showVerificacion, setShowVerificacion]             = useState(false)
+  const [showVerificacionAlmacen, setShowVerificacionAlmacen] = useState(false)
 
   const closeGradeModal = useCallback(() => setShowGradeModal(false), [])
   const closeTourSimulator = useCallback(() => {
@@ -214,8 +216,10 @@ export default function ModuloDetalle() {
         setShowChecklistMant('investigacion')
       } else if (contenido.id === 'm3-s29-c3') {
         setShowChecklistMant('almacen')
-      } else if (contenido.id === 'm2-s20-c3' || contenido.id === 'm3-s27-c3') {
+      } else if (contenido.id === 'm2-s20-c3') {
         setShowVerificacion(true)
+      } else if (contenido.id === 'm3-s27-c3') {
+        setShowVerificacionAlmacen(true)
       } else if (contenido.id === 'm0-s02-c3') {
         setShowClasificador(true)
       } else if (contenido.id === 'm0-s04-c3') {
@@ -798,14 +802,19 @@ export default function ModuloDetalle() {
         />
       )}
 
-      {/* Verificación de funcionamiento — m2-s20-c3 / m3-s27-c3 */}
+      {/* Verificación de funcionamiento electrónico — m2-s20-c3 (Zona Investigación) */}
       {showVerificacion && (
         <VerificacionFuncionamientoModal
           onClose={() => setShowVerificacion(false)}
-          onComplete={() => {
-            markContenidoCompleted('m2-s20-c3')
-            markContenidoCompleted('m3-s27-c3')
-          }}
+          onComplete={() => markContenidoCompleted('m2-s20-c3')}
+        />
+      )}
+
+      {/* Verificación visual herramientas — m3-s27-c3 (Zona Almacén) */}
+      {showVerificacionAlmacen && (
+        <VerificacionAlmacenModal
+          onClose={() => setShowVerificacionAlmacen(false)}
+          onComplete={() => markContenidoCompleted('m3-s27-c3')}
         />
       )}
 
