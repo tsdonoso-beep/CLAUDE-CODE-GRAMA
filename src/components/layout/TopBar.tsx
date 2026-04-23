@@ -22,7 +22,7 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
 
   const crumbs: { label: string; to?: string }[] = []
   if (taller) {
-    crumbs.push({ label: taller.nombreCorto, to: `/taller/${slug}/ruta` })
+    crumbs.push({ label: taller.nombreCorto, to: `/taller/${slug}` })
     if (location.pathname.includes('/ruta')) {
       crumbs.push({ label: 'Ruta de Aprendizaje', to: num ? `/taller/${slug}/ruta` : undefined })
       if (num) crumbs.push({ label: `Módulo ${num}` })
