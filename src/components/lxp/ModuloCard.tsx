@@ -4,7 +4,6 @@ import { ChevronDown, ChevronRight, Lock, Clock, CheckCircle2, AlertCircle, Play
 import { useNavigate, useParams } from 'react-router-dom'
 import type { ModuloLXP } from '@/data/modulosLXP'
 import type { EstadoModulo } from '@/mock/mockEstados'
-import { ContenidoBadge } from './ContenidoBadge'
 
 interface ModuloCardProps {
   modulo: ModuloLXP
@@ -179,19 +178,6 @@ export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) 
                     <span className="text-[10px] font-medium tabular-nums shrink-0" style={{ color: '#94a3b8' }}>
                       {ses.duracionHoras}h
                     </span>
-                  </div>
-                  <div className="flex flex-col gap-1 pl-2">
-                    {ses.contenidos.map(c => (
-                      <div key={c.id} className="flex items-center gap-3 min-w-0 py-0.5">
-                        <ContenidoBadge tipo={c.tipo} size="list" />
-                        <span className="text-xs truncate flex-1" style={{ color: '#64748b' }}>{c.titulo}</span>
-                        {c.duracionMin && (
-                          <span className="text-[11px] shrink-0 tabular-nums" style={{ color: '#94a3b8' }}>
-                            {duracionLabel(c.duracionMin)}
-                          </span>
-                        )}
-                      </div>
-                    ))}
                   </div>
                 </div>
               )
