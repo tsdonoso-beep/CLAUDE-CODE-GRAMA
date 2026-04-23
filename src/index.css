@@ -407,3 +407,14 @@
 .float-c { animation: floatC var(--dur, 10s) ease-in-out infinite; }
 .float-d { animation: floatD var(--dur, 20s) ease-in-out infinite; }
 
+/* ── Hero shape animations (from reference HTML) ─────────────────────── */
+@keyframes heroFa  { 0%,100%{ transform:translateX(-50%) translateY(0)       } 50%{ transform:translateX(-50%) translateY(16px)             } }
+@keyframes heroFb  { 0%,100%{ transform:translateY(0)                        } 50%{ transform:translateY(20px)                             } }
+@keyframes heroFc  { 0%,100%{ transform:translateX(0)                        } 50%{ transform:translateX(-14px)                            } }
+@keyframes heroFd  { 0%,100%{ transform:translateX(-50%) translateY(0)       } 50%{ transform:translateX(-50%) translateY(-14px)           } }
+@keyframes heroFe  { 0%,100%{ transform:translateX(0)                        } 50%{ transform:translateX(14px)                             } }
+@keyframes heroFf  { 0%,100%{ transform:rotate(22deg)                        } 50%{ transform:rotate(32deg) translate(-4px,-8px)           } }
+@keyframes heroSpin{ from{ transform:rotate(0deg) } to{ transform:rotate(360deg) } }
+@keyframes heroNavIn{ from{ opacity:0; transform:translateY(-8px) } to{ opacity:1; transform:none } }
+@keyframes blink    { 0%,100%{ opacity:1 } 50%{ opacity:.15 } }
+

@@ -621,35 +621,31 @@ export default function Landing() {
       {/* ══ NAVBAR ══════════════════════════════════════════════════════════ */}
       <header
         className="fixed top-0 left-0 right-0 z-50 border-b"
-        style={{ background: 'rgba(240,253,246,0.92)', backdropFilter: 'blur(16px)', borderColor: 'rgba(4,57,65,0.08)' }}
+        style={{ background:'rgba(240,253,246,.88)', backdropFilter:'blur(16px)', borderColor:'rgba(4,57,65,.06)', height:64, display:'flex', alignItems:'center', animation:'heroNavIn .5s ease both' }}
       >
-        <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between gap-6">
+        <div className="w-full flex items-center justify-between gap-6" style={{ padding:'0 5vw' }}>
           <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <GramaLogo variant="dark" size="sm" />
           </button>
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map(l => (
-              <a key={l.label} href={l.href} className="text-xs font-semibold transition-opacity hover:opacity-60" style={{ color: '#043941' }}>
+              <a key={l.label} href={l.href} style={{ fontSize:'.78rem', fontWeight:600, color:'rgba(4,57,65,.5)', textDecoration:'none' }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#043941')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(4,57,65,.5)')}>
                 {l.label}
               </a>
             ))}
           </nav>
           <div className="flex items-center gap-3">
             {isLoggedIn ? (
-              <button
-                onClick={goToApp}
-                className="hidden md:flex items-center gap-1.5 px-5 py-2 rounded-full text-xs font-bold transition-all hover:scale-[1.03] hover:shadow-md"
-                style={{ background: '#02d47e', color: '#043941' }}
-              >
-                Ir a la plataforma <ChevronRight size={13} />
+              <button onClick={goToApp} className="hidden md:flex items-center gap-1.5 transition-all hover:-translate-y-px"
+                style={{ background:'#02d47e', color:'#043941', fontSize:'.78rem', fontWeight:800, padding:'.5rem 1.3rem', borderRadius:100, boxShadow:'0 3px 14px rgba(2,212,126,.4)' }}>
+                Ir a la plataforma <ChevronRight size={12} />
               </button>
             ) : (
-              <button
-                onClick={() => navigate('/login')}
-                className="hidden md:flex items-center gap-1.5 px-5 py-2 rounded-full text-xs font-bold transition-all hover:scale-[1.03] hover:shadow-md"
-                style={{ background: '#02d47e', color: '#043941' }}
-              >
-                Iniciar sesión <ChevronRight size={13} />
+              <button onClick={() => navigate('/login')} className="hidden md:flex items-center gap-1.5 transition-all hover:-translate-y-px"
+                style={{ background:'#02d47e', color:'#043941', fontSize:'.78rem', fontWeight:800, padding:'.5rem 1.3rem', borderRadius:100, boxShadow:'0 3px 14px rgba(2,212,126,.4)' }}>
+                Iniciar sesión <ChevronRight size={12} />
               </button>
             )}
             <button className="md:hidden p-1.5 rounded-lg" onClick={() => setMobileMenuOpen(o => !o)} style={{ color: '#043941' }}>
@@ -658,13 +654,11 @@ export default function Landing() {
           </div>
         </div>
         {mobileMenuOpen && (
-          <div className="md:hidden border-t px-6 py-4 space-y-3" style={{ borderColor: 'rgba(4,57,65,0.08)', background: '#f0fdf6' }}>
+          <div className="md:hidden border-t absolute top-16 left-0 right-0 px-6 py-4 space-y-3" style={{ borderColor:'rgba(4,57,65,0.08)', background:'#f0fdf6', zIndex:50 }}>
             {NAV_LINKS.map(l => (
-              <a key={l.label} href={l.href} className="block text-sm font-semibold" style={{ color: '#043941' }} onClick={() => setMobileMenuOpen(false)}>
-                {l.label}
-              </a>
+              <a key={l.label} href={l.href} className="block text-sm font-semibold" style={{ color: '#043941' }} onClick={() => setMobileMenuOpen(false)}>{l.label}</a>
             ))}
-            <button onClick={() => navigate('/login')} className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-full text-sm font-bold" style={{ background: '#02d47e', color: '#043941' }}>
+            <button onClick={() => navigate('/login')} className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-full text-sm font-bold" style={{ background:'#02d47e', color:'#043941' }}>
               Iniciar sesión <ChevronRight size={14} />
             </button>
           </div>
@@ -672,159 +666,101 @@ export default function Landing() {
       </header>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ background: '#f0fdf6', paddingTop: 56, minHeight: '92vh' }}>
+      <section style={{ minHeight:'100vh', display:'flex', flexDirection:'column', background:'#f0fdf6', position:'relative', overflow:'hidden' }}>
 
-        {/* ── Small decorative shapes (con float) ── */}
+        {/* s1 — large mint triangle, top center-right */}
+        <div style={{ position:'absolute', top:-200, left:'58%', transform:'translateX(-50%)', width:420, height:420, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', animation:'heroFa 15s ease-in-out infinite', pointerEvents:'none' }} />
+        {/* s1b — dark teal over s1 */}
+        <div style={{ position:'absolute', top:-110, left:'64%', transform:'translateX(-50%)', width:200, height:200, background:'#043941', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', animation:'heroFa 15s ease-in-out infinite .5s', pointerEvents:'none' }} />
+        {/* s2 — yellow vertical bar, top-left, rounded bottom */}
+        <div style={{ position:'absolute', top:-45, left:'19%', width:90, height:210, background:'#f8ee91', borderRadius:'0 0 48px 48px', animation:'heroFb 11s ease-in-out infinite 1s', pointerEvents:'none' }} />
+        {/* s3 — dark teal right-pointing triangle */}
+        <div style={{ position:'absolute', top:'20%', right:-150, width:300, height:240, background:'#043941', clipPath:'polygon(100% 50%,0% 0%,0% 100%)', animation:'heroFc 13s ease-in-out infinite .5s', pointerEvents:'none' }} />
+        {/* s3b — lilac triangle over s3 */}
+        <div style={{ position:'absolute', top:'24%', right:-60, width:140, height:112, background:'#d4c4fc', clipPath:'polygon(100% 50%,0% 0%,0% 100%)', animation:'heroFc 13s ease-in-out infinite 1s', pointerEvents:'none' }} />
+        {/* s4 — large mint triangle, bottom-left */}
+        <div style={{ position:'absolute', bottom:-180, left:'18%', transform:'translateX(-50%)', width:380, height:380, background:'#b8edd0', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', animation:'heroFd 14s ease-in-out infinite 1.5s', pointerEvents:'none' }} />
+        {/* s4b — dark teal triangle over s4 */}
+        <div style={{ position:'absolute', bottom:-90, left:'10%', transform:'translateX(-50%)', width:180, height:180, background:'#043941', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', animation:'heroFd 14s ease-in-out infinite 2s', pointerEvents:'none' }} />
+        {/* s5 — lilac triangle, bottom-right */}
+        <div style={{ position:'absolute', bottom:-130, left:'78%', transform:'translateX(-50%)', width:280, height:280, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', animation:'heroFd 16s ease-in-out infinite 3s', pointerEvents:'none' }} />
+        {/* s6 — dark teal left-pointing triangle */}
+        <div style={{ position:'absolute', top:'54%', left:-160, width:310, height:250, background:'#043941', clipPath:'polygon(0% 50%,100% 0%,100% 100%)', animation:'heroFe 13s ease-in-out infinite 2s', pointerEvents:'none' }} />
+        {/* s7 — spinning green cross */}
+        <div style={{ position:'absolute', top:'10%', left:'6%', width:46, height:46, background:'#02d47e', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 18s linear infinite', pointerEvents:'none' }} />
+        {/* s8 — yellow rotated square */}
+        <div style={{ position:'absolute', top:'46%', left:'5%', width:36, height:36, background:'#f8ee91', borderRadius:4, animation:'heroFf 9s ease-in-out infinite 1.2s', pointerEvents:'none' }} />
 
-        {/* Green + cross, top-left */}
-        <svg className="absolute pointer-events-none float-a" width="60" height="60" viewBox="0 0 60 60"
-          style={{ top: '13%', left: '4.5%', animationDuration: '14s' }}>
-          <rect x="23" y="0" width="14" height="60" rx="7" fill="#02d47e" />
-          <rect x="0" y="23" width="60" height="14" rx="7" fill="#02d47e" />
-        </svg>
+        {/* ── Hero Top ── */}
+        <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', padding:'100px 5vw 60px', position:'relative' }}>
+          <div className="relative z-10 text-center w-full" style={{ maxWidth:900, margin:'0 auto' }}>
 
-        {/* Yellow shield badge, top-left */}
-        <svg className="absolute pointer-events-none float-b" width="90" height="108" viewBox="0 0 90 108"
-          style={{ top: '4%', left: '10%', animationDuration: '20s' }}>
-          <path d="M 0 0 L 90 0 L 90 68 Q 45 108 0 68 Z" fill="#f8ee91" />
-        </svg>
-
-        {/* Small yellow rotated square, left edge */}
-        <div className="absolute pointer-events-none float-d" style={{
-          left: '3.5%', top: '55%',
-          width: 38, height: 38, background: '#f8ee91', borderRadius: 7,
-          transform: 'rotate(24deg)', animationDuration: '12s',
-        }} />
-
-        {/* Small lilac bar, bottom-right */}
-        <div className="absolute pointer-events-none float-c" style={{
-          bottom: '17%', right: '2%',
-          width: 180, height: 20, borderRadius: 10, background: '#d4c4fc',
-          animationDuration: '15s',
-        }} />
-
-        {/* ── Large corner shapes (sin animación rotatoria — solo posición fija) ── */}
-
-        {/* Dark teal bar, top-center partially cropped */}
-        <div className="absolute pointer-events-none" style={{
-          top: -10, left: '50%', transform: 'translateX(-10%)',
-          width: 200, height: 30, borderRadius: 15, background: '#043941',
-        }} />
-
-        {/* Large dark teal right-pointing triangle — upper-right corner */}
-        <svg className="absolute pointer-events-none" viewBox="0 0 300 380"
-          style={{ top: 0, right: 0, width: 'clamp(200px, 22vw, 320px)', height: 'auto' }}>
-          <polygon points="300,0 300,380 0,190" fill="#043941" />
-        </svg>
-
-        {/* Large lilac right-pointing triangle — right side, below dark teal */}
-        <svg className="absolute pointer-events-none" viewBox="0 0 200 280"
-          style={{ top: '36%', right: 0, width: 'clamp(140px, 16vw, 220px)', height: 'auto' }}>
-          <polygon points="200,0 200,280 0,140" fill="#d4c4fc" />
-        </svg>
-
-        {/* Dark teal triangle — lower-left */}
-        <svg className="absolute pointer-events-none" viewBox="0 0 180 160"
-          style={{ bottom: '14%', left: 0, width: 'clamp(130px, 14vw, 200px)', height: 'auto' }}>
-          <polygon points="0,0 0,160 180,80" fill="#043941" />
-        </svg>
-
-        {/* Large mint triangle — bottom-left corner */}
-        <svg className="absolute pointer-events-none" viewBox="0 0 420 260"
-          style={{ bottom: 0, left: 0, width: 'clamp(260px, 30vw, 450px)', height: 'auto' }}>
-          <polygon points="0,260 420,260 200,0" fill="#b8edd0" />
-        </svg>
-
-        {/* Background mint hexagon, center-right (sutil) */}
-        <div className="absolute pointer-events-none" style={{
-          right: '6%', top: '8%',
-          width: 'clamp(200px, 28vw, 380px)', height: 'clamp(200px, 28vw, 380px)',
-          background: 'rgba(184,237,208,0.28)',
-          clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-        }} />
-
-        {/* ── Hero content ── */}
-        <div className="relative z-10 max-w-3xl mx-auto px-6 text-center"
-          style={{ paddingTop: 'clamp(3.5rem, 10vh, 7rem)' }}>
-
-          {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 animate-fade-in-up"
-            style={{ background: 'rgba(4,57,65,0.06)', border: '1px solid rgba(4,57,65,0.14)' }}>
-            <span className="w-2 h-2 rounded-full animate-pulse shrink-0" style={{ background: '#02d47e' }} />
-            <span className="font-bold tracking-widest uppercase" style={{ fontSize: 11, color: '#043941', letterSpacing: '0.09em' }}>
-              Plataforma Educativa · Docentes · Alumnos · Directores
-            </span>
-          </div>
-
-          {/* Title */}
-          <h1
-            className="font-black leading-[1.05] mb-6 animate-fade-in-up stagger-2"
-            style={{ fontSize: 'clamp(3.4rem, 9.5vw, 8rem)', letterSpacing: '-0.035em', color: '#043941' }}
-          >
-            Tu plataforma<br />
-            <span style={{
-              background: '#02d47e', color: '#043941',
-              borderRadius: 20, padding: '4px 32px 8px',
-              display: 'inline-block', lineHeight: 1.2,
-            }}>
-              educativa
-            </span>
-            <br />para formación.
-          </h1>
-
-          {/* Subtitle */}
-          <p className="leading-relaxed mb-10 mx-auto max-w-md animate-fade-in-up stagger-3"
-            style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: 'rgba(4,57,65,0.6)' }}>
-            Una plataforma para{' '}
-            <strong style={{ color: '#043941' }}>docentes, alumnos y directores</strong>{' '}
-            EPT. Formación especializada, conectada y gratuita para toda la comunidad educativa del Perú.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in-up stagger-4">
-            <button
-              onClick={isLoggedIn ? goToApp : () => navigate('/login')}
-              className="flex items-center gap-2 px-9 py-4 rounded-full font-bold transition-all hover:scale-[1.03] hover:shadow-lg"
-              style={{ fontSize: 15, background: '#02d47e', color: '#043941' }}
-            >
-              {isLoggedIn ? 'Ir a la plataforma' : 'Comenzar ahora'}
-              <ArrowRight size={16} />
-            </button>
-            <a
-              href="#talleres"
-              className="flex items-center gap-2 px-9 py-4 rounded-full font-bold transition-all"
-              style={{ fontSize: 15, color: '#043941', border: '2px solid rgba(4,57,65,0.22)', background: 'transparent' }}
-              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(4,57,65,0.05)')}
-              onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-            >
-              Explorar talleres
-              <ChevronRight size={16} />
-            </a>
-          </div>
-
-        </div>
-
-        {/* ── Stats bar — white strip ── */}
-        <div className="relative z-10 mt-20" style={{ borderTop: '1px solid rgba(4,57,65,0.08)', background: '#ffffff' }}>
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4">
-              {STATS.map((s, i) => (
-                <div
-                  key={s.value}
-                  className="flex flex-col items-center py-8 px-4"
-                  style={{ borderRight: i < 3 ? '1px solid rgba(4,57,65,0.07)' : 'none' }}
-                >
-                  <span className="font-black leading-none mb-2" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.2rem)', color: '#043941' }}>{s.value}</span>
-                  <span className="font-bold text-center uppercase tracking-wider" style={{ fontSize: 10, color: 'rgba(4,57,65,0.4)', letterSpacing: '0.1em' }}>{s.label}</span>
-                </div>
-              ))}
+            {/* Eyebrow */}
+            <div className="inline-flex items-center gap-2 rounded-full animate-fade-in-up"
+              style={{ background:'rgba(4,57,65,.07)', border:'1.5px solid rgba(4,57,65,.14)', color:'rgba(4,57,65,.6)', fontSize:'.58rem', fontWeight:700, letterSpacing:'.22em', textTransform:'uppercase', padding:'.3rem 1rem', marginBottom:'1.6rem' }}>
+              <span style={{ width:5, height:5, borderRadius:'50%', background:'#02d47e', animation:'blink 2.5s infinite', flexShrink:0, display:'inline-block' }} />
+              Plataforma educativa · Docentes · Alumnos · Directores
             </div>
+
+            {/* Title */}
+            <h1 className="animate-fade-in-up stagger-2" style={{ fontSize:'clamp(2.8rem,7.5vw,6.5rem)', fontWeight:900, lineHeight:.95, letterSpacing:'-.05em', marginBottom:0 }}>
+              <span style={{ display:'block', color:'#043941' }}>Tu plataforma</span>
+              <span style={{ display:'inline-block', color:'#043941', background:'#02d47e', padding:'.05em .22em .1em', borderRadius:12, margin:'.06em 0' }}>educativa</span>
+              <span style={{ display:'block', color:'#043941' }}>para formación.</span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="animate-fade-in-up stagger-3"
+              style={{ fontSize:'clamp(.88rem,1.4vw,.96rem)', color:'rgba(4,57,65,.55)', lineHeight:1.85, maxWidth:500, margin:'1.8rem auto 2.4rem', fontWeight:400 }}>
+              Una plataforma para <strong style={{ color:'#043941', fontWeight:700 }}>docentes, alumnos y directores</strong> EPT. Formación especializada, conectada y gratuita para toda la comunidad educativa del Perú.
+            </p>
+
+            {/* Buttons */}
+            <div className="flex items-center justify-center flex-wrap gap-4 animate-fade-in-up stagger-4">
+              <button
+                onClick={isLoggedIn ? goToApp : () => navigate('/login')}
+                className="inline-flex items-center gap-2 transition-all hover:-translate-y-0.5"
+                style={{ background:'#02d47e', color:'#043941', fontSize:'.9rem', fontWeight:800, padding:'1rem 2.2rem', borderRadius:100, boxShadow:'0 6px 22px rgba(2,212,126,.45)', border:'none', cursor:'pointer' }}
+                onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 10px 30px rgba(2,212,126,.6)')}
+                onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 6px 22px rgba(2,212,126,.45)')}
+              >
+                {isLoggedIn ? 'Ir a la plataforma' : 'Comenzar ahora'}
+                <ArrowRight size={14} />
+              </button>
+              <a
+                href="#talleres"
+                className="inline-flex items-center gap-2 transition-all"
+                style={{ color:'rgba(4,57,65,.6)', fontSize:'.86rem', fontWeight:700, border:'1.5px solid rgba(4,57,65,.2)', padding:'.96rem 1.8rem', borderRadius:100, background:'rgba(255,255,255,.6)', textDecoration:'none' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(4,57,65,.4)'; e.currentTarget.style.color='#043941'; e.currentTarget.style.background='#fff' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(4,57,65,.2)'; e.currentTarget.style.color='rgba(4,57,65,.6)'; e.currentTarget.style.background='rgba(255,255,255,.6)' }}
+              >
+                Explorar talleres
+                <ChevronRight size={12} />
+              </a>
+            </div>
+
           </div>
         </div>
 
-        {/* Marquee */}
-        <TalleresMarquee />
+        {/* ── Stats bar ── */}
+        <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 animate-fade-in-up"
+          style={{ background:'#fff', borderTop:'1px solid rgba(4,57,65,.08)', animationDelay:'.7s' }}>
+          {[
+            { n:'10',  hi:'',  label:'Talleres EPT' },
+            { n:'36',  hi:'+', label:'Docentes capacitados' },
+            { n:'200', hi:'+', label:'Fichas descargables' },
+            { n:'150', hi:'h', label:'Formación híbrida' },
+          ].map((s, i) => (
+            <div key={i} className="text-center" style={{ padding:'2rem 1.5rem', borderLeft: i > 0 ? '1px solid rgba(4,57,65,.08)' : 'none' }}>
+              <span style={{ display:'block', fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, color:'#043941', lineHeight:1, letterSpacing:'-.04em', marginBottom:'.4rem' }}>
+                {s.n}<span style={{ color:'#02d47e' }}>{s.hi}</span>
+              </span>
+              <span style={{ fontSize:'.72rem', fontWeight:500, color:'rgba(4,57,65,.45)', letterSpacing:'.04em', textTransform:'uppercase' }}>{s.label}</span>
+            </div>
+          ))}
+        </div>
 
+        <TalleresMarquee />
       </section>
 
       {/* ══ POR QUÉ GRAMA ═══════════════════════════════════════════════════ */}
