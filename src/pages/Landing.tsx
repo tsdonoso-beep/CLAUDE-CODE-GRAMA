@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   BookOpen, Clock, Users, Building2, Briefcase,
-  Video, FileText, ChevronRight, ChevronLeft, ChevronDown, ArrowRight,
+  ChevronRight, ChevronLeft, ChevronDown, ArrowRight,
   CheckCircle, Menu, X, Wrench,
 } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
@@ -19,35 +19,6 @@ const STATS = [
   { value: '150h', label: 'Formación híbrida' },
 ]
 
-const FEATURES = [
-  {
-    icon: Package,
-    overline: 'El problema',
-    title: 'El conocimiento técnico se queda en las cajas',
-    desc: 'Los equipos llegan al taller pero sin formación para usarlos. Cuando el docente rota, todo se pierde.',
-    accent: true,
-  },
-  {
-    icon: Layers,
-    overline: 'Nuestra solución',
-    title: 'Una ruta de aprendizaje híbrida diseñada para ti',
-    desc: '7 módulos con contenido asíncrono, sesiones en vivo y práctica presencial. A tu ritmo, desde cualquier lugar.',
-    accent: false,
-  },
-  {
-    icon: Award,
-    overline: 'El resultado',
-    title: 'Autonomía docente garantizada al finalizar',
-    desc: 'Dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes — con confianza.',
-    accent: false,
-  },
-]
-
-const PRODUCTS = [
-  { icon: Video,    title: 'Acceso asíncrono',      desc: 'Videos, lecturas y fichas disponibles 24/7' },
-  { icon: FileText, title: 'Repositorio completo',   desc: 'Manuales, fichas IPRC y protocolos descargables' },
-  { icon: Clock,    title: 'Acompañamiento en vivo', desc: 'Sesiones sincrónicas con expertos por taller' },
-]
 
 const COMMUNITY = [
   { icon: Users,     color: '#02d47e', bg: 'rgba(2,212,126,0.08)',   title: 'Docentes EPT',            desc: 'Domina el uso pedagógico de los equipos de tu taller y mejora tus competencias técnicas.',        cta: 'Ingresar a la plataforma', action: 'app'  },
