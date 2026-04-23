@@ -760,7 +760,6 @@ export default function Landing() {
           ))}
         </div>
 
-        <TalleresMarquee />
       </section>
 
       {/* ══ POR QUÉ GRAMA ═══════════════════════════════════════════════════ */}
