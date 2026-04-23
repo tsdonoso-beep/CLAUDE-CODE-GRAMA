@@ -760,6 +760,13 @@ export default function Landing() {
           ))}
         </div>
 
+        {/* Wave de cierre — transición blanco → #f0fdf6 */}
+        <div style={{ background: '#fff', lineHeight: 0 }}>
+          <svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" style={{ display:'block', width:'100%' }} preserveAspectRatio="none">
+            <path d="M0,36 C360,72 720,0 1080,36 C1260,54 1380,24 1440,36 L1440,72 L0,72 Z" fill="#f0fdf6" />
+          </svg>
+        </div>
+
       </section>
 
       {/* ══ POR QUÉ GRAMA ═══════════════════════════════════════════════════ */}
