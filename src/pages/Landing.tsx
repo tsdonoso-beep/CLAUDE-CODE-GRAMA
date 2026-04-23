@@ -674,75 +674,82 @@ export default function Landing() {
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden" style={{ background: '#f0fdf6', paddingTop: 56, minHeight: '92vh' }}>
 
-        {/* ── Green + cross, top-left ── */}
-        <svg className="absolute pointer-events-none float-a" width="58" height="58" viewBox="0 0 58 58"
-          style={{ top: '12%', left: '4%', animationDuration: '14s' }}>
-          <rect x="22" y="0" width="14" height="58" rx="7" fill="#02d47e" />
-          <rect x="0" y="22" width="58" height="14" rx="7" fill="#02d47e" />
+        {/* ── Small decorative shapes (con float) ── */}
+
+        {/* Green + cross, top-left */}
+        <svg className="absolute pointer-events-none float-a" width="60" height="60" viewBox="0 0 60 60"
+          style={{ top: '13%', left: '4.5%', animationDuration: '14s' }}>
+          <rect x="23" y="0" width="14" height="60" rx="7" fill="#02d47e" />
+          <rect x="0" y="23" width="60" height="14" rx="7" fill="#02d47e" />
         </svg>
 
-        {/* ── Yellow shield / badge, top-left ── */}
-        <svg className="absolute pointer-events-none float-b" width="86" height="102" viewBox="0 0 86 102"
-          style={{ top: '5%', left: '11%', animationDuration: '20s' }}>
-          <path d="M 0 0 L 86 0 L 86 64 Q 43 102 0 64 Z" fill="#f8ee91" />
+        {/* Yellow shield badge, top-left */}
+        <svg className="absolute pointer-events-none float-b" width="90" height="108" viewBox="0 0 90 108"
+          style={{ top: '4%', left: '10%', animationDuration: '20s' }}>
+          <path d="M 0 0 L 90 0 L 90 68 Q 45 108 0 68 Z" fill="#f8ee91" />
         </svg>
 
-        {/* ── Dark teal bar, partially cropped at top-center ── */}
-        <div className="absolute pointer-events-none" style={{
-          top: -8, left: '50%', transform: 'translateX(-30%)',
-          width: 180, height: 28, borderRadius: 14, background: '#043941',
-        }} />
-
-        {/* ── Large dark teal right-pointing triangle, upper-right corner ── */}
-        <svg className="absolute pointer-events-none float-c" width="240" height="260" viewBox="0 0 240 260"
-          style={{ top: 0, right: 0, animationDuration: '18s' }}>
-          <polygon points="240,0 240,260 0,130" fill="#043941" />
-        </svg>
-
-        {/* ── Large lilac right-pointing triangle, right middle ── */}
-        <svg className="absolute pointer-events-none float-b" width="170" height="200" viewBox="0 0 170 200"
-          style={{ top: '38%', right: 0, animationDuration: '22s' }}>
-          <polygon points="170,0 170,200 0,100" fill="#d4c4fc" />
-        </svg>
-
-        {/* ── Small yellow rotated square, left edge ── */}
+        {/* Small yellow rotated square, left edge */}
         <div className="absolute pointer-events-none float-d" style={{
-          left: '3%', top: '56%', width: 38, height: 38,
-          background: '#f8ee91', borderRadius: 7, transform: 'rotate(24deg)',
-          animationDuration: '12s',
+          left: '3.5%', top: '55%',
+          width: 38, height: 38, background: '#f8ee91', borderRadius: 7,
+          transform: 'rotate(24deg)', animationDuration: '12s',
         }} />
 
-        {/* ── Dark teal triangle, lower-left ── */}
-        <svg className="absolute pointer-events-none float-a" width="145" height="130" viewBox="0 0 145 130"
-          style={{ bottom: '18%', left: 0, animationDuration: '17s' }}>
-          <polygon points="0,0 0,130 145,65" fill="#043941" />
-        </svg>
-
-        {/* ── Large mint triangle, bottom-left corner ── */}
-        <svg className="absolute pointer-events-none" width="300" height="200" viewBox="0 0 300 200"
-          style={{ bottom: 0, left: 0 }}>
-          <polygon points="0,200 300,200 150,0" fill="#b8edd0" />
-        </svg>
-
-        {/* ── Small lilac bar, bottom-right ── */}
+        {/* Small lilac bar, bottom-right */}
         <div className="absolute pointer-events-none float-c" style={{
-          bottom: '24%', right: '3%', width: 110, height: 18,
-          borderRadius: 9, background: '#d4c4fc', animationDuration: '13s',
+          bottom: '17%', right: '2%',
+          width: 180, height: 20, borderRadius: 10, background: '#d4c4fc',
+          animationDuration: '15s',
         }} />
 
-        {/* ── Faint large hexagon background ── */}
+        {/* ── Large corner shapes (sin animación rotatoria — solo posición fija) ── */}
+
+        {/* Dark teal bar, top-center partially cropped */}
         <div className="absolute pointer-events-none" style={{
-          right: '8%', top: '18%', width: 320, height: 320,
-          background: 'rgba(184,237,208,0.22)',
+          top: -10, left: '50%', transform: 'translateX(-10%)',
+          width: 200, height: 30, borderRadius: 15, background: '#043941',
+        }} />
+
+        {/* Large dark teal right-pointing triangle — upper-right corner */}
+        <svg className="absolute pointer-events-none" viewBox="0 0 300 380"
+          style={{ top: 0, right: 0, width: 'clamp(200px, 22vw, 320px)', height: 'auto' }}>
+          <polygon points="300,0 300,380 0,190" fill="#043941" />
+        </svg>
+
+        {/* Large lilac right-pointing triangle — right side, below dark teal */}
+        <svg className="absolute pointer-events-none" viewBox="0 0 200 280"
+          style={{ top: '36%', right: 0, width: 'clamp(140px, 16vw, 220px)', height: 'auto' }}>
+          <polygon points="200,0 200,280 0,140" fill="#d4c4fc" />
+        </svg>
+
+        {/* Dark teal triangle — lower-left */}
+        <svg className="absolute pointer-events-none" viewBox="0 0 180 160"
+          style={{ bottom: '14%', left: 0, width: 'clamp(130px, 14vw, 200px)', height: 'auto' }}>
+          <polygon points="0,0 0,160 180,80" fill="#043941" />
+        </svg>
+
+        {/* Large mint triangle — bottom-left corner */}
+        <svg className="absolute pointer-events-none" viewBox="0 0 420 260"
+          style={{ bottom: 0, left: 0, width: 'clamp(260px, 30vw, 450px)', height: 'auto' }}>
+          <polygon points="0,260 420,260 200,0" fill="#b8edd0" />
+        </svg>
+
+        {/* Background mint hexagon, center-right (sutil) */}
+        <div className="absolute pointer-events-none" style={{
+          right: '6%', top: '8%',
+          width: 'clamp(200px, 28vw, 380px)', height: 'clamp(200px, 28vw, 380px)',
+          background: 'rgba(184,237,208,0.28)',
           clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
         }} />
 
         {/* ── Hero content ── */}
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center" style={{ paddingTop: 'clamp(4rem, 12vh, 8rem)' }}>
+        <div className="relative z-10 max-w-3xl mx-auto px-6 text-center"
+          style={{ paddingTop: 'clamp(3.5rem, 10vh, 7rem)' }}>
 
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 animate-fade-in-up"
-            style={{ background: 'rgba(4,57,65,0.06)', border: '1px solid rgba(4,57,65,0.13)' }}>
+            style={{ background: 'rgba(4,57,65,0.06)', border: '1px solid rgba(4,57,65,0.14)' }}>
             <span className="w-2 h-2 rounded-full animate-pulse shrink-0" style={{ background: '#02d47e' }} />
             <span className="font-bold tracking-widest uppercase" style={{ fontSize: 11, color: '#043941', letterSpacing: '0.09em' }}>
               Plataforma Educativa · Docentes · Alumnos · Directores
@@ -752,13 +759,13 @@ export default function Landing() {
           {/* Title */}
           <h1
             className="font-black leading-[1.05] mb-6 animate-fade-in-up stagger-2"
-            style={{ fontSize: 'clamp(3.2rem, 9vw, 7.5rem)', letterSpacing: '-0.03em', color: '#043941' }}
+            style={{ fontSize: 'clamp(3.4rem, 9.5vw, 8rem)', letterSpacing: '-0.035em', color: '#043941' }}
           >
             Tu plataforma<br />
             <span style={{
               background: '#02d47e', color: '#043941',
-              borderRadius: 18, padding: '2px 28px 6px',
-              display: 'inline-block', lineHeight: 1.18,
+              borderRadius: 20, padding: '4px 32px 8px',
+              display: 'inline-block', lineHeight: 1.2,
             }}>
               educativa
             </span>
@@ -766,8 +773,8 @@ export default function Landing() {
           </h1>
 
           {/* Subtitle */}
-          <p className="leading-relaxed mb-10 mx-auto max-w-lg animate-fade-in-up stagger-3"
-            style={{ fontSize: 'clamp(0.9rem, 1.6vw, 1.05rem)', color: 'rgba(4,57,65,0.6)' }}>
+          <p className="leading-relaxed mb-10 mx-auto max-w-md animate-fade-in-up stagger-3"
+            style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: 'rgba(4,57,65,0.6)' }}>
             Una plataforma para{' '}
             <strong style={{ color: '#043941' }}>docentes, alumnos y directores</strong>{' '}
             EPT. Formación especializada, conectada y gratuita para toda la comunidad educativa del Perú.
@@ -807,7 +814,7 @@ export default function Landing() {
                   className="flex flex-col items-center py-8 px-4"
                   style={{ borderRight: i < 3 ? '1px solid rgba(4,57,65,0.07)' : 'none' }}
                 >
-                  <span className="font-black leading-none mb-2" style={{ fontSize: 'clamp(2.2rem, 4vw, 3rem)', color: '#043941' }}>{s.value}</span>
+                  <span className="font-black leading-none mb-2" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.2rem)', color: '#043941' }}>{s.value}</span>
                   <span className="font-bold text-center uppercase tracking-wider" style={{ fontSize: 10, color: 'rgba(4,57,65,0.4)', letterSpacing: '0.1em' }}>{s.label}</span>
                 </div>
               ))}
