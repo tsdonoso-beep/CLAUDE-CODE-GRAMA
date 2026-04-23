@@ -31,6 +31,7 @@ import { ActividadExternaModal, ACTIVIDADES_EXTERNAS, type ActividadExternaConfi
 import { EscenarioPedagogicoModal, ESCENARIO_COMP1, ESCENARIO_COMP2, ESCENARIO_COMP3, ESCENARIO_COMP4, type EscenarioConfig } from '@/components/lxp/interactivos/EscenarioPedagogicoModal'
 import { ClasificadorHerramientasModal } from '@/components/lxp/interactivos/ClasificadorHerramientasModal'
 import { LaboratorioPromptsModal } from '@/components/lxp/interactivos/LaboratorioPromptsModal'
+import { VerificacionFuncionamientoModal } from '@/components/lxp/interactivos/VerificacionFuncionamientoModal'
 import { descargablesLXP } from '@/data/descargablesLXP'
 import { quizBancosMeca } from '@/data/quizBancosMeca'
 import { descargablesMeca } from '@/data/descargablesMeca'
@@ -77,6 +78,7 @@ export default function ModuloDetalle() {
   const [escenarioPedagogico, setEscenarioPedagogico]       = useState<EscenarioConfig | null>(null)
   const [showClasificador, setShowClasificador]             = useState(false)
   const [showLaboratorio, setShowLaboratorio]               = useState(false)
+  const [showVerificacion, setShowVerificacion]             = useState(false)
 
   const closeGradeModal = useCallback(() => setShowGradeModal(false), [])
   const closeTourSimulator = useCallback(() => {
@@ -212,6 +214,8 @@ export default function ModuloDetalle() {
         setShowChecklistMant('investigacion')
       } else if (contenido.id === 'm3-s29-c3') {
         setShowChecklistMant('almacen')
+      } else if (contenido.id === 'm2-s20-c3' || contenido.id === 'm3-s27-c3') {
+        setShowVerificacion(true)
       } else if (contenido.id === 'm0-s02-c3') {
         setShowClasificador(true)
       } else if (contenido.id === 'm0-s04-c3') {
@@ -790,6 +794,17 @@ export default function ModuloDetalle() {
           onComplete={() => {
             const id = showChecklistMant === 'investigacion' ? 'm2-s22-c3' : 'm3-s29-c3'
             markContenidoCompleted(id)
+          }}
+        />
+      )}
+
+      {/* Verificación de funcionamiento — m2-s20-c3 / m3-s27-c3 */}
+      {showVerificacion && (
+        <VerificacionFuncionamientoModal
+          onClose={() => setShowVerificacion(false)}
+          onComplete={() => {
+            markContenidoCompleted('m2-s20-c3')
+            markContenidoCompleted('m3-s27-c3')
           }}
         />
       )}
