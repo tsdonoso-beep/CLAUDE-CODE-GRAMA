@@ -216,10 +216,6 @@ export default function ModuloDetalle() {
         setShowChecklistMant('investigacion')
       } else if (contenido.id === 'm3-s29-c3') {
         setShowChecklistMant('almacen')
-      } else if (contenido.id === 'm2-s20-c3') {
-        setShowVerificacion(true)
-      } else if (contenido.id === 'm3-s27-c3') {
-        setShowVerificacionAlmacen(true)
       } else if (contenido.id === 'm0-s02-c3') {
         setShowClasificador(true)
       } else if (contenido.id === 'm0-s04-c3') {
@@ -267,7 +263,11 @@ export default function ModuloDetalle() {
         toast.info('Sesión sincrónica', { description: fechaInfo })
       }
     } else if (contenido.tipo === 'ACTIVIDAD_PRACTICA') {
-      if (contenido.urlActividad) {
+      if (contenido.id === 'm2-s20-c3') {
+        setShowVerificacion(true)
+      } else if (contenido.id === 'm3-s27-c3') {
+        setShowVerificacionAlmacen(true)
+      } else if (contenido.urlActividad) {
         window.open(contenido.urlActividad, '_blank')
         markContenidoCompleted(contenido.id)
       } else {
