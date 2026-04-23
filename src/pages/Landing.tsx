@@ -672,143 +672,150 @@ export default function Landing() {
       </header>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden pt-16" style={{ background: '#f0fdf6' }}>
+      <section className="relative overflow-hidden" style={{ background: '#f0fdf6', paddingTop: 56, minHeight: '92vh' }}>
 
-        {/* ── Geometric floating shapes ── */}
-
-        {/* s1 — tall bar, dark teal, top-left */}
-        <div className="absolute pointer-events-none float-a" style={{
-          width: 18, height: 120, borderRadius: 12,
-          background: '#043941', opacity: 0.18,
-          top: '14%', left: '5%', transform: 'rotate(-18deg)',
-          animationDuration: '16s',
-        }} />
-        {/* s2 — triangle, yellow, top-right area */}
-        <svg viewBox="0 0 60 52" className="absolute pointer-events-none float-b" style={{ width: 60, height: 52, top: '10%', right: '12%', animationDuration: '20s', opacity: 0.9 }}>
-          <polygon points="30,0 60,52 0,52" fill="#f8ee91" />
+        {/* ── Green + cross, top-left ── */}
+        <svg className="absolute pointer-events-none float-a" width="58" height="58" viewBox="0 0 58 58"
+          style={{ top: '12%', left: '4%', animationDuration: '14s' }}>
+          <rect x="22" y="0" width="14" height="58" rx="7" fill="#02d47e" />
+          <rect x="0" y="22" width="58" height="14" rx="7" fill="#02d47e" />
         </svg>
-        {/* s3 — wide bar, mint, upper-center-left */}
-        <div className="absolute pointer-events-none float-c" style={{
-          width: 90, height: 14, borderRadius: 8,
-          background: '#b8edd0', opacity: 0.75,
-          top: '8%', left: '22%', transform: 'rotate(12deg)',
-          animationDuration: '13s',
+
+        {/* ── Yellow shield / badge, top-left ── */}
+        <svg className="absolute pointer-events-none float-b" width="86" height="102" viewBox="0 0 86 102"
+          style={{ top: '5%', left: '11%', animationDuration: '20s' }}>
+          <path d="M 0 0 L 86 0 L 86 64 Q 43 102 0 64 Z" fill="#f8ee91" />
+        </svg>
+
+        {/* ── Dark teal bar, partially cropped at top-center ── */}
+        <div className="absolute pointer-events-none" style={{
+          top: -8, left: '50%', transform: 'translateX(-30%)',
+          width: 180, height: 28, borderRadius: 14, background: '#043941',
         }} />
-        {/* s4 — bar, lilac, right side */}
+
+        {/* ── Large dark teal right-pointing triangle, upper-right corner ── */}
+        <svg className="absolute pointer-events-none float-c" width="240" height="260" viewBox="0 0 240 260"
+          style={{ top: 0, right: 0, animationDuration: '18s' }}>
+          <polygon points="240,0 240,260 0,130" fill="#043941" />
+        </svg>
+
+        {/* ── Large lilac right-pointing triangle, right middle ── */}
+        <svg className="absolute pointer-events-none float-b" width="170" height="200" viewBox="0 0 170 200"
+          style={{ top: '38%', right: 0, animationDuration: '22s' }}>
+          <polygon points="170,0 170,200 0,100" fill="#d4c4fc" />
+        </svg>
+
+        {/* ── Small yellow rotated square, left edge ── */}
         <div className="absolute pointer-events-none float-d" style={{
-          width: 14, height: 80, borderRadius: 10,
-          background: '#d4c4fc', opacity: 0.70,
-          top: '30%', right: '6%', transform: 'rotate(8deg)',
-          animationDuration: '18s',
+          left: '3%', top: '56%', width: 38, height: 38,
+          background: '#f8ee91', borderRadius: 7, transform: 'rotate(24deg)',
+          animationDuration: '12s',
         }} />
-        {/* s5 — cross/plus, green */}
-        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-a" style={{ width: 40, height: 40, top: '52%', left: '8%', animationDuration: '14s', opacity: 0.55 }}>
-          <rect x="15" y="0" width="10" height="40" rx="5" fill="#02d47e" />
-          <rect x="0" y="15" width="40" height="10" rx="5" fill="#02d47e" />
+
+        {/* ── Dark teal triangle, lower-left ── */}
+        <svg className="absolute pointer-events-none float-a" width="145" height="130" viewBox="0 0 145 130"
+          style={{ bottom: '18%', left: 0, animationDuration: '17s' }}>
+          <polygon points="0,0 0,130 145,65" fill="#043941" />
         </svg>
-        {/* s6 — rotated square, yellow, bottom-right */}
-        <div className="absolute pointer-events-none float-b" style={{
-          width: 42, height: 42, borderRadius: 8,
-          background: '#f8ee91', opacity: 0.65,
-          bottom: '22%', right: '18%', transform: 'rotate(28deg)',
-          animationDuration: '22s',
-        }} />
-        {/* s7 — small bar, dark teal, bottom-left */}
+
+        {/* ── Large mint triangle, bottom-left corner ── */}
+        <svg className="absolute pointer-events-none" width="300" height="200" viewBox="0 0 300 200"
+          style={{ bottom: 0, left: 0 }}>
+          <polygon points="0,200 300,200 150,0" fill="#b8edd0" />
+        </svg>
+
+        {/* ── Small lilac bar, bottom-right ── */}
         <div className="absolute pointer-events-none float-c" style={{
-          width: 70, height: 12, borderRadius: 8,
-          background: '#043941', opacity: 0.14,
-          bottom: '28%', left: '14%', transform: 'rotate(-6deg)',
-          animationDuration: '17s',
+          bottom: '24%', right: '3%', width: 110, height: 18,
+          borderRadius: 9, background: '#d4c4fc', animationDuration: '13s',
         }} />
-        {/* s8 — triangle, lilac, left mid */}
-        <svg viewBox="0 0 50 44" className="absolute pointer-events-none float-d" style={{ width: 50, height: 44, top: '68%', left: '3%', animationDuration: '11s', opacity: 0.7 }}>
-          <polygon points="25,0 50,44 0,44" fill="#d4c4fc" />
-        </svg>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 pt-16 pb-0 text-center">
+        {/* ── Faint large hexagon background ── */}
+        <div className="absolute pointer-events-none" style={{
+          right: '8%', top: '18%', width: 320, height: 320,
+          background: 'rgba(184,237,208,0.22)',
+          clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+        }} />
 
-          {/* Eyebrow badge */}
+        {/* ── Hero content ── */}
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center" style={{ paddingTop: 'clamp(4rem, 12vh, 8rem)' }}>
+
+          {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 animate-fade-in-up"
-            style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.28)' }}>
+            style={{ background: 'rgba(4,57,65,0.06)', border: '1px solid rgba(4,57,65,0.13)' }}>
             <span className="w-2 h-2 rounded-full animate-pulse shrink-0" style={{ background: '#02d47e' }} />
-            <span className="text-xs font-bold tracking-wide" style={{ color: '#043941' }}>
-              Plataforma activa · Docentes EPT Perú
+            <span className="font-bold tracking-widest uppercase" style={{ fontSize: 11, color: '#043941', letterSpacing: '0.09em' }}>
+              Plataforma Educativa · Docentes · Alumnos · Directores
             </span>
           </div>
 
-          {/* Hero title */}
+          {/* Title */}
           <h1
-            className="font-black leading-[1.06] mb-6 animate-fade-in-up stagger-2"
-            style={{
-              fontSize: 'clamp(2.8rem, 7.5vw, 6rem)',
-              letterSpacing: '-0.03em',
-              color: '#043941',
-            }}
+            className="font-black leading-[1.05] mb-6 animate-fade-in-up stagger-2"
+            style={{ fontSize: 'clamp(3.2rem, 9vw, 7.5rem)', letterSpacing: '-0.03em', color: '#043941' }}
           >
-            Potenciamos la<br />
-            <span
-              style={{
-                background: '#02d47e',
-                color: '#043941',
-                borderRadius: 10,
-                padding: '0 20px',
-                display: 'inline-block',
-                lineHeight: 1.18,
-              }}
-            >
-              educación técnica
+            Tu plataforma<br />
+            <span style={{
+              background: '#02d47e', color: '#043941',
+              borderRadius: 18, padding: '2px 28px 6px',
+              display: 'inline-block', lineHeight: 1.18,
+            }}>
+              educativa
             </span>
-            <br />del Perú
+            <br />para formación.
           </h1>
 
-          <p className="text-base leading-relaxed mb-10 mx-auto max-w-xl animate-fade-in-up stagger-3" style={{ color: 'rgba(4,57,65,0.6)' }}>
-            Formación híbrida para docentes EPT. Domina cada equipo de tu taller técnico a tu propio ritmo, desde cualquier dispositivo.
+          {/* Subtitle */}
+          <p className="leading-relaxed mb-10 mx-auto max-w-lg animate-fade-in-up stagger-3"
+            style={{ fontSize: 'clamp(0.9rem, 1.6vw, 1.05rem)', color: 'rgba(4,57,65,0.6)' }}>
+            Una plataforma para{' '}
+            <strong style={{ color: '#043941' }}>docentes, alumnos y directores</strong>{' '}
+            EPT. Formación especializada, conectada y gratuita para toda la comunidad educativa del Perú.
           </p>
 
+          {/* CTAs */}
           <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in-up stagger-4">
             <button
               onClick={isLoggedIn ? goToApp : () => navigate('/login')}
-              className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold transition-all hover:scale-[1.03] hover:shadow-lg"
-              style={{ background: '#02d47e', color: '#043941' }}
+              className="flex items-center gap-2 px-9 py-4 rounded-full font-bold transition-all hover:scale-[1.03] hover:shadow-lg"
+              style={{ fontSize: 15, background: '#02d47e', color: '#043941' }}
             >
               {isLoggedIn ? 'Ir a la plataforma' : 'Comenzar ahora'}
-              <ArrowRight size={15} />
+              <ArrowRight size={16} />
             </button>
             <a
               href="#talleres"
-              className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold transition-all hover:bg-opacity-10"
-              style={{ color: '#043941', border: '2px solid rgba(4,57,65,0.2)' }}
+              className="flex items-center gap-2 px-9 py-4 rounded-full font-bold transition-all"
+              style={{ fontSize: 15, color: '#043941', border: '2px solid rgba(4,57,65,0.22)', background: 'transparent' }}
               onMouseEnter={e => (e.currentTarget.style.background = 'rgba(4,57,65,0.05)')}
               onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
             >
               Explorar talleres
-              <ChevronRight size={15} />
+              <ChevronRight size={16} />
             </a>
           </div>
 
         </div>
 
-        {/* Stats bar — white strip */}
-        <div className="relative z-10 mt-16" style={{ borderTop: '1px solid rgba(4,57,65,0.08)', background: '#ffffff' }}>
+        {/* ── Stats bar — white strip ── */}
+        <div className="relative z-10 mt-20" style={{ borderTop: '1px solid rgba(4,57,65,0.08)', background: '#ffffff' }}>
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4">
               {STATS.map((s, i) => (
                 <div
                   key={s.value}
                   className="flex flex-col items-center py-8 px-4"
-                  style={{
-                    borderRight: i < 3 ? '1px solid rgba(4,57,65,0.07)' : 'none',
-                  }}
+                  style={{ borderRight: i < 3 ? '1px solid rgba(4,57,65,0.07)' : 'none' }}
                 >
-                  <span className="font-black leading-none mb-1.5" style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', color: '#043941' }}>{s.value}</span>
-                  <span className="text-xs font-semibold text-center" style={{ color: 'rgba(4,57,65,0.45)' }}>{s.label}</span>
+                  <span className="font-black leading-none mb-2" style={{ fontSize: 'clamp(2.2rem, 4vw, 3rem)', color: '#043941' }}>{s.value}</span>
+                  <span className="font-bold text-center uppercase tracking-wider" style={{ fontSize: 10, color: 'rgba(4,57,65,0.4)', letterSpacing: '0.1em' }}>{s.label}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Marquee tickers */}
+        {/* Marquee */}
         <TalleresMarquee />
 
       </section>
