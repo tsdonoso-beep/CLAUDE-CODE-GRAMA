@@ -2,9 +2,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  BookOpen, Clock, Award, Users, Building2, Briefcase,
+  BookOpen, Clock, Users, Building2, Briefcase,
   Video, FileText, ChevronRight, ChevronLeft, ChevronDown, ArrowRight,
-  Layers, Package, CheckCircle, Mail, Menu, X, Wrench,
+  CheckCircle, Menu, X, Wrench,
 } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
 import { useAuth } from '@/contexts/AuthContext'
@@ -140,9 +140,9 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
   return (
     <div className="relative">
       <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to right, #f0faf5 0%, transparent 100%)' }} />
+        style={{ background: 'linear-gradient(to right, #f0fdf6 0%, transparent 100%)' }} />
       <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to left, #f0faf5 0%, transparent 100%)' }} />
+        style={{ background: 'linear-gradient(to left, #f0fdf6 0%, transparent 100%)' }} />
 
       <button
         className="absolute left-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
@@ -357,7 +357,7 @@ function TallerModal({
                     </p>
                     <div className="grid grid-cols-2 gap-1">
                       {taller.competencias.slice(0, 4).map((c, i) => (
-                        <div key={i} className="flex items-start gap-1.5 px-2 py-1.5 rounded-lg" style={{ background: '#f0faf5' }}>
+                        <div key={i} className="flex items-start gap-1.5 px-2 py-1.5 rounded-lg" style={{ background: '#f0fdf6' }}>
                           <span className="h-1.5 w-1.5 rounded-full shrink-0 mt-1" style={{ background: '#02d47e' }} />
                           <span className="text-[10px] leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{c}</span>
                         </div>
@@ -376,7 +376,7 @@ function TallerModal({
                       <div
                         key={m.id}
                         className="flex items-center gap-3 px-3 py-2 rounded-xl"
-                        style={{ background: '#f0faf5' }}
+                        style={{ background: '#f0fdf6' }}
                       >
                         <span className="text-[10px] font-extrabold w-5 shrink-0 text-center" style={{ color: '#94a3b8' }}>M{i}</span>
                         <span className="text-[11px] font-semibold flex-1" style={{ color: 'var(--grama-oscuro)' }}>{m.nombre}</span>
@@ -410,7 +410,7 @@ function TallerModal({
           </div>
 
           {/* Footer */}
-          <div className="p-4 space-y-3 shrink-0 border-t" style={{ borderColor: '#f0faf5' }}>
+          <div className="p-4 space-y-3 shrink-0 border-t" style={{ borderColor: '#f0fdf6' }}>
             {/* Dots de posición — clickeables */}
             <div className="flex items-center justify-center gap-1.5">
               {talleresConfig.map((_, i) => (
@@ -434,7 +434,7 @@ function TallerModal({
                 onClick={onPrev}
                 disabled={isFirst}
                 className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all hover:bg-opacity-80 disabled:opacity-30"
-                style={{ background: '#f0faf5', color: 'var(--grama-oscuro)' }}
+                style={{ background: '#f0fdf6', color: 'var(--grama-oscuro)' }}
               >
                 <ChevronLeft size={13} /> Anterior
               </button>
@@ -442,7 +442,7 @@ function TallerModal({
                 onClick={onNext}
                 disabled={isLast}
                 className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all hover:bg-opacity-80 disabled:opacity-30"
-                style={{ background: '#f0faf5', color: 'var(--grama-oscuro)' }}
+                style={{ background: '#f0fdf6', color: 'var(--grama-oscuro)' }}
               >
                 Siguiente <ChevronRight size={13} />
               </button>
@@ -503,7 +503,7 @@ function FAQSection() {
   const WA_URL = 'https://wa.me/51900000000?text=Hola%2C+soy+docente+EPT+y+tengo+una+consulta+sobre+GRAMA+LXP+%F0%9F%91%8B'
 
   return (
-    <section className="py-20 px-6" style={{ background: '#f4f8f9' }}>
+    <section className="py-20 px-6" style={{ background: '#f0fdf6' }}>
       <div className="max-w-6xl mx-auto grid lg:grid-cols-[3fr_2fr] gap-14 items-start">
 
         {/* Acordeón */}
@@ -645,20 +645,20 @@ export default function Landing() {
   const comunidadReveal = useReveal()
 
   return (
-    <div style={{ fontFamily: "'Manrope', sans-serif", background: '#ffffff' }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f0fdf6' }}>
 
       {/* ══ NAVBAR ══════════════════════════════════════════════════════════ */}
       <header
         className="fixed top-0 left-0 right-0 z-50 border-b"
-        style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderColor: 'rgba(4,57,65,0.08)' }}
+        style={{ background: 'rgba(240,253,246,0.92)', backdropFilter: 'blur(16px)', borderColor: 'rgba(4,57,65,0.08)' }}
       >
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between gap-6">
+        <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between gap-6">
           <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <GramaLogo variant="dark" size="sm" />
           </button>
           <nav className="hidden md:flex items-center gap-6">
             {NAV_LINKS.map(l => (
-              <a key={l.label} href={l.href} className="text-xs font-semibold transition-opacity hover:opacity-60" style={{ color: 'var(--grama-oscuro)' }}>
+              <a key={l.label} href={l.href} className="text-xs font-semibold transition-opacity hover:opacity-60" style={{ color: '#043941' }}>
                 {l.label}
               </a>
             ))}
@@ -667,33 +667,33 @@ export default function Landing() {
             {isLoggedIn ? (
               <button
                 onClick={goToApp}
-                className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-opacity hover:opacity-90"
-                style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
+                className="hidden md:flex items-center gap-1.5 px-5 py-2 rounded-full text-xs font-bold transition-all hover:scale-[1.03] hover:shadow-md"
+                style={{ background: '#02d47e', color: '#043941' }}
               >
                 Ir a la plataforma <ChevronRight size={13} />
               </button>
             ) : (
               <button
                 onClick={() => navigate('/login')}
-                className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-opacity hover:opacity-90"
-                style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
+                className="hidden md:flex items-center gap-1.5 px-5 py-2 rounded-full text-xs font-bold transition-all hover:scale-[1.03] hover:shadow-md"
+                style={{ background: '#02d47e', color: '#043941' }}
               >
                 Iniciar sesión <ChevronRight size={13} />
               </button>
             )}
-            <button className="md:hidden p-1.5 rounded-lg" onClick={() => setMobileMenuOpen(o => !o)} style={{ color: 'var(--grama-oscuro)' }}>
+            <button className="md:hidden p-1.5 rounded-lg" onClick={() => setMobileMenuOpen(o => !o)} style={{ color: '#043941' }}>
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
         {mobileMenuOpen && (
-          <div className="md:hidden border-t px-6 py-4 space-y-3" style={{ borderColor: 'rgba(4,57,65,0.08)', background: '#ffffff' }}>
+          <div className="md:hidden border-t px-6 py-4 space-y-3" style={{ borderColor: 'rgba(4,57,65,0.08)', background: '#f0fdf6' }}>
             {NAV_LINKS.map(l => (
-              <a key={l.label} href={l.href} className="block text-sm font-semibold" style={{ color: 'var(--grama-oscuro)' }} onClick={() => setMobileMenuOpen(false)}>
+              <a key={l.label} href={l.href} className="block text-sm font-semibold" style={{ color: '#043941' }} onClick={() => setMobileMenuOpen(false)}>
                 {l.label}
               </a>
             ))}
-            <button onClick={() => navigate('/login')} className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-sm font-bold" style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}>
+            <button onClick={() => navigate('/login')} className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-full text-sm font-bold" style={{ background: '#02d47e', color: '#043941' }}>
               Iniciar sesión <ChevronRight size={14} />
             </button>
           </div>
@@ -701,138 +701,139 @@ export default function Landing() {
       </header>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden pt-16" style={{ background: 'linear-gradient(160deg, #f0faf5 0%, #e8f5ef 55%, #d4ece2 100%)' }}>
-        {/* Patrón GRAMA */}
-        <div className="absolute inset-0 grama-pattern opacity-60" />
+      <section className="relative overflow-hidden pt-16" style={{ background: '#f0fdf6' }}>
 
-        {/* Orb oscuro esquina superior izquierda */}
-        <div className="absolute pointer-events-none" style={{ width: 520, height: 520, background: 'radial-gradient(circle, rgba(4,57,65,0.09) 0%, transparent 65%)', left: -120, top: -120 }} />
-        {/* Orb oscuro esquina inferior derecha */}
-        <div className="absolute pointer-events-none" style={{ width: 480, height: 480, background: 'radial-gradient(circle, rgba(4,57,65,0.07) 0%, transparent 65%)', right: -80, bottom: -80 }} />
+        {/* ── Geometric floating shapes ── */}
 
-        {/* Tangrams fijos */}
-        <Tangram color="#02d47e" opacity={0.18} rotate={15}  className="absolute w-[26rem] h-[26rem] -top-10 -right-10" />
-        <Tangram color="#02d47e" opacity={0.14} rotate={-20} className="absolute w-80 h-80 bottom-4 -left-10" />
-        <Tangram color="#043941" opacity={0.07} rotate={45}  className="absolute w-60 h-60 top-1/2 left-1/3" />
-
-        {/* Piezas flotantes */}
-        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:78, height:78, top:'12%', left:'6%', animationDuration:'14s' }}>
-          <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.20} />
+        {/* s1 — tall bar, dark teal, top-left */}
+        <div className="absolute pointer-events-none float-a" style={{
+          width: 18, height: 120, borderRadius: 12,
+          background: '#043941', opacity: 0.18,
+          top: '14%', left: '5%', transform: 'rotate(-18deg)',
+          animationDuration: '16s',
+        }} />
+        {/* s2 — triangle, yellow, top-right area */}
+        <svg viewBox="0 0 60 52" className="absolute pointer-events-none float-b" style={{ width: 60, height: 52, top: '10%', right: '12%', animationDuration: '20s', opacity: 0.9 }}>
+          <polygon points="30,0 60,52 0,52" fill="#f8ee91" />
         </svg>
-        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:56, height:56, top:'48%', left:'12%', animationDuration:'18s' }}>
-          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.13} />
+        {/* s3 — wide bar, mint, upper-center-left */}
+        <div className="absolute pointer-events-none float-c" style={{
+          width: 90, height: 14, borderRadius: 8,
+          background: '#b8edd0', opacity: 0.75,
+          top: '8%', left: '22%', transform: 'rotate(12deg)',
+          animationDuration: '13s',
+        }} />
+        {/* s4 — bar, lilac, right side */}
+        <div className="absolute pointer-events-none float-d" style={{
+          width: 14, height: 80, borderRadius: 10,
+          background: '#d4c4fc', opacity: 0.70,
+          top: '30%', right: '6%', transform: 'rotate(8deg)',
+          animationDuration: '18s',
+        }} />
+        {/* s5 — cross/plus, green */}
+        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-a" style={{ width: 40, height: 40, top: '52%', left: '8%', animationDuration: '14s', opacity: 0.55 }}>
+          <rect x="15" y="0" width="10" height="40" rx="5" fill="#02d47e" />
+          <rect x="0" y="15" width="40" height="10" rx="5" fill="#02d47e" />
         </svg>
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:48, height:48, top:'6%', left:'40%', animationDuration:'11s' }}>
-          <rect x="4" y="4" width="42" height="42" transform="rotate(20 25 25)" fill="#02d47e" fillOpacity={0.16} />
+        {/* s6 — rotated square, yellow, bottom-right */}
+        <div className="absolute pointer-events-none float-b" style={{
+          width: 42, height: 42, borderRadius: 8,
+          background: '#f8ee91', opacity: 0.65,
+          bottom: '22%', right: '18%', transform: 'rotate(28deg)',
+          animationDuration: '22s',
+        }} />
+        {/* s7 — small bar, dark teal, bottom-left */}
+        <div className="absolute pointer-events-none float-c" style={{
+          width: 70, height: 12, borderRadius: 8,
+          background: '#043941', opacity: 0.14,
+          bottom: '28%', left: '14%', transform: 'rotate(-6deg)',
+          animationDuration: '17s',
+        }} />
+        {/* s8 — triangle, lilac, left mid */}
+        <svg viewBox="0 0 50 44" className="absolute pointer-events-none float-d" style={{ width: 50, height: 44, top: '68%', left: '3%', animationDuration: '11s', opacity: 0.7 }}>
+          <polygon points="25,0 50,44 0,44" fill="#d4c4fc" />
         </svg>
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:44, height:44, top:'20%', right:'20%', animationDuration:'9s' }}>
-          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.18} />
-        </svg>
-        <svg viewBox="0 0 80 40" className="absolute pointer-events-none float-a" style={{ width:70, height:36, top:'58%', right:'15%', animationDuration:'16s' }}>
-          <polygon points="20,0 80,0 60,40 0,40" fill="#043941" fillOpacity={0.10} />
-        </svg>
-        <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-b" style={{ width:64, height:64, bottom:'15%', right:'6%', animationDuration:'13s' }}>
-          <polygon points="0,0 80,40 0,80" fill="#02d47e" fillOpacity={0.15} />
-        </svg>
-        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-c" style={{ width:40, height:40, bottom:'28%', left:'30%', animationDuration:'21s' }}>
-          <polygon points="20,0 40,40 0,40" fill="#043941" fillOpacity={0.10} />
-        </svg>
 
+        <div className="relative z-10 max-w-5xl mx-auto px-6 pt-16 pb-0 text-center">
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-6 pb-12 lg:pt-10 lg:pb-14">
-          {/* Grid hero: texto izq, visual der */}
-          <div className="grid lg:grid-cols-[3fr_2fr] gap-12 items-center mb-16">
-
-            {/* Columna texto */}
-            <div>
-              {/* Badge */}
-
-              <h1 className="t-hero font-extrabold leading-[1.05] mb-6 animate-fade-in-up stagger-2" style={{ letterSpacing: '-0.03em', color: 'var(--grama-oscuro)' }}>
-                Potenciamos la{' '}
-                <span style={{ color: 'var(--grama-menta)' }}>educación técnica</span>
-                {' '}del Perú
-              </h1>
-
-              <p className="text-sm leading-loose mb-10 max-w-lg animate-fade-in-up stagger-3" style={{ color: 'var(--tc-secondary)' }}>
-                Plataforma de formación para docentes EPT. Aprende a dominar cada equipo de tu taller técnico, a tu ritmo.
-              </p>
-
-              <div className="flex flex-wrap gap-3 animate-fade-in-up stagger-4">
-                <button
-                  onClick={isLoggedIn ? goToApp : () => navigate('/login')}
-                  className="flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold transition-all hover:scale-[1.02] hover:shadow-lg"
-                  style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
-                >
-                  {isLoggedIn ? 'Ir a la plataforma' : 'Comenzar ahora'}
-                  <ArrowRight size={15} />
-                </button>
-                <a
-                  href="#talleres"
-                  className="flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-bold transition-all"
-                  style={{ background: 'transparent', color: 'var(--grama-oscuro)', border: '1.5px solid rgba(4,57,65,0.18)' }}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(4,57,65,0.05)')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-                >
-                  Explorar talleres
-                  <ChevronRight size={15} />
-                </a>
-              </div>
-            </div>
-
-            {/* Columna visual — foto docentes */}
-            <div className="hidden lg:block relative animate-fade-in-up stagger-3">
-
-              {/* Blob glow verde detrás */}
-              <div className="absolute pointer-events-none" style={{
-                width: 460, height: 460,
-                background: 'radial-gradient(circle, rgba(2,212,126,0.18) 0%, transparent 68%)',
-                top: '50%', left: '50%',
-                transform: 'translate(-50%, -50%)',
-                filter: 'blur(48px)',
-              }} />
-
-              {/* Tarjeta decorativa de fondo */}
-              <div className="absolute rounded-[28px]" style={{
-                inset: '16px 10px 10px 16px',
-                transform: 'rotate(-4deg)',
-                background: 'linear-gradient(145deg, rgba(2,212,126,0.10) 0%, rgba(4,57,65,0.18) 100%)',
-                border: '1.5px solid rgba(2,212,126,0.2)',
-              }} />
-
-              {/* Marco principal — foto */}
-              <div className="relative overflow-hidden" style={{
-                borderRadius: 22,
-                boxShadow: '0 32px 72px rgba(4,57,65,0.28), 0 8px 24px rgba(4,57,65,0.14)',
-                border: '2.5px solid rgba(255,255,255,0.88)',
-              }}>
-                <img
-                  src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=700&q=80"
-                  alt="Docentes EPT aprendiendo juntos en taller técnico"
-                  className="w-full object-cover object-center"
-                  style={{ aspectRatio: '3/4', display: 'block', filter: 'brightness(0.84) saturate(1.05)' }}
-                />
-                <div className="absolute inset-0" style={{
-                  background: 'linear-gradient(to bottom, transparent 50%, rgba(3,14,18,0.68) 100%)',
-                }} />
-                <div className="absolute bottom-5 left-5 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full shrink-0 animate-pulse" style={{ background: '#02d47e' }} />
-                  <span className="text-sm font-bold tracking-wide" style={{ color: 'rgba(255,255,255,0.92)' }}>
-                    Docentes EPT · Perú
-                  </span>
-                </div>
-              </div>
-
-            </div>
+          {/* Eyebrow badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 animate-fade-in-up"
+            style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.28)' }}>
+            <span className="w-2 h-2 rounded-full animate-pulse shrink-0" style={{ background: '#02d47e' }} />
+            <span className="text-xs font-bold tracking-wide" style={{ color: '#043941' }}>
+              Plataforma activa · Docentes EPT Perú
+            </span>
           </div>
 
-          {/* Stats band — sobre fondo claro */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: 'rgba(4,57,65,0.06)', border: '1px solid rgba(4,57,65,0.07)' }}>
-            {STATS.map(s => (
-              <div key={s.value} className="flex flex-col items-center py-6 px-4" style={{ background: '#ffffff' }}>
-                <span className="font-extrabold leading-none mb-1.5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', color: 'var(--grama-oscuro)' }}>{s.value}</span>
-                <span className="text-xs font-medium text-center" style={{ color: 'rgba(4,57,65,0.45)' }}>{s.label}</span>
-              </div>
-            ))}
+          {/* Hero title */}
+          <h1
+            className="font-black leading-[1.06] mb-6 animate-fade-in-up stagger-2"
+            style={{
+              fontSize: 'clamp(2.8rem, 7.5vw, 6rem)',
+              letterSpacing: '-0.03em',
+              color: '#043941',
+            }}
+          >
+            Potenciamos la<br />
+            <span
+              style={{
+                background: '#02d47e',
+                color: '#043941',
+                borderRadius: 10,
+                padding: '0 20px',
+                display: 'inline-block',
+                lineHeight: 1.18,
+              }}
+            >
+              educación técnica
+            </span>
+            <br />del Perú
+          </h1>
+
+          <p className="text-base leading-relaxed mb-10 mx-auto max-w-xl animate-fade-in-up stagger-3" style={{ color: 'rgba(4,57,65,0.6)' }}>
+            Formación híbrida para docentes EPT. Domina cada equipo de tu taller técnico a tu propio ritmo, desde cualquier dispositivo.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in-up stagger-4">
+            <button
+              onClick={isLoggedIn ? goToApp : () => navigate('/login')}
+              className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold transition-all hover:scale-[1.03] hover:shadow-lg"
+              style={{ background: '#02d47e', color: '#043941' }}
+            >
+              {isLoggedIn ? 'Ir a la plataforma' : 'Comenzar ahora'}
+              <ArrowRight size={15} />
+            </button>
+            <a
+              href="#talleres"
+              className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold transition-all hover:bg-opacity-10"
+              style={{ color: '#043941', border: '2px solid rgba(4,57,65,0.2)' }}
+              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(4,57,65,0.05)')}
+              onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+            >
+              Explorar talleres
+              <ChevronRight size={15} />
+            </a>
+          </div>
+
+        </div>
+
+        {/* Stats bar — white strip */}
+        <div className="relative z-10 mt-16" style={{ borderTop: '1px solid rgba(4,57,65,0.08)', background: '#ffffff' }}>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4">
+              {STATS.map((s, i) => (
+                <div
+                  key={s.value}
+                  className="flex flex-col items-center py-8 px-4"
+                  style={{
+                    borderRight: i < 3 ? '1px solid rgba(4,57,65,0.07)' : 'none',
+                  }}
+                >
+                  <span className="font-black leading-none mb-1.5" style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', color: '#043941' }}>{s.value}</span>
+                  <span className="text-xs font-semibold text-center" style={{ color: 'rgba(4,57,65,0.45)' }}>{s.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -842,31 +843,25 @@ export default function Landing() {
       </section>
 
       {/* ══ POR QUÉ GRAMA ═══════════════════════════════════════════════════ */}
-      <section id="nosotros" className="py-20 px-6 relative overflow-hidden">
+      <section id="nosotros" className="py-20 px-6 relative overflow-hidden" style={{ background: '#ffffff' }}>
         {/* Tangramas estáticos de fondo */}
         <Tangram color="#02d47e" opacity={0.04} rotate={30}  className="absolute w-96 h-96 -right-20 top-0 pointer-events-none" />
         <Tangram color="#043941" opacity={0.05} rotate={-18} className="absolute w-72 h-72 -left-16 bottom-8 pointer-events-none" />
 
-        {/* Piezas flotantes — lateral izquierdo */}
-        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:44, height:44, top:'14%', left:'2%', animationDuration:'17s' }}>
-          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.13} />
+        {/* Shapes — lateral izquierdo */}
+        <div className="absolute pointer-events-none float-b" style={{ width: 14, height: 72, borderRadius: 8, background: '#f8ee91', opacity: 0.7, top: '14%', left: '2%', transform: 'rotate(-12deg)', animationDuration: '17s' }} />
+        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-a" style={{ width: 32, height: 32, top: '55%', left: '2%', animationDuration: '13s', opacity: 0.55 }}>
+          <rect x="12" y="0" width="10" height="40" rx="4" fill="#02d47e" /><rect x="0" y="12" width="40" height="10" rx="4" fill="#02d47e" />
         </svg>
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-a" style={{ width:32, height:32, top:'55%', left:'3.5%', animationDuration:'13s' }}>
-          <rect x="3" y="3" width="44" height="44" transform="rotate(22 25 25)" fill="#043941" fillOpacity={0.08} />
-        </svg>
-        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-c" style={{ width:22, height:22, top:'78%', left:'1.5%', animationDuration:'20s' }}>
-          <polygon points="0,40 20,0 40,40" fill="#02d47e" fillOpacity={0.18} />
+        <svg viewBox="0 0 40 36" className="absolute pointer-events-none float-c" style={{ width: 30, height: 26, top: '78%', left: '1.5%', animationDuration: '20s', opacity: 0.75 }}>
+          <polygon points="20,0 40,36 0,36" fill="#d4c4fc" />
         </svg>
 
-        {/* Piezas flotantes — lateral derecho */}
-        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-c" style={{ width:38, height:38, top:'10%', right:'2%', animationDuration:'15s' }}>
-          <polygon points="0,0 60,30 0,60" fill="#02d47e" fillOpacity={0.12} />
-        </svg>
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-a" style={{ width:28, height:28, top:'42%', right:'1.5%', animationDuration:'11s' }}>
-          <rect x="4" y="4" width="42" height="42" transform="rotate(-15 25 25)" fill="#043941" fillOpacity={0.07} />
-        </svg>
-        <svg viewBox="0 0 60 30" className="absolute pointer-events-none float-b" style={{ width:46, height:24, top:'70%', right:'3%', animationDuration:'19s' }}>
-          <polygon points="0,0 60,0 45,30 15,30" fill="#02d47e" fillOpacity={0.10} />
+        {/* Shapes — lateral derecho */}
+        <div className="absolute pointer-events-none float-c" style={{ width: 60, height: 12, borderRadius: 8, background: '#b8edd0', opacity: 0.75, top: '10%', right: '1.5%', transform: 'rotate(8deg)', animationDuration: '15s' }} />
+        <div className="absolute pointer-events-none float-a" style={{ width: 12, height: 52, borderRadius: 8, background: '#043941', opacity: 0.13, top: '42%', right: '2%', transform: 'rotate(-5deg)', animationDuration: '11s' }} />
+        <svg viewBox="0 0 50 44" className="absolute pointer-events-none float-b" style={{ width: 38, height: 33, top: '70%', right: '1.5%', animationDuration: '19s', opacity: 0.7 }}>
+          <polygon points="25,0 50,44 0,44" fill="#f8ee91" />
         </svg>
 
         <div className="max-w-6xl mx-auto">
@@ -1000,7 +995,7 @@ export default function Landing() {
       </section>
 
       {/* ══ TALLERES ════════════════════════════════════════════════════════ */}
-      <section id="talleres" className="py-16 px-6 relative overflow-hidden" style={{ background: '#f0faf5' }}>
+      <section id="talleres" className="py-16 px-6 relative overflow-hidden" style={{ background: '#f0fdf6' }}>
         <Tangram color="#043941" opacity={0.025} rotate={-15} className="absolute w-80 h-80 -left-10 bottom-10 pointer-events-none" />
 
         <div className="max-w-6xl mx-auto">
@@ -1043,7 +1038,7 @@ export default function Landing() {
       </section>
 
       {/* ══ COMUNIDAD ═══════════════════════════════════════════════════════ */}
-      <section id="comunidad" className="py-16 px-6 relative overflow-hidden">
+      <section id="comunidad" className="py-16 px-6 relative overflow-hidden" style={{ background: '#ffffff' }}>
         {/* Tangramas fijos — laterales */}
         <Tangram color="#02d47e" opacity={0.13} rotate={60}  className="absolute w-96 h-96 -right-12 -top-4 pointer-events-none" />
         <Tangram color="#043941" opacity={0.08} rotate={-25} className="absolute w-72 h-72 -left-10 bottom-0 pointer-events-none" />
@@ -1112,7 +1107,7 @@ export default function Landing() {
       <FAQSection />
 
       {/* ══ CTA FINAL ═══════════════════════════════════════════════════════ */}
-      <section id="contacto" className="py-14 px-6">
+      <section id="contacto" className="py-14 px-6" style={{ background: '#f0fdf6' }}>
         <div className="max-w-4xl mx-auto">
           <div
             className="rounded-3xl p-12 relative overflow-hidden"
