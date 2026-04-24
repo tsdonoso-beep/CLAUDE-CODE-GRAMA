@@ -33,6 +33,42 @@ const NAV_LINKS = [
   { label: 'Contacto',        href: '#contacto' },
 ]
 
+const WHY_CARDS = [
+  {
+    tag: 'EL PROBLEMA',
+    tagBg: 'rgba(239,68,68,0.15)',
+    tagColor: '#ef4444',
+    frontBg: '#043941',
+    titleFront: ['Los equipos llegan.', 'La formación, no.'],
+    shape: 'triangle',
+    shapeColor: '#b8edd0',
+    backBg: '#f0fdf6',
+    body: ['Los talleres técnicos reciben equipos nuevos pero los docentes no tienen formación pedagógica para usarlos.', 'Cuando el profesor rota, el conocimiento se va con él — y el ciclo empieza de nuevo.'],
+  },
+  {
+    tag: 'LA SOLUCIÓN',
+    tagBg: 'rgba(2,212,126,0.15)',
+    tagColor: '#02d47e',
+    frontBg: '#043941',
+    titleFront: ['Una ruta híbrida', 'para tu taller.'],
+    shape: 'cross',
+    shapeColor: '#02d47e',
+    backBg: '#f0fdf6',
+    body: ['7 módulos con video, fichas descargables y sesiones en vivo. A tu ritmo, desde cualquier dispositivo.', 'Diseñado para cada especialidad EPT: automotriz, confección, cocina, ebanistería y más.'],
+  },
+  {
+    tag: 'EL RESULTADO',
+    tagBg: 'rgba(167,139,250,0.2)',
+    tagColor: '#7c3aed',
+    frontBg: '#2d1b69',
+    titleFront: ['Autonomía docente', 'garantizada.'],
+    shape: 'diamond',
+    shapeColor: '#d4c4fc',
+    backBg: '#faf5ff',
+    body: ['Al terminar dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes con confianza real.', 'Con certificación, fichas listas para usar y acceso permanente al material del taller.'],
+  },
+]
+
 // ── Tangram decorativo ────────────────────────────────────────────────────────
 // Las 7 piezas del tangram: 2 triángulos grandes, 1 medio, 2 pequeños, 1 cuadrado, 1 paralelogramo
 function Tangram({
@@ -608,9 +644,9 @@ export default function Landing() {
   const goNext = () => { setModalDir('next'); setModalIndex(i => Math.min(talleresConfig.length - 1, i! + 1)) }
   const goTo   = (i: number) => { setModalDir(i > (modalIndex ?? 0) ? 'next' : 'prev'); setModalIndex(i) }
 
+  const [flippedCard, setFlippedCard] = useState<number | null>(null)
+
   // Reveal hooks por sección
-  const featuresHeaderReveal = useReveal()
-  const featuresReveal = useReveal()
   const talleresHeaderReveal = useReveal()
   const talleresReveal = useReveal()
   const comunidadReveal = useReveal()
@@ -770,154 +806,140 @@ export default function Landing() {
       </section>
 
       {/* ══ POR QUÉ GRAMA ═══════════════════════════════════════════════════ */}
-      <section id="nosotros" className="py-20 px-6 relative overflow-hidden" style={{ background: '#ffffff' }}>
-        {/* Tangramas estáticos de fondo */}
-        <Tangram color="#02d47e" opacity={0.04} rotate={30}  className="absolute w-96 h-96 -right-20 top-0 pointer-events-none" />
-        <Tangram color="#043941" opacity={0.05} rotate={-18} className="absolute w-72 h-72 -left-16 bottom-8 pointer-events-none" />
+      <section id="nosotros" style={{ background: '#ffffff', padding: '5rem 1.5rem', overflow: 'hidden', position: 'relative' }}>
 
-        {/* Shapes — lateral izquierdo */}
-        <div className="absolute pointer-events-none float-b" style={{ width: 14, height: 72, borderRadius: 8, background: '#f8ee91', opacity: 0.7, top: '14%', left: '2%', transform: 'rotate(-12deg)', animationDuration: '17s' }} />
-        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-a" style={{ width: 32, height: 32, top: '55%', left: '2%', animationDuration: '13s', opacity: 0.55 }}>
-          <rect x="12" y="0" width="10" height="40" rx="4" fill="#02d47e" /><rect x="0" y="12" width="40" height="10" rx="4" fill="#02d47e" />
-        </svg>
-        <svg viewBox="0 0 40 36" className="absolute pointer-events-none float-c" style={{ width: 30, height: 26, top: '78%', left: '1.5%', animationDuration: '20s', opacity: 0.75 }}>
-          <polygon points="20,0 40,36 0,36" fill="#d4c4fc" />
-        </svg>
-
-        {/* Shapes — lateral derecho */}
-        <div className="absolute pointer-events-none float-c" style={{ width: 60, height: 12, borderRadius: 8, background: '#b8edd0', opacity: 0.75, top: '10%', right: '1.5%', transform: 'rotate(8deg)', animationDuration: '15s' }} />
-        <div className="absolute pointer-events-none float-a" style={{ width: 12, height: 52, borderRadius: 8, background: '#043941', opacity: 0.13, top: '42%', right: '2%', transform: 'rotate(-5deg)', animationDuration: '11s' }} />
-        <svg viewBox="0 0 50 44" className="absolute pointer-events-none float-b" style={{ width: 38, height: 33, top: '70%', right: '1.5%', animationDuration: '19s', opacity: 0.7 }}>
+        {/* Shapes decorativos de fondo */}
+        <div style={{ position:'absolute', top:'8%', left:'3%', width:60, height:130, background:'#b8edd0', borderRadius:'0 0 30px 30px', opacity:.3, pointerEvents:'none', transform:'rotate(-8deg)', animation:'heroFb 13s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', bottom:'10%', right:'3%', width:50, height:110, background:'#d4c4fc', borderRadius:'0 0 25px 25px', opacity:.35, pointerEvents:'none', transform:'rotate(10deg)', animation:'heroFb 16s ease-in-out infinite 2s' }} />
+        <svg viewBox="0 0 50 44" style={{ position:'absolute', top:'18%', right:'4%', width:40, height:35, opacity:.25, pointerEvents:'none', animation:'heroFe 14s ease-in-out infinite 1s' }}>
           <polygon points="25,0 50,44 0,44" fill="#f8ee91" />
         </svg>
+        <svg viewBox="0 0 50 44" style={{ position:'absolute', bottom:'20%', left:'4%', width:34, height:30, opacity:.3, pointerEvents:'none', animation:'heroFc 17s ease-in-out infinite .5s' }}>
+          <polygon points="25,0 50,44 0,44" fill="#02d47e" />
+        </svg>
 
-        <div className="max-w-6xl mx-auto">
+        <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
           {/* Header */}
-          <div
-            ref={featuresHeaderReveal.ref}
-            className="mb-12"
-            style={{ opacity: featuresHeaderReveal.visible ? 1 : 0, transform: featuresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
-          >
-            <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-4" style={{ color: 'var(--grama-menta)' }}>
-              <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
+          <div style={{ textAlign:'center', marginBottom:'3.5rem' }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
+              <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
               ¿Por qué GRAMA?
             </span>
-            <h2 className="t-h1 font-extrabold leading-tight" style={{ color: 'var(--grama-oscuro)' }}>
+            <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.1, color:'#043941', margin:0 }}>
               El conocimiento técnico<br />
-              <span style={{ color: 'var(--grama-menta)' }}>no debería perderse</span>
+              <span style={{ color:'#02d47e' }}>no debería perderse</span>
             </h2>
           </div>
 
-          {/* Layout editorial: [timeline 3fr] | [foto tall 2fr] */}
-          <div
-            ref={featuresReveal.ref}
-            className="grid lg:grid-cols-[3fr_2fr] gap-8 items-stretch"
-            style={{
-              opacity: featuresReveal.visible ? 1 : 0,
-              transform: featuresReveal.visible ? 'none' : 'translateY(30px)',
-              transition: 'opacity 0.7s ease, transform 0.7s ease',
-            }}
-          >
+          {/* Flip Cards */}
+          <div style={{ display:'flex', gap:'2rem', justifyContent:'center', flexWrap:'wrap', alignItems:'center' }}>
+            {WHY_CARDS.map((card, i) => {
+              const isFlipped = flippedCard === i
+              const tilt = i === 0 ? 'rotate(-3deg)' : i === 2 ? 'rotate(3deg)' : 'none'
+              return (
+                <div
+                  key={i}
+                  onClick={() => setFlippedCard(isFlipped ? null : i)}
+                  style={{
+                    width: 300,
+                    height: 400,
+                    perspective: '1000px',
+                    cursor: 'pointer',
+                    transform: isFlipped ? 'none' : tilt,
+                    transition: 'transform .4s ease',
+                    flexShrink: 0,
+                  }}
+                >
+                  <div style={{
+                    width: '100%',
+                    height: '100%',
+                    position: 'relative',
+                    transformStyle: 'preserve-3d' as const,
+                    transition: 'transform .6s cubic-bezier(.4,0,.2,1)',
+                    transform: isFlipped ? 'rotateY(180deg)' : 'none',
+                  }}>
 
-            {/* ── Columna izquierda: los 3 pasos del timeline ── */}
-            <div className="flex flex-col gap-4">
+                    {/* ── FRONT ── */}
+                    <div style={{
+                      position: 'absolute', inset: 0,
+                      borderRadius: 24,
+                      background: card.frontBg,
+                      backfaceVisibility: 'hidden' as const,
+                      WebkitBackfaceVisibility: 'hidden' as any,
+                      overflow: 'hidden',
+                      padding: '2rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'flex-end',
+                    }}>
+                      {/* Decorative shape top-right */}
+                      {card.shape === 'triangle' && (
+                        <div style={{ position:'absolute', top:-40, right:-30, width:160, height:160, background:card.shapeColor, opacity:.18, clipPath:'polygon(50% 0%,100% 100%,0% 100%)', transform:'rotate(180deg)' }} />
+                      )}
+                      {card.shape === 'cross' && (
+                        <div style={{ position:'absolute', top:20, right:20, width:64, height:64, background:card.shapeColor, opacity:.22, clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)' }} />
+                      )}
+                      {card.shape === 'diamond' && (
+                        <div style={{ position:'absolute', top:16, right:16, width:80, height:80, background:card.shapeColor, opacity:.25, transform:'rotate(45deg)', borderRadius:8 }} />
+                      )}
 
-              {/* EL PROBLEMA */}
-              <div className="flex gap-4">
-                <div className="flex flex-col items-center shrink-0" style={{ width: 44 }}>
-                  <div className="w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0"
-                    style={{ background: '#1e3a3f', border: '2px solid rgba(2,212,126,0.25)', boxShadow: '0 0 0 4px rgba(2,212,126,0.06)' }}>
-                    🏫
+                      {/* Tag */}
+                      <span style={{ display:'inline-block', padding:'.25rem .75rem', borderRadius:100, fontSize:'.65rem', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', background:card.tagBg, color:card.tagColor, marginBottom:'1rem', width:'fit-content' }}>
+                        {card.tag}
+                      </span>
+
+                      {/* Title */}
+                      <p style={{ fontSize:'clamp(1.4rem,2.5vw,1.85rem)', fontWeight:900, lineHeight:1.15, color:'#fff', margin:'0 0 1.5rem' }}>
+                        {card.titleFront[0]}<br />{card.titleFront[1]}
+                      </p>
+
+                      {/* Hint */}
+                      <p style={{ fontSize:'.72rem', color:'rgba(255,255,255,0.45)', margin:0 }}>↓ Toca para saber más</p>
+                    </div>
+
+                    {/* ── BACK ── */}
+                    <div style={{
+                      position: 'absolute', inset: 0,
+                      borderRadius: 24,
+                      background: card.backBg,
+                      backfaceVisibility: 'hidden' as const,
+                      WebkitBackfaceVisibility: 'hidden' as any,
+                      transform: 'rotateY(180deg)',
+                      padding: '2rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      border: '1.5px solid rgba(4,57,65,0.1)',
+                    }}>
+                      <div>
+                        <span style={{ display:'inline-block', padding:'.25rem .75rem', borderRadius:100, fontSize:'.65rem', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', background:card.tagBg, color:card.tagColor, marginBottom:'1rem' }}>
+                          {card.tag}
+                        </span>
+                        <p style={{ fontSize:'1.05rem', fontWeight:800, color:'#043941', lineHeight:1.3, marginBottom:'1rem' }}>
+                          {card.titleFront[0]}<br />{card.titleFront[1]}
+                        </p>
+                        <p style={{ fontSize:'.82rem', lineHeight:1.65, color:'#4a7a82', marginBottom:'.75rem', margin:'0 0 .75rem' }}>
+                          {card.body[0]}
+                        </p>
+                        <p style={{ fontSize:'.82rem', lineHeight:1.65, color:'#4a7a82' }}>
+                          {card.body[1]}
+                        </p>
+                      </div>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setFlippedCard(null) }}
+                        style={{ display:'inline-flex', alignItems:'center', gap:4, fontSize:'.75rem', fontWeight:700, color:'#043941', background:'none', border:'1.5px solid rgba(4,57,65,0.2)', borderRadius:100, padding:'.4rem 1rem', cursor:'pointer', width:'fit-content' }}
+                      >
+                        ← Volver
+                      </button>
+                    </div>
+
                   </div>
-                  <div className="w-px flex-1 mt-2" style={{ background: 'linear-gradient(to bottom, rgba(4,57,65,0.18), rgba(4,57,65,0.06))', minHeight: 28 }} />
                 </div>
-                <div className="flex-1 pb-2">
-                  <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: 'rgba(4,57,65,0.45)' }}>
-                    <span className="w-1 h-1 rounded-full inline-block" style={{ background: 'rgba(4,57,65,0.35)' }} />
-                    EL PROBLEMA
-                  </p>
-                  <div className="rounded-2xl p-6" style={{ background: '#ffffff', border: '1.5px solid rgba(4,57,65,0.14)', boxShadow: '0 2px 12px rgba(4,57,65,0.06)' }}>
-                    <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
-                      Los equipos llegan.<br />
-                      La formación, <span style={{ color: '#e11d48' }}>no.</span>
-                    </h3>
-                    <p className="text-sm leading-relaxed mb-4" style={{ color: '#64748b' }}>
-                      Los talleres técnicos reciben equipos nuevos pero los docentes no tienen cómo aprender a usarlos. Cuando el profesor rota, el conocimiento desaparece con él.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              )
+            })}
+          </div>
 
-              {/* LA SOLUCIÓN */}
-              <div className="flex gap-4">
-                <div className="flex flex-col items-center shrink-0" style={{ width: 44 }}>
-                  <div className="w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0"
-                    style={{ background: '#d0f0f5', border: '2px solid rgba(4,95,108,0.22)', boxShadow: '0 0 0 4px rgba(4,95,108,0.06)' }}>
-                    💻
-                  </div>
-                  <div className="w-px flex-1 mt-2" style={{ background: 'linear-gradient(to bottom, rgba(4,95,108,0.18), rgba(4,95,108,0.04))', minHeight: 28 }} />
-                </div>
-                <div className="flex-1 pb-2">
-                  <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
-                    <span className="w-1 h-1 rounded-full inline-block" style={{ background: '#045f6c' }} />
-                    LA SOLUCIÓN
-                  </p>
-                  <div className="rounded-2xl p-6" style={{ background: '#edf7f8', border: '1.5px solid rgba(4,95,108,0.12)' }}>
-                    <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
-                      Una ruta híbrida diseñada<br />para tu taller
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#4a7a82' }}>
-                      7 módulos con video, fichas descargables y sesiones en vivo. A tu ritmo, adaptado a tu especialidad EPT, desde cualquier dispositivo.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* EL RESULTADO */}
-              <div className="flex gap-4">
-                <div className="shrink-0" style={{ width: 44 }}>
-                  <div className="w-11 h-11 rounded-full flex items-center justify-center text-lg"
-                    style={{ background: '#fef3c7', border: '2px solid rgba(202,138,4,0.28)', boxShadow: '0 0 0 4px rgba(202,138,4,0.06)' }}>
-                    🎯
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <p className="overline-label mb-2 flex items-center gap-1.5" style={{ color: '#92400e' }}>
-                    <span className="w-1 h-1 rounded-full inline-block" style={{ background: '#ca8a04' }} />
-                    EL RESULTADO
-                  </p>
-                  <div className="rounded-2xl p-6" style={{ background: '#fef9e7', border: '1.5px solid rgba(202,138,4,0.18)' }}>
-                    <h3 className="font-extrabold leading-snug mb-3" style={{ fontSize: '1.1rem', color: 'var(--grama-oscuro)' }}>
-                      Autonomía docente<br />garantizada
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#78350f' }}>
-                      Al terminar dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes — con confianza real.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-            </div>{/* ── fin columna timeline ── */}
-
-            {/* ── Columna derecha: foto tall editorial ── */}
-            <div className="hidden lg:block rounded-3xl overflow-hidden relative" style={{ minHeight: 420 }}>
-              <img
-                src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=700&q=80"
-                alt="Docente EPT logrando su autonomía formativa"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              {/* Overlay degradado inferior con quote */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6"
-                style={{ background: 'linear-gradient(to top, rgba(4,57,65,0.82) 0%, rgba(4,57,65,0.2) 50%, transparent 100%)' }}>
-                <p className="text-sm font-semibold text-white leading-snug mb-1">
-                  "Ahora puedo enseñar con los equipos<br />— y mis estudiantes lo notan."
-                </p>
-                <p className="text-xs" style={{ color: 'rgba(2,212,126,0.85)' }}>Docente EPT · Lima Norte</p>
-              </div>
-            </div>
-
-          </div>{/* ── fin grid ── */}
         </div>
       </section>
 
