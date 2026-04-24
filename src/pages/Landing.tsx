@@ -554,119 +554,120 @@ const FAQ_ITEMS = [
 // ── FAQ Section ───────────────────────────────────────────────────────────────
 function FAQSection() {
   const [open, setOpen] = useState<number | null>(null)
+  const colors = ['#02d47e', '#f8ee91', '#d4c4fc', '#043941', '#b8edd0']
   const WA_URL = 'https://wa.me/51900000000?text=Hola%2C+soy+docente+EPT+y+tengo+una+consulta+sobre+GRAMA+LXP+%F0%9F%91%8B'
 
   return (
-    <section className="py-20 px-6" style={{ background: '#f0fdf6' }}>
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-[3fr_2fr] gap-14 items-start">
+    <section style={{ background: '#f0fdf6', padding: '5.5rem 1.5rem', position:'relative', overflow:'hidden' }}>
 
-        {/* Acordeón */}
-        <div>
-          <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-4" style={{ color: 'var(--grama-menta)' }}>
-            <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
+      {/* Shapes decorativas — lenguaje hero */}
+      <div style={{ position:'absolute', top:-150, right:'10%', width:300, height:300, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.2, pointerEvents:'none', animation:'heroFa 17s ease-in-out infinite' }} />
+      <div style={{ position:'absolute', bottom:-100, left:'5%', width:280, height:280, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.18, pointerEvents:'none', animation:'heroFd 19s ease-in-out infinite 2s' }} />
+      <div style={{ position:'absolute', top:'45%', right:-80, width:160, height:130, background:'#f8ee91', borderRadius:'0 0 60px 60px', opacity:.3, pointerEvents:'none', animation:'heroFb 15s ease-in-out infinite 1s' }} />
+
+      <div style={{ maxWidth:1140, margin:'0 auto' }}>
+
+        {/* Header */}
+        <div style={{ maxWidth:700, marginBottom:'3.5rem' }}>
+          <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
+            <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
             Preguntas frecuentes
           </span>
-          <h2 className="t-h1 font-extrabold leading-tight mb-10" style={{ color: 'var(--grama-oscuro)' }}>
+          <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 .8rem' }}>
             Todo lo que necesitas<br />
-            <span style={{ color: 'var(--grama-menta)' }}>saber antes de empezar</span>
+            <span style={{ color:'#02d47e' }}>saber antes de empezar</span>
           </h2>
-
-          <div className="space-y-3">
-            {FAQ_ITEMS.map((item, i) => (
-              <div
-                key={i}
-                className="rounded-2xl overflow-hidden transition-all"
-                style={{
-                  background: open === i ? '#ffffff' : '#ffffff',
-                  boxShadow: open === i
-                    ? '0 4px 20px rgba(4,57,65,0.10)'
-                    : '0 1px 4px rgba(4,57,65,0.05)',
-                }}
-              >
-                <button
-                  onClick={() => setOpen(open === i ? null : i)}
-                  className="w-full text-left px-6 py-4 flex items-center justify-between gap-4 transition-colors"
-                  style={{ background: 'transparent' }}
-                >
-                  <span
-                    className="text-sm font-bold leading-snug"
-                    style={{ color: open === i ? 'var(--grama-oscuro)' : '#334155' }}
-                  >
-                    {item.q}
-                  </span>
-                  <span
-                    className="shrink-0 h-7 w-7 rounded-full flex items-center justify-center transition-all"
-                    style={{
-                      background: open === i ? 'var(--grama-oscuro)' : '#f1f5f9',
-                      transform: open === i ? 'rotate(180deg)' : 'none',
-                    }}
-                  >
-                    <ChevronDown size={14} style={{ color: open === i ? '#02d47e' : '#94a3b8' }} />
-                  </span>
-                </button>
-                {open === i && (
-                  <div className="px-6 pb-5">
-                    <div className="h-px mb-4" style={{ background: 'rgba(4,57,65,0.07)' }} />
-                    <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
-                      {item.a}
-                    </p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+          <p style={{ fontSize:'.9rem', color:'rgba(4,57,65,.58)', lineHeight:1.8, margin:0 }}>
+            Respuestas ágiles a las preguntas más comunes sobre GRAMA LXP.
+          </p>
         </div>
 
-        {/* Card WhatsApp — sticky */}
-        <div className="lg:sticky lg:top-8">
-          <div
-            className="rounded-3xl p-8 relative overflow-hidden"
-            style={{
-              background: 'linear-gradient(145deg, #043941 0%, #032e34 100%)',
-              boxShadow: '0 16px 48px rgba(4,57,65,0.22)',
-            }}
-          >
-            {/* Orb decorativo */}
-            <div className="absolute pointer-events-none" style={{
-              width: 220, height: 220,
-              background: 'radial-gradient(circle, rgba(37,211,102,0.12) 0%, transparent 65%)',
-              bottom: -40, right: -40,
-            }} />
+        {/* Layout: FAQ + Sticky */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 320px', gap:36, alignItems:'start' }}>
 
-            <div className="relative z-10">
-              {/* Ícono */}
-              <div
-                className="h-12 w-12 rounded-2xl flex items-center justify-center mb-5"
-                style={{ background: 'rgba(37,211,102,0.15)', border: '1px solid rgba(37,211,102,0.2)' }}
-              >
-                <WhatsAppIcon size={22} />
+          {/* Acordeón colorido */}
+          <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
+            {FAQ_ITEMS.map((item, i) => {
+              const color = colors[i % colors.length]
+              const isOpen = open === i
+              return (
+                <div
+                  key={i}
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  style={{
+                    borderRadius:20,
+                    overflow:'hidden',
+                    background: isOpen ? '#fff' : 'transparent',
+                    border: `1px solid ${isOpen ? color + '22' : 'rgba(4,57,65,0.06)'}`,
+                    boxShadow: isOpen ? `0 12px 40px ${color}18` : 'none',
+                    cursor:'pointer',
+                    transition:'all .3s cubic-bezier(.4,0,.2,1)',
+                  }}
+                >
+                  <div style={{
+                    display:'flex', gap:14, padding:'1.6rem',
+                    alignItems:'flex-start',
+                    borderLeft: `6px solid ${color}`,
+                  }}>
+                    {/* Indicador */}
+                    <div style={{ width:36, height:36, borderRadius:12, background:`${color}18`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all .3s', transform: isOpen ? 'scale(1.1) rotate(90deg)' : 'none' }}>
+                      <span style={{ fontSize:'1.3rem', fontWeight:800, color:color }}>
+                        {isOpen ? '−' : '+'}
+                      </span>
+                    </div>
+
+                    {/* Pregunta + Respuesta */}
+                    <div style={{ flex:1, minWidth:0 }}>
+                      <p style={{ fontSize:'.95rem', fontWeight:800, color:'#043941', margin:'0 0 0.5rem', lineHeight:1.4 }}>
+                        {item.q}
+                      </p>
+
+                      {isOpen && (
+                        <div style={{ paddingTop:12, marginTop:12, borderTop:`1px solid ${color}24` }}>
+                          <p style={{ fontSize:'.85rem', color:'#64748b', lineHeight:1.75, margin:0 }}>
+                            {item.a}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Card sticky WhatsApp */}
+          <div style={{ position:'sticky', top:100 }}>
+            <div style={{ borderRadius:24, padding:'2.2rem', background:'linear-gradient(135deg, #043941 0%, #032e34 100%)', boxShadow:'0 16px 48px rgba(4,57,65,.25)', overflow:'hidden', position:'relative' }}>
+              <div style={{ position:'absolute', bottom:-80, right:-80, width:260, height:260, background:'radial-gradient(circle, rgba(2,212,126,.12) 0%, transparent 70%)', pointerEvents:'none' }} />
+              <div style={{ position:'relative', zIndex:10 }}>
+                <div style={{ width:48, height:48, borderRadius:16, background:'rgba(2,212,126,.16)', border:'1px solid rgba(2,212,126,.24)', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:16, fontSize:'1.5rem' }}>
+                  💬
+                </div>
+                <h3 style={{ fontSize:'1.05rem', fontWeight:900, color:'#fff', margin:'0 0 8px', lineHeight:1.3 }}>
+                  ¿Otra pregunta?
+                </h3>
+                <p style={{ fontSize:'.82rem', color:'rgba(255,255,255,.55)', margin:'0 0 1.6rem', lineHeight:1.7 }}>
+                  Escríbenos en WhatsApp — respuesta sin formularios ni correos.
+                </p>
+                <a
+                  href={WA_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.85rem 1.2rem', borderRadius:12, background:'#25d366', color:'#fff', fontWeight:800, fontSize:'.8rem', textDecoration:'none', border:'none', cursor:'pointer', transition:'all .2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 6px 20px rgba(37,211,102,.5)' }}
+                  onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='none' }}
+                >
+                  💚 Escribir WhatsApp
+                </a>
+                <p style={{ fontSize:'.7rem', textAlign:'center', margin:'12px 0 0', color:'rgba(255,255,255,.3)' }}>
+                  Respuesta en &lt; 24h — Lun a Vie
+                </p>
               </div>
-
-              <h3 className="text-lg font-extrabold text-white mb-2 leading-snug">
-                ¿Tienes una pregunta<br />que no está aquí?
-              </h3>
-              <p className="text-sm mb-6 leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                Escríbenos directamente y te respondemos en menos de 24 horas. Sin formularios, sin correos.
-              </p>
-
-              <a
-                href={WA_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl text-sm font-bold transition-all hover:scale-[1.02] hover:opacity-95"
-                style={{ background: '#25d366', color: '#0a2e0f' }}
-              >
-                <WhatsAppIcon size={16} />
-                Escribir por WhatsApp
-              </a>
-
-              <p className="text-center text-[11px] mt-3" style={{ color: 'rgba(255,255,255,0.25)' }}>
-                Respuesta típica en &lt; 24h · Lun–Vie
-              </p>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </section>
   )
