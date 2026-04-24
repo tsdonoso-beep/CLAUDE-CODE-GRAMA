@@ -221,7 +221,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
       {/* Track — position:relative necesario para que card.offsetLeft sea relativo a este contenedor */}
       <div
         ref={scrollRef}
-        style={{ position:'relative', display:'flex', gap:20, overflowX:'hidden', padding:'40px 80px 60px', scrollbarWidth:'none' }}
+        style={{ position:'relative', display:'flex', gap:16, overflowX:'hidden', padding:'40px 60px 60px', scrollbarWidth:'none' }}
         onMouseEnter={() => { pausedRef.current = true }}
         onMouseLeave={() => { pausedRef.current = false; speedRef.current = 0.8 }}
       >
@@ -233,7 +233,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 28px 56px rgba(4,57,65,.24)' }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 6px 24px rgba(4,57,65,.1)' }}
             style={{
-              width:300, flexShrink:0, borderRadius:24, overflow:'hidden',
+              width:280, flexShrink:0, borderRadius:24, overflow:'hidden',
               background:'#fff', cursor:'pointer',
               boxShadow:'0 6px 24px rgba(4,57,65,.1)',
               transition:'box-shadow .3s ease',
@@ -244,7 +244,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
             <div style={{ height:5, background:`hsl(${t.color})` }} />
 
             {/* Foto */}
-            <div style={{ height:240, position:'relative', overflow:'hidden' }}>
+            <div style={{ height:210, position:'relative', overflow:'hidden' }}>
               <img src={t.imagen} alt={t.nombre} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.75) saturate(0.85)' }} />
               <div style={{ position:'absolute', inset:0, background:'linear-gradient(170deg, rgba(4,57,65,0.05) 0%, rgba(4,57,65,0.84) 100%)' }} />
 
