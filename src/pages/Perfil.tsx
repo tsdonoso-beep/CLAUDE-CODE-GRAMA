@@ -39,6 +39,55 @@ function getInitials(name: string) {
   return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase() || '?'
 }
 
+// Shapes únicas por taller — composición geométrica que refleja cada especialidad
+function TallerHeroShapes({ slugs }: { slugs: string[] }) {
+  const c1 = TALLER_ACCENTS[slugs[0]] ?? '#02d47e'
+  const c2 = slugs[1] ? (TALLER_ACCENTS[slugs[1]] ?? '#d4c4fc') : '#f8ee91'
+  const p = { position: 'absolute' as const, pointerEvents: 'none' as const }
+
+  // Patrón base compartido — triángulo grande + overlap oscuro + borde derecho
+  const base = (
+    <>
+      <div style={{ ...p, top:-220, right:'-4%', width:540, height:540, background:c1, clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.14, animation:'heroFa 16s ease-in-out infinite' }} />
+      <div style={{ ...p, top:-100, right:'2%', width:260, height:260, background:'#0b4a56', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.22, animation:'heroFa 16s ease-in-out infinite .5s' }} />
+      <div style={{ ...p, top:'15%', right:-160, width:400, height:320, background:c1, clipPath:'polygon(100% 50%,0% 0%,0% 100%)', opacity:.1, animation:'heroFc 14s ease-in-out infinite .5s' }} />
+    </>
+  )
+
+  // Extras diferenciados por categoría de taller
+  const slug = slugs[0]
+  const isIndustrial = ['mecanica-automotriz','electricidad','electronica','computacion'].includes(slug)
+  const isArtesanal  = ['ebanisteria','construccion','agropecuaria'].includes(slug)
+  // resto → servicios (vestido, cocina, comunicaciones)
+
+  const extras = isIndustrial ? (
+    <>
+      <div style={{ ...p, top:-55, right:'27%', width:95, height:250, background:c1, borderRadius:'0 0 48px 48px', opacity:.2, animation:'heroFb 12s ease-in-out infinite 1s' }} />
+      <div style={{ ...p, bottom:'6%', right:'5%', width:58, height:58, background:c1, borderRadius:8, opacity:.28, animation:'heroFf 9s ease-in-out infinite 1.2s' }} />
+      <div style={{ ...p, bottom:'18%', right:'3%', width:48, height:48, background:'#02d47e', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 20s linear infinite' }} />
+    </>
+  ) : isArtesanal ? (
+    <>
+      <div style={{ ...p, top:'42%', right:-90, width:210, height:290, background:c1, clipPath:'polygon(0% 50%,100% 0%,100% 100%)', opacity:.14, animation:'heroFe 13s ease-in-out infinite 2s' }} />
+      <div style={{ ...p, bottom:-80, right:'28%', width:170, height:170, background:c1, transform:'rotate(45deg)', borderRadius:20, opacity:.2, animation:'heroFd 15s ease-in-out infinite 1s' }} />
+      <div style={{ ...p, top:'8%', right:'14%', width:52, height:52, background:'#f8ee91', borderRadius:6, opacity:.3, animation:'heroFf 11s ease-in-out infinite 2s' }} />
+    </>
+  ) : (
+    // Servicios: barras verticales rítmicas
+    <>
+      <div style={{ ...p, top:-65, right:'26%', width:82, height:270, background:c1, borderRadius:'0 0 42px 42px', opacity:.22, animation:'heroFb 11s ease-in-out infinite 1s' }} />
+      <div style={{ ...p, top:-35, right:'19%', width:52, height:190, background:'#f8ee91', borderRadius:'0 0 26px 26px', opacity:.22, animation:'heroFb 14s ease-in-out infinite 2s' }} />
+      <div style={{ ...p, top:'10%', right:'8%', width:44, height:44, background:c1, borderRadius:'50%', opacity:.22, animation:'heroFd 10s ease-in-out infinite .5s' }} />
+    </>
+  )
+
+  const second = slugs.length > 1 ? (
+    <div style={{ ...p, bottom:-160, right:'18%', width:420, height:420, background:c2, clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.1, animation:'heroFd 18s ease-in-out infinite 2s' }} />
+  ) : null
+
+  return <>{base}{extras}{second}</>
+}
+
 // ── Tangram decorativo (copiado de Landing.tsx) ───────────────────────────────
 function Tangram({
   color = '#02d47e',
@@ -329,20 +378,8 @@ export default function Perfil() {
             <div className={`absolute inset-0 grama-pattern ${heroDark ? 'opacity-20' : 'opacity-60'}`} />
 
             {heroDark ? (
-              /* Docentes: blobs con colores de talleres activos */
-              <>
-                {tallerSlugsAccesibles.map((s, i) => {
-                  const c = TALLER_ACCENTS[s] ?? '#02d47e'
-                  return (
-                    <div key={s} className="absolute pointer-events-none" style={{
-                      width: 420, height: 420,
-                      background: `radial-gradient(circle, ${c}28 0%, transparent 65%)`,
-                      right: i === 0 ? -60 : 180,
-                      top: i === 0 ? -110 : 60,
-                    }} />
-                  )
-                })}
-              </>
+              /* Docentes: shapes geométricas únicas por especialidad */
+              <TallerHeroShapes slugs={tallerSlugsAccesibles} />
             ) : (
               /* Admin: tangrams + floating shapes */
               <>
@@ -370,85 +407,107 @@ export default function Perfil() {
 
                 {/* Left: avatar + text */}
                 <div className="flex items-start gap-5 animate-fade-in-up">
-                  {/* Avatar */}
+                  {/* Avatar — 72px con rings de presencia */}
                   <div className="relative shrink-0">
+                    {/* Outer pulse ring */}
                     <div className="absolute rounded-full animate-pulse pointer-events-none" style={{
-                      inset: -10,
-                      border: `1px solid ${accent}30`,
-                      background: `radial-gradient(circle, ${accent}10 0%, transparent 70%)`,
+                      inset: -14,
+                      border: `1.5px solid ${heroDark ? accent + '35' : accent + '30'}`,
+                      background: `radial-gradient(circle, ${accent}12 0%, transparent 70%)`,
                       borderRadius: '50%',
                     }} />
-                    <div className="absolute rounded-full pointer-events-none" style={{ inset: -4, border: `1px solid ${accent}35`, borderRadius: '50%' }} />
-                    <div className="h-14 w-14 rounded-full flex items-center justify-center text-lg font-extrabold relative z-10" style={{
+                    {/* Inner ring */}
+                    <div className="absolute rounded-full pointer-events-none" style={{
+                      inset: -5,
+                      border: `1.5px solid ${heroDark ? accent + '45' : accent + '40'}`,
+                      borderRadius: '50%',
+                    }} />
+                    <div className="h-[72px] w-[72px] rounded-full flex items-center justify-center text-2xl font-black relative z-10" style={{
                       background: heroDark
-                        ? 'linear-gradient(135deg,#02d47e 0%,#00c16e 100%)'
+                        ? `linear-gradient(135deg, ${accent} 0%, ${accent}cc 100%)`
                         : 'linear-gradient(135deg, #043941 0%, #045f6c 100%)',
-                      border: `2px solid ${heroDark ? 'rgba(210,255,225,0.3)' : `${accent}50`}`,
+                      border: `2.5px solid ${heroDark ? 'rgba(210,255,225,0.25)' : accent + '45'}`,
                       color: heroDark ? '#043941' : '#02d47e',
-                      boxShadow: `0 4px 20px rgba(4,57,65,0.18), 0 0 0 1px rgba(2,212,126,0.12)`,
-                      letterSpacing: '-0.02em',
+                      boxShadow: `0 8px 28px ${accent}35, 0 0 0 1px ${accent}18`,
+                      letterSpacing: '-0.03em',
                     }}>
                       {getInitials(displayName)}
                     </div>
                     {isAdmin && (
-                      <div className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full flex items-center justify-center z-20"
-                        style={{ background: '#02d47e', border: '2px solid #043941', boxShadow: '0 2px 8px rgba(2,212,126,0.35)' }}>
-                        <Shield size={11} style={{ color: 'var(--grama-oscuro)' }} />
+                      <div className="absolute -bottom-1.5 -right-1.5 h-7 w-7 rounded-full flex items-center justify-center z-20"
+                        style={{ background: '#02d47e', border: '2.5px solid #043941', boxShadow: '0 3px 10px rgba(2,212,126,0.45)' }}>
+                        <Shield size={13} style={{ color: '#043941' }} />
                       </div>
                     )}
                   </div>
 
                   {/* Text block */}
                   <div className="min-w-0">
-                    <div className="flex items-center gap-2 mb-2.5">
-                      <span className="inline-flex items-center gap-1.5 overline-label font-extrabold px-2.5 py-1 rounded-full" style={{
-                        background: heroDark ? 'rgba(2,212,126,0.15)' : `${accent}15`,
-                        border: `1px solid ${heroDark ? 'rgba(2,212,126,0.3)' : `${accent}30`}`,
+                    {/* Badge */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-3 py-1.5 rounded-full" style={{
+                        background: heroDark ? 'rgba(2,212,126,0.15)' : `${accent}12`,
+                        border: `1px solid ${heroDark ? 'rgba(2,212,126,0.3)' : `${accent}28`}`,
                         color: heroDark ? '#02d47e' : (accent === '#02d47e' ? '#02a05a' : accent),
+                        letterSpacing: '.08em',
+                        textTransform: 'uppercase',
                       }}>
-                        <span className="w-1 h-1 rounded-full animate-pulse" style={{ background: heroDark ? '#02d47e' : accent }} />
+                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse" style={{ background: heroDark ? '#02d47e' : accent }} />
                         {isAdmin
-                          ? 'ADMINISTRADOR · GRAMA'
+                          ? 'Administrador · GRAMA'
                           : tallerSlugsAccesibles.length > 1
-                            ? `DOCENTE EPT · ${tallerSlugsAccesibles.length} TALLERES`
+                            ? `Docente EPT · ${tallerSlugsAccesibles.length} talleres`
                             : taller
-                              ? `DOCENTE EPT · T${String(taller.numero).padStart(2, '0')}`
-                              : 'DOCENTE EPT · PROGRAMA MSE-SFT'}
+                              ? `Docente EPT · T${String(taller.numero).padStart(2, '0')}`
+                              : 'Docente EPT · MSE-SFT'}
                       </span>
                       {isAdmin && (
                         <button onClick={() => navigate('/admin')}
-                          className="hidden sm:flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full transition-opacity hover:opacity-80"
+                          className="hidden sm:flex items-center gap-1.5 text-[11px] font-bold px-3 py-1.5 rounded-full transition-opacity hover:opacity-80"
                           style={{ background: 'rgba(2,212,126,0.14)', color: '#02a05a', border: '1px solid rgba(2,212,126,0.25)' }}>
-                          <Shield size={10} /> Panel de Admin
+                          <Shield size={11} /> Panel de Admin
                         </button>
                       )}
                     </div>
 
-                    <h1 className="t-display font-extrabold leading-tight mb-2 animate-fade-in-up stagger-1"
-                      style={{ letterSpacing: '-0.025em', color: heroDark ? '#d2ffe1' : 'var(--grama-oscuro)' }}>
-                      Hola, {firstName}
+                    {/* H1 — nombre destacado */}
+                    <h1 className="animate-fade-in-up stagger-1"
+                      style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:.95, letterSpacing:'-.04em', marginBottom:'.5rem' }}>
+                      <span style={{ color: heroDark ? 'rgba(210,255,225,0.7)' : 'rgba(4,57,65,0.6)', fontWeight:700 }}>Hola,</span>
+                      {' '}
+                      <span style={{
+                        color: heroDark ? '#043941' : '#043941',
+                        background: '#02d47e',
+                        padding: '.02em .18em .06em',
+                        borderRadius: 10,
+                      }}>{firstName}</span>
                     </h1>
 
-                    <p className="text-base mb-4 animate-fade-in-up stagger-2"
-                      style={{ color: heroDark ? 'rgba(210,255,225,0.55)' : '#64748b' }}>
-                      {displayName !== firstName ? displayName : ''}{displayName !== firstName && displayEmail ? ' · ' : ''}{displayEmail}
+                    {/* Subtítulo */}
+                    <p className="text-sm mb-5 animate-fade-in-up stagger-2"
+                      style={{ color: heroDark ? 'rgba(210,255,225,0.45)' : '#64748b', fontWeight: 500 }}>
+                      {displayName !== firstName ? displayName + ' · ' : ''}{displayEmail}
                     </p>
 
-                    {/* Stat chips */}
-                    <div className="flex flex-wrap gap-2.5 animate-fade-in-up stagger-3">
+                    {/* Stat chips — más visuales */}
+                    <div className="flex flex-wrap gap-2 animate-fade-in-up stagger-3">
                       {[
-                        { icon: Layers,  label: `${TOTAL_MODULOS} Módulos`, sub: 'de formación' },
+                        { icon: Layers,  label: `${TOTAL_MODULOS} Módulos`, sub: 'formación' },
                         { icon: Clock,   label: `${TOTAL_HORAS}h`,          sub: 'híbrida' },
                         { icon: Package, label: 'Constancia',               sub: 'Inroprin' },
                       ].map(stat => (
-                        <div key={stat.label} className="flex items-center gap-2 px-3 py-1.5 rounded-xl" style={{
-                          background: heroDark ? 'rgba(4,57,65,0.5)' : 'rgba(4,57,65,0.06)',
-                          border: `1px solid ${heroDark ? 'rgba(2,212,126,0.18)' : 'rgba(4,57,65,0.10)'}`,
+                        <div key={stat.label} className="flex items-center gap-2 px-3.5 py-2 rounded-xl" style={{
+                          background: heroDark ? 'rgba(4,57,65,0.55)' : 'rgba(4,57,65,0.05)',
+                          border: `1px solid ${heroDark ? 'rgba(2,212,126,0.2)' : 'rgba(4,57,65,0.09)'}`,
+                          backdropFilter: heroDark ? 'blur(8px)' : 'none',
                         }}>
-                          <stat.icon size={13} style={{ color: heroDark ? '#02d47e' : accent }} />
+                          <div className="h-7 w-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                            style={{ background: heroDark ? `${accent}28` : `${accent}14` }}>
+                            <stat.icon size={13} style={{ color: heroDark ? '#02d47e' : accent }} />
+                          </div>
                           <div>
-                            <p className="text-xs font-bold leading-none" style={{ color: heroDark ? '#d2ffe1' : 'var(--grama-oscuro)' }}>{stat.label}</p>
-                            <p className="text-[11px] mt-0.5 leading-none" style={{ color: heroDark ? 'rgba(210,255,225,0.45)' : '#64748b' }}>{stat.sub}</p>
+                            <p className="text-xs font-bold leading-none" style={{ color: heroDark ? '#d2ffe1' : '#043941' }}>{stat.label}</p>
+                            <p className="text-[11px] mt-0.5 leading-none font-medium" style={{ color: heroDark ? 'rgba(210,255,225,0.4)' : '#94a3b8' }}>{stat.sub}</p>
                           </div>
                         </div>
                       ))}
@@ -458,42 +517,45 @@ export default function Perfil() {
 
                 {/* Right: progreso / talleres box */}
                 {tallerSlugsAccesibles.length === 1 && taller ? (
-                  <div className="hidden lg:flex flex-col items-center gap-3 p-5 rounded-2xl animate-fade-in-up stagger-4" style={{
-                    background: heroDark ? 'rgba(4,57,65,0.58)' : '#ffffff',
-                    border: `1px solid ${heroDark ? 'rgba(255,255,255,0.14)' : 'rgba(4,57,65,0.10)'}`,
-                    boxShadow: heroDark ? '0 4px 24px rgba(0,0,0,0.25)' : '0 2px 12px rgba(4,57,65,0.06)',
-                    backdropFilter: heroDark ? 'blur(10px)' : 'none',
-                    minWidth: 156,
+                  <div className="hidden lg:flex flex-col items-center gap-4 p-6 rounded-2xl animate-fade-in-up stagger-4" style={{
+                    background: heroDark ? 'rgba(2,18,22,0.5)' : '#ffffff',
+                    border: `1.5px solid ${heroDark ? `${accent}28` : 'rgba(4,57,65,0.08)'}`,
+                    boxShadow: heroDark ? `0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px ${accent}15` : '0 4px 16px rgba(4,57,65,0.08)',
+                    backdropFilter: heroDark ? 'blur(16px)' : 'none',
+                    minWidth: 172,
                   }}>
-                    <p className="overline-label font-bold" style={{ color: heroDark ? 'rgba(210,255,225,0.5)' : '#64748b' }}>Tu progreso</p>
-                    <ProgressRing percentage={progreso.porcentaje} size={88} label={`${progreso.completados}/${progreso.total}`} sublabel="actividades" dark={heroDark} />
-                    <p className="text-[10px] text-center" style={{ color: heroDark ? 'rgba(210,255,225,0.4)' : '#64748b' }}>{progreso.porcentaje}% completado</p>
+                    <p className="text-[11px] font-extrabold uppercase tracking-widest" style={{ color: heroDark ? `${accent}cc` : '#94a3b8' }}>Tu progreso</p>
+                    <ProgressRing percentage={progreso.porcentaje} size={100} label={`${progreso.completados}/${progreso.total}`} sublabel="actividades" dark={heroDark} />
+                    <div className="text-center">
+                      <p className="text-sm font-black" style={{ color: heroDark ? '#d2ffe1' : '#043941' }}>{progreso.porcentaje}% completado</p>
+                      <p className="text-[10px] mt-0.5" style={{ color: heroDark ? 'rgba(210,255,225,0.38)' : '#94a3b8' }}>{taller.nombreCorto ?? taller.nombre}</p>
+                    </div>
                   </div>
                 ) : tallerSlugsAccesibles.length > 1 ? (
-                  <div className="hidden lg:flex flex-col gap-2.5 p-4 rounded-2xl animate-fade-in-up stagger-4" style={{
-                    background: heroDark ? 'rgba(4,57,65,0.58)' : '#ffffff',
-                    border: `1px solid ${heroDark ? 'rgba(255,255,255,0.14)' : 'rgba(4,57,65,0.10)'}`,
-                    boxShadow: heroDark ? '0 4px 24px rgba(0,0,0,0.25)' : '0 2px 12px rgba(4,57,65,0.06)',
-                    backdropFilter: heroDark ? 'blur(10px)' : 'none',
-                    minWidth: 220,
+                  <div className="hidden lg:flex flex-col gap-3 p-5 rounded-2xl animate-fade-in-up stagger-4" style={{
+                    background: heroDark ? 'rgba(2,18,22,0.5)' : '#ffffff',
+                    border: `1.5px solid ${heroDark ? 'rgba(255,255,255,0.1)' : 'rgba(4,57,65,0.08)'}`,
+                    boxShadow: heroDark ? '0 8px 32px rgba(0,0,0,0.3)' : '0 4px 16px rgba(4,57,65,0.08)',
+                    backdropFilter: heroDark ? 'blur(16px)' : 'none',
+                    minWidth: 248,
                   }}>
-                    <p className="overline-label font-bold mb-1" style={{ color: heroDark ? 'rgba(2,212,126,0.75)' : '#64748b' }}>Mis talleres</p>
+                    <p className="text-[11px] font-extrabold uppercase tracking-widest" style={{ color: heroDark ? 'rgba(2,212,126,0.7)' : '#94a3b8' }}>Mis talleres</p>
                     {tallerSlugsAccesibles.map(s => {
                       const t = talleresConfig.find(x => x.slug === s)
                       if (!t) return null
                       const ta = TALLER_ACCENTS[s] ?? '#02d47e'
                       const p  = getTallerProgreso(s)
                       return (
-                        <div key={s}>
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md" style={{ background: `${ta}25`, color: ta }}>
+                        <div key={s} style={{ padding: '2px 0' }}>
+                          <div className="flex items-center gap-2 mb-1.5">
+                            <span className="text-[10px] font-black px-2 py-1 rounded-lg flex-shrink-0" style={{ background: `${ta}22`, color: ta, border: `1px solid ${ta}30` }}>
                               T{String(t.numero).padStart(2, '0')}
                             </span>
-                            <span className="text-xs font-semibold truncate" style={{ color: heroDark ? '#d2ffe1' : 'var(--grama-oscuro)' }}>{t.nombreCorto}</span>
-                            <span className="ml-auto text-[10px] font-bold shrink-0" style={{ color: ta }}>{p.porcentaje}%</span>
+                            <span className="text-xs font-bold truncate" style={{ color: heroDark ? '#d2ffe1' : '#043941' }}>{t.nombreCorto}</span>
+                            <span className="ml-auto text-xs font-black flex-shrink-0" style={{ color: ta }}>{p.porcentaje}%</span>
                           </div>
-                          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: heroDark ? 'rgba(255,255,255,0.18)' : 'rgba(4,57,65,0.08)' }}>
-                            <div className="h-full rounded-full transition-all" style={{ width: `${p.porcentaje}%`, background: ta }} />
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: heroDark ? 'rgba(255,255,255,0.1)' : 'rgba(4,57,65,0.07)' }}>
+                            <div className="h-full rounded-full transition-all duration-700" style={{ width: `${p.porcentaje}%`, background: `linear-gradient(90deg, ${ta} 0%, ${ta}cc 100%)` }} />
                           </div>
                         </div>
                       )
