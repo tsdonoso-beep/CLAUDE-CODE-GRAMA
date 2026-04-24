@@ -130,23 +130,25 @@ function useReveal(threshold = 0.12) {
   return { ref, visible }
 }
 
-// Hook para calcular el reveal del círculo basado en scroll entre dos elementos
-function useScrollReveal(startRef: React.RefObject<HTMLDivElement>, endRef: React.RefObject<HTMLDivElement>) {
-  const [progress, setProgress] = useState(0)
+// Hook que calcula el radio del círculo reveal basado en scroll del hero
+function useCircleReveal(heroRef: React.RefObject<HTMLDivElement>) {
+  const [radius, setRadius] = useState(0)
   useEffect(() => {
-    const handleScroll = () => {
-      if (!startRef.current || !endRef.current) return
-      const startTop = startRef.current.offsetTop
-      const endTop = endRef.current.offsetTop
-      const range = endTop - startTop
-      const current = window.scrollY - startTop
-      const p = Math.max(0, Math.min(1, current / range))
-      setProgress(p)
+    const calc = () => {
+      if (!heroRef.current) return
+      const heroH = heroRef.current.offsetHeight
+      const scrolled = window.scrollY
+      const startAt = heroH * 0.35
+      const endAt   = heroH * 0.88
+      const progress = Math.max(0, Math.min(1, (scrolled - startAt) / (endAt - startAt)))
+      const maxR = Math.hypot(window.innerWidth, window.innerHeight) * 1.1
+      setRadius(progress * maxR)
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [startRef, endRef])
-  return progress
+    window.addEventListener('scroll', calc, { passive: true })
+    calc()
+    return () => window.removeEventListener('scroll', calc)
+  }, [heroRef])
+  return radius
 }
 
 // ── Carrusel horizontal de talleres ──────────────────────────────────────────
@@ -723,10 +725,9 @@ export default function Landing() {
   const [flippedCard, setFlippedCard] = useState<number | null>(null)
   const [open, setOpen] = useState<number | null>(null)
 
-  // Refs para scroll reveal del círculo (hero → por qué grama)
+  // Círculo reveal: hero → por qué grama
   const heroRef = useRef<HTMLDivElement>(null)
-  const porQueGramaRef = useRef<HTMLDivElement>(null)
-  const circleProgress = useScrollReveal(heroRef, porQueGramaRef)
+  const circleRadius = useCircleReveal(heroRef)
 
   // Reveal hooks por sección
   const talleresHeaderReveal = useReveal()
@@ -888,7 +889,14 @@ export default function Landing() {
       </section>
 
       {/* ══ POR QUÉ GRAMA ═══════════════════════════════════════════════════ */}
-      <section ref={porQueGramaRef} id="nosotros" style={{ background: '#ffffff', padding: '5rem 1.5rem', overflow: 'hidden', position: 'relative' }}>
+      <section id="nosotros" style={{
+        background: '#ffffff',
+        padding: '5rem 1.5rem',
+        overflow: 'hidden',
+        position: 'relative',
+        clipPath: `circle(${circleRadius}px at 50% 0%)`,
+        willChange: 'clip-path',
+      }}>
 
         {/* Shapes decorativos de fondo */}
         <div style={{ position:'absolute', top:'8%', left:'3%', width:60, height:130, background:'#b8edd0', borderRadius:'0 0 30px 30px', opacity:.3, pointerEvents:'none', transform:'rotate(-8deg)', animation:'heroFb 13s ease-in-out infinite' }} />
