@@ -167,10 +167,10 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
       const dist = (card.offsetLeft + card.offsetWidth / 2) - visibleCenter
       const n    = Math.max(-1, Math.min(1, dist / maxDist))   // [-1 … 1]
       const abs  = Math.abs(n)
-      const scale   = 1.05 - abs * 0.27                        // 1.05 centro → 0.78 bordes
-      const rotY    = -n * 20                                   // cards derecha giran hacia el espectador
-      const dropY   = abs * abs * 28                            // caída cuadrática: 0px centro → 28px bordes
-      const opacity = Math.max(0.52, 1 - abs * 0.48)
+      const scale   = 1 - abs * 0.06                           // 1.0 centro → 0.94 bordes (minimal zoom)
+      const rotY    = -n * 8                                    // cards derecha giran suavemente
+      const dropY   = abs * abs * 12                            // caída suave: 0px centro → 12px bordes
+      const opacity = Math.max(0.75, 1 - abs * 0.25)           // menos oscurecimiento en bordes
       card.style.transform = `perspective(900px) rotateY(${rotY}deg) translateY(${dropY}px) scale(${scale})`
       card.style.opacity   = String(opacity)
       card.style.zIndex    = String(Math.round((1 - abs) * 20))
@@ -221,7 +221,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
       {/* Track — position:relative necesario para que card.offsetLeft sea relativo a este contenedor */}
       <div
         ref={scrollRef}
-        style={{ position:'relative', display:'flex', gap:24, overflowX:'hidden', padding:'40px 100px 60px', scrollbarWidth:'none' }}
+        style={{ position:'relative', display:'flex', gap:20, overflowX:'hidden', padding:'40px 80px 60px', scrollbarWidth:'none' }}
         onMouseEnter={() => { pausedRef.current = true }}
         onMouseLeave={() => { pausedRef.current = false; speedRef.current = 0.8 }}
       >
@@ -233,7 +233,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 28px 56px rgba(4,57,65,.24)' }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 6px 24px rgba(4,57,65,.1)' }}
             style={{
-              width:320, flexShrink:0, borderRadius:24, overflow:'hidden',
+              width:300, flexShrink:0, borderRadius:24, overflow:'hidden',
               background:'#fff', cursor:'pointer',
               boxShadow:'0 6px 24px rgba(4,57,65,.1)',
               transition:'box-shadow .3s ease',
