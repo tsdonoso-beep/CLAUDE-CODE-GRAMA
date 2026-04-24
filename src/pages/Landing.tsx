@@ -702,6 +702,7 @@ export default function Landing() {
   const goTo   = (i: number) => { setModalDir(i > (modalIndex ?? 0) ? 'next' : 'prev'); setModalIndex(i) }
 
   const [flippedCard, setFlippedCard] = useState<number | null>(null)
+  const [open, setOpen] = useState<number | null>(null)
 
   // Reveal hooks por sección
   const talleresHeaderReveal = useReveal()
@@ -1169,9 +1170,9 @@ export default function Landing() {
                     style={{
                       borderRadius:18,
                       overflow:'hidden',
-                      background: isOpen ? '#fff' : 'transparent',
-                      border: `1px solid ${isOpen ? color + '22' : 'rgba(4,57,65,0.06)'}`,
-                      boxShadow: isOpen ? `0 12px 40px ${color}18` : 'none',
+                      background: isOpen ? '#fff' : `${color}08`,
+                      border: `1.5px solid ${isOpen ? color + '44' : color + '18'}`,
+                      boxShadow: isOpen ? `0 12px 40px ${color}22` : `0 2px 8px ${color}12`,
                       cursor:'pointer',
                       transition:'all .3s cubic-bezier(.4,0,.2,1)',
                     }}
@@ -1181,13 +1182,13 @@ export default function Landing() {
                       alignItems:'flex-start',
                       borderLeft: `6px solid ${color}`,
                     }}>
-                      <div style={{ width:32, height:32, borderRadius:10, background:`${color}18`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all .3s', transform: isOpen ? 'scale(1.1) rotate(90deg)' : 'none' }}>
+                      <div style={{ width:32, height:32, borderRadius:10, background:`${color}20`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all .3s', transform: isOpen ? 'scale(1.1) rotate(90deg)' : 'none' }}>
                         <span style={{ fontSize:'1.1rem', fontWeight:800, color:color }}>
                           {isOpen ? '−' : '+'}
                         </span>
                       </div>
                       <div style={{ flex:1, minWidth:0 }}>
-                        <p style={{ fontSize:'.92rem', fontWeight:800, color:'#043941', margin:'0 0 0.4rem', lineHeight:1.4 }}>
+                        <p style={{ fontSize:'.96rem', fontWeight:900, color:'#043941', margin:'0 0 0.4rem', lineHeight:1.4, letterSpacing:'-.3px' }}>
                           {item.q}
                         </p>
                         {isOpen && (
