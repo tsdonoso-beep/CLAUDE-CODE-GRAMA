@@ -890,22 +890,6 @@ export default function Landing() {
       {/* ══ POR QUÉ GRAMA ═══════════════════════════════════════════════════ */}
       <section ref={porQueGramaRef} id="nosotros" style={{ background: '#ffffff', padding: '5rem 1.5rem', overflow: 'hidden', position: 'relative' }}>
 
-        {/* Círculo reveal que consume el hero al hacer scroll */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: Math.max(100, 1400 * (1 + circleProgress * 0.3)),
-          height: Math.max(100, 1400 * (1 + circleProgress * 0.3)),
-          background: '#ffffff',
-          borderRadius: '50%',
-          pointerEvents: 'none',
-          zIndex: 5,
-          opacity: Math.min(1, circleProgress * 3),
-          boxShadow: `0 -40px 80px rgba(0,0,0,0.08)`,
-        }} />
-
         {/* Shapes decorativos de fondo */}
         <div style={{ position:'absolute', top:'8%', left:'3%', width:60, height:130, background:'#b8edd0', borderRadius:'0 0 30px 30px', opacity:.3, pointerEvents:'none', transform:'rotate(-8deg)', animation:'heroFb 13s ease-in-out infinite' }} />
         <div style={{ position:'absolute', bottom:'10%', right:'3%', width:50, height:110, background:'#d4c4fc', borderRadius:'0 0 25px 25px', opacity:.35, pointerEvents:'none', transform:'rotate(10deg)', animation:'heroFb 16s ease-in-out infinite 2s' }} />
