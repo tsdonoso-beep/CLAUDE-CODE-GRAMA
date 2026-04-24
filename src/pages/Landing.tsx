@@ -154,65 +154,82 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
   }, [])
 
   return (
-    <div className="relative">
-      <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to right, #f0fdf6 0%, transparent 100%)' }} />
-      <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to left, #f0fdf6 0%, transparent 100%)' }} />
+    <div style={{ position:'relative' }}>
+      {/* Fade masks */}
+      <div style={{ position:'absolute', left:0, top:0, bottom:0, width:80, zIndex:10, pointerEvents:'none', background:'linear-gradient(to right,#f0fdf6 0%,transparent 100%)' }} />
+      <div style={{ position:'absolute', right:0, top:0, bottom:0, width:80, zIndex:10, pointerEvents:'none', background:'linear-gradient(to left,#f0fdf6 0%,transparent 100%)' }} />
 
+      {/* Arrow — left */}
       <button
-        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
-        style={{ background: '#043941', color: 'var(--grama-menta)' }}
-        onMouseEnter={() => { speedRef.current = -4; pausedRef.current = false }}
-        onMouseLeave={() => { speedRef.current = 0.7 }}
+        style={{ position:'absolute', left:12, top:'50%', transform:'translateY(-50%)', zIndex:20, width:40, height:40, borderRadius:'50%', background:'#043941', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 16px rgba(4,57,65,.35)', color:'#02d47e', transition:'transform .2s ease, box-shadow .2s ease' }}
+        onMouseEnter={e => { speedRef.current = -4; pausedRef.current = false;(e.currentTarget.style.transform='translateY(-50%) scale(1.12)'); e.currentTarget.style.boxShadow='0 6px 22px rgba(4,57,65,.45)' }}
+        onMouseLeave={e => { speedRef.current = 0.7; e.currentTarget.style.transform='translateY(-50%)'; e.currentTarget.style.boxShadow='0 4px 16px rgba(4,57,65,.35)' }}
       >
         <ChevronLeft size={18} />
       </button>
 
+      {/* Arrow — right */}
       <button
-        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
-        style={{ background: '#043941', color: 'var(--grama-menta)' }}
-        onMouseEnter={() => { speedRef.current = 4; pausedRef.current = false }}
-        onMouseLeave={() => { speedRef.current = 0.7 }}
+        style={{ position:'absolute', right:12, top:'50%', transform:'translateY(-50%)', zIndex:20, width:40, height:40, borderRadius:'50%', background:'#043941', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 16px rgba(4,57,65,.35)', color:'#02d47e', transition:'transform .2s ease, box-shadow .2s ease' }}
+        onMouseEnter={e => { speedRef.current = 4; pausedRef.current = false; e.currentTarget.style.transform='translateY(-50%) scale(1.12)'; e.currentTarget.style.boxShadow='0 6px 22px rgba(4,57,65,.45)' }}
+        onMouseLeave={e => { speedRef.current = 0.7; e.currentTarget.style.transform='translateY(-50%)'; e.currentTarget.style.boxShadow='0 4px 16px rgba(4,57,65,.35)' }}
       >
         <ChevronRight size={18} />
       </button>
 
+      {/* Track */}
       <div
         ref={scrollRef}
-        className="flex gap-5 overflow-x-hidden px-14 pb-4"
-        style={{ scrollbarWidth: 'none' }}
+        style={{ display:'flex', gap:20, overflowX:'hidden', padding:'8px 56px 16px', scrollbarWidth:'none' }}
         onMouseEnter={() => { pausedRef.current = true }}
         onMouseLeave={() => { pausedRef.current = false; speedRef.current = 0.7 }}
       >
         {items.map((t, i) => (
           <div
             key={i}
-            className="shrink-0 rounded-2xl overflow-hidden bg-white cursor-pointer group transition-all hover:shadow-xl hover:-translate-y-2"
-            style={{ width: 248, border: '1px solid #e3f8fb' }}
             onClick={() => onOpenModal(i % talleresConfig.length)}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform='translateY(-10px)'; (e.currentTarget as HTMLElement).style.boxShadow='0 20px 48px rgba(4,57,65,.18)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform='none'; (e.currentTarget as HTMLElement).style.boxShadow='0 4px 20px rgba(4,57,65,.08)' }}
+            style={{ width:256, flexShrink:0, borderRadius:20, overflow:'hidden', background:'#fff', cursor:'pointer', boxShadow:'0 4px 20px rgba(4,57,65,.08)', transition:'transform .3s ease, box-shadow .3s ease' }}
           >
-            <div className="relative overflow-hidden" style={{ height: 272 }}>
-              <img
-                src={t.imagen}
-                alt={t.nombre}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                style={{ filter: 'brightness(0.82) saturate(0.88)' }}
+            {/* Color accent strip */}
+            <div style={{ height:4, background:`hsl(${t.color})` }} />
+
+            {/* Photo */}
+            <div style={{ height:192, position:'relative', overflow:'hidden' }}>
+              <img src={t.imagen} alt={t.nombre} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.75) saturate(0.85)', transition:'transform .5s ease' }}
+                onMouseEnter={e => (e.currentTarget.style.transform='scale(1.06)')}
+                onMouseLeave={e => (e.currentTarget.style.transform='none')}
               />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(4,57,65,0.88) 100%)' }} />
-              <div className="absolute top-3 left-3">
-                <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full" style={{ background: `hsl(${t.color})`, color: '#fff' }}>
-                  T{String(t.numero).padStart(2, '0')}
-                </span>
+              {/* Gradient overlay */}
+              <div style={{ position:'absolute', inset:0, background:'linear-gradient(170deg, rgba(4,57,65,0.05) 0%, rgba(4,57,65,0.82) 100%)' }} />
+
+              {/* Badge pill */}
+              <div style={{ position:'absolute', top:14, left:14, display:'inline-flex', alignItems:'center', gap:5, background:'rgba(4,57,65,0.72)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,0.14)', borderRadius:100, padding:'.2rem .65rem' }}>
+                <span style={{ width:5, height:5, borderRadius:'50%', background:'#02d47e', display:'inline-block', flexShrink:0 }} />
+                <span style={{ fontSize:'.58rem', fontWeight:800, letterSpacing:'.14em', color:'rgba(255,255,255,.92)' }}>T{String(t.numero).padStart(2,'0')}</span>
               </div>
-              <Tangram color={`hsl(${t.color})`} opacity={0.3} rotate={15} className="absolute -bottom-3 -right-3 w-20 h-20" />
+
+              {/* Title overlay */}
+              <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'1rem' }}>
+                <h3 style={{ fontSize:'.92rem', fontWeight:900, color:'#fff', lineHeight:1.25, margin:0 }}>{t.nombre}</h3>
+              </div>
             </div>
-            <div className="p-4.5" style={{ padding: '14px 16px 16px' }}>
-              <h3 className="text-sm font-extrabold mb-1.5 leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{t.nombre}</h3>
-              <p className="text-xs leading-relaxed line-clamp-2 mb-3.5" style={{ color: '#64748b' }}>{t.descripcion}</p>
-              <div className="flex items-center gap-3" style={{ color: '#94a3b8' }}>
-                <span className="flex items-center gap-1 text-[10px] font-semibold"><BookOpen size={10} /> 7 módulos</span>
-                <span className="flex items-center gap-1 text-[10px] font-semibold"><Clock size={10} /> 150h</span>
+
+            {/* Content */}
+            <div style={{ padding:'14px 16px 16px' }}>
+              <p style={{ fontSize:'.75rem', lineHeight:1.65, color:'#64748b', margin:'0 0 12px', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical' as const, overflow:'hidden' }}>{t.descripcion}</p>
+
+              <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:12 }}>
+                <span style={{ display:'flex', alignItems:'center', gap:4, fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.5)' }}><BookOpen size={10} /> 7 módulos</span>
+                <span style={{ display:'flex', alignItems:'center', gap:4, fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.5)' }}><Clock size={10} /> 150h</span>
+              </div>
+
+              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', paddingTop:10, borderTop:'1px solid rgba(4,57,65,0.07)' }}>
+                <span style={{ fontSize:'.7rem', fontWeight:800, color:'#043941' }}>Ver ruta</span>
+                <div style={{ width:26, height:26, borderRadius:'50%', background:`hsl(${t.color})`, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                  <ChevronRight size={12} color="#fff" />
+                </div>
               </div>
             </div>
           </div>
@@ -953,45 +970,55 @@ export default function Landing() {
       </section>
 
       {/* ══ TALLERES ════════════════════════════════════════════════════════ */}
-      <section id="talleres" className="py-16 px-6 relative overflow-hidden" style={{ background: '#f0fdf6' }}>
-        <Tangram color="#043941" opacity={0.025} rotate={-15} className="absolute w-80 h-80 -left-10 bottom-10 pointer-events-none" />
+      <section id="talleres" style={{ background: '#f0fdf6', padding: '5rem 1.5rem', position:'relative', overflow:'hidden' }}>
 
-        <div className="max-w-6xl mx-auto">
+        {/* Shapes — mismo lenguaje que hero */}
+        <div style={{ position:'absolute', top:-70, left:'8%', width:108, height:260, background:'#f8ee91', borderRadius:'0 0 54px 54px', opacity:.32, pointerEvents:'none', animation:'heroFb 13s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', bottom:-100, right:'6%', width:300, height:300, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.28, pointerEvents:'none', animation:'heroFd 16s ease-in-out infinite 2s' }} />
+        <div style={{ position:'absolute', top:'28%', right:-80, width:200, height:160, background:'#043941', clipPath:'polygon(100% 50%,0% 0%,0% 100%)', opacity:.06, pointerEvents:'none', animation:'heroFc 15s ease-in-out infinite 1s' }} />
+        <div style={{ position:'absolute', bottom:'18%', left:-80, width:180, height:145, background:'#b8edd0', clipPath:'polygon(0% 50%,100% 0%,100% 100%)', opacity:.35, pointerEvents:'none', animation:'heroFe 14s ease-in-out infinite .5s' }} />
+        <div style={{ position:'absolute', top:'14%', left:'5%', width:52, height:52, background:'#02d47e', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 24s linear infinite', pointerEvents:'none', opacity:.45 }} />
+
+        <div style={{ maxWidth:1152, margin:'0 auto' }}>
+
+          {/* Header */}
           <div
             ref={talleresHeaderReveal.ref}
-            className="text-center max-w-2xl mx-auto mb-10"
-            style={{ opacity: talleresHeaderReveal.visible ? 1 : 0, transform: talleresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
+            style={{ textAlign:'center', maxWidth:600, margin:'0 auto 3rem', opacity: talleresHeaderReveal.visible ? 1 : 0, transform: talleresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
           >
-            <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-3" style={{ color: 'var(--grama-menta)' }}>
-              <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
+            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
+              <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
               Especialidades disponibles
             </span>
-            <h2 className="t-h1 font-extrabold leading-tight mb-3" style={{ color: 'var(--grama-oscuro)' }}>
-              {talleresConfig.length} especialidades técnicas
+            <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.1, color:'#043941', margin:'0 0 .75rem' }}>
+              {talleresConfig.length} especialidades <span style={{ color:'#02d47e' }}>técnicas</span>
             </h2>
-            <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
+            <p style={{ fontSize:'.875rem', color:'rgba(4,57,65,.5)', lineHeight:1.75, margin:0 }}>
               Haz clic en cualquier taller para ver su ruta de aprendizaje y equipamiento.
             </p>
           </div>
 
+          {/* Carrusel */}
           <div
             ref={talleresReveal.ref}
-            className="mb-12"
-            style={{ opacity: talleresReveal.visible ? 1 : 0, transform: talleresReveal.visible ? 'none' : 'translateY(24px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
+            style={{ marginBottom:'3rem', opacity: talleresReveal.visible ? 1 : 0, transform: talleresReveal.visible ? 'none' : 'translateY(24px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
           >
             <TalleresCarousel onOpenModal={openModal} />
           </div>
 
-          <div className="text-center">
+          {/* CTA */}
+          <div style={{ textAlign:'center' }}>
             <button
               onClick={goToApp}
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-sm font-bold text-white transition-all hover:scale-[1.02] hover:shadow-lg"
-              style={{ background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)' }}
+              style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#02d47e', color:'#043941', fontSize:'.9rem', fontWeight:800, padding:'1rem 2.2rem', borderRadius:100, boxShadow:'0 6px 22px rgba(2,212,126,.4)', border:'none', cursor:'pointer', transition:'box-shadow .2s ease, transform .2s ease' }}
+              onMouseEnter={e => { e.currentTarget.style.boxShadow='0 10px 32px rgba(2,212,126,.55)'; e.currentTarget.style.transform='translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.boxShadow='0 6px 22px rgba(2,212,126,.4)'; e.currentTarget.style.transform='none' }}
             >
               Acceder a la plataforma completa
               <ArrowRight size={15} />
             </button>
           </div>
+
         </div>
       </section>
 
