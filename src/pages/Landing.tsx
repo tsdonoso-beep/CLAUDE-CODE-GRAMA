@@ -928,21 +928,27 @@ export default function Landing() {
               const isFlipped = flippedCard === i
               const tilt = i === 0 ? 'rotate(-3deg)' : i === 2 ? 'rotate(3deg)' : 'none'
               return (
+                // Div exterior: solo animación de entrada (opacity + translateY)
                 <div
                   key={i}
-                  onClick={() => setFlippedCard(isFlipped ? null : i)}
                   style={{
-                    width: 300,
-                    height: 400,
-                    perspective: '1000px',
-                    cursor: 'pointer',
-                    transform: isFlipped ? 'none' : tilt,
-                    transition: 'transform .4s ease',
                     flexShrink: 0,
                     opacity: 0,
                     animation: `fadeInUp 0.6s cubic-bezier(0.4,0,0.2,1) ${0.2 + i * 0.15}s forwards`,
                   }}
                 >
+                  {/* Div interior: tilt + click + flip — sin interferencia con animación */}
+                  <div
+                    onClick={() => setFlippedCard(isFlipped ? null : i)}
+                    style={{
+                      width: 300,
+                      height: 400,
+                      perspective: '1000px',
+                      cursor: 'pointer',
+                      transform: isFlipped ? 'none' : tilt,
+                      transition: 'transform .4s ease',
+                    }}
+                  >
                   <div style={{
                     width: '100%',
                     height: '100%',
@@ -1027,6 +1033,7 @@ export default function Landing() {
                     </div>
 
                   </div>
+                </div>
                 </div>
               )
             })}
