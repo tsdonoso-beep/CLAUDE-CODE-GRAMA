@@ -196,9 +196,9 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
 
   return (
     <div style={{ position:'relative' }}>
-      {/* Fade masks — más anchos para suavizar los bordes del arco */}
-      <div style={{ position:'absolute', left:0, top:0, bottom:0, width:130, zIndex:10, pointerEvents:'none', background:'linear-gradient(to right,#f0fdf6 40%,transparent)' }} />
-      <div style={{ position:'absolute', right:0, top:0, bottom:0, width:130, zIndex:10, pointerEvents:'none', background:'linear-gradient(to left,#f0fdf6 40%,transparent)' }} />
+      {/* Fade masks — suaves en los bordes */}
+      <div style={{ position:'absolute', left:0, top:0, bottom:0, width:80, zIndex:10, pointerEvents:'none', background:'linear-gradient(to right,#f0fdf6 30%,transparent)' }} />
+      <div style={{ position:'absolute', right:0, top:0, bottom:0, width:80, zIndex:10, pointerEvents:'none', background:'linear-gradient(to left,#f0fdf6 30%,transparent)' }} />
 
       {/* Flecha izquierda */}
       <button
@@ -221,7 +221,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
       {/* Track — position:relative necesario para que card.offsetLeft sea relativo a este contenedor */}
       <div
         ref={scrollRef}
-        style={{ position:'relative', display:'flex', gap:16, overflowX:'hidden', padding:'40px 60px 60px', scrollbarWidth:'none' }}
+        style={{ position:'relative', display:'flex', gap:18, overflowX:'hidden', padding:'40px 48px 60px', scrollbarWidth:'none' }}
         onMouseEnter={() => { pausedRef.current = true }}
         onMouseLeave={() => { pausedRef.current = false; speedRef.current = 0.8 }}
       >
@@ -1052,9 +1052,7 @@ export default function Landing() {
         <div style={{ position:'absolute', bottom:'18%', left:-80, width:180, height:145, background:'#b8edd0', clipPath:'polygon(0% 50%,100% 0%,100% 100%)', opacity:.35, pointerEvents:'none', animation:'heroFe 14s ease-in-out infinite .5s' }} />
         <div style={{ position:'absolute', top:'14%', left:'5%', width:52, height:52, background:'#02d47e', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 24s linear infinite', pointerEvents:'none', opacity:.45 }} />
 
-        <div style={{ maxWidth:1152, margin:'0 auto' }}>
-
-          {/* Header */}
+          {/* Header — centrado con maxWidth */}
           <div
             ref={talleresHeaderReveal.ref}
             style={{ textAlign:'center', maxWidth:600, margin:'0 auto 3rem', opacity: talleresHeaderReveal.visible ? 1 : 0, transform: talleresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
@@ -1071,10 +1069,10 @@ export default function Landing() {
             </p>
           </div>
 
-          {/* Carrusel */}
+          {/* Carrusel — full width, fuera del maxWidth para usar toda la pantalla */}
           <div
             ref={talleresReveal.ref}
-            style={{ marginBottom:'3rem', opacity: talleresReveal.visible ? 1 : 0, transform: talleresReveal.visible ? 'none' : 'translateY(24px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
+            style={{ margin:'0 -1.5rem 3rem', opacity: talleresReveal.visible ? 1 : 0, transform: talleresReveal.visible ? 'none' : 'translateY(24px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
           >
             <TalleresCarousel onOpenModal={openModal} />
           </div>
@@ -1091,8 +1089,6 @@ export default function Landing() {
               <ArrowRight size={15} />
             </button>
           </div>
-
-        </div>
       </section>
 
       {/* ══ COMUNIDAD ═══════════════════════════════════════════════════════ */}
