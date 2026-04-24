@@ -36,35 +36,44 @@ const NAV_LINKS = [
 const WHY_CARDS = [
   {
     tag: 'EL PROBLEMA',
-    tagBg: 'rgba(239,68,68,0.15)',
-    tagColor: '#ef4444',
+    tagBg: 'rgba(248,238,145,0.25)',
+    tagColor: '#c8a800',
     frontBg: '#043941',
     titleFront: ['Los equipos llegan.', 'La formación, no.'],
+    titleColor: '#ffffff',
+    hintColor: 'rgba(255,255,255,0.4)',
     shape: 'triangle',
-    shapeColor: '#b8edd0',
+    shapeColor: '#f8ee91',
     backBg: '#f0fdf6',
+    backBorder: 'rgba(4,57,65,0.1)',
     body: ['Los talleres técnicos reciben equipos nuevos pero los docentes no tienen formación pedagógica para usarlos.', 'Cuando el profesor rota, el conocimiento se va con él — y el ciclo empieza de nuevo.'],
   },
   {
     tag: 'LA SOLUCIÓN',
-    tagBg: 'rgba(2,212,126,0.15)',
-    tagColor: '#02d47e',
-    frontBg: '#043941',
+    tagBg: 'rgba(4,57,65,0.14)',
+    tagColor: '#043941',
+    frontBg: '#f8ee91',
     titleFront: ['Una ruta híbrida', 'para tu taller.'],
+    titleColor: '#043941',
+    hintColor: 'rgba(4,57,65,0.38)',
     shape: 'cross',
-    shapeColor: '#02d47e',
-    backBg: '#f0fdf6',
+    shapeColor: '#043941',
+    backBg: '#fefce8',
+    backBorder: 'rgba(202,138,4,0.18)',
     body: ['7 módulos con video, fichas descargables y sesiones en vivo. A tu ritmo, desde cualquier dispositivo.', 'Diseñado para cada especialidad EPT: automotriz, confección, cocina, ebanistería y más.'],
   },
   {
     tag: 'EL RESULTADO',
-    tagBg: 'rgba(167,139,250,0.2)',
-    tagColor: '#7c3aed',
-    frontBg: '#2d1b69',
+    tagBg: 'rgba(4,57,65,0.1)',
+    tagColor: '#043941',
+    frontBg: '#d4c4fc',
     titleFront: ['Autonomía docente', 'garantizada.'],
+    titleColor: '#1a0d4a',
+    hintColor: 'rgba(26,13,74,0.38)',
     shape: 'diamond',
-    shapeColor: '#d4c4fc',
+    shapeColor: '#043941',
     backBg: '#faf5ff',
+    backBorder: 'rgba(167,139,250,0.2)',
     body: ['Al terminar dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes con confianza real.', 'Con certificación, fichas listas para usar y acceso permanente al material del taller.'],
   },
 ]
@@ -705,27 +714,27 @@ export default function Landing() {
       <section style={{ minHeight:'100vh', display:'flex', flexDirection:'column', background:'#f0fdf6', position:'relative', overflow:'hidden' }}>
 
         {/* s1 — large mint triangle, top center-right */}
-        <div style={{ position:'absolute', top:-200, left:'58%', transform:'translateX(-50%)', width:420, height:420, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', animation:'heroFa 15s ease-in-out infinite', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:-260, left:'58%', transform:'translateX(-50%)', width:560, height:560, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', animation:'heroFa 15s ease-in-out infinite', pointerEvents:'none' }} />
         {/* s1b — dark teal over s1 */}
-        <div style={{ position:'absolute', top:-110, left:'64%', transform:'translateX(-50%)', width:200, height:200, background:'#043941', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', animation:'heroFa 15s ease-in-out infinite .5s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:-140, left:'64%', transform:'translateX(-50%)', width:260, height:260, background:'#043941', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', animation:'heroFa 15s ease-in-out infinite .5s', pointerEvents:'none' }} />
         {/* s2 — yellow vertical bar, top-left, rounded bottom */}
-        <div style={{ position:'absolute', top:-45, left:'19%', width:90, height:210, background:'#f8ee91', borderRadius:'0 0 48px 48px', animation:'heroFb 11s ease-in-out infinite 1s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:-60, left:'19%', width:112, height:270, background:'#f8ee91', borderRadius:'0 0 56px 56px', animation:'heroFb 11s ease-in-out infinite 1s', pointerEvents:'none' }} />
         {/* s3 — dark teal right-pointing triangle */}
-        <div style={{ position:'absolute', top:'20%', right:-150, width:300, height:240, background:'#043941', clipPath:'polygon(100% 50%,0% 0%,0% 100%)', animation:'heroFc 13s ease-in-out infinite .5s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'18%', right:-200, width:420, height:340, background:'#043941', clipPath:'polygon(100% 50%,0% 0%,0% 100%)', animation:'heroFc 13s ease-in-out infinite .5s', pointerEvents:'none' }} />
         {/* s3b — lilac triangle over s3 */}
-        <div style={{ position:'absolute', top:'24%', right:-60, width:140, height:112, background:'#d4c4fc', clipPath:'polygon(100% 50%,0% 0%,0% 100%)', animation:'heroFc 13s ease-in-out infinite 1s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'23%', right:-90, width:200, height:160, background:'#d4c4fc', clipPath:'polygon(100% 50%,0% 0%,0% 100%)', animation:'heroFc 13s ease-in-out infinite 1s', pointerEvents:'none' }} />
         {/* s4 — large mint triangle, bottom-left */}
-        <div style={{ position:'absolute', bottom:-180, left:'18%', transform:'translateX(-50%)', width:380, height:380, background:'#b8edd0', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', animation:'heroFd 14s ease-in-out infinite 1.5s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:-250, left:'18%', transform:'translateX(-50%)', width:520, height:520, background:'#b8edd0', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', animation:'heroFd 14s ease-in-out infinite 1.5s', pointerEvents:'none' }} />
         {/* s4b — dark teal triangle over s4 */}
-        <div style={{ position:'absolute', bottom:-90, left:'10%', transform:'translateX(-50%)', width:180, height:180, background:'#043941', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', animation:'heroFd 14s ease-in-out infinite 2s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:-120, left:'10%', transform:'translateX(-50%)', width:240, height:240, background:'#043941', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', animation:'heroFd 14s ease-in-out infinite 2s', pointerEvents:'none' }} />
         {/* s5 — lilac triangle, bottom-right */}
-        <div style={{ position:'absolute', bottom:-130, left:'78%', transform:'translateX(-50%)', width:280, height:280, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', animation:'heroFd 16s ease-in-out infinite 3s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:-180, left:'78%', transform:'translateX(-50%)', width:380, height:380, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', animation:'heroFd 16s ease-in-out infinite 3s', pointerEvents:'none' }} />
         {/* s6 — dark teal left-pointing triangle */}
-        <div style={{ position:'absolute', top:'54%', left:-160, width:310, height:250, background:'#043941', clipPath:'polygon(0% 50%,100% 0%,100% 100%)', animation:'heroFe 13s ease-in-out infinite 2s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'52%', left:-210, width:440, height:360, background:'#043941', clipPath:'polygon(0% 50%,100% 0%,100% 100%)', animation:'heroFe 13s ease-in-out infinite 2s', pointerEvents:'none' }} />
         {/* s7 — spinning green cross */}
-        <div style={{ position:'absolute', top:'10%', left:'6%', width:46, height:46, background:'#02d47e', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 18s linear infinite', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'10%', left:'6%', width:60, height:60, background:'#02d47e', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 18s linear infinite', pointerEvents:'none' }} />
         {/* s8 — yellow rotated square */}
-        <div style={{ position:'absolute', top:'46%', left:'5%', width:36, height:36, background:'#f8ee91', borderRadius:4, animation:'heroFf 9s ease-in-out infinite 1.2s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'46%', left:'5%', width:50, height:50, background:'#f8ee91', borderRadius:6, animation:'heroFf 9s ease-in-out infinite 1.2s', pointerEvents:'none' }} />
 
         {/* ── Hero Top ── */}
         <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', padding:'100px 5vw 60px', position:'relative' }}>
@@ -890,12 +899,12 @@ export default function Landing() {
                       </span>
 
                       {/* Title */}
-                      <p style={{ fontSize:'clamp(1.4rem,2.5vw,1.85rem)', fontWeight:900, lineHeight:1.15, color:'#fff', margin:'0 0 1.5rem' }}>
+                      <p style={{ fontSize:'clamp(1.4rem,2.5vw,1.85rem)', fontWeight:900, lineHeight:1.15, color:card.titleColor, margin:'0 0 1.5rem' }}>
                         {card.titleFront[0]}<br />{card.titleFront[1]}
                       </p>
 
                       {/* Hint */}
-                      <p style={{ fontSize:'.72rem', color:'rgba(255,255,255,0.45)', margin:0 }}>↓ Toca para saber más</p>
+                      <p style={{ fontSize:'.72rem', color:card.hintColor, margin:0 }}>↓ Toca para saber más</p>
                     </div>
 
                     {/* ── BACK ── */}
@@ -910,7 +919,7 @@ export default function Landing() {
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'space-between',
-                      border: '1.5px solid rgba(4,57,65,0.1)',
+                      border: `1.5px solid ${card.backBorder}`,
                     }}>
                       <div>
                         <span style={{ display:'inline-block', padding:'.25rem .75rem', borderRadius:100, fontSize:'.65rem', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', background:card.tagBg, color:card.tagColor, marginBottom:'1rem' }}>
