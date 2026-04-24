@@ -21,9 +21,9 @@ const STATS = [
 
 
 const COMMUNITY = [
-  { icon: Users,     color: '#02d47e', bg: 'rgba(2,212,126,0.08)',   title: 'Docentes EPT',            desc: 'Domina el uso pedagógico de los equipos de tu taller y mejora tus competencias técnicas.',        cta: 'Ingresar a la plataforma', action: 'app'  },
-  { icon: Building2, color: '#045f6c', bg: 'rgba(4,95,108,0.08)',    title: 'Instituciones Educativas', desc: 'Capacitamos a tus docentes para aprovechar al máximo cada equipo EPT especializado.',              cta: 'Escribirnos',              action: 'mail' },
-  { icon: Briefcase, color: '#043941', bg: 'rgba(4,57,65,0.08)',     title: 'Coordinadores EPT',       desc: 'Monitorea el avance formativo de tu equipo y garantiza la implementación pedagógica.',             cta: 'Contactar',                action: 'mail' },
+  { icon: Users,     color: '#02d47e', accent: '#02d47e', bg: 'rgba(2,212,126,0.15)',   title: 'Para Docentes',            desc: 'Domina el uso pedagógico de cada equipo. Accede a 7 módulos, fichas descargables, sesiones en vivo y certificación para mejorar tus competencias técnicas.',        cta: 'Ingresar a la plataforma', action: 'app'  },
+  { icon: BookOpen,  color: '#f8ee91', accent: '#f8ee91', bg: 'rgba(248,238,145,0.15)',  title: 'Para Alumnos',            desc: 'Aprende las técnicas y procedimientos a través de contenido interactivo. Crece pedagógicamente con tu docente en un ambiente estructurado y seguro.',              cta: 'Explorar talleres',         action: 'app' },
+  { icon: Briefcase, color: '#d4c4fc', accent: '#d4c4fc', bg: 'rgba(212,196,252,0.15)',  title: 'Para Directores',       desc: 'Monitorea la implementación pedagógica de tu equipo docente. Asegura calidad formativa y alineación con los estándares EPT de tu institución.',             cta: 'Solicitar demostración',   action: 'mail' },
 ]
 
 const NAV_LINKS = [
@@ -1044,68 +1044,77 @@ export default function Landing() {
       </section>
 
       {/* ══ COMUNIDAD ═══════════════════════════════════════════════════════ */}
-      <section id="comunidad" className="py-16 px-6 relative overflow-hidden" style={{ background: '#ffffff' }}>
-        {/* Tangramas fijos — laterales */}
-        <Tangram color="#02d47e" opacity={0.13} rotate={60}  className="absolute w-96 h-96 -right-12 -top-4 pointer-events-none" />
-        <Tangram color="#043941" opacity={0.08} rotate={-25} className="absolute w-72 h-72 -left-10 bottom-0 pointer-events-none" />
-        <Tangram color="#02d47e" opacity={0.06} rotate={10}  className="absolute w-48 h-48 left-4 top-4 pointer-events-none" />
-        {/* Piezas flotantes — izquierda */}
-        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:52, height:52, top:'18%', left:'4%', animationDuration:'20s' }}>
-          <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.16} />
-        </svg>
-        <svg viewBox="0 0 40 40" className="absolute pointer-events-none float-a" style={{ width:34, height:34, bottom:'25%', left:'7%', animationDuration:'14s' }}>
-          <rect x="3" y="3" width="34" height="34" transform="rotate(15 20 20)" fill="#043941" fillOpacity={0.10} />
-        </svg>
-        {/* Piezas flotantes — derecha */}
-        <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:42, height:42, bottom:'22%', right:'5%', animationDuration:'17s' }}>
-          <polygon points="25,0 50,50 0,50" fill="#02d47e" fillOpacity={0.14} />
-        </svg>
-        <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-d" style={{ width:46, height:46, top:'14%', right:'8%', animationDuration:'11s' }}>
-          <polygon points="0,60 30,0 60,60" fill="#043941" fillOpacity={0.08} />
-        </svg>
+      <section id="comunidad" style={{ background: '#ffffff', padding: '5rem 1.5rem', position:'relative', overflow:'hidden' }}>
 
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <span className="inline-flex items-center gap-2 overline-label font-extrabold mb-3" style={{ color: 'var(--grama-menta)' }}>
-              <span className="h-px w-8 inline-block" style={{ background: '#02d47e' }} />
+        {/* Shapes — mismo lenguaje que hero/talleres */}
+        <div style={{ position:'absolute', top:-100, right:'5%', width:280, height:280, background:'#02d47e', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.12, pointerEvents:'none', animation:'heroFa 16s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', bottom:-140, left:'8%', width:320, height:320, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.14, pointerEvents:'none', animation:'heroFd 18s ease-in-out infinite 2s' }} />
+        <div style={{ position:'absolute', top:'40%', left:-60, width:140, height:110, background:'#f8ee91', clipPath:'polygon(0% 50%,100% 0%,100% 100%)', opacity:.25, pointerEvents:'none', animation:'heroFe 14s ease-in-out infinite 1s' }} />
+
+        <div style={{ maxWidth:1152, margin:'0 auto' }}>
+
+          {/* Header */}
+          <div style={{ textAlign:'center', maxWidth:700, margin:'0 auto 4rem' }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
+              <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
               Para toda la comunidad
             </span>
-            <h2 className="t-h1 font-extrabold leading-tight mb-3" style={{ color: 'var(--grama-oscuro)' }}>
-              Diseñado para toda la comunidad EPT
+            <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
+              Diseñado para <span style={{ color:'#02d47e' }}>docentes, alumnos</span><br/>y <span style={{ color:'#02d47e' }}>directores</span>
             </h2>
-            <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>
-              GRAMA sirve a toda la comunidad EPT.
+            <p style={{ fontSize:'.9rem', color:'rgba(4,57,65,.6)', lineHeight:1.8, margin:0 }}>
+              GRAMA se adapta a los roles y necesidades de cada miembro de la comunidad educativa técnica.
             </p>
           </div>
 
-          <div ref={comunidadReveal.ref} className="grid md:grid-cols-3 gap-6">
+          {/* Cards Grid */}
+          <div ref={comunidadReveal.ref} style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(320px, 1fr))', gap:28, maxWidth:1100, margin:'0 auto' }}>
             {COMMUNITY.map((c, i) => (
               <div
                 key={c.title}
-                className="group relative p-7 rounded-3xl border flex flex-col overflow-hidden transition-all hover:shadow-md hover:-translate-y-0.5"
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform='translateY(-12px)'; (e.currentTarget as HTMLElement).style.boxShadow='0 24px 56px rgba(4,57,65,.16)' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform='none'; (e.currentTarget as HTMLElement).style.boxShadow='0 6px 24px rgba(4,57,65,.08)' }}
                 style={{
-                  borderColor: '#e3f8fb',
-                  background: '#ffffff',
+                  borderRadius:24,
+                  background:'#fff',
+                  overflow:'hidden',
+                  boxShadow:'0 6px 24px rgba(4,57,65,.08)',
+                  transition:'transform .3s ease, box-shadow .3s ease',
                   opacity: comunidadReveal.visible ? 1 : 0,
-                  transform: comunidadReveal.visible ? 'translateY(0)' : 'translateY(28px)',
-                  transition: `opacity 0.5s ease ${i * 0.12}s, transform 0.5s ease ${i * 0.12}s`,
+                  transform: comunidadReveal.visible ? 'translateY(0)' : 'translateY(32px)',
+                  transitionDelay: `${i * 0.08}s`,
                 }}
               >
-                <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-5" style={{ background: c.bg }}>
-                  <c.icon size={22} style={{ color: c.color }} />
+                {/* Top accent strip */}
+                <div style={{ height:6, background:c.accent }} />
+
+                {/* Icon area */}
+                <div style={{ padding:'2rem', display:'flex', alignItems:'center', justifyContent:'center', minHeight:140 }}>
+                  <div style={{ width:80, height:80, borderRadius:20, background:c.bg, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                    <c.icon size={40} style={{ color:c.color }} />
+                  </div>
                 </div>
-                <h3 className="text-base font-extrabold mb-2" style={{ color: 'var(--grama-oscuro)' }}>{c.title}</h3>
-                <p className="text-sm leading-relaxed flex-1 mb-5" style={{ color: '#64748b' }}>{c.desc}</p>
-                <button
-                  onClick={c.action === 'app' ? goToApp : () => window.location.href = 'mailto:contacto@grama.pe'}
-                  className="flex items-center gap-1.5 text-xs font-bold transition-opacity hover:opacity-60 self-start"
-                  style={{ color: c.color }}
-                >
-                  {c.cta} <ChevronRight size={12} />
-                </button>
+
+                {/* Content */}
+                <div style={{ padding:'0 2rem 2rem' }}>
+                  <h3 style={{ fontSize:'1.1rem', fontWeight:900, color:'#043941', margin:'0 0 1rem', lineHeight:1.3 }}>{c.title}</h3>
+                  <p style={{ fontSize:'.88rem', lineHeight:1.7, color:'#64748b', margin:'0 0 1.8rem' }}>{c.desc}</p>
+
+                  {/* CTA Button */}
+                  <button
+                    onClick={c.action === 'app' ? goToApp : () => window.location.href = 'mailto:contacto@grama.pe'}
+                    style={{ display:'inline-flex', alignItems:'center', gap:6, background:c.accent, color:'#fff', fontSize:'.8rem', fontWeight:800, padding:'.7rem 1.6rem', borderRadius:100, border:'none', cursor:'pointer', transition:'box-shadow .2s, transform .2s' }}
+                    onMouseEnter={e => { e.currentTarget.style.boxShadow=`0 8px 20px ${c.accent}44`; e.currentTarget.style.transform='translateY(-2px)' }}
+                    onMouseLeave={e => { e.currentTarget.style.boxShadow='none'; e.currentTarget.style.transform='none' }}
+                  >
+                    {c.cta}
+                    <ChevronRight size={14} />
+                  </button>
+                </div>
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
