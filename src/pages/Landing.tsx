@@ -132,21 +132,41 @@ function useReveal(threshold = 0.12) {
 
 // ── Carrusel horizontal de talleres ──────────────────────────────────────────
 function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void }) {
-  const scrollRef  = useRef<HTMLDivElement>(null)
-  const speedRef   = useRef(0.7)
-  const pausedRef  = useRef(false)
-  const rafRef     = useRef<number>()
-  const items = [...talleresConfig, ...talleresConfig]
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const speedRef  = useRef(0.8)
+  const pausedRef = useRef(false)
+  const rafRef    = useRef<number>()
+  const items     = [...talleresConfig, ...talleresConfig]
+
+  // Arc transform: cada card recibe scale + rotateY + translateY proporcional a su distancia del centro visible
+  const applyArc = (el: HTMLDivElement) => {
+    const visibleCenter = el.scrollLeft + el.clientWidth / 2
+    const maxDist       = el.clientWidth * 0.5
+    el.querySelectorAll<HTMLElement>('[data-card]').forEach(card => {
+      const dist = (card.offsetLeft + card.offsetWidth / 2) - visibleCenter
+      const n    = Math.max(-1, Math.min(1, dist / maxDist))   // [-1 … 1]
+      const abs  = Math.abs(n)
+      const scale   = 1.05 - abs * 0.27                        // 1.05 centro → 0.78 bordes
+      const rotY    = -n * 20                                   // cards derecha giran hacia el espectador
+      const dropY   = abs * abs * 28                            // caída cuadrática: 0px centro → 28px bordes
+      const opacity = Math.max(0.52, 1 - abs * 0.48)
+      card.style.transform = `perspective(900px) rotateY(${rotY}deg) translateY(${dropY}px) scale(${scale})`
+      card.style.opacity   = String(opacity)
+      card.style.zIndex    = String(Math.round((1 - abs) * 20))
+    })
+  }
 
   useEffect(() => {
     const el = scrollRef.current
     if (!el) return
+    applyArc(el)                                                // render inicial correcto
     const tick = () => {
-      if (!pausedRef.current && el) {
+      if (!pausedRef.current) {
         el.scrollLeft += speedRef.current
         if (el.scrollLeft >= el.scrollWidth / 2) el.scrollLeft = 0
         if (el.scrollLeft <= 0 && speedRef.current < 0) el.scrollLeft = el.scrollWidth / 2
       }
+      applyArc(el)
       rafRef.current = requestAnimationFrame(tick)
     }
     rafRef.current = requestAnimationFrame(tick)
@@ -155,76 +175,77 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
 
   return (
     <div style={{ position:'relative' }}>
-      {/* Fade masks */}
-      <div style={{ position:'absolute', left:0, top:0, bottom:0, width:80, zIndex:10, pointerEvents:'none', background:'linear-gradient(to right,#f0fdf6 0%,transparent 100%)' }} />
-      <div style={{ position:'absolute', right:0, top:0, bottom:0, width:80, zIndex:10, pointerEvents:'none', background:'linear-gradient(to left,#f0fdf6 0%,transparent 100%)' }} />
+      {/* Fade masks — más anchos para suavizar los bordes del arco */}
+      <div style={{ position:'absolute', left:0, top:0, bottom:0, width:130, zIndex:10, pointerEvents:'none', background:'linear-gradient(to right,#f0fdf6 40%,transparent)' }} />
+      <div style={{ position:'absolute', right:0, top:0, bottom:0, width:130, zIndex:10, pointerEvents:'none', background:'linear-gradient(to left,#f0fdf6 40%,transparent)' }} />
 
-      {/* Arrow — left */}
+      {/* Flecha izquierda */}
       <button
-        style={{ position:'absolute', left:12, top:'50%', transform:'translateY(-50%)', zIndex:20, width:40, height:40, borderRadius:'50%', background:'#043941', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 16px rgba(4,57,65,.35)', color:'#02d47e', transition:'transform .2s ease, box-shadow .2s ease' }}
-        onMouseEnter={e => { speedRef.current = -4; pausedRef.current = false;(e.currentTarget.style.transform='translateY(-50%) scale(1.12)'); e.currentTarget.style.boxShadow='0 6px 22px rgba(4,57,65,.45)' }}
-        onMouseLeave={e => { speedRef.current = 0.7; e.currentTarget.style.transform='translateY(-50%)'; e.currentTarget.style.boxShadow='0 4px 16px rgba(4,57,65,.35)' }}
+        style={{ position:'absolute', left:20, top:'50%', transform:'translateY(-50%)', zIndex:20, width:42, height:42, borderRadius:'50%', background:'#043941', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 16px rgba(4,57,65,.4)', color:'#02d47e', transition:'transform .2s, box-shadow .2s' }}
+        onMouseEnter={e => { speedRef.current = -5; pausedRef.current = false; e.currentTarget.style.transform='translateY(-50%) scale(1.14)'; e.currentTarget.style.boxShadow='0 6px 24px rgba(4,57,65,.55)' }}
+        onMouseLeave={e => { speedRef.current = 0.8; e.currentTarget.style.transform='translateY(-50%)'; e.currentTarget.style.boxShadow='0 4px 16px rgba(4,57,65,.4)' }}
       >
         <ChevronLeft size={18} />
       </button>
 
-      {/* Arrow — right */}
+      {/* Flecha derecha */}
       <button
-        style={{ position:'absolute', right:12, top:'50%', transform:'translateY(-50%)', zIndex:20, width:40, height:40, borderRadius:'50%', background:'#043941', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 16px rgba(4,57,65,.35)', color:'#02d47e', transition:'transform .2s ease, box-shadow .2s ease' }}
-        onMouseEnter={e => { speedRef.current = 4; pausedRef.current = false; e.currentTarget.style.transform='translateY(-50%) scale(1.12)'; e.currentTarget.style.boxShadow='0 6px 22px rgba(4,57,65,.45)' }}
-        onMouseLeave={e => { speedRef.current = 0.7; e.currentTarget.style.transform='translateY(-50%)'; e.currentTarget.style.boxShadow='0 4px 16px rgba(4,57,65,.35)' }}
+        style={{ position:'absolute', right:20, top:'50%', transform:'translateY(-50%)', zIndex:20, width:42, height:42, borderRadius:'50%', background:'#043941', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 16px rgba(4,57,65,.4)', color:'#02d47e', transition:'transform .2s, box-shadow .2s' }}
+        onMouseEnter={e => { speedRef.current = 5; pausedRef.current = false; e.currentTarget.style.transform='translateY(-50%) scale(1.14)'; e.currentTarget.style.boxShadow='0 6px 24px rgba(4,57,65,.55)' }}
+        onMouseLeave={e => { speedRef.current = 0.8; e.currentTarget.style.transform='translateY(-50%)'; e.currentTarget.style.boxShadow='0 4px 16px rgba(4,57,65,.4)' }}
       >
         <ChevronRight size={18} />
       </button>
 
-      {/* Track */}
+      {/* Track — position:relative necesario para que card.offsetLeft sea relativo a este contenedor */}
       <div
         ref={scrollRef}
-        style={{ display:'flex', gap:20, overflowX:'hidden', padding:'8px 56px 16px', scrollbarWidth:'none' }}
+        style={{ position:'relative', display:'flex', gap:20, overflowX:'hidden', padding:'36px 80px 52px', scrollbarWidth:'none' }}
         onMouseEnter={() => { pausedRef.current = true }}
-        onMouseLeave={() => { pausedRef.current = false; speedRef.current = 0.7 }}
+        onMouseLeave={() => { pausedRef.current = false; speedRef.current = 0.8 }}
       >
         {items.map((t, i) => (
           <div
             key={i}
+            data-card="true"
             onClick={() => onOpenModal(i % talleresConfig.length)}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform='translateY(-10px)'; (e.currentTarget as HTMLElement).style.boxShadow='0 20px 48px rgba(4,57,65,.18)' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform='none'; (e.currentTarget as HTMLElement).style.boxShadow='0 4px 20px rgba(4,57,65,.08)' }}
-            style={{ width:256, flexShrink:0, borderRadius:20, overflow:'hidden', background:'#fff', cursor:'pointer', boxShadow:'0 4px 20px rgba(4,57,65,.08)', transition:'transform .3s ease, box-shadow .3s ease' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 24px 52px rgba(4,57,65,.22)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 4px 20px rgba(4,57,65,.09)' }}
+            style={{
+              width:252, flexShrink:0, borderRadius:20, overflow:'hidden',
+              background:'#fff', cursor:'pointer',
+              boxShadow:'0 4px 20px rgba(4,57,65,.09)',
+              transition:'box-shadow .3s ease',
+              /* sin transition de transform — el arco actualiza cada frame */
+            }}
           >
-            {/* Color accent strip */}
+            {/* Franja de color */}
             <div style={{ height:4, background:`hsl(${t.color})` }} />
 
-            {/* Photo */}
-            <div style={{ height:192, position:'relative', overflow:'hidden' }}>
-              <img src={t.imagen} alt={t.nombre} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.75) saturate(0.85)', transition:'transform .5s ease' }}
-                onMouseEnter={e => (e.currentTarget.style.transform='scale(1.06)')}
-                onMouseLeave={e => (e.currentTarget.style.transform='none')}
-              />
-              {/* Gradient overlay */}
-              <div style={{ position:'absolute', inset:0, background:'linear-gradient(170deg, rgba(4,57,65,0.05) 0%, rgba(4,57,65,0.82) 100%)' }} />
+            {/* Foto */}
+            <div style={{ height:196, position:'relative', overflow:'hidden' }}>
+              <img src={t.imagen} alt={t.nombre} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.75) saturate(0.85)' }} />
+              <div style={{ position:'absolute', inset:0, background:'linear-gradient(170deg, rgba(4,57,65,0.05) 0%, rgba(4,57,65,0.84) 100%)' }} />
 
-              {/* Badge pill */}
+              {/* Badge */}
               <div style={{ position:'absolute', top:14, left:14, display:'inline-flex', alignItems:'center', gap:5, background:'rgba(4,57,65,0.72)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,0.14)', borderRadius:100, padding:'.2rem .65rem' }}>
                 <span style={{ width:5, height:5, borderRadius:'50%', background:'#02d47e', display:'inline-block', flexShrink:0 }} />
                 <span style={{ fontSize:'.58rem', fontWeight:800, letterSpacing:'.14em', color:'rgba(255,255,255,.92)' }}>T{String(t.numero).padStart(2,'0')}</span>
               </div>
 
-              {/* Title overlay */}
+              {/* Título */}
               <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'1rem' }}>
                 <h3 style={{ fontSize:'.92rem', fontWeight:900, color:'#fff', lineHeight:1.25, margin:0 }}>{t.nombre}</h3>
               </div>
             </div>
 
-            {/* Content */}
+            {/* Contenido */}
             <div style={{ padding:'14px 16px 16px' }}>
               <p style={{ fontSize:'.75rem', lineHeight:1.65, color:'#64748b', margin:'0 0 12px', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical' as const, overflow:'hidden' }}>{t.descripcion}</p>
-
               <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:12 }}>
                 <span style={{ display:'flex', alignItems:'center', gap:4, fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.5)' }}><BookOpen size={10} /> 7 módulos</span>
                 <span style={{ display:'flex', alignItems:'center', gap:4, fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.5)' }}><Clock size={10} /> 150h</span>
               </div>
-
               <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', paddingTop:10, borderTop:'1px solid rgba(4,57,65,0.07)' }}>
                 <span style={{ fontSize:'.7rem', fontWeight:800, color:'#043941' }}>Ver ruta</span>
                 <div style={{ width:26, height:26, borderRadius:'50%', background:`hsl(${t.color})`, display:'flex', alignItems:'center', justifyContent:'center' }}>
