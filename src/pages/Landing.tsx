@@ -130,6 +130,25 @@ function useReveal(threshold = 0.12) {
   return { ref, visible }
 }
 
+// Hook para calcular el reveal del círculo basado en scroll entre dos elementos
+function useScrollReveal(startRef: React.RefObject<HTMLDivElement>, endRef: React.RefObject<HTMLDivElement>) {
+  const [progress, setProgress] = useState(0)
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!startRef.current || !endRef.current) return
+      const startTop = startRef.current.offsetTop
+      const endTop = endRef.current.offsetTop
+      const range = endTop - startTop
+      const current = window.scrollY - startTop
+      const p = Math.max(0, Math.min(1, current / range))
+      setProgress(p)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [startRef, endRef])
+  return progress
+}
+
 // ── Carrusel horizontal de talleres ──────────────────────────────────────────
 function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void }) {
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -704,6 +723,11 @@ export default function Landing() {
   const [flippedCard, setFlippedCard] = useState<number | null>(null)
   const [open, setOpen] = useState<number | null>(null)
 
+  // Refs para scroll reveal del círculo (hero → por qué grama)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const porQueGramaRef = useRef<HTMLDivElement>(null)
+  const circleProgress = useScrollReveal(heroRef, porQueGramaRef)
+
   // Reveal hooks por sección
   const talleresHeaderReveal = useReveal()
   const talleresReveal = useReveal()
@@ -760,7 +784,7 @@ export default function Landing() {
       </header>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section style={{ minHeight:'100vh', display:'flex', flexDirection:'column', background:'#f0fdf6', position:'relative', overflow:'hidden' }}>
+      <section ref={heroRef} style={{ minHeight:'100vh', display:'flex', flexDirection:'column', background:'#f0fdf6', position:'relative', overflow:'hidden' }}>
 
         {/* s1 — large mint triangle, top center-right */}
         <div style={{ position:'absolute', top:-260, left:'58%', transform:'translateX(-50%)', width:560, height:560, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', animation:'heroFa 15s ease-in-out infinite', pointerEvents:'none' }} />
@@ -864,7 +888,23 @@ export default function Landing() {
       </section>
 
       {/* ══ POR QUÉ GRAMA ═══════════════════════════════════════════════════ */}
-      <section id="nosotros" style={{ background: '#ffffff', padding: '5rem 1.5rem', overflow: 'hidden', position: 'relative' }}>
+      <section ref={porQueGramaRef} id="nosotros" style={{ background: '#ffffff', padding: '5rem 1.5rem', overflow: 'hidden', position: 'relative' }}>
+
+        {/* Círculo reveal que consume el hero al hacer scroll */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: Math.max(100, 1400 * (1 + circleProgress * 0.3)),
+          height: Math.max(100, 1400 * (1 + circleProgress * 0.3)),
+          background: '#ffffff',
+          borderRadius: '50%',
+          pointerEvents: 'none',
+          zIndex: 5,
+          opacity: Math.min(1, circleProgress * 3),
+          boxShadow: `0 -40px 80px rgba(0,0,0,0.08)`,
+        }} />
 
         {/* Shapes decorativos de fondo */}
         <div style={{ position:'absolute', top:'8%', left:'3%', width:60, height:130, background:'#b8edd0', borderRadius:'0 0 30px 30px', opacity:.3, pointerEvents:'none', transform:'rotate(-8deg)', animation:'heroFb 13s ease-in-out infinite' }} />
@@ -878,8 +918,8 @@ export default function Landing() {
 
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
-          {/* Header */}
-          <div style={{ textAlign:'center', marginBottom:'3.5rem' }}>
+          {/* Header — con scroll reveal */}
+          <div style={{ textAlign:'center', marginBottom:'3.5rem', opacity: 0, transform: 'translateY(32px)', animation: 'fadeInUp 0.8s cubic-bezier(0.4,0,0.2,1) 0.1s forwards' }}>
             <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
               <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
               ¿Por qué GRAMA?
@@ -907,6 +947,8 @@ export default function Landing() {
                     transform: isFlipped ? 'none' : tilt,
                     transition: 'transform .4s ease',
                     flexShrink: 0,
+                    opacity: 0,
+                    animation: `fadeInUp 0.6s cubic-bezier(0.4,0,0.2,1) ${0.2 + i * 0.15}s forwards`,
                   }}
                 >
                   <div style={{
