@@ -1,7 +1,7 @@
 // src/pages/Login.tsx
 import { useState, useMemo, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
+import { Eye, EyeOff, AlertCircle, CheckCircle, ArrowRight } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
@@ -11,10 +11,10 @@ import { talleresConfig } from '@/data/talleresConfig'
 type Tab = 'login' | 'register'
 
 const INPUT_STYLE = {
-  base: 'w-full px-4 py-3 rounded-xl border-2 text-sm outline-none transition-all',
-  colors: { borderColor: '#e3f8fb', color: 'var(--grama-oscuro)', background: '#fafffe' },
+  base: 'w-full px-4 py-3.5 rounded-xl border text-sm outline-none transition-all duration-200',
+  colors: { borderColor: 'rgba(4,57,65,0.1)', color: '#043941', background: 'rgba(4,57,65,0.02)' },
   focus: '#02d47e',
-  blur: '#e3f8fb',
+  blur: 'rgba(4,57,65,0.1)',
 }
 
 function GramaInput({
@@ -99,22 +99,23 @@ function LoginForm({ onSuccess }: { onSuccess: (isAdmin: boolean) => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-6">
       {error && (
-        <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm" style={{ background: '#fee2e2', color: '#ef4444' }}>
-          <AlertCircle size={16} className="shrink-0" />{error}
+        <div className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium animate-fade-in-up"
+          style={{ background: 'rgba(239,68,68,0.08)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.2)' }}>
+          <AlertCircle size={16} className="shrink-0 flex-none" /><span>{error}</span>
         </div>
       )}
 
       <div>
-        <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
+        <label htmlFor="email" className="block text-sm font-bold mb-2.5" style={{ color: '#043941', letterSpacing: '-0.3px' }}>
           Correo electrónico
         </label>
         <GramaInput id="email" type="email" autoComplete="email" value={email} onChange={setEmail} placeholder="docente@colegio.pe" required />
       </div>
 
       <div>
-        <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
+        <label htmlFor="password" className="block text-sm font-bold mb-2.5" style={{ color: '#043941', letterSpacing: '-0.3px' }}>
           Contraseña
         </label>
         <div className="relative">
@@ -122,32 +123,37 @@ function LoginForm({ onSuccess }: { onSuccess: (isAdmin: boolean) => void }) {
             id="password" type={showPass ? 'text' : 'password'} autoComplete="off"
             value={password} onChange={e => setPassword(e.target.value)}
             placeholder="••••••••" required
-            className={`${INPUT_STYLE.base} pr-12`}
+            className={`${INPUT_STYLE.base} pr-11`}
             style={INPUT_STYLE.colors}
-            onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
-            onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}
+            onFocus={e => { e.target.style.borderColor = INPUT_STYLE.focus; e.target.style.boxShadow = `0 0 0 3px rgba(2,212,126,0.1)` }}
+            onBlur={e => { e.target.style.borderColor = INPUT_STYLE.blur; e.target.style.boxShadow = 'none' }}
           />
           <button type="button" onClick={() => setShowPass(!showPass)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1" style={{ color: '#045f6c' }} tabIndex={-1}>
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1.5 rounded-lg transition-colors"
+            style={{ color: '#64748b' }}
+            onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#64748b')}
+            tabIndex={-1}>
             {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
       </div>
 
-      <div className="text-right">
-        <button type="button" className="text-xs font-medium" style={{ color: '#045f6c' }}
+      <div className="flex items-center justify-between">
+        <button type="button" className="text-xs font-semibold transition-colors"
+          style={{ color: '#64748b' }}
           onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#045f6c')}>
+          onMouseLeave={e => (e.currentTarget.style.color = '#64748b')}>
           ¿Olvidaste tu contraseña?
         </button>
       </div>
 
       <button type="submit" disabled={loading}
-        className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all disabled:opacity-70"
-        style={{ background: 'var(--grama-menta)' }}
-        onMouseEnter={e => !loading && ((e.target as HTMLButtonElement).style.background = '#00c16e')}
-        onMouseLeave={e => !loading && ((e.target as HTMLButtonElement).style.background = '#02d47e')}>
-        {loading ? 'Ingresando...' : 'Ingresar'}
+        className="w-full py-3.5 rounded-xl font-bold text-white text-sm transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60 hover:shadow-lg"
+        style={{ background: '#02d47e', boxShadow: '0 4px 12px rgba(2,212,126,0.3)' }}
+        onMouseEnter={e => !loading && (e.currentTarget.style.transform = 'translateY(-2px)')}
+        onMouseLeave={e => !loading && (e.currentTarget.style.transform = 'none')}>
+        {loading ? 'Ingresando...' : <>Ingresar <ArrowRight size={16} className="opacity-70" /></>}
       </button>
     </form>
   )
@@ -229,42 +235,44 @@ function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {/* Aviso informativo */}
-      <div className="px-4 py-3 rounded-xl text-xs leading-relaxed" style={{ background: '#e3f8fb', color: '#045f6c' }}>
-        Completa el formulario y validaremos tu acceso internamente. Te notificaremos por correo.
+      <div className="px-4 py-3.5 rounded-xl text-xs leading-relaxed font-medium"
+        style={{ background: 'rgba(2,212,126,0.08)', color: '#043941', border: '1px solid rgba(2,212,126,0.15)' }}>
+        ✓ Completa el formulario y validaremos tu acceso internamente. Te notificaremos por correo en menos de 24h.
       </div>
 
       {error && (
-        <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm" style={{ background: '#fee2e2', color: '#ef4444' }}>
-          <AlertCircle size={16} className="shrink-0" />{error}
+        <div className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium animate-fade-in-up"
+          style={{ background: 'rgba(239,68,68,0.08)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.2)' }}>
+          <AlertCircle size={16} className="shrink-0 flex-none" /><span>{error}</span>
         </div>
       )}
 
       <div>
-        <label htmlFor="nombre" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
+        <label htmlFor="nombre" className="block text-sm font-bold mb-2.5" style={{ color: '#043941', letterSpacing: '-0.3px' }}>
           Nombre completo *
         </label>
         <GramaInput id="nombre" value={nombre} onChange={setNombre} placeholder="Prof. Ana García" required />
       </div>
 
       <div>
-        <label htmlFor="reg-email" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
+        <label htmlFor="reg-email" className="block text-sm font-bold mb-2.5" style={{ color: '#043941', letterSpacing: '-0.3px' }}>
           Correo electrónico *
         </label>
         <GramaInput id="reg-email" type="email" autoComplete="email" value={email} onChange={setEmail} placeholder="docente@colegio.pe" required />
       </div>
 
       <div>
-        <label htmlFor="ie" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
+        <label htmlFor="ie" className="block text-sm font-bold mb-2.5" style={{ color: '#043941', letterSpacing: '-0.3px' }}>
           Institución Educativa
         </label>
         <select
           id="ie" value={ieId}
           onChange={e => setIeId(e.target.value === '' ? '' : Number(e.target.value))}
           className={INPUT_STYLE.base} style={{ ...INPUT_STYLE.colors, cursor: 'pointer' }}
-          onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
-          onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}>
+          onFocus={e => { e.target.style.borderColor = INPUT_STYLE.focus; e.target.style.boxShadow = `0 0 0 3px rgba(2,212,126,0.1)` }}
+          onBlur={e => { e.target.style.borderColor = INPUT_STYLE.blur; e.target.style.boxShadow = 'none' }}>
           <option value="">Selecciona tu IE</option>
           {INSTITUCIONES_EDUCATIVAS.map(ie => (
             <option key={ie.id} value={ie.id}>{ie.nombre} · {ie.distrito}</option>
@@ -274,21 +282,21 @@ function RegisterForm() {
 
       {talleresDeIE.length > 0 && (
         <div>
-          <label htmlFor="taller" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
+          <label htmlFor="taller" className="block text-sm font-bold mb-2.5" style={{ color: '#043941', letterSpacing: '-0.3px' }}>
             Taller de interés
           </label>
           {talleresDeIE.length === 1 ? (
-            <div className="w-full px-4 py-3 rounded-xl border-2 text-sm font-semibold flex items-center gap-2"
-              style={{ borderColor: 'var(--grama-menta)', color: 'var(--grama-oscuro)', background: '#f0fdf9' }}>
-              <CheckCircle size={15} style={{ color: 'var(--grama-menta)' }} />
+            <div className="w-full px-4 py-3.5 rounded-xl border text-sm font-semibold flex items-center gap-2"
+              style={{ borderColor: '#02d47e', color: '#043941', background: 'rgba(2,212,126,0.06)' }}>
+              <CheckCircle size={16} style={{ color: '#02d47e', flexShrink: 0 }} />
               {talleresDeIE[0].nombre}
             </div>
           ) : (
             <select id="taller" value={tallerSlug}
               onChange={e => setTallerSlug(e.target.value)}
               className={INPUT_STYLE.base} style={{ ...INPUT_STYLE.colors, cursor: 'pointer' }}
-              onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
-              onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}>
+              onFocus={e => { e.target.style.borderColor = INPUT_STYLE.focus; e.target.style.boxShadow = `0 0 0 3px rgba(2,212,126,0.1)` }}
+              onBlur={e => { e.target.style.borderColor = INPUT_STYLE.blur; e.target.style.boxShadow = 'none' }}>
               <option value="">Selecciona tu taller</option>
               {talleresDeIE.map(t => (
                 <option key={t.slug} value={t.slug}>{t.nombre}</option>
@@ -299,24 +307,24 @@ function RegisterForm() {
       )}
 
       <div>
-        <label htmlFor="mensaje" className="block text-sm font-semibold mb-2" style={{ color: 'var(--grama-oscuro)' }}>
+        <label htmlFor="mensaje" className="block text-sm font-bold mb-2.5" style={{ color: '#043941', letterSpacing: '-0.3px' }}>
           Mensaje (opcional)
         </label>
         <textarea
           id="mensaje" value={mensaje} onChange={e => setMensaje(e.target.value)}
           placeholder="Cuéntanos brevemente tu contexto..."
           rows={3} className={`${INPUT_STYLE.base} resize-none`} style={INPUT_STYLE.colors}
-          onFocus={e => (e.target.style.borderColor = INPUT_STYLE.focus)}
-          onBlur={e => (e.target.style.borderColor = INPUT_STYLE.blur)}
+          onFocus={e => { e.target.style.borderColor = INPUT_STYLE.focus; e.target.style.boxShadow = `0 0 0 3px rgba(2,212,126,0.1)` }}
+          onBlur={e => { e.target.style.borderColor = INPUT_STYLE.blur; e.target.style.boxShadow = 'none' }}
         />
       </div>
 
       <button type="submit" disabled={loading}
-        className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all disabled:opacity-70"
-        style={{ background: 'var(--grama-menta)' }}
-        onMouseEnter={e => !loading && ((e.target as HTMLButtonElement).style.background = '#00c16e')}
-        onMouseLeave={e => !loading && ((e.target as HTMLButtonElement).style.background = '#02d47e')}>
-        {loading ? 'Enviando...' : 'Solicitar acceso'}
+        className="w-full py-3.5 rounded-xl font-bold text-white text-sm transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60 hover:shadow-lg"
+        style={{ background: '#02d47e', boxShadow: '0 4px 12px rgba(2,212,126,0.3)' }}
+        onMouseEnter={e => !loading && (e.currentTarget.style.transform = 'translateY(-2px)')}
+        onMouseLeave={e => !loading && (e.currentTarget.style.transform = 'none')}>
+        {loading ? 'Enviando...' : <>Solicitar acceso <ArrowRight size={16} className="opacity-70" /></>}
       </button>
     </form>
   )
@@ -335,64 +343,44 @@ export default function Login() {
     }
   }, [loading, user, isAdmin, navigate])
 
-  const tabBase = 'flex-1 py-2.5 text-sm font-bold transition-all rounded-lg'
+  const tabBase = 'flex-1 py-3 text-sm font-bold transition-all rounded-lg'
 
   return (
-    <div className="min-h-screen flex" style={{ background: 'var(--grama-oscuro)' }}>
+    <div className="min-h-screen flex" style={{ background: '#f0fdf6' }}>
 
       {/* ── Botón volver al landing ── */}
       <button
         onClick={() => navigate('/')}
-        className="fixed top-4 left-4 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-opacity hover:opacity-70"
-        style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.1)' }}
+        className="fixed top-6 left-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold transition-all hover:translate-y-px"
+        style={{ background: '#fff', color: '#043941', boxShadow: '0 2px 8px rgba(4,57,65,0.1)', border: '1px solid rgba(4,57,65,0.08)' }}
       >
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
           <path d="M19 12H5M12 5l-7 7 7 7" />
         </svg>
-        Volver al inicio
+        Volver
       </button>
 
-      {/* ── Lado izquierdo (desktop) ── */}
-      <div className="hidden lg:flex flex-col items-center justify-center w-1/2 px-16 py-12 grama-pattern relative overflow-hidden" style={{ background: '#052e35' }}>
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute" style={{ width: 420, height: 420, background: 'radial-gradient(circle, rgba(2,212,126,0.10) 0%, transparent 65%)', right: -80, top: -80 }} />
-          <div className="absolute" style={{ width: 300, height: 300, background: 'radial-gradient(circle, rgba(4,95,108,0.18) 0%, transparent 65%)', left: -60, bottom: -60 }} />
-          <svg viewBox="0 0 160 160" className="absolute w-64 h-64 -bottom-10 -left-10" style={{ transform: 'rotate(-15deg)' }} xmlns="http://www.w3.org/2000/svg">
-            <polygon points="0,160 80,80 0,0"     fill="#02d47e" fillOpacity={0.12} />
-            <polygon points="160,0 80,80 160,160" fill="#02d47e" fillOpacity={0.08} />
-            <polygon points="0,160 80,160 80,80"  fill="#02d47e" fillOpacity={0.14} />
-            <rect x="70" y="30" width="40" height="40" transform="rotate(45 90 50)" fill="#02d47e" fillOpacity={0.10} />
-          </svg>
-          <svg viewBox="0 0 160 160" className="absolute w-48 h-48 -top-6 -right-6" style={{ transform: 'rotate(20deg)' }} xmlns="http://www.w3.org/2000/svg">
-            <polygon points="0,160 80,80 0,0"     fill="#02d47e" fillOpacity={0.10} />
-            <polygon points="160,0 80,80 160,160" fill="#02d47e" fillOpacity={0.07} />
-            <polygon points="80,80 120,80 120,120" fill="#02d47e" fillOpacity={0.09} />
-          </svg>
-          <svg viewBox="0 0 80 80" className="absolute float-a" style={{ width:64, height:64, top:'12%', left:'6%', animationDuration:'15s' }}>
-            <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.22} />
-          </svg>
-          <svg viewBox="0 0 60 60" className="absolute float-b" style={{ width:46, height:46, top:'52%', left:'8%', animationDuration:'19s' }}>
-            <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.18} />
-          </svg>
-          <svg viewBox="0 0 50 50" className="absolute float-c" style={{ width:38, height:38, top:'22%', right:'14%', animationDuration:'12s' }}>
-            <rect x="3" y="3" width="44" height="44" transform="rotate(15 25 25)" fill="#02d47e" fillOpacity={0.16} />
-          </svg>
-          <svg viewBox="0 0 60 60" className="absolute float-d" style={{ width:44, height:44, bottom:'20%', right:'10%', animationDuration:'10s' }}>
-            <polygon points="30,0 60,60 0,60" fill="#02d47e" fillOpacity={0.20} />
-          </svg>
-          <svg viewBox="0 0 80 40" className="absolute float-a" style={{ width:58, height:30, bottom:'38%', left:'18%', animationDuration:'17s' }}>
-            <polygon points="20,0 80,0 60,40 0,40" fill="#02d47e" fillOpacity={0.14} />
-          </svg>
-        </div>
+      {/* ── Lado izquierdo (desktop) — Hero mejorado ── */}
+      <div className="hidden lg:flex flex-col items-center justify-center w-1/2 px-16 py-12 relative overflow-hidden" style={{ background: '#043941' }}>
+        {/* Shapes decorativos — más audaces como en landing */}
+        <div style={{ position:'absolute', top:-280, left:'20%', transform:'translateX(-50%)', width:560, height:560, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:0.16, pointerEvents:'none', animation:'heroFa 15s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', bottom:-200, right:'15%', width:420, height:420, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:0.14, pointerEvents:'none', animation:'heroFd 18s ease-in-out infinite 2s' }} />
+        <div style={{ position:'absolute', top:'30%', left:-140, width:240, height:200, background:'#f8ee91', borderRadius:'0 0 120px 120px', opacity:0.2, pointerEvents:'none', animation:'heroFb 14s ease-in-out infinite 1s' }} />
+        <div style={{ position:'absolute', bottom:'15%', right:'-5%', width:180, height:120, background:'#02d47e', clipPath:'polygon(0% 50%,100% 0%,100% 100%)', opacity:0.15, pointerEvents:'none', animation:'heroFe 13s ease-in-out infinite 1.5s' }} />
+
         <div className="relative z-10 text-center max-w-sm">
-          <div className="flex justify-center mb-8"><GramaLogo variant="light" size="lg" /></div>
-          <h2 className="text-2xl font-extrabold text-white mb-3">Plataforma de Capacitación Docente</h2>
-          <p className="text-sm font-medium" style={{ color: 'var(--grama-menta)' }}>Talleres EPT · Programa MSE-SFT · MINEDU Perú</p>
-          <div className="mt-10 grid grid-cols-3 gap-4">
-            {[{ value: '10', label: 'Talleres EPT' }, { value: '150h', label: 'de capacitación' }, { value: '7', label: 'módulos' }].map(s => (
+          <div className="flex justify-center mb-10 animate-fade-in-up"><GramaLogo variant="light" size="lg" /></div>
+          <h2 className="text-3xl font-black text-white mb-3 animate-fade-in-up stagger-2" style={{ lineHeight: 1.2, letterSpacing: '-1px' }}>
+            Tu formación<br/>docente comienza<br/>aquí
+          </h2>
+          <p className="text-sm font-medium animate-fade-in-up stagger-3" style={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.7 }}>
+            Plataforma de capacitación especializada para docentes EPT del Perú. Acceso a 10 talleres, 150 horas de contenido y certificación.
+          </p>
+          <div className="mt-10 grid grid-cols-3 gap-4 animate-fade-in-up stagger-4">
+            {[{ value: '10', label: 'Talleres' }, { value: '150h', label: 'Contenido' }, { value: '7', label: 'Módulos' }].map(s => (
               <div key={s.label} className="text-center">
-                <p className="text-2xl font-extrabold" style={{ color: 'var(--grama-menta)' }}>{s.value}</p>
-                <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{s.label}</p>
+                <p className="text-2xl font-black" style={{ color: '#02d47e', letterSpacing: '-0.5px' }}>{s.value}</p>
+                <p className="text-xs font-medium mt-1" style={{ color: 'rgba(255,255,255,0.5)' }}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -400,54 +388,63 @@ export default function Login() {
       </div>
 
       {/* ── Lado derecho: formulario ── */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-        <div className="lg:hidden mb-8 text-center">
-          <GramaLogo variant="light" size="md" className="mx-auto mb-3" />
-          <p className="text-xs font-medium" style={{ color: 'var(--grama-menta)' }}>Plataforma de Capacitación Docente</p>
+      <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 relative overflow-hidden">
+        {/* Shapes para lado derecho */}
+        <div style={{ position:'absolute', top:-120, right:'8%', width:320, height:320, background:'#02d47e', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:0.08, pointerEvents:'none', animation:'heroFa 16s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', bottom:-180, left:'12%', width:380, height:380, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:0.1, pointerEvents:'none', animation:'heroFd 18s ease-in-out infinite 2s' }} />
+
+        {/* Mobile header */}
+        <div className="lg:hidden mb-10 text-center animate-fade-in-up">
+          <GramaLogo variant="dark" size="md" className="mx-auto mb-4" />
+          <h2 className="text-xl font-black" style={{ color: '#043941' }}>Iniciar sesión</h2>
+          <p className="text-xs mt-1" style={{ color: '#64748b' }}>Accede a tu formación docente</p>
         </div>
 
-        <div className="w-full max-w-sm">
-          <div className="rounded-2xl overflow-hidden shadow-2xl">
+        <div className="w-full max-w-md relative z-10 animate-fade-in-up stagger-2">
+          <div className="rounded-3xl overflow-hidden" style={{ background: '#fff', boxShadow: '0 12px 40px rgba(4,57,65,0.12)', border: '1.5px solid rgba(2,212,126,0.12)' }}>
             {/* Tabs */}
-            <div className="p-2 flex gap-1" style={{ background: '#f0faf5' }}>
+            <div className="p-2.5 flex gap-2" style={{ background: 'rgba(4,57,65,0.02)' }}>
               <button
                 onClick={() => setTab('login')}
                 className={tabBase}
                 style={tab === 'login'
-                  ? { background: '#ffffff', color: 'var(--grama-oscuro)', boxShadow: 'var(--sh-brand-sm)' }
-                  : { color: '#045f6c' }}>
+                  ? { background: '#ffffff', color: '#043941', boxShadow: '0 2px 8px rgba(4,57,65,0.08)', fontWeight: 800 }
+                  : { color: '#64748b', fontWeight: 700 }}>
                 Ingresar
               </button>
               <button
                 onClick={() => setTab('register')}
                 className={tabBase}
                 style={tab === 'register'
-                  ? { background: '#ffffff', color: 'var(--grama-oscuro)', boxShadow: 'var(--sh-brand-sm)' }
-                  : { color: '#045f6c' }}>
+                  ? { background: '#ffffff', color: '#043941', boxShadow: '0 2px 8px rgba(4,57,65,0.08)', fontWeight: 800 }
+                  : { color: '#64748b', fontWeight: 700 }}>
                 Regístrate
               </button>
             </div>
+
+            {/* Separador */}
+            <div style={{ height: '1px', background: 'rgba(4,57,65,0.06)' }} />
 
             {/* Formulario */}
             <div className="p-8" style={{ background: '#ffffff' }}>
               {tab === 'login' ? (
                 <>
-                  <h1 className="text-2xl font-extrabold mb-1" style={{ color: 'var(--grama-oscuro)' }}>Iniciar sesión</h1>
-                  <p className="text-sm mb-8" style={{ color: '#045f6c' }}>Ingresa tus credenciales para acceder</p>
+                  <h1 className="text-xl font-black mb-1.5" style={{ color: '#043941', letterSpacing: '-0.5px' }}>Iniciar sesión</h1>
+                  <p className="text-sm mb-7" style={{ color: '#64748b' }}>Ingresa tus credenciales para acceder a la plataforma</p>
                   <LoginForm onSuccess={(adminLogin) => navigate(adminLogin ? '/admin' : '/perfil', { replace: true })} />
                 </>
               ) : (
                 <>
-                  <h1 className="text-2xl font-extrabold mb-1" style={{ color: 'var(--grama-oscuro)' }}>Crear cuenta</h1>
-                  <p className="text-sm mb-6" style={{ color: '#045f6c' }}>Regístrate con los datos de tu taller</p>
+                  <h1 className="text-xl font-black mb-1.5" style={{ color: '#043941', letterSpacing: '-0.5px' }}>Solicitar acceso</h1>
+                  <p className="text-sm mb-6" style={{ color: '#64748b' }}>Completa el formulario para acceder como docente</p>
                   <RegisterForm />
                 </>
               )}
             </div>
 
             {/* Footer */}
-            <div className="px-8 py-4 text-center text-xs" style={{ background: '#f0faf5', color: '#045f6c' }}>
-              ¿Problemas para acceder? Contacta a tu coordinador UGEL
+            <div className="px-8 py-4 text-center text-xs font-medium" style={{ background: 'rgba(4,57,65,0.02)', color: '#64748b', borderTop: '1px solid rgba(4,57,65,0.06)' }}>
+              ¿Problemas? <button className="text-[#02d47e] font-bold hover:underline" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>Contacta a tu coordinador UGEL</button>
             </div>
           </div>
         </div>
