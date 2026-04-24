@@ -638,30 +638,39 @@ function FAQSection() {
 
           {/* Card sticky WhatsApp */}
           <div style={{ position:'sticky', top:100 }}>
-            <div style={{ borderRadius:24, padding:'2.2rem', background:'linear-gradient(135deg, #043941 0%, #032e34 100%)', boxShadow:'0 16px 48px rgba(4,57,65,.25)', overflow:'hidden', position:'relative' }}>
+            <div style={{ borderRadius:24, padding:'2.2rem', background:'linear-gradient(135deg, #043941 0%, #032e34 100%)', boxShadow:'0 16px 48px rgba(4,57,65,.25)', overflow:'hidden', position:'relative', border:'1px solid rgba(2,212,126,.08)' }}>
               <div style={{ position:'absolute', bottom:-80, right:-80, width:260, height:260, background:'radial-gradient(circle, rgba(2,212,126,.12) 0%, transparent 70%)', pointerEvents:'none' }} />
               <div style={{ position:'relative', zIndex:10 }}>
-                <div style={{ width:48, height:48, borderRadius:16, background:'rgba(2,212,126,.16)', border:'1px solid rgba(2,212,126,.24)', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:16, fontSize:'1.5rem' }}>
-                  💬
+                {/* Badge */}
+                <div style={{ display:'inline-block', fontSize:'.65rem', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', background:'rgba(2,212,126,.18)', color:'#02d47e', padding:'.35rem .75rem', borderRadius:100, marginBottom:1.2, border:'1px solid rgba(2,212,126,.2)' }}>
+                  ✓ Respuesta &lt; 24h
                 </div>
-                <h3 style={{ fontSize:'1.05rem', fontWeight:900, color:'#fff', margin:'0 0 8px', lineHeight:1.3 }}>
-                  ¿Otra pregunta?
+
+                {/* Icon */}
+                <div style={{ width:56, height:56, borderRadius:16, background:'rgba(2,212,126,.14)', border:'1px solid rgba(2,212,126,.2)', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:'1.4rem', fontSize:'1.8rem' }}>
+                  🚀
+                </div>
+
+                <h3 style={{ fontSize:'1.1rem', fontWeight:900, color:'#fff', margin:'0 0 12px', lineHeight:1.25 }}>
+                  ¿Duda sin respuesta?
                 </h3>
-                <p style={{ fontSize:'.82rem', color:'rgba(255,255,255,.55)', margin:'0 0 1.6rem', lineHeight:1.7 }}>
-                  Escríbenos en WhatsApp — respuesta sin formularios ni correos.
+                <p style={{ fontSize:'.85rem', color:'rgba(255,255,255,.6)', margin:'0 0 1.8rem', lineHeight:1.75 }}>
+                  Escríbenos por WhatsApp — soporte directo del equipo GRAMA, sin formularios ni demoras.
                 </p>
+
                 <a
                   href={WA_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.85rem 1.2rem', borderRadius:12, background:'#25d366', color:'#fff', fontWeight:800, fontSize:'.8rem', textDecoration:'none', border:'none', cursor:'pointer', transition:'all .2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 6px 20px rgba(37,211,102,.5)' }}
-                  onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='none' }}
+                  style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.9rem 1.4rem', borderRadius:13, background:'#25d366', color:'#fff', fontWeight:800, fontSize:'.85rem', textDecoration:'none', border:'none', cursor:'pointer', transition:'all .2s', boxShadow:'0 4px 12px rgba(37,211,102,.3)' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.boxShadow='0 8px 24px rgba(37,211,102,.5)' }}
+                  onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 4px 12px rgba(37,211,102,.3)' }}
                 >
-                  💚 Escribir WhatsApp
+                  💚 Escribir por WhatsApp
                 </a>
-                <p style={{ fontSize:'.7rem', textAlign:'center', margin:'12px 0 0', color:'rgba(255,255,255,.3)' }}>
-                  Respuesta en &lt; 24h — Lun a Vie
+
+                <p style={{ fontSize:'.7rem', textAlign:'center', margin:'14px 0 0', color:'rgba(255,255,255,.35)' }}>
+                  Equipo GRAMA · Lun–Vie
                 </p>
               </div>
             </div>
