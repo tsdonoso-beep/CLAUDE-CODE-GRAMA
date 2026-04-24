@@ -200,7 +200,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
       {/* Track — position:relative necesario para que card.offsetLeft sea relativo a este contenedor */}
       <div
         ref={scrollRef}
-        style={{ position:'relative', display:'flex', gap:20, overflowX:'hidden', padding:'36px 80px 52px', scrollbarWidth:'none' }}
+        style={{ position:'relative', display:'flex', gap:24, overflowX:'hidden', padding:'40px 100px 60px', scrollbarWidth:'none' }}
         onMouseEnter={() => { pausedRef.current = true }}
         onMouseLeave={() => { pausedRef.current = false; speedRef.current = 0.8 }}
       >
@@ -209,47 +209,47 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
             key={i}
             data-card="true"
             onClick={() => onOpenModal(i % talleresConfig.length)}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 24px 52px rgba(4,57,65,.22)' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 4px 20px rgba(4,57,65,.09)' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 28px 56px rgba(4,57,65,.24)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 6px 24px rgba(4,57,65,.1)' }}
             style={{
-              width:252, flexShrink:0, borderRadius:20, overflow:'hidden',
+              width:320, flexShrink:0, borderRadius:24, overflow:'hidden',
               background:'#fff', cursor:'pointer',
-              boxShadow:'0 4px 20px rgba(4,57,65,.09)',
+              boxShadow:'0 6px 24px rgba(4,57,65,.1)',
               transition:'box-shadow .3s ease',
               /* sin transition de transform — el arco actualiza cada frame */
             }}
           >
             {/* Franja de color */}
-            <div style={{ height:4, background:`hsl(${t.color})` }} />
+            <div style={{ height:5, background:`hsl(${t.color})` }} />
 
             {/* Foto */}
-            <div style={{ height:196, position:'relative', overflow:'hidden' }}>
+            <div style={{ height:240, position:'relative', overflow:'hidden' }}>
               <img src={t.imagen} alt={t.nombre} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.75) saturate(0.85)' }} />
               <div style={{ position:'absolute', inset:0, background:'linear-gradient(170deg, rgba(4,57,65,0.05) 0%, rgba(4,57,65,0.84) 100%)' }} />
 
               {/* Badge */}
-              <div style={{ position:'absolute', top:14, left:14, display:'inline-flex', alignItems:'center', gap:5, background:'rgba(4,57,65,0.72)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,0.14)', borderRadius:100, padding:'.2rem .65rem' }}>
-                <span style={{ width:5, height:5, borderRadius:'50%', background:'#02d47e', display:'inline-block', flexShrink:0 }} />
-                <span style={{ fontSize:'.58rem', fontWeight:800, letterSpacing:'.14em', color:'rgba(255,255,255,.92)' }}>T{String(t.numero).padStart(2,'0')}</span>
+              <div style={{ position:'absolute', top:16, left:16, display:'inline-flex', alignItems:'center', gap:6, background:'rgba(4,57,65,0.74)', backdropFilter:'blur(10px)', border:'1px solid rgba(255,255,255,0.16)', borderRadius:100, padding:'.28rem .8rem' }}>
+                <span style={{ width:6, height:6, borderRadius:'50%', background:'#02d47e', display:'inline-block', flexShrink:0 }} />
+                <span style={{ fontSize:'.62rem', fontWeight:800, letterSpacing:'.15em', color:'rgba(255,255,255,.94)' }}>T{String(t.numero).padStart(2,'0')}</span>
               </div>
 
               {/* Título */}
-              <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'1rem' }}>
-                <h3 style={{ fontSize:'.92rem', fontWeight:900, color:'#fff', lineHeight:1.25, margin:0 }}>{t.nombre}</h3>
+              <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'1.2rem' }}>
+                <h3 style={{ fontSize:'.98rem', fontWeight:900, color:'#fff', lineHeight:1.2, margin:0 }}>{t.nombre}</h3>
               </div>
             </div>
 
             {/* Contenido */}
-            <div style={{ padding:'14px 16px 16px' }}>
-              <p style={{ fontSize:'.75rem', lineHeight:1.65, color:'#64748b', margin:'0 0 12px', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical' as const, overflow:'hidden' }}>{t.descripcion}</p>
-              <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:12 }}>
-                <span style={{ display:'flex', alignItems:'center', gap:4, fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.5)' }}><BookOpen size={10} /> 7 módulos</span>
-                <span style={{ display:'flex', alignItems:'center', gap:4, fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.5)' }}><Clock size={10} /> 150h</span>
+            <div style={{ padding:'18px 20px 20px' }}>
+              <p style={{ fontSize:'.78rem', lineHeight:1.7, color:'#64748b', margin:'0 0 14px', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical' as const, overflow:'hidden' }}>{t.descripcion}</p>
+              <div style={{ display:'flex', alignItems:'center', gap:14, marginBottom:14 }}>
+                <span style={{ display:'flex', alignItems:'center', gap:5, fontSize:'.7rem', fontWeight:700, color:'rgba(4,57,65,.55)' }}><BookOpen size={11} /> 7 módulos</span>
+                <span style={{ display:'flex', alignItems:'center', gap:5, fontSize:'.7rem', fontWeight:700, color:'rgba(4,57,65,.55)' }}><Clock size={11} /> 150h</span>
               </div>
-              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', paddingTop:10, borderTop:'1px solid rgba(4,57,65,0.07)' }}>
-                <span style={{ fontSize:'.7rem', fontWeight:800, color:'#043941' }}>Ver ruta</span>
-                <div style={{ width:26, height:26, borderRadius:'50%', background:`hsl(${t.color})`, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                  <ChevronRight size={12} color="#fff" />
+              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', paddingTop:12, borderTop:'1px solid rgba(4,57,65,0.08)' }}>
+                <span style={{ fontSize:'.72rem', fontWeight:800, color:'#043941' }}>Ver ruta</span>
+                <div style={{ width:28, height:28, borderRadius:'50%', background:`hsl(${t.color})`, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                  <ChevronRight size={13} color="#fff" />
                 </div>
               </div>
             </div>
