@@ -1128,69 +1128,133 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ══ FAQ ═════════════════════════════════════════════════════════════ */}
-      <FAQSection />
+      {/* ══ CENTRO DE AYUDA & CONTACTO ═══════════════════════════════════════ */}
+      <section id="contacto" style={{ background: '#f0fdf6', padding: '6rem 1.5rem', position:'relative', overflow:'hidden' }}>
 
-      {/* ══ CTA FINAL ═══════════════════════════════════════════════════════ */}
-      <section id="contacto" className="py-14 px-6" style={{ background: '#f0fdf6' }}>
-        <div className="max-w-4xl mx-auto">
-          <div
-            className="rounded-3xl p-12 relative overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)' }}
-          >
-            {/* Tangram decorativo en el CTA — fijos */}
-            <Tangram color="#02d47e" opacity={0.22} rotate={20}  className="absolute -top-10 -right-10 w-[22rem] h-[22rem] pointer-events-none" />
-            <Tangram color="#ffffff" opacity={0.09} rotate={-30} className="absolute -bottom-10 -left-10 w-64 h-64 pointer-events-none" />
-            <Tangram color="#02d47e" opacity={0.10} rotate={55}  className="absolute top-1/2 left-1/4 w-36 h-36 pointer-events-none" />
-            <div className="absolute pointer-events-none" style={{ width: 500, height: 500, background: 'radial-gradient(circle, rgba(2,212,126,0.14) 0%, transparent 65%)', right: -100, top: -100 }} />
+        {/* Shapes — hero language */}
+        <div style={{ position:'absolute', top:-120, left:'12%', width:320, height:320, background:'#02d47e', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.1, pointerEvents:'none', animation:'heroFa 16s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', bottom:-160, right:'8%', width:340, height:340, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.12, pointerEvents:'none', animation:'heroFd 18s ease-in-out infinite 2s' }} />
+        <div style={{ position:'absolute', top:'50%', left:-100, width:200, height:160, background:'#f8ee91', borderRadius:'0 0 80px 80px', opacity:.28, pointerEvents:'none', animation:'heroFb 14s ease-in-out infinite 1s' }} />
 
-            {/* Piezas flotantes */}
-            <svg viewBox="0 0 80 80" className="absolute pointer-events-none float-a" style={{ width:72, height:72, top:'10%', right:'28%', animationDuration:'15s' }}>
-              <polygon points="0,80 40,0 80,80" fill="#02d47e" fillOpacity={0.22} />
-            </svg>
-            <svg viewBox="0 0 60 60" className="absolute pointer-events-none float-b" style={{ width:52, height:52, bottom:'12%', right:'38%', animationDuration:'19s' }}>
-              <polygon points="30,0 60,60 0,60" fill="#ffffff" fillOpacity={0.10} />
-            </svg>
-            <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-c" style={{ width:44, height:44, top:'20%', left:'18%', animationDuration:'12s' }}>
-              <rect x="4" y="4" width="42" height="42" transform="rotate(20 25 25)" fill="#02d47e" fillOpacity={0.18} />
-            </svg>
-            <svg viewBox="0 0 50 50" className="absolute pointer-events-none float-d" style={{ width:38, height:38, bottom:'18%', left:'38%', animationDuration:'10s' }}>
-              <polygon points="25,0 50,50 0,50" fill="#ffffff" fillOpacity={0.08} />
-            </svg>
+        <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
-              <div className="text-center md:text-left max-w-lg">
-                <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl mb-6" style={{ background: 'rgba(2,212,126,0.15)', border: '1px solid rgba(2,212,126,0.25)' }}>
-                  <CheckCircle size={22} style={{ color: 'var(--grama-menta)' }} />
+          {/* Header */}
+          <div style={{ textAlign:'center', maxWidth:750, margin:'0 auto 4rem' }}>
+            <h2 style={{ fontSize:'clamp(2.2rem,5vw,3.2rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
+              Listo para <span style={{ color:'#02d47e' }}>transformar</span><br/>tu taller?
+            </h2>
+            <p style={{ fontSize:'.95rem', color:'rgba(4,57,65,.6)', lineHeight:1.8, margin:0 }}>
+              Responde tus dudas y comienza tu ruta de aprendizaje hoy. Nuestro equipo está disponible para apoyarte.
+            </p>
+          </div>
+
+          {/* FAQ + Contact Grid */}
+          <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr', gap:40, alignItems:'start' }}>
+
+            {/* Acordeón — misma estructura FAQ */}
+            <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
+              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:12 }}>
+                <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
+                Dudas frecuentes
+              </span>
+
+              {FAQ_ITEMS.map((item, i) => {
+                const colors = ['#02d47e', '#f8ee91', '#d4c4fc', '#043941', '#b8edd0']
+                const color = colors[i % colors.length]
+                const isOpen = open === i
+                return (
+                  <div
+                    key={i}
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    style={{
+                      borderRadius:18,
+                      overflow:'hidden',
+                      background: isOpen ? '#fff' : 'transparent',
+                      border: `1px solid ${isOpen ? color + '22' : 'rgba(4,57,65,0.06)'}`,
+                      boxShadow: isOpen ? `0 12px 40px ${color}18` : 'none',
+                      cursor:'pointer',
+                      transition:'all .3s cubic-bezier(.4,0,.2,1)',
+                    }}
+                  >
+                    <div style={{
+                      display:'flex', gap:12, padding:'1.4rem',
+                      alignItems:'flex-start',
+                      borderLeft: `6px solid ${color}`,
+                    }}>
+                      <div style={{ width:32, height:32, borderRadius:10, background:`${color}18`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all .3s', transform: isOpen ? 'scale(1.1) rotate(90deg)' : 'none' }}>
+                        <span style={{ fontSize:'1.1rem', fontWeight:800, color:color }}>
+                          {isOpen ? '−' : '+'}
+                        </span>
+                      </div>
+                      <div style={{ flex:1, minWidth:0 }}>
+                        <p style={{ fontSize:'.92rem', fontWeight:800, color:'#043941', margin:'0 0 0.4rem', lineHeight:1.4 }}>
+                          {item.q}
+                        </p>
+                        {isOpen && (
+                          <div style={{ paddingTop:10, marginTop:10, borderTop:`1px solid ${color}24` }}>
+                            <p style={{ fontSize:'.82rem', color:'#64748b', lineHeight:1.7, margin:0 }}>
+                              {item.a}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Contact Block */}
+            <div style={{ position:'sticky', top:120 }}>
+              <div style={{ background:'#fff', borderRadius:22, padding:'2.4rem', border:'1px solid rgba(4,57,65,.08)', boxShadow:'0 8px 32px rgba(4,57,65,.08)' }}>
+                <div style={{ width:52, height:52, borderRadius:14, background:'rgba(2,212,126,.14)', border:'1px solid rgba(2,212,126,.2)', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:1.8, fontSize:'1.8rem' }}>
+                  ✨
                 </div>
-                <h2 className="t-h1 font-extrabold text-white mb-3">
-                  Tu taller ya está equipado.<br />Ahora falta que lo domines.
-                </h2>
-                <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                  Inicia tu ruta de aprendizaje con GRAMA y conviértete en el referente pedagógico de tu especialidad técnica.
+
+                <h3 style={{ fontSize:'1.08rem', fontWeight:900, color:'#043941', margin:'0 0 10px', lineHeight:1.3 }}>
+                  ¿Listo para empezar?
+                </h3>
+                <p style={{ fontSize:'.82rem', color:'rgba(4,57,65,.6)', margin:'0 0 2rem', lineHeight:1.7 }}>
+                  Abre tu cuenta o contacta a nuestro equipo directamente.
+                </p>
+
+                <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+                  <button
+                    onClick={goToApp}
+                    style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.9rem 1.2rem', borderRadius:12, background:'#02d47e', color:'#043941', fontWeight:800, fontSize:'.82rem', border:'none', cursor:'pointer', transition:'all .2s', boxShadow:'0 4px 12px rgba(2,212,126,.25)' }}
+                    onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 20px rgba(2,212,126,.4)' }}
+                    onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 4px 12px rgba(2,212,126,.25)' }}
+                  >
+                    🚀 Ingresar
+                  </button>
+
+                  <a
+                    href="https://wa.me/51900000000?text=Hola%2C+soy+docente+EPT+y+tengo+una+consulta+sobre+GRAMA+LXP+%F0%9F%91%8B"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.9rem 1.2rem', borderRadius:12, background:'#25d366', color:'#fff', fontWeight:800, fontSize:'.82rem', textDecoration:'none', border:'none', cursor:'pointer', transition:'all .2s', boxShadow:'0 4px 12px rgba(37,211,102,.2)' }}
+                    onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 20px rgba(37,211,102,.4)' }}
+                    onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 4px 12px rgba(37,211,102,.2)' }}
+                  >
+                    💬 WhatsApp
+                  </a>
+
+                  <a
+                    href="mailto:contacto@grama.pe"
+                    style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.9rem 1.2rem', borderRadius:12, background:'transparent', color:'#043941', fontWeight:800, fontSize:'.82rem', textDecoration:'none', border:'1.5px solid rgba(4,57,65,.15)', cursor:'pointer', transition:'all .2s' }}
+                    onMouseEnter={e => { e.currentTarget.style.background='rgba(4,57,65,.03)'; e.currentTarget.style.borderColor='rgba(4,57,65,.25)' }}
+                    onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderColor='rgba(4,57,65,.15)' }}
+                  >
+                    📧 Email
+                  </a>
+                </div>
+
+                <p style={{ fontSize:'.7rem', textAlign:'center', margin:'1.6rem 0 0', color:'rgba(4,57,65,.4)', lineHeight:1.5 }}>
+                  Equipo GRAMA<br/>Respuesta &lt; 24h
                 </p>
               </div>
-              <div className="flex flex-col gap-3 shrink-0">
-                <button
-                  onClick={goToApp}
-                  className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]"
-                  style={{ background: '#02d47e', color: 'var(--grama-oscuro)' }}
-                >
-                  Ingresar a la plataforma <ArrowRight size={15} />
-                </button>
-                <a
-                  href="https://wa.me/51900000000?text=Hola%2C+soy+docente+EPT+y+tengo+una+consulta+sobre+GRAMA+LXP+%F0%9F%91%8B"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all"
-                  style={{ background: 'rgba(37,211,102,0.15)', color: '#25d366', border: '1px solid rgba(37,211,102,0.25)' }}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(37,211,102,0.25)')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'rgba(37,211,102,0.15)')}
-                >
-                  <WhatsAppIcon size={15} /> Escribir por WhatsApp
-                </a>
-              </div>
             </div>
+
           </div>
         </div>
       </section>
