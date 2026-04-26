@@ -798,13 +798,6 @@ export default function Landing() {
         <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', padding:'100px 5vw 60px', position:'relative' }}>
           <div className="relative z-10 text-center w-full" style={{ maxWidth:900, margin:'0 auto' }}>
 
-            {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 rounded-full animate-fade-in-up"
-              style={{ background:'rgba(4,57,65,.07)', border:'1.5px solid rgba(4,57,65,.14)', color:'rgba(4,57,65,.6)', fontSize:'.58rem', fontWeight:700, letterSpacing:'.22em', textTransform:'uppercase', padding:'.3rem 1rem', marginBottom:'1.6rem' }}>
-              <span style={{ width:5, height:5, borderRadius:'50%', background:'#02d47e', animation:'blink 2.5s infinite', flexShrink:0, display:'inline-block' }} />
-              Plataforma educativa · Docentes · Alumnos · Directores
-            </div>
-
             {/* Title */}
             <h1 className="animate-fade-in-up stagger-2" style={{ fontSize:'clamp(2.8rem,7.5vw,6.5rem)', fontWeight:900, lineHeight:.95, letterSpacing:'-.05em', marginBottom:0 }}>
               <span style={{ display:'block', color:'#043941' }}>Tu plataforma</span>
@@ -832,12 +825,12 @@ export default function Landing() {
               </button>
               <a
                 href="#talleres"
-                className="inline-flex items-center gap-2 transition-all"
-                style={{ color:'rgba(4,57,65,.6)', fontSize:'.86rem', fontWeight:700, border:'1.5px solid rgba(4,57,65,.2)', padding:'.96rem 1.8rem', borderRadius:100, background:'rgba(255,255,255,.6)', textDecoration:'none' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(4,57,65,.4)'; e.currentTarget.style.color='#043941'; e.currentTarget.style.background='#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(4,57,65,.2)'; e.currentTarget.style.color='rgba(4,57,65,.6)'; e.currentTarget.style.background='rgba(255,255,255,.6)' }}
+                className="inline-flex items-center gap-2 transition-all hover:-translate-y-0.5"
+                style={{ color:'#043941', fontSize:'.86rem', fontWeight:800, border:'2px solid #043941', padding:'.96rem 1.8rem', borderRadius:100, background:'transparent', textDecoration:'none' }}
+                onMouseEnter={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.color='#fff' }}
+                onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='#043941' }}
               >
-                Explorar talleres
+                Ver talleres
                 <ChevronRight size={12} />
               </a>
             </div>
