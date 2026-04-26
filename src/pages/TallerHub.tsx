@@ -1,5 +1,6 @@
 // src/pages/TallerHub.tsx
 import { useNavigate } from 'react-router-dom'
+import { useRef, useState, useEffect } from 'react'
 import { BookOpen, Package, ChevronRight, Clock, Award, ArrowRight } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
@@ -28,6 +29,20 @@ const TALLER_SVG: Record<string, React.ReactNode> = {
   'taller-general-ept':       <SvgEptGeneral />,
   'industria-vestido':        <SvgIndustriaVestido />,
   'computacion-informatica':  <SvgComputacion />,
+}
+
+// ── Scroll reveal ─────────────────────────────────────────────────────────────
+function useReveal(threshold = 0.12) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setVisible(true); obs.disconnect() }
+    }, { threshold })
+    if (ref.current) obs.observe(ref.current)
+    return () => obs.disconnect()
+  }, [threshold])
+  return { ref, visible }
 }
 
 // ── Shapes geométricas por categoría — mismo lenguaje que Perfil hero ─────────
@@ -80,6 +95,11 @@ function splitNombre(nombre: string) {
 export default function TallerHub() {
   const { taller, slug } = useTaller()
   const navigate = useNavigate()
+
+  const compHeaderReveal = useReveal()
+  const compGridReveal   = useReveal(0.08)
+  const rutaReveal       = useReveal()
+  const repoReveal       = useReveal()
 
   if (!taller || !slug) return null
 
@@ -223,7 +243,11 @@ export default function TallerHub() {
         <div style={{ background: '#ffffff', borderBottom: '1px solid rgba(4,57,65,0.06)' }}>
           <div className="px-8 pb-10 pt-2">
 
-            <div className="mb-8">
+            <div
+              ref={compHeaderReveal.ref}
+              className="mb-8"
+              style={{ opacity: compHeaderReveal.visible ? 1 : 0, transform: compHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.55s ease, transform 0.55s ease' }}
+            >
               <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:12 }}>
                 <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
                 Lo que lograrás
@@ -239,7 +263,11 @@ export default function TallerHub() {
             </div>
 
             {/* Grid de competencias con borde de acento */}
-            <div className="grid sm:grid-cols-2 gap-3">
+            <div
+              ref={compGridReveal.ref}
+              className="grid sm:grid-cols-2 gap-3"
+              style={{ opacity: compGridReveal.visible ? 1 : 0, transform: compGridReveal.visible ? 'none' : 'translateY(24px)', transition: 'opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s' }}
+            >
               {taller.competencias.map((c, i) => (
                 <CompetenciaCard key={i} index={i} text={c} color={tallerColor} />
               ))}
@@ -254,8 +282,12 @@ export default function TallerHub() {
 
         {/* ── RUTA DE APRENDIZAJE ── */}
         {!isGeneralEpt && (
-          <div className="bg-white rounded-2xl overflow-hidden"
-            style={{ boxShadow: '0 2px 16px rgba(4,57,65,0.07)' }}>
+          <div
+            ref={rutaReveal.ref}
+            style={{ opacity: rutaReveal.visible ? 1 : 0, transform: rutaReveal.visible ? 'none' : 'translateY(28px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
+          >
+          <div className="bg-white overflow-hidden"
+            style={{ borderRadius: 20, boxShadow: '0 4px 20px rgba(4,57,65,.08)' }}>
             <div
               className="px-6 pt-6 pb-3 flex items-center justify-between cursor-pointer group"
               onClick={() => navigate(`/taller/${slug}/ruta`)}
@@ -325,9 +357,14 @@ export default function TallerHub() {
               </button>
             </div>
           </div>
+          </div>
         )}
 
         {/* ── EQUIPAMIENTO DEL TALLER ── */}
+        <div
+          ref={repoReveal.ref}
+          style={{ opacity: repoReveal.visible ? 1 : 0, transform: repoReveal.visible ? 'none' : 'translateY(28px)', transition: 'opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s' }}
+        >
         <div className="bg-white overflow-hidden"
           style={{ borderRadius: 20, boxShadow: '0 4px 20px rgba(4,57,65,.08)' }}>
           <div
@@ -387,6 +424,7 @@ export default function TallerHub() {
               <ArrowRight size={14} />
             </button>
           </div>
+        </div>
         </div>
 
       </div>
