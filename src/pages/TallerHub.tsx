@@ -224,9 +224,8 @@ export default function TallerHub() {
           <div className="px-8 pb-10 pt-2">
 
             <div className="mb-8">
-              <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-widest mb-3"
-                style={{ color: '#02d47e' }}>
-                <span style={{ display: 'inline-block', height: 1, width: 28, background: '#02d47e' }} />
+              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:12 }}>
+                <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
                 Lo que lograrás
               </span>
               <h2 className="text-xl font-extrabold mb-2" style={{ color: '#043941' }}>
@@ -262,8 +261,8 @@ export default function TallerHub() {
               onClick={() => navigate(`/taller/${slug}/ruta`)}
             >
               <div>
-                <p className="text-[11px] font-extrabold uppercase tracking-widest mb-1"
-                  style={{ color: '#02d47e' }}>
+                <p style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:4 }}>
+                  <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
                   Tu camino de aprendizaje
                 </p>
                 <h2 className="text-lg font-extrabold" style={{ color: '#043941' }}>
@@ -336,8 +335,8 @@ export default function TallerHub() {
             onClick={() => navigate(`/taller/${slug}/repositorio`)}
           >
             <div>
-              <p className="text-[11px] font-extrabold uppercase tracking-widest mb-1"
-                style={{ color: '#02d47e' }}>
+              <p style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:4 }}>
+                <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
                 Con qué trabajarás
               </p>
               <h2 className="text-lg font-extrabold" style={{ color: '#043941' }}>
