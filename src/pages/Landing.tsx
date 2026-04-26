@@ -515,6 +515,7 @@ function TallerModal({
           </div>
         </div>
       </div>
+    </div>
     </>
   )
 }
