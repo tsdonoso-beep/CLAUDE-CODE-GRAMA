@@ -103,7 +103,7 @@ export default function TallerHub() {
     <div style={{ background: '#f0faf5', fontFamily: 'Manrope, sans-serif' }}>
 
       {/* ══ HERO ══════════════════════════════════════════════════════════════ */}
-      <div className="relative overflow-hidden" style={{ minHeight: 400 }}>
+      <div className="relative overflow-hidden" style={{ minHeight: 500 }}>
 
         {/* Fondo oscuro gradiente */}
         <div className="absolute inset-0" style={{
@@ -130,10 +130,10 @@ export default function TallerHub() {
         }} />
 
         {/* Contenido */}
-        <div className="relative z-10 px-8 pt-10 pb-20" style={{ maxWidth: 780 }}>
+        <div className="relative z-10 px-8 pt-14 pb-24" style={{ maxWidth: 780 }}>
 
           {/* Badge taller */}
-          <div className="inline-flex items-center gap-2 mb-6"
+          <div className="inline-flex items-center gap-2 mb-8"
             style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.28)', borderRadius: 100, padding: '6px 14px' }}>
             <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#02d47e', display: 'inline-block', flexShrink: 0 }} />
             <span style={{ fontSize: '.65rem', fontWeight: 800, letterSpacing: '.18em', color: '#02d47e', textTransform: 'uppercase' as const }}>
@@ -142,17 +142,17 @@ export default function TallerHub() {
           </div>
 
           {/* Título dos líneas */}
-          <h1 className="font-extrabold leading-tight mb-4" style={{ letterSpacing: '-0.02em' }}>
+          <h1 className="font-extrabold leading-tight mb-5" style={{ letterSpacing: '-0.02em' }}>
             {head && (
-              <span className="block" style={{ fontSize: 'clamp(2rem,4vw,3rem)', color: '#ffffff', marginBottom: 6 }}>
+              <span className="block" style={{ fontSize: 'clamp(2.2rem,4.5vw,3.4rem)', color: '#ffffff', marginBottom: 8 }}>
                 {head}
               </span>
             )}
             <span className="inline-block" style={{
-              fontSize: 'clamp(2rem,4vw,3rem)',
+              fontSize: 'clamp(2.2rem,4.5vw,3.4rem)',
               color: '#032e34',
               background: '#02d47e',
-              padding: '2px 20px 4px',
+              padding: '2px 22px 6px',
               borderRadius: 10,
               lineHeight: 1.25,
             }}>
@@ -161,12 +161,12 @@ export default function TallerHub() {
           </h1>
 
           {/* Descripción */}
-          <p className="text-sm leading-relaxed mb-8" style={{ color: 'rgba(255,255,255,0.6)', maxWidth: 460 }}>
+          <p className="text-sm leading-relaxed mb-10" style={{ color: 'rgba(255,255,255,0.6)', maxWidth: 480 }}>
             {taller.descripcion}
           </p>
 
           {/* Stats */}
-          <div className="flex flex-wrap gap-5 mb-8">
+          <div className="flex flex-wrap gap-6 mb-10">
             {[
               !isGeneralEpt && { icon: BookOpen, value: `${modulosLXP.length} módulos`, sub: 'M0 → M6' },
               !isGeneralEpt && { icon: Clock,    value: `${totalHoras}h`,               sub: 'Virtual + Presencial' },
