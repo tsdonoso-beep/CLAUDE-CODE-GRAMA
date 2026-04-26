@@ -329,8 +329,8 @@ export default function TallerHub() {
         )}
 
         {/* ── EQUIPAMIENTO DEL TALLER ── */}
-        <div className="bg-white rounded-2xl overflow-hidden"
-          style={{ boxShadow: '0 2px 16px rgba(4,57,65,0.07)' }}>
+        <div className="bg-white overflow-hidden"
+          style={{ borderRadius: 20, boxShadow: '0 4px 20px rgba(4,57,65,.08)' }}>
           <div
             className="px-6 pt-6 pb-4 flex items-center justify-between cursor-pointer group"
             onClick={() => navigate(`/taller/${slug}/repositorio`)}
@@ -399,20 +399,21 @@ export default function TallerHub() {
 function CompetenciaCard({ index, text, color }: { index: number; text: string; color: string }) {
   return (
     <div
-      className="flex items-start gap-4 p-4 rounded-xl transition-all duration-200 cursor-default"
+      className="flex items-start gap-4 p-4 transition-all duration-200 cursor-default"
       style={{
+        borderRadius: 20,
         background: '#fafffe',
         border: '1px solid rgba(4,57,65,0.07)',
         borderLeft: `4px solid ${color}`,
-        boxShadow: '0 1px 4px rgba(4,57,65,0.04)',
+        boxShadow: '0 4px 20px rgba(4,57,65,.08)',
       }}
       onMouseEnter={e => {
         (e.currentTarget as HTMLElement).style.transform = 'translateX(4px)'
-        ;(e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(4,57,65,0.1)'
+        ;(e.currentTarget as HTMLElement).style.boxShadow = '0 8px 28px rgba(4,57,65,0.13)'
       }}
       onMouseLeave={e => {
         (e.currentTarget as HTMLElement).style.transform = 'none'
-        ;(e.currentTarget as HTMLElement).style.boxShadow = '0 1px 4px rgba(4,57,65,0.04)'
+        ;(e.currentTarget as HTMLElement).style.boxShadow = '0 4px 20px rgba(4,57,65,.08)'
       }}
     >
       <span style={{

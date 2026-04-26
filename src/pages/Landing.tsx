@@ -230,12 +230,12 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
             key={i}
             data-card="true"
             onClick={() => onOpenModal(i % talleresConfig.length)}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 28px 56px rgba(4,57,65,.24)' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 6px 24px rgba(4,57,65,.1)' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 20px 48px rgba(4,57,65,.18)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 4px 20px rgba(4,57,65,.08)' }}
             style={{
-              width:280, flexShrink:0, borderRadius:24, overflow:'hidden',
+              width:280, flexShrink:0, borderRadius:20, overflow:'hidden',
               background:'#fff', cursor:'pointer',
-              boxShadow:'0 6px 24px rgba(4,57,65,.1)',
+              boxShadow:'0 4px 20px rgba(4,57,65,.08)',
               transition:'box-shadow .3s ease',
               /* sin transition de transform — el arco actualiza cada frame */
             }}
@@ -961,7 +961,7 @@ export default function Landing() {
                     {/* ── FRONT ── */}
                     <div style={{
                       position: 'absolute', inset: 0,
-                      borderRadius: 24,
+                      borderRadius: 20,
                       background: card.frontBg,
                       backfaceVisibility: 'hidden' as const,
                       WebkitBackfaceVisibility: 'hidden' as any,
@@ -999,7 +999,7 @@ export default function Landing() {
                     {/* ── BACK ── */}
                     <div style={{
                       position: 'absolute', inset: 0,
-                      borderRadius: 24,
+                      borderRadius: 20,
                       background: card.backBg,
                       backfaceVisibility: 'hidden' as const,
                       WebkitBackfaceVisibility: 'hidden' as any,
@@ -1120,13 +1120,13 @@ export default function Landing() {
             {COMMUNITY.map((c, i) => (
               <div
                 key={c.title}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform='translateY(-12px)'; (e.currentTarget as HTMLElement).style.boxShadow='0 24px 56px rgba(4,57,65,.16)' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform='none'; (e.currentTarget as HTMLElement).style.boxShadow='0 6px 24px rgba(4,57,65,.08)' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform='translateY(-12px)'; (e.currentTarget as HTMLElement).style.boxShadow='0 20px 48px rgba(4,57,65,.14)' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform='none'; (e.currentTarget as HTMLElement).style.boxShadow='0 4px 20px rgba(4,57,65,.08)' }}
                 style={{
-                  borderRadius:24,
+                  borderRadius:20,
                   background:'#fff',
                   overflow:'hidden',
-                  boxShadow:'0 6px 24px rgba(4,57,65,.08)',
+                  boxShadow:'0 4px 20px rgba(4,57,65,.08)',
                   transition:'transform .3s ease, box-shadow .3s ease',
                   opacity: comunidadReveal.visible ? 1 : 0,
                   transform: comunidadReveal.visible ? 'translateY(0)' : 'translateY(32px)',
