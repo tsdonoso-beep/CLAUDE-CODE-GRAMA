@@ -21,9 +21,9 @@ const STATS = [
 
 
 const COMMUNITY = [
-  { icon: Users,     color: '#02d47e', accent: '#02d47e', bg: 'rgba(2,212,126,0.15)',   title: 'Para Docentes',            desc: 'Domina el uso pedagógico de cada equipo. Accede a 7 módulos, fichas descargables, sesiones en vivo y certificación para mejorar tus competencias técnicas.',        cta: 'Ingresar a la plataforma', action: 'app'  },
-  { icon: BookOpen,  color: '#f8ee91', accent: '#f8ee91', bg: 'rgba(248,238,145,0.15)',  title: 'Para Alumnos',            desc: 'Aprende las técnicas y procedimientos a través de contenido interactivo. Crece pedagógicamente con tu docente en un ambiente estructurado y seguro.',              cta: 'Explorar talleres',         action: 'app' },
-  { icon: Briefcase, color: '#d4c4fc', accent: '#d4c4fc', bg: 'rgba(212,196,252,0.15)',  title: 'Para Directores',       desc: 'Monitorea la implementación pedagógica de tu equipo docente. Asegura calidad formativa y alineación con los estándares EPT de tu institución.',             cta: 'Solicitar demostración',   action: 'mail' },
+  { icon: Users,     color: '#02d47e', accent: '#02d47e', bg: 'rgba(2,212,126,0.15)',   title: 'Para Docentes',   desc: '7 módulos, fichas y certificación para dominar tu taller EPT.',            cta: 'Ingresar a la plataforma', action: 'app'  },
+  { icon: BookOpen,  color: '#f8ee91', accent: '#f8ee91', bg: 'rgba(248,238,145,0.15)',  title: 'Para Alumnos',    desc: 'Contenido interactivo guiado por tu docente, a tu ritmo.',                 cta: 'Explorar talleres',        action: 'app'  },
+  { icon: Briefcase, color: '#d4c4fc', accent: '#d4c4fc', bg: 'rgba(212,196,252,0.15)',  title: 'Para Directores', desc: 'Monitorea el avance pedagógico de tu institución en tiempo real.',         cta: 'Solicitar demostración',   action: 'mail' },
 ]
 
 const NAV_LINKS = [
@@ -46,7 +46,7 @@ const WHY_CARDS = [
     shapeColor: '#f8ee91',
     backBg: '#f0fdf6',
     backBorder: 'rgba(4,57,65,0.1)',
-    body: ['Los talleres técnicos reciben equipos nuevos pero los docentes no tienen formación pedagógica para usarlos.', 'Cuando el profesor rota, el conocimiento se va con él — y el ciclo empieza de nuevo.'],
+    body: ['Equipo nuevo. Docente sin formación para usarlo.', 'Al rotar, el conocimiento se va con él.', 'El ciclo se repite en cada institución.'],
   },
   {
     tag: 'LA SOLUCIÓN',
@@ -60,7 +60,7 @@ const WHY_CARDS = [
     shapeColor: '#043941',
     backBg: '#fefce8',
     backBorder: 'rgba(202,138,4,0.18)',
-    body: ['7 módulos con video, fichas descargables y sesiones en vivo. A tu ritmo, desde cualquier dispositivo.', 'Diseñado para cada especialidad EPT: automotriz, confección, cocina, ebanistería y más.'],
+    body: ['7 módulos: video, fichas y sesiones en vivo.', 'A tu ritmo, desde cualquier dispositivo.', 'Diseñado para cada especialidad EPT.'],
   },
   {
     tag: 'EL RESULTADO',
@@ -74,7 +74,7 @@ const WHY_CARDS = [
     shapeColor: '#043941',
     backBg: '#faf5ff',
     backBorder: 'rgba(167,139,250,0.2)',
-    body: ['Al terminar dominas el uso pedagógico de cada equipo y puedes replicarlo con tus estudiantes con confianza real.', 'Con certificación, fichas listas para usar y acceso permanente al material del taller.'],
+    body: ['Dominas tu taller y lo enseñas con confianza.', 'Certificación y fichas listas para usar.', 'Acceso permanente a todo el material.'],
   },
 ]
 
@@ -335,157 +335,138 @@ function TallerModal({
         onClick={onClose}
       />
 
-      {/* Panel */}
+      {/* Panel — 2 columnas en desktop */}
       <div className="fixed inset-x-0 bottom-0 z-50 flex justify-center md:inset-0 md:items-center md:p-6" onClick={onClose}>
         <div
-          className="slide-up-modal bg-white w-full md:max-w-lg rounded-t-3xl md:rounded-3xl overflow-hidden flex flex-col shadow-2xl"
+          className="slide-up-modal bg-white w-full md:max-w-2xl rounded-t-3xl md:rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row"
           style={{ maxHeight: '92vh' }}
           onClick={e => e.stopPropagation()}
         >
-          {/* Header imagen */}
-          <div className="relative h-52 shrink-0 overflow-hidden">
-            <img
-              key={taller.slug}
-              src={taller.imagen}
-              alt={taller.nombre}
-              className={`w-full h-full object-cover ${slideClass}`}
-              style={{ filter: 'brightness(0.75) saturate(0.9)' }}
-            />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(4,57,65,0.15) 0%, rgba(4,57,65,0.88) 100%)' }} />
+          {/* ── Columna izquierda: foto + identidad ── */}
+          <div className="relative shrink-0 overflow-hidden" style={{ height: 200, minHeight: 200 }} >
+            {/* En desktop ocupa toda la altura de la fila */}
+            <style>{`.taller-modal-photo { height: 200px; } @media (min-width:768px) { .taller-modal-photo { height: 100%; width: 260px; min-height: unset; } }`}</style>
+            <div className="taller-modal-photo relative w-full overflow-hidden">
+              <img
+                key={taller.slug}
+                src={taller.imagen}
+                alt={taller.nombre}
+                className={`absolute inset-0 w-full h-full object-cover ${slideClass}`}
+                style={{ filter: 'brightness(0.65) saturate(0.85)' }}
+              />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, rgba(4,57,65,0.2) 0%, rgba(4,57,65,0.92) 100%)' }} />
+              <Tangram color={`hsl(${taller.color})`} opacity={0.25} rotate={20} className="absolute -bottom-6 -right-6 w-28 h-28" />
 
-            {/* Cerrar */}
-            <button
-              onClick={onClose}
-              className="absolute top-3 right-3 h-8 w-8 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
-              style={{ background: 'rgba(0,0,0,0.45)' }}
-            >
-              <X size={14} color="white" />
-            </button>
-
-            {/* Tangram mini */}
-            <Tangram color={`hsl(${taller.color})`} opacity={0.3} rotate={15} className="absolute -bottom-4 -right-4 w-24 h-24" />
-
-            {/* Info */}
-            <div className={`absolute bottom-4 left-5 right-16 ${slideClass}`} key={`info-${taller.slug}`}>
-              <span
-                className="text-[11px] font-extrabold px-2.5 py-1 rounded-full inline-block mb-1.5"
-                style={{ background: `hsl(${taller.color})`, color: '#fff' }}
+              {/* Cerrar — solo visible en móvil en la foto */}
+              <button
+                onClick={onClose}
+                className="absolute top-3 right-3 md:hidden h-8 w-8 rounded-full flex items-center justify-center"
+                style={{ background: 'rgba(0,0,0,0.45)' }}
               >
-                T{String(taller.numero).padStart(2, '0')} · {index + 1} de {talleresConfig.length}
-              </span>
-              <h2 className="text-xl font-extrabold text-white leading-tight">{taller.nombre}</h2>
+                <X size={14} color="white" />
+              </button>
+
+              {/* Info taller */}
+              <div className={`absolute bottom-4 left-5 right-5 ${slideClass}`} key={`info-${taller.slug}`}>
+                <span
+                  className="text-[10px] font-extrabold px-2.5 py-1 rounded-full inline-block mb-2"
+                  style={{ background: `hsl(${taller.color})`, color: '#fff' }}
+                >
+                  T{String(taller.numero).padStart(2, '0')} · {index + 1} de {talleresConfig.length}
+                </span>
+                <h2 className="font-extrabold text-white leading-tight" style={{ fontSize: 'clamp(1rem,2vw,1.35rem)' }}>{taller.nombre}</h2>
+                <p className="text-[11px] mt-1.5 leading-relaxed" style={{ color: 'rgba(255,255,255,0.62)' }}>{taller.descripcion}</p>
+              </div>
             </div>
           </div>
 
-          {/* Cuerpo scrollable */}
-          <div key={taller.slug} className={`flex-1 overflow-y-auto p-5 space-y-5 ${slideClass}`}>
-            {taller.slug === 'taller-general-ept' ? (
-              <>
-                {/* Descripción extendida para Taller General EPT */}
-                <div className="space-y-3">
-                  <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>
-                    El <strong style={{ color: 'var(--grama-oscuro)' }}>Taller General EPT</strong> es un espacio transversal de aprendizaje equipado con tecnología de fabricación digital, TICs y recursos pedagógicos de vanguardia. Está diseñado para que los docentes desarrollen proyectos productivos aplicando el enfoque de Design Thinking e innovación.
-                  </p>
-                  <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>
-                    A diferencia de los talleres especializados, este espacio integra herramientas de múltiples disciplinas: desde la fabricación digital (impresión 3D, corte láser, sublimación) hasta la comunicación audiovisual y el emprendimiento. Es el hub donde convergen ideas, prototipos y aprendizajes de todos los talleres EPT.
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {['Fabricación Digital', 'Design Thinking', 'Emprendimiento', 'Prototipado', 'Proyectos Productivos'].map(tag => (
-                      <span key={tag} className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ background: '#e3f8fb', color: '#045f6c' }}>{tag}</span>
-                    ))}
-                  </div>
-                </div>
+          {/* ── Columna derecha: contenido + footer ── */}
+          <div className="flex flex-col flex-1 overflow-hidden">
 
-                {/* Equipamiento representativo */}
-                <div>
-                  <p className="overline-label font-extrabold mb-2.5 flex items-center gap-2" style={{ color: 'var(--grama-menta)' }}>
-                    <Wrench size={11} /> Equipamiento representativo
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {[
-                      'Impresora 3D FDM', 'Cortadora Láser CO₂', 'Escáner 3D', 'Máquina de Sublimación',
-                      'Kit de Electrónica', 'Computadoras de Escritorio', 'Cámara con Trípode',
-                      'Tablet con Stylus', 'Plotter de Corte', 'Estación de Soldadura',
-                    ].map(nombre => (
-                      <span
-                        key={nombre}
-                        className="text-[10px] font-medium px-2.5 py-1 rounded-full"
-                        style={{ background: '#e3f8fb', color: '#045f6c' }}
-                      >
-                        {nombre}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                {/* Descripción */}
-                <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>{taller.descripcion}</p>
+            {/* Cerrar — solo en desktop */}
+            <div className="hidden md:flex justify-end px-4 pt-3 shrink-0">
+              <button onClick={onClose} className="h-7 w-7 rounded-full flex items-center justify-center hover:opacity-70 transition-opacity" style={{ background: 'rgba(4,57,65,0.07)' }}>
+                <X size={13} color="#043941" />
+              </button>
+            </div>
 
-                {/* Competencias */}
-                {taller.competencias?.length > 0 && (
+            {/* Cuerpo */}
+            <div key={taller.slug} className={`flex-1 overflow-y-auto px-5 pb-2 pt-1 space-y-4 ${slideClass}`}>
+              {taller.slug === 'taller-general-ept' ? (
+                <>
                   <div>
-                    <p className="overline-label font-extrabold mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
-                      <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.2 7.8L9 2.5" stroke="#02d47e" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                      Competencias que desarrollarás
+                    <p className="overline-label font-extrabold mb-2 flex items-center gap-1.5" style={{ color: '#02d47e' }}>
+                      <Wrench size={11} /> Equipamiento representativo
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {['Impresora 3D FDM','Cortadora Láser CO₂','Escáner 3D','Sublimación','Kit Electrónica','Plotter de Corte'].map(n => (
+                        <span key={n} className="text-[10px] font-medium px-2.5 py-1 rounded-full" style={{ background:'#e3f8fb', color:'#045f6c' }}>{n}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {['Fabricación Digital','Design Thinking','Emprendimiento','Prototipado','Proyectos Productivos'].map(tag => (
+                      <span key={tag} className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ background:'#f0fdf6', color:'#045f6c' }}>{tag}</span>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Competencias */}
+                  {taller.competencias?.length > 0 && (
+                    <div>
+                      <p className="overline-label font-extrabold mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
+                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.2 7.8L9 2.5" stroke="#02d47e" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        Competencias
+                      </p>
+                      <div className="grid grid-cols-2 gap-1">
+                        {taller.competencias.slice(0, 4).map((c, i) => (
+                          <div key={i} className="flex items-start gap-1.5 px-2 py-1.5 rounded-lg" style={{ background: '#f0fdf6' }}>
+                            <span className="h-1.5 w-1.5 rounded-full shrink-0 mt-1" style={{ background: '#02d47e' }} />
+                            <span className="text-[10px] leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{c}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Módulos — 2 columnas compactas */}
+                  <div>
+                    <p className="overline-label font-extrabold mb-2 flex items-center gap-1.5" style={{ color: '#02d47e' }}>
+                      <BookOpen size={11} /> Ruta · {modulosLXP.length} módulos · 150h
                     </p>
                     <div className="grid grid-cols-2 gap-1">
-                      {taller.competencias.slice(0, 4).map((c, i) => (
-                        <div key={i} className="flex items-start gap-1.5 px-2 py-1.5 rounded-lg" style={{ background: '#f0fdf6' }}>
-                          <span className="h-1.5 w-1.5 rounded-full shrink-0 mt-1" style={{ background: '#02d47e' }} />
-                          <span className="text-[10px] leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{c}</span>
+                      {modulosLXP.map((m, i) => (
+                        <div key={m.id} className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg" style={{ background: '#f0fdf6' }}>
+                          <span className="text-[9px] font-extrabold shrink-0" style={{ color: '#02d47e' }}>M{i}</span>
+                          <span className="text-[10px] font-semibold truncate" style={{ color: 'var(--grama-oscuro)' }}>{m.nombre}</span>
+                          <span className="text-[9px] ml-auto shrink-0" style={{ color: '#94a3b8' }}>{m.horasTotal}h</span>
                         </div>
                       ))}
                     </div>
                   </div>
-                )}
 
-                {/* Ruta de aprendizaje */}
-                <div>
-                  <p className="overline-label font-extrabold mb-2.5 flex items-center gap-2" style={{ color: 'var(--grama-menta)' }}>
-                    <BookOpen size={11} /> Ruta de aprendizaje · 7 módulos · 150h
-                  </p>
-                  <div className="space-y-1.5">
-                    {modulosLXP.map((m, i) => (
-                      <div
-                        key={m.id}
-                        className="flex items-center gap-3 px-3 py-2 rounded-xl"
-                        style={{ background: '#f0fdf6' }}
-                      >
-                        <span className="text-[10px] font-extrabold w-5 shrink-0 text-center" style={{ color: '#94a3b8' }}>M{i}</span>
-                        <span className="text-[11px] font-semibold flex-1" style={{ color: 'var(--grama-oscuro)' }}>{m.nombre}</span>
-                        <span className="text-[10px] shrink-0 font-medium" style={{ color: '#94a3b8' }}>{m.horasTotal}h</span>
+                  {/* Equipamiento — máx 5 chips */}
+                  {bienes.length > 0 && (
+                    <div>
+                      <p className="overline-label font-extrabold mb-2 flex items-center gap-1.5" style={{ color: '#02d47e' }}>
+                        <Wrench size={11} /> Equipamiento
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {bienes.slice(0, 5).map(b => (
+                          <span key={b.nombre} className="text-[10px] font-medium px-2.5 py-1 rounded-full" style={{ background: '#e3f8fb', color: '#045f6c' }}>
+                            {b.nombre}
+                          </span>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Equipamiento */}
-                {bienes.length > 0 && (
-                  <div>
-                    <p className="overline-label font-extrabold mb-2.5 flex items-center gap-2" style={{ color: 'var(--grama-menta)' }}>
-                      <Wrench size={11} /> Equipamiento representativo
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {bienes.map(b => (
-                        <span
-                          key={b.nombre}
-                          className="text-[10px] font-medium px-2.5 py-1 rounded-full"
-                          style={{ background: '#e3f8fb', color: '#045f6c' }}
-                        >
-                          {b.nombre}
-                        </span>
-                      ))}
                     </div>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
+                  )}
+                </>
+              )}
+            </div>
 
-          {/* Footer */}
-          <div className="p-4 space-y-3 shrink-0 border-t" style={{ borderColor: '#f0fdf6' }}>
+            {/* Footer */}
+            <div className="px-4 pb-4 pt-3 space-y-3 shrink-0 border-t" style={{ borderColor: '#f0fdf6' }}>
             {/* Dots de posición — clickeables */}
             <div className="flex items-center justify-center gap-1.5">
               {talleresConfig.map((_, i) => (
@@ -1017,12 +998,14 @@ export default function Landing() {
                         <p style={{ fontSize:'1.05rem', fontWeight:800, color:'#043941', lineHeight:1.3, marginBottom:'1rem' }}>
                           {card.titleFront[0]}<br />{card.titleFront[1]}
                         </p>
-                        <p style={{ fontSize:'.82rem', lineHeight:1.65, color:'#4a7a82', marginBottom:'.75rem', margin:'0 0 .75rem' }}>
-                          {card.body[0]}
-                        </p>
-                        <p style={{ fontSize:'.82rem', lineHeight:1.65, color:'#4a7a82' }}>
-                          {card.body[1]}
-                        </p>
+                        <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+                          {card.body.map((line, li) => (
+                            <div key={li} style={{ display:'flex', alignItems:'flex-start', gap:10 }}>
+                              <span style={{ width:6, height:6, borderRadius:'50%', background:'#02d47e', flexShrink:0, marginTop:6 }} />
+                              <span style={{ fontSize:'.85rem', lineHeight:1.55, color:'#4a7a82' }}>{line}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                       <button
                         onClick={(e) => { e.stopPropagation(); setFlippedCard(null) }}
