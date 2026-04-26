@@ -192,7 +192,7 @@ export default function TallerHub() {
               <button
                 onClick={() => navigate(`/taller/${slug}/ruta`)}
                 className="flex items-center gap-2 px-6 py-3 text-sm font-bold transition-all hover:opacity-90 active:scale-[0.98]"
-                style={{ background: 'linear-gradient(90deg,#02d47e,#00c16e)', color: '#032e34', borderRadius: 12 }}
+                style={{ background: '#02d47e', color: '#043941', borderRadius: 100, boxShadow: '0 6px 22px rgba(2,212,126,.4)' }}
               >
                 <BookOpen size={14} />
                 Iniciar Ruta de Aprendizaje
@@ -202,7 +202,7 @@ export default function TallerHub() {
             <button
               onClick={() => navigate(`/taller/${slug}/repositorio`)}
               className="flex items-center gap-2 px-6 py-3 text-sm font-bold transition-all active:scale-[0.98]"
-              style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', border: '1.5px solid rgba(255,255,255,0.15)', borderRadius: 12 }}
+              style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', border: '1.5px solid rgba(255,255,255,0.15)', borderRadius: 100 }}
             >
               <Package size={14} />
               Ver Repositorio
@@ -271,8 +271,8 @@ export default function TallerHub() {
                 </h2>
               </div>
               <div className="h-8 w-8 rounded-full flex items-center justify-center shrink-0 transition-all group-hover:scale-110"
-                style={{ background: 'linear-gradient(90deg,#02d47e,#00c16e)' }}>
-                <ChevronRight size={15} color="#032e34" />
+                style={{ background: '#02d47e' }}>
+                <ChevronRight size={15} color="#043941" />
               </div>
             </div>
 
@@ -318,8 +318,8 @@ export default function TallerHub() {
             <div className="px-6 pb-5 pt-2">
               <button
                 onClick={() => navigate(`/taller/${slug}/ruta`)}
-                className="w-full flex items-center justify-center gap-2 py-3 text-sm font-bold rounded-xl transition-all hover:opacity-90 active:scale-[0.98]"
-                style={{ background: 'rgba(2,212,126,0.08)', color: '#02d47e', border: '1.5px solid rgba(2,212,126,0.2)' }}
+                className="w-full flex items-center justify-center gap-2 py-3 text-sm font-bold transition-all hover:opacity-90 active:scale-[0.98]"
+                style={{ background: '#02d47e', color: '#043941', borderRadius: 100, boxShadow: '0 4px 14px rgba(2,212,126,.35)' }}
               >
                 Ver ruta completa
                 <ArrowRight size={14} />
@@ -381,8 +381,8 @@ export default function TallerHub() {
           <div className="px-6 pb-5">
             <button
               onClick={() => navigate(`/taller/${slug}/repositorio`)}
-              className="w-full flex items-center justify-center gap-2 py-3 text-sm font-bold rounded-xl transition-all hover:opacity-90 active:scale-[0.98]"
-              style={{ background: 'rgba(4,57,65,0.04)', color: '#043941', border: '1.5px solid rgba(4,57,65,0.1)' }}
+              className="w-full flex items-center justify-center gap-2 py-3 text-sm font-bold transition-all hover:opacity-90 active:scale-[0.98]"
+              style={{ background: 'rgba(4,57,65,0.05)', color: '#043941', border: '1.5px solid rgba(4,57,65,0.12)', borderRadius: 100 }}
             >
               Ver repositorio completo
               <ArrowRight size={14} />
