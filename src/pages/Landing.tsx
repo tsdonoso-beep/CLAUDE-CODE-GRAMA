@@ -343,10 +343,9 @@ function TallerModal({
           onClick={e => e.stopPropagation()}
         >
           {/* ── Columna izquierda: foto + identidad ── */}
-          <div className="relative shrink-0 overflow-hidden" style={{ height: 200, minHeight: 200 }} >
-            {/* En desktop ocupa toda la altura de la fila */}
-            <style>{`.taller-modal-photo { height: 200px; } @media (min-width:768px) { .taller-modal-photo { height: 100%; width: 260px; min-height: unset; } }`}</style>
-            <div className="taller-modal-photo relative w-full overflow-hidden">
+          <style>{`.modal-photo-col { height: 220px; flex-shrink: 0; } @media (min-width:768px) { .modal-photo-col { height: auto; width: 250px; align-self: stretch; } }`}</style>
+          <div className="modal-photo-col relative overflow-hidden">
+            <div className="relative w-full h-full overflow-hidden">
               <img
                 key={taller.slug}
                 src={taller.imagen}
@@ -466,53 +465,56 @@ function TallerModal({
             </div>
 
             {/* Footer */}
-            <div className="px-4 pb-4 pt-3 space-y-3 shrink-0 border-t" style={{ borderColor: '#f0fdf6' }}>
-            {/* Dots de posición — clickeables */}
-            <div className="flex items-center justify-center gap-1.5">
-              {talleresConfig.map((_, i) => (
+            <div className="px-4 pb-4 pt-2.5 shrink-0 border-t space-y-2.5" style={{ borderColor: '#f0fdf6' }}>
+
+              {/* Nav row: flechas + dots fusionados */}
+              <div className="flex items-center justify-between gap-2">
                 <button
-                  key={i}
-                  onClick={() => i !== index && onGoTo(i)}
-                  className="rounded-full transition-all duration-300"
-                  style={{
-                    width: i === index ? 20 : 6,
-                    height: 6,
-                    background: i === index ? '#02d47e' : '#e3f8fb',
-                    cursor: i === index ? 'default' : 'pointer',
-                  }}
-                />
-              ))}
-            </div>
+                  onClick={onPrev}
+                  disabled={isFirst}
+                  className="flex items-center justify-center rounded-full transition-all disabled:opacity-20 hover:scale-110"
+                  style={{ width: 30, height: 30, background: '#f0fdf6', border: 'none', cursor: isFirst ? 'default' : 'pointer', flexShrink: 0 }}
+                >
+                  <ChevronLeft size={15} color="#043941" />
+                </button>
 
-            {/* Prev / Next */}
-            <div className="flex gap-2">
-              <button
-                onClick={onPrev}
-                disabled={isFirst}
-                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all hover:bg-opacity-80 disabled:opacity-30"
-                style={{ background: '#f0fdf6', color: 'var(--grama-oscuro)' }}
-              >
-                <ChevronLeft size={13} /> Anterior
-              </button>
-              <button
-                onClick={onNext}
-                disabled={isLast}
-                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all hover:bg-opacity-80 disabled:opacity-30"
-                style={{ background: '#f0fdf6', color: 'var(--grama-oscuro)' }}
-              >
-                Siguiente <ChevronRight size={13} />
-              </button>
-            </div>
+                <div className="flex items-center gap-1.5 flex-1 justify-center">
+                  {talleresConfig.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => i !== index && onGoTo(i)}
+                      className="rounded-full transition-all duration-300"
+                      style={{
+                        width: i === index ? 18 : 5,
+                        height: 5,
+                        background: i === index ? '#02d47e' : '#d1f0e8',
+                        border: 'none',
+                        padding: 0,
+                        cursor: i === index ? 'default' : 'pointer',
+                      }}
+                    />
+                  ))}
+                </div>
 
-            {/* CTA principal */}
-            <a
-              href="mailto:contacto@grama.pe"
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold text-white transition-all hover:scale-[1.02] hover:shadow-lg"
-              style={{ background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)' }}
-            >
-              Solicitar información <ArrowRight size={14} />
-            </a>
-          </div>
+                <button
+                  onClick={onNext}
+                  disabled={isLast}
+                  className="flex items-center justify-center rounded-full transition-all disabled:opacity-20 hover:scale-110"
+                  style={{ width: 30, height: 30, background: '#f0fdf6', border: 'none', cursor: isLast ? 'default' : 'pointer', flexShrink: 0 }}
+                >
+                  <ChevronRight size={15} color="#043941" />
+                </button>
+              </div>
+
+              {/* CTA principal */}
+              <a
+                href="mailto:contacto@grama.pe"
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-bold transition-all hover:scale-[1.02] hover:shadow-lg"
+                style={{ background: '#02d47e', color: '#043941', boxShadow: '0 4px 18px rgba(2,212,126,.35)' }}
+              >
+                Solicitar información <ArrowRight size={14} />
+              </a>
+            </div>
         </div>
       </div>
     </div>
