@@ -683,7 +683,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
 
   const selectStyle = {
     className: 'px-3 py-2 rounded-xl border-2 text-sm outline-none',
-    style: { borderColor: 'rgba(255,255,255,0.75)', background: '#ffffff', color: '#ffffff' },
+    style: { borderColor: 'rgba(255,255,255,0.75)', background: '#ffffff', color: '#043941' },
   }
 
   // ── helpers de sidebar ──────────────────────────────────────────────────────
@@ -735,7 +735,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     style={{ display: 'flex', alignItems: 'center', gap: '.6rem', width: '100%', padding: '.55rem .7rem', borderRadius: 10, marginBottom: 2, cursor: 'pointer', border: 'none', textAlign: 'left', transition: 'all .15s',
                       background: active ? 'rgba(2,212,126,0.13)' : 'transparent',
                       borderLeft: active ? '2.5px solid #02d47e' : '2.5px solid transparent',
-                      color: active ? '#ffffff' : 'rgba(255,255,255,0.75)',
+                      color: active ? '#ffffff' : 'rgba(255,255,255,0.80)',
                     }}>
                     <item.icon size={15} />
                     <span style={{ fontSize: '.8rem', fontWeight: active ? 700 : 500, flex: 1 }}>{item.label}</span>
@@ -756,8 +756,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
               {profile?.email?.[0]?.toUpperCase() ?? 'A'}
             </div>
             <div style={{ minWidth: 0 }}>
-              <p style={{ fontSize: '.72rem', fontWeight: 700, color: '#043941' }}>Admin</p>
-              <p style={{ fontSize: '.6rem', color: '#043941', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 140 }}>{profile?.email}</p>
+              <p style={{ fontSize: '.72rem', fontWeight: 700, color: 'rgba(255,255,255,0.9)' }}>Admin</p>
+              <p style={{ fontSize: '.6rem', color: 'rgba(255,255,255,0.7)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 140 }}>{profile?.email}</p>
             </div>
           </div>
           <div style={{ display: 'flex', gap: '.4rem' }}>
@@ -931,7 +931,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   {solicitudesPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{solicitudesPendientes} pendientes</span> : 'Sin pendientes'} · {solicitudes.length} en total
                 </p>
               </div>
-              <button onClick={fetchSolicitudes} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: '#ffffff', color: 'rgba(255,255,255,0.75)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
+              <button onClick={fetchSolicitudes} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: '#ffffff', color: 'rgba(4,57,65,0.75)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
                 <RefreshCw size={12} /> Recargar
               </button>
             </div>
@@ -977,7 +977,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
             ) : solicitudesFiltradas.length === 0 ? (
               <div className="text-center py-20 rounded-2xl"
                 style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.80)' }}>
-                <Inbox size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.75)' }} />
+                <Inbox size={36} className="mx-auto mb-3" style={{ color: 'rgba(4,57,65,0.75)' }} />
                 <p className="text-sm" style={{ color: '#043941' }}>
                   No hay solicitudes en esta categoría.
                 </p>
@@ -1092,7 +1092,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     {consultasPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{consultasPendientes} sin responder</span> : 'Todas respondidas'} · {consultasAdmin.length} en total
                   </p>
                 </div>
-                <button onClick={fetchConsultasAdmin} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: '#ffffff', color: 'rgba(255,255,255,0.75)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
+                <button onClick={fetchConsultasAdmin} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: '#ffffff', color: 'rgba(4,57,65,0.75)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
                   <RefreshCw size={12} /> Recargar
                 </button>
               </div>
@@ -1124,7 +1124,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
               ) : consultasFiltradas.length === 0 ? (
                 <div className="text-center py-20 rounded-2xl"
                   style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.80)' }}>
-                  <MessageCircle size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.75)' }} />
+                  <MessageCircle size={36} className="mx-auto mb-3" style={{ color: 'rgba(4,57,65,0.75)' }} />
                   <p className="text-sm" style={{ color: '#043941' }}>No hay consultas en esta categoría.</p>
                 </div>
               ) : (
@@ -1160,7 +1160,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         {/* Mensaje del docente */}
                         <div className="px-5 py-4">
                           <p className="text-xs font-bold mb-2" style={{ color: '#043941' }}>Consulta</p>
-                          <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)' }}>{c.mensaje}</p>
+                          <p className="text-sm leading-relaxed" style={{ color: 'rgba(4,57,65,0.8)' }}>{c.mensaje}</p>
                         </div>
 
                         {/* Respuesta existente */}
@@ -1176,7 +1176,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                                 </span>
                               )}
                             </div>
-                            <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>{c.respuesta}</p>
+                            <p className="text-sm leading-relaxed" style={{ color: 'rgba(4,57,65,0.7)' }}>{c.respuesta}</p>
                           </div>
                         )}
 
@@ -1232,7 +1232,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     value={filtroAnalyticsDocente}
                     onChange={e => { setFiltroAnalyticsDocente(e.target.value); setBusquedaDocente('') }}
                     className="px-3 py-2 rounded-xl border-2 text-sm outline-none min-w-[260px]"
-                    style={{ borderColor: filtroAnalyticsDocente ? '#02d47e' : 'rgba(255,255,255,0.75)', background: '#ffffff', color: '#ffffff' }}>
+                    style={{ borderColor: filtroAnalyticsDocente ? '#02d47e' : 'rgba(255,255,255,0.75)', background: '#ffffff', color: '#043941' }}>
                     <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todos los docentes (global)</option>
                     {docentes.map(d => (
                       <option key={d.id} value={d.id} style={{ background: '#0d2b31', color: '#ffffff' }}>{d.nombre_completo} — {d.email}</option>
@@ -1315,7 +1315,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                                     {row.badge}
                                   </span>
                                 ) : (
-                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: '#ffffff', color: 'rgba(255,255,255,0.75)', padding: '.15rem .45rem', borderRadius: 5, flexShrink: 0 }}>ALL</span>
+                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: '#ffffff', color: 'rgba(4,57,65,0.75)', padding: '.15rem .45rem', borderRadius: 5, flexShrink: 0 }}>ALL</span>
                                 )}
                                 <span style={{ fontSize: '.72rem', color: isBase ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.6)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                   {row.label}
@@ -1372,11 +1372,11 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         return (
                           <div key={q.contenidoId} style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 130px 70px', gap: 0, padding: '.75rem 1.5rem', borderBottom: isLast ? 'none' : '1px solid rgba(255,255,255,0.04)', alignItems: 'center' }}>
                             {/* title */}
-                            <p style={{ fontSize: '.78rem', color: 'rgba(255,255,255,0.75)', fontWeight: 500, paddingRight: '1rem' }}>{q.titulo}</p>
+                            <p style={{ fontSize: '.78rem', color: 'rgba(4,57,65,0.75)', fontWeight: 500, paddingRight: '1rem' }}>{q.titulo}</p>
                             {/* intentos */}
-                            <p style={{ fontSize: '.78rem', fontWeight: 700, color: 'rgba(255,255,255,0.6)' }}>{q.intentos}</p>
+                            <p style={{ fontSize: '.78rem', fontWeight: 700, color: 'rgba(4,57,65,0.6)' }}>{q.intentos}</p>
                             {/* docentes */}
-                            <p style={{ fontSize: '.78rem', fontWeight: 700, color: 'rgba(255,255,255,0.6)' }}>{q.docentesUnicos}</p>
+                            <p style={{ fontSize: '.78rem', fontWeight: 700, color: 'rgba(4,57,65,0.6)' }}>{q.docentesUnicos}</p>
                             {/* tasa bar */}
                             <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem' }}>
                               <div style={{ flex: 1, height: 6, background: '#ffffff', borderRadius: 6, overflow: 'hidden' }}>
@@ -1438,7 +1438,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                           <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: '#ffffff' }}>
                             <div className="h-full rounded-full transition-all" style={{ width: `${Math.round((n.count / maxCount) * 100)}%`, background: '#02d47e' }} />
                           </div>
-                          <span className="text-xs font-bold w-8 text-right" style={{ color: 'rgba(255,255,255,0.6)' }}>{n.count}</span>
+                          <span className="text-xs font-bold w-8 text-right" style={{ color: 'rgba(4,57,65,0.6)' }}>{n.count}</span>
                         </div>
                       )
                     })}
@@ -1645,7 +1645,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
               onChange={e => setBusquedaUsuario(e.target.value)}
               placeholder="Buscar por nombre o correo…"
               className="w-full pl-9 pr-4 py-2.5 rounded-xl border-2 text-sm outline-none"
-              style={{ borderColor: busquedaUsuario ? '#02d47e' : 'rgba(255,255,255,0.12)', background: '#ffffff', color: '#ffffff' }}
+              style={{ borderColor: busquedaUsuario ? '#02d47e' : 'rgba(255,255,255,0.12)', background: '#ffffff', color: '#043941' }}
             />
             {busquedaUsuario && (
               <button onClick={() => setBusquedaUsuario('')} className="absolute right-3 top-1/2 -translate-y-1/2 opacity-40 hover:opacity-70 text-white text-sm">✕</button>
@@ -1740,7 +1740,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                               <div className="h-full rounded-full transition-all"
                                 style={{ width: `${d.porcentaje}%`, background: d.porcentaje >= 80 ? '#02d47e' : d.porcentaje >= 40 ? '#f59e0b' : '#ef4444' }} />
                             </div>
-                            <span className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                            <span className="text-xs font-bold" style={{ color: 'rgba(4,57,65,0.7)' }}>
                               {d.porcentaje}%
                             </span>
                           </div>
@@ -1992,7 +1992,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                       color:      d.role === 'admin' ? '#c084fc' : '#02d47e' }}>
                       {d.role === 'admin' ? 'Admin' : 'Docente'}
                     </span>
-                    {taller && <span style={{ fontSize: '.62rem', color: 'rgba(255,255,255,0.62)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{taller.nombreCorto ?? taller.nombre}</span>}
+                    {taller && <span style={{ fontSize: '.62rem', color: 'rgba(4,57,65,0.62)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{taller.nombreCorto ?? taller.nombre}</span>}
                   </div>
                 </div>
                 <button onClick={() => setDocenteDetalle(null)} style={{ width: 28, height: 28, borderRadius: 8, background: '#ffffff', border: '1px solid rgba(255,255,255,0.08)', color: '#043941', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
@@ -2011,7 +2011,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   <div style={{ background: '#ffffff', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, padding: '.75rem 1rem', marginBottom: '1.1rem' }}>
                     <p style={{ fontSize: '.58rem', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: '#043941', marginBottom: '.3rem' }}>Institución</p>
                     <p style={{ fontSize: '.82rem', fontWeight: 600, color: '#043941' }}>{ie.nombre}</p>
-                    <p style={{ fontSize: '.68rem', color: 'rgba(255,255,255,0.62)', marginTop: '.18rem' }}>{ie.distrito} · {ie.region}</p>
+                    <p style={{ fontSize: '.68rem', color: 'rgba(4,57,65,0.62)', marginTop: '.18rem' }}>{ie.distrito} · {ie.region}</p>
                   </div>
                 )}
 
@@ -2028,7 +2028,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   ].map(s => (
                     <div key={s.label} style={{ background: '#ffffff', border: '1px solid rgba(255,255,255,0.80)', borderRadius: 11, padding: '.65rem .5rem', textAlign: 'center' }}>
                       <p style={{ fontSize: '1.2rem', fontWeight: 900, color: s.color, lineHeight: 1 }}>{s.value}</p>
-                      <p style={{ fontSize: '.58rem', color: 'rgba(255,255,255,0.62)', marginTop: '.3rem' }}>{s.label}</p>
+                      <p style={{ fontSize: '.58rem', color: 'rgba(4,57,65,0.62)', marginTop: '.3rem' }}>{s.label}</p>
                     </div>
                   ))}
                 </div>
@@ -2047,7 +2047,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     background: d.porcentaje >= 80 ? '#02d47e' : d.porcentaje >= 40 ? '#f59e0b' : '#ef4444' }} />
                 </div>
                 {d.visualizados > d.completados && (
-                  <p style={{ fontSize: '.62rem', color: 'rgba(255,255,255,0.75)', marginBottom: '1rem' }}>
+                  <p style={{ fontSize: '.62rem', color: 'rgba(4,57,65,0.75)', marginBottom: '1rem' }}>
                     {d.visualizados} visualizados · {d.completados} completados
                   </p>
                 )}
@@ -2125,7 +2125,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                           value=""
                           onChange={e => { if (e.target.value) setTalleresEditando(prev => [...prev, e.target.value]) }}
                           className="w-full px-3 py-2 rounded-xl text-xs outline-none"
-                          style={{ background: '#ffffff', color: 'rgba(255,255,255,0.75)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                          style={{ background: '#ffffff', color: 'rgba(4,57,65,0.75)', border: '1px solid rgba(255,255,255,0.1)' }}>
                           <option value="">+ Añadir taller…</option>
                           {talleresDisponibles.map(t => (
                             <option key={t.slug} value={t.slug} style={{ background: '#052e35' }}>{t.nombre}</option>
@@ -2165,8 +2165,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     { label: 'Fecha de registro',  value: formatDate(d.created_at) },
                   ].map(row => (
                     <div key={row.label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.62)' }}>{row.label}</p>
-                      <p style={{ fontSize: '.72rem', fontWeight: 600, color: 'rgba(255,255,255,0.6)' }}>{row.value}</p>
+                      <p style={{ fontSize: '.72rem', color: 'rgba(4,57,65,0.62)' }}>{row.label}</p>
+                      <p style={{ fontSize: '.72rem', fontWeight: 600, color: 'rgba(4,57,65,0.6)' }}>{row.value}</p>
                     </div>
                   ))}
                 </div>
@@ -2196,7 +2196,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                           className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all"
                           style={copiadoBienvenida === d.id
                             ? { background: 'rgba(2,212,126,0.15)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.3)' }
-                            : { background: '#ffffff', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                            : { background: '#ffffff', color: 'rgba(4,57,65,0.6)', border: '1px solid rgba(255,255,255,0.1)' }}>
                           {copiadoBienvenida === d.id
                             ? <><CheckCircle size={13} /> ¡Mensaje copiado!</>
                             : <><Copy size={13} /> Copiar mensaje de bienvenida</>}
