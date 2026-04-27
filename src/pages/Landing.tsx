@@ -859,69 +859,26 @@ export default function Landing() {
           </div>
         </div>
 
-        {/* ── Columna derecha — mockup visual ── */}
+        {/* ── Columna derecha — imagen + badges flotantes ── */}
         <div style={{ position:'relative', zIndex:2, animation:'heroNavIn .7s .22s ease both' }}>
 
-          {/* Contenedor principal oscuro */}
-          <div style={{
-            background:'linear-gradient(135deg, #032b31 0%, #043941 55%, #045f6c 100%)',
-            borderRadius:24, padding:28, minHeight:380,
-            boxShadow:'0 32px 80px rgba(4,57,65,.28)',
-            position:'relative', overflow:'hidden',
-          }}>
-            {/* Formas decorativas internas */}
-            <div style={{ position:'absolute', bottom:-50, right:-50, width:180, height:180, background:'#02d47e', clipPath:'polygon(100% 0,100% 100%,0 100%)', opacity:.1, pointerEvents:'none' }} />
-            <div style={{ position:'absolute', top:-30, left:'40%', width:90, height:90, background:'rgba(255,255,255,.04)', clipPath:'polygon(50% 0,100% 100%,0 100%)', pointerEvents:'none' }} />
-
-            {/* Header del mockup */}
-            <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:20 }}>
-              <div style={{ width:32, height:32, borderRadius:8, background:'rgba(2,212,126,.15)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><polygon points="2,22 12,2 12,22" fill="#02d47e"/><polygon points="12,2 22,12 12,12" fill="rgba(255,255,255,0.85)"/></svg>
-              </div>
-              <div>
-                <p style={{ fontSize:12, fontWeight:800, color:'#fff', margin:0 }}>GRAMA Platform</p>
-                <p style={{ fontSize:10, color:'rgba(2,212,126,.8)', margin:0 }}>Panel del Docente</p>
-              </div>
-              <div style={{ marginLeft:'auto', display:'flex', gap:5 }}>
-                {['#ef4444','#f59e0b','#02d47e'].map(c => <div key={c} style={{ width:8, height:8, borderRadius:'50%', background:c }} />)}
-              </div>
-            </div>
-
-            {/* Mini taller cards */}
-            {[
-              { name:'Mecánica Automotriz', prog:68, color:'#3b82f6' },
-              { name:'Industria del Vestido', prog:42, color:'#ec4899' },
-              { name:'Ebanistería', prog:91, color:'#b8975a' },
-            ].map((t, i) => (
-              <div key={i} style={{ background:'rgba(255,255,255,.06)', borderRadius:12, padding:'10px 14px', marginBottom:8, display:'flex', alignItems:'center', gap:12, animation:`heroNavIn .5s ${.3 + i*.12}s ease both` }}>
-                <div style={{ width:8, height:8, borderRadius:'50%', background:t.color, boxShadow:`0 0 6px ${t.color}`, flexShrink:0 }} />
-                <div style={{ flex:1, minWidth:0 }}>
-                  <p style={{ fontSize:11, fontWeight:700, color:'rgba(255,255,255,.9)', margin:'0 0 4px', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{t.name}</p>
-                  <div style={{ height:4, background:'rgba(255,255,255,.1)', borderRadius:4, overflow:'hidden' }}>
-                    <div style={{ height:'100%', width:`${t.prog}%`, background:`linear-gradient(90deg, ${t.color}, #02d47e)`, borderRadius:4 }} />
-                  </div>
-                </div>
-                <span style={{ fontSize:11, fontWeight:800, color:'#02d47e', flexShrink:0 }}>{t.prog}%</span>
-              </div>
-            ))}
-
-            {/* Stat badges flotantes */}
-            <div style={{ display:'flex', gap:8, marginTop:16 }}>
-              {[
-                { label:'Módulos completados', val:'4/7', color:'rgba(2,212,126,.15)', text:'#02d47e' },
-                { label:'Siguiente sesión', val:'Martes', color:'rgba(248,238,145,.1)', text:'#f8ee91' },
-              ].map((s,i) => (
-                <div key={i} style={{ flex:1, background:s.color, borderRadius:10, padding:'10px 12px' }}>
-                  <p style={{ fontSize:9, color:'rgba(255,255,255,.5)', margin:'0 0 3px', textTransform:'uppercase', letterSpacing:'.06em' }}>{s.label}</p>
-                  <p style={{ fontSize:16, fontWeight:900, color:s.text, margin:0 }}>{s.val}</p>
-                </div>
-              ))}
+          {/* Imagen principal */}
+          <div style={{ borderRadius:24, overflow:'hidden', boxShadow:'0 32px 80px rgba(4,57,65,.28)', position:'relative', aspectRatio:'4/3' }}>
+            <img
+              src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=700&q=80"
+              alt="Vista de la plataforma"
+              style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }}
+            />
+            {/* Overlay sutil */}
+            <div style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, transparent 50%, rgba(4,57,65,.4) 100%)', pointerEvents:'none' }} />
+            <div style={{ position:'absolute', bottom:16, left:16, background:'rgba(4,57,65,.75)', backdropFilter:'blur(6px)', color:'#fff', fontSize:10, fontWeight:700, letterSpacing:'1px', textTransform:'uppercase', padding:'4px 10px', borderRadius:6 }}>
+              Vista de la plataforma
             </div>
           </div>
 
           {/* Badge flotante — roles */}
-          <div style={{ position:'absolute', top:-16, right:-16, background:'#fff', borderRadius:14, padding:'10px 14px', boxShadow:'0 8px 28px rgba(4,57,65,.14)', display:'flex', alignItems:'center', gap:8, zIndex:3 }}>
-            <div style={{ width:32, height:32, borderRadius:8, background:'rgba(2,212,126,.12)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:14 }}>🎓</div>
+          <div style={{ position:'absolute', top:-14, right:-14, background:'#fff', borderRadius:14, padding:'10px 14px', boxShadow:'0 8px 28px rgba(4,57,65,.14)', display:'flex', alignItems:'center', gap:8, zIndex:3 }}>
+            <div style={{ width:32, height:32, borderRadius:8, background:'rgba(2,212,126,.12)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:15 }}>🎓</div>
             <div>
               <p style={{ fontSize:10, fontWeight:800, color:'#043941', margin:0 }}>3 roles disponibles</p>
               <p style={{ fontSize:9, color:'#5a7a80', margin:0 }}>Docente · Alumno · Director</p>
@@ -929,7 +886,7 @@ export default function Landing() {
           </div>
 
           {/* Badge flotante — certificación */}
-          <div style={{ position:'absolute', bottom:-16, left:-16, background:'#043941', borderRadius:14, padding:'10px 16px', boxShadow:'0 8px 28px rgba(4,57,65,.3)', display:'flex', alignItems:'center', gap:10, zIndex:3 }}>
+          <div style={{ position:'absolute', bottom:-14, left:-14, background:'#043941', borderRadius:14, padding:'10px 16px', boxShadow:'0 8px 28px rgba(4,57,65,.3)', display:'flex', alignItems:'center', gap:10, zIndex:3 }}>
             <div style={{ width:32, height:32, borderRadius:'50%', background:'rgba(2,212,126,.2)', display:'flex', alignItems:'center', justifyContent:'center' }}>
               <CheckCircle size={16} color="#02d47e" />
             </div>
