@@ -83,6 +83,54 @@ function buildMockAnalytics(): AnalyticsData {
   }
 }
 
+// ── Quiz performance types ─────────────────────────────────────────────────────
+interface QuizStat {
+  contenidoId: string
+  titulo: string
+  modulo: string          // 'M0', 'M1', …
+  preguntas: number
+  puntajeMinimo?: number
+  bloqueante: boolean
+  intentos: number        // total rows in quiz_resultados
+  docentesUnicos: number  // distinct usuario_ids
+  aprobados: number       // distinct usuario_ids con al menos un aprobado=true
+  tasaAprobacion: number  // 0-100
+}
+
+function buildMockQuizStats(): QuizStat[] {
+  // Extraer todos los QUIZ del currículo con stats simuladas realistas
+  const data: { id: string; titulo: string; modulo: string; preguntas: number; puntajeMinimo?: number; bloqueante?: boolean; intentos: number; docentesUnicos: number; aprobados: number }[] = [
+    { id: 'm0-s03-c5', titulo: 'Quiz: Google Workspace',         modulo: 'M0', preguntas: 8,  intentos: 42, docentesUnicos: 38, aprobados: 34 },
+    { id: 'm0-s04-c4', titulo: 'Quiz: IA para el Aprendizaje',  modulo: 'M0', preguntas: 6,  intentos: 39, docentesUnicos: 36, aprobados: 30 },
+    { id: 'm0-s05-c5', titulo: 'Quiz: IA creativa',              modulo: 'M0', preguntas: 6,  intentos: 37, docentesUnicos: 35, aprobados: 29 },
+    { id: 'm0-s06-c5', titulo: 'Quiz: Herramientas de ideación', modulo: 'M0', preguntas: 6,  intentos: 35, docentesUnicos: 33, aprobados: 27 },
+    { id: 'm0-ra1-c1', titulo: 'Evaluación M0',                  modulo: 'M0', preguntas: 15, intentos: 48, docentesUnicos: 32, aprobados: 22 },
+    { id: 'm1-s11-c3', titulo: 'Quiz: Metrado de equipos',       modulo: 'M1', preguntas: 10, intentos: 28, docentesUnicos: 22, aprobados: 18 },
+    { id: 'm1-s12-c2', titulo: 'Quiz: Instalación y softwares',  modulo: 'M1', preguntas: 10, intentos: 25, docentesUnicos: 21, aprobados: 15 },
+    { id: 'm1-s13-c3', titulo: 'Quiz: Seguridad EPP',            modulo: 'M1', preguntas: 8,  intentos: 34, docentesUnicos: 20, aprobados: 14, puntajeMinimo: 80, bloqueante: true },
+    { id: 'm1-s14-c2', titulo: "Quiz: Garantías y do's/don'ts",  modulo: 'M1', preguntas: 8,  intentos: 19, docentesUnicos: 17, aprobados: 14 },
+    { id: 'm1-ra2-c1', titulo: 'Evaluación M1',                  modulo: 'M1', preguntas: 20, intentos: 26, docentesUnicos: 15, aprobados: 10, puntajeMinimo: 80 },
+    { id: 'm2-ra2-c1', titulo: 'Evaluación M2',                  modulo: 'M2', preguntas: 20, intentos: 14, docentesUnicos: 11, aprobados: 8  },
+    { id: 'm3-ra3-c1', titulo: 'Evaluación M3',                  modulo: 'M3', preguntas: 20, intentos: 9,  docentesUnicos: 7,  aprobados: 5  },
+    { id: 'm5-s51-c4', titulo: 'Quiz: Competencia 1',            modulo: 'M5', preguntas: 8,  intentos: 6,  docentesUnicos: 5,  aprobados: 4  },
+    { id: 'm5-s53-c4', titulo: 'Quiz: Competencia 2',            modulo: 'M5', preguntas: 8,  intentos: 5,  docentesUnicos: 5,  aprobados: 3  },
+    { id: 'm5-s55-c4', titulo: 'Quiz: Competencia 3',            modulo: 'M5', preguntas: 8,  intentos: 5,  docentesUnicos: 4,  aprobados: 3  },
+    { id: 'm5-s57-c4', titulo: 'Quiz: Competencia 4',            modulo: 'M5', preguntas: 8,  intentos: 4,  docentesUnicos: 4,  aprobados: 3  },
+  ]
+  return data.map(d => ({
+    contenidoId: d.id,
+    titulo: d.titulo,
+    modulo: d.modulo,
+    preguntas: d.preguntas,
+    puntajeMinimo: d.puntajeMinimo,
+    bloqueante: d.bloqueante ?? false,
+    intentos: d.intentos,
+    docentesUnicos: d.docentesUnicos,
+    aprobados: d.aprobados,
+    tasaAprobacion: d.docentesUnicos > 0 ? Math.round((d.aprobados / d.docentesUnicos) * 100) : 0,
+  }))
+}
+
 const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
   import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
 
@@ -234,6 +282,7 @@ export default function Admin() {
   const [loadingAnalytics, setLoadingAnalytics] = useState(false)
   const [filtroAnalyticsDocente, setFiltroAnalyticsDocente] = useState('')
   const [busquedaDocente, setBusquedaDocente] = useState('')
+  const [quizStats, setQuizStats] = useState<QuizStat[]>([])
 
   useEffect(() => { fetchData(); fetchSolicitudes(); fetchConsultasAdmin() }, [])
   useEffect(() => { if (tab === 'analytics') fetchAnalytics(filtroAnalyticsDocente || undefined) }, [tab, filtroAnalyticsDocente])
@@ -251,6 +300,7 @@ export default function Admin() {
     // En DEV_MODE sin Supabase real, usar datos mock
     if (DEV_MODE) {
       setDocentes(buildMockDocentes())
+      setQuizStats(buildMockQuizStats())
       setLoading(false)
       return
     }
@@ -323,6 +373,40 @@ export default function Admin() {
     })
 
     setDocentes(rows)
+
+    // 5. Quiz stats por contenido
+    type QBucket = { intentos: number; docentes: Set<string>; aprobados: Set<string> }
+    const qBuckets: Record<string, QBucket> = {}
+    quizResults?.forEach(q => {
+      if (!qBuckets[q.contenido_id]) qBuckets[q.contenido_id] = { intentos: 0, docentes: new Set(), aprobados: new Set() }
+      qBuckets[q.contenido_id].intentos++
+      qBuckets[q.contenido_id].docentes.add(q.usuario_id)
+      if (q.aprobado) qBuckets[q.contenido_id].aprobados.add(q.usuario_id)
+    })
+    const computedQuizStats: QuizStat[] = modulosLXP.flatMap(m =>
+      m.sesiones.flatMap(s =>
+        s.contenidos
+          .filter(c => c.tipo === 'QUIZ')
+          .map(c => {
+            const b = qBuckets[c.id] ?? { intentos: 0, docentes: new Set(), aprobados: new Set() }
+            const docentesUnicos = b.docentes.size
+            const aprobados = b.aprobados.size
+            return {
+              contenidoId: c.id,
+              titulo: c.titulo,
+              modulo: `M${m.numero}`,
+              preguntas: c.preguntas ?? 0,
+              puntajeMinimo: (c as { puntajeMinimo?: number }).puntajeMinimo,
+              bloqueante: (c as { bloqueaSiguiente?: boolean }).bloqueaSiguiente ?? false,
+              intentos: b.intentos,
+              docentesUnicos,
+              aprobados,
+              tasaAprobacion: docentesUnicos > 0 ? Math.round((aprobados / docentesUnicos) * 100) : 0,
+            }
+          })
+      )
+    )
+    setQuizStats(computedQuizStats)
     setLoading(false)
   }
 
@@ -1250,6 +1334,64 @@ Equipo GRAMA · Programa TSF-MINEDU`
                       })}
                     </div>
                   )}
+                </div>
+              )
+            })()}
+
+            {/* ── Rendimiento por quiz ──────────────────────────────────── */}
+            {quizStats.length > 0 && (() => {
+              const grupos = modulosLXP
+                .map(m => ({ modulo: `M${m.numero}`, nombre: m.nombre, items: quizStats.filter(q => q.modulo === `M${m.numero}`) }))
+                .filter(g => g.items.length > 0)
+              return (
+                <div style={{ borderRadius: 16, overflow: 'hidden', marginBottom: '2rem', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  {/* header */}
+                  <div style={{ padding: '1.1rem 1.5rem', background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', gap: '.6rem' }}>
+                    <BarChart2 size={14} color="#02d47e" />
+                    <h3 style={{ fontSize: '.88rem', fontWeight: 800, color: '#fff' }}>Rendimiento por quiz</h3>
+                    <span style={{ fontSize: '.65rem', color: 'rgba(255,255,255,0.28)', marginLeft: '.1rem' }}>{quizStats.length} quizzes · tasa = docentes que aprueban / docentes únicos que intentaron</span>
+                  </div>
+                  {/* column headers */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 130px 70px', gap: 0, padding: '.55rem 1.5rem', background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                    {['Quiz', 'Intentos', 'Docentes', 'Tasa de aprobación', 'Tags'].map(h => (
+                      <span key={h} style={{ fontSize: '.6rem', fontWeight: 700, color: 'rgba(255,255,255,0.28)', textTransform: 'uppercase', letterSpacing: '.08em' }}>{h}</span>
+                    ))}
+                  </div>
+                  {grupos.map((g, gi) => (
+                    <div key={g.modulo}>
+                      {/* group header */}
+                      <div style={{ padding: '.45rem 1.5rem', background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid rgba(255,255,255,0.04)', borderTop: gi > 0 ? '1px solid rgba(255,255,255,0.06)' : 'none', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+                        <span style={{ fontSize: '.6rem', fontWeight: 800, background: '#02d47e', color: '#043941', padding: '.12rem .38rem', borderRadius: 4 }}>{g.modulo}</span>
+                        <span style={{ fontSize: '.7rem', color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>{g.nombre}</span>
+                      </div>
+                      {g.items.map((q, qi) => {
+                        const tColor = q.tasaAprobacion >= 80 ? '#02d47e' : q.tasaAprobacion >= 60 ? '#22d3ee' : q.tasaAprobacion >= 40 ? '#f59e0b' : '#ef4444'
+                        const isLast = qi === g.items.length - 1
+                        return (
+                          <div key={q.contenidoId} style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 130px 70px', gap: 0, padding: '.75rem 1.5rem', borderBottom: isLast ? 'none' : '1px solid rgba(255,255,255,0.04)', alignItems: 'center' }}>
+                            {/* title */}
+                            <p style={{ fontSize: '.78rem', color: 'rgba(255,255,255,0.75)', fontWeight: 500, paddingRight: '1rem' }}>{q.titulo}</p>
+                            {/* intentos */}
+                            <p style={{ fontSize: '.78rem', fontWeight: 700, color: 'rgba(255,255,255,0.6)' }}>{q.intentos}</p>
+                            {/* docentes */}
+                            <p style={{ fontSize: '.78rem', fontWeight: 700, color: 'rgba(255,255,255,0.6)' }}>{q.docentesUnicos}</p>
+                            {/* tasa bar */}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+                              <div style={{ flex: 1, height: 6, background: 'rgba(255,255,255,0.07)', borderRadius: 6, overflow: 'hidden' }}>
+                                <div style={{ height: '100%', width: `${q.tasaAprobacion}%`, background: tColor, borderRadius: 6, transition: 'width .4s ease' }} />
+                              </div>
+                              <span style={{ fontSize: '.75rem', fontWeight: 800, color: tColor, width: 32, textAlign: 'right', flexShrink: 0 }}>{q.tasaAprobacion}%</span>
+                            </div>
+                            {/* tags */}
+                            <div style={{ display: 'flex', gap: '.25rem', flexWrap: 'wrap' }}>
+                              {q.bloqueante && <span style={{ fontSize: '.55rem', fontWeight: 800, background: 'rgba(239,68,68,0.15)', color: '#ef4444', padding: '.1rem .3rem', borderRadius: 4, letterSpacing: '.04em' }}>BLOQUEA</span>}
+                              {q.puntajeMinimo && <span style={{ fontSize: '.55rem', fontWeight: 800, background: 'rgba(245,158,11,0.15)', color: '#f59e0b', padding: '.1rem .3rem', borderRadius: 4 }}>MÍN {q.puntajeMinimo}%</span>}
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  ))}
                 </div>
               )
             })()}
