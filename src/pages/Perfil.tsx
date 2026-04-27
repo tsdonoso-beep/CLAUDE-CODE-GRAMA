@@ -577,10 +577,11 @@ export default function Perfil() {
         </div>
 
         {/* Content */}
-        <div className="flex-1 p-6 space-y-5">
+        <style>{`@media(min-width:1280px){.perfil-content{display:grid;grid-template-columns:1fr 340px;gap:20px;grid-template-areas:"cards calendar" "modulos logros"}}`}</style>
+        <div className="perfil-content flex-1 p-6 space-y-5 lg:space-y-0">
 
           {/* ── Row 1: Taller cards + Agenda ─────────────────────────────── */}
-          <div>
+          <div style={{ gridArea: 'cards' }}>
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm font-black" style={{ color: '#043941' }}>Mis talleres inscritos</p>
               <button
@@ -591,7 +592,7 @@ export default function Perfil() {
                 Ver todos los módulos <ArrowRight size={11} />
               </button>
             </div>
-            <style>{`@media(min-width:1280px){.pr1{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}}`}</style>
+            <style>{`@media(min-width:1280px){.pr1{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}}`}</style>
             <div className="pr1">
               {/* Cards grid */}
               <style>{`@media(min-width:640px){.pc{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}}`}</style>
@@ -690,7 +691,7 @@ export default function Perfil() {
 
               {/* Agenda */}
               {tallerSlugsAccesibles.length > 0 && (
-                <div className="mt-5 xl:mt-0">
+                <div className="mt-5 xl:mt-0" style={{ gridArea: 'calendar' }}>
                   <CalendarioSidebar
                     tallerSlugs={tallerSlugsAccesibles}
                     accent={primaryAccent}
@@ -706,7 +707,7 @@ export default function Perfil() {
           <div className="pr2 space-y-4 lg:space-y-0">
 
             {/* Módulos en curso */}
-            <div className="rounded-2xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.04)' }}>
+            <div className="rounded-2xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.04)', gridArea: 'modulos' }}>
               <div className="px-5 pt-4 pb-3 border-b flex items-start justify-between" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
                 <div>
                   <p className="text-sm font-black" style={{ color: '#043941' }}>Módulos en curso</p>
@@ -768,7 +769,7 @@ export default function Perfil() {
             </div>
 
             {/* Mis logros */}
-            <div className="rounded-2xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.04)' }}>
+            <div className="rounded-2xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.04)', gridArea: 'logros' }}>
               <div className="px-5 pt-4 pb-3 border-b flex items-start justify-between" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
                 <div>
                   <p className="text-sm font-black" style={{ color: '#043941' }}>Mis logros</p>
