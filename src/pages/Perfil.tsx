@@ -556,147 +556,209 @@ export default function Perfil() {
               </div>
             </div>
 
-            {/* Content grid */}
-            <div className="p-6 grid gap-6 items-start" style={{ gridTemplateColumns: '1fr' }}>
-              <style>{`@media (min-width:1280px){.perfil-grid{grid-template-columns:1fr 320px}}`}</style>
-              <div className="perfil-grid grid gap-6 items-start">
+            {/* ── MIS TALLERES — compact cards ───────────────────────────── */}
+            <div className="px-6 pt-6 pb-2">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <p className="text-sm font-black" style={{ color: '#043941' }}>Mis talleres</p>
+                  <p className="text-[11px]" style={{ color: '#94a3b8' }}>
+                    {tallerSlugsAccesibles.length} taller{tallerSlugsAccesibles.length !== 1 ? 'es' : ''} activo{tallerSlugsAccesibles.length !== 1 ? 's' : ''}
+                  </p>
+                </div>
+              </div>
 
-                {/* Taller cards column */}
-                <div className="space-y-5">
-                  {tallerSlugsAccesibles.length > 0 ? (
-                    tallerSlugsAccesibles.map(slug => {
+              {tallerSlugsAccesibles.length > 0 ? (
+                <div
+                  className="grid gap-4"
+                  style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}
+                >
+                  {tallerSlugsAccesibles.map(slug => {
+                    const t  = talleresConfig.find(x => x.slug === slug)
+                    if (!t) return null
+                    const ta = TALLER_ACCENTS[slug] ?? '#02d47e'
+                    const p  = getTallerProgreso(slug)
+                    return (
+                      <div
+                        key={slug}
+                        className="rounded-2xl overflow-hidden"
+                        style={{
+                          background: '#ffffff',
+                          border: `1.5px solid rgba(4,57,65,0.07)`,
+                          boxShadow: '0 2px 8px rgba(4,57,65,0.05)',
+                        }}
+                      >
+                        {/* Accent top strip */}
+                        <div style={{ height: 4, background: `linear-gradient(90deg,${ta},${ta}88)` }} />
+                        <div className="p-4">
+                          <div className="flex items-start justify-between gap-2 mb-3">
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <div
+                                className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0 text-[10px] font-extrabold"
+                                style={{ background: `${ta}15`, color: ta }}
+                              >
+                                T{String(t.numero).padStart(2, '0')}
+                              </div>
+                              <div className="min-w-0">
+                                <p className="text-sm font-black truncate leading-tight" style={{ color: '#043941' }}>
+                                  {t.nombreCorto ?? t.nombre}
+                                </p>
+                                <p className="text-[10px]" style={{ color: '#94a3b8' }}>
+                                  {modulosLXP.length} módulos · 150h
+                                </p>
+                              </div>
+                            </div>
+                            <span className="text-base font-black flex-shrink-0" style={{ color: ta }}>
+                              {p.porcentaje}%
+                            </span>
+                          </div>
+
+                          {/* Progress bar */}
+                          <div className="h-1.5 rounded-full overflow-hidden mb-3" style={{ background: 'rgba(4,57,65,0.07)' }}>
+                            <div
+                              className="h-full rounded-full transition-all duration-700"
+                              style={{ width: `${p.porcentaje}%`, background: `linear-gradient(90deg,${ta},${ta}cc)` }}
+                            />
+                          </div>
+
+                          <button
+                            onClick={() => navigate(`/taller/${slug}`)}
+                            className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-bold transition-all"
+                            style={{ background: `${ta}12`, color: ta, border: `1px solid ${ta}28` }}
+                            onMouseEnter={e => (e.currentTarget.style.background = `${ta}22`)}
+                            onMouseLeave={e => (e.currentTarget.style.background = `${ta}12`)}
+                          >
+                            Continuar taller <ArrowRight size={11} />
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : (
+                <div
+                  className="rounded-2xl p-8 text-center"
+                  style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}
+                >
+                  <div
+                    className="h-12 w-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                    style={{ background: 'rgba(2,212,126,0.08)', border: '1px solid rgba(2,212,126,0.15)' }}
+                  >
+                    <BookOpen size={20} style={{ color: '#02d47e' }} />
+                  </div>
+                  <p className="text-sm font-bold mb-1" style={{ color: '#043941' }}>Sin taller asignado</p>
+                  <p className="text-xs mb-4" style={{ color: '#94a3b8' }}>
+                    Contacta con tu coordinador UGEL para habilitar tu acceso.
+                  </p>
+                  <a
+                    href="mailto:soporte@grama.pe"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold"
+                    style={{ background: '#02d47e', color: '#043941' }}
+                  >
+                    Contactar soporte <ArrowRight size={12} />
+                  </a>
+                </div>
+              )}
+            </div>
+
+            {/* ── MÓDULOS EN CURSO + CALENDARIO — 2-col ─────────────────── */}
+            <style>{`@media(min-width:1280px){.perfil-bottom{grid-template-columns:1fr 320px}}`}</style>
+            <div className="perfil-bottom grid gap-6 px-6 pb-6 pt-4 items-start">
+
+              {/* Módulos en curso */}
+              {tallerSlugsAccesibles.length > 0 && (
+                <div>
+                  <p className="text-sm font-black mb-1" style={{ color: '#043941' }}>Módulos en curso</p>
+                  <p className="text-[11px] mb-4" style={{ color: '#94a3b8' }}>
+                    Estado actual por taller
+                  </p>
+                  <div className="space-y-3">
+                    {tallerSlugsAccesibles.map(slug => {
                       const t = talleresConfig.find(x => x.slug === slug)
                       if (!t) return null
-                      const ta      = TALLER_ACCENTS[slug] ?? '#02d47e'
-                      const p       = getTallerProgreso(slug)
-                      const proxima = getProximaSesion(slug)
-                      const moduloIdx   = Math.min(
+                      const ta        = TALLER_ACCENTS[slug] ?? '#02d47e'
+                      const p         = getTallerProgreso(slug)
+                      const moduloIdx = Math.min(
                         Math.floor((p.porcentaje / 100) * modulosLXP.length),
                         modulosLXP.length - 1,
                       )
-                      const moduloActual = modulosLXP[moduloIdx]
+                      const modulo  = modulosLXP[moduloIdx]
+                      const proxima = getProximaSesion(slug)
+                      const sesionesCompletadas = Math.round((p.porcentaje / 100) * (modulo?.sesiones?.length ?? 0))
 
                       return (
                         <div
                           key={slug}
-                          className="rounded-2xl overflow-hidden animate-fade-in-up"
-                          style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.06)' }}
+                          className="rounded-2xl p-4 flex items-start gap-4"
+                          style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 1px 6px rgba(4,57,65,0.04)' }}
                         >
-                          {/* Card hero */}
+                          {/* Module badge */}
                           <div
-                            className="relative overflow-hidden"
-                            style={{ height: 140, background: `linear-gradient(135deg,#043941 0%,${ta}55 100%)` }}
+                            className="h-11 w-11 rounded-xl flex flex-col items-center justify-center flex-shrink-0"
+                            style={{ background: `${ta}12`, border: `1.5px solid ${ta}30` }}
                           >
-                            <div className="absolute inset-0 grama-pattern opacity-20" />
-                            <TallerHeroShapes slugs={[slug]} />
-                            <div className="relative z-10 p-5 h-full flex flex-col justify-between">
-                              <div className="flex items-start justify-between">
-                                <span
-                                  className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full"
-                                  style={{ background: `${ta}30`, color: ta, border: `1px solid ${ta}50` }}
-                                >
-                                  T{String(t.numero).padStart(2, '0')}
-                                </span>
-                                <button
-                                  onClick={() => navigate(`/taller/${slug}`)}
-                                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold"
-                                  style={{ background: ta, color: '#043941' }}
-                                  onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-                                  onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-                                >
-                                  Continuar <ArrowRight size={12} />
-                                </button>
-                              </div>
-                              <div>
-                                <h3
-                                  className="text-base font-black"
-                                  style={{ color: '#d2ffe1', letterSpacing: '-0.02em' }}
-                                >
-                                  {t.nombreCorto ?? t.nombre}
-                                </h3>
-                                {proxima && (
-                                  <p className="text-[10px] mt-0.5" style={{ color: 'rgba(210,255,225,0.5)' }}>
-                                    Próx: {formatFechaSesion(proxima.fecha)}
-                                  </p>
-                                )}
-                              </div>
-                            </div>
+                            <span className="text-[9px] font-extrabold uppercase" style={{ color: ta }}>MÓD</span>
+                            <span className="text-sm font-black leading-none" style={{ color: ta }}>{modulo?.numero}</span>
                           </div>
 
-                          {/* Card body */}
-                          <div className="p-5">
-                            <div className="flex items-center justify-between mb-2">
-                              <span className="text-xs font-bold" style={{ color: '#043941' }}>Progreso del taller</span>
-                              <span className="text-sm font-black" style={{ color: ta }}>{p.porcentaje}%</span>
+                          {/* Content */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="min-w-0">
+                                <p className="text-sm font-bold leading-snug" style={{ color: '#043941' }}>
+                                  {modulo?.nombre}
+                                </p>
+                                <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                                  <span
+                                    className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                                    style={{ background: `${ta}12`, color: ta }}
+                                  >
+                                    {t.nombreCorto}
+                                  </span>
+                                  <span className="text-[10px]" style={{ color: '#94a3b8' }}>
+                                    {sesionesCompletadas}/{modulo?.sesiones?.length ?? 0} sesiones · {modulo?.horasTotal}h
+                                  </span>
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => navigate(`/taller/${slug}/ruta`)}
+                                className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold flex-shrink-0"
+                                style={{ background: `${ta}12`, color: ta, border: `1px solid ${ta}25` }}
+                                onMouseEnter={e => (e.currentTarget.style.background = `${ta}22`)}
+                                onMouseLeave={e => (e.currentTarget.style.background = `${ta}12`)}
+                              >
+                                Ir <ChevronRight size={11} />
+                              </button>
                             </div>
-                            <div className="h-2.5 rounded-full overflow-hidden mb-4" style={{ background: 'rgba(4,57,65,0.07)' }}>
+
+                            {/* Mini progress */}
+                            <div className="mt-2.5 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(4,57,65,0.07)' }}>
                               <div
                                 className="h-full rounded-full transition-all duration-700"
-                                style={{ width: `${p.porcentaje}%`, background: `linear-gradient(90deg,${ta} 0%,${ta}cc 100%)` }}
+                                style={{ width: `${p.porcentaje}%`, background: `linear-gradient(90deg,${ta},${ta}cc)` }}
                               />
                             </div>
 
-                            <div className="flex items-center gap-4 mb-4">
-                              <div className="flex items-center gap-1.5">
-                                <BookOpen size={12} style={{ color: 'rgba(4,57,65,0.4)' }} />
-                                <span className="text-xs" style={{ color: 'rgba(4,57,65,0.55)' }}>{modulosLXP.length} módulos</span>
-                              </div>
-                              <div className="flex items-center gap-1.5">
-                                <Activity size={12} style={{ color: 'rgba(4,57,65,0.4)' }} />
-                                <span className="text-xs" style={{ color: 'rgba(4,57,65,0.55)' }}>{p.completados}/{p.total} actividades</span>
-                              </div>
-                            </div>
-
-                            {moduloActual && (
-                              <div
-                                className="p-3 rounded-xl"
-                                style={{ background: `${ta}08`, border: `1px solid ${ta}20` }}
-                              >
-                                <p className="text-[9px] font-extrabold uppercase tracking-widest mb-1" style={{ color: `${ta}99` }}>
-                                  Módulo en curso
-                                </p>
-                                <p className="text-xs font-bold" style={{ color: '#043941' }}>{moduloActual.nombre}</p>
-                              </div>
+                            {proxima && (
+                              <p className="text-[10px] mt-2 font-medium" style={{ color: ta }}>
+                                Próxima sesión: {formatFechaSesion(proxima.fecha)}
+                              </p>
                             )}
                           </div>
                         </div>
                       )
-                    })
-                  ) : (
-                    <div
-                      className="rounded-2xl p-8 text-center"
-                      style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}
-                    >
-                      <div
-                        className="h-12 w-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-                        style={{ background: 'rgba(2,212,126,0.08)', border: '1px solid rgba(2,212,126,0.15)' }}
-                      >
-                        <BookOpen size={20} style={{ color: '#02d47e' }} />
-                      </div>
-                      <p className="text-sm font-bold mb-1" style={{ color: '#043941' }}>Sin taller asignado</p>
-                      <p className="text-xs mb-4" style={{ color: '#94a3b8' }}>
-                        Contacta con tu coordinador UGEL para habilitar tu acceso.
-                      </p>
-                      <a
-                        href="mailto:soporte@grama.pe"
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold"
-                        style={{ background: '#02d47e', color: '#043941' }}
-                      >
-                        Contactar soporte <ArrowRight size={12} />
-                      </a>
-                    </div>
-                  )}
+                    })}
+                  </div>
                 </div>
+              )}
 
-                {/* Calendario sidebar */}
-                {tallerSlugsAccesibles.length > 0 && (
-                  <CalendarioSidebar
-                    tallerSlugs={tallerSlugsAccesibles}
-                    accent={primaryAccent}
-                  />
-                )}
+              {/* Calendario */}
+              {tallerSlugsAccesibles.length > 0 && (
+                <CalendarioSidebar
+                  tallerSlugs={tallerSlugsAccesibles}
+                  accent={primaryAccent}
+                />
+              )}
 
-              </div>
             </div>
 
           </div>
