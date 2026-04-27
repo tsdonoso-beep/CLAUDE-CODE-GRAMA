@@ -822,35 +822,37 @@ Equipo GRAMA · Programa TSF-MINEDU`
 
         {tab === 'solicitudes' && (
           <div>
-            {/* Sub-filtros + Recargar */}
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-              <div className="flex flex-wrap gap-2">
-                {([
-                  ['pendiente', 'Pendientes'],
-                  ['aprobado', 'Aprobadas'],
-                  ['rechazado', 'Rechazadas'],
-                  ['todas', 'Todas'],
-                ] as const).map(([estado, label]) => {
-                  const count = estado === 'todas' ? solicitudes.length : solicitudes.filter(s => s.estado === estado).length
-                  return (
-                    <button
-                      key={estado}
-                      onClick={() => setFiltroEstado(estado)}
-                      className="px-4 py-2 rounded-xl text-sm font-bold transition-all"
-                      style={filtroEstado === estado
-                        ? { background: '#f59e0b', color: '#043941' }
-                        : { background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)' }}>
-                      {label} ({count})
-                    </button>
-                  )
-                })}
+            {/* Section header */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+              <div>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#fff', marginBottom: '.25rem' }}>Solicitudes de acceso</h3>
+                <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.38)' }}>
+                  {solicitudesPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{solicitudesPendientes} pendientes</span> : 'Sin pendientes'} · {solicitudes.length} en total
+                </p>
               </div>
-              <button
-                onClick={fetchSolicitudes}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
-                style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)' }}>
-                <RefreshCw size={14} /> Recargar
+              <button onClick={fetchSolicitudes} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
+                <RefreshCw size={12} /> Recargar
               </button>
+            </div>
+            {/* Filtros */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.5rem', marginBottom: '1.25rem' }}>
+              {([
+                ['pendiente', 'Pendientes'],
+                ['aprobado', 'Aprobadas'],
+                ['rechazado', 'Rechazadas'],
+                ['todas', 'Todas'],
+              ] as const).map(([estado, label]) => {
+                const count = estado === 'todas' ? solicitudes.length : solicitudes.filter(s => s.estado === estado).length
+                const active = filtroEstado === estado
+                return (
+                  <button key={estado} onClick={() => setFiltroEstado(estado)}
+                    style={{ padding: '.38rem .9rem', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, cursor: 'pointer', border: 'none', transition: 'all .15s',
+                      background: active ? '#f59e0b' : 'rgba(255,255,255,0.07)',
+                      color:      active ? '#043941' : 'rgba(255,255,255,0.5)' }}>
+                    {label} <span style={{ opacity: .7 }}>({count})</span>
+                  </button>
+                )
+              })}
             </div>
 
             {/* Aviso contraseñas sensibles */}
@@ -981,31 +983,36 @@ Equipo GRAMA · Programa TSF-MINEDU`
             : consultasAdmin.filter(c => c.estado === filtroConsultas)
           return (
             <div>
-              {/* Sub-filtros */}
-              <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-                <div className="flex gap-2">
-                  {([
-                    ['pendiente', 'Pendientes'],
-                    ['respondida', 'Respondidas'],
-                    ['todas', 'Todas'],
-                  ] as const).map(([estado, label]) => {
-                    const count = estado === 'todas' ? consultasAdmin.length : consultasAdmin.filter(c => c.estado === estado).length
-                    return (
-                      <button key={estado} onClick={() => setFiltroConsultas(estado)}
-                        className="px-4 py-2 rounded-xl text-sm font-bold transition-all"
-                        style={filtroConsultas === estado
-                          ? { background: '#02d47e', color: '#043941' }
-                          : { background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)' }}>
-                        {label} ({count})
-                      </button>
-                    )
-                  })}
+              {/* Section header */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+                <div>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#fff', marginBottom: '.25rem' }}>Consultas de docentes</h3>
+                  <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.38)' }}>
+                    {consultasPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{consultasPendientes} sin responder</span> : 'Todas respondidas'} · {consultasAdmin.length} en total
+                  </p>
                 </div>
-                <button onClick={fetchConsultasAdmin}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold"
-                  style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)' }}>
-                  <RefreshCw size={14} /> Recargar
+                <button onClick={fetchConsultasAdmin} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
+                  <RefreshCw size={12} /> Recargar
                 </button>
+              </div>
+              {/* Filtros */}
+              <div style={{ display: 'flex', gap: '.5rem', marginBottom: '1.25rem' }}>
+                {([
+                  ['pendiente', 'Pendientes'],
+                  ['respondida', 'Respondidas'],
+                  ['todas', 'Todas'],
+                ] as const).map(([estado, label]) => {
+                  const count = estado === 'todas' ? consultasAdmin.length : consultasAdmin.filter(c => c.estado === estado).length
+                  const active = filtroConsultas === estado
+                  return (
+                    <button key={estado} onClick={() => setFiltroConsultas(estado)}
+                      style={{ padding: '.38rem .9rem', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, cursor: 'pointer', border: 'none', transition: 'all .15s',
+                        background: active ? '#02d47e' : 'rgba(255,255,255,0.07)',
+                        color:      active ? '#043941' : 'rgba(255,255,255,0.5)' }}>
+                      {label} <span style={{ opacity: .7 }}>({count})</span>
+                    </button>
+                  )
+                })}
               </div>
 
               {loadingConsultas ? (
@@ -1106,6 +1113,13 @@ Equipo GRAMA · Programa TSF-MINEDU`
 
         {tab === 'analytics' && (
           <div>
+            {/* Section header */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+              <div>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#fff', marginBottom: '.25rem' }}>Reportes de uso</h3>
+                <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.38)' }}>Actividad de la plataforma · {docentes.length} docentes</p>
+              </div>
+            </div>
             {/* Filtro por docente */}
             <div className="mb-6 flex flex-wrap items-end gap-3">
               <div className="flex flex-col gap-1">
@@ -1240,19 +1254,31 @@ Equipo GRAMA · Programa TSF-MINEDU`
         )}
 
         {tab === 'usuarios' && <>
-        {/* Stats resumen */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          {[
-            { label: 'Docentes registrados', value: docentes.length, icon: Users },
-            { label: 'IEs activas', value: new Set(docentes.map(d => d.ie_id)).size, icon: Filter },
-            { label: 'Progreso promedio', value: `${docentes.length > 0 ? Math.round(docentes.reduce((a, d) => a + d.porcentaje, 0) / docentes.length) : 0}%`, icon: RefreshCw },
-            { label: 'Completaron > 50%', value: docentes.filter(d => d.porcentaje > 50).length, icon: Download },
-          ].map(s => (
-            <div key={s.label} className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.06)' }}>
-              <p className="text-xs mb-1" style={{ color: 'rgba(255,255,255,0.45)' }}>{s.label}</p>
-              <p className="text-2xl font-extrabold" style={{ color: '#02d47e' }}>{s.value}</p>
+        {/* Section header */}
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+          <div>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#fff', marginBottom: '.25rem' }}>Docentes registrados</h3>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.25rem', marginTop: '.4rem' }}>
+              {[
+                { label: 'Total', value: docentes.length },
+                { label: 'IEs activas', value: new Set(docentes.map(d => d.ie_id)).size },
+                { label: 'Progreso promedio', value: `${docentes.length > 0 ? Math.round(docentes.reduce((a, d) => a + d.porcentaje, 0) / docentes.length) : 0}%` },
+                { label: '> 50% avance', value: docentes.filter(d => d.porcentaje > 50).length },
+              ].map(s => (
+                <span key={s.label} style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.38)' }}>
+                  <span style={{ fontWeight: 800, color: '#02d47e', marginRight: '.25rem' }}>{s.value}</span>{s.label}
+                </span>
+              ))}
             </div>
-          ))}
+          </div>
+          <div style={{ display: 'flex', gap: '.5rem', flexShrink: 0 }}>
+            <button onClick={abrirModalCrear} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.75rem', fontWeight: 700, padding: '.45rem 1rem', borderRadius: 9, background: 'rgba(2,212,126,0.12)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.25)', cursor: 'pointer' }}>
+              <Users size={13} /> + Nuevo docente
+            </button>
+            <button onClick={() => downloadCSV(docentesFiltrados)} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.75rem', fontWeight: 700, padding: '.45rem 1rem', borderRadius: 9, background: '#02d47e', color: '#043941', border: 'none', cursor: 'pointer' }}>
+              <Download size={13} /> CSV
+            </button>
+          </div>
         </div>
 
         {/* Controles */}
@@ -1286,18 +1312,6 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   return <option key={slug} value={slug!} style={{ background: '#0d2b31', color: '#ffffff' }}>{t?.nombre ?? slug}</option>
                 })}
               </select>
-            </div>
-            <div className="flex gap-2">
-              <button onClick={abrirModalCrear}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold"
-                style={{ background: 'rgba(2,212,126,0.15)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.3)' }}>
-                <Users size={15} /> + Nuevo usuario
-              </button>
-              <button onClick={() => downloadCSV(docentesFiltrados)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold"
-                style={{ background: '#02d47e', color: '#043941' }}>
-                <Download size={15} /> Descargar CSV
-              </button>
             </div>
           </div>
         </div>
