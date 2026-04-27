@@ -2,8 +2,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  BookOpen, Clock, Users, Building2, Briefcase,
-  ChevronRight, ChevronLeft, ChevronDown, ArrowRight,
+  BookOpen, Clock,
+  ChevronRight, ChevronLeft, ArrowRight,
   CheckCircle, Menu, X, Wrench,
 } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
@@ -20,62 +20,11 @@ const STATS = [
 ]
 
 
-const COMMUNITY = [
-  { icon: Users,     color: '#02d47e', accent: '#02d47e', bg: 'rgba(2,212,126,0.15)',   title: 'Para Docentes',   desc: '7 módulos, fichas y certificación para dominar tu taller EPT.',            cta: 'Ingresar a la plataforma', action: 'app'  },
-  { icon: BookOpen,  color: '#f8ee91', accent: '#f8ee91', bg: 'rgba(248,238,145,0.15)',  title: 'Para Alumnos',    desc: 'Contenido interactivo guiado por tu docente, a tu ritmo.',                 cta: 'Explorar talleres',        action: 'app'  },
-  { icon: Briefcase, color: '#d4c4fc', accent: '#d4c4fc', bg: 'rgba(212,196,252,0.15)',  title: 'Para Directores', desc: 'Monitorea el avance pedagógico de tu institución en tiempo real.',         cta: 'Solicitar demostración',   action: 'mail' },
-]
-
 const NAV_LINKS = [
   { label: '¿Para quién?',  href: '#perfiles' },
   { label: 'Cómo funciona', href: '#como' },
   { label: 'Talleres',      href: '#talleres' },
   { label: 'MINEDU',        href: '#faq' },
-]
-
-const WHY_CARDS = [
-  {
-    tag: 'EL PROBLEMA',
-    tagBg: 'rgba(248,238,145,0.25)',
-    tagColor: '#c8a800',
-    frontBg: '#043941',
-    titleFront: ['Los equipos llegan.', 'La formación, no.'],
-    titleColor: '#ffffff',
-    hintColor: 'rgba(255,255,255,0.4)',
-    shape: 'triangle',
-    shapeColor: '#f8ee91',
-    backBg: '#f0fdf6',
-    backBorder: 'rgba(4,57,65,0.1)',
-    body: ['Equipo nuevo. Docente sin formación para usarlo.', 'Al rotar, el conocimiento se va con él.', 'El ciclo se repite en cada institución.'],
-  },
-  {
-    tag: 'LA SOLUCIÓN',
-    tagBg: 'rgba(4,57,65,0.14)',
-    tagColor: '#043941',
-    frontBg: '#f8ee91',
-    titleFront: ['Una ruta híbrida', 'para tu taller.'],
-    titleColor: '#043941',
-    hintColor: 'rgba(4,57,65,0.38)',
-    shape: 'cross',
-    shapeColor: '#043941',
-    backBg: '#fefce8',
-    backBorder: 'rgba(202,138,4,0.18)',
-    body: ['7 módulos: video, fichas y sesiones en vivo.', 'A tu ritmo, desde cualquier dispositivo.', 'Diseñado para cada especialidad EPT.'],
-  },
-  {
-    tag: 'EL RESULTADO',
-    tagBg: 'rgba(4,57,65,0.1)',
-    tagColor: '#043941',
-    frontBg: '#d4c4fc',
-    titleFront: ['Autonomía docente', 'garantizada.'],
-    titleColor: '#1a0d4a',
-    hintColor: 'rgba(26,13,74,0.38)',
-    shape: 'diamond',
-    shapeColor: '#043941',
-    backBg: '#faf5ff',
-    backBorder: 'rgba(167,139,250,0.2)',
-    body: ['Dominas tu taller y lo enseñas con confianza.', 'Certificación y fichas listas para usar.', 'Acceso permanente a todo el material.'],
-  },
 ]
 
 // ── Tangram decorativo ────────────────────────────────────────────────────────
@@ -128,27 +77,6 @@ function useReveal(threshold = 0.12) {
     return () => obs.disconnect()
   }, [threshold])
   return { ref, visible }
-}
-
-// Hook que calcula el radio del círculo reveal basado en scroll del hero
-function useCircleReveal(heroRef: React.RefObject<HTMLDivElement>) {
-  const [radius, setRadius] = useState(0)
-  useEffect(() => {
-    const calc = () => {
-      if (!heroRef.current) return
-      const heroH = heroRef.current.offsetHeight
-      const scrolled = window.scrollY
-      const startAt = heroH * 0.35
-      const endAt   = heroH * 0.88
-      const progress = Math.max(0, Math.min(1, (scrolled - startAt) / (endAt - startAt)))
-      const maxR = Math.hypot(window.innerWidth, window.innerHeight) * 1.1
-      setRadius(progress * maxR)
-    }
-    window.addEventListener('scroll', calc, { passive: true })
-    calc()
-    return () => window.removeEventListener('scroll', calc)
-  }, [heroRef])
-  return radius
 }
 
 // ── Carrusel horizontal de talleres ──────────────────────────────────────────
@@ -556,137 +484,6 @@ const FAQ_ITEMS = [
   },
 ]
 
-// ── FAQ Section ───────────────────────────────────────────────────────────────
-function FAQSection() {
-  const [open, setOpen] = useState<number | null>(null)
-  const colors = ['#02d47e', '#f8ee91', '#d4c4fc', '#043941', '#b8edd0']
-  const WA_URL = 'https://wa.me/51900000000?text=Hola%2C+soy+docente+EPT+y+tengo+una+consulta+sobre+GRAMA+LXP+%F0%9F%91%8B'
-
-  return (
-    <section style={{ background: '#f0fdf6', padding: '5.5rem 1.5rem', position:'relative', overflow:'hidden' }}>
-
-      {/* Shapes decorativas — lenguaje hero */}
-      <div style={{ position:'absolute', top:-150, right:'10%', width:300, height:300, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.2, pointerEvents:'none', animation:'heroFa 17s ease-in-out infinite' }} />
-      <div style={{ position:'absolute', bottom:-100, left:'5%', width:280, height:280, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.18, pointerEvents:'none', animation:'heroFd 19s ease-in-out infinite 2s' }} />
-      <div style={{ position:'absolute', top:'45%', right:-80, width:160, height:130, background:'#f8ee91', borderRadius:'0 0 60px 60px', opacity:.3, pointerEvents:'none', animation:'heroFb 15s ease-in-out infinite 1s' }} />
-
-      <div style={{ maxWidth:1140, margin:'0 auto' }}>
-
-        {/* Header */}
-        <div style={{ maxWidth:700, marginBottom:'3.5rem' }}>
-          <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
-            <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
-            Preguntas frecuentes
-          </span>
-          <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 .8rem' }}>
-            Todo lo que necesitas<br />
-            <span style={{ color:'#02d47e' }}>saber antes de empezar</span>
-          </h2>
-          <p style={{ fontSize:'.9rem', color:'rgba(4,57,65,.58)', lineHeight:1.8, margin:0 }}>
-            Respuestas ágiles a las preguntas más comunes sobre GRAMA LXP.
-          </p>
-        </div>
-
-        {/* Layout: FAQ + Sticky */}
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 320px', gap:36, alignItems:'start' }}>
-
-          {/* Acordeón colorido */}
-          <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
-            {FAQ_ITEMS.map((item, i) => {
-              const color = colors[i % colors.length]
-              const isOpen = open === i
-              return (
-                <div
-                  key={i}
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  style={{
-                    borderRadius:20,
-                    overflow:'hidden',
-                    background: isOpen ? '#fff' : 'transparent',
-                    border: `1px solid ${isOpen ? color + '22' : 'rgba(4,57,65,0.06)'}`,
-                    boxShadow: isOpen ? `0 12px 40px ${color}18` : 'none',
-                    cursor:'pointer',
-                    transition:'all .3s cubic-bezier(.4,0,.2,1)',
-                  }}
-                >
-                  <div style={{
-                    display:'flex', gap:14, padding:'1.6rem',
-                    alignItems:'flex-start',
-                    borderLeft: `6px solid ${color}`,
-                  }}>
-                    {/* Indicador */}
-                    <div style={{ width:36, height:36, borderRadius:12, background:`${color}18`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all .3s', transform: isOpen ? 'scale(1.1) rotate(90deg)' : 'none' }}>
-                      <span style={{ fontSize:'1.3rem', fontWeight:800, color:color }}>
-                        {isOpen ? '−' : '+'}
-                      </span>
-                    </div>
-
-                    {/* Pregunta + Respuesta */}
-                    <div style={{ flex:1, minWidth:0 }}>
-                      <p style={{ fontSize:'.95rem', fontWeight:800, color:'#043941', margin:'0 0 0.5rem', lineHeight:1.4 }}>
-                        {item.q}
-                      </p>
-
-                      {isOpen && (
-                        <div style={{ paddingTop:12, marginTop:12, borderTop:`1px solid ${color}24` }}>
-                          <p style={{ fontSize:'.85rem', color:'#64748b', lineHeight:1.75, margin:0 }}>
-                            {item.a}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-
-          {/* Card sticky WhatsApp */}
-          <div style={{ position:'sticky', top:100 }}>
-            <div style={{ borderRadius:24, padding:'2.2rem', background:'linear-gradient(135deg, #043941 0%, #032e34 100%)', boxShadow:'0 16px 48px rgba(4,57,65,.25)', overflow:'hidden', position:'relative', border:'1px solid rgba(2,212,126,.08)' }}>
-              <div style={{ position:'absolute', bottom:-80, right:-80, width:260, height:260, background:'radial-gradient(circle, rgba(2,212,126,.12) 0%, transparent 70%)', pointerEvents:'none' }} />
-              <div style={{ position:'relative', zIndex:10 }}>
-                {/* Badge */}
-                <div style={{ display:'inline-block', fontSize:'.65rem', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', background:'rgba(2,212,126,.18)', color:'#02d47e', padding:'.35rem .75rem', borderRadius:100, marginBottom:1.2, border:'1px solid rgba(2,212,126,.2)' }}>
-                  ✓ Respuesta &lt; 24h
-                </div>
-
-                {/* Icon */}
-                <div style={{ width:56, height:56, borderRadius:16, background:'rgba(2,212,126,.14)', border:'1px solid rgba(2,212,126,.2)', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:'1.4rem', fontSize:'1.8rem' }}>
-                  🚀
-                </div>
-
-                <h3 style={{ fontSize:'1.1rem', fontWeight:900, color:'#fff', margin:'0 0 12px', lineHeight:1.25 }}>
-                  ¿Duda sin respuesta?
-                </h3>
-                <p style={{ fontSize:'.85rem', color:'rgba(255,255,255,.6)', margin:'0 0 1.8rem', lineHeight:1.75 }}>
-                  Escríbenos por WhatsApp — soporte directo del equipo GRAMA, sin formularios ni demoras.
-                </p>
-
-                <a
-                  href={WA_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.9rem 1.4rem', borderRadius:13, background:'#25d366', color:'#fff', fontWeight:800, fontSize:'.85rem', textDecoration:'none', border:'none', cursor:'pointer', transition:'all .2s', boxShadow:'0 4px 12px rgba(37,211,102,.3)' }}
-                  onMouseEnter={e => { e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.boxShadow='0 8px 24px rgba(37,211,102,.5)' }}
-                  onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 4px 12px rgba(37,211,102,.3)' }}
-                >
-                  💚 Escribir por WhatsApp
-                </a>
-
-                <p style={{ fontSize:'.7rem', textAlign:'center', margin:'14px 0 0', color:'rgba(255,255,255,.35)' }}>
-                  Equipo GRAMA · Lun–Vie
-                </p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-  )
-}
-
 // ── Componente principal ──────────────────────────────────────────────────────
 export default function Landing() {
   const navigate = useNavigate()
@@ -706,18 +503,8 @@ export default function Landing() {
   const goNext = () => { setModalDir('next'); setModalIndex(i => Math.min(talleresConfig.length - 1, i! + 1)) }
   const goTo   = (i: number) => { setModalDir(i > (modalIndex ?? 0) ? 'next' : 'prev'); setModalIndex(i) }
 
-  const [flippedCard, setFlippedCard] = useState<number | null>(null)
   const [open, setOpen] = useState<number | null>(null)
   const [activeTab, setActiveTab] = useState<'docente' | 'alumno' | 'director'>('docente')
-
-  // Círculo reveal: hero → por qué grama
-  const heroRef = useRef<HTMLDivElement>(null)
-  const circleRadius = useCircleReveal(heroRef)
-
-  // Reveal hooks por sección
-  const talleresHeaderReveal = useReveal()
-  const talleresReveal = useReveal()
-  const comunidadReveal = useReveal()
 
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f0fdf6' }}>
@@ -781,7 +568,7 @@ export default function Landing() {
       </header>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section ref={heroRef} style={{
+      <section style={{
         minHeight: '100vh', paddingTop: 60,
         background: 'linear-gradient(135deg, #e8f8f2 0%, #e3f8fb 50%, #edf6ff 100%)',
         display: 'grid', gridTemplateColumns: '1fr 1fr',
@@ -1553,31 +1340,119 @@ export default function Landing() {
       )}
 
       {/* ══ FOOTER ══════════════════════════════════════════════════════════ */}
-      <footer style={{ background: '#043941' }} className="px-6 py-12">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
+      <footer style={{ background: '#032e34', position:'relative', overflow:'hidden' }}>
+
+        {/* Glow decorativo */}
+        <div style={{ position:'absolute', top:-120, left:'20%', width:400, height:400, background:'radial-gradient(circle, rgba(2,212,126,.06) 0%, transparent 70%)', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:-80, right:'10%', width:300, height:300, background:'radial-gradient(circle, rgba(2,212,126,.04) 0%, transparent 70%)', pointerEvents:'none' }} />
+
+        {/* Banda superior verde */}
+        <div style={{ height:3, background:'linear-gradient(90deg, #02d47e, #b8edd0 50%, #02d47e)' }} />
+
+        {/* Contenido principal */}
+        <div style={{ maxWidth:1100, margin:'0 auto', padding:'4rem 1.5rem 2.5rem', position:'relative', zIndex:1 }}>
+
+          {/* Grid 4 columnas */}
+          <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr 1fr 1fr', gap:40, marginBottom:'3rem' }}>
+
+            {/* Col 1 — Marca */}
             <div>
               <GramaLogo variant="light" size="sm" />
-              <p className="text-[11px] mt-2" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                Programa MSE-SFT · Perú
+              <p style={{ fontSize:'.82rem', color:'rgba(255,255,255,.45)', lineHeight:1.75, margin:'14px 0 20px', maxWidth:260 }}>
+                Formación técnica híbrida para docentes EPT. Diseñado con MINEDU para talleres especializados en todo el Perú.
               </p>
+              {/* Badge MINEDU */}
+              <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(2,212,126,.1)', border:'1px solid rgba(2,212,126,.18)', borderRadius:100, padding:'.35rem .9rem' }}>
+                <span style={{ width:6, height:6, borderRadius:'50%', background:'#02d47e', display:'inline-block', flexShrink:0 }} />
+                <span style={{ fontSize:'.62rem', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', color:'#02d47e' }}>Programa TSF · MINEDU Perú</span>
+              </div>
             </div>
-            <nav className="flex flex-wrap gap-6">
-              {NAV_LINKS.map(l => (
-                <a key={l.label} href={l.href} className="text-xs font-semibold transition-opacity hover:opacity-70" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                  {l.label}
+
+            {/* Col 2 — Plataforma */}
+            <div>
+              <p style={{ fontSize:'.65rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'rgba(255,255,255,.3)', marginBottom:16 }}>Plataforma</p>
+              <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+                {[
+                  { label:'Acceder', href:'/login' },
+                  { label:'¿Para quién?', href:'#perfiles' },
+                  { label:'Cómo funciona', href:'#como' },
+                  { label:'Especialidades', href:'#talleres' },
+                  { label:'Preguntas frecuentes', href:'#faq' },
+                ].map(l => (
+                  <a key={l.label} href={l.href}
+                    style={{ fontSize:'.82rem', color:'rgba(255,255,255,.45)', textDecoration:'none', transition:'color .2s' }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
+                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,.45)')}
+                  >{l.label}</a>
+                ))}
+              </div>
+            </div>
+
+            {/* Col 3 — Talleres */}
+            <div>
+              <p style={{ fontSize:'.65rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'rgba(255,255,255,.3)', marginBottom:16 }}>Talleres EPT</p>
+              <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+                {talleresConfig.slice(0, 5).map(t => (
+                  <a key={t.slug} href={`#talleres`}
+                    style={{ fontSize:'.82rem', color:'rgba(255,255,255,.45)', textDecoration:'none', transition:'color .2s', display:'flex', alignItems:'center', gap:6 }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
+                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,.45)')}
+                  >
+                    <span style={{ width:4, height:4, borderRadius:'50%', background:'rgba(2,212,126,.4)', flexShrink:0 }} />
+                    {t.nombreCorto}
+                  </a>
+                ))}
+                <span style={{ fontSize:'.75rem', color:'rgba(255,255,255,.25)', marginTop:2 }}>+ {talleresConfig.length - 5} más</span>
+              </div>
+            </div>
+
+            {/* Col 4 — Contacto */}
+            <div>
+              <p style={{ fontSize:'.65rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'rgba(255,255,255,.3)', marginBottom:16 }}>Contacto</p>
+              <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+                <a
+                  href="https://wa.me/51900000000?text=Hola%2C+soy+docente+EPT+y+tengo+una+consulta+sobre+GRAMA+LXP"
+                  target="_blank" rel="noopener noreferrer"
+                  style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.82rem', color:'rgba(255,255,255,.45)', textDecoration:'none', transition:'color .2s' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#25d366')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,.45)')}
+                >
+                  💬 WhatsApp
                 </a>
-              ))}
-            </nav>
+                <a href="mailto:contacto@grama.pe"
+                  style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.82rem', color:'rgba(255,255,255,.45)', textDecoration:'none', transition:'color .2s' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,.45)')}
+                >
+                  📧 contacto@grama.pe
+                </a>
+                <p style={{ fontSize:'.75rem', color:'rgba(255,255,255,.22)', margin:'8px 0 0', lineHeight:1.6 }}>
+                  Soporte: Lun–Vie<br/>Respuesta &lt; 24h
+                </p>
+              </div>
+            </div>
+
           </div>
-          <div className="pt-6 border-t flex flex-col md:flex-row items-center justify-between gap-3" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
-            <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.25)' }}>
+
+          {/* Divider */}
+          <div style={{ height:1, background:'rgba(255,255,255,.07)', marginBottom:'1.8rem' }} />
+
+          {/* Bottom bar */}
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:12 }}>
+            <p style={{ fontSize:'.72rem', color:'rgba(255,255,255,.22)', margin:0 }}>
               © {new Date().getFullYear()} GRAMA Proyectos Educativos · Todos los derechos reservados
             </p>
-            <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.25)' }}>
-              Plataforma TSF · Programa MIE-EPT
-            </p>
+            <div style={{ display:'flex', gap:20 }}>
+              {NAV_LINKS.map(l => (
+                <a key={l.label} href={l.href}
+                  style={{ fontSize:'.72rem', fontWeight:600, color:'rgba(255,255,255,.3)', textDecoration:'none', transition:'color .2s' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,.7)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,.3)')}
+                >{l.label}</a>
+              ))}
+            </div>
           </div>
+
         </div>
       </footer>
     </div>
