@@ -27,10 +27,10 @@ const COMMUNITY = [
 ]
 
 const NAV_LINKS = [
-  { label: 'Nosotros',        href: '#nosotros' },
-  { label: 'Talleres',        href: '#talleres' },
-  { label: '¿Para quién es?', href: '#comunidad' },
-  { label: 'Contacto',        href: '#contacto' },
+  { label: '¿Para quién?',  href: '#perfiles' },
+  { label: 'Cómo funciona', href: '#como' },
+  { label: 'Talleres',      href: '#talleres' },
+  { label: 'MINEDU',        href: '#faq' },
 ]
 
 const WHY_CARDS = [
@@ -722,47 +722,58 @@ export default function Landing() {
     <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f0fdf6' }}>
 
       {/* ══ NAVBAR ══════════════════════════════════════════════════════════ */}
-      <header
-        className="fixed top-0 left-0 right-0 z-50 border-b"
-        style={{ background:'rgba(240,253,246,.88)', backdropFilter:'blur(16px)', borderColor:'rgba(4,57,65,.06)', height:64, display:'flex', alignItems:'center', animation:'heroNavIn .5s ease both' }}
-      >
-        <div className="w-full flex items-center justify-between gap-6" style={{ padding:'0 5vw' }}>
-          <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <GramaLogo variant="dark" size="sm" />
+      <header style={{
+        position:'fixed', top:0, left:0, right:0, zIndex:50,
+        display:'flex', alignItems:'center', justifyContent:'space-between',
+        padding:'0 52px', height:60,
+        background:'rgba(255,255,255,0.94)', backdropFilter:'blur(16px)',
+        borderBottom:'1px solid rgba(2,212,126,0.12)',
+      }}>
+        {/* Logo */}
+        <button onClick={() => window.scrollTo({ top:0, behavior:'smooth' })} style={{ display:'flex', alignItems:'center', background:'none', border:'none', cursor:'pointer', padding:0 }}>
+          <GramaLogo variant="dark" size="sm" />
+        </button>
+
+        {/* Links desktop */}
+        <nav className="hidden md:flex" style={{ display:'flex', alignItems:'center', gap:32 }}>
+          {NAV_LINKS.map(l => (
+            <a key={l.label} href={l.href} style={{ fontSize:13, fontWeight:500, color:'#043941', textDecoration:'none', opacity:.6, transition:'opacity .2s' }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+              onMouseLeave={e => (e.currentTarget.style.opacity = '.6')}>
+              {l.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Derecha */}
+        <div style={{ display:'flex', alignItems:'center', gap:14 }}>
+          <span className="hidden md:block" style={{ fontSize:10, fontWeight:700, letterSpacing:'1.2px', textTransform:'uppercase', color:'#5a7a80' }}>
+            MINEDU · Perú
+          </span>
+          <button
+            onClick={isLoggedIn ? goToApp : () => navigate('/login')}
+            style={{ background:'#043941', color:'#fff', padding:'9px 22px', borderRadius:8, fontSize:13, fontWeight:700, border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:5, transition:'all .2s' }}
+            onMouseEnter={e => (e.currentTarget.style.background = '#045f6c')}
+            onMouseLeave={e => (e.currentTarget.style.background = '#043941')}
+          >
+            {isLoggedIn ? 'Ir a la plataforma' : 'Acceder'} <ChevronRight size={13} />
           </button>
-          <nav className="hidden md:flex items-center gap-8">
+          {/* Hamburger mobile */}
+          <button className="md:hidden" onClick={() => setMobileMenuOpen(o => !o)} style={{ background:'none', border:'none', cursor:'pointer', color:'#043941', padding:4 }}>
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div style={{ position:'absolute', top:60, left:0, right:0, background:'#fff', borderBottom:'1px solid rgba(4,57,65,0.08)', padding:'16px 24px 20px', zIndex:50, display:'flex', flexDirection:'column', gap:12 }}>
             {NAV_LINKS.map(l => (
-              <a key={l.label} href={l.href} style={{ fontSize:'.78rem', fontWeight:600, color:'rgba(4,57,65,.5)', textDecoration:'none' }}
-                onMouseEnter={e => (e.currentTarget.style.color = '#043941')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(4,57,65,.5)')}>
+              <a key={l.label} href={l.href} style={{ fontSize:14, fontWeight:600, color:'#043941', textDecoration:'none' }} onClick={() => setMobileMenuOpen(false)}>
                 {l.label}
               </a>
             ))}
-          </nav>
-          <div className="flex items-center gap-3">
-            {isLoggedIn ? (
-              <button onClick={goToApp} className="hidden md:flex items-center gap-1.5 transition-all hover:-translate-y-px"
-                style={{ background:'#02d47e', color:'#043941', fontSize:'.78rem', fontWeight:800, padding:'.5rem 1.3rem', borderRadius:100, boxShadow:'0 3px 14px rgba(2,212,126,.4)' }}>
-                Ir a la plataforma <ChevronRight size={12} />
-              </button>
-            ) : (
-              <button onClick={() => navigate('/login')} className="hidden md:flex items-center gap-1.5 transition-all hover:-translate-y-px"
-                style={{ background:'#02d47e', color:'#043941', fontSize:'.78rem', fontWeight:800, padding:'.5rem 1.3rem', borderRadius:100, boxShadow:'0 3px 14px rgba(2,212,126,.4)' }}>
-                Iniciar sesión <ChevronRight size={12} />
-              </button>
-            )}
-            <button className="md:hidden p-1.5 rounded-lg" onClick={() => setMobileMenuOpen(o => !o)} style={{ color: '#043941' }}>
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
-        </div>
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t absolute top-16 left-0 right-0 px-6 py-4 space-y-3" style={{ borderColor:'rgba(4,57,65,0.08)', background:'#f0fdf6', zIndex:50 }}>
-            {NAV_LINKS.map(l => (
-              <a key={l.label} href={l.href} className="block text-sm font-semibold" style={{ color: '#043941' }} onClick={() => setMobileMenuOpen(false)}>{l.label}</a>
-            ))}
-            <button onClick={() => navigate('/login')} className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-full text-sm font-bold" style={{ background:'#02d47e', color:'#043941' }}>
-              Iniciar sesión <ChevronRight size={14} />
+            <button onClick={() => { navigate('/login'); setMobileMenuOpen(false) }} style={{ marginTop:4, background:'#043941', color:'#fff', padding:'11px', borderRadius:8, fontSize:14, fontWeight:700, border:'none', cursor:'pointer' }}>
+              Acceder →
             </button>
           </div>
         )}
