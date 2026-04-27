@@ -1617,102 +1617,95 @@ Equipo GRAMA · Programa TSF-MINEDU`
               onClick={() => setDocenteDetalle(null)}
             />
             {/* Panel */}
-            <div className="fixed right-0 top-0 bottom-0 z-50 flex flex-col overflow-y-auto w-full max-w-md shadow-2xl"
-              style={{ background: '#052e35', borderLeft: '1px solid rgba(255,255,255,0.1)' }}>
-              {/* Header */}
-              <div className="flex items-center justify-between px-6 py-4 shrink-0"
-                style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>Detalle de usuario</p>
-                <button
-                  onClick={() => setDocenteDetalle(null)}
-                  className="p-2 rounded-lg transition-opacity hover:opacity-70"
-                  style={{ color: 'rgba(255,255,255,0.5)' }}>
-                  <XCircle size={18} />
+            <div className="fixed right-0 top-0 bottom-0 z-50 flex flex-col w-full max-w-md shadow-2xl"
+              style={{ background: '#052e35', borderLeft: '1px solid rgba(255,255,255,0.08)' }}>
+
+              {/* ── Header sticky con identidad del docente ── */}
+              <div className="shrink-0" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)', padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '.85rem' }}>
+                <div style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(2,212,126,0.14)', color: '#02d47e', border: '1.5px solid rgba(2,212,126,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.72rem', fontWeight: 800, flexShrink: 0 }}>
+                  {initials}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p style={{ fontSize: '.88rem', fontWeight: 800, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.nombre_completo ?? d.email}</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', marginTop: '.18rem' }}>
+                    <span style={{ fontSize: '.58rem', fontWeight: 700, padding: '.12rem .45rem', borderRadius: 20,
+                      background: d.role === 'admin' ? 'rgba(168,85,247,0.15)' : 'rgba(2,212,126,0.12)',
+                      color:      d.role === 'admin' ? '#c084fc' : '#02d47e' }}>
+                      {d.role === 'admin' ? 'Admin' : 'Docente'}
+                    </span>
+                    {taller && <span style={{ fontSize: '.62rem', color: 'rgba(255,255,255,0.32)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{taller.nombreCorto ?? taller.nombre}</span>}
+                  </div>
+                </div>
+                <button onClick={() => setDocenteDetalle(null)} style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+                  <XCircle size={13} />
                 </button>
               </div>
 
-              <div className="flex-1 px-6 py-6 space-y-6">
-                {/* Avatar + info principal */}
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-lg font-extrabold"
-                    style={{ background: 'rgba(2,212,126,0.15)', color: '#02d47e', border: '2px solid rgba(2,212,126,0.3)' }}>
-                    {initials}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-extrabold text-white text-lg leading-tight">{d.nombre_completo ?? '—'}</p>
-                    <p className="text-xs mt-0.5 truncate" style={{ color: 'rgba(255,255,255,0.45)' }}>{d.email}</p>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      <span className="text-xs px-2 py-0.5 rounded-lg font-bold"
-                        style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e' }}>
-                        {d.role === 'admin' ? 'Admin' : 'Docente'}
-                      </span>
-                      {taller && (
-                        <span className="text-xs px-2 py-0.5 rounded-lg font-bold"
-                          style={{ background: 'rgba(34,211,238,0.1)', color: '#22d3ee' }}>
-                          {taller.nombreCorto ?? taller.nombre}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
+              {/* ── Cuerpo scrollable ── */}
+              <div className="flex-1 overflow-y-auto" style={{ padding: '1.25rem' }}>
+
+                {/* Email */}
+                <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.35)', marginBottom: '1.1rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.email}</p>
 
                 {/* IE */}
                 {ie && (
-                  <div className="px-4 py-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-                    <p className="text-xs mb-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>Institución Educativa</p>
-                    <p className="text-sm font-semibold text-white">{ie.nombre}</p>
-                    <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{ie.distrito} · {ie.region}</p>
+                  <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, padding: '.75rem 1rem', marginBottom: '1.1rem' }}>
+                    <p style={{ fontSize: '.58rem', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: '.3rem' }}>Institución</p>
+                    <p style={{ fontSize: '.82rem', fontWeight: 600, color: '#fff' }}>{ie.nombre}</p>
+                    <p style={{ fontSize: '.68rem', color: 'rgba(255,255,255,0.32)', marginTop: '.18rem' }}>{ie.distrito} · {ie.region}</p>
                   </div>
                 )}
 
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-3">
+                {/* Divider */}
+                <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', margin: '1rem 0' }} />
+
+                {/* Stats + barra de progreso */}
+                <p style={{ fontSize: '.58rem', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: '.75rem' }}>Progreso</p>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '.6rem', marginBottom: '1rem' }}>
                   {[
                     { label: 'Completados', value: `${d.completados}/${d.total}`, color: '#02d47e' },
-                    { label: 'Progreso', value: `${d.porcentaje}%`, color: d.porcentaje >= 80 ? '#02d47e' : d.porcentaje >= 40 ? '#f59e0b' : '#ef4444' },
-                    { label: 'Horas est.', value: `${horasCertificadas}h`, color: '#22d3ee' },
+                    { label: 'Avance',      value: `${d.porcentaje}%`,             color: d.porcentaje >= 80 ? '#02d47e' : d.porcentaje >= 40 ? '#f59e0b' : '#ef4444' },
+                    { label: 'Horas est.',  value: `${horasCertificadas}h`,        color: '#22d3ee' },
                   ].map(s => (
-                    <div key={s.label} className="rounded-xl p-3 text-center"
-                      style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-                      <p className="text-xl font-extrabold" style={{ color: s.color }}>{s.value}</p>
-                      <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.label}</p>
+                    <div key={s.label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 11, padding: '.65rem .5rem', textAlign: 'center' }}>
+                      <p style={{ fontSize: '1.2rem', fontWeight: 900, color: s.color, lineHeight: 1 }}>{s.value}</p>
+                      <p style={{ fontSize: '.58rem', color: 'rgba(255,255,255,0.32)', marginTop: '.3rem' }}>{s.label}</p>
                     </div>
                   ))}
                 </div>
 
-                {/* Barra de progreso */}
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>Progreso general</p>
-                    {d.moduloActual && (
-                      <span className="text-xs font-extrabold px-2 py-0.5 rounded-lg"
-                        style={{ background: 'rgba(34,211,238,0.12)', color: '#22d3ee' }}>
-                        Módulo actual: {d.moduloActual}
-                      </span>
-                    )}
-                  </div>
-                  <div className="h-3 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
-                    <div className="h-full rounded-full transition-all"
-                      style={{ width: `${d.porcentaje}%`, background: d.porcentaje >= 80 ? '#02d47e' : d.porcentaje >= 40 ? '#f59e0b' : '#ef4444' }} />
-                  </div>
-                  {d.visualizados > d.completados && (
-                    <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.25)' }}>
-                      {d.visualizados} visualizados · {d.completados} completados
-                    </p>
+                <div style={{ marginBottom: '.35rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <p style={{ fontSize: '.68rem', color: 'rgba(255,255,255,0.35)' }}>Progreso general</p>
+                  {d.moduloActual && (
+                    <span style={{ fontSize: '.6rem', fontWeight: 700, background: 'rgba(34,211,238,0.1)', color: '#22d3ee', padding: '.12rem .5rem', borderRadius: 20 }}>
+                      {d.moduloActual}
+                    </span>
                   )}
                 </div>
+                <div style={{ height: 6, background: 'rgba(255,255,255,0.07)', borderRadius: 6, overflow: 'hidden', marginBottom: d.visualizados > d.completados ? '.35rem' : '1rem' }}>
+                  <div style={{ height: '100%', borderRadius: 6, transition: 'width .4s ease',
+                    width: `${d.porcentaje}%`,
+                    background: d.porcentaje >= 80 ? '#02d47e' : d.porcentaje >= 40 ? '#f59e0b' : '#ef4444' }} />
+                </div>
+                {d.visualizados > d.completados && (
+                  <p style={{ fontSize: '.62rem', color: 'rgba(255,255,255,0.22)', marginBottom: '1rem' }}>
+                    {d.visualizados} visualizados · {d.completados} completados
+                  </p>
+                )}
 
                 {/* Quizzes */}
-                <div className="px-4 py-3 rounded-xl flex items-center justify-between"
-                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-                  <p className="text-sm font-semibold text-white">Quizzes aprobados</p>
-                  <span className="text-lg font-extrabold"
-                    style={{ color: d.quizzesAprobados === d.quizzesTotal && d.quizzesTotal > 0 ? '#02d47e' : '#f59e0b' }}>
+                <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, padding: '.75rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.1rem' }}>
+                  <p style={{ fontSize: '.82rem', fontWeight: 600, color: '#fff' }}>Quizzes aprobados</p>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 900, color: d.quizzesAprobados === d.quizzesTotal && d.quizzesTotal > 0 ? '#02d47e' : '#f59e0b' }}>
                     {d.quizzesAprobados}/{d.quizzesTotal}
                   </span>
                 </div>
 
+                {/* Divider */}
+                <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', margin: '1rem 0' }} />
+
                 {/* Talleres asignados — edición con borrador local */}
+                <p style={{ fontSize: '.58rem', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: '.75rem' }}>Talleres asignados</p>
                 {(() => {
                   const talleresOriginales: string[] = (d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : [])
                   const hayPendientes = JSON.stringify([...talleresEditando].sort()) !== JSON.stringify([...talleresOriginales].sort())
@@ -1805,23 +1798,24 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 })()}
 
                 {/* Fechas */}
-                <div className="space-y-2">
+                <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', margin: '1rem 0' }} />
+                <p style={{ fontSize: '.58rem', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: '.6rem' }}>Actividad</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '.4rem', marginBottom: '1.1rem' }}>
                   {[
-                    { label: 'Último acceso', value: formatDate(d.last_seen_at) },
-                    { label: 'Fecha de registro', value: formatDate(d.created_at) },
+                    { label: 'Último acceso',      value: formatDate(d.last_seen_at) },
+                    { label: 'Fecha de registro',  value: formatDate(d.created_at) },
                   ].map(row => (
-                    <div key={row.label} className="flex items-center justify-between">
-                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{row.label}</p>
-                      <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.6)' }}>{row.value}</p>
+                    <div key={row.label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.32)' }}>{row.label}</p>
+                      <p style={{ fontSize: '.72rem', fontWeight: 600, color: 'rgba(255,255,255,0.6)' }}>{row.value}</p>
                     </div>
                   ))}
                 </div>
 
-                {/* Resetear contraseña */}
-                <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(239,68,68,0.2)' }}>
-                  <div className="px-4 py-3" style={{ background: 'rgba(239,68,68,0.06)' }}>
-                    <p className="text-xs font-bold" style={{ color: 'rgba(239,68,68,0.8)' }}>Credenciales</p>
-                  </div>
+                {/* Credenciales */}
+                <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', margin: '1rem 0' }} />
+                <p style={{ fontSize: '.58rem', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(239,68,68,0.5)', marginBottom: '.75rem' }}>Credenciales</p>
+                <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(239,68,68,0.18)' }}>
                   <div className="p-4 space-y-3">
                     {passwordsReset[d.id] ? (
                       <>
