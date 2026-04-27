@@ -12,19 +12,11 @@ import { talleresConfig } from '@/data/talleresConfig'
 import { getBienesByTaller } from '@/data/bienesData'
 import { modulosLXP } from '@/data/modulosLXP'
 // ── Data ──────────────────────────────────────────────────────────────────────
-const STATS = [
-  { value: '10',   label: 'Talleres EPT' },
-  { value: '36+',  label: 'Docentes capacitados' },
-  { value: '200+', label: 'Fichas descargables' },
-  { value: '150h', label: 'Formación híbrida' },
-]
-
-
 const NAV_LINKS = [
   { label: '¿Para quién?',  href: '#perfiles' },
   { label: 'Cómo funciona', href: '#como' },
   { label: 'Talleres',      href: '#talleres' },
-  { label: 'MINEDU',        href: '#faq' },
+  { label: 'Preguntas',     href: '#faq' },
 ]
 
 // ── Tangram decorativo ────────────────────────────────────────────────────────
@@ -190,7 +182,7 @@ function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void })
 
             {/* Contenido */}
             <div style={{ padding:'18px 20px 20px' }}>
-              <p style={{ fontSize:'.78rem', lineHeight:1.7, color:'#64748b', margin:'0 0 14px', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical' as const, overflow:'hidden' }}>{t.descripcion}</p>
+              <p style={{ fontSize:'.78rem', lineHeight:1.7, color:'rgba(4,57,65,.5)', margin:'0 0 14px', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical' as const, overflow:'hidden' }}>{t.descripcion}</p>
               <div style={{ display:'flex', alignItems:'center', gap:14, marginBottom:14 }}>
                 <span style={{ display:'flex', alignItems:'center', gap:5, fontSize:'.7rem', fontWeight:700, color:'rgba(4,57,65,.55)' }}><BookOpen size={11} /> 7 módulos</span>
                 <span style={{ display:'flex', alignItems:'center', gap:5, fontSize:'.7rem', fontWeight:700, color:'rgba(4,57,65,.55)' }}><Clock size={11} /> 150h</span>
@@ -535,7 +527,7 @@ export default function Landing() {
 
         {/* Derecha */}
         <div style={{ display:'flex', alignItems:'center', gap:14 }}>
-          <span className="hidden md:block" style={{ fontSize:10, fontWeight:700, letterSpacing:'1.2px', textTransform:'uppercase', color:'#5a7a80' }}>
+          <span className="hidden md:block" style={{ fontSize:10, fontWeight:700, letterSpacing:'1.2px', textTransform:'uppercase', color:'rgba(4,57,65,.55)' }}>
             MINEDU · Perú
           </span>
           <button
@@ -597,7 +589,7 @@ export default function Landing() {
           <h1 style={{ fontSize:'clamp(2.4rem,4.2vw,3.8rem)', fontWeight:900, lineHeight:1.04, letterSpacing:'-1.8px', color:'#043941', marginBottom:22 }}>
             Formación técnica<br />
             que{' '}
-            <em style={{ fontStyle:'normal', color:'#00c16e', position:'relative' }}>
+            <em style={{ fontStyle:'normal', color:'#02d47e', position:'relative' }}>
               transforma
               <svg style={{ position:'absolute', bottom:-6, left:0, width:'100%', height:8 }} viewBox="0 0 200 8" preserveAspectRatio="none">
                 <path d="M0,6 Q50,0 100,5 Q150,10 200,4" stroke="#02d47e" strokeWidth="2.5" fill="none" strokeLinecap="round" opacity=".6"/>
@@ -608,7 +600,7 @@ export default function Landing() {
 
           {/* Subtexto */}
           <div style={{ background:'rgba(255,255,255,.65)', border:'1.5px solid rgba(4,57,65,.09)', borderRadius:12, padding:'14px 18px', marginBottom:32, maxWidth:440, backdropFilter:'blur(6px)' }}>
-            <p style={{ fontSize:14, color:'#5a7a80', lineHeight:1.65, fontWeight:500, margin:0 }}>
+            <p style={{ fontSize:14, color:'rgba(4,57,65,.55)', lineHeight:1.65, fontWeight:500, margin:0 }}>
               La plataforma LMS para capacitar a docentes de talleres EPT en los 24 departamentos del Perú. Sin papeles, sin complicaciones.
             </p>
           </div>
@@ -617,13 +609,13 @@ export default function Landing() {
           <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
             <button
               onClick={isLoggedIn ? goToApp : () => navigate('/login')}
-              style={{ background:'#043941', color:'#fff', padding:'13px 28px', borderRadius:9, fontSize:14, fontWeight:700, border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:7, boxShadow:'0 4px 20px rgba(4,57,65,.25)', transition:'all .2s' }}
+              style={{ background:'#043941', color:'#fff', padding:'13px 28px', borderRadius:100, fontSize:14, fontWeight:700, border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:7, boxShadow:'0 4px 20px rgba(4,57,65,.25)', transition:'all .2s' }}
               onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)' }}
               onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none' }}
             >
-              {isLoggedIn ? 'Ir a la plataforma' : 'Empieza ahora'} <ArrowRight size={14} />
+              {isLoggedIn ? 'Ir a la plataforma' : 'Comenzar mi formación'} <ArrowRight size={14} />
             </button>
-            <a href="#perfiles" style={{ border:'1.5px solid #043941', color:'#043941', padding:'12px 22px', borderRadius:9, fontSize:14, fontWeight:600, textDecoration:'none', display:'flex', alignItems:'center', gap:7, transition:'all .2s' }}
+            <a href="#perfiles" style={{ border:'1.5px solid #043941', color:'#043941', padding:'12px 22px', borderRadius:100, fontSize:14, fontWeight:600, textDecoration:'none', display:'flex', alignItems:'center', gap:7, transition:'all .2s' }}
               onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background='#043941'; (e.currentTarget as HTMLAnchorElement).style.color='#fff' }}
               onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background='transparent'; (e.currentTarget as HTMLAnchorElement).style.color='#043941' }}
             >
@@ -637,11 +629,11 @@ export default function Landing() {
             <div style={{ display:'flex' }}>
               {['#02d47e','#045f6c','#f8ee91','#d4c4fc'].map((c,i) => (
                 <div key={i} style={{ width:28, height:28, borderRadius:'50%', background:c, border:'2px solid #fff', marginLeft: i > 0 ? -8 : 0, display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, fontWeight:800, color:'#043941' }}>
-                  {['D','A','D','D'][i]}
+                  {['D','D','D','D'][i]}
                 </div>
               ))}
             </div>
-            <p style={{ fontSize:12, color:'#5a7a80', fontWeight:500, margin:0 }}>
+            <p style={{ fontSize:12, color:'rgba(4,57,65,.55)', fontWeight:500, margin:0 }}>
               <strong style={{ color:'#043941' }}>36+ docentes</strong> ya capacitados en la plataforma
             </p>
           </div>
@@ -669,7 +661,7 @@ export default function Landing() {
             <div style={{ width:32, height:32, borderRadius:8, background:'rgba(2,212,126,.12)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:15 }}>🎓</div>
             <div>
               <p style={{ fontSize:10, fontWeight:800, color:'#043941', margin:0 }}>3 roles disponibles</p>
-              <p style={{ fontSize:9, color:'#5a7a80', margin:0 }}>Docente · Alumno · Director</p>
+              <p style={{ fontSize:9, color:'rgba(4,57,65,.55)', margin:0 }}>Docente · Alumno · Director</p>
             </div>
           </div>
 
@@ -1172,7 +1164,7 @@ export default function Landing() {
                 </div>
 
                 <h3 style={{ fontSize:'1.05rem', fontWeight:900, color:'#043941', margin:'0 0 .75rem', lineHeight:1.25 }}>{step.title}</h3>
-                <p style={{ fontSize:'.84rem', color:'rgba(4,57,65,.58)', lineHeight:1.75, margin:'0 0 1.2rem' }}>{step.desc}</p>
+                <p style={{ fontSize:'.84rem', color:'rgba(4,57,65,.6)', lineHeight:1.75, margin:'0 0 1.2rem' }}>{step.desc}</p>
 
                 {/* Badges */}
                 <div style={{ display:'flex', flexWrap:'wrap', gap:6, justifyContent:'center' }}>
@@ -1194,7 +1186,7 @@ export default function Landing() {
               onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 12px 32px rgba(4,57,65,.35)' }}
               onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 8px 24px rgba(4,57,65,.25)' }}
             >
-              Empezar ahora — es gratis <ArrowRight size={15} />
+              Comenzar mi formación — gratis <ArrowRight size={15} />
             </button>
           </div>
 
@@ -1249,7 +1241,7 @@ export default function Landing() {
                       <div style={{ flex:1, minWidth:0 }}>
                         <p style={{ fontSize:'.92rem', fontWeight:800, color:'#043941', margin:0, lineHeight:1.4 }}>{item.q}</p>
                         {isOpen && (
-                          <p style={{ fontSize:'.83rem', color:'#64748b', lineHeight:1.75, margin:'10px 0 0', paddingTop:10, borderTop:`1px solid ${color}20` }}>
+                          <p style={{ fontSize:'.83rem', color:'rgba(4,57,65,.5)', lineHeight:1.75, margin:'10px 0 0', paddingTop:10, borderTop:`1px solid ${color}20` }}>
                             {item.a}
                           </p>
                         )}
