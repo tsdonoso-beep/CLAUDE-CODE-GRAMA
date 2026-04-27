@@ -614,33 +614,33 @@ export default function Perfil() {
                         {/* Hero area */}
                         <div
                           className="relative overflow-hidden"
-                          style={{ height: 178, background: `linear-gradient(145deg,#043941 0%,${ta}55 100%)` }}
+                          style={{ height: 148, background: `linear-gradient(145deg,#043941 0%,${ta}55 100%)` }}
                         >
                           <div className="absolute inset-0 grama-pattern opacity-20" />
                           <TallerHeroShapes slugs={[slug]} />
                         </div>
                         {/* Body */}
-                        <div className="p-5">
-                          <p className="text-[10px] font-extrabold uppercase tracking-widest mb-1" style={{ color: ta }}>
+                        <div className="px-4 py-4">
+                          <p className="text-[10px] font-extrabold uppercase tracking-widest mb-0.5" style={{ color: ta }}>
                             Taller EPT · {t.nombre}
                           </p>
-                          <h3 className="text-lg font-black mb-0.5" style={{ color: '#043941', letterSpacing: '-0.02em' }}>
+                          <h3 className="text-base font-black mb-0.5" style={{ color: '#043941', letterSpacing: '-0.02em' }}>
                             {t.nombreCorto ?? t.nombre}
                           </h3>
-                          <p className="text-xs mb-3" style={{ color: '#94a3b8' }}>
+                          <p className="text-xs mb-2.5" style={{ color: '#94a3b8' }}>
                             {modulosLXP.length} módulos · 150 horas de formación
                           </p>
-                          <div className="flex items-center justify-between mb-1.5">
+                          <div className="flex items-center justify-between mb-1">
                             <span className="text-xs" style={{ color: 'rgba(4,57,65,0.5)' }}>Tu avance</span>
                             <span className="text-sm font-black" style={{ color: ta }}>{p.porcentaje}%</span>
                           </div>
-                          <div className="h-2 rounded-full overflow-hidden mb-3" style={{ background: 'rgba(4,57,65,0.07)' }}>
+                          <div className="h-1.5 rounded-full overflow-hidden mb-2.5" style={{ background: 'rgba(4,57,65,0.07)' }}>
                             <div
                               className="h-full rounded-full transition-all duration-700"
                               style={{ width: `${p.porcentaje}%`, background: `linear-gradient(90deg,${ta},${ta}cc)` }}
                             />
                           </div>
-                          <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center justify-between mb-2.5">
                             <p className="text-[11px]" style={{ color: '#94a3b8' }}>
                               Módulo {mIdx + 1} de {modulosLXP.length} · U{mIdx + 1} en curso
                             </p>
