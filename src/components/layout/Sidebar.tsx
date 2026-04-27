@@ -4,6 +4,7 @@ import { NavLink, useParams, useNavigate, useLocation } from 'react-router-dom'
 import { BookOpen, Package, ChevronLeft, ChevronRight, X, User, Home, LayoutDashboard, Trophy, Award, Compass } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { useProgress } from '@/contexts/ProgressContext'
+import { useAuth } from '@/contexts/AuthContext'
 import { GramaLogo } from '@/components/GramaLogo'
 
 const TALLER_ACCENTS: Record<string, string> = {
@@ -31,7 +32,13 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
   const taller = talleresConfig.find(t => t.slug === slug)
   const accent = TALLER_ACCENTS[slug ?? ''] ?? '#02d47e'
   const { getTallerProgreso } = useProgress()
+  const { profile } = useAuth()
   const progreso = slug ? getTallerProgreso(slug) : { porcentaje: 0, completados: 0, total: 0 }
+
+  const enrolledSlugs: string[] =
+    profile?.taller_slugs?.length
+      ? profile.taller_slugs
+      : profile?.taller_slug ? [profile.taller_slug] : []
 
   // ── Transición de modo ───────────────────────────────────────────────────
   const targetMode = (pathname === '/perfil' ? 'perfil' : 'taller') as 'perfil' | 'taller'
@@ -190,6 +197,69 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
               )}
             </div>
           )
+        )}
+
+        {/* Mis talleres — sección rápida en modo perfil */}
+        {shownMode === 'perfil' && enrolledSlugs.length > 0 && (
+          <div className="border-b shrink-0" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+            {collapsed ? (
+              <div className="flex flex-col items-center gap-2 py-3">
+                {enrolledSlugs.map(s => {
+                  const ta = TALLER_ACCENTS[s] ?? '#02d47e'
+                  const t  = talleresConfig.find(x => x.slug === s)
+                  return (
+                    <button
+                      key={s}
+                      onClick={() => navigate(`/taller/${s}`)}
+                      title={t?.nombreCorto ?? s}
+                      className="w-7 h-7 rounded-lg flex items-center justify-center transition-all hover:scale-110"
+                      style={{ background: `${ta}22`, border: `1px solid ${ta}33` }}
+                    >
+                      <span className="w-2 h-2 rounded-full" style={{ background: ta }} />
+                    </button>
+                  )
+                })}
+              </div>
+            ) : (
+              <div style={{ padding: '10px 12px 8px' }}>
+                <p className="text-[9px] font-extrabold uppercase tracking-widest mb-2 px-1" style={{ color: 'rgba(255,255,255,0.22)' }}>
+                  Mis talleres
+                </p>
+                {enrolledSlugs.map(s => {
+                  const t  = talleresConfig.find(x => x.slug === s)
+                  const ta = TALLER_ACCENTS[s] ?? '#02d47e'
+                  const p  = getTallerProgreso(s)
+                  return (
+                    <button
+                      key={s}
+                      onClick={() => navigate(`/taller/${s}`)}
+                      className="w-full flex items-center gap-2 px-1 py-1.5 rounded-lg transition-all mb-0.5 text-left"
+                      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                    >
+                      <span className="w-2 h-2 rounded-full shrink-0" style={{ background: ta }} />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-1 mb-1">
+                          <p className="text-[11px] font-semibold truncate leading-none" style={{ color: 'rgba(255,255,255,0.65)' }}>
+                            {t?.nombreCorto ?? s}
+                          </p>
+                          <span className="text-[10px] font-extrabold shrink-0" style={{ color: ta }}>
+                            {p.porcentaje}%
+                          </span>
+                        </div>
+                        <div className="h-0.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
+                          <div
+                            className="h-full rounded-full transition-all duration-700"
+                            style={{ width: `${p.porcentaje}%`, background: ta }}
+                          />
+                        </div>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+          </div>
         )}
 
         {/* Navegación */}
