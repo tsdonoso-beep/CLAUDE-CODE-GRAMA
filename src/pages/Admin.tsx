@@ -1177,6 +1177,83 @@ Equipo GRAMA · Programa TSF-MINEDU`
               })()}
             </div>
 
+            {/* ── Embudo de progresión por módulo ──────────────────────────── */}
+            {(() => {
+              const total = docentes.length
+              // filas: "Registrados" como techo, luego cada módulo
+              const funnelRows = [
+                { label: 'Registrados', badge: null, count: total },
+                ...modulosLXP.map(m => {
+                  const count = docentes.filter(d => {
+                    if (!d.moduloActual) return false
+                    return parseInt(d.moduloActual.replace('M', '')) >= m.numero
+                  }).length
+                  return { label: m.nombre, badge: `M${m.numero}`, count }
+                }),
+              ]
+              return (
+                <div style={{ borderRadius: 16, padding: '1.5rem', marginBottom: '2rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', marginBottom: '1.25rem' }}>
+                    <TrendingUp size={14} color="#02d47e" />
+                    <h3 style={{ fontSize: '.88rem', fontWeight: 800, color: '#fff' }}>Embudo de progresión</h3>
+                    <span style={{ fontSize: '.65rem', color: 'rgba(255,255,255,0.28)', marginLeft: '.15rem' }}>{total} docente{total !== 1 ? 's' : ''}</span>
+                  </div>
+                  {total === 0 ? (
+                    <p style={{ fontSize: '.8rem', color: 'rgba(255,255,255,0.3)' }}>Sin datos de docentes</p>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '.7rem' }}>
+                      {funnelRows.map((row, i) => {
+                        const pct = total > 0 ? Math.round((row.count / total) * 100) : 0
+                        const prevCount = i > 0 ? funnelRows[i - 1].count : null
+                        const drop = prevCount != null && prevCount > 0
+                          ? Math.round(((prevCount - row.count) / prevCount) * 100)
+                          : 0
+                        const barColor = pct >= 70 ? '#02d47e' : pct >= 40 ? '#22d3ee' : pct >= 20 ? '#f59e0b' : '#ef4444'
+                        const isBase = i === 0
+                        return (
+                          <div key={row.label}>
+                            {/* drop indicator between rows */}
+                            {!isBase && drop > 0 && (
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', marginBottom: '.4rem', paddingLeft: 192 }}>
+                                <div style={{ width: 1, height: 10, background: drop >= 30 ? 'rgba(239,68,68,0.35)' : 'rgba(255,255,255,0.1)', marginLeft: 4 }} />
+                                <span style={{ fontSize: '.6rem', fontWeight: 700, color: drop >= 30 ? '#ef4444' : 'rgba(255,255,255,0.28)' }}>
+                                  ↓ {drop}% abandonaron aquí
+                                </span>
+                              </div>
+                            )}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                              {/* label */}
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '.45rem', width: 192, flexShrink: 0 }}>
+                                {row.badge ? (
+                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: isBase ? 'rgba(255,255,255,0.12)' : '#02d47e', color: isBase ? 'rgba(255,255,255,0.5)' : '#043941', padding: '.15rem .4rem', borderRadius: 5, flexShrink: 0 }}>
+                                    {row.badge}
+                                  </span>
+                                ) : (
+                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.45)', padding: '.15rem .45rem', borderRadius: 5, flexShrink: 0 }}>ALL</span>
+                                )}
+                                <span style={{ fontSize: '.72rem', color: isBase ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.6)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                  {row.label}
+                                </span>
+                              </div>
+                              {/* bar */}
+                              <div style={{ flex: 1, height: isBase ? 6 : 8, background: 'rgba(255,255,255,0.07)', borderRadius: 8, overflow: 'hidden' }}>
+                                <div style={{ height: '100%', width: `${pct}%`, background: isBase ? 'rgba(255,255,255,0.18)' : barColor, borderRadius: 8, transition: 'width .5s ease' }} />
+                              </div>
+                              {/* count + pct */}
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', flexShrink: 0 }}>
+                                <span style={{ fontSize: '.78rem', fontWeight: 800, color: isBase ? 'rgba(255,255,255,0.5)' : '#fff', width: 28, textAlign: 'right' }}>{row.count}</span>
+                                <span style={{ fontSize: '.72rem', fontWeight: 700, color: isBase ? 'rgba(255,255,255,0.3)' : barColor, width: 38, textAlign: 'right' }}>{pct}%</span>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+              )
+            })()}
+
             {loadingAnalytics || !analytics ? (
               <div className="flex items-center justify-center py-20">
                 <div className="h-7 w-7 rounded-full border-2 animate-spin"
