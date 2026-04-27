@@ -579,7 +579,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
     const q = busquedaUsuario.toLowerCase().trim()
     return docentes.filter(d => {
       const matchIE = !filtroIE || String(d.ie_id) === filtroIE
-      const matchTaller = !filtroTaller || d.taller_slug === filtroTaller
+      const matchTaller = !filtroTaller || d.taller_slug === filtroTaller || (d.taller_slugs?.includes(filtroTaller) ?? false)
       const matchBusqueda = !q ||
         d.nombre_completo?.toLowerCase().includes(q) ||
         d.email?.toLowerCase().includes(q)
@@ -593,7 +593,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
   }, [solicitudes, filtroEstado])
 
   const talleresEnUso = useMemo(() =>
-    [...new Set(docentes.map(d => d.taller_slug).filter(Boolean))], [docentes])
+    [...new Set(docentes.flatMap(d => [d.taller_slug, ...(d.taller_slugs ?? [])]).filter((s): s is string => !!s))], [docentes])
 
   const selectStyle = {
     className: 'px-3 py-2 rounded-xl border-2 text-sm outline-none',
@@ -759,13 +759,18 @@ Equipo GRAMA · Programa TSF-MINEDU`
               {talleresConfig.map(t => {
                 const count = docentes.filter(d => d.taller_slug === t.slug || d.taller_slugs?.includes(t.slug)).length
                 return (
-                  <div key={t.slug} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 14, padding: '1rem' }}>
+                  <button key={t.slug}
+                    onClick={() => navigate(`/taller/${t.slug}`)}
+                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 14, padding: '1rem', cursor: 'pointer', textAlign: 'left', transition: 'border-color .15s, background .15s' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(2,212,126,0.3)'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(2,212,126,0.06)' }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.07)'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.04)' }}
+                  >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', marginBottom: '.5rem' }}>
                       <span style={{ fontSize: '.6rem', fontWeight: 800, background: '#02d47e', color: '#043941', padding: '.18rem .45rem', borderRadius: 6 }}>T{String(t.numero).padStart(2, '0')}</span>
                       <span style={{ fontSize: '.68rem', color: 'rgba(255,255,255,0.35)' }}>{count} docente{count !== 1 ? 's' : ''}</span>
                     </div>
                     <p style={{ fontSize: '.82rem', fontWeight: 700, color: '#fff' }}>{t.nombre}</p>
-                  </div>
+                  </button>
                 )
               })}
             </div>
@@ -778,13 +783,21 @@ Equipo GRAMA · Programa TSF-MINEDU`
             {talleresConfig.map(t => {
               const count = docentes.filter(d => d.taller_slug === t.slug || d.taller_slugs?.includes(t.slug)).length
               return (
-                <div key={t.slug} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 18, padding: '1.25rem' }}>
+                <div key={t.slug} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 18, padding: '1.25rem', display: 'flex', flexDirection: 'column' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem', marginBottom: '.85rem' }}>
                     <span style={{ fontSize: '.65rem', fontWeight: 800, background: '#02d47e', color: '#043941', padding: '.22rem .55rem', borderRadius: 7 }}>T{String(t.numero).padStart(2, '0')}</span>
                     <span style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.4)' }}>{count} docente{count !== 1 ? 's' : ''} asignado{count !== 1 ? 's' : ''}</span>
                   </div>
                   <p style={{ fontSize: '.92rem', fontWeight: 700, color: '#fff', marginBottom: '.35rem' }}>{t.nombre}</p>
-                  <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.35)', lineHeight: 1.5 }}>{t.descripcion?.slice(0, 90)}…</p>
+                  <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.35)', lineHeight: 1.5, flex: 1, marginBottom: '1rem' }}>{t.descripcion?.slice(0, 90)}…</p>
+                  <button
+                    onClick={() => navigate(`/taller/${t.slug}`)}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.4rem', width: '100%', padding: '.5rem', borderRadius: 10, background: 'rgba(2,212,126,0.1)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.2)', fontSize: '.75rem', fontWeight: 700, cursor: 'pointer' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(2,212,126,0.18)' }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(2,212,126,0.1)' }}
+                  >
+                    Ver taller <ChevronRight size={13} />
+                  </button>
                 </div>
               )
             })}
@@ -805,7 +818,9 @@ Equipo GRAMA · Programa TSF-MINEDU`
                       </div>
                       <div style={{ minWidth: 0 }}>
                         <p style={{ fontSize: '.78rem', fontWeight: 700, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.nombre}</p>
-                        <p style={{ fontSize: '.65rem', color: 'rgba(255,255,255,0.35)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.taller_slug ?? 'Sin taller'}</p>
+                        <p style={{ fontSize: '.65rem', color: 'rgba(255,255,255,0.35)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {(d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : []).map(s => talleresConfig.find(t => t.slug === s)?.nombreCorto ?? s).join(' · ') || 'Sin taller'}
+                        </p>
                       </div>
                       <span style={{ marginLeft: 'auto', fontSize: '.8rem', fontWeight: 800, color: pct >= 70 ? '#02d47e' : pct >= 30 ? '#f59e0b' : 'rgba(255,255,255,0.4)', flexShrink: 0 }}>{pct}%</span>
                     </div>
@@ -1155,7 +1170,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     style={{ background: 'rgba(2,212,126,0.08)', border: '1px solid rgba(2,212,126,0.2)' }}>
                     <div>
                       <p className="text-sm font-bold text-white">{d.nombre_completo}</p>
-                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{ie?.nombre ?? '—'} · {talleresConfig.find(t => t.slug === d.taller_slug)?.nombreCorto ?? d.taller_slug}</p>
+                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{ie?.nombre ?? '—'} · {(d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : []).map(s => talleresConfig.find(t => t.slug === s)?.nombreCorto ?? s).join(' · ') || '—'}</p>
                     </div>
                   </div>
                 ) : null
@@ -1360,10 +1375,15 @@ Equipo GRAMA · Programa TSF-MINEDU`
                           <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{ie?.distrito}</p>
                         </td>
                         <td className="px-5 py-3.5">
-                          <span className="text-xs font-bold px-2 py-1 rounded-lg"
-                            style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e' }}>
-                            {taller?.nombreCorto ?? d.taller_slug ?? '—'}
-                          </span>
+                          <div className="flex flex-wrap gap-1">
+                            {(d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : []).map(slug => (
+                              <span key={slug} className="text-xs font-bold px-2 py-1 rounded-lg"
+                                style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e' }}>
+                                {talleresConfig.find(t => t.slug === slug)?.nombreCorto ?? slug}
+                              </span>
+                            ))}
+                            {!d.taller_slug && !d.taller_slugs?.length && <span className="text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>—</span>}
+                          </div>
                         </td>
                         <td className="px-5 py-3.5">
                           {d.moduloActual ? (

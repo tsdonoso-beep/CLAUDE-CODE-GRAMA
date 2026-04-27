@@ -1,5 +1,5 @@
 // src/pages/Perfil.tsx
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import {
   Mail, MapPin, Building2, Package, Clock,
@@ -273,6 +273,8 @@ export default function Perfil() {
   const navigate = useNavigate()
   const { profile, user, isAdmin, signOut } = useAuth()
   const { getTallerProgreso } = useProgress()
+
+  if (isAdmin) return <Navigate to="/admin" replace />
 
   const displayName  = profile?.nombre_completo || user?.email?.split('@')[0] || 'Docente'
   const firstName    = displayName.split(' ')[0]
