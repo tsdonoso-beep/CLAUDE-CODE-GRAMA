@@ -708,6 +708,7 @@ export default function Landing() {
 
   const [flippedCard, setFlippedCard] = useState<number | null>(null)
   const [open, setOpen] = useState<number | null>(null)
+  const [activeTab, setActiveTab] = useState<'docente' | 'alumno' | 'director'>('docente')
 
   // Círculo reveal: hero → por qué grama
   const heroRef = useRef<HTMLDivElement>(null)
@@ -915,158 +916,239 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ══ POR QUÉ GRAMA ═══════════════════════════════════════════════════ */}
-      <section id="nosotros" style={{
+      {/* ══ PERFILES (TABS) ══════════════════════════════════════════════════ */}
+      <section id="perfiles" style={{
         background: '#ffffff',
-        padding: '5rem 1.5rem',
+        padding: '5.5rem 1.5rem',
         overflow: 'hidden',
         position: 'relative',
-        clipPath: `circle(${circleRadius}px at 50% 0%)`,
-        willChange: 'clip-path',
       }}>
-
-        {/* Shapes decorativos de fondo */}
-        <div style={{ position:'absolute', top:'8%', left:'3%', width:60, height:130, background:'#b8edd0', borderRadius:'0 0 30px 30px', opacity:.3, pointerEvents:'none', transform:'rotate(-8deg)', animation:'heroFb 13s ease-in-out infinite' }} />
-        <div style={{ position:'absolute', bottom:'10%', right:'3%', width:50, height:110, background:'#d4c4fc', borderRadius:'0 0 25px 25px', opacity:.35, pointerEvents:'none', transform:'rotate(10deg)', animation:'heroFb 16s ease-in-out infinite 2s' }} />
-        <svg viewBox="0 0 50 44" style={{ position:'absolute', top:'18%', right:'4%', width:40, height:35, opacity:.25, pointerEvents:'none', animation:'heroFe 14s ease-in-out infinite 1s' }}>
-          <polygon points="25,0 50,44 0,44" fill="#f8ee91" />
-        </svg>
-        <svg viewBox="0 0 50 44" style={{ position:'absolute', bottom:'20%', left:'4%', width:34, height:30, opacity:.3, pointerEvents:'none', animation:'heroFc 17s ease-in-out infinite .5s' }}>
-          <polygon points="25,0 50,44 0,44" fill="#02d47e" />
-        </svg>
+        {/* Shapes decorativas */}
+        <div style={{ position:'absolute', top:-80, left:'5%', width:220, height:220, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.18, pointerEvents:'none', animation:'heroFa 16s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', bottom:-120, right:'4%', width:260, height:260, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.14, pointerEvents:'none', animation:'heroFd 18s ease-in-out infinite 2s' }} />
+        <div style={{ position:'absolute', top:'40%', right:-60, width:120, height:96, background:'#f8ee91', borderRadius:'0 0 48px 48px', opacity:.28, pointerEvents:'none', animation:'heroFb 14s ease-in-out infinite 1s' }} />
 
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
-          {/* Header — con scroll reveal */}
-          <div style={{ textAlign:'center', marginBottom:'3.5rem', opacity: 0, transform: 'translateY(32px)', animation: 'fadeInUp 0.8s cubic-bezier(0.4,0,0.2,1) 0.1s forwards' }}>
-            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
+          {/* Header */}
+          <div style={{ textAlign:'center', marginBottom:'2.8rem' }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:14 }}>
               <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
-              ¿Por qué GRAMA?
+              ¿Para quién?
             </span>
             <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.1, color:'#043941', margin:0 }}>
-              El conocimiento técnico<br />
-              <span style={{ color:'#02d47e' }}>no debería perderse</span>
+              Una plataforma,{' '}
+              <span style={{ color:'#02d47e' }}>tres experiencias</span>
             </h2>
           </div>
 
-          {/* Flip Cards */}
-          <div style={{ display:'flex', gap:'2rem', justifyContent:'center', flexWrap:'wrap', alignItems:'center' }}>
-            {WHY_CARDS.map((card, i) => {
-              const isFlipped = flippedCard === i
-              const tilt = i === 0 ? 'rotate(-3deg)' : i === 2 ? 'rotate(3deg)' : 'none'
+          {/* Tab buttons */}
+          <div style={{ display:'flex', justifyContent:'center', gap:10, marginBottom:'3rem', flexWrap:'wrap' }}>
+            {([
+              { key: 'docente',  emoji: '🔧', label: 'Docente',  activeColor:'#043941', activeBg:'#043941', activeText:'#fff' },
+              { key: 'alumno',   emoji: '⭐', label: 'Alumno',   activeColor:'#02d47e', activeBg:'#e8fff4', activeText:'#043941' },
+              { key: 'director', emoji: '📊', label: 'Director', activeColor:'#f59e0b', activeBg:'#fffbeb', activeText:'#92400e' },
+            ] as const).map(tab => {
+              const isActive = activeTab === tab.key
               return (
-                // Div exterior: solo animación de entrada (opacity + translateY)
-                <div
-                  key={i}
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
                   style={{
-                    flexShrink: 0,
-                    opacity: 0,
-                    animation: `fadeInUp 0.6s cubic-bezier(0.4,0,0.2,1) ${0.2 + i * 0.15}s forwards`,
+                    display:'inline-flex', alignItems:'center', gap:8,
+                    padding:'.65rem 1.6rem', borderRadius:100,
+                    fontSize:'.85rem', fontWeight:800,
+                    border: isActive ? `2px solid ${tab.activeColor}` : '2px solid rgba(4,57,65,0.1)',
+                    background: isActive ? (tab.key === 'docente' ? '#043941' : tab.activeBg) : 'transparent',
+                    color: isActive ? tab.activeText : 'rgba(4,57,65,0.5)',
+                    cursor:'pointer',
+                    transition:'all .25s cubic-bezier(.4,0,.2,1)',
+                    boxShadow: isActive ? `0 4px 16px ${tab.activeColor}30` : 'none',
                   }}
                 >
-                  {/* Div interior: tilt + click + flip — sin interferencia con animación */}
-                  <div
-                    onClick={() => setFlippedCard(isFlipped ? null : i)}
-                    style={{
-                      width: 300,
-                      height: 400,
-                      perspective: '1000px',
-                      cursor: 'pointer',
-                      transform: isFlipped ? 'none' : tilt,
-                      transition: 'transform .4s ease',
-                    }}
-                  >
-                  <div style={{
-                    width: '100%',
-                    height: '100%',
-                    position: 'relative',
-                    transformStyle: 'preserve-3d' as const,
-                    transition: 'transform .6s cubic-bezier(.4,0,.2,1)',
-                    transform: isFlipped ? 'rotateY(180deg)' : 'none',
-                  }}>
-
-                    {/* ── FRONT ── */}
-                    <div style={{
-                      position: 'absolute', inset: 0,
-                      borderRadius: 20,
-                      background: card.frontBg,
-                      backfaceVisibility: 'hidden' as const,
-                      WebkitBackfaceVisibility: 'hidden' as any,
-                      overflow: 'hidden',
-                      padding: '2rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'flex-end',
-                    }}>
-                      {/* Decorative shape top-right */}
-                      {card.shape === 'triangle' && (
-                        <div style={{ position:'absolute', top:-40, right:-30, width:160, height:160, background:card.shapeColor, opacity:.18, clipPath:'polygon(50% 0%,100% 100%,0% 100%)', transform:'rotate(180deg)' }} />
-                      )}
-                      {card.shape === 'cross' && (
-                        <div style={{ position:'absolute', top:20, right:20, width:64, height:64, background:card.shapeColor, opacity:.22, clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)' }} />
-                      )}
-                      {card.shape === 'diamond' && (
-                        <div style={{ position:'absolute', top:16, right:16, width:80, height:80, background:card.shapeColor, opacity:.25, transform:'rotate(45deg)', borderRadius:8 }} />
-                      )}
-
-                      {/* Tag */}
-                      <span style={{ display:'inline-block', padding:'.25rem .75rem', borderRadius:100, fontSize:'.65rem', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', background:card.tagBg, color:card.tagColor, marginBottom:'1rem', width:'fit-content' }}>
-                        {card.tag}
-                      </span>
-
-                      {/* Title */}
-                      <p style={{ fontSize:'clamp(1.4rem,2.5vw,1.85rem)', fontWeight:900, lineHeight:1.15, color:card.titleColor, margin:'0 0 1.5rem' }}>
-                        {card.titleFront[0]}<br />{card.titleFront[1]}
-                      </p>
-
-                      {/* Hint */}
-                      <p style={{ fontSize:'.72rem', color:card.hintColor, margin:0 }}>↓ Toca para saber más</p>
-                    </div>
-
-                    {/* ── BACK ── */}
-                    <div style={{
-                      position: 'absolute', inset: 0,
-                      borderRadius: 20,
-                      background: card.backBg,
-                      backfaceVisibility: 'hidden' as const,
-                      WebkitBackfaceVisibility: 'hidden' as any,
-                      transform: 'rotateY(180deg)',
-                      padding: '2rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between',
-                      border: `1.5px solid ${card.backBorder}`,
-                    }}>
-                      <div>
-                        <span style={{ display:'inline-block', padding:'.25rem .75rem', borderRadius:100, fontSize:'.65rem', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', background:card.tagBg, color:card.tagColor, marginBottom:'1rem' }}>
-                          {card.tag}
-                        </span>
-                        <p style={{ fontSize:'1.05rem', fontWeight:800, color:'#043941', lineHeight:1.3, marginBottom:'1rem' }}>
-                          {card.titleFront[0]}<br />{card.titleFront[1]}
-                        </p>
-                        <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
-                          {card.body.map((line, li) => (
-                            <div key={li} style={{ display:'flex', alignItems:'flex-start', gap:10 }}>
-                              <span style={{ width:6, height:6, borderRadius:'50%', background:'#02d47e', flexShrink:0, marginTop:6 }} />
-                              <span style={{ fontSize:'.85rem', lineHeight:1.55, color:'#4a7a82' }}>{line}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setFlippedCard(null) }}
-                        style={{ display:'inline-flex', alignItems:'center', gap:4, fontSize:'.75rem', fontWeight:700, color:'#043941', background:'none', border:'1.5px solid rgba(4,57,65,0.2)', borderRadius:100, padding:'.4rem 1rem', cursor:'pointer', width:'fit-content' }}
-                      >
-                        ← Volver
-                      </button>
-                    </div>
-
-                  </div>
-                </div>
-                </div>
+                  <span style={{ fontSize:'1rem' }}>{tab.emoji}</span>
+                  {tab.label}
+                </button>
               )
             })}
           </div>
+
+          {/* Tab content */}
+          {activeTab === 'docente' && (
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
+              {/* Texto */}
+              <div>
+                <span style={{ display:'inline-block', fontSize:'.68rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', background:'rgba(4,57,65,.08)', color:'#043941', padding:'.3rem .85rem', borderRadius:100, marginBottom:20 }}>
+                  🔧 Para Docentes EPT
+                </span>
+                <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
+                  Domina tu taller,<br />
+                  <span style={{ color:'#02d47e' }}>certifícate y enseña</span><br />
+                  con confianza.
+                </h3>
+                <p style={{ fontSize:'.9rem', color:'rgba(4,57,65,.6)', lineHeight:1.8, margin:'0 0 1.8rem' }}>
+                  7 módulos progresivos para que conozcas, instales y operes cada equipo de tu especialidad. Fichas descargables, videos y sesiones en vivo incluidos.
+                </p>
+                <div style={{ display:'flex', flexDirection:'column', gap:12, marginBottom:'2rem' }}>
+                  {[
+                    '7 módulos por especialidad técnica',
+                    'Fichas plastificables listas para usar en aula',
+                    'Certificación reconocida por MINEDU',
+                    'Avanza a tu propio ritmo, sin fechas límite',
+                    'Acceso permanente a todo el material',
+                  ].map((feat, i) => (
+                    <div key={i} style={{ display:'flex', alignItems:'center', gap:10 }}>
+                      <span style={{ width:20, height:20, borderRadius:'50%', background:'rgba(2,212,126,.15)', border:'1.5px solid #02d47e', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                        <svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="#02d47e" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      </span>
+                      <span style={{ fontSize:'.85rem', fontWeight:600, color:'#043941' }}>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={() => navigate('/login')}
+                  style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#043941', color:'#fff', fontSize:'.88rem', fontWeight:800, padding:'1rem 2rem', borderRadius:100, border:'none', cursor:'pointer', boxShadow:'0 6px 20px rgba(4,57,65,.25)', transition:'all .2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 10px 28px rgba(4,57,65,.35)' }}
+                  onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 6px 20px rgba(4,57,65,.25)' }}
+                >
+                  Comenzar mi formación <ArrowRight size={15} />
+                </button>
+              </div>
+              {/* Imagen */}
+              <div style={{ position:'relative', borderRadius:24, overflow:'hidden', boxShadow:'0 24px 64px rgba(4,57,65,.16)' }}>
+                <img
+                  src="https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=700&q=80"
+                  alt="Docente EPT en taller"
+                  style={{ width:'100%', aspectRatio:'4/3', objectFit:'cover', display:'block' }}
+                />
+                <div style={{ position:'absolute', inset:0, background:'linear-gradient(160deg, transparent 50%, rgba(4,57,65,.55) 100%)' }} />
+                {/* Badge flotante */}
+                <div style={{ position:'absolute', bottom:20, left:20, background:'rgba(255,255,255,.95)', backdropFilter:'blur(8px)', borderRadius:14, padding:'10px 16px', boxShadow:'0 8px 24px rgba(0,0,0,.12)' }}>
+                  <p style={{ margin:0, fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.5)', letterSpacing:'.06em', textTransform:'uppercase' }}>Talleres disponibles</p>
+                  <p style={{ margin:'2px 0 0', fontSize:'1.3rem', fontWeight:900, color:'#043941' }}>{talleresConfig.length} especialidades</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'alumno' && (
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
+              {/* Texto */}
+              <div>
+                <span style={{ display:'inline-block', fontSize:'.68rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', background:'rgba(2,212,126,.12)', color:'#047857', padding:'.3rem .85rem', borderRadius:100, marginBottom:20 }}>
+                  ⭐ Para Alumnos
+                </span>
+                <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
+                  Aprende haciendo,<br />
+                  <span style={{ color:'#02d47e' }}>a tu ritmo</span><br />
+                  y con tu docente.
+                </h3>
+                <p style={{ fontSize:'.9rem', color:'rgba(4,57,65,.6)', lineHeight:1.8, margin:'0 0 1.8rem' }}>
+                  Contenido interactivo guiado por tu docente. Proyectos prácticos para aplicar lo que aprendes en tu especialidad técnica.
+                </p>
+                <div style={{ display:'flex', flexDirection:'column', gap:12, marginBottom:'2rem' }}>
+                  {[
+                    'Proyectos prácticos con materiales reales',
+                    'Contenido adaptado a tu nivel y ritmo',
+                    'Sigue el avance de tu proyecto en tiempo real',
+                    'Portafolio digital de tus logros',
+                  ].map((feat, i) => (
+                    <div key={i} style={{ display:'flex', alignItems:'center', gap:10 }}>
+                      <span style={{ width:20, height:20, borderRadius:'50%', background:'rgba(2,212,126,.15)', border:'1.5px solid #02d47e', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                        <svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="#02d47e" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      </span>
+                      <span style={{ fontSize:'.85rem', fontWeight:600, color:'#043941' }}>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+                {/* Proyectos "en proceso" */}
+                <div style={{ display:'flex', gap:10, marginBottom:'1.8rem' }}>
+                  {[
+                    { nombre:'Kit de Robótica', color:'#d4c4fc', textColor:'#5b21b6' },
+                    { nombre:'Kit de Matemáticas', color:'#fde68a', textColor:'#92400e' },
+                  ].map(p => (
+                    <div key={p.nombre} style={{ display:'flex', alignItems:'center', gap:6, background:p.color + '33', border:`1px solid ${p.color}`, borderRadius:100, padding:'.3rem .9rem' }}>
+                      <span style={{ width:6, height:6, borderRadius:'50%', background:p.color }} />
+                      <span style={{ fontSize:'.72rem', fontWeight:700, color:p.textColor }}>{p.nombre}</span>
+                      <span style={{ fontSize:'.65rem', fontWeight:600, color:p.textColor, opacity:.7 }}>· En proceso</span>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  disabled
+                  style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(4,57,65,.07)', color:'rgba(4,57,65,.35)', fontSize:'.88rem', fontWeight:800, padding:'1rem 2rem', borderRadius:100, border:'1.5px solid rgba(4,57,65,.1)', cursor:'not-allowed' }}
+                >
+                  Próximamente <span style={{ fontSize:'.7rem', fontWeight:600, background:'#f8ee91', color:'#92400e', padding:'.15rem .5rem', borderRadius:100 }}>Beta 2025</span>
+                </button>
+              </div>
+              {/* Imagen */}
+              <div style={{ position:'relative', borderRadius:24, overflow:'hidden', boxShadow:'0 24px 64px rgba(4,57,65,.16)' }}>
+                <img
+                  src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=700&q=80"
+                  alt="Alumno en taller EPT"
+                  style={{ width:'100%', aspectRatio:'4/3', objectFit:'cover', display:'block' }}
+                />
+                <div style={{ position:'absolute', inset:0, background:'linear-gradient(160deg, transparent 50%, rgba(4,57,65,.55) 100%)' }} />
+                <div style={{ position:'absolute', bottom:20, left:20, background:'rgba(255,255,255,.95)', backdropFilter:'blur(8px)', borderRadius:14, padding:'10px 16px', boxShadow:'0 8px 24px rgba(0,0,0,.12)' }}>
+                  <p style={{ margin:0, fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.5)', letterSpacing:'.06em', textTransform:'uppercase' }}>Proyectos disponibles</p>
+                  <p style={{ margin:'2px 0 0', fontSize:'1.3rem', fontWeight:900, color:'#043941' }}>2 en proceso</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'director' && (
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
+              {/* Texto */}
+              <div>
+                <span style={{ display:'inline-block', fontSize:'.68rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', background:'rgba(245,158,11,.12)', color:'#92400e', padding:'.3rem .85rem', borderRadius:100, marginBottom:20 }}>
+                  📊 Para Directores
+                </span>
+                <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
+                  Monitorea el avance<br />
+                  <span style={{ color:'#f59e0b' }}>pedagógico</span><br />
+                  de tu institución.
+                </h3>
+                <p style={{ fontSize:'.9rem', color:'rgba(4,57,65,.6)', lineHeight:1.8, margin:'0 0 1.8rem' }}>
+                  Visibilidad completa del progreso de tus docentes en formación. Reportes por taller, módulo y avance individual en tiempo real.
+                </p>
+                <div style={{ display:'flex', flexDirection:'column', gap:12, marginBottom:'2rem' }}>
+                  {[
+                    'Dashboard de avance por taller y docente',
+                    'Alertas de docentes sin iniciar formación',
+                    'Reportes exportables para UGEL',
+                    'Semáforo de cumplimiento por especialidad',
+                  ].map((feat, i) => (
+                    <div key={i} style={{ display:'flex', alignItems:'center', gap:10 }}>
+                      <span style={{ width:20, height:20, borderRadius:'50%', background:'rgba(245,158,11,.15)', border:'1.5px solid #f59e0b', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                        <svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="#f59e0b" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      </span>
+                      <span style={{ fontSize:'.85rem', fontWeight:600, color:'#043941' }}>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  disabled
+                  style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(4,57,65,.07)', color:'rgba(4,57,65,.35)', fontSize:'.88rem', fontWeight:800, padding:'1rem 2rem', borderRadius:100, border:'1.5px solid rgba(4,57,65,.1)', cursor:'not-allowed' }}
+                >
+                  En desarrollo <span style={{ fontSize:'.7rem', fontWeight:600, background:'rgba(245,158,11,.15)', color:'#92400e', padding:'.15rem .5rem', borderRadius:100 }}>Pronto</span>
+                </button>
+              </div>
+              {/* Imagen */}
+              <div style={{ position:'relative', borderRadius:24, overflow:'hidden', boxShadow:'0 24px 64px rgba(4,57,65,.16)' }}>
+                <img
+                  src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&q=80"
+                  alt="Director monitoreando institución"
+                  style={{ width:'100%', aspectRatio:'4/3', objectFit:'cover', display:'block' }}
+                />
+                <div style={{ position:'absolute', inset:0, background:'linear-gradient(160deg, transparent 50%, rgba(4,57,65,.55) 100%)' }} />
+                <div style={{ position:'absolute', bottom:20, left:20, background:'rgba(255,255,255,.95)', backdropFilter:'blur(8px)', borderRadius:14, padding:'10px 16px', boxShadow:'0 8px 24px rgba(0,0,0,.12)' }}>
+                  <p style={{ margin:0, fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.5)', letterSpacing:'.06em', textTransform:'uppercase' }}>Módulo de seguimiento</p>
+                  <p style={{ margin:'2px 0 0', fontSize:'1.3rem', fontWeight:900, color:'#043941' }}>En desarrollo</p>
+                </div>
+              </div>
+            </div>
+          )}
 
         </div>
       </section>
