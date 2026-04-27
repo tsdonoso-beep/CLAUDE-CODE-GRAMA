@@ -130,7 +130,7 @@ function Tangram({
 const MESES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
 const DIAS_ES  = ['Lu','Ma','Mi','Ju','Vi','Sa','Do']
 
-function CalendarioSidebar({ tallerSlugs, accent }: { tallerSlugs: string[]; accent: string }) {
+function CalendarioSidebar({ tallerSlugs, accent, maxSesiones = 4 }: { tallerSlugs: string[]; accent: string; maxSesiones?: number }) {
   const now = new Date()
   const [viewMonth, setViewMonth] = useState(now.getMonth())
   const [viewYear,  setViewYear]  = useState(now.getFullYear())
@@ -244,7 +244,7 @@ function CalendarioSidebar({ tallerSlugs, accent }: { tallerSlugs: string[]; acc
         <div className="mx-4 mb-4 pt-3 border-t" style={{ borderColor: 'rgba(4,57,65,0.07)' }}>
           <p className="text-[9px] font-extrabold uppercase tracking-widest mb-2.5" style={{ color: 'rgba(4,57,65,0.3)' }}>Próximas sesiones</p>
           <div className="space-y-2.5">
-            {sesiones.slice(0, 4).map(s => {
+            {sesiones.slice(0, maxSesiones).map(s => {
               const dias    = diasParaSesion(s.fecha)
               const tColor  = TALLER_ACCENTS[s.tallerSlug] ?? accent
               const tNombre = talleresConfig.find(t => t.slug === s.tallerSlug)?.nombreCorto ?? s.tallerSlug
@@ -591,7 +591,7 @@ export default function Perfil() {
                 Ver todos los módulos <ArrowRight size={11} />
               </button>
             </div>
-            <style>{`@media(min-width:1280px){.pr1{display:grid;grid-template-columns:1fr 300px;gap:20px}}`}</style>
+            <style>{`@media(min-width:1280px){.pr1{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}}`}</style>
             <div className="pr1">
               {/* Cards grid */}
               <style>{`@media(min-width:640px){.pc{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}}`}</style>
@@ -691,7 +691,11 @@ export default function Perfil() {
               {/* Agenda */}
               {tallerSlugsAccesibles.length > 0 && (
                 <div className="mt-5 xl:mt-0">
-                  <CalendarioSidebar tallerSlugs={tallerSlugsAccesibles} accent={primaryAccent} />
+                  <CalendarioSidebar
+                    tallerSlugs={tallerSlugsAccesibles}
+                    accent={primaryAccent}
+                    maxSesiones={Math.max(2, tallerSlugsAccesibles.length * 2)}
+                  />
                 </div>
               )}
             </div>
