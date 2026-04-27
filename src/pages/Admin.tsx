@@ -715,32 +715,32 @@ Equipo GRAMA · Programa TSF-MINEDU`
     <div style={{ display: 'flex', minHeight: '100vh', fontFamily: "'Manrope', sans-serif" }}>
 
       {/* ── Sidebar ─────────────────────────────────────────────────────────── */}
-      <aside style={{ width: 240, background: '#032d34', position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 40, display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255,255,255,0.05)' }}>
+      <aside style={{ width: 240, background: '#f7faf9', position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 40, display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(4,57,65,0.09)' }}>
 
         {/* Logo */}
-        <div style={{ padding: '1.25rem 1.1rem .9rem', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-          <GramaLogo variant="light" size="sm" />
-          <p style={{ fontSize: '.56rem', color: 'rgba(255,255,255,0.25)', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', marginTop: '.45rem' }}>Panel de administración</p>
+        <div style={{ padding: '1.25rem 1.1rem .9rem', borderBottom: '1px solid rgba(4,57,65,0.07)' }}>
+          <GramaLogo variant="dark" size="sm" />
+          <p style={{ fontSize: '.56rem', color: 'rgba(4,57,65,0.38)', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', marginTop: '.45rem' }}>Panel de administración</p>
         </div>
 
         {/* Nav */}
         <nav style={{ flex: 1, overflowY: 'auto', padding: '.6rem .55rem' }}>
           {NAV_GROUPS.map(group => (
             <div key={group.label} style={{ marginBottom: '1.1rem' }}>
-              <p style={{ fontSize: '.56rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)', padding: '.3rem .6rem .4rem' }}>{group.label}</p>
+              <p style={{ fontSize: '.56rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.32)', padding: '.3rem .6rem .4rem' }}>{group.label}</p>
               {group.items.map(item => {
                 const active = tab === item.id
                 return (
                   <button key={item.id} onClick={() => setTab(item.id)}
                     style={{ display: 'flex', alignItems: 'center', gap: '.6rem', width: '100%', padding: '.55rem .7rem', borderRadius: 10, marginBottom: 2, cursor: 'pointer', border: 'none', textAlign: 'left', transition: 'all .15s',
-                      background: active ? 'rgba(2,212,126,0.13)' : 'transparent',
+                      background: active ? 'rgba(2,212,126,0.14)' : 'transparent',
                       borderLeft: active ? '2.5px solid #02d47e' : '2.5px solid transparent',
-                      color: active ? '#ffffff' : 'rgba(255,255,255,0.48)',
+                      color: active ? '#043941' : 'rgba(4,57,65,0.48)',
                     }}>
                     <item.icon size={15} />
                     <span style={{ fontSize: '.8rem', fontWeight: active ? 700 : 500, flex: 1 }}>{item.label}</span>
                     {(item.badge ?? 0) > 0 && (
-                      <span style={{ fontSize: '.62rem', fontWeight: 800, background: 'rgba(239,68,68,0.22)', color: '#ef4444', padding: '.15rem .45rem', borderRadius: 20, lineHeight: 1.4 }}>{item.badge}</span>
+                      <span style={{ fontSize: '.62rem', fontWeight: 800, background: 'rgba(239,68,68,0.12)', color: '#dc2626', padding: '.15rem .45rem', borderRadius: 20, lineHeight: 1.4 }}>{item.badge}</span>
                     )}
                   </button>
                 )
@@ -750,21 +750,21 @@ Equipo GRAMA · Programa TSF-MINEDU`
         </nav>
 
         {/* User footer */}
-        <div style={{ padding: '.8rem 1rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ padding: '.8rem 1rem', borderTop: '1px solid rgba(4,57,65,0.07)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', marginBottom: '.65rem' }}>
             <div style={{ width: 30, height: 30, borderRadius: '50%', background: '#02d47e', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.7rem', fontWeight: 800, color: '#043941', flexShrink: 0 }}>
               {profile?.email?.[0]?.toUpperCase() ?? 'A'}
             </div>
             <div style={{ minWidth: 0 }}>
-              <p style={{ fontSize: '.72rem', fontWeight: 700, color: '#fff' }}>Admin</p>
-              <p style={{ fontSize: '.6rem', color: 'rgba(255,255,255,0.3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 140 }}>{profile?.email}</p>
+              <p style={{ fontSize: '.72rem', fontWeight: 700, color: '#043941' }}>Admin</p>
+              <p style={{ fontSize: '.6rem', color: 'rgba(4,57,65,0.42)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 140 }}>{profile?.email}</p>
             </div>
           </div>
           <div style={{ display: 'flex', gap: '.4rem' }}>
-            <button onClick={() => navigate('/perfil')} style={{ flex: 1, fontSize: '.68rem', fontWeight: 600, padding: '.38rem .5rem', borderRadius: 8, background: 'rgba(2,212,126,0.1)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.15)', cursor: 'pointer' }}>
+            <button onClick={() => navigate('/')} style={{ flex: 1, fontSize: '.68rem', fontWeight: 600, padding: '.38rem .5rem', borderRadius: 8, background: 'rgba(2,212,126,0.12)', color: '#027a4a', border: '1px solid rgba(2,212,126,0.25)', cursor: 'pointer' }}>
               Ver plataforma
             </button>
-            <button onClick={signOut} title="Cerrar sesión" style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.35)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <button onClick={signOut} title="Cerrar sesión" style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(4,57,65,0.05)', color: 'rgba(4,57,65,0.38)', border: '1px solid rgba(4,57,65,0.1)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <LogOut size={13} />
             </button>
           </div>
