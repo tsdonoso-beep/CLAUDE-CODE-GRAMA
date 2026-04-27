@@ -683,7 +683,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
 
   const selectStyle = {
     className: 'px-3 py-2 rounded-xl border-2 text-sm outline-none',
-    style: { borderColor: 'rgba(255,255,255,0.15)', background: '#ffffff', color: '#ffffff' },
+    style: { borderColor: 'rgba(255,255,255,0.75)', background: '#ffffff', color: '#ffffff' },
   }
 
   // ── helpers de sidebar ──────────────────────────────────────────────────────
@@ -715,7 +715,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
     <div style={{ display: 'flex', minHeight: '100vh', fontFamily: "'Manrope', sans-serif" }}>
 
       {/* ── Sidebar ─────────────────────────────────────────────────────────── */}
-      <aside style={{ width: 240, background: '#032d34', position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 40, display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255,255,255,0.05)' }}>
+      <aside style={{ width: 240, background: '#032d34', position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 40, display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255,255,255,0.80)' }}>
 
         {/* Logo */}
         <div style={{ padding: '1.25rem 1.1rem .9rem', borderBottom: '1px solid rgba(4,57,65,0.12)' }}>
@@ -727,7 +727,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
         <nav style={{ flex: 1, overflowY: 'auto', padding: '.6rem .55rem' }}>
           {NAV_GROUPS.map(group => (
             <div key={group.label} style={{ marginBottom: '1.1rem' }}>
-              <p style={{ fontSize: '.56rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.52)', padding: '.3rem .6rem .4rem' }}>{group.label}</p>
+              <p style={{ fontSize: '.56rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.75)', padding: '.3rem .6rem .4rem' }}>{group.label}</p>
               {group.items.map(item => {
                 const active = tab === item.id
                 return (
@@ -735,7 +735,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     style={{ display: 'flex', alignItems: 'center', gap: '.6rem', width: '100%', padding: '.55rem .7rem', borderRadius: 10, marginBottom: 2, cursor: 'pointer', border: 'none', textAlign: 'left', transition: 'all .15s',
                       background: active ? 'rgba(2,212,126,0.13)' : 'transparent',
                       borderLeft: active ? '2.5px solid #02d47e' : '2.5px solid transparent',
-                      color: active ? '#ffffff' : 'rgba(255,255,255,0.48)',
+                      color: active ? '#ffffff' : 'rgba(255,255,255,0.75)',
                     }}>
                     <item.icon size={15} />
                     <span style={{ fontSize: '.8rem', fontWeight: active ? 700 : 500, flex: 1 }}>{item.label}</span>
@@ -750,7 +750,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
         </nav>
 
         {/* User footer */}
-        <div style={{ padding: '.8rem 1rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ padding: '.8rem 1rem', borderTop: '1px solid rgba(255,255,255,0.80)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', marginBottom: '.65rem' }}>
             <div style={{ width: 30, height: 30, borderRadius: '50%', background: '#02d47e', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.7rem', fontWeight: 800, color: '#043941', flexShrink: 0 }}>
               {profile?.email?.[0]?.toUpperCase() ?? 'A'}
@@ -908,7 +908,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                           {(d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : []).map(s => talleresConfig.find(t => t.slug === s)?.nombreCorto ?? s).join(' · ') || 'Sin taller'}
                         </p>
                       </div>
-                      <span style={{ marginLeft: 'auto', fontSize: '.8rem', fontWeight: 800, color: pct >= 70 ? '#02d47e' : pct >= 30 ? '#f59e0b' : 'rgba(255,255,255,0.4)', flexShrink: 0 }}>{pct}%</span>
+                      <span style={{ marginLeft: 'auto', fontSize: '.8rem', fontWeight: 800, color: pct >= 70 ? '#02d47e' : pct >= 30 ? '#f59e0b' : 'rgba(255,255,255,0.75)', flexShrink: 0 }}>{pct}%</span>
                     </div>
                     <div style={{ height: 4, background: '#ffffff', borderRadius: 4, overflow: 'hidden' }}>
                       <div style={{ height: '100%', width: `${pct}%`, background: pct >= 70 ? '#02d47e' : pct >= 30 ? '#f59e0b' : 'rgba(4,57,65,0.3)', borderRadius: 4, transition: 'width .4s ease' }} />
@@ -931,7 +931,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   {solicitudesPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{solicitudesPendientes} pendientes</span> : 'Sin pendientes'} · {solicitudes.length} en total
                 </p>
               </div>
-              <button onClick={fetchSolicitudes} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: '#ffffff', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
+              <button onClick={fetchSolicitudes} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: '#ffffff', color: 'rgba(255,255,255,0.75)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
                 <RefreshCw size={12} /> Recargar
               </button>
             </div>
@@ -949,7 +949,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   <button key={estado} onClick={() => setFiltroEstado(estado)}
                     style={{ padding: '.38rem .9rem', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, cursor: 'pointer', border: 'none', transition: 'all .15s',
                       background: active ? '#f59e0b' : 'rgba(255,255,255,0.07)',
-                      color:      active ? '#043941' : 'rgba(255,255,255,0.5)' }}>
+                      color:      active ? '#043941' : 'rgba(255,255,255,0.75)' }}>
                     {label} <span style={{ opacity: .7 }}>({count})</span>
                   </button>
                 )
@@ -976,8 +976,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
               </div>
             ) : solicitudesFiltradas.length === 0 ? (
               <div className="text-center py-20 rounded-2xl"
-                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <Inbox size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.42)' }} />
+                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.80)' }}>
+                <Inbox size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.75)' }} />
                 <p className="text-sm" style={{ color: '#043941' }}>
                   No hay solicitudes en esta categoría.
                 </p>
@@ -1016,7 +1016,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                           </div>
                           {sol.mensaje && (
                             <p className="mt-2 text-xs px-3 py-2 rounded-lg italic"
-                              style={{ background: '#ffffff', color: '#043941', border: '1px solid rgba(255,255,255,0.06)' }}>
+                              style={{ background: '#ffffff', color: '#043941', border: '1px solid rgba(255,255,255,0.80)' }}>
                               "{sol.mensaje}"
                             </p>
                           )}
@@ -1092,7 +1092,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     {consultasPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{consultasPendientes} sin responder</span> : 'Todas respondidas'} · {consultasAdmin.length} en total
                   </p>
                 </div>
-                <button onClick={fetchConsultasAdmin} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: '#ffffff', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
+                <button onClick={fetchConsultasAdmin} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: '#ffffff', color: 'rgba(255,255,255,0.75)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
                   <RefreshCw size={12} /> Recargar
                 </button>
               </div>
@@ -1109,7 +1109,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     <button key={estado} onClick={() => setFiltroConsultas(estado)}
                       style={{ padding: '.38rem .9rem', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, cursor: 'pointer', border: 'none', transition: 'all .15s',
                         background: active ? '#02d47e' : 'rgba(255,255,255,0.07)',
-                        color:      active ? '#043941' : 'rgba(255,255,255,0.5)' }}>
+                        color:      active ? '#043941' : 'rgba(255,255,255,0.75)' }}>
                       {label} <span style={{ opacity: .7 }}>({count})</span>
                     </button>
                   )
@@ -1123,8 +1123,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 </div>
               ) : consultasFiltradas.length === 0 ? (
                 <div className="text-center py-20 rounded-2xl"
-                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                  <MessageCircle size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.42)' }} />
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.80)' }}>
+                  <MessageCircle size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.75)' }} />
                   <p className="text-sm" style={{ color: '#043941' }}>No hay consultas en esta categoría.</p>
                 </div>
               ) : (
@@ -1183,7 +1183,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         {/* Formulario de respuesta (solo pendientes) */}
                         {!respondida && (
                           <div className="px-5 py-4 border-t space-y-3"
-                            style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)' }}>
+                            style={{ borderColor: 'rgba(255,255,255,0.80)', background: 'rgba(255,255,255,0.02)' }}>
                             <p className="text-xs font-bold" style={{ color: '#043941' }}>Tu respuesta</p>
                             <textarea
                               value={respuestaTexto[c.id] ?? ''}
@@ -1232,7 +1232,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     value={filtroAnalyticsDocente}
                     onChange={e => { setFiltroAnalyticsDocente(e.target.value); setBusquedaDocente('') }}
                     className="px-3 py-2 rounded-xl border-2 text-sm outline-none min-w-[260px]"
-                    style={{ borderColor: filtroAnalyticsDocente ? '#02d47e' : 'rgba(255,255,255,0.15)', background: '#ffffff', color: '#ffffff' }}>
+                    style={{ borderColor: filtroAnalyticsDocente ? '#02d47e' : 'rgba(255,255,255,0.75)', background: '#ffffff', color: '#ffffff' }}>
                     <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todos los docentes (global)</option>
                     {docentes.map(d => (
                       <option key={d.id} value={d.id} style={{ background: '#0d2b31', color: '#ffffff' }}>{d.nombre_completo} — {d.email}</option>
@@ -1311,11 +1311,11 @@ Equipo GRAMA · Programa TSF-MINEDU`
                               {/* label */}
                               <div style={{ display: 'flex', alignItems: 'center', gap: '.45rem', width: 192, flexShrink: 0 }}>
                                 {row.badge ? (
-                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: isBase ? 'rgba(255,255,255,0.12)' : '#02d47e', color: isBase ? 'rgba(255,255,255,0.5)' : '#043941', padding: '.15rem .4rem', borderRadius: 5, flexShrink: 0 }}>
+                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: isBase ? 'rgba(255,255,255,0.12)' : '#02d47e', color: isBase ? 'rgba(255,255,255,0.75)' : '#043941', padding: '.15rem .4rem', borderRadius: 5, flexShrink: 0 }}>
                                     {row.badge}
                                   </span>
                                 ) : (
-                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: '#ffffff', color: 'rgba(255,255,255,0.45)', padding: '.15rem .45rem', borderRadius: 5, flexShrink: 0 }}>ALL</span>
+                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: '#ffffff', color: 'rgba(255,255,255,0.75)', padding: '.15rem .45rem', borderRadius: 5, flexShrink: 0 }}>ALL</span>
                                 )}
                                 <span style={{ fontSize: '.72rem', color: isBase ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.6)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                   {row.label}
@@ -1327,8 +1327,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
                               </div>
                               {/* count + pct */}
                               <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', flexShrink: 0 }}>
-                                <span style={{ fontSize: '.78rem', fontWeight: 800, color: isBase ? 'rgba(255,255,255,0.5)' : '#fff', width: 28, textAlign: 'right' }}>{row.count}</span>
-                                <span style={{ fontSize: '.72rem', fontWeight: 700, color: isBase ? 'rgba(255,255,255,0.3)' : barColor, width: 38, textAlign: 'right' }}>{pct}%</span>
+                                <span style={{ fontSize: '.78rem', fontWeight: 800, color: isBase ? 'rgba(255,255,255,0.75)' : '#fff', width: 28, textAlign: 'right' }}>{row.count}</span>
+                                <span style={{ fontSize: '.72rem', fontWeight: 700, color: isBase ? 'rgba(255,255,255,0.75)' : barColor, width: 38, textAlign: 'right' }}>{pct}%</span>
                               </div>
                             </div>
                           </div>
@@ -1362,7 +1362,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   {grupos.map((g, gi) => (
                     <div key={g.modulo}>
                       {/* group header */}
-                      <div style={{ padding: '.45rem 1.5rem', background: 'rgba(255,255,255,0.03)',  borderBottom: '1px solid rgba(4,57,65,0.07)', borderTop: gi > 0 ? '1px solid rgba(255,255,255,0.06)' : 'none', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+                      <div style={{ padding: '.45rem 1.5rem', background: 'rgba(255,255,255,0.03)',  borderBottom: '1px solid rgba(4,57,65,0.07)', borderTop: gi > 0 ? '1px solid rgba(255,255,255,0.80)' : 'none', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
                         <span style={{ fontSize: '.6rem', fontWeight: 800, background: '#02d47e', color: '#043941', padding: '.12rem .38rem', borderRadius: 4 }}>{g.modulo}</span>
                         <span style={{ fontSize: '.7rem', color: '#043941', fontWeight: 600 }}>{g.nombre}</span>
                       </div>
@@ -1523,7 +1523,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         <button key={d} onClick={() => setFiltroInactividad(d)}
                           style={{ fontSize: '.68rem', fontWeight: 700, padding: '.28rem .7rem', borderRadius: 20, cursor: 'pointer', border: 'none', transition: 'all .15s',
                             background: filtroInactividad === d ? '#02d47e' : 'rgba(255,255,255,0.07)',
-                            color: filtroInactividad === d ? '#043941' : 'rgba(255,255,255,0.45)',
+                            color: filtroInactividad === d ? '#043941' : 'rgba(255,255,255,0.75)',
                           }}>
                           +{d}d
                         </button>
@@ -1552,7 +1552,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     <div>
                       {inactivos.map((d, i) => {
                         const dias = d.diasSinAcceso
-                        const diasColor = dias === null || dias > 60 ? '#ef4444' : dias > 30 ? '#f59e0b' : dias > 14 ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.35)'
+                        const diasColor = dias === null || dias > 60 ? '#ef4444' : dias > 30 ? '#f59e0b' : dias > 14 ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.35)'
                         const slugs = d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : []
                         const initials = (d.nombre_completo ?? d.email ?? '?').split(' ').slice(0, 2).map((w: string) => w[0]).join('').toUpperCase()
                         return (
@@ -1703,7 +1703,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     return (
                       <tr key={d.id}
                         onClick={() => setDocenteDetalle(d)}
-                        style={{ borderBottom: i < docentesFiltrados.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none', cursor: 'pointer' }}
+                        style={{ borderBottom: i < docentesFiltrados.length - 1 ? '1px solid rgba(255,255,255,0.80)' : 'none', cursor: 'pointer' }}
                         className="transition-colors hover:bg-white/5">
                         <td className="px-5 py-3.5">
                           <p className="font-semibold text-white">{d.nombre_completo}</p>
@@ -1928,7 +1928,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         {talleresConfig.map((t, i) => (
                           <label key={t.slug}
                             className="flex items-center gap-3 px-4 py-2.5 cursor-pointer transition-colors hover:bg-white/5"
-                            style={{ borderBottom: i < talleresConfig.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                            style={{ borderBottom: i < talleresConfig.length - 1 ? '1px solid rgba(255,255,255,0.80)' : 'none' }}>
                             <input type="checkbox" checked={nuevosTalleres.includes(t.slug)}
                               onChange={e => setNuevosTalleres(prev =>
                                 e.target.checked ? [...prev, t.slug] : prev.filter(s => s !== t.slug)
@@ -2026,7 +2026,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     { label: 'Avance',      value: `${d.porcentaje}%`,             color: d.porcentaje >= 80 ? '#02d47e' : d.porcentaje >= 40 ? '#f59e0b' : '#ef4444' },
                     { label: 'Horas est.',  value: `${horasCertificadas}h`,        color: '#22d3ee' },
                   ].map(s => (
-                    <div key={s.label} style={{ background: '#ffffff', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 11, padding: '.65rem .5rem', textAlign: 'center' }}>
+                    <div key={s.label} style={{ background: '#ffffff', border: '1px solid rgba(255,255,255,0.80)', borderRadius: 11, padding: '.65rem .5rem', textAlign: 'center' }}>
                       <p style={{ fontSize: '1.2rem', fontWeight: 900, color: s.color, lineHeight: 1 }}>{s.value}</p>
                       <p style={{ fontSize: '.58rem', color: 'rgba(255,255,255,0.62)', marginTop: '.3rem' }}>{s.label}</p>
                     </div>
@@ -2047,7 +2047,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     background: d.porcentaje >= 80 ? '#02d47e' : d.porcentaje >= 40 ? '#f59e0b' : '#ef4444' }} />
                 </div>
                 {d.visualizados > d.completados && (
-                  <p style={{ fontSize: '.62rem', color: 'rgba(255,255,255,0.52)', marginBottom: '1rem' }}>
+                  <p style={{ fontSize: '.62rem', color: 'rgba(255,255,255,0.75)', marginBottom: '1rem' }}>
                     {d.visualizados} visualizados · {d.completados} completados
                   </p>
                 )}
@@ -2125,7 +2125,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                           value=""
                           onChange={e => { if (e.target.value) setTalleresEditando(prev => [...prev, e.target.value]) }}
                           className="w-full px-3 py-2 rounded-xl text-xs outline-none"
-                          style={{ background: '#ffffff', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                          style={{ background: '#ffffff', color: 'rgba(255,255,255,0.75)', border: '1px solid rgba(255,255,255,0.1)' }}>
                           <option value="">+ Añadir taller…</option>
                           {talleresDisponibles.map(t => (
                             <option key={t.slug} value={t.slug} style={{ background: '#052e35' }}>{t.nombre}</option>
