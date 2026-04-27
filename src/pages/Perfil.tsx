@@ -577,10 +577,10 @@ export default function Perfil() {
         </div>
 
         {/* Content */}
-        <style>{`@media(min-width:1280px){.perfil-content{display:grid;grid-template-columns:1fr 340px;gap:20px;grid-template-areas:"cards calendar" "modulos logros"}}`}</style>
-        <div className="perfil-content flex-1 p-6 space-y-5 lg:space-y-0">
+        <style>{`@media(min-width:1280px){.perfil-content{display:grid;grid-template-columns:1fr 340px;grid-template-areas:"cards calendar" "modulos logros";gap:20px;align-items:start}}`}</style>
+        <div className="perfil-content flex-1 p-6 space-y-5 xl:space-y-0">
 
-          {/* ── Row 1: Taller cards + Agenda ─────────────────────────────── */}
+          {/* ── 1. Cards (grid area: cards) ──────────────────────────────── */}
           <div style={{ gridArea: 'cards' }}>
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm font-black" style={{ color: '#043941' }}>Mis talleres inscritos</p>
@@ -592,222 +592,198 @@ export default function Perfil() {
                 Ver todos los módulos <ArrowRight size={11} />
               </button>
             </div>
-            <style>{`@media(min-width:1280px){.pr1{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}}`}</style>
-            <div className="pr1">
-              {/* Cards grid */}
-              <style>{`@media(min-width:640px){.pc{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}}`}</style>
-              <div className="pc space-y-4 sm:space-y-0">
-                {tallerSlugsAccesibles.length > 0 ? (
-                  tallerSlugsAccesibles.map(slug => {
-                    const t    = talleresConfig.find(x => x.slug === slug)
-                    if (!t) return null
-                    const ta   = TALLER_ACCENTS[slug] ?? '#02d47e'
-                    const p    = getTallerProgreso(slug)
-                    const mIdx = Math.min(Math.floor((p.porcentaje / 100) * modulosLXP.length), modulosLXP.length - 1)
-                    const mod  = modulosLXP[mIdx]
-                    const prox = getProximaSesion(slug)
-                    return (
-                      <div
-                        key={slug}
-                        className="rounded-2xl overflow-hidden"
-                        style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 10px rgba(4,57,65,0.07)' }}
-                      >
-                        {/* Hero area */}
-                        <div
-                          className="relative overflow-hidden"
-                          style={{ height: 148, background: `linear-gradient(145deg,#043941 0%,${ta}55 100%)` }}
-                        >
-                          <div className="absolute inset-0 grama-pattern opacity-20" />
-                          <TallerHeroShapes slugs={[slug]} />
-                        </div>
-                        {/* Body */}
-                        <div className="px-4 py-4">
-                          <p className="text-[10px] font-extrabold uppercase tracking-widest mb-0.5" style={{ color: ta }}>
-                            Taller EPT · {t.nombre}
-                          </p>
-                          <h3 className="text-base font-black mb-0.5" style={{ color: '#043941', letterSpacing: '-0.02em' }}>
-                            {t.nombreCorto ?? t.nombre}
-                          </h3>
-                          <p className="text-xs mb-2.5" style={{ color: '#94a3b8' }}>
-                            {modulosLXP.length} módulos · 150 horas de formación
-                          </p>
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="text-xs" style={{ color: 'rgba(4,57,65,0.5)' }}>Tu avance</span>
-                            <span className="text-sm font-black" style={{ color: ta }}>{p.porcentaje}%</span>
-                          </div>
-                          <div className="h-1.5 rounded-full overflow-hidden mb-2.5" style={{ background: 'rgba(4,57,65,0.07)' }}>
-                            <div
-                              className="h-full rounded-full transition-all duration-700"
-                              style={{ width: `${p.porcentaje}%`, background: `linear-gradient(90deg,${ta},${ta}cc)` }}
-                            />
-                          </div>
-                          <div className="flex items-center justify-between mb-2.5">
-                            <p className="text-[11px]" style={{ color: '#94a3b8' }}>
-                              Módulo {mIdx + 1} de {modulosLXP.length} · U{mIdx + 1} en curso
-                            </p>
-                            <button
-                              onClick={() => navigate(`/taller/${slug}`)}
-                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all"
-                              style={{ background: 'transparent', color: ta, border: `1.5px solid ${ta}55` }}
-                              onMouseEnter={e => (e.currentTarget.style.background = `${ta}12`)}
-                              onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-                            >
-                              Continuar <ArrowRight size={11} />
-                            </button>
-                          </div>
-                          {prox && (
-                            <div
-                              className="flex items-center gap-2 px-3 py-2 rounded-xl"
-                              style={{ background: `${ta}08`, border: `1px solid ${ta}22` }}
-                            >
-                              <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ta }} />
-                              <p className="text-[11px] font-medium truncate" style={{ color: 'rgba(4,57,65,0.6)' }}>
-                                Próximo: {prox.titulo} · {formatFechaSesion(prox.fecha)}
-                              </p>
-                            </div>
-                          )}
-                          {!prox && mod && (
-                            <div
-                              className="flex items-center gap-2 px-3 py-2 rounded-xl"
-                              style={{ background: `${ta}08`, border: `1px solid ${ta}22` }}
-                            >
-                              <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ta }} />
-                              <p className="text-[11px] font-medium truncate" style={{ color: 'rgba(4,57,65,0.6)' }}>
-                                {mod.nombre}
-                              </p>
-                            </div>
-                          )}
-                        </div>
+            <style>{`@media(min-width:640px){.pc{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}}`}</style>
+            <div className="pc space-y-4 sm:space-y-0">
+              {tallerSlugsAccesibles.length > 0 ? (
+                tallerSlugsAccesibles.map(slug => {
+                  const t    = talleresConfig.find(x => x.slug === slug)
+                  if (!t) return null
+                  const ta   = TALLER_ACCENTS[slug] ?? '#02d47e'
+                  const p    = getTallerProgreso(slug)
+                  const mIdx = Math.min(Math.floor((p.porcentaje / 100) * modulosLXP.length), modulosLXP.length - 1)
+                  const mod  = modulosLXP[mIdx]
+                  const prox = getProximaSesion(slug)
+                  return (
+                    <div
+                      key={slug}
+                      className="rounded-2xl overflow-hidden"
+                      style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 10px rgba(4,57,65,0.07)' }}
+                    >
+                      <div className="relative overflow-hidden" style={{ height: 148, background: `linear-gradient(145deg,#043941 0%,${ta}55 100%)` }}>
+                        <div className="absolute inset-0 grama-pattern opacity-20" />
+                        <TallerHeroShapes slugs={[slug]} />
                       </div>
-                    )
-                  })
-                ) : (
-                  <div className="rounded-2xl p-8 text-center" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}>
-                    <p className="text-sm font-bold mb-1" style={{ color: '#043941' }}>Sin taller asignado</p>
-                    <p className="text-xs" style={{ color: '#94a3b8' }}>Contacta con tu coordinador UGEL.</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Agenda */}
-              {tallerSlugsAccesibles.length > 0 && (
-                <div className="mt-5 xl:mt-0" style={{ gridArea: 'calendar' }}>
-                  <CalendarioSidebar
-                    tallerSlugs={tallerSlugsAccesibles}
-                    accent={primaryAccent}
-                    maxSesiones={Math.max(2, tallerSlugsAccesibles.length * 2)}
-                  />
+                      <div className="px-4 py-4">
+                        <p className="text-[10px] font-extrabold uppercase tracking-widest mb-0.5" style={{ color: ta }}>
+                          Taller EPT · {t.nombre}
+                        </p>
+                        <h3 className="text-base font-black mb-0.5" style={{ color: '#043941', letterSpacing: '-0.02em' }}>
+                          {t.nombreCorto ?? t.nombre}
+                        </h3>
+                        <p className="text-xs mb-2.5" style={{ color: '#94a3b8' }}>
+                          {modulosLXP.length} módulos · 150 horas de formación
+                        </p>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs" style={{ color: 'rgba(4,57,65,0.5)' }}>Tu avance</span>
+                          <span className="text-sm font-black" style={{ color: ta }}>{p.porcentaje}%</span>
+                        </div>
+                        <div className="h-1.5 rounded-full overflow-hidden mb-2.5" style={{ background: 'rgba(4,57,65,0.07)' }}>
+                          <div className="h-full rounded-full transition-all duration-700" style={{ width: `${p.porcentaje}%`, background: `linear-gradient(90deg,${ta},${ta}cc)` }} />
+                        </div>
+                        <div className="flex items-center justify-between mb-2.5">
+                          <p className="text-[11px]" style={{ color: '#94a3b8' }}>
+                            Módulo {mIdx + 1} de {modulosLXP.length} · U{mIdx + 1} en curso
+                          </p>
+                          <button
+                            onClick={() => navigate(`/taller/${slug}`)}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all"
+                            style={{ background: 'transparent', color: ta, border: `1.5px solid ${ta}55` }}
+                            onMouseEnter={e => (e.currentTarget.style.background = `${ta}12`)}
+                            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                          >
+                            Continuar <ArrowRight size={11} />
+                          </button>
+                        </div>
+                        {prox ? (
+                          <div className="flex items-center gap-2 px-3 py-2 rounded-xl" style={{ background: `${ta}08`, border: `1px solid ${ta}22` }}>
+                            <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ta }} />
+                            <p className="text-[11px] font-medium truncate" style={{ color: 'rgba(4,57,65,0.6)' }}>
+                              Próximo: {prox.titulo} · {formatFechaSesion(prox.fecha)}
+                            </p>
+                          </div>
+                        ) : mod ? (
+                          <div className="flex items-center gap-2 px-3 py-2 rounded-xl" style={{ background: `${ta}08`, border: `1px solid ${ta}22` }}>
+                            <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ta }} />
+                            <p className="text-[11px] font-medium truncate" style={{ color: 'rgba(4,57,65,0.6)' }}>{mod.nombre}</p>
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                  )
+                })
+              ) : (
+                <div className="rounded-2xl p-8 text-center" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)' }}>
+                  <p className="text-sm font-bold mb-1" style={{ color: '#043941' }}>Sin taller asignado</p>
+                  <p className="text-xs" style={{ color: '#94a3b8' }}>Contacta con tu coordinador UGEL.</p>
                 </div>
               )}
             </div>
           </div>
 
-          {/* ── Row 2: Módulos en curso + Mis logros ─────────────────────── */}
-          <style>{`@media(min-width:1024px){.pr2{display:grid;grid-template-columns:1fr 340px;gap:20px}}`}</style>
-          <div className="pr2 space-y-4 lg:space-y-0">
-
-            {/* Módulos en curso */}
-            <div className="rounded-2xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.04)', gridArea: 'modulos' }}>
-              <div className="px-5 pt-4 pb-3 border-b flex items-start justify-between" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
-                <div>
-                  <p className="text-sm font-black" style={{ color: '#043941' }}>Módulos en curso</p>
-                  <p className="text-[11px]" style={{ color: '#94a3b8' }}>
-                    Actividad reciente entre tus {tallerSlugsAccesibles.length} taller{tallerSlugsAccesibles.length !== 1 ? 'es' : ''}
-                  </p>
-                </div>
-                <button
-                  className="text-xs font-bold flex items-center gap-1 mt-0.5 transition-opacity hover:opacity-70"
-                  style={{ color: primaryAccent }}
-                  onClick={() => tallerSlugsAccesibles[0] && navigate(`/taller/${tallerSlugsAccesibles[0]}/ruta`)}
-                >
-                  Ver todos <ArrowRight size={11} />
-                </button>
-              </div>
-              <div className="divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
-                {sesionesParaLista.length > 0 ? sesionesParaLista.map(ses => {
-                  const ok  = ses.status === 'completado'
-                  const cur = ses.status === 'en-curso'
-                  return (
-                    <div key={ses.id} className="flex items-center gap-3 px-5 py-3.5">
-                      <div
-                        className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                        style={{
-                          background: ok  ? 'rgba(2,212,126,0.12)' : cur ? '#043941' : 'rgba(4,57,65,0.05)',
-                          border:     ok  ? '1px solid rgba(2,212,126,0.28)' : cur ? 'none' : '1px solid rgba(4,57,65,0.1)',
-                        }}
-                      >
-                        {ok  && <CheckCircle2 size={16} style={{ color: '#02d47e' }} />}
-                        {cur && <PlayCircle   size={16} style={{ color: '#02d47e' }} />}
-                        {!ok && !cur && <Lock size={14} style={{ color: 'rgba(4,57,65,0.28)' }} />}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-bold truncate" style={{ color: '#043941' }}>{ses.titulo}</p>
-                        <div className="flex items-center gap-1.5 mt-0.5">
-                          <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: ses.accent }} />
-                          <p className="text-[10px]" style={{ color: '#94a3b8' }}>
-                            {ses.tallerNombre} · {ses.unidad} {cur ? '— en curso' : ''}
-                          </p>
-                        </div>
-                      </div>
-                      <span
-                        className="text-[10px] font-extrabold px-2.5 py-1 rounded-full flex-shrink-0"
-                        style={{
-                          background: ok ? 'rgba(2,212,126,0.12)' : cur ? `${ses.accent}18` : 'rgba(4,57,65,0.06)',
-                          color:      ok ? '#02a05a'              : cur ? ses.accent        : 'rgba(4,57,65,0.35)',
-                        }}
-                      >
-                        {ok ? 'Completado' : cur ? 'En curso' : 'Pendiente'}
-                      </span>
-                    </div>
-                  )
-                }) : (
-                  <div className="px-5 py-8 text-center">
-                    <p className="text-xs" style={{ color: '#94a3b8' }}>Completa actividades para ver tu progreso aquí.</p>
-                  </div>
-                )}
-              </div>
+          {/* ── 2. Calendario (grid area: calendar) ──────────────────────── */}
+          {tallerSlugsAccesibles.length > 0 && (
+            <div style={{ gridArea: 'calendar' }}>
+              <CalendarioSidebar
+                tallerSlugs={tallerSlugsAccesibles}
+                accent={primaryAccent}
+                maxSesiones={Math.max(2, tallerSlugsAccesibles.length * 2)}
+              />
             </div>
+          )}
 
-            {/* Mis logros */}
-            <div className="rounded-2xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.04)', gridArea: 'logros' }}>
-              <div className="px-5 pt-4 pb-3 border-b flex items-start justify-between" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
-                <div>
-                  <p className="text-sm font-black" style={{ color: '#043941' }}>Mis logros</p>
-                  <p className="text-[11px]" style={{ color: '#94a3b8' }}>
-                    {logros.filter(l => l.obtenido).length} de {logros.length} obtenidos
-                  </p>
-                </div>
-                <button className="text-xs font-bold flex items-center gap-1 mt-0.5 transition-opacity hover:opacity-70" style={{ color: primaryAccent }}>
-                  Ver todos <ArrowRight size={11} />
-                </button>
+          {/* ── 3. Módulos en curso (grid area: modulos) ─────────────────── */}
+          <div
+            className="rounded-2xl overflow-hidden"
+            style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.04)', gridArea: 'modulos' }}
+          >
+            <div className="px-5 pt-4 pb-3 border-b flex items-start justify-between" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
+              <div>
+                <p className="text-sm font-black" style={{ color: '#043941' }}>Módulos en curso</p>
+                <p className="text-[11px]" style={{ color: '#94a3b8' }}>
+                  Actividad reciente entre tus {tallerSlugsAccesibles.length} taller{tallerSlugsAccesibles.length !== 1 ? 'es' : ''}
+                </p>
               </div>
-              <div className="p-4 grid grid-cols-3 gap-3">
-                {logros.map(logro => (
-                  <div
-                    key={logro.titulo}
-                    className="rounded-xl p-3 flex flex-col items-center gap-1.5 text-center"
-                    style={{
-                      background: logro.obtenido ? `${logro.color}12` : 'rgba(4,57,65,0.03)',
-                      border: `1px solid ${logro.obtenido ? logro.color + '30' : 'rgba(4,57,65,0.07)'}`,
-                    }}
-                  >
+              <button
+                className="text-xs font-bold flex items-center gap-1 mt-0.5 transition-opacity hover:opacity-70"
+                style={{ color: primaryAccent }}
+                onClick={() => tallerSlugsAccesibles[0] && navigate(`/taller/${tallerSlugsAccesibles[0]}/ruta`)}
+              >
+                Ver todos <ArrowRight size={11} />
+              </button>
+            </div>
+            <div className="divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
+              {sesionesParaLista.length > 0 ? sesionesParaLista.map(ses => {
+                const ok  = ses.status === 'completado'
+                const cur = ses.status === 'en-curso'
+                return (
+                  <div key={ses.id} className="flex items-center gap-3 px-5 py-3.5">
                     <div
-                      className="h-10 w-10 rounded-xl flex items-center justify-center"
-                      style={{ background: logro.obtenido ? `${logro.color}22` : 'rgba(4,57,65,0.06)' }}
+                      className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{
+                        background: ok  ? 'rgba(2,212,126,0.12)' : cur ? '#043941' : 'rgba(4,57,65,0.05)',
+                        border:     ok  ? '1px solid rgba(2,212,126,0.28)' : cur ? 'none' : '1px solid rgba(4,57,65,0.1)',
+                      }}
                     >
-                      <logro.Icon size={20} style={{ color: logro.obtenido ? logro.color : '#94a3b8' }} />
+                      {ok  && <CheckCircle2 size={16} style={{ color: '#02d47e' }} />}
+                      {cur && <PlayCircle   size={16} style={{ color: '#02d47e' }} />}
+                      {!ok && !cur && <Lock size={14} style={{ color: 'rgba(4,57,65,0.28)' }} />}
                     </div>
-                    <p className="text-[11px] font-black leading-tight" style={{ color: logro.obtenido ? '#043941' : '#94a3b8' }}>
-                      {logro.titulo}
-                    </p>
-                    <p className="text-[9px] font-medium leading-tight" style={{ color: logro.obtenido ? logro.color : '#b0c4ca' }}>
-                      {logro.subtitulo}
-                    </p>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-bold truncate" style={{ color: '#043941' }}>{ses.titulo}</p>
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: ses.accent }} />
+                        <p className="text-[10px]" style={{ color: '#94a3b8' }}>
+                          {ses.tallerNombre} · {ses.unidad}{cur ? ' — en curso' : ''}
+                        </p>
+                      </div>
+                    </div>
+                    <span
+                      className="text-[10px] font-extrabold px-2.5 py-1 rounded-full flex-shrink-0"
+                      style={{
+                        background: ok ? 'rgba(2,212,126,0.12)' : cur ? `${ses.accent}18` : 'rgba(4,57,65,0.06)',
+                        color:      ok ? '#02a05a'              : cur ? ses.accent        : 'rgba(4,57,65,0.35)',
+                      }}
+                    >
+                      {ok ? 'Completado' : cur ? 'En curso' : 'Pendiente'}
+                    </span>
                   </div>
-                ))}
-              </div>
+                )
+              }) : (
+                <div className="px-5 py-8 text-center">
+                  <p className="text-xs" style={{ color: '#94a3b8' }}>Completa actividades para ver tu progreso aquí.</p>
+                </div>
+              )}
             </div>
+          </div>
 
+          {/* ── 4. Mis logros (grid area: logros) ────────────────────────── */}
+          <div
+            className="rounded-2xl overflow-hidden"
+            style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.04)', gridArea: 'logros' }}
+          >
+            <div className="px-5 pt-4 pb-3 border-b flex items-start justify-between" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
+              <div>
+                <p className="text-sm font-black" style={{ color: '#043941' }}>Mis logros</p>
+                <p className="text-[11px]" style={{ color: '#94a3b8' }}>
+                  {logros.filter(l => l.obtenido).length} de {logros.length} obtenidos
+                </p>
+              </div>
+              <button className="text-xs font-bold flex items-center gap-1 mt-0.5 transition-opacity hover:opacity-70" style={{ color: primaryAccent }}>
+                Ver todos <ArrowRight size={11} />
+              </button>
+            </div>
+            <div className="p-4 grid grid-cols-3 gap-3">
+              {logros.map(logro => (
+                <div
+                  key={logro.titulo}
+                  className="rounded-xl p-3 flex flex-col items-center gap-1.5 text-center"
+                  style={{
+                    background: logro.obtenido ? `${logro.color}12` : 'rgba(4,57,65,0.03)',
+                    border: `1px solid ${logro.obtenido ? logro.color + '30' : 'rgba(4,57,65,0.07)'}`,
+                  }}
+                >
+                  <div className="h-10 w-10 rounded-xl flex items-center justify-center" style={{ background: logro.obtenido ? `${logro.color}22` : 'rgba(4,57,65,0.06)' }}>
+                    <logro.Icon size={20} style={{ color: logro.obtenido ? logro.color : '#94a3b8' }} />
+                  </div>
+                  <p className="text-[11px] font-black leading-tight" style={{ color: logro.obtenido ? '#043941' : '#94a3b8' }}>
+                    {logro.titulo}
+                  </p>
+                  <p className="text-[9px] font-medium leading-tight" style={{ color: logro.obtenido ? logro.color : '#b0c4ca' }}>
+                    {logro.subtitulo}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
         </div>
