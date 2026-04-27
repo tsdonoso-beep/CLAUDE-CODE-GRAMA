@@ -720,7 +720,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
         {/* Logo */}
         <div style={{ padding: '1.25rem 1.1rem .9rem', borderBottom: '1px solid rgba(4,57,65,0.12)' }}>
           <GramaLogo variant="light" size="sm" />
-          <p style={{ fontSize: '.56rem', color: 'rgba(4,57,65,0.6)', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', marginTop: '.45rem' }}>Panel de administración</p>
+          <p style={{ fontSize: '.56rem', color: 'rgba(255,255,255,0.6)', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', marginTop: '.45rem' }}>Panel de administración</p>
         </div>
 
         {/* Nav */}
@@ -797,7 +797,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
               {([
                 { label: 'Docentes activos',      value: docentes.length,           icon: Users,         color: '#02d47e' },
                 { label: 'Talleres',              value: talleresConfig.length,      icon: BookOpen,      color: '#60a5fa' },
-                { label: 'Solicitudes pendientes',value: solicitudesPendientes,      icon: Inbox,         color: '#f59e0b' },
+                { label: 'Solicitudes pendientes',value: solicitudesPendientes,      icon: Inbox,         color: '#043941' },
                 { label: 'Consultas pendientes',  value: consultasPendientes,        icon: MessageCircle, color: '#c084fc' },
               ] as { label: string; value: number; icon: React.ElementType; color: string }[]).map(s => (
                 <div key={s.label} style={{ background: '#ffffff', borderRadius: 16, padding: '1.2rem', border: '1px solid rgba(255,255,255,0.07)' }}>
@@ -928,7 +928,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
               <div>
                 <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#043941', marginBottom: '.25rem' }}>Solicitudes de acceso</h3>
                 <p style={{ fontSize: '.72rem', color: 'rgba(4,57,65,0.6)' }}>
-                  {solicitudesPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{solicitudesPendientes} pendientes</span> : 'Sin pendientes'} · {solicitudes.length} en total
+                  {solicitudesPendientes > 0 ? <span style={{ color: '#043941', fontWeight: 700 }}>{solicitudesPendientes} pendientes</span> : 'Sin pendientes'} · {solicitudes.length} en total
                 </p>
               </div>
               <button onClick={fetchSolicitudes} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: '#ffffff', color: 'rgba(4,57,65,0.75)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
@@ -959,9 +959,9 @@ Equipo GRAMA · Programa TSF-MINEDU`
             {/* Aviso contraseñas sensibles */}
             <div className="flex items-start gap-3 px-5 py-4 rounded-2xl mb-6"
               style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
-              <AlertTriangle size={16} style={{ color: '#f59e0b', flexShrink: 0, marginTop: 1 }} />
+              <AlertTriangle size={16} style={{ color: '#043941', flexShrink: 0, marginTop: 1 }} />
               <div>
-                <p className="text-sm font-bold" style={{ color: '#f59e0b' }}>Información sensible</p>
+                <p className="text-sm font-bold" style={{ color: '#043941' }}>Información sensible</p>
                 <p className="text-xs mt-0.5" style={{ color: '#043941' }}>
                   Las contraseñas se muestran para que puedas hacer respaldo. Mantenlas en privado.
                 </p>
@@ -1001,7 +1001,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                             <p className="font-bold text-white">{sol.nombre}</p>
                             <span className="text-xs px-2 py-0.5 rounded-lg font-bold"
                               style={sol.estado === 'pendiente'
-                                ? { background: 'rgba(245,158,11,0.15)', color: '#f59e0b' }
+                                ? { background: 'rgba(245,158,11,0.15)', color: '#043941' }
                                 : sol.estado === 'aprobado'
                                 ? { background: 'rgba(2,212,126,0.15)', color: '#02d47e' }
                                 : { background: 'rgba(239,68,68,0.15)', color: '#ef4444' }}>
@@ -1025,7 +1025,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                               <div className="flex items-center gap-2 px-3 py-2 rounded-lg"
                                 style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
                                 <span className="text-xs" style={{ color: '#043941' }}>Contraseña:</span>
-                                <code className="flex-1 text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>{password}</code>
+                                <code className="flex-1 text-sm font-bold" style={{ color: '#043941', letterSpacing: '0.05em' }}>{password}</code>
                                 <button
                                   onClick={() => {
                                     copiarAlPortapapeles(password)
@@ -1033,7 +1033,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                                     setTimeout(() => setCopiadoId(null), 1500)
                                   }}
                                   className="flex items-center gap-1 text-xs px-2 py-0.5 rounded font-semibold transition-all"
-                                  style={{ background: 'rgba(245,158,11,0.2)', color: '#f59e0b' }}>
+                                  style={{ background: 'rgba(245,158,11,0.2)', color: '#043941' }}>
                                   {copiadoId === sol.id ? <><CheckCircle size={11} /> Copiado</> : <><Copy size={11} /> Copiar</>}
                                 </button>
                               </div>
@@ -1089,7 +1089,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 <div>
                   <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#043941', marginBottom: '.25rem' }}>Consultas de docentes</h3>
                   <p style={{ fontSize: '.72rem', color: 'rgba(4,57,65,0.6)' }}>
-                    {consultasPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{consultasPendientes} sin responder</span> : 'Todas respondidas'} · {consultasAdmin.length} en total
+                    {consultasPendientes > 0 ? <span style={{ color: '#043941', fontWeight: 700 }}>{consultasPendientes} sin responder</span> : 'Todas respondidas'} · {consultasAdmin.length} en total
                   </p>
                 </div>
                 <button onClick={fetchConsultasAdmin} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: '#ffffff', color: 'rgba(4,57,65,0.75)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
@@ -1145,7 +1145,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                               <span className="text-xs px-2 py-0.5 rounded-lg font-bold"
                                 style={respondida
                                   ? { background: 'rgba(2,212,126,0.15)', color: '#02d47e' }
-                                  : { background: 'rgba(245,158,11,0.15)', color: '#f59e0b' }}>
+                                  : { background: 'rgba(245,158,11,0.15)', color: '#043941' }}>
                                 {respondida ? 'Respondida' : 'Pendiente'}
                               </span>
                             </div>
@@ -1233,9 +1233,9 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     onChange={e => { setFiltroAnalyticsDocente(e.target.value); setBusquedaDocente('') }}
                     className="px-3 py-2 rounded-xl border-2 text-sm outline-none min-w-[260px]"
                     style={{ borderColor: filtroAnalyticsDocente ? '#02d47e' : 'rgba(255,255,255,0.75)', background: '#ffffff', color: '#043941' }}>
-                    <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todos los docentes (global)</option>
+                    <option value="" style={{ background: '#0d2b31', color: '#043941' }}>Todos los docentes (global)</option>
                     {docentes.map(d => (
-                      <option key={d.id} value={d.id} style={{ background: '#0d2b31', color: '#ffffff' }}>{d.nombre_completo} — {d.email}</option>
+                      <option key={d.id} value={d.id} style={{ background: '#0d2b31', color: '#043941' }}>{d.nombre_completo} — {d.email}</option>
                     ))}
                   </select>
                   {filtroAnalyticsDocente && (
@@ -1387,7 +1387,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                             {/* tags */}
                             <div style={{ display: 'flex', gap: '.25rem', flexWrap: 'wrap' }}>
                               {q.bloqueante && <span style={{ fontSize: '.55rem', fontWeight: 800, background: 'rgba(239,68,68,0.15)', color: '#ef4444', padding: '.1rem .3rem', borderRadius: 4, letterSpacing: '.04em' }}>BLOQUEA</span>}
-                              {q.puntajeMinimo && <span style={{ fontSize: '.55rem', fontWeight: 800, background: 'rgba(245,158,11,0.15)', color: '#f59e0b', padding: '.1rem .3rem', borderRadius: 4 }}>MÍN {q.puntajeMinimo}%</span>}
+                              {q.puntajeMinimo && <span style={{ fontSize: '.55rem', fontWeight: 800, background: 'rgba(245,158,11,0.15)', color: '#043941', padding: '.1rem .3rem', borderRadius: 4 }}>MÍN {q.puntajeMinimo}%</span>}
                             </div>
                           </div>
                         )
@@ -1411,7 +1411,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     { label: 'Inicios de sesión', value: analytics.totalLogins, Icon: LogIn, color: '#02d47e' },
                     { label: 'Visitas al repositorio', value: analytics.navegacion.filter(n => n.pagina === 'repositorio').reduce((a, n) => a + n.count, 0), Icon: Globe, color: '#22d3ee' },
                     { label: 'Manuales abiertos', value: analytics.contenidos.filter(c => c.tipo_evento === 'apertura_manual').reduce((a, c) => a + c.count, 0), Icon: BookOpen, color: '#a78bfa' },
-                    { label: 'Videos reproducidos', value: analytics.contenidos.filter(c => c.tipo_evento === 'reproduccion_video').reduce((a, c) => a + c.count, 0), Icon: Video, color: '#f59e0b' },
+                    { label: 'Videos reproducidos', value: analytics.contenidos.filter(c => c.tipo_evento === 'reproduccion_video').reduce((a, c) => a + c.count, 0), Icon: Video, color: '#043941' },
                   ].map(({ label, value, Icon, color }) => (
                     <div key={label} className="rounded-2xl p-4" style={{ background: '#ffffff' }}>
                       <div className="flex items-center gap-2 mb-1">
@@ -1561,7 +1561,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                             className="hover:bg-white/[0.03]"
                             onClick={() => setDocenteDetalle(d)}>
                             {/* avatar */}
-                            <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(245,158,11,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.65rem', fontWeight: 800, color: '#f59e0b', flexShrink: 0 }}>
+                            <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(245,158,11,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.65rem', fontWeight: 800, color: '#043941', flexShrink: 0 }}>
                               {initials}
                             </div>
                             {/* name + email */}
@@ -1654,16 +1654,16 @@ Equipo GRAMA · Programa TSF-MINEDU`
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex gap-3 flex-wrap">
               <select value={filtroIE} onChange={e => setFiltroIE(e.target.value)} {...selectStyle}>
-                <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todas las IEs</option>
+                <option value="" style={{ background: '#0d2b31', color: '#043941' }}>Todas las IEs</option>
                 {INSTITUCIONES_EDUCATIVAS.map(ie => (
-                  <option key={ie.id} value={String(ie.id)} style={{ background: '#0d2b31', color: '#ffffff' }}>{ie.nombre}</option>
+                  <option key={ie.id} value={String(ie.id)} style={{ background: '#0d2b31', color: '#043941' }}>{ie.nombre}</option>
                 ))}
               </select>
               <select value={filtroTaller} onChange={e => setFiltroTaller(e.target.value)} {...selectStyle}>
-                <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todos los talleres</option>
+                <option value="" style={{ background: '#0d2b31', color: '#043941' }}>Todos los talleres</option>
                 {talleresEnUso.map(slug => {
                   const t = talleresConfig.find(t => t.slug === slug)
-                  return <option key={slug} value={slug!} style={{ background: '#0d2b31', color: '#ffffff' }}>{t?.nombre ?? slug}</option>
+                  return <option key={slug} value={slug!} style={{ background: '#0d2b31', color: '#043941' }}>{t?.nombre ?? slug}</option>
                 })}
               </select>
             </div>
@@ -1833,11 +1833,11 @@ Equipo GRAMA · Programa TSF-MINEDU`
                       <div className="flex items-center justify-between">
                         <span className="text-xs" style={{ color: '#043941' }}>Contraseña</span>
                         <div className="flex items-center gap-2">
-                          <code className="text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>{usuarioCreadoOk.password}</code>
+                          <code className="text-sm font-bold" style={{ color: '#043941', letterSpacing: '0.05em' }}>{usuarioCreadoOk.password}</code>
                           <button
                             onClick={() => copiarAlPortapapeles(usuarioCreadoOk.password)}
                             className="text-xs px-2 py-0.5 rounded font-semibold"
-                            style={{ background: 'rgba(245,158,11,0.2)', color: '#f59e0b' }}>
+                            style={{ background: 'rgba(245,158,11,0.2)', color: '#043941' }}>
                             <Copy size={11} />
                           </button>
                         </div>
@@ -1883,10 +1883,10 @@ Equipo GRAMA · Programa TSF-MINEDU`
                       <div className="flex gap-2">
                         <input value={nuevoPassword} onChange={e => setNuevoPassword(e.target.value)}
                           className="flex-1 px-4 py-2.5 rounded-xl text-sm outline-none font-mono"
-                          style={{ background: '#ffffff', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.25)', letterSpacing: '0.05em' }} />
+                          style={{ background: '#ffffff', color: '#043941', border: '1px solid rgba(245,158,11,0.25)', letterSpacing: '0.05em' }} />
                         <button onClick={() => setNuevoPassword(generatePassword())}
                           className="px-3 py-2 rounded-xl text-xs font-semibold shrink-0"
-                          style={{ background: 'rgba(245,158,11,0.12)', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.2)' }}>
+                          style={{ background: 'rgba(245,158,11,0.12)', color: '#043941', border: '1px solid rgba(245,158,11,0.2)' }}>
                           Regenerar
                         </button>
                       </div>
@@ -2080,7 +2080,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         <p className="text-xs font-bold" style={{ color: '#043941' }}>
                           Talleres asignados
                           {hayPendientes && (
-                            <span className="ml-2 text-[10px] font-extrabold" style={{ color: '#f59e0b' }}>
+                            <span className="ml-2 text-[10px] font-extrabold" style={{ color: '#043941' }}>
                               · cambios sin guardar
                             </span>
                           )}
@@ -2181,13 +2181,13 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         <div className="flex items-center gap-2 px-3 py-2 rounded-lg"
                           style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
                           <span className="text-xs" style={{ color: '#043941' }}>Nueva contraseña:</span>
-                          <code className="flex-1 text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>
+                          <code className="flex-1 text-sm font-bold" style={{ color: '#043941', letterSpacing: '0.05em' }}>
                             {passwordsReset[d.id]}
                           </code>
                           <button
                             onClick={() => copiarAlPortapapeles(passwordsReset[d.id])}
                             className="shrink-0 p-1 rounded opacity-60 hover:opacity-100"
-                            style={{ color: '#f59e0b' }}>
+                            style={{ color: '#043941' }}>
                             <Copy size={12} />
                           </button>
                         </div>
