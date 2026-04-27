@@ -1153,53 +1153,167 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ══ TALLERES ════════════════════════════════════════════════════════ */}
+      {/* ══ TALLERES (role-aware) ════════════════════════════════════════════ */}
       <section id="talleres" style={{ background: '#f0fdf6', padding: '5rem 1.5rem', position:'relative', overflow:'hidden' }}>
 
-        {/* Shapes — mismo lenguaje que hero */}
+        {/* Shapes */}
         <div style={{ position:'absolute', top:-70, left:'8%', width:108, height:260, background:'#f8ee91', borderRadius:'0 0 54px 54px', opacity:.32, pointerEvents:'none', animation:'heroFb 13s ease-in-out infinite' }} />
         <div style={{ position:'absolute', bottom:-100, right:'6%', width:300, height:300, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.28, pointerEvents:'none', animation:'heroFd 16s ease-in-out infinite 2s' }} />
-        <div style={{ position:'absolute', top:'28%', right:-80, width:200, height:160, background:'#043941', clipPath:'polygon(100% 50%,0% 0%,0% 100%)', opacity:.06, pointerEvents:'none', animation:'heroFc 15s ease-in-out infinite 1s' }} />
-        <div style={{ position:'absolute', bottom:'18%', left:-80, width:180, height:145, background:'#b8edd0', clipPath:'polygon(0% 50%,100% 0%,100% 100%)', opacity:.35, pointerEvents:'none', animation:'heroFe 14s ease-in-out infinite .5s' }} />
         <div style={{ position:'absolute', top:'14%', left:'5%', width:52, height:52, background:'#02d47e', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 24s linear infinite', pointerEvents:'none', opacity:.45 }} />
 
-          {/* Header — centrado con maxWidth */}
-          <div
-            ref={talleresHeaderReveal.ref}
-            style={{ textAlign:'center', maxWidth:600, margin:'0 auto 3rem', opacity: talleresHeaderReveal.visible ? 1 : 0, transform: talleresHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
-          >
-            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
+        <div style={{ maxWidth:1100, margin:'0 auto' }}>
+
+          {/* Header dinámico */}
+          <div style={{ textAlign:'center', maxWidth:640, margin:'0 auto 3.2rem' }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:14 }}>
               <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
-              Especialidades disponibles
+              {activeTab === 'docente' && 'Especialidades disponibles'}
+              {activeTab === 'alumno'  && 'Proyectos en desarrollo'}
+              {activeTab === 'director' && 'Estado por especialidad'}
             </span>
-            <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.1, color:'#043941', margin:'0 0 .75rem' }}>
-              {talleresConfig.length} especialidades <span style={{ color:'#02d47e' }}>técnicas</span>
+            <h2 style={{ fontSize:'clamp(1.8rem,3.5vw,2.6rem)', fontWeight:900, lineHeight:1.1, color:'#043941', margin:'0 0 .75rem' }}>
+              {activeTab === 'docente' && <>{talleresConfig.length} especialidades <span style={{ color:'#02d47e' }}>técnicas</span></>}
+              {activeTab === 'alumno'  && <>Proyectos <span style={{ color:'#02d47e' }}>para alumnos</span></>}
+              {activeTab === 'director' && <>Seguimiento <span style={{ color:'#f59e0b' }}>por taller</span></>}
             </h2>
             <p style={{ fontSize:'.875rem', color:'rgba(4,57,65,.5)', lineHeight:1.75, margin:0 }}>
-              Haz clic en cualquier taller para ver su ruta de aprendizaje y equipamiento.
+              {activeTab === 'docente' && 'Haz clic en cualquier taller para ver su ruta de aprendizaje y equipamiento.'}
+              {activeTab === 'alumno'  && 'Kits de proyectos guiados por tu docente. Más especialidades en camino.'}
+              {activeTab === 'director' && 'Vista global del avance de formación docente en tu institución.'}
             </p>
           </div>
 
-          {/* Carrusel — full width, fuera del maxWidth para usar toda la pantalla */}
-          <div
-            ref={talleresReveal.ref}
-            style={{ margin:'0 -1.5rem 3rem', opacity: talleresReveal.visible ? 1 : 0, transform: talleresReveal.visible ? 'none' : 'translateY(24px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
-          >
-            <TalleresCarousel onOpenModal={openModal} />
-          </div>
+          {/* ── DOCENTE: grid de talleres ── */}
+          {activeTab === 'docente' && (
+            <div style={{ animation:'fadeInUp .4s ease both' }}>
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(200px, 1fr))', gap:16, marginBottom:'2.5rem' }}>
+                {talleresConfig.map((t, i) => (
+                  <div
+                    key={t.slug}
+                    onClick={() => openModal(i)}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform='translateY(-6px)'; (e.currentTarget as HTMLElement).style.boxShadow='0 16px 40px rgba(4,57,65,.15)' }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform='none'; (e.currentTarget as HTMLElement).style.boxShadow='0 4px 16px rgba(4,57,65,.07)' }}
+                    style={{ borderRadius:16, overflow:'hidden', background:'#fff', cursor:'pointer', boxShadow:'0 4px 16px rgba(4,57,65,.07)', transition:'transform .25s ease, box-shadow .25s ease' }}
+                  >
+                    {/* Franja color */}
+                    <div style={{ height:4, background:`hsl(${t.color})` }} />
+                    {/* Imagen */}
+                    <div style={{ height:130, position:'relative', overflow:'hidden' }}>
+                      <img src={t.imagen} alt={t.nombre} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(.72) saturate(.85)' }} />
+                      <div style={{ position:'absolute', inset:0, background:'linear-gradient(170deg, rgba(4,57,65,.04) 0%, rgba(4,57,65,.75) 100%)' }} />
+                      <div style={{ position:'absolute', top:10, left:10, display:'inline-flex', alignItems:'center', gap:5, background:'rgba(4,57,65,.7)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,.14)', borderRadius:100, padding:'.22rem .65rem' }}>
+                        <span style={{ width:5, height:5, borderRadius:'50%', background:'#02d47e', display:'inline-block' }} />
+                        <span style={{ fontSize:'.58rem', fontWeight:800, letterSpacing:'.12em', color:'rgba(255,255,255,.92)' }}>T{String(t.numero).padStart(2,'0')}</span>
+                      </div>
+                      <h3 style={{ position:'absolute', bottom:10, left:12, right:12, margin:0, fontSize:'.82rem', fontWeight:900, color:'#fff', lineHeight:1.2 }}>{t.nombre}</h3>
+                    </div>
+                    {/* Footer */}
+                    <div style={{ padding:'10px 14px 12px', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+                      <span style={{ fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.45)' }}>7 módulos · 150h</span>
+                      <div style={{ width:24, height:24, borderRadius:'50%', background:`hsl(${t.color})`, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                        <ChevronRight size={11} color="#fff" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ textAlign:'center' }}>
+                <button
+                  onClick={goToApp}
+                  style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#02d47e', color:'#043941', fontSize:'.9rem', fontWeight:800, padding:'1rem 2.2rem', borderRadius:100, boxShadow:'0 6px 22px rgba(2,212,126,.4)', border:'none', cursor:'pointer', transition:'all .2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.boxShadow='0 10px 32px rgba(2,212,126,.55)'; e.currentTarget.style.transform='translateY(-2px)' }}
+                  onMouseLeave={e => { e.currentTarget.style.boxShadow='0 6px 22px rgba(2,212,126,.4)'; e.currentTarget.style.transform='none' }}
+                >
+                  Acceder a la plataforma completa <ArrowRight size={15} />
+                </button>
+              </div>
+            </div>
+          )}
 
-          {/* CTA */}
-          <div style={{ textAlign:'center' }}>
-            <button
-              onClick={goToApp}
-              style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#02d47e', color:'#043941', fontSize:'.9rem', fontWeight:800, padding:'1rem 2.2rem', borderRadius:100, boxShadow:'0 6px 22px rgba(2,212,126,.4)', border:'none', cursor:'pointer', transition:'box-shadow .2s ease, transform .2s ease' }}
-              onMouseEnter={e => { e.currentTarget.style.boxShadow='0 10px 32px rgba(2,212,126,.55)'; e.currentTarget.style.transform='translateY(-2px)' }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow='0 6px 22px rgba(2,212,126,.4)'; e.currentTarget.style.transform='none' }}
-            >
-              Acceder a la plataforma completa
-              <ArrowRight size={15} />
-            </button>
-          </div>
+          {/* ── ALUMNO: proyectos "en proceso" ── */}
+          {activeTab === 'alumno' && (
+            <div style={{ animation:'fadeInUp .4s ease both' }}>
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(300px, 1fr))', gap:20, marginBottom:'2.5rem', maxWidth:720, margin:'0 auto 2.5rem' }}>
+                {[
+                  { nombre:'Kit de Robótica', desc:'Introducción a robótica y automatización. Armado, programación y competencias con módulos Arduino.', color:'#d4c4fc', textColor:'#5b21b6', emoji:'🤖', modulos:4 },
+                  { nombre:'Kit de Matemáticas', desc:'Actividades prácticas para fortalecer razonamiento matemático con materiales manipulativos y retos.', color:'#fde68a', textColor:'#92400e', emoji:'📐', modulos:3 },
+                ].map(p => (
+                  <div key={p.nombre} style={{ borderRadius:20, overflow:'hidden', background:'#fff', boxShadow:'0 4px 20px rgba(4,57,65,.07)', border:`1px solid ${p.color}55` }}>
+                    {/* Header color */}
+                    <div style={{ background:`${p.color}33`, padding:'1.6rem', display:'flex', alignItems:'flex-start', justifyContent:'space-between', borderBottom:`1px solid ${p.color}44` }}>
+                      <div>
+                        <span style={{ fontSize:'2rem', display:'block', marginBottom:8 }}>{p.emoji}</span>
+                        <h3 style={{ margin:0, fontSize:'1.05rem', fontWeight:900, color:'#043941', lineHeight:1.2 }}>{p.nombre}</h3>
+                      </div>
+                      <span style={{ fontSize:'.65rem', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', background:p.color, color:p.textColor, padding:'.3rem .7rem', borderRadius:100, whiteSpace:'nowrap', flexShrink:0 }}>
+                        En proceso
+                      </span>
+                    </div>
+                    <div style={{ padding:'1.2rem 1.4rem 1.4rem' }}>
+                      <p style={{ fontSize:'.84rem', color:'rgba(4,57,65,.6)', lineHeight:1.7, margin:'0 0 1rem' }}>{p.desc}</p>
+                      <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+                        <div style={{ flex:1, height:6, borderRadius:100, background:'rgba(4,57,65,.07)', overflow:'hidden' }}>
+                          <div style={{ width:'35%', height:'100%', borderRadius:100, background:`linear-gradient(90deg, ${p.color}, ${p.color}bb)` }} />
+                        </div>
+                        <span style={{ fontSize:'.7rem', fontWeight:700, color:'rgba(4,57,65,.45)', whiteSpace:'nowrap' }}>{p.modulos} mód. · Beta</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ textAlign:'center' }}>
+                <p style={{ fontSize:'.82rem', color:'rgba(4,57,65,.4)', margin:'0 0 .8rem' }}>Más kits en desarrollo — disponibles en 2025</p>
+                <button
+                  disabled
+                  style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(4,57,65,.07)', color:'rgba(4,57,65,.3)', fontSize:'.88rem', fontWeight:800, padding:'.9rem 2rem', borderRadius:100, border:'1.5px solid rgba(4,57,65,.1)', cursor:'not-allowed' }}
+                >
+                  Próximamente para alumnos
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ── DIRECTOR: semáforo por taller ── */}
+          {activeTab === 'director' && (
+            <div style={{ animation:'fadeInUp .4s ease both' }}>
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(280px, 1fr))', gap:14, marginBottom:'2.5rem' }}>
+                {talleresConfig.map((t, i) => {
+                  const semaforos = ['verde','verde','amarillo','rojo','verde','amarillo','verde','rojo','amarillo'] as const
+                  const sem = semaforos[i % semaforos.length]
+                  const semColor = sem === 'verde' ? '#02d47e' : sem === 'amarillo' ? '#f59e0b' : '#ef4444'
+                  const semLabel = sem === 'verde' ? 'Al día' : sem === 'amarillo' ? 'En progreso' : 'Sin iniciar'
+                  const pct = sem === 'verde' ? 78 + (i * 7) % 22 : sem === 'amarillo' ? 30 + (i * 11) % 30 : 0
+                  return (
+                    <div key={t.slug} style={{ borderRadius:14, background:'#fff', boxShadow:'0 2px 12px rgba(4,57,65,.06)', border:'1px solid rgba(4,57,65,.07)', padding:'14px 16px', display:'flex', alignItems:'center', gap:14 }}>
+                      {/* Dot semáforo */}
+                      <div style={{ width:10, height:10, borderRadius:'50%', background:semColor, boxShadow:`0 0 0 3px ${semColor}30`, flexShrink:0 }} />
+                      {/* Info */}
+                      <div style={{ flex:1, minWidth:0 }}>
+                        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:6 }}>
+                          <span style={{ fontSize:'.82rem', fontWeight:800, color:'#043941', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', maxWidth:160 }}>{t.nombre}</span>
+                          <span style={{ fontSize:'.65rem', fontWeight:700, color:semColor, background:`${semColor}15`, padding:'.2rem .55rem', borderRadius:100, flexShrink:0, marginLeft:8 }}>{semLabel}</span>
+                        </div>
+                        <div style={{ height:5, borderRadius:100, background:'rgba(4,57,65,.07)', overflow:'hidden' }}>
+                          <div style={{ width:`${pct}%`, height:'100%', borderRadius:100, background:`linear-gradient(90deg, ${semColor}, ${semColor}cc)`, transition:'width .6s ease' }} />
+                        </div>
+                        <span style={{ fontSize:'.68rem', color:'rgba(4,57,65,.4)', marginTop:4, display:'block' }}>{pct}% docentes formados</span>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+              <div style={{ textAlign:'center' }}>
+                <button
+                  disabled
+                  style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(4,57,65,.07)', color:'rgba(4,57,65,.3)', fontSize:'.88rem', fontWeight:800, padding:'.9rem 2rem', borderRadius:100, border:'1.5px solid rgba(4,57,65,.1)', cursor:'not-allowed' }}
+                >
+                  Dashboard completo — En desarrollo
+                </button>
+              </div>
+            </div>
+          )}
+
+        </div>
       </section>
 
       {/* ══ COMUNIDAD ═══════════════════════════════════════════════════════ */}
