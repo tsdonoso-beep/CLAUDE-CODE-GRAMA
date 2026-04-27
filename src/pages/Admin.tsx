@@ -615,7 +615,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
             style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e' }}>
             Ver plataforma
           </button>
-          <button onClick={signOut} className="p-2 rounded-lg" style={{ color: 'rgba(255,255,255,0.4)' }}
+          <button onClick={signOut} className="p-2 rounded-lg" style={{ color: 'rgba(255,255,255,0.65)' }}
             title="Cerrar sesión">
             <LogOut size={16} />
           </button>
@@ -695,7 +695,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
               <AlertTriangle size={16} style={{ color: '#f59e0b', flexShrink: 0, marginTop: 1 }} />
               <div>
                 <p className="text-sm font-bold" style={{ color: '#f59e0b' }}>Información sensible</p>
-                <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.70)' }}>
                   Las contraseñas se muestran para que puedas hacer respaldo. Mantenlas en privado.
                 </p>
               </div>
@@ -710,8 +710,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
             ) : solicitudesFiltradas.length === 0 ? (
               <div className="text-center py-20 rounded-2xl"
                 style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <Inbox size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.15)' }} />
-                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                <Inbox size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.40)' }} />
+                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.60)' }}>
                   No hay solicitudes en esta categoría.
                 </p>
               </div>
@@ -741,15 +741,15 @@ Equipo GRAMA · Programa TSF-MINEDU`
                               {sol.estado === 'pendiente' ? 'Pendiente' : sol.estado === 'aprobado' ? 'Aprobada' : 'Rechazada'}
                             </span>
                           </div>
-                          <p className="text-xs mb-2" style={{ color: 'rgba(255,255,255,0.45)' }}>{sol.email}</p>
-                          <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs mb-1" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                          <p className="text-xs mb-2" style={{ color: 'rgba(255,255,255,0.70)' }}>{sol.email}</p>
+                          <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs mb-1" style={{ color: 'rgba(255,255,255,0.65)' }}>
                             {sol.institucion && <span>{sol.institucion}</span>}
                             {taller && <span>Taller: <span style={{ color: '#02d47e' }}>{taller.nombreCorto ?? taller.nombre}</span></span>}
                             <span>{formatDate(sol.created_at)}</span>
                           </div>
                           {sol.mensaje && (
                             <p className="mt-2 text-xs px-3 py-2 rounded-lg italic"
-                              style={{ background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                              style={{ background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.65)', border: '1px solid rgba(255,255,255,0.06)' }}>
                               "{sol.mensaje}"
                             </p>
                           )}
@@ -757,7 +757,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                             <div className="mt-3 space-y-2">
                               <div className="flex items-center gap-2 px-3 py-2 rounded-lg"
                                 style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
-                                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>Contraseña:</span>
+                                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.70)' }}>Contraseña:</span>
                                 <code className="flex-1 text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>{password}</code>
                                 <button
                                   onClick={() => {
@@ -852,8 +852,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
               ) : consultasFiltradas.length === 0 ? (
                 <div className="text-center py-20 rounded-2xl"
                   style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                  <MessageCircle size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.15)' }} />
-                  <p className="text-sm" style={{ color: 'rgba(255,255,255,0.3)' }}>No hay consultas en esta categoría.</p>
+                  <MessageCircle size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.40)' }} />
+                  <p className="text-sm" style={{ color: 'rgba(255,255,255,0.60)' }}>No hay consultas en esta categoría.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -877,7 +877,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                                 {respondida ? 'Respondida' : 'Pendiente'}
                               </span>
                             </div>
-                            <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                            <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-xs" style={{ color: 'rgba(255,255,255,0.65)' }}>
                               {taller && <span style={{ color: '#02d47e' }}>{taller.nombreCorto ?? taller.nombre}</span>}
                               <span>{moduloLabel}</span>
                               <span>{formatFechaConsulta(c.created_at)}</span>
@@ -887,7 +887,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
 
                         {/* Mensaje del docente */}
                         <div className="px-5 py-4">
-                          <p className="text-xs font-bold mb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>Consulta</p>
+                          <p className="text-xs font-bold mb-2" style={{ color: 'rgba(255,255,255,0.65)' }}>Consulta</p>
                           <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)' }}>{c.mensaje}</p>
                         </div>
 
@@ -899,7 +899,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                               <CheckCircle size={13} style={{ color: '#02d47e' }} />
                               <p className="text-xs font-bold" style={{ color: '#02d47e' }}>Tu respuesta</p>
                               {c.responded_at && (
-                                <span className="text-xs ml-auto" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                                <span className="text-xs ml-auto" style={{ color: 'rgba(255,255,255,0.60)' }}>
                                   {formatFechaConsulta(c.responded_at)}
                                 </span>
                               )}
@@ -912,7 +912,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         {!respondida && (
                           <div className="px-5 py-4 border-t space-y-3"
                             style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)' }}>
-                            <p className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>Tu respuesta</p>
+                            <p className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.65)' }}>Tu respuesta</p>
                             <textarea
                               value={respuestaTexto[c.id] ?? ''}
                               onChange={e => setRespuestaTexto(prev => ({ ...prev, [c.id]: e.target.value }))}
@@ -945,7 +945,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
             {/* Filtro por docente */}
             <div className="mb-6 flex flex-wrap items-end gap-3">
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                <label className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.65)' }}>
                   Filtrar por docente
                 </label>
                 <div className="flex gap-2">
@@ -977,7 +977,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     style={{ background: 'rgba(2,212,126,0.08)', border: '1px solid rgba(2,212,126,0.2)' }}>
                     <div>
                       <p className="text-sm font-bold text-white">{d.nombre_completo}</p>
-                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{ie?.nombre ?? '—'} · {talleresConfig.find(t => t.slug === d.taller_slug)?.nombreCorto ?? d.taller_slug}</p>
+                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.70)' }}>{ie?.nombre ?? '—'} · {talleresConfig.find(t => t.slug === d.taller_slug)?.nombreCorto ?? d.taller_slug}</p>
                     </div>
                   </div>
                 ) : null
@@ -1002,7 +1002,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     <div key={label} className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.06)' }}>
                       <div className="flex items-center gap-2 mb-1">
                         <Icon size={14} style={{ color }} />
-                        <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{label}</p>
+                        <p className="text-xs" style={{ color: 'rgba(255,255,255,0.70)' }}>{label}</p>
                       </div>
                       <p className="text-2xl font-extrabold" style={{ color }}>{value}</p>
                     </div>
@@ -1019,7 +1019,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         <div key={i} className="flex items-center gap-3">
                           <div className="w-36 text-xs text-right" style={{ color: 'rgba(255,255,255,0.5)' }}>
                             {n.pagina.replace('_', ' ')}
-                            {n.referrer && <span className="block text-[11px]" style={{ color: 'rgba(255,255,255,0.3)' }}>desde: {n.referrer}</span>}
+                            {n.referrer && <span className="block text-[11px]" style={{ color: 'rgba(255,255,255,0.60)' }}>desde: {n.referrer}</span>}
                           </div>
                           <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
                             <div className="h-full rounded-full transition-all" style={{ width: `${Math.round((n.count / maxCount) * 100)}%`, background: '#02d47e' }} />
@@ -1041,7 +1041,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     <thead>
                       <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                         {['Contenido', 'Tipo', 'Evento', 'Accesos'].map(h => (
-                          <th key={h} className="text-left px-5 py-3 text-xs font-bold" style={{ color: 'rgba(255,255,255,0.35)' }}>{h}</th>
+                          <th key={h} className="text-left px-5 py-3 text-xs font-bold" style={{ color: 'rgba(255,255,255,0.65)' }}>{h}</th>
                         ))}
                       </tr>
                     </thead>
@@ -1057,7 +1057,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         return (
                           <tr key={i} style={{ borderBottom: i < Math.min(analytics.contenidos.length, 20) - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
                             <td className="px-5 py-3 text-white text-xs">{c.bien_nombre}</td>
-                            <td className="px-5 py-3 text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{c.tipo_contenido}</td>
+                            <td className="px-5 py-3 text-xs" style={{ color: 'rgba(255,255,255,0.70)' }}>{c.tipo_contenido}</td>
                             <td className="px-5 py-3">
                               <span className="text-xs font-semibold px-2 py-0.5 rounded-lg" style={{ background: `${color}20`, color }}>
                                 {c.tipo_evento.replace(/_/g, ' ')}
@@ -1085,7 +1085,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
             { label: 'Completaron > 50%', value: docentes.filter(d => d.porcentaje > 50).length, icon: Download },
           ].map(s => (
             <div key={s.label} className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.06)' }}>
-              <p className="text-xs mb-1" style={{ color: 'rgba(255,255,255,0.45)' }}>{s.label}</p>
+              <p className="text-xs mb-1" style={{ color: 'rgba(255,255,255,0.70)' }}>{s.label}</p>
               <p className="text-2xl font-extrabold" style={{ color: '#02d47e' }}>{s.value}</p>
             </div>
           ))}
@@ -1145,11 +1145,11 @@ Equipo GRAMA · Programa TSF-MINEDU`
               <div className="flex flex-col items-center gap-3">
                 <div className="h-7 w-7 rounded-full border-2 animate-spin"
                   style={{ borderColor: '#02d47e', borderTopColor: 'transparent' }} />
-                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Cargando datos…</span>
+                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.65)' }}>Cargando datos…</span>
               </div>
             </div>
           ) : docentesFiltrados.length === 0 ? (
-            <div className="text-center py-20" style={{ color: 'rgba(255,255,255,0.3)' }}>
+            <div className="text-center py-20" style={{ color: 'rgba(255,255,255,0.60)' }}>
               <Users size={40} className="mx-auto mb-3 opacity-40" />
               <p className="text-sm">No hay docentes registrados aún</p>
             </div>
@@ -1160,7 +1160,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
                     {['Docente', 'IE', 'Taller', 'Módulo', 'Progreso', 'Quizzes', 'Último acceso', 'Registro'].map(h => (
                       <th key={h} className="text-left px-5 py-3 text-xs font-bold"
-                        style={{ color: 'rgba(255,255,255,0.35)' }}>{h}</th>
+                        style={{ color: 'rgba(255,255,255,0.65)' }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -1175,11 +1175,11 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         className="transition-colors hover:bg-white/5">
                         <td className="px-5 py-3.5">
                           <p className="font-semibold text-white">{d.nombre_completo}</p>
-                          <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>{d.email}</p>
+                          <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.65)' }}>{d.email}</p>
                         </td>
                         <td className="px-5 py-3.5">
                           <p className="text-white text-xs font-medium">{ie?.nombre ?? '—'}</p>
-                          <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{ie?.distrito}</p>
+                          <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.65)' }}>{ie?.distrito}</p>
                         </td>
                         <td className="px-5 py-3.5">
                           <span className="text-xs font-bold px-2 py-1 rounded-lg"
@@ -1194,7 +1194,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                               {d.moduloActual}
                             </span>
                           ) : (
-                            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>—</span>
+                            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.50)' }}>—</span>
                           )}
                         </td>
                         <td className="px-5 py-3.5">
@@ -1207,11 +1207,11 @@ Equipo GRAMA · Programa TSF-MINEDU`
                               {d.porcentaje}%
                             </span>
                           </div>
-                          <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                          <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.60)' }}>
                             {d.completados}/{d.total} completados
                           </p>
                           {d.visualizados > d.completados && (
-                            <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.2)' }}>
+                            <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.50)' }}>
                               {d.visualizados} visualizados
                             </p>
                           )}
@@ -1230,13 +1230,13 @@ Equipo GRAMA · Programa TSF-MINEDU`
                               {d.quizzesAprobados}/{d.quizzesTotal}
                             </span>
                           ) : (
-                            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>0/{d.quizzesTotal}</span>
+                            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.50)' }}>0/{d.quizzesTotal}</span>
                           )}
                         </td>
-                        <td className="px-5 py-3.5 text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                        <td className="px-5 py-3.5 text-xs" style={{ color: 'rgba(255,255,255,0.65)' }}>
                           {formatDate(d.last_seen_at)}
                         </td>
-                        <td className="px-5 py-3.5 text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                        <td className="px-5 py-3.5 text-xs" style={{ color: 'rgba(255,255,255,0.65)' }}>
                           {formatDate(d.created_at)}
                         </td>
                       </tr>
@@ -1248,7 +1248,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
           )}
         </div>
 
-        <p className="text-xs mt-4 text-right" style={{ color: 'rgba(255,255,255,0.2)' }}>
+        <p className="text-xs mt-4 text-right" style={{ color: 'rgba(255,255,255,0.50)' }}>
           {docentesFiltrados.length} de {docentes.length} docentes · haz clic en un usuario para ver detalles
         </p>
         </>}
@@ -1271,7 +1271,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   <p className="font-bold text-white text-sm">Crear nuevo usuario</p>
                 </div>
                 {!creandoUsuario && !usuarioCreadoOk && (
-                  <button onClick={() => setShowCrearModal(false)} style={{ color: 'rgba(255,255,255,0.4)' }}>
+                  <button onClick={() => setShowCrearModal(false)} style={{ color: 'rgba(255,255,255,0.65)' }}>
                     <XCircle size={18} />
                   </button>
                 )}
@@ -1284,17 +1284,17 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     <div className="flex flex-col items-center gap-3 py-4">
                       <CheckCircle size={40} style={{ color: '#02d47e' }} />
                       <p className="font-extrabold text-white text-lg">¡Usuario creado!</p>
-                      <p className="text-xs text-center" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                      <p className="text-xs text-center" style={{ color: 'rgba(255,255,255,0.70)' }}>
                         Guarda estas credenciales antes de cerrar.
                       </p>
                     </div>
                     <div className="rounded-xl p-4 space-y-3" style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
                       <div className="flex items-center justify-between">
-                        <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>Correo</span>
+                        <span className="text-xs" style={{ color: 'rgba(255,255,255,0.70)' }}>Correo</span>
                         <code className="text-sm font-bold text-white">{usuarioCreadoOk.email}</code>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>Contraseña</span>
+                        <span className="text-xs" style={{ color: 'rgba(255,255,255,0.70)' }}>Contraseña</span>
                         <div className="flex items-center gap-2">
                           <code className="text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>{usuarioCreadoOk.password}</code>
                           <button
@@ -1444,7 +1444,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
               {/* Header */}
               <div className="flex items-center justify-between px-6 py-4 shrink-0"
                 style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>Detalle de usuario</p>
+                <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.65)' }}>Detalle de usuario</p>
                 <button
                   onClick={() => setDocenteDetalle(null)}
                   className="p-2 rounded-lg transition-opacity hover:opacity-70"
@@ -1462,7 +1462,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-extrabold text-white text-lg leading-tight">{d.nombre_completo ?? '—'}</p>
-                    <p className="text-xs mt-0.5 truncate" style={{ color: 'rgba(255,255,255,0.45)' }}>{d.email}</p>
+                    <p className="text-xs mt-0.5 truncate" style={{ color: 'rgba(255,255,255,0.70)' }}>{d.email}</p>
                     <div className="flex flex-wrap gap-2 mt-2">
                       <span className="text-xs px-2 py-0.5 rounded-lg font-bold"
                         style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e' }}>
@@ -1481,9 +1481,9 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 {/* IE */}
                 {ie && (
                   <div className="px-4 py-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-                    <p className="text-xs mb-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>Institución Educativa</p>
+                    <p className="text-xs mb-0.5" style={{ color: 'rgba(255,255,255,0.65)' }}>Institución Educativa</p>
                     <p className="text-sm font-semibold text-white">{ie.nombre}</p>
-                    <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{ie.distrito} · {ie.region}</p>
+                    <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.65)' }}>{ie.distrito} · {ie.region}</p>
                   </div>
                 )}
 
@@ -1497,7 +1497,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     <div key={s.label} className="rounded-xl p-3 text-center"
                       style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
                       <p className="text-xl font-extrabold" style={{ color: s.color }}>{s.value}</p>
-                      <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.label}</p>
+                      <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.65)' }}>{s.label}</p>
                     </div>
                   ))}
                 </div>
@@ -1505,7 +1505,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 {/* Barra de progreso */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>Progreso general</p>
+                    <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.65)' }}>Progreso general</p>
                     {d.moduloActual && (
                       <span className="text-xs font-extrabold px-2 py-0.5 rounded-lg"
                         style={{ background: 'rgba(34,211,238,0.12)', color: '#22d3ee' }}>
@@ -1518,7 +1518,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                       style={{ width: `${d.porcentaje}%`, background: d.porcentaje >= 80 ? '#02d47e' : d.porcentaje >= 40 ? '#f59e0b' : '#ef4444' }} />
                   </div>
                   {d.visualizados > d.completados && (
-                    <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                    <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.55)' }}>
                       {d.visualizados} visualizados · {d.completados} completados
                     </p>
                   )}
@@ -1547,7 +1547,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         transition: 'border-color 0.2s',
                       }}>
                       <div className="flex items-center justify-between">
-                        <p className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                        <p className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.65)' }}>
                           Talleres asignados
                           {hayPendientes && (
                             <span className="ml-2 text-[10px] font-extrabold" style={{ color: '#f59e0b' }}>
@@ -1564,7 +1564,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                       {/* Chips de talleres activos */}
                       <div className="flex flex-wrap gap-2 min-h-[28px]">
                         {talleresEditando.length === 0 && (
-                          <span className="text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>Sin taller asignado</span>
+                          <span className="text-xs" style={{ color: 'rgba(255,255,255,0.55)' }}>Sin taller asignado</span>
                         )}
                         {talleresEditando.map(slug => {
                           const t = talleresConfig.find(x => x.slug === slug)
@@ -1595,7 +1595,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                           value=""
                           onChange={e => { if (e.target.value) setTalleresEditando(prev => [...prev, e.target.value]) }}
                           className="w-full px-3 py-2 rounded-xl text-xs outline-none"
-                          style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                          style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.70)', border: '1px solid rgba(255,255,255,0.1)' }}>
                           <option value="">+ Añadir taller…</option>
                           {talleresDisponibles.map(t => (
                             <option key={t.slug} value={t.slug} style={{ background: '#052e35' }}>{t.nombre}</option>
@@ -1617,7 +1617,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                             onClick={() => setTalleresEditando(talleresOriginales)}
                             disabled={guardandoTalleres}
                             className="px-3 py-2 rounded-xl text-xs font-semibold transition-all"
-                            style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.4)' }}>
+                            style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.65)' }}>
                             Descartar
                           </button>
                         </div>
@@ -1633,7 +1633,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     { label: 'Fecha de registro', value: formatDate(d.created_at) },
                   ].map(row => (
                     <div key={row.label} className="flex items-center justify-between">
-                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{row.label}</p>
+                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.65)' }}>{row.label}</p>
                       <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.6)' }}>{row.value}</p>
                     </div>
                   ))}
@@ -1649,7 +1649,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                       <>
                         <div className="flex items-center gap-2 px-3 py-2 rounded-lg"
                           style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
-                          <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>Nueva contraseña:</span>
+                          <span className="text-xs" style={{ color: 'rgba(255,255,255,0.70)' }}>Nueva contraseña:</span>
                           <code className="flex-1 text-sm font-bold" style={{ color: '#f59e0b', letterSpacing: '0.05em' }}>
                             {passwordsReset[d.id]}
                           </code>
@@ -1673,7 +1673,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         <button
                           onClick={() => setPasswordsReset(prev => { const n = { ...prev }; delete n[d.id]; return n })}
                           className="w-full py-2 rounded-xl text-xs font-semibold"
-                          style={{ color: 'rgba(255,255,255,0.3)' }}>
+                          style={{ color: 'rgba(255,255,255,0.60)' }}>
                           Generar otra contraseña
                         </button>
                       </>
