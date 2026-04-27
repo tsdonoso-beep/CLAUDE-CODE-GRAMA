@@ -1,6 +1,6 @@
 // src/pages/Admin.tsx
 import { useState, useEffect, useMemo } from 'react'
-import { Download, Users, RefreshCw, LogOut, Filter, BarChart2, BookOpen, Video, FileDown, Globe, LogIn, AlertTriangle, Inbox, Copy, CheckCircle, XCircle, MessageCircle, Send } from 'lucide-react'
+import { Download, Users, RefreshCw, LogOut, Filter, BarChart2, BookOpen, Video, FileDown, Globe, LogIn, AlertTriangle, Inbox, Copy, CheckCircle, XCircle, MessageCircle, Send, LayoutDashboard, TrendingUp, ChevronRight } from 'lucide-react'
 import { type ConsultaDB, getAllConsultasAdmin, responderConsultaDB, buildMockConsultas, MODULOS_CONSULTA, formatFechaConsulta } from '@/data/consultasDocentes'
 import { supabase } from '@/lib/supabase'
 import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
@@ -195,7 +195,7 @@ function downloadCSV(rows: DocenteRow[]) {
 export default function Admin() {
   const { signOut, profile } = useAuth()
   const navigate = useNavigate()
-  const [tab, setTab] = useState<'solicitudes' | 'usuarios' | 'analytics'>('solicitudes')
+  const [tab, setTab] = useState<'panel' | 'talleres' | 'solicitudes' | 'usuarios' | 'consultas' | 'analytics' | 'progreso'>('panel')
   const [solicitudes, setSolicitudes] = useState<SolicitudAcceso[]>([])
   const [loadingSolicitudes, setLoadingSolicitudes] = useState(true)
   const [filtroEstado, setFiltroEstado] = useState<'pendiente' | 'aprobado' | 'rechazado' | 'todas'>('pendiente')
@@ -600,61 +600,225 @@ Equipo GRAMA · Programa TSF-MINEDU`
     style: { borderColor: 'rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.08)', color: '#ffffff' },
   }
 
-  return (
-    <div className="min-h-screen" style={{ background: '#043941', fontFamily: "'Manrope', sans-serif" }}>
-      {/* Header */}
-      <header className="border-b px-6 py-4 flex items-center justify-between" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
-        <div className="flex items-center gap-4">
-          <GramaLogo variant="light" size="sm" />
-          <div className="h-5 w-px" style={{ background: 'rgba(255,255,255,0.2)' }} />
-          <span className="text-sm font-bold text-white">Panel Seguimiento</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{profile?.email}</span>
-          <button onClick={() => navigate('/perfil')} className="text-xs px-3 py-1.5 rounded-lg font-semibold"
-            style={{ background: 'rgba(2,212,126,0.12)', color: '#02d47e' }}>
-            Ver plataforma
-          </button>
-          <button onClick={signOut} className="p-2 rounded-lg" style={{ color: 'rgba(255,255,255,0.4)' }}
-            title="Cerrar sesión">
-            <LogOut size={16} />
-          </button>
-        </div>
-      </header>
+  // ── helpers de sidebar ──────────────────────────────────────────────────────
+  const PAGE_TITLES: Record<string, string> = {
+    panel: 'Panel', talleres: 'Talleres', solicitudes: 'Solicitudes de acceso',
+    usuarios: 'Docentes', consultas: 'Consultas', analytics: 'Reportes', progreso: 'Progreso',
+  }
+  const solicitudesPendientes = solicitudes.filter(s => s.estado === 'pendiente').length
+  const consultasPendientes   = consultasAdmin.filter(c => c.estado === 'pendiente').length
 
-      <main className="px-6 py-8 max-w-7xl mx-auto">
-        {/* Tab switcher */}
-        <div className="flex gap-2 mb-8">
-          {([
-            ['solicitudes', Inbox, 'Solicitudes'],
-            ['usuarios', Users, 'Usuarios activos'],
-            ['consultas', MessageCircle, 'Consultas'],
-            ['analytics', BarChart2, 'Analytics'],
-          ] as const).map(([key, Icon, label]) => {
-            const pending = key === 'solicitudes'
-              ? solicitudes.filter(s => s.estado === 'pendiente').length
-              : key === 'consultas'
-              ? consultasAdmin.filter(c => c.estado === 'pendiente').length
-              : 0
-            return (
-              <button
-                key={key}
-                onClick={() => setTab(key)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all"
-                style={tab === key
-                  ? { background: '#02d47e', color: '#043941' }
-                  : { background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.55)' }}>
-                <Icon size={15} /> {label}
-                {pending > 0 && (
-                  <span className="text-xs font-extrabold px-1.5 py-0.5 rounded-full"
-                    style={{ background: tab === key ? 'rgba(4,57,65,0.3)' : 'rgba(239,68,68,0.25)', color: tab === key ? '#043941' : '#ef4444', lineHeight: 1 }}>
-                    {pending}
-                  </span>
-                )}
-              </button>
-            )
-          })}
+  type NavId = typeof tab
+  const NAV_GROUPS: { label: string; items: { id: NavId; label: string; icon: React.ElementType; badge?: number }[] }[] = [
+    { label: 'Principal', items: [
+      { id: 'panel',    label: 'Panel',    icon: LayoutDashboard },
+      { id: 'talleres', label: 'Talleres', icon: BookOpen },
+    ]},
+    { label: 'Usuarios', items: [
+      { id: 'usuarios',    label: 'Docentes',    icon: Users },
+      { id: 'solicitudes', label: 'Solicitudes', icon: Inbox,          badge: solicitudesPendientes },
+      { id: 'consultas',   label: 'Consultas',   icon: MessageCircle,  badge: consultasPendientes },
+    ]},
+    { label: 'Analítica', items: [
+      { id: 'analytics', label: 'Reportes', icon: BarChart2  },
+      { id: 'progreso',  label: 'Progreso', icon: TrendingUp },
+    ]},
+  ]
+
+  return (
+    <div style={{ display: 'flex', minHeight: '100vh', fontFamily: "'Manrope', sans-serif" }}>
+
+      {/* ── Sidebar ─────────────────────────────────────────────────────────── */}
+      <aside style={{ width: 240, background: '#032d34', position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 40, display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255,255,255,0.05)' }}>
+
+        {/* Logo */}
+        <div style={{ padding: '1.25rem 1.1rem .9rem', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          <GramaLogo variant="light" size="sm" />
+          <p style={{ fontSize: '.56rem', color: 'rgba(255,255,255,0.25)', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', marginTop: '.45rem' }}>Panel de administración</p>
         </div>
+
+        {/* Nav */}
+        <nav style={{ flex: 1, overflowY: 'auto', padding: '.6rem .55rem' }}>
+          {NAV_GROUPS.map(group => (
+            <div key={group.label} style={{ marginBottom: '1.1rem' }}>
+              <p style={{ fontSize: '.56rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)', padding: '.3rem .6rem .4rem' }}>{group.label}</p>
+              {group.items.map(item => {
+                const active = tab === item.id
+                return (
+                  <button key={item.id} onClick={() => setTab(item.id)}
+                    style={{ display: 'flex', alignItems: 'center', gap: '.6rem', width: '100%', padding: '.55rem .7rem', borderRadius: 10, marginBottom: 2, cursor: 'pointer', border: 'none', textAlign: 'left', transition: 'all .15s',
+                      background: active ? 'rgba(2,212,126,0.13)' : 'transparent',
+                      borderLeft: active ? '2.5px solid #02d47e' : '2.5px solid transparent',
+                      color: active ? '#ffffff' : 'rgba(255,255,255,0.48)',
+                    }}>
+                    <item.icon size={15} />
+                    <span style={{ fontSize: '.8rem', fontWeight: active ? 700 : 500, flex: 1 }}>{item.label}</span>
+                    {(item.badge ?? 0) > 0 && (
+                      <span style={{ fontSize: '.62rem', fontWeight: 800, background: 'rgba(239,68,68,0.22)', color: '#ef4444', padding: '.15rem .45rem', borderRadius: 20, lineHeight: 1.4 }}>{item.badge}</span>
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+          ))}
+        </nav>
+
+        {/* User footer */}
+        <div style={{ padding: '.8rem 1rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', marginBottom: '.65rem' }}>
+            <div style={{ width: 30, height: 30, borderRadius: '50%', background: '#02d47e', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.7rem', fontWeight: 800, color: '#043941', flexShrink: 0 }}>
+              {profile?.email?.[0]?.toUpperCase() ?? 'A'}
+            </div>
+            <div style={{ minWidth: 0 }}>
+              <p style={{ fontSize: '.72rem', fontWeight: 700, color: '#fff' }}>Admin</p>
+              <p style={{ fontSize: '.6rem', color: 'rgba(255,255,255,0.3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 140 }}>{profile?.email}</p>
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: '.4rem' }}>
+            <button onClick={() => navigate('/perfil')} style={{ flex: 1, fontSize: '.68rem', fontWeight: 600, padding: '.38rem .5rem', borderRadius: 8, background: 'rgba(2,212,126,0.1)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.15)', cursor: 'pointer' }}>
+              Ver plataforma
+            </button>
+            <button onClick={signOut} title="Cerrar sesión" style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.35)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <LogOut size={13} />
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* ── Main ────────────────────────────────────────────────────────────── */}
+      <div style={{ flex: 1, marginLeft: 240, display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#043941' }}>
+
+        {/* Top header */}
+        <header style={{ height: 56, borderBottom: '1px solid rgba(255,255,255,0.07)', padding: '0 1.75rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#043941', position: 'sticky', top: 0, zIndex: 30 }}>
+          <h2 style={{ fontSize: '.88rem', fontWeight: 700, color: '#fff' }}>{PAGE_TITLES[tab]}</h2>
+          <button onClick={fetchData} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.35rem .85rem', borderRadius: 8, background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
+            <RefreshCw size={12} /> Actualizar
+          </button>
+        </header>
+
+        {/* Content */}
+        <main style={{ flex: 1, padding: '1.75rem 2rem' }}>
+
+        {/* ── PANEL DASHBOARD ───────────────────────────────────────────────── */}
+        {tab === 'panel' && (
+          <div>
+            <p style={{ fontSize: '1.4rem', fontWeight: 800, color: '#fff', marginBottom: '1.5rem' }}>
+              Hola, <span style={{ color: '#02d47e' }}>Admin</span>
+            </p>
+
+            {/* Stat cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+              {([
+                { label: 'Docentes activos',      value: docentes.length,           icon: Users,         color: '#02d47e' },
+                { label: 'Talleres',              value: talleresConfig.length,      icon: BookOpen,      color: '#60a5fa' },
+                { label: 'Solicitudes pendientes',value: solicitudesPendientes,      icon: Inbox,         color: '#f59e0b' },
+                { label: 'Consultas pendientes',  value: consultasPendientes,        icon: MessageCircle, color: '#c084fc' },
+              ] as { label: string; value: number; icon: React.ElementType; color: string }[]).map(s => (
+                <div key={s.label} style={{ background: 'rgba(255,255,255,0.05)', borderRadius: 16, padding: '1.2rem', border: '1px solid rgba(255,255,255,0.07)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <p style={{ fontSize: '.6rem', color: 'rgba(255,255,255,0.38)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: '.5rem' }}>{s.label}</p>
+                      <p style={{ fontSize: '2rem', fontWeight: 900, color: '#fff', lineHeight: 1 }}>{s.value}</p>
+                    </div>
+                    <div style={{ width: 34, height: 34, borderRadius: 10, background: `${s.color}1f`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <s.icon size={15} color={s.color} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Quick actions */}
+            <p style={{ fontSize: '.6rem', color: 'rgba(255,255,255,0.28)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: '.9rem' }}>Acciones rápidas</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+              {([
+                { label: 'Revisar solicitudes', desc: 'Aprobar o rechazar nuevos accesos', id: 'solicitudes', icon: Inbox },
+                { label: 'Gestionar docentes',  desc: 'Ver progreso y resetear contraseñas', id: 'usuarios',   icon: Users },
+                { label: 'Ver reportes',        desc: 'Accesos, navegación y contenidos',    id: 'analytics',  icon: BarChart2 },
+              ] as { label: string; desc: string; id: NavId; icon: React.ElementType }[]).map(a => (
+                <button key={a.id} onClick={() => setTab(a.id)}
+                  style={{ textAlign: 'left', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, padding: '1.1rem 1.1rem 1rem', cursor: 'pointer' }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(2,212,126,0.3)'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(2,212,126,0.05)' }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.08)'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.04)' }}
+                >
+                  <div style={{ width: 32, height: 32, borderRadius: 9, background: 'rgba(2,212,126,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '.75rem' }}>
+                    <a.icon size={15} color="#02d47e" />
+                  </div>
+                  <p style={{ fontSize: '.82rem', fontWeight: 700, color: '#fff', marginBottom: '.25rem' }}>{a.label}</p>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <p style={{ fontSize: '.7rem', color: 'rgba(255,255,255,0.38)', lineHeight: 1.4 }}>{a.desc}</p>
+                    <ChevronRight size={13} color="rgba(255,255,255,0.25)" />
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Talleres overview */}
+            <p style={{ fontSize: '.6rem', color: 'rgba(255,255,255,0.28)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: '.9rem' }}>Talleres activos</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: '.75rem' }}>
+              {talleresConfig.map(t => {
+                const count = docentes.filter(d => d.taller_slug === t.slug || d.taller_slugs?.includes(t.slug)).length
+                return (
+                  <div key={t.slug} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 14, padding: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', marginBottom: '.5rem' }}>
+                      <span style={{ fontSize: '.6rem', fontWeight: 800, background: '#02d47e', color: '#043941', padding: '.18rem .45rem', borderRadius: 6 }}>T{String(t.numero).padStart(2, '0')}</span>
+                      <span style={{ fontSize: '.68rem', color: 'rgba(255,255,255,0.35)' }}>{count} docente{count !== 1 ? 's' : ''}</span>
+                    </div>
+                    <p style={{ fontSize: '.82rem', fontWeight: 700, color: '#fff' }}>{t.nombre}</p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ── TALLERES ──────────────────────────────────────────────────────── */}
+        {tab === 'talleres' && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1rem' }}>
+            {talleresConfig.map(t => {
+              const count = docentes.filter(d => d.taller_slug === t.slug || d.taller_slugs?.includes(t.slug)).length
+              return (
+                <div key={t.slug} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 18, padding: '1.25rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem', marginBottom: '.85rem' }}>
+                    <span style={{ fontSize: '.65rem', fontWeight: 800, background: '#02d47e', color: '#043941', padding: '.22rem .55rem', borderRadius: 7 }}>T{String(t.numero).padStart(2, '0')}</span>
+                    <span style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.4)' }}>{count} docente{count !== 1 ? 's' : ''} asignado{count !== 1 ? 's' : ''}</span>
+                  </div>
+                  <p style={{ fontSize: '.92rem', fontWeight: 700, color: '#fff', marginBottom: '.35rem' }}>{t.nombre}</p>
+                  <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.35)', lineHeight: 1.5 }}>{t.descripcion?.slice(0, 90)}…</p>
+                </div>
+              )
+            })}
+          </div>
+        )}
+
+        {/* ── PROGRESO ──────────────────────────────────────────────────────── */}
+        {tab === 'progreso' && (
+          <div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
+              {docentes.slice().sort((a, b) => (b.contenidosCompletados ?? 0) - (a.contenidosCompletados ?? 0)).map(d => {
+                const pct = Math.round(((d.contenidosCompletados ?? 0) / Math.max(getTotalContenidosLXP(), 1)) * 100)
+                return (
+                  <div key={d.id} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, padding: '1.1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '.65rem', marginBottom: '.75rem' }}>
+                      <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(2,212,126,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.72rem', fontWeight: 800, color: '#02d47e', flexShrink: 0 }}>
+                        {d.nombre?.[0]?.toUpperCase() ?? '?'}
+                      </div>
+                      <div style={{ minWidth: 0 }}>
+                        <p style={{ fontSize: '.78rem', fontWeight: 700, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.nombre}</p>
+                        <p style={{ fontSize: '.65rem', color: 'rgba(255,255,255,0.35)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.taller_slug ?? 'Sin taller'}</p>
+                      </div>
+                      <span style={{ marginLeft: 'auto', fontSize: '.8rem', fontWeight: 800, color: pct >= 70 ? '#02d47e' : pct >= 30 ? '#f59e0b' : 'rgba(255,255,255,0.4)', flexShrink: 0 }}>{pct}%</span>
+                    </div>
+                    <div style={{ height: 4, background: 'rgba(255,255,255,0.08)', borderRadius: 4, overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${pct}%`, background: pct >= 70 ? '#02d47e' : pct >= 30 ? '#f59e0b' : 'rgba(255,255,255,0.2)', borderRadius: 4, transition: 'width .4s ease' }} />
+                    </div>
+                    <p style={{ fontSize: '.62rem', color: 'rgba(255,255,255,0.28)', marginTop: '.4rem' }}>{d.contenidosCompletados ?? 0} / {getTotalContenidosLXP()} contenidos</p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
 
         {tab === 'solicitudes' && (
           <div>
@@ -1693,6 +1857,9 @@ Equipo GRAMA · Programa TSF-MINEDU`
           </>
         )
       })()}
+
+        </main>
+      </div>
     </div>
   )
 }
