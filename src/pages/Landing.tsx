@@ -1316,149 +1316,155 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ══ COMUNIDAD ═══════════════════════════════════════════════════════ */}
-      <section id="comunidad" style={{ background: '#ffffff', padding: '5rem 1.5rem', position:'relative', overflow:'hidden' }}>
+      {/* ══ CÓMO FUNCIONA (3 pasos) ══════════════════════════════════════════ */}
+      <section id="como" style={{ background: '#ffffff', padding: '5.5rem 1.5rem', position:'relative', overflow:'hidden' }}>
 
-        {/* Shapes — mismo lenguaje que hero/talleres */}
-        <div style={{ position:'absolute', top:-100, right:'5%', width:280, height:280, background:'#02d47e', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.12, pointerEvents:'none', animation:'heroFa 16s ease-in-out infinite' }} />
-        <div style={{ position:'absolute', bottom:-140, left:'8%', width:320, height:320, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.14, pointerEvents:'none', animation:'heroFd 18s ease-in-out infinite 2s' }} />
-        <div style={{ position:'absolute', top:'40%', left:-60, width:140, height:110, background:'#f8ee91', clipPath:'polygon(0% 50%,100% 0%,100% 100%)', opacity:.25, pointerEvents:'none', animation:'heroFe 14s ease-in-out infinite 1s' }} />
+        {/* Shapes */}
+        <div style={{ position:'absolute', top:-100, right:'5%', width:260, height:260, background:'#02d47e', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.07, pointerEvents:'none', animation:'heroFa 16s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', bottom:-80, left:'6%', width:200, height:200, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.12, pointerEvents:'none', animation:'heroFd 18s ease-in-out infinite 2s' }} />
 
-        <div style={{ maxWidth:1152, margin:'0 auto' }}>
+        <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
           {/* Header */}
-          <div style={{ textAlign:'center', maxWidth:700, margin:'0 auto 4rem' }}>
-            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
+          <div style={{ textAlign:'center', marginBottom:'4rem' }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:14 }}>
               <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
-              Para toda la comunidad
+              Cómo funciona
             </span>
-            <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
-              Diseñado para <span style={{ color:'#02d47e' }}>docentes, alumnos</span><br/>y <span style={{ color:'#02d47e' }}>directores</span>
+            <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.1, color:'#043941', margin:0 }}>
+              Tu formación en{' '}
+              <span style={{ color:'#02d47e' }}>tres pasos</span>
             </h2>
-            <p style={{ fontSize:'.9rem', color:'rgba(4,57,65,.6)', lineHeight:1.8, margin:0 }}>
-              GRAMA se adapta a los roles y necesidades de cada miembro de la comunidad educativa técnica.
-            </p>
           </div>
 
-          {/* Cards Grid */}
-          <div ref={comunidadReveal.ref} style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(320px, 1fr))', gap:28, maxWidth:1100, margin:'0 auto' }}>
-            {COMMUNITY.map((c, i) => (
-              <div
-                key={c.title}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform='translateY(-12px)'; (e.currentTarget as HTMLElement).style.boxShadow='0 20px 48px rgba(4,57,65,.14)' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform='none'; (e.currentTarget as HTMLElement).style.boxShadow='0 4px 20px rgba(4,57,65,.08)' }}
-                style={{
-                  borderRadius:20,
-                  background:'#fff',
-                  overflow:'hidden',
-                  boxShadow:'0 4px 20px rgba(4,57,65,.08)',
-                  transition:'transform .3s ease, box-shadow .3s ease',
-                  opacity: comunidadReveal.visible ? 1 : 0,
-                  transform: comunidadReveal.visible ? 'translateY(0)' : 'translateY(32px)',
-                  transitionDelay: `${i * 0.08}s`,
-                }}
-              >
-                {/* Top accent strip */}
-                <div style={{ height:6, background:c.accent }} />
+          {/* Steps */}
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:0, position:'relative' }}>
 
-                {/* Icon area */}
-                <div style={{ padding:'2rem', display:'flex', alignItems:'center', justifyContent:'center', minHeight:140 }}>
-                  <div style={{ width:80, height:80, borderRadius:20, background:c.bg, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                    <c.icon size={40} style={{ color:c.color }} />
+            {/* Línea conectora */}
+            <div style={{ position:'absolute', top:44, left:'16.66%', right:'16.66%', height:2, background:'linear-gradient(90deg, #02d47e, #b8edd0, #02d47e)', opacity:.35, zIndex:0 }} />
+
+            {([
+              {
+                n: '01',
+                emoji: '🎯',
+                title: 'Elige tu especialidad',
+                desc: 'Selecciona tu taller EPT — Mecánica, Cocina, Confección y más. Tu ruta de aprendizaje se configura automáticamente.',
+                badges: ['9 especialidades', 'Ruta personalizada'],
+                color: '#02d47e',
+                bg: 'rgba(2,212,126,.08)',
+              },
+              {
+                n: '02',
+                emoji: '📚',
+                title: 'Aprende a tu ritmo',
+                desc: '7 módulos con video, fichas técnicas descargables y sesiones en vivo. Sin fechas límite — avanza cuando puedas.',
+                badges: ['7 módulos', '150h formación', 'Sin fechas límite'],
+                color: '#5b8def',
+                bg: 'rgba(91,141,239,.08)',
+              },
+              {
+                n: '03',
+                emoji: '🏆',
+                title: 'Certifícate y enseña',
+                desc: 'Aprueba la evaluación final, descarga tu certificado reconocido por MINEDU y lleva ese conocimiento al aula.',
+                badges: ['Certificado MINEDU', 'Material permanente'],
+                color: '#f59e0b',
+                bg: 'rgba(245,158,11,.08)',
+              },
+            ] as const).map((step, i) => (
+              <div key={i} style={{ position:'relative', zIndex:1, display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', padding:'0 2rem' }}>
+
+                {/* Número + icono */}
+                <div style={{ position:'relative', marginBottom:'1.6rem' }}>
+                  <div style={{ width:88, height:88, borderRadius:'50%', background:step.bg, border:`2px solid ${step.color}30`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'2rem', boxShadow:`0 8px 24px ${step.color}20` }}>
+                    {step.emoji}
+                  </div>
+                  <div style={{ position:'absolute', top:-6, right:-6, width:26, height:26, borderRadius:'50%', background:step.color, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'.62rem', fontWeight:900, color: step.color === '#f59e0b' ? '#92400e' : '#043941', boxShadow:`0 4px 10px ${step.color}55` }}>
+                    {step.n}
                   </div>
                 </div>
 
-                {/* Content */}
-                <div style={{ padding:'0 2rem 2rem' }}>
-                  <h3 style={{ fontSize:'1.1rem', fontWeight:900, color:'#043941', margin:'0 0 1rem', lineHeight:1.3 }}>{c.title}</h3>
-                  <p style={{ fontSize:'.88rem', lineHeight:1.7, color:'#64748b', margin:'0 0 1.8rem' }}>{c.desc}</p>
+                <h3 style={{ fontSize:'1.05rem', fontWeight:900, color:'#043941', margin:'0 0 .75rem', lineHeight:1.25 }}>{step.title}</h3>
+                <p style={{ fontSize:'.84rem', color:'rgba(4,57,65,.58)', lineHeight:1.75, margin:'0 0 1.2rem' }}>{step.desc}</p>
 
-                  {/* CTA Button */}
-                  <button
-                    onClick={c.action === 'app' ? goToApp : () => window.location.href = 'mailto:contacto@grama.pe'}
-                    style={{ display:'inline-flex', alignItems:'center', gap:6, background:c.accent, color:'#fff', fontSize:'.8rem', fontWeight:800, padding:'.7rem 1.6rem', borderRadius:100, border:'none', cursor:'pointer', transition:'box-shadow .2s, transform .2s' }}
-                    onMouseEnter={e => { e.currentTarget.style.boxShadow=`0 8px 20px ${c.accent}44`; e.currentTarget.style.transform='translateY(-2px)' }}
-                    onMouseLeave={e => { e.currentTarget.style.boxShadow='none'; e.currentTarget.style.transform='none' }}
-                  >
-                    {c.cta}
-                    <ChevronRight size={14} />
-                  </button>
+                {/* Badges */}
+                <div style={{ display:'flex', flexWrap:'wrap', gap:6, justifyContent:'center' }}>
+                  {step.badges.map(b => (
+                    <span key={b} style={{ fontSize:'.65rem', fontWeight:700, background:step.bg, color: step.color === '#5b8def' ? '#3b60c4' : step.color === '#f59e0b' ? '#92400e' : '#047857', padding:'.25rem .65rem', borderRadius:100, border:`1px solid ${step.color}25` }}>
+                      {b}
+                    </span>
+                  ))}
                 </div>
               </div>
             ))}
           </div>
 
+          {/* CTA central */}
+          <div style={{ textAlign:'center', marginTop:'3.5rem' }}>
+            <button
+              onClick={() => navigate('/login')}
+              style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#043941', color:'#fff', fontSize:'.9rem', fontWeight:800, padding:'1rem 2.4rem', borderRadius:100, border:'none', cursor:'pointer', boxShadow:'0 8px 24px rgba(4,57,65,.25)', transition:'all .2s' }}
+              onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 12px 32px rgba(4,57,65,.35)' }}
+              onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 8px 24px rgba(4,57,65,.25)' }}
+            >
+              Empezar ahora — es gratis <ArrowRight size={15} />
+            </button>
+          </div>
+
         </div>
       </section>
 
-      {/* ══ CENTRO DE AYUDA & CONTACTO ═══════════════════════════════════════ */}
-      <section id="contacto" style={{ background: '#f0fdf6', padding: '6rem 1.5rem', position:'relative', overflow:'hidden' }}>
+      {/* ══ FAQ + CTA ════════════════════════════════════════════════════════ */}
+      <section id="faq" style={{ background: '#f0fdf6', padding: '5.5rem 1.5rem', position:'relative', overflow:'hidden' }}>
 
-        {/* Shapes — hero language */}
-        <div style={{ position:'absolute', top:-120, left:'12%', width:320, height:320, background:'#02d47e', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.1, pointerEvents:'none', animation:'heroFa 16s ease-in-out infinite' }} />
-        <div style={{ position:'absolute', bottom:-160, right:'8%', width:340, height:340, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.12, pointerEvents:'none', animation:'heroFd 18s ease-in-out infinite 2s' }} />
-        <div style={{ position:'absolute', top:'50%', left:-100, width:200, height:160, background:'#f8ee91', borderRadius:'0 0 80px 80px', opacity:.28, pointerEvents:'none', animation:'heroFb 14s ease-in-out infinite 1s' }} />
+        {/* Shapes */}
+        <div style={{ position:'absolute', top:-100, left:'10%', width:280, height:280, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.2, pointerEvents:'none', animation:'heroFa 17s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', bottom:-100, right:'5%', width:240, height:240, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.16, pointerEvents:'none', animation:'heroFd 19s ease-in-out infinite 2s' }} />
 
-        <div style={{ maxWidth:1100, margin:'0 auto' }}>
+        <div style={{ maxWidth:1100, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 340px', gap:48, alignItems:'start' }}>
 
-          {/* Header */}
-          <div style={{ textAlign:'center', maxWidth:750, margin:'0 auto 4rem' }}>
-            <h2 style={{ fontSize:'clamp(2.2rem,5vw,3.2rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
-              Listo para <span style={{ color:'#02d47e' }}>transformar</span><br/>tu taller?
-            </h2>
-            <p style={{ fontSize:'.95rem', color:'rgba(4,57,65,.6)', lineHeight:1.8, margin:0 }}>
-              Responde tus dudas y comienza tu ruta de aprendizaje hoy. Nuestro equipo está disponible para apoyarte.
-            </p>
-          </div>
-
-          {/* FAQ + Contact Grid */}
-          <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr', gap:40, alignItems:'start' }}>
-
-            {/* Acordeón — misma estructura FAQ */}
-            <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
-              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:12 }}>
+          {/* FAQ accordion */}
+          <div>
+            <div style={{ marginBottom:'2rem' }}>
+              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:14 }}>
                 <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
-                Dudas frecuentes
+                Preguntas frecuentes
               </span>
+              <h2 style={{ fontSize:'clamp(1.8rem,3.5vw,2.6rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:0 }}>
+                Todo lo que necesitas<br />
+                <span style={{ color:'#02d47e' }}>saber antes de empezar</span>
+              </h2>
+            </div>
 
+            <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
               {FAQ_ITEMS.map((item, i) => {
-                const colors = ['#02d47e', '#f8ee91', '#d4c4fc', '#043941', '#b8edd0']
-                const color = colors[i % colors.length]
+                const faqColors = ['#02d47e','#5b8def','#d4c4fc','#f59e0b','#b8edd0']
+                const color = faqColors[i % faqColors.length]
                 const isOpen = open === i
                 return (
                   <div
                     key={i}
                     onClick={() => setOpen(isOpen ? null : i)}
                     style={{
-                      borderRadius:18,
+                      borderRadius:16,
                       overflow:'hidden',
-                      background: isOpen ? '#fff' : `${color}08`,
-                      border: `1.5px solid ${isOpen ? color + '44' : color + '18'}`,
-                      boxShadow: isOpen ? `0 12px 40px ${color}22` : `0 2px 8px ${color}12`,
+                      background: isOpen ? '#fff' : 'transparent',
+                      border: `1px solid ${isOpen ? color + '30' : 'rgba(4,57,65,.07)'}`,
+                      boxShadow: isOpen ? `0 8px 32px ${color}18` : 'none',
                       cursor:'pointer',
                       transition:'all .3s cubic-bezier(.4,0,.2,1)',
                     }}
                   >
-                    <div style={{
-                      display:'flex', gap:12, padding:'1.4rem',
-                      alignItems:'flex-start',
-                      borderLeft: `6px solid ${color}`,
-                    }}>
-                      <div style={{ width:32, height:32, borderRadius:10, background:`${color}20`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all .3s', transform: isOpen ? 'scale(1.1) rotate(90deg)' : 'none' }}>
-                        <span style={{ fontSize:'1.1rem', fontWeight:800, color:color }}>
-                          {isOpen ? '−' : '+'}
-                        </span>
+                    <div style={{ display:'flex', gap:14, padding:'1.25rem 1.4rem', alignItems:'flex-start', borderLeft:`5px solid ${isOpen ? color : 'rgba(4,57,65,.1)'}`, transition:'border-color .3s' }}>
+                      <div style={{ width:30, height:30, borderRadius:10, background:`${color}18`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'transform .3s', transform: isOpen ? 'rotate(45deg)' : 'none' }}>
+                        <span style={{ fontSize:'1rem', fontWeight:800, color:color, lineHeight:1 }}>+</span>
                       </div>
                       <div style={{ flex:1, minWidth:0 }}>
-                        <p style={{ fontSize:'.96rem', fontWeight:900, color:'#043941', margin:'0 0 0.4rem', lineHeight:1.4, letterSpacing:'-.3px' }}>
-                          {item.q}
-                        </p>
+                        <p style={{ fontSize:'.92rem', fontWeight:800, color:'#043941', margin:0, lineHeight:1.4 }}>{item.q}</p>
                         {isOpen && (
-                          <div style={{ paddingTop:10, marginTop:10, borderTop:`1px solid ${color}24` }}>
-                            <p style={{ fontSize:'.82rem', color:'#64748b', lineHeight:1.7, margin:0 }}>
-                              {item.a}
-                            </p>
-                          </div>
+                          <p style={{ fontSize:'.83rem', color:'#64748b', lineHeight:1.75, margin:'10px 0 0', paddingTop:10, borderTop:`1px solid ${color}20` }}>
+                            {item.a}
+                          </p>
                         )}
                       </div>
                     </div>
@@ -1466,59 +1472,71 @@ export default function Landing() {
                 )
               })}
             </div>
+          </div>
 
-            {/* Contact Block */}
-            <div style={{ position:'sticky', top:120 }}>
-              <div style={{ background:'#fff', borderRadius:22, padding:'2.4rem', border:'1px solid rgba(4,57,65,.08)', boxShadow:'0 8px 32px rgba(4,57,65,.08)' }}>
-                <div style={{ width:52, height:52, borderRadius:14, background:'rgba(2,212,126,.14)', border:'1px solid rgba(2,212,126,.2)', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:1.8, fontSize:'1.8rem' }}>
-                  ✨
+          {/* CTA card sticky */}
+          <div style={{ position:'sticky', top:100 }}>
+            <div style={{ borderRadius:24, overflow:'hidden', background:'linear-gradient(145deg, #043941 0%, #032e34 100%)', boxShadow:'0 20px 56px rgba(4,57,65,.28)', border:'1px solid rgba(2,212,126,.1)', position:'relative' }}>
+              {/* Glow fondo */}
+              <div style={{ position:'absolute', bottom:-60, right:-60, width:200, height:200, background:'radial-gradient(circle, rgba(2,212,126,.14) 0%, transparent 70%)', pointerEvents:'none' }} />
+
+              <div style={{ position:'relative', zIndex:1, padding:'2.2rem' }}>
+                {/* Badge */}
+                <div style={{ display:'inline-flex', alignItems:'center', gap:6, background:'rgba(2,212,126,.18)', border:'1px solid rgba(2,212,126,.25)', borderRadius:100, padding:'.3rem .8rem', marginBottom:'1.4rem' }}>
+                  <span style={{ width:6, height:6, borderRadius:'50%', background:'#02d47e', boxShadow:'0 0 0 2px rgba(2,212,126,.35)', display:'inline-block' }} />
+                  <span style={{ fontSize:'.65rem', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', color:'#02d47e' }}>Respuesta &lt; 24h</span>
                 </div>
 
-                <h3 style={{ fontSize:'1.08rem', fontWeight:900, color:'#043941', margin:'0 0 10px', lineHeight:1.3 }}>
+                {/* Icono */}
+                <div style={{ width:52, height:52, borderRadius:14, background:'rgba(2,212,126,.12)', border:'1px solid rgba(2,212,126,.18)', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:'1.2rem', fontSize:'1.7rem' }}>
+                  🚀
+                </div>
+
+                <h3 style={{ fontSize:'1.15rem', fontWeight:900, color:'#fff', margin:'0 0 10px', lineHeight:1.25 }}>
                   ¿Listo para empezar?
                 </h3>
-                <p style={{ fontSize:'.82rem', color:'rgba(4,57,65,.6)', margin:'0 0 2rem', lineHeight:1.7 }}>
-                  Abre tu cuenta o contacta a nuestro equipo directamente.
+                <p style={{ fontSize:'.82rem', color:'rgba(255,255,255,.5)', margin:'0 0 1.8rem', lineHeight:1.7 }}>
+                  Accede a la plataforma o escríbenos directamente. Te ayudamos a incorporar tu colegio en menos de 24h.
                 </p>
 
                 <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
                   <button
                     onClick={goToApp}
-                    style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.9rem 1.2rem', borderRadius:12, background:'#02d47e', color:'#043941', fontWeight:800, fontSize:'.82rem', border:'none', cursor:'pointer', transition:'all .2s', boxShadow:'0 4px 12px rgba(2,212,126,.25)' }}
-                    onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 20px rgba(2,212,126,.4)' }}
-                    onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 4px 12px rgba(2,212,126,.25)' }}
+                    style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.95rem 1.2rem', borderRadius:12, background:'#02d47e', color:'#043941', fontWeight:800, fontSize:'.85rem', border:'none', cursor:'pointer', transition:'all .2s', boxShadow:'0 4px 16px rgba(2,212,126,.35)' }}
+                    onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 24px rgba(2,212,126,.5)' }}
+                    onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 4px 16px rgba(2,212,126,.35)' }}
                   >
-                    🚀 Ingresar
+                    🚀 Ingresar a la plataforma
                   </button>
 
                   <a
                     href="https://wa.me/51900000000?text=Hola%2C+soy+docente+EPT+y+tengo+una+consulta+sobre+GRAMA+LXP+%F0%9F%91%8B"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.9rem 1.2rem', borderRadius:12, background:'#25d366', color:'#fff', fontWeight:800, fontSize:'.82rem', textDecoration:'none', border:'none', cursor:'pointer', transition:'all .2s', boxShadow:'0 4px 12px rgba(37,211,102,.2)' }}
-                    onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 20px rgba(37,211,102,.4)' }}
-                    onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 4px 12px rgba(37,211,102,.2)' }}
+                    style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.95rem 1.2rem', borderRadius:12, background:'#25d366', color:'#fff', fontWeight:800, fontSize:'.85rem', textDecoration:'none', transition:'all .2s', boxShadow:'0 4px 12px rgba(37,211,102,.25)' }}
+                    onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 20px rgba(37,211,102,.45)' }}
+                    onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 4px 12px rgba(37,211,102,.25)' }}
                   >
                     💬 WhatsApp
                   </a>
 
                   <a
                     href="mailto:contacto@grama.pe"
-                    style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.9rem 1.2rem', borderRadius:12, background:'transparent', color:'#043941', fontWeight:800, fontSize:'.82rem', textDecoration:'none', border:'1.5px solid rgba(4,57,65,.15)', cursor:'pointer', transition:'all .2s' }}
-                    onMouseEnter={e => { e.currentTarget.style.background='rgba(4,57,65,.03)'; e.currentTarget.style.borderColor='rgba(4,57,65,.25)' }}
-                    onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderColor='rgba(4,57,65,.15)' }}
+                    style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.95rem 1.2rem', borderRadius:12, background:'transparent', color:'rgba(255,255,255,.65)', fontWeight:700, fontSize:'.85rem', textDecoration:'none', border:'1px solid rgba(255,255,255,.14)', transition:'all .2s' }}
+                    onMouseEnter={e => { e.currentTarget.style.background='rgba(255,255,255,.06)'; e.currentTarget.style.borderColor='rgba(255,255,255,.25)' }}
+                    onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderColor='rgba(255,255,255,.14)' }}
                   >
-                    📧 Email
+                    📧 Escribir por email
                   </a>
                 </div>
 
-                <p style={{ fontSize:'.7rem', textAlign:'center', margin:'1.6rem 0 0', color:'rgba(4,57,65,.4)', lineHeight:1.5 }}>
-                  Equipo GRAMA<br/>Respuesta &lt; 24h
+                <p style={{ fontSize:'.68rem', textAlign:'center', margin:'1.4rem 0 0', color:'rgba(255,255,255,.25)', lineHeight:1.5 }}>
+                  Equipo GRAMA · Programa TSF-MINEDU
                 </p>
               </div>
             </div>
-
           </div>
+
         </div>
       </section>
 
