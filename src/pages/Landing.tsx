@@ -780,100 +780,182 @@ export default function Landing() {
       </header>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section ref={heroRef} style={{ minHeight:'100vh', display:'flex', flexDirection:'column', background:'#f0fdf6', position:'relative', overflow:'hidden' }}>
+      <section ref={heroRef} style={{
+        minHeight: '100vh', paddingTop: 60,
+        background: 'linear-gradient(135deg, #e8f8f2 0%, #e3f8fb 50%, #edf6ff 100%)',
+        display: 'grid', gridTemplateColumns: '1fr 1fr',
+        alignItems: 'center', gap: 48,
+        padding: '100px 52px 60px',
+        position: 'relative', overflow: 'hidden',
+      }}>
 
-        {/* s1 — large mint triangle, top center-right */}
-        <div style={{ position:'absolute', top:-260, left:'58%', transform:'translateX(-50%)', width:560, height:560, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', animation:'heroFa 15s ease-in-out infinite', pointerEvents:'none' }} />
-        {/* s1b — dark teal over s1 */}
-        <div style={{ position:'absolute', top:-140, left:'64%', transform:'translateX(-50%)', width:260, height:260, background:'#043941', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', animation:'heroFa 15s ease-in-out infinite .5s', pointerEvents:'none' }} />
-        {/* s2 — yellow vertical bar, top-left, rounded bottom */}
-        <div style={{ position:'absolute', top:-60, left:'19%', width:112, height:270, background:'#f8ee91', borderRadius:'0 0 56px 56px', animation:'heroFb 11s ease-in-out infinite 1s', pointerEvents:'none' }} />
-        {/* s3 — dark teal right-pointing triangle */}
-        <div style={{ position:'absolute', top:'18%', right:-200, width:420, height:340, background:'#043941', clipPath:'polygon(100% 50%,0% 0%,0% 100%)', animation:'heroFc 13s ease-in-out infinite .5s', pointerEvents:'none' }} />
-        {/* s3b — lilac triangle over s3 */}
-        <div style={{ position:'absolute', top:'23%', right:-90, width:200, height:160, background:'#d4c4fc', clipPath:'polygon(100% 50%,0% 0%,0% 100%)', animation:'heroFc 13s ease-in-out infinite 1s', pointerEvents:'none' }} />
-        {/* s4 — large mint triangle, bottom-left */}
-        <div style={{ position:'absolute', bottom:-250, left:'18%', transform:'translateX(-50%)', width:520, height:520, background:'#b8edd0', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', animation:'heroFd 14s ease-in-out infinite 1.5s', pointerEvents:'none' }} />
-        {/* s4b — dark teal triangle over s4 */}
-        <div style={{ position:'absolute', bottom:-120, left:'10%', transform:'translateX(-50%)', width:240, height:240, background:'#043941', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', animation:'heroFd 14s ease-in-out infinite 2s', pointerEvents:'none' }} />
-        {/* s5 — lilac triangle, bottom-right */}
-        <div style={{ position:'absolute', bottom:-180, left:'78%', transform:'translateX(-50%)', width:380, height:380, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', animation:'heroFd 16s ease-in-out infinite 3s', pointerEvents:'none' }} />
-        {/* s6 — dark teal left-pointing triangle */}
-        <div style={{ position:'absolute', top:'52%', left:-210, width:440, height:360, background:'#043941', clipPath:'polygon(0% 50%,100% 0%,100% 100%)', animation:'heroFe 13s ease-in-out infinite 2s', pointerEvents:'none' }} />
-        {/* s7 — spinning green cross */}
-        <div style={{ position:'absolute', top:'10%', left:'6%', width:60, height:60, background:'#02d47e', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 18s linear infinite', pointerEvents:'none' }} />
-        {/* s8 — yellow rotated square */}
-        <div style={{ position:'absolute', top:'46%', left:'5%', width:50, height:50, background:'#f8ee91', borderRadius:6, animation:'heroFf 9s ease-in-out infinite 1.2s', pointerEvents:'none' }} />
+        {/* ── Formas de fondo ── */}
+        <div style={{ position:'absolute', bottom:-120, left:-80, width:400, height:400, background:'#02d47e', clipPath:'polygon(0 0,100% 0,0 100%)', opacity:.05, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:-60, right:-60, width:280, height:280, background:'#043941', clipPath:'polygon(100% 0,100% 100%,0 100%)', opacity:.04, borderRadius:'0 0 0 60%', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'30%', left:'46%', width:120, height:120, background:'#f8ee91', borderRadius:18, opacity:.18, transform:'rotate(22deg)', animation:'heroFf 10s ease-in-out infinite', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'18%', right:'6%', width:64, height:64, background:'#d4c4fc', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.35, animation:'heroFb 8s ease-in-out infinite 1s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:'14%', left:'46%', width:44, height:44, background:'#02d47e', borderRadius:'50%', opacity:.25, animation:'heroFf 7s ease-in-out infinite 2s', pointerEvents:'none' }} />
 
-        {/* ── Hero Top ── */}
-        <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', padding:'100px 5vw 60px', position:'relative' }}>
-          <div className="relative z-10 text-center w-full" style={{ maxWidth:900, margin:'0 auto' }}>
+        {/* ── Columna izquierda ── */}
+        <div style={{ position:'relative', zIndex:2, animation:'heroNavIn .7s ease both' }}>
 
-            {/* Title */}
-            <h1 className="animate-fade-in-up stagger-2" style={{ fontSize:'clamp(2.8rem,7.5vw,6.5rem)', fontWeight:900, lineHeight:.95, letterSpacing:'-.05em', marginBottom:0 }}>
-              <span style={{ display:'block', color:'#043941' }}>Tu plataforma</span>
-              <span style={{ display:'inline-block', color:'#043941', background:'#02d47e', padding:'.05em .22em .1em', borderRadius:12, margin:'.06em 0' }}>educativa</span>
-              <span style={{ display:'block', color:'#043941' }}>para formación.</span>
-            </h1>
+          {/* Badge */}
+          <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(2,212,126,.12)', border:'1px solid rgba(2,212,126,.3)', color:'#043941', padding:'6px 14px', borderRadius:100, fontSize:11, fontWeight:700, letterSpacing:'.8px', textTransform:'uppercase', marginBottom:28 }}>
+            <span style={{ width:7, height:7, borderRadius:'50%', background:'#02d47e', boxShadow:'0 0 0 3px rgba(2,212,126,.25)', animation:'heroPulse 2s infinite', display:'inline-block' }} />
+            Plataforma Nacional · MINEDU Perú
+          </div>
 
-            {/* Subtitle */}
-            <p className="animate-fade-in-up stagger-3"
-              style={{ fontSize:'clamp(.88rem,1.4vw,.96rem)', color:'rgba(4,57,65,.55)', lineHeight:1.85, maxWidth:500, margin:'1.8rem auto 2.4rem', fontWeight:400 }}>
-              Una plataforma para <strong style={{ color:'#043941', fontWeight:700 }}>docentes, alumnos y directores</strong> EPT. Formación especializada, conectada y gratuita para toda la comunidad educativa del Perú.
+          {/* H1 */}
+          <h1 style={{ fontSize:'clamp(2.4rem,4.2vw,3.8rem)', fontWeight:900, lineHeight:1.04, letterSpacing:'-1.8px', color:'#043941', marginBottom:22 }}>
+            Formación técnica<br />
+            que{' '}
+            <em style={{ fontStyle:'normal', color:'#00c16e', position:'relative' }}>
+              transforma
+              <svg style={{ position:'absolute', bottom:-6, left:0, width:'100%', height:8 }} viewBox="0 0 200 8" preserveAspectRatio="none">
+                <path d="M0,6 Q50,0 100,5 Q150,10 200,4" stroke="#02d47e" strokeWidth="2.5" fill="none" strokeLinecap="round" opacity=".6"/>
+              </svg>
+            </em>
+            <br />la educación
+          </h1>
+
+          {/* Subtexto */}
+          <div style={{ background:'rgba(255,255,255,.65)', border:'1.5px solid rgba(4,57,65,.09)', borderRadius:12, padding:'14px 18px', marginBottom:32, maxWidth:440, backdropFilter:'blur(6px)' }}>
+            <p style={{ fontSize:14, color:'#5a7a80', lineHeight:1.65, fontWeight:500, margin:0 }}>
+              La plataforma LMS para capacitar a docentes de talleres EPT en los 24 departamentos del Perú. Sin papeles, sin complicaciones.
             </p>
+          </div>
 
-            {/* Buttons */}
-            <div className="flex items-center justify-center flex-wrap gap-4 animate-fade-in-up stagger-4">
-              <button
-                onClick={isLoggedIn ? goToApp : () => navigate('/login')}
-                className="inline-flex items-center gap-2 transition-all hover:-translate-y-0.5"
-                style={{ background:'#02d47e', color:'#043941', fontSize:'.9rem', fontWeight:800, padding:'1rem 2.2rem', borderRadius:100, boxShadow:'0 6px 22px rgba(2,212,126,.45)', border:'none', cursor:'pointer' }}
-                onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 10px 30px rgba(2,212,126,.6)')}
-                onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 6px 22px rgba(2,212,126,.45)')}
-              >
-                {isLoggedIn ? 'Ir a la plataforma' : 'Comenzar ahora'}
-                <ArrowRight size={14} />
-              </button>
-              <a
-                href="#talleres"
-                className="inline-flex items-center gap-2 transition-all hover:-translate-y-0.5"
-                style={{ color:'#043941', fontSize:'.86rem', fontWeight:800, border:'2px solid #043941', padding:'.96rem 1.8rem', borderRadius:100, background:'transparent', textDecoration:'none' }}
-                onMouseEnter={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.color='#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='#043941' }}
-              >
-                Ver talleres
-                <ChevronRight size={12} />
-              </a>
+          {/* CTAs */}
+          <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
+            <button
+              onClick={isLoggedIn ? goToApp : () => navigate('/login')}
+              style={{ background:'#043941', color:'#fff', padding:'13px 28px', borderRadius:9, fontSize:14, fontWeight:700, border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:7, boxShadow:'0 4px 20px rgba(4,57,65,.25)', transition:'all .2s' }}
+              onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none' }}
+            >
+              {isLoggedIn ? 'Ir a la plataforma' : 'Empieza ahora'} <ArrowRight size={14} />
+            </button>
+            <a href="#perfiles" style={{ border:'1.5px solid #043941', color:'#043941', padding:'12px 22px', borderRadius:9, fontSize:14, fontWeight:600, textDecoration:'none', display:'flex', alignItems:'center', gap:7, transition:'all .2s' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background='#043941'; (e.currentTarget as HTMLAnchorElement).style.color='#fff' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background='transparent'; (e.currentTarget as HTMLAnchorElement).style.color='#043941' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4" fill="none"/><polygon points="5.5,4.5 10,7 5.5,9.5" fill="currentColor"/></svg>
+              Ver cómo funciona
+            </a>
+          </div>
+
+          {/* Social proof mini */}
+          <div style={{ marginTop:36, display:'flex', alignItems:'center', gap:14 }}>
+            <div style={{ display:'flex' }}>
+              {['#02d47e','#045f6c','#f8ee91','#d4c4fc'].map((c,i) => (
+                <div key={i} style={{ width:28, height:28, borderRadius:'50%', background:c, border:'2px solid #fff', marginLeft: i > 0 ? -8 : 0, display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, fontWeight:800, color:'#043941' }}>
+                  {['D','A','D','D'][i]}
+                </div>
+              ))}
             </div>
-
+            <p style={{ fontSize:12, color:'#5a7a80', fontWeight:500, margin:0 }}>
+              <strong style={{ color:'#043941' }}>36+ docentes</strong> ya capacitados en la plataforma
+            </p>
           </div>
         </div>
 
-        {/* ── Stats bar ── */}
-        <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 animate-fade-in-up"
-          style={{ background:'#fff', borderTop:'1px solid rgba(4,57,65,.08)', animationDelay:'.7s' }}>
+        {/* ── Columna derecha — mockup visual ── */}
+        <div style={{ position:'relative', zIndex:2, animation:'heroNavIn .7s .22s ease both' }}>
+
+          {/* Contenedor principal oscuro */}
+          <div style={{
+            background:'linear-gradient(135deg, #032b31 0%, #043941 55%, #045f6c 100%)',
+            borderRadius:24, padding:28, minHeight:380,
+            boxShadow:'0 32px 80px rgba(4,57,65,.28)',
+            position:'relative', overflow:'hidden',
+          }}>
+            {/* Formas decorativas internas */}
+            <div style={{ position:'absolute', bottom:-50, right:-50, width:180, height:180, background:'#02d47e', clipPath:'polygon(100% 0,100% 100%,0 100%)', opacity:.1, pointerEvents:'none' }} />
+            <div style={{ position:'absolute', top:-30, left:'40%', width:90, height:90, background:'rgba(255,255,255,.04)', clipPath:'polygon(50% 0,100% 100%,0 100%)', pointerEvents:'none' }} />
+
+            {/* Header del mockup */}
+            <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:20 }}>
+              <div style={{ width:32, height:32, borderRadius:8, background:'rgba(2,212,126,.15)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><polygon points="2,22 12,2 12,22" fill="#02d47e"/><polygon points="12,2 22,12 12,12" fill="rgba(255,255,255,0.85)"/></svg>
+              </div>
+              <div>
+                <p style={{ fontSize:12, fontWeight:800, color:'#fff', margin:0 }}>GRAMA Platform</p>
+                <p style={{ fontSize:10, color:'rgba(2,212,126,.8)', margin:0 }}>Panel del Docente</p>
+              </div>
+              <div style={{ marginLeft:'auto', display:'flex', gap:5 }}>
+                {['#ef4444','#f59e0b','#02d47e'].map(c => <div key={c} style={{ width:8, height:8, borderRadius:'50%', background:c }} />)}
+              </div>
+            </div>
+
+            {/* Mini taller cards */}
+            {[
+              { name:'Mecánica Automotriz', prog:68, color:'#3b82f6' },
+              { name:'Industria del Vestido', prog:42, color:'#ec4899' },
+              { name:'Ebanistería', prog:91, color:'#b8975a' },
+            ].map((t, i) => (
+              <div key={i} style={{ background:'rgba(255,255,255,.06)', borderRadius:12, padding:'10px 14px', marginBottom:8, display:'flex', alignItems:'center', gap:12, animation:`heroNavIn .5s ${.3 + i*.12}s ease both` }}>
+                <div style={{ width:8, height:8, borderRadius:'50%', background:t.color, boxShadow:`0 0 6px ${t.color}`, flexShrink:0 }} />
+                <div style={{ flex:1, minWidth:0 }}>
+                  <p style={{ fontSize:11, fontWeight:700, color:'rgba(255,255,255,.9)', margin:'0 0 4px', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{t.name}</p>
+                  <div style={{ height:4, background:'rgba(255,255,255,.1)', borderRadius:4, overflow:'hidden' }}>
+                    <div style={{ height:'100%', width:`${t.prog}%`, background:`linear-gradient(90deg, ${t.color}, #02d47e)`, borderRadius:4 }} />
+                  </div>
+                </div>
+                <span style={{ fontSize:11, fontWeight:800, color:'#02d47e', flexShrink:0 }}>{t.prog}%</span>
+              </div>
+            ))}
+
+            {/* Stat badges flotantes */}
+            <div style={{ display:'flex', gap:8, marginTop:16 }}>
+              {[
+                { label:'Módulos completados', val:'4/7', color:'rgba(2,212,126,.15)', text:'#02d47e' },
+                { label:'Siguiente sesión', val:'Martes', color:'rgba(248,238,145,.1)', text:'#f8ee91' },
+              ].map((s,i) => (
+                <div key={i} style={{ flex:1, background:s.color, borderRadius:10, padding:'10px 12px' }}>
+                  <p style={{ fontSize:9, color:'rgba(255,255,255,.5)', margin:'0 0 3px', textTransform:'uppercase', letterSpacing:'.06em' }}>{s.label}</p>
+                  <p style={{ fontSize:16, fontWeight:900, color:s.text, margin:0 }}>{s.val}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Badge flotante — roles */}
+          <div style={{ position:'absolute', top:-16, right:-16, background:'#fff', borderRadius:14, padding:'10px 14px', boxShadow:'0 8px 28px rgba(4,57,65,.14)', display:'flex', alignItems:'center', gap:8, zIndex:3 }}>
+            <div style={{ width:32, height:32, borderRadius:8, background:'rgba(2,212,126,.12)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:14 }}>🎓</div>
+            <div>
+              <p style={{ fontSize:10, fontWeight:800, color:'#043941', margin:0 }}>3 roles disponibles</p>
+              <p style={{ fontSize:9, color:'#5a7a80', margin:0 }}>Docente · Alumno · Director</p>
+            </div>
+          </div>
+
+          {/* Badge flotante — certificación */}
+          <div style={{ position:'absolute', bottom:-16, left:-16, background:'#043941', borderRadius:14, padding:'10px 16px', boxShadow:'0 8px 28px rgba(4,57,65,.3)', display:'flex', alignItems:'center', gap:10, zIndex:3 }}>
+            <div style={{ width:32, height:32, borderRadius:'50%', background:'rgba(2,212,126,.2)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+              <CheckCircle size={16} color="#02d47e" />
+            </div>
+            <div>
+              <p style={{ fontSize:11, fontWeight:800, color:'#fff', margin:0 }}>Certificación MINEDU</p>
+              <p style={{ fontSize:9, color:'rgba(2,212,126,.7)', margin:0 }}>Al completar todos los módulos</p>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Stats bar (pegada al fondo del hero) ── */}
+        <div style={{ position:'absolute', bottom:0, left:0, right:0, background:'#043941', display:'grid', gridTemplateColumns:'repeat(4,1fr)', zIndex:3 }}>
           {[
-            { n:'10',  hi:'',  label:'Talleres EPT' },
-            { n:'36',  hi:'+', label:'Docentes capacitados' },
-            { n:'200', hi:'+', label:'Fichas descargables' },
-            { n:'150', hi:'h', label:'Formación híbrida' },
+            { n:'9',   hi:'',   label:'Talleres EPT' },
+            { n:'36',  hi:'+',  label:'Docentes capacitados' },
+            { n:'24',  hi:'',   label:'Departamentos' },
+            { n:'150', hi:'h',  label:'Formación híbrida' },
           ].map((s, i) => (
-            <div key={i} className="text-center" style={{ padding:'2rem 1.5rem', borderLeft: i > 0 ? '1px solid rgba(4,57,65,.08)' : 'none' }}>
-              <span style={{ display:'block', fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, color:'#043941', lineHeight:1, letterSpacing:'-.04em', marginBottom:'.4rem' }}>
-                {s.n}<span style={{ color:'#02d47e' }}>{s.hi}</span>
+            <div key={i} style={{ textAlign:'center', padding:'18px 16px', borderLeft: i > 0 ? '1px solid rgba(255,255,255,.06)' : 'none' }}>
+              <span style={{ display:'block', fontSize:'clamp(1.4rem,2.5vw,2rem)', fontWeight:900, color:'#02d47e', lineHeight:1, letterSpacing:'-.04em', marginBottom:4 }}>
+                {s.n}<span style={{ color:'rgba(255,255,255,.6)', fontSize:'.7em' }}>{s.hi}</span>
               </span>
-              <span style={{ fontSize:'.72rem', fontWeight:500, color:'rgba(4,57,65,.45)', letterSpacing:'.04em', textTransform:'uppercase' }}>{s.label}</span>
+              <span style={{ fontSize:'.6rem', fontWeight:600, color:'rgba(255,255,255,.4)', letterSpacing:'.08em', textTransform:'uppercase' }}>{s.label}</span>
             </div>
           ))}
         </div>
-
-        {/* Wave de cierre — transición blanco → #f0fdf6 */}
-        <div style={{ background: '#fff', lineHeight: 0 }}>
-          <svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" style={{ display:'block', width:'100%' }} preserveAspectRatio="none">
-            <path d="M0,36 C360,72 720,0 1080,36 C1260,54 1380,24 1440,36 L1440,72 L0,72 Z" fill="#f0fdf6" />
-          </svg>
-        </div>
-
       </section>
 
       {/* ══ POR QUÉ GRAMA ═══════════════════════════════════════════════════ */}
