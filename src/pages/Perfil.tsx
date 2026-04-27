@@ -2,17 +2,15 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
 import {
-  ChevronRight, LogOut, ArrowRight,
-  LayoutDashboard, BookOpen, Compass, User as UserIcon,
-  Activity, Trophy, Award, CalendarDays,
+  ChevronRight, ArrowRight,
+  Trophy, Award, CalendarDays,
   Zap, GraduationCap, Star, Users2,
-  Bell, HelpCircle, CheckCircle2, PlayCircle, Lock, MapPin,
+  CheckCircle2, PlayCircle, Lock, MapPin,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useProgress } from '@/contexts/ProgressContext'
 import { talleresConfig } from '@/data/talleresConfig'
 import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
-import { GramaLogo } from '@/components/GramaLogo'
 import { trackNavegacion } from '@/lib/tracker'
 import {
   getProximaSesion, formatFechaSesion,
@@ -353,166 +351,9 @@ export default function Perfil() {
   ]
 
   return (
-    <div className="flex min-h-screen" style={{ fontFamily: "'Manrope', sans-serif" }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif" }}>
 
-      {/* ── SIDEBAR ──────────────────────────────────────────────────────── */}
-      <aside
-        className="fixed top-0 left-0 h-full flex-col z-40 hidden lg:flex overflow-y-auto"
-        style={{ width: 190, background: '#043941', borderRight: '1px solid rgba(255,255,255,0.06)' }}
-      >
-        {/* Logo + subtítulo */}
-        <div className="px-4 pt-5 pb-4 border-b" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
-          <button onClick={() => navigate('/')} className="transition-opacity hover:opacity-80">
-            <GramaLogo variant="light" size="sm" />
-          </button>
-          <p className="text-[8px] font-extrabold uppercase tracking-widest mt-1.5" style={{ color: 'rgba(255,255,255,0.28)' }}>
-            Proyectos Educativos
-          </p>
-        </div>
-
-        {/* MIS TALLERES */}
-        {tallerSlugsAccesibles.length > 0 && (
-          <div className="px-3 pt-4 pb-3 border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-            <p className="text-[9px] font-extrabold uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.28)' }}>
-              Mis talleres
-            </p>
-            {tallerSlugsAccesibles.map(slug => {
-              const t  = talleresConfig.find(x => x.slug === slug)
-              const ta = TALLER_ACCENTS[slug] ?? '#02d47e'
-              const p  = getTallerProgreso(slug)
-              return (
-                <button
-                  key={slug}
-                  onClick={() => navigate(`/taller/${slug}`)}
-                  className="w-full flex items-center justify-between px-2 py-2 rounded-lg transition-all mb-0.5"
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.07)')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-                >
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: ta }} />
-                    <span className="text-xs font-bold truncate" style={{ color: 'rgba(255,255,255,0.8)' }}>
-                      {t?.nombreCorto ?? slug}
-                    </span>
-                  </div>
-                  <span className="text-[11px] font-extrabold flex-shrink-0 ml-1" style={{ color: ta }}>
-                    {p.porcentaje}%
-                  </span>
-                </button>
-              )
-            })}
-          </div>
-        )}
-
-        {/* MI CAPACITACIÓN */}
-        <div className="px-3 pt-3 pb-2">
-          <p className="text-[9px] font-extrabold uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.28)' }}>
-            Mi capacitación
-          </p>
-          {[
-            { Icon: LayoutDashboard, label: 'Inicio',       active: true,  badge: 0, onClick: () => {} },
-            { Icon: BookOpen,        label: 'Mis módulos',  active: false, badge: tallerSlugsAccesibles.length, onClick: () => tallerSlugsAccesibles[0] && navigate(`/taller/${tallerSlugsAccesibles[0]}/ruta`) },
-            { Icon: Activity,        label: 'Actividades',  active: false, badge: 0, onClick: () => {} },
-            { Icon: Trophy,          label: 'Mis logros',   active: false, badge: 0, onClick: () => {} },
-            { Icon: Award,           label: 'Certificados', active: false, badge: 0, onClick: () => {} },
-          ].map(item => (
-            <button
-              key={item.label}
-              onClick={item.onClick}
-              className="w-full flex items-center gap-2 px-2 py-2 rounded-lg text-left transition-all mb-0.5"
-              style={{
-                background: item.active ? 'rgba(2,212,126,0.15)' : 'transparent',
-                border:     item.active ? '1px solid rgba(2,212,126,0.25)' : '1px solid transparent',
-              }}
-              onMouseEnter={e => { if (!item.active) e.currentTarget.style.background = 'rgba(255,255,255,0.06)' }}
-              onMouseLeave={e => { if (!item.active) e.currentTarget.style.background = 'transparent' }}
-            >
-              <item.Icon size={13} style={{ color: item.active ? '#02d47e' : 'rgba(255,255,255,0.45)', flexShrink: 0 }} />
-              <span className="text-xs font-semibold flex-1 text-left" style={{ color: item.active ? '#02d47e' : 'rgba(255,255,255,0.6)' }}>
-                {item.label}
-              </span>
-              {item.badge > 0 && (
-                <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full" style={{ background: '#02d47e', color: '#043941' }}>
-                  {item.badge}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-
-        {/* GRAMA */}
-        <div className="px-3 pt-1 pb-2 mt-auto">
-          <p className="text-[9px] font-extrabold uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.28)' }}>
-            GRAMA
-          </p>
-          {[
-            { Icon: Compass,  label: 'Explorar talleres', onClick: () => navigate('/') },
-            { Icon: Bell,     label: 'Notificaciones',    onClick: () => {} },
-            { Icon: UserIcon, label: 'Mi perfil',         onClick: () => {} },
-          ].map(item => (
-            <button
-              key={item.label}
-              onClick={item.onClick}
-              className="w-full flex items-center gap-2 px-2 py-2 rounded-lg text-left transition-all mb-0.5"
-              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}
-              onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-            >
-              <item.Icon size={13} style={{ color: 'rgba(255,255,255,0.4)', flexShrink: 0 }} />
-              <span className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.55)' }}>{item.label}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* User footer */}
-        <div className="px-3 py-3 border-t" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
-          <div className="flex items-center gap-2">
-            <div
-              className="h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-black"
-              style={{ background: primaryAccent, color: '#043941' }}
-            >
-              {getInitials(displayName)}
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold truncate leading-snug" style={{ color: 'rgba(255,255,255,0.85)' }}>{displayName}</p>
-              <p className="text-[10px] truncate leading-snug" style={{ color: 'rgba(255,255,255,0.35)' }}>Docente EPT · {ieLabel}</p>
-            </div>
-            <button
-              onClick={async () => { await signOut(); navigate('/login', { replace: true }) }}
-              className="h-6 w-6 rounded flex items-center justify-center flex-shrink-0 transition-colors hover:bg-white/10"
-              title="Cerrar sesión"
-            >
-              <LogOut size={12} style={{ color: 'rgba(255,255,255,0.35)' }} />
-            </button>
-          </div>
-        </div>
-      </aside>
-
-      {/* ── MAIN ─────────────────────────────────────────────────────────── */}
-      <style>{`@media(min-width:1024px){.pm{margin-left:190px}}`}</style>
-      <main className="pm flex-1 flex flex-col min-h-screen" style={{ background: '#f5f7f6' }}>
-
-        {/* Header */}
-        <header
-          className="sticky top-0 z-30 flex items-center justify-between border-b px-8"
-          style={{ background: '#ffffff', borderColor: 'rgba(4,57,65,0.08)', height: 56 }}
-        >
-          <div>
-            <p className="text-sm font-black" style={{ color: '#043941' }}>Mi capacitación</p>
-            <p className="text-[11px]" style={{ color: '#94a3b8' }}>{ieSubhead}</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <p className="text-[11px] font-medium hidden md:block mr-1" style={{ color: '#94a3b8' }}>
-              {fechaHoy.charAt(0).toUpperCase() + fechaHoy.slice(1)}
-            </p>
-            <button className="h-8 w-8 rounded-full flex items-center justify-center transition-colors hover:bg-black/[0.05]">
-              <Bell size={15} style={{ color: 'rgba(4,57,65,0.4)' }} />
-            </button>
-            <button className="h-8 w-8 rounded-full flex items-center justify-center transition-colors hover:bg-black/[0.05]">
-              <HelpCircle size={15} style={{ color: 'rgba(4,57,65,0.4)' }} />
-            </button>
-          </div>
-        </header>
-
-        {/* Hero */}
+      {/* Hero */}
         <div
           className="relative overflow-hidden"
           style={{ background: 'linear-gradient(135deg,#043941 0%,#055c6a 60%,#043941 100%)', minHeight: 148 }}
@@ -787,7 +628,6 @@ export default function Perfil() {
           </div>
 
         </div>
-      </main>
     </div>
   )
 }

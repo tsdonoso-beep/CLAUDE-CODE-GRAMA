@@ -21,8 +21,11 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
   const displayEmail = profile?.email ?? user?.email ?? ''
 
   const crumbs: { label: string; to?: string }[] = []
-  if (taller) {
-    crumbs.push({ label: taller.nombreCorto, to: `/taller/${slug}` })
+  if (location.pathname === '/perfil') {
+    crumbs.push({ label: 'Mi capacitación' })
+  } else if (taller) {
+    crumbs.push({ label: 'Mi perfil', to: '/perfil' })
+    crumbs.push({ label: taller.nombreCorto, to: location.pathname === `/taller/${slug}` ? undefined : `/taller/${slug}` })
     if (location.pathname.includes('/ruta')) {
       crumbs.push({ label: 'Ruta de Aprendizaje', to: num ? `/taller/${slug}/ruta` : undefined })
       if (num) crumbs.push({ label: `Módulo ${num}` })

@@ -72,10 +72,10 @@ const App = () => (
                 <Route element={<RequireAuth />}>
                   {/* Hub: sin sidebar */}
                   <Route path="/hub" element={wrap(Bienvenida)} />
-                  <Route path="/perfil" element={wrap(Perfil)} />
 
-                  {/* App con sidebar */}
+                  {/* App con sidebar — incluye perfil */}
                   <Route element={<AppShell />}>
+                    <Route path="/perfil"                              element={wrap(Perfil)} />
                     <Route path="/taller/:slug"                        element={wrap(TallerHub)} />
                     <Route path="/taller/:slug/ruta"                   element={wrap(RutaAprendizaje)} />
                     <Route path="/taller/:slug/ruta/modulo/:num"       element={wrap(ModuloDetalle)} />
