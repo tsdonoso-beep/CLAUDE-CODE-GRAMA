@@ -795,8 +795,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
         {tab === 'progreso' && (
           <div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
-              {docentes.slice().sort((a, b) => (b.contenidosCompletados ?? 0) - (a.contenidosCompletados ?? 0)).map(d => {
-                const pct = Math.round(((d.contenidosCompletados ?? 0) / Math.max(getTotalContenidosLXP(), 1)) * 100)
+              {docentes.slice().sort((a, b) => (b.completados ?? 0) - (a.completados ?? 0)).map(d => {
+                const pct = Math.round(((d.completados ?? 0) / Math.max(getTotalContenidosLXP(), 1)) * 100)
                 return (
                   <div key={d.id} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, padding: '1.1rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '.65rem', marginBottom: '.75rem' }}>
@@ -812,7 +812,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     <div style={{ height: 4, background: 'rgba(255,255,255,0.08)', borderRadius: 4, overflow: 'hidden' }}>
                       <div style={{ height: '100%', width: `${pct}%`, background: pct >= 70 ? '#02d47e' : pct >= 30 ? '#f59e0b' : 'rgba(255,255,255,0.2)', borderRadius: 4, transition: 'width .4s ease' }} />
                     </div>
-                    <p style={{ fontSize: '.62rem', color: 'rgba(255,255,255,0.28)', marginTop: '.4rem' }}>{d.contenidosCompletados ?? 0} / {getTotalContenidosLXP()} contenidos</p>
+                    <p style={{ fontSize: '.62rem', color: 'rgba(255,255,255,0.28)', marginTop: '.4rem' }}>{d.completados ?? 0} / {getTotalContenidosLXP()} contenidos</p>
                   </div>
                 )
               })}
@@ -1866,7 +1866,6 @@ Equipo GRAMA · Programa TSF-MINEDU`
         )
       })()}
 
-        </main>
       </div>
     </div>
   )
