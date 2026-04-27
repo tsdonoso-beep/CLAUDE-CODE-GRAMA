@@ -283,6 +283,8 @@ export default function Admin() {
   const [filtroAnalyticsDocente, setFiltroAnalyticsDocente] = useState('')
   const [busquedaDocente, setBusquedaDocente] = useState('')
   const [quizStats, setQuizStats] = useState<QuizStat[]>([])
+  const [filtroInactividad, setFiltroInactividad] = useState<7 | 14 | 30>(30)
+  const [copiadoEmailsRetención, setCopiadoEmailsRetención] = useState(false)
 
   useEffect(() => { fetchData(); fetchSolicitudes(); fetchConsultasAdmin() }, [])
   useEffect(() => { if (tab === 'analytics') fetchAnalytics(filtroAnalyticsDocente || undefined) }, [tab, filtroAnalyticsDocente])
@@ -1484,6 +1486,124 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 </div>
               </div>
             )}
+
+            {/* ── Retención: docentes inactivos ─────────────────────────── */}
+            {(() => {
+              const ahora = Date.now()
+              const diasMs = filtroInactividad * 24 * 60 * 60 * 1000
+              const inactivos = docentes
+                .filter(d => {
+                  if (!d.last_seen_at) return true
+                  return ahora - new Date(d.last_seen_at).getTime() > diasMs
+                })
+                .map(d => ({
+                  ...d,
+                  diasSinAcceso: d.last_seen_at
+                    ? Math.floor((ahora - new Date(d.last_seen_at).getTime()) / 86400000)
+                    : null,
+                }))
+                .sort((a, b) => (b.diasSinAcceso ?? 9999) - (a.diasSinAcceso ?? 9999))
+
+              const emailsTodos = inactivos.map(d => d.email).filter(Boolean).join(', ')
+
+              return (
+                <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  {/* Header */}
+                  <div style={{ padding: '1.1rem 1.5rem', background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '.75rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
+                      <AlertTriangle size={14} color="#f59e0b" />
+                      <h3 style={{ fontSize: '.88rem', fontWeight: 800, color: '#fff' }}>Retención</h3>
+                      <span style={{ fontSize: '.65rem', color: 'rgba(255,255,255,0.28)' }}>
+                        docentes sin actividad reciente
+                      </span>
+                    </div>
+                    {/* filtro días */}
+                    <div style={{ display: 'flex', gap: '.35rem' }}>
+                      {([7, 14, 30] as const).map(d => (
+                        <button key={d} onClick={() => setFiltroInactividad(d)}
+                          style={{ fontSize: '.68rem', fontWeight: 700, padding: '.28rem .7rem', borderRadius: 20, cursor: 'pointer', border: 'none', transition: 'all .15s',
+                            background: filtroInactividad === d ? '#02d47e' : 'rgba(255,255,255,0.07)',
+                            color: filtroInactividad === d ? '#043941' : 'rgba(255,255,255,0.45)',
+                          }}>
+                          +{d}d
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Summary banner */}
+                  <div style={{ padding: '.7rem 1.5rem', background: inactivos.length > 0 ? 'rgba(245,158,11,0.06)' : 'rgba(2,212,126,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+                    <p style={{ fontSize: '.78rem', color: inactivos.length > 0 ? '#f59e0b' : '#02d47e', fontWeight: 700 }}>
+                      {inactivos.length === 0
+                        ? `✓ Todos los docentes activos en los últimos ${filtroInactividad} días`
+                        : `${inactivos.length} docente${inactivos.length !== 1 ? 's' : ''} sin actividad en los últimos ${filtroInactividad} días`}
+                    </p>
+                    {inactivos.length > 0 && emailsTodos && (
+                      <button
+                        onClick={() => { navigator.clipboard.writeText(emailsTodos); setCopiadoEmailsRetención(true); setTimeout(() => setCopiadoEmailsRetención(false), 2000) }}
+                        style={{ display: 'flex', alignItems: 'center', gap: '.35rem', fontSize: '.68rem', fontWeight: 700, padding: '.3rem .8rem', borderRadius: 8, cursor: 'pointer', border: '1px solid rgba(245,158,11,0.3)', background: copiadoEmailsRetención ? 'rgba(2,212,126,0.12)' : 'rgba(245,158,11,0.1)', color: copiadoEmailsRetención ? '#02d47e' : '#f59e0b', flexShrink: 0, transition: 'all .2s' }}>
+                        {copiadoEmailsRetención ? <><CheckCircle size={11} /> Copiados</> : <><Copy size={11} /> Copiar todos los emails</>}
+                      </button>
+                    )}
+                  </div>
+
+                  {/* List */}
+                  {inactivos.length > 0 && (
+                    <div>
+                      {inactivos.map((d, i) => {
+                        const dias = d.diasSinAcceso
+                        const diasColor = dias === null || dias > 60 ? '#ef4444' : dias > 30 ? '#f59e0b' : dias > 14 ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.35)'
+                        const slugs = d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : []
+                        const initials = (d.nombre_completo ?? d.email ?? '?').split(' ').slice(0, 2).map((w: string) => w[0]).join('').toUpperCase()
+                        return (
+                          <div key={d.id}
+                            style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '.85rem 1.5rem', borderBottom: i < inactivos.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none', cursor: 'pointer', transition: 'background .15s' }}
+                            className="hover:bg-white/[0.03]"
+                            onClick={() => setDocenteDetalle(d)}>
+                            {/* avatar */}
+                            <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(245,158,11,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.65rem', fontWeight: 800, color: '#f59e0b', flexShrink: 0 }}>
+                              {initials}
+                            </div>
+                            {/* name + email */}
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <p style={{ fontSize: '.78rem', fontWeight: 700, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.nombre_completo}</p>
+                              <p style={{ fontSize: '.65rem', color: 'rgba(255,255,255,0.35)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.email}</p>
+                            </div>
+                            {/* talleres */}
+                            <div style={{ display: 'flex', gap: '.25rem', flexShrink: 0, flexWrap: 'wrap', maxWidth: 160 }}>
+                              {slugs.length > 0
+                                ? slugs.map(s => <span key={s} style={{ fontSize: '.6rem', fontWeight: 700, background: 'rgba(2,212,126,0.1)', color: '#02d47e', padding: '.12rem .35rem', borderRadius: 5 }}>{talleresConfig.find(t => t.slug === s)?.nombreCorto ?? s}</span>)
+                                : <span style={{ fontSize: '.6rem', color: 'rgba(255,255,255,0.2)' }}>Sin taller</span>}
+                            </div>
+                            {/* progreso */}
+                            <div style={{ width: 80, flexShrink: 0 }}>
+                              <div style={{ height: 4, background: 'rgba(255,255,255,0.07)', borderRadius: 4, overflow: 'hidden', marginBottom: '.2rem' }}>
+                                <div style={{ height: '100%', width: `${d.porcentaje}%`, background: d.porcentaje >= 50 ? '#02d47e' : 'rgba(255,255,255,0.2)', borderRadius: 4 }} />
+                              </div>
+                              <p style={{ fontSize: '.6rem', color: 'rgba(255,255,255,0.28)', textAlign: 'right' }}>{d.porcentaje}%</p>
+                            </div>
+                            {/* días badge */}
+                            <div style={{ width: 56, flexShrink: 0, textAlign: 'right' }}>
+                              <span style={{ fontSize: '.7rem', fontWeight: 800, color: diasColor }}>
+                                {dias === null ? 'Nunca' : `${dias}d`}
+                              </span>
+                            </div>
+                            {/* copy email */}
+                            <button
+                              onClick={e => { e.stopPropagation(); navigator.clipboard.writeText(d.email ?? '') }}
+                              title="Copiar email"
+                              style={{ flexShrink: 0, width: 28, height: 28, borderRadius: 7, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.3)' }}
+                              className="hover:text-white hover:bg-white/10">
+                              <Copy size={11} />
+                            </button>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+              )
+            })()}
           </div>
         )}
 
