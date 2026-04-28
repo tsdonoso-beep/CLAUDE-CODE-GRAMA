@@ -418,7 +418,7 @@ export default function Perfil() {
         </div>
 
         {/* Content */}
-        <style>{`@media(min-width:1280px){.perfil-content{display:grid;grid-template-columns:1fr 340px;grid-template-areas:"cards calendar" "modulos logros";gap:20px;align-items:start}}`}</style>
+        <style>{`@media(min-width:1280px){.perfil-content{display:grid;grid-template-columns:1fr 340px;grid-template-areas:"cards calendar";gap:20px;align-items:start}}`}</style>
         <div className="perfil-content flex-1 p-6 space-y-5 xl:space-y-0">
 
           {/* ── 1. Cards (grid area: cards) ──────────────────────────────── */}
@@ -522,116 +522,6 @@ export default function Perfil() {
             </div>
           )}
 
-          {/* ── 3. Mis módulos (grid area: modulos) ──────────────────────── */}
-          <div
-            className="rounded-2xl overflow-hidden"
-            id="mis-modulos"
-            style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.04)', gridArea: 'modulos' }}
-          >
-            <div className="px-5 pt-4 pb-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
-              <p className="text-sm font-black" style={{ color: '#043941' }}>Mis módulos</p>
-              <p className="text-[11px]" style={{ color: '#94a3b8' }}>Continúa donde lo dejaste en cada taller</p>
-            </div>
-            <div>
-              {tallerSlugsAccesibles.map((s, ti) => {
-                const t   = talleresConfig.find(x => x.slug === s)
-                const ta  = TALLER_ACCENTS[s] ?? '#02d47e'
-                const p   = getTallerProgreso(s)
-                const idx = Math.min(Math.floor((p.porcentaje / 100) * modulosLXP.length), modulosLXP.length - 1)
-                const mod = modulosLXP[idx]
-                if (!mod) return null
-                const fraccion = (p.porcentaje - (idx * 100 / modulosLXP.length)) / (100 / modulosLXP.length)
-                const activo   = Math.min(Math.floor(fraccion * mod.sesiones.length), mod.sesiones.length - 1)
-                return (
-                  <div key={s} className={ti > 0 ? 'border-t' : ''} style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
-                    {/* Header de taller */}
-                    <button
-                      className="w-full flex items-center gap-2 px-5 py-2.5 transition-colors hover:bg-slate-50 text-left"
-                      onClick={() => navigate(`/taller/${s}/ruta`)}
-                    >
-                      <span className="w-2 h-2 rounded-full shrink-0" style={{ background: ta }} />
-                      <span className="text-xs font-extrabold flex-1" style={{ color: '#043941' }}>{t?.nombreCorto ?? s}</span>
-                      <span className="text-[10px] font-bold" style={{ color: ta }}>{p.porcentaje}%</span>
-                      <ArrowRight size={11} style={{ color: ta }} />
-                    </button>
-                    {/* Sesiones del módulo activo */}
-                    <div className="pb-1">
-                      {mod.sesiones.slice(0, 3).map((ses, i) => {
-                        const ok  = i < activo
-                        const cur = i === activo
-                        return (
-                          <div key={ses.id} className="flex items-center gap-3 px-5 py-2.5">
-                            <div className="h-7 w-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                              style={{
-                                background: ok ? 'rgba(2,212,126,0.10)' : cur ? '#043941' : 'rgba(4,57,65,0.04)',
-                                border:     ok ? '1px solid rgba(2,212,126,0.22)' : cur ? 'none' : '1px solid rgba(4,57,65,0.08)',
-                              }}
-                            >
-                              {ok  && <CheckCircle2 size={13} style={{ color: '#02d47e' }} />}
-                              {cur && <PlayCircle   size={13} style={{ color: '#02d47e' }} />}
-                              {!ok && !cur && <Lock size={12} style={{ color: 'rgba(4,57,65,0.25)' }} />}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-[11px] font-bold truncate" style={{ color: '#043941' }}>{ses.nombre}</p>
-                              <p className="text-[10px]" style={{ color: '#94a3b8' }}>U{idx + 1} · Sesión {i + 1}</p>
-                            </div>
-                            <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full flex-shrink-0"
-                              style={{
-                                background: ok ? 'rgba(2,212,126,0.10)' : cur ? `${ta}18` : 'rgba(4,57,65,0.05)',
-                                color:      ok ? '#02a05a'              : cur ? ta        : 'rgba(4,57,65,0.30)',
-                              }}
-                            >
-                              {ok ? 'Listo' : cur ? 'En curso' : 'Pendiente'}
-                            </span>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* ── 4. Mis logros (grid area: logros) ────────────────────────── */}
-          <div
-            className="rounded-2xl overflow-hidden"
-            style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.04)', gridArea: 'logros' }}
-          >
-            <div className="px-5 pt-4 pb-3 border-b flex items-start justify-between" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
-              <div>
-                <p className="text-sm font-black" style={{ color: '#043941' }}>Mis logros</p>
-                <p className="text-[11px]" style={{ color: '#94a3b8' }}>
-                  {logros.filter(l => l.obtenido).length} de {logros.length} obtenidos
-                </p>
-              </div>
-              <button className="text-xs font-bold flex items-center gap-1 mt-0.5 transition-opacity hover:opacity-70" style={{ color: primaryAccent }}>
-                Ver todos <ArrowRight size={11} />
-              </button>
-            </div>
-            <div className="p-4 grid grid-cols-3 gap-3">
-              {logros.map(logro => (
-                <div
-                  key={logro.titulo}
-                  className="rounded-xl p-3 flex flex-col items-center gap-1.5 text-center"
-                  style={{
-                    background: logro.obtenido ? `${logro.color}12` : 'rgba(4,57,65,0.03)',
-                    border: `1px solid ${logro.obtenido ? logro.color + '30' : 'rgba(4,57,65,0.07)'}`,
-                  }}
-                >
-                  <div className="h-10 w-10 rounded-xl flex items-center justify-center" style={{ background: logro.obtenido ? `${logro.color}22` : 'rgba(4,57,65,0.06)' }}>
-                    <logro.Icon size={20} style={{ color: logro.obtenido ? logro.color : '#94a3b8' }} />
-                  </div>
-                  <p className="text-[11px] font-black leading-tight" style={{ color: logro.obtenido ? '#043941' : '#94a3b8' }}>
-                    {logro.titulo}
-                  </p>
-                  <p className="text-[9px] font-medium leading-tight" style={{ color: logro.obtenido ? logro.color : '#b0c4ca' }}>
-                    {logro.subtitulo}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
 
         </div>
     </div>
