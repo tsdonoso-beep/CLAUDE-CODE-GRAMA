@@ -522,68 +522,73 @@ export default function Perfil() {
             </div>
           )}
 
-          {/* ── 3. Módulos en curso (grid area: modulos) ─────────────────── */}
+          {/* ── 3. Mis módulos (grid area: modulos) ──────────────────────── */}
           <div
             className="rounded-2xl overflow-hidden"
             style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.04)', gridArea: 'modulos' }}
           >
-            <div className="px-5 pt-4 pb-3 border-b flex items-start justify-between" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
-              <div>
-                <p className="text-sm font-black" style={{ color: '#043941' }}>Módulos en curso</p>
-                <p className="text-[11px]" style={{ color: '#94a3b8' }}>
-                  Actividad reciente entre tus {tallerSlugsAccesibles.length} taller{tallerSlugsAccesibles.length !== 1 ? 'es' : ''}
-                </p>
-              </div>
-              <button
-                className="text-xs font-bold flex items-center gap-1 mt-0.5 transition-opacity hover:opacity-70"
-                style={{ color: primaryAccent }}
-                onClick={() => tallerSlugsAccesibles[0] && navigate(`/taller/${tallerSlugsAccesibles[0]}/ruta`)}
-              >
-                Ver todos <ArrowRight size={11} />
-              </button>
+            <div className="px-5 pt-4 pb-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
+              <p className="text-sm font-black" style={{ color: '#043941' }}>Mis módulos</p>
+              <p className="text-[11px]" style={{ color: '#94a3b8' }}>Continúa donde lo dejaste en cada taller</p>
             </div>
-            <div className="divide-y" style={{ borderColor: 'rgba(4,57,65,0.05)' }}>
-              {sesionesParaLista.length > 0 ? sesionesParaLista.map(ses => {
-                const ok  = ses.status === 'completado'
-                const cur = ses.status === 'en-curso'
+            <div>
+              {tallerSlugsAccesibles.map((s, ti) => {
+                const t   = talleresConfig.find(x => x.slug === s)
+                const ta  = TALLER_ACCENTS[s] ?? '#02d47e'
+                const p   = getTallerProgreso(s)
+                const idx = Math.min(Math.floor((p.porcentaje / 100) * modulosLXP.length), modulosLXP.length - 1)
+                const mod = modulosLXP[idx]
+                if (!mod) return null
+                const fraccion = (p.porcentaje - (idx * 100 / modulosLXP.length)) / (100 / modulosLXP.length)
+                const activo   = Math.min(Math.floor(fraccion * mod.sesiones.length), mod.sesiones.length - 1)
                 return (
-                  <div key={ses.id} className="flex items-center gap-3 px-5 py-3.5">
-                    <div
-                      className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{
-                        background: ok  ? 'rgba(2,212,126,0.12)' : cur ? '#043941' : 'rgba(4,57,65,0.05)',
-                        border:     ok  ? '1px solid rgba(2,212,126,0.28)' : cur ? 'none' : '1px solid rgba(4,57,65,0.1)',
-                      }}
+                  <div key={s} className={ti > 0 ? 'border-t' : ''} style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
+                    {/* Header de taller */}
+                    <button
+                      className="w-full flex items-center gap-2 px-5 py-2.5 transition-colors hover:bg-slate-50 text-left"
+                      onClick={() => navigate(`/taller/${s}/ruta`)}
                     >
-                      {ok  && <CheckCircle2 size={16} style={{ color: '#02d47e' }} />}
-                      {cur && <PlayCircle   size={16} style={{ color: '#02d47e' }} />}
-                      {!ok && !cur && <Lock size={14} style={{ color: 'rgba(4,57,65,0.28)' }} />}
+                      <span className="w-2 h-2 rounded-full shrink-0" style={{ background: ta }} />
+                      <span className="text-xs font-extrabold flex-1" style={{ color: '#043941' }}>{t?.nombreCorto ?? s}</span>
+                      <span className="text-[10px] font-bold" style={{ color: ta }}>{p.porcentaje}%</span>
+                      <ArrowRight size={11} style={{ color: ta }} />
+                    </button>
+                    {/* Sesiones del módulo activo */}
+                    <div className="pb-1">
+                      {mod.sesiones.slice(0, 3).map((ses, i) => {
+                        const ok  = i < activo
+                        const cur = i === activo
+                        return (
+                          <div key={ses.id} className="flex items-center gap-3 px-5 py-2.5">
+                            <div className="h-7 w-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                              style={{
+                                background: ok ? 'rgba(2,212,126,0.10)' : cur ? '#043941' : 'rgba(4,57,65,0.04)',
+                                border:     ok ? '1px solid rgba(2,212,126,0.22)' : cur ? 'none' : '1px solid rgba(4,57,65,0.08)',
+                              }}
+                            >
+                              {ok  && <CheckCircle2 size={13} style={{ color: '#02d47e' }} />}
+                              {cur && <PlayCircle   size={13} style={{ color: '#02d47e' }} />}
+                              {!ok && !cur && <Lock size={12} style={{ color: 'rgba(4,57,65,0.25)' }} />}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[11px] font-bold truncate" style={{ color: '#043941' }}>{ses.nombre}</p>
+                              <p className="text-[10px]" style={{ color: '#94a3b8' }}>U{idx + 1} · Sesión {i + 1}</p>
+                            </div>
+                            <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full flex-shrink-0"
+                              style={{
+                                background: ok ? 'rgba(2,212,126,0.10)' : cur ? `${ta}18` : 'rgba(4,57,65,0.05)',
+                                color:      ok ? '#02a05a'              : cur ? ta        : 'rgba(4,57,65,0.30)',
+                              }}
+                            >
+                              {ok ? 'Listo' : cur ? 'En curso' : 'Pendiente'}
+                            </span>
+                          </div>
+                        )
+                      })}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-bold truncate" style={{ color: '#043941' }}>{ses.titulo}</p>
-                      <div className="flex items-center gap-1.5 mt-0.5">
-                        <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: ses.accent }} />
-                        <p className="text-[10px]" style={{ color: '#94a3b8' }}>
-                          {ses.tallerNombre} · {ses.unidad}{cur ? ' — en curso' : ''}
-                        </p>
-                      </div>
-                    </div>
-                    <span
-                      className="text-[10px] font-extrabold px-2.5 py-1 rounded-full flex-shrink-0"
-                      style={{
-                        background: ok ? 'rgba(2,212,126,0.12)' : cur ? `${ses.accent}18` : 'rgba(4,57,65,0.06)',
-                        color:      ok ? '#02a05a'              : cur ? ses.accent        : 'rgba(4,57,65,0.35)',
-                      }}
-                    >
-                      {ok ? 'Completado' : cur ? 'En curso' : 'Pendiente'}
-                    </span>
                   </div>
                 )
-              }) : (
-                <div className="px-5 py-8 text-center">
-                  <p className="text-xs" style={{ color: '#94a3b8' }}>Completa actividades para ver tu progreso aquí.</p>
-                </div>
-              )}
+              })}
             </div>
           </div>
 
