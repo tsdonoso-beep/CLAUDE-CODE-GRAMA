@@ -525,6 +525,7 @@ export default function Perfil() {
           {/* ── 3. Mis módulos (grid area: modulos) ──────────────────────── */}
           <div
             className="rounded-2xl overflow-hidden"
+            id="mis-modulos"
             style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.04)', gridArea: 'modulos' }}
           >
             <div className="px-5 pt-4 pb-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>

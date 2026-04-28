@@ -86,7 +86,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
 
   const perfilNavItems = [
     { icon: LayoutDashboard, label: 'Mis talleres',  to: '/perfil' as string | undefined },
-    { icon: BookOpen,        label: 'Mis módulos',  to: undefined as string | undefined },
+    { icon: BookOpen,        label: 'Mis módulos',  to: '/perfil#mis-modulos' as string | undefined },
     { icon: Trophy,          label: 'Mis logros',   to: undefined as string | undefined },
     { icon: Award,           label: 'Certificados', to: undefined as string | undefined },
   ]
@@ -207,11 +207,17 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
         >
           {shownMode === 'perfil' ? (
             perfilNavItems.map(({ icon: Icon, label, to }) => {
-              const isActive = to ? pathname === to : false
+              const [toPath, toHash] = (to ?? '').split('#')
+              const isActive = to ? pathname === toPath : false
+              const handleClick = () => {
+                if (!to) return
+                navigate(toPath)
+                if (toHash) setTimeout(() => document.getElementById(toHash)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
+              }
               return (
                 <div key={label}>
                   <button
-                    onClick={() => to && navigate(to)}
+                    onClick={handleClick}
                     title={collapsed ? label : undefined}
                     className={[
                       'w-full transition-all rounded-xl',
