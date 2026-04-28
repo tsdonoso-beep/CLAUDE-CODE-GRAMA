@@ -5,7 +5,7 @@ import {
   ChevronRight, ArrowRight,
   Trophy, Award, CalendarDays,
   Zap, GraduationCap, Star, Users2,
-  CheckCircle2, PlayCircle, Lock, MapPin,
+  CheckCircle2, PlayCircle, Lock,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useProgress } from '@/contexts/ProgressContext'
@@ -85,43 +85,6 @@ function TallerHeroShapes({ slugs }: { slugs: string[] }) {
   ) : null
 
   return <>{base}{extras}{second}</>
-}
-
-// ── Tangram decorativo (copiado de Landing.tsx) ───────────────────────────────
-function Tangram({
-  color = '#02d47e',
-  opacity = 0.12,
-  className = '',
-  rotate = 0,
-}: {
-  color?: string
-  opacity?: number
-  className?: string
-  rotate?: number
-}) {
-  return (
-    <svg
-      viewBox="0 0 160 160"
-      className={`pointer-events-none select-none ${className}`}
-      style={{ transform: `rotate(${rotate}deg)` }}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* Triángulo grande 1 */}
-      <polygon points="0,160 80,80 0,0"              fill={color} fillOpacity={opacity} />
-      {/* Triángulo grande 2 */}
-      <polygon points="160,0 80,80 160,160"           fill={color} fillOpacity={opacity * 0.7} />
-      {/* Triángulo mediano */}
-      <polygon points="0,160 80,160 80,80"            fill={color} fillOpacity={opacity * 1.2} />
-      {/* Cuadrado */}
-      <rect x="70" y="30" width="40" height="40" transform="rotate(45 90 50)" fill={color} fillOpacity={opacity * 0.9} />
-      {/* Triángulo pequeño 1 */}
-      <polygon points="80,80 120,80 120,120"          fill={color} fillOpacity={opacity * 0.8} />
-      {/* Triángulo pequeño 2 */}
-      <polygon points="80,80 80,120 120,120"          fill={color} fillOpacity={opacity * 0.6} />
-      {/* Paralelogramo */}
-      <polygon points="120,80 160,80 160,120 120,120" fill={color} fillOpacity={opacity * 0.5} />
-    </svg>
-  )
 }
 
 // ── Calendario de sesiones (sidebar) ─────────────────────────────────────────
@@ -370,51 +333,23 @@ export default function Perfil() {
     <div style={{ fontFamily: "'Manrope', sans-serif" }}>
 
       {/* Hero */}
-        <div
-          className="relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg,#043941 0%,#055c6a 60%,#043941 100%)', minHeight: 148 }}
-        >
-          <div className="absolute inset-0 grama-pattern opacity-20" />
-          {tallerSlugsAccesibles.length > 0 && <TallerHeroShapes slugs={tallerSlugsAccesibles} />}
-          <div className="relative z-10 px-8 py-7 flex items-center justify-between gap-6">
-            {/* Left: greeting + chips */}
-            <div className="min-w-0">
-              <p className="text-[11px] font-bold uppercase tracking-widest mb-0.5" style={{ color: 'rgba(2,212,126,0.7)' }}>
-                {greeting}, {firstName}
-              </p>
-              <h1 className="text-2xl font-black mb-4" style={{ color: '#d2ffe1', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
-                Mis talleres
-              </h1>
-              <div className="flex flex-wrap gap-2">
-                {ie && (
-                  <span
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
-                    style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.18)', color: 'rgba(255,255,255,0.65)' }}
-                  >
-                    <MapPin size={10} />
-                    {ie.nombre}, {ie.distrito}
-                  </span>
-                )}
-              </div>
-            </div>
-            {/* Right: stats */}
-            <div className="hidden md:flex items-center gap-6 flex-shrink-0">
-              {[
-                { value: String(tallerSlugsAccesibles.length || 0), label: 'Talleres activos' },
-                { value: `${overallProgreso}%`,                      label: 'Avance general' },
-                { value: '1',                                         label: 'Certificado logrado' },
-              ].map((stat, i) => (
-                <div key={stat.label} className="flex items-center gap-6">
-                  {i > 0 && <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.14)' }} />}
-                  <div className="text-center">
-                    <p className="text-2xl font-black leading-none" style={{ color: '#02d47e' }}>{stat.value}</p>
-                    <p className="text-[10px] mt-0.5 font-medium" style={{ color: 'rgba(210,255,225,0.48)' }}>{stat.label}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+      <div
+        className="relative overflow-hidden"
+        style={{ background: 'linear-gradient(135deg,#043941 0%,#055c6a 60%,#043941 100%)' }}
+      >
+        <div className="absolute inset-0 grama-pattern opacity-20" />
+        <div className="relative z-10 px-8 py-6">
+          <p className="text-[11px] font-bold uppercase tracking-widest mb-1" style={{ color: 'rgba(2,212,126,0.65)' }}>
+            {greeting}
+          </p>
+          <h1 className="text-xl font-black leading-tight" style={{ color: '#d2ffe1', letterSpacing: '-0.02em' }}>
+            {displayName}
+          </h1>
+          <p className="text-xs mt-1.5 font-medium" style={{ color: 'rgba(255,255,255,0.45)' }}>
+            Docente EPT · {ieSubhead}
+          </p>
         </div>
+      </div>
 
         {/* Content */}
         <style>{`@media(min-width:1280px){.perfil-content{display:grid;grid-template-columns:1fr 340px;grid-template-areas:"cards calendar";gap:20px;align-items:start}}`}</style>
