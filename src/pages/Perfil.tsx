@@ -367,7 +367,7 @@ export default function Perfil() {
                 {greeting}, {firstName}
               </p>
               <h1 className="text-2xl font-black mb-4" style={{ color: '#d2ffe1', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
-                Continúa donde lo dejaste
+                Mis talleres
               </h1>
               <div className="flex flex-wrap gap-2">
                 {tallerSlugsAccesibles.map(slug => {
