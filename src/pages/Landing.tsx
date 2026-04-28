@@ -894,58 +894,28 @@ export default function Landing() {
               <div style={{ position:'absolute', bottom:-60, right:-60, width:200, height:200, background:'radial-gradient(circle, rgba(2,212,126,.14) 0%, transparent 70%)', pointerEvents:'none' }} />
 
               <div style={{ position:'relative', zIndex:1, padding:'2.2rem' }}>
-                {/* Badge */}
-                <div style={{ display:'inline-flex', alignItems:'center', gap:6, background:'rgba(2,212,126,.18)', border:'1px solid rgba(2,212,126,.25)', borderRadius:100, padding:'.3rem .8rem', marginBottom:'1.4rem' }}>
-                  <span style={{ width:6, height:6, borderRadius:'50%', background:'#02d47e', boxShadow:'0 0 0 2px rgba(2,212,126,.35)', display:'inline-block' }} />
-                  <span style={{ fontSize:'var(--t-overline)', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', color:'#02d47e' }}>Respuesta &lt; 24h</span>
-                </div>
-
                 {/* Icono */}
                 <div style={{ width:52, height:52, borderRadius:14, background:'rgba(2,212,126,.12)', border:'1px solid rgba(2,212,126,.18)', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:'1.2rem', fontSize:'1.7rem' }}>
-                  🚀
+                  💬
                 </div>
 
                 <h3 style={{ fontSize:'1.15rem', fontWeight:800, color:'#fff', margin:'0 0 10px', lineHeight:1.25 }}>
-                  ¿Listo para empezar?
+                  ¿Tienes otra duda?
                 </h3>
                 <p style={{ fontSize:'var(--t-body)', color:'rgba(255,255,255,.5)', margin:'0 0 1.8rem', lineHeight:1.7 }}>
-                  Accede a la plataforma o escríbenos directamente. Te ayudamos a incorporar tu colegio en menos de 24h.
+                  Escríbenos por WhatsApp y te respondemos en menos de 24h.
                 </p>
 
-                <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
-                  <button
-                    onClick={goToApp}
-                    style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.95rem 1.2rem', borderRadius:12, background:'#02d47e', color:'#043941', fontWeight:800, fontSize:'var(--t-body)', border:'none', cursor:'pointer', transition:'all .2s', boxShadow:'0 4px 16px rgba(2,212,126,.35)' }}
-                    onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 24px rgba(2,212,126,.5)' }}
-                    onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 4px 16px rgba(2,212,126,.35)' }}
-                  >
-                    🚀 Ingresar a la plataforma
-                  </button>
-
-                  <a
-                    href="https://wa.me/51900000000?text=Hola%2C+soy+docente+EPT+y+tengo+una+consulta+sobre+GRAMA+LXP+%F0%9F%91%8B"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.95rem 1.2rem', borderRadius:12, background:'#25d366', color:'#fff', fontWeight:800, fontSize:'var(--t-body)', textDecoration:'none', transition:'all .2s', boxShadow:'0 4px 12px rgba(37,211,102,.25)' }}
-                    onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 20px rgba(37,211,102,.45)' }}
-                    onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 4px 12px rgba(37,211,102,.25)' }}
-                  >
-                    💬 WhatsApp
-                  </a>
-
-                  <a
-                    href="mailto:contacto@grama.pe"
-                    style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.95rem 1.2rem', borderRadius:12, background:'transparent', color:'rgba(255,255,255,.65)', fontWeight:700, fontSize:'var(--t-body)', textDecoration:'none', border:'1px solid rgba(255,255,255,.14)', transition:'all .2s' }}
-                    onMouseEnter={e => { e.currentTarget.style.background='rgba(255,255,255,.06)'; e.currentTarget.style.borderColor='rgba(255,255,255,.25)' }}
-                    onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderColor='rgba(255,255,255,.14)' }}
-                  >
-                    📧 Escribir por email
-                  </a>
-                </div>
-
-                <p style={{ fontSize:'var(--t-overline)', textAlign:'center', margin:'1.4rem 0 0', color:'rgba(255,255,255,.25)', lineHeight:1.5 }}>
-                  Equipo GRAMA · Programa TSF-MINEDU
-                </p>
+                <a
+                  href="https://wa.me/51900000000?text=Hola%2C+tengo+una+consulta+sobre+GRAMA+LXP+%F0%9F%91%8B"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', padding:'.95rem 1.2rem', borderRadius:12, background:'#25d366', color:'#fff', fontWeight:800, fontSize:'var(--t-body)', textDecoration:'none', transition:'all .2s', boxShadow:'0 4px 12px rgba(37,211,102,.25)' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 20px rgba(37,211,102,.45)' }}
+                  onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 4px 12px rgba(37,211,102,.25)' }}
+                >
+                  <WhatsAppIcon size={16} /> Contactar por WhatsApp
+                </a>
               </div>
             </div>
           </div>
