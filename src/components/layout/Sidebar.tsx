@@ -243,7 +243,6 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                   {isActive && label === 'Mis talleres' && !collapsed && enrolledSlugs.slice(0, 3).map(s => {
                     const t  = talleresConfig.find(x => x.slug === s)
                     const ta = TALLER_ACCENTS[s] ?? '#02d47e'
-                    const p  = getTallerProgreso(s)
                     return (
                       <button
                         key={s}
@@ -255,9 +254,6 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                         <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: ta }} />
                         <span className="flex-1 text-[11px] font-semibold truncate" style={{ color: 'rgba(255,255,255,0.55)' }}>
                           {t?.nombreCorto ?? s}
-                        </span>
-                        <span className="text-[10px] font-extrabold shrink-0" style={{ color: ta }}>
-                          {p.porcentaje}%
                         </span>
                       </button>
                     )
