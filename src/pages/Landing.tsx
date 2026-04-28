@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import {
   BookOpen, Clock,
   ChevronRight, ChevronLeft, ArrowRight,
-  CheckCircle, Menu, X, Wrench,
+  Menu, X, Wrench,
 } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
 import { useAuth } from '@/contexts/AuthContext'
@@ -579,31 +579,18 @@ export default function Landing() {
         {/* ── Columna izquierda ── */}
         <div style={{ position:'relative', zIndex:2, animation:'heroNavIn .7s ease both' }}>
 
-          {/* Badge */}
-          <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(2,212,126,.12)', border:'1px solid rgba(2,212,126,.3)', color:'#043941', padding:'6px 14px', borderRadius:100, fontSize:11, fontWeight:700, letterSpacing:'.8px', textTransform:'uppercase', marginBottom:28 }}>
-            <span style={{ width:7, height:7, borderRadius:'50%', background:'#02d47e', boxShadow:'0 0 0 3px rgba(2,212,126,.25)', animation:'heroPulse 2s infinite', display:'inline-block' }} />
-            Plataforma Nacional · MINEDU Perú
-          </div>
-
           {/* H1 */}
-          <h1 style={{ fontSize:'clamp(2.4rem,4.2vw,3.8rem)', fontWeight:900, lineHeight:1.04, letterSpacing:'-1.8px', color:'#043941', marginBottom:22 }}>
+          <h1 style={{ fontSize:'clamp(2.4rem,4.2vw,3.8rem)', fontWeight:900, lineHeight:1.04, letterSpacing:'-1.8px', color:'#043941', marginBottom:20 }}>
             Formación técnica<br />
-            que{' '}
-            <em style={{ fontStyle:'normal', color:'#02d47e', position:'relative' }}>
-              transforma
-              <svg style={{ position:'absolute', bottom:-6, left:0, width:'100%', height:8 }} viewBox="0 0 200 8" preserveAspectRatio="none">
-                <path d="M0,6 Q50,0 100,5 Q150,10 200,4" stroke="#02d47e" strokeWidth="2.5" fill="none" strokeLinecap="round" opacity=".6"/>
-              </svg>
-            </em>
-            <br />la educación
+            que <em style={{ fontStyle:'normal', color:'#02d47e' }}>transforma</em><br />
+            la educación
           </h1>
 
-          {/* Subtexto */}
-          <div style={{ background:'rgba(255,255,255,.65)', border:'1.5px solid rgba(4,57,65,.09)', borderRadius:12, padding:'14px 18px', marginBottom:32, maxWidth:440, backdropFilter:'blur(6px)' }}>
-            <p style={{ fontSize:14, color:'rgba(4,57,65,.55)', lineHeight:1.65, fontWeight:500, margin:0 }}>
-              La plataforma LMS para capacitar a docentes de talleres EPT en los 24 departamentos del Perú. Sin papeles, sin complicaciones.
-            </p>
-          </div>
+          {/* Subtexto limpio */}
+          <p style={{ fontSize:'1rem', color:'rgba(4,57,65,.6)', lineHeight:1.75, fontWeight:450, margin:'0 0 32px', maxWidth:420 }}>
+            La plataforma LXP para docentes de talleres EPT<br />
+            en los 24 departamentos del Perú.
+          </p>
 
           {/* CTAs */}
           <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
@@ -623,56 +610,19 @@ export default function Landing() {
               Ver cómo funciona
             </a>
           </div>
-
-          {/* Social proof mini */}
-          <div style={{ marginTop:36, display:'flex', alignItems:'center', gap:14 }}>
-            <div style={{ display:'flex' }}>
-              {['#02d47e','#045f6c','#f8ee91','#d4c4fc'].map((c,i) => (
-                <div key={i} style={{ width:28, height:28, borderRadius:'50%', background:c, border:'2px solid #fff', marginLeft: i > 0 ? -8 : 0, display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, fontWeight:800, color:'#043941' }}>
-                  {['D','D','D','D'][i]}
-                </div>
-              ))}
-            </div>
-            <p style={{ fontSize:12, color:'rgba(4,57,65,.55)', fontWeight:500, margin:0 }}>
-              <strong style={{ color:'#043941' }}>36+ docentes</strong> ya capacitados en la plataforma
-            </p>
-          </div>
         </div>
 
-        {/* ── Columna derecha — imagen + badges flotantes ── */}
+        {/* ── Columna derecha — imagen ── */}
         <div style={{ position:'relative', zIndex:2, animation:'heroNavIn .7s .22s ease both' }}>
-
-          {/* Imagen principal */}
           <div style={{ borderRadius:24, overflow:'hidden', boxShadow:'0 32px 80px rgba(4,57,65,.28)', position:'relative', aspectRatio:'4/3' }}>
             <img
               src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=700&q=80"
               alt="Vista de la plataforma"
               style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }}
             />
-            {/* Overlay sutil */}
             <div style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, transparent 50%, rgba(4,57,65,.4) 100%)', pointerEvents:'none' }} />
             <div style={{ position:'absolute', bottom:16, left:16, background:'rgba(4,57,65,.75)', backdropFilter:'blur(6px)', color:'#fff', fontSize:10, fontWeight:700, letterSpacing:'1px', textTransform:'uppercase', padding:'4px 10px', borderRadius:6 }}>
               Vista de la plataforma
-            </div>
-          </div>
-
-          {/* Badge flotante — roles */}
-          <div style={{ position:'absolute', top:-14, right:-14, background:'#fff', borderRadius:14, padding:'10px 14px', boxShadow:'0 8px 28px rgba(4,57,65,.14)', display:'flex', alignItems:'center', gap:8, zIndex:3 }}>
-            <div style={{ width:32, height:32, borderRadius:8, background:'rgba(2,212,126,.12)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:15 }}>🎓</div>
-            <div>
-              <p style={{ fontSize:10, fontWeight:800, color:'#043941', margin:0 }}>3 roles disponibles</p>
-              <p style={{ fontSize:9, color:'rgba(4,57,65,.55)', margin:0 }}>Docente · Alumno · Director</p>
-            </div>
-          </div>
-
-          {/* Badge flotante — certificación */}
-          <div style={{ position:'absolute', bottom:-14, left:-14, background:'#043941', borderRadius:14, padding:'10px 16px', boxShadow:'0 8px 28px rgba(4,57,65,.3)', display:'flex', alignItems:'center', gap:10, zIndex:3 }}>
-            <div style={{ width:32, height:32, borderRadius:'50%', background:'rgba(2,212,126,.2)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-              <CheckCircle size={16} color="#02d47e" />
-            </div>
-            <div>
-              <p style={{ fontSize:11, fontWeight:800, color:'#fff', margin:0 }}>Certificación MINEDU</p>
-              <p style={{ fontSize:9, color:'rgba(2,212,126,.7)', margin:0 }}>Al completar todos los módulos</p>
             </div>
           </div>
         </div>
