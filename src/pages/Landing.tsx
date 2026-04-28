@@ -347,7 +347,7 @@ export default function Landing() {
               <div>
                 <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:800, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
                   Domina tu taller,<br />
-                  certifícate y enseña<br />
+                  <span style={{ color:'#02d47e' }}>certifícate y enseña</span><br />
                   con confianza.
                 </h3>
                 <p style={{ fontSize:'var(--t-body-lg)', color:'rgba(4,57,65,.6)', lineHeight:1.8, margin:'0 0 1.8rem' }}>
@@ -388,7 +388,7 @@ export default function Landing() {
               <div>
                 <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:800, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
                   Aprende haciendo,<br />
-                  a tu ritmo<br />
+                  <span style={{ color:'#02d47e' }}>a tu ritmo</span><br />
                   y con tu docente.
                 </h3>
                 <p style={{ fontSize:'var(--t-body-lg)', color:'rgba(4,57,65,.6)', lineHeight:1.8, margin:'0 0 1.8rem' }}>
@@ -451,7 +451,7 @@ export default function Landing() {
               <div>
                 <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:800, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
                   Monitorea el avance<br />
-                  pedagógico<br />
+                  <span style={{ color:'#f59e0b' }}>pedagógico</span><br />
                   de tu institución.
                 </h3>
                 <p style={{ fontSize:'var(--t-body-lg)', color:'rgba(4,57,65,.6)', lineHeight:1.8, margin:'0 0 1.8rem' }}>
