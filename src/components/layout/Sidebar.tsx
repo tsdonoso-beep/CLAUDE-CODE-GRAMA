@@ -1,7 +1,7 @@
 // src/components/layout/Sidebar.tsx
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, useParams, useNavigate, useLocation } from 'react-router-dom'
-import { BookOpen, Package, ChevronLeft, ChevronRight, X, User, Home, LayoutDashboard, Trophy, Award, Compass } from 'lucide-react'
+import { BookOpen, Package, ChevronLeft, ChevronRight, X, User, Home, LayoutDashboard, Trophy, Award, MessageCircle } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { useProgress } from '@/contexts/ProgressContext'
 import { useAuth } from '@/contexts/AuthContext'
@@ -86,7 +86,6 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
 
   const perfilNavItems = [
     { icon: LayoutDashboard, label: 'Mis talleres',  to: '/perfil' as string | undefined },
-    { icon: BookOpen,        label: 'Mis módulos',  to: undefined as string | undefined },
     { icon: Trophy,          label: 'Mis logros',   to: '/perfil/logros' as string | undefined },
     { icon: Award,           label: 'Certificados', to: undefined as string | undefined },
   ]
@@ -360,17 +359,18 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
         >
           {shownMode === 'perfil' ? (
             <button
-              onClick={() => navigate('/hub')}
-              title={collapsed ? 'Explorar talleres' : undefined}
-              className={`w-full flex items-center rounded-xl transition-all text-white/30 hover:text-white/60 hover:bg-white/[0.05] ${
+              onClick={() => navigate('/perfil/ayuda')}
+              title={collapsed ? 'Centro de ayuda' : undefined}
+              className={`w-full flex items-center rounded-xl transition-all hover:bg-white/[0.05] ${
                 collapsed ? 'justify-center p-2.5' : 'gap-2.5 px-3 py-2.5'
               }`}
+              style={{ color: location.pathname === '/perfil/ayuda' ? '#02d47e' : 'rgba(255,255,255,0.3)' }}
             >
               <div className="h-6 w-6 rounded-full flex items-center justify-center shrink-0"
                 style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                <Compass size={11} style={{ color: 'rgba(255,255,255,0.5)' }} />
+                <MessageCircle size={11} style={{ color: 'inherit' }} />
               </div>
-              {!collapsed && <span className="text-xs font-semibold">Explorar talleres</span>}
+              {!collapsed && <span className="text-xs font-semibold">Centro de ayuda</span>}
             </button>
           ) : (
             <button

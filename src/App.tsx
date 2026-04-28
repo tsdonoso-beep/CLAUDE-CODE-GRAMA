@@ -24,6 +24,7 @@ const BienDetalle     = lazy(() => import("./pages/BienDetalle"))
 const Admin           = lazy(() => import("./pages/Admin"))
 const Perfil          = lazy(() => import("./pages/Perfil"))
 const MisLogros       = lazy(() => import("./pages/MisLogros"))
+const CentroAyuda     = lazy(() => import("./pages/CentroAyuda"))
 const NotFound        = lazy(() => import("./pages/NotFound"))
 
 const queryClient = new QueryClient()
@@ -78,6 +79,7 @@ const App = () => (
                   <Route element={<AppShell />}>
                     <Route path="/perfil"                              element={wrap(Perfil)} />
                     <Route path="/perfil/logros"                       element={wrap(MisLogros)} />
+                    <Route path="/perfil/ayuda"                        element={wrap(CentroAyuda)} />
                     <Route path="/taller/:slug"                        element={wrap(TallerHub)} />
                     <Route path="/taller/:slug/ruta"                   element={wrap(RutaAprendizaje)} />
                     <Route path="/taller/:slug/ruta/modulo/:num"       element={wrap(ModuloDetalle)} />
