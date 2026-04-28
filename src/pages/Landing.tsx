@@ -580,17 +580,6 @@ export default function Landing() {
             ))}
           </div>
 
-          {/* Nota al pie sutil */}
-          <div style={{ marginTop:'4rem', paddingTop:'2rem', borderTop:'1px solid rgba(4,57,65,.07)', display:'flex', alignItems:'center', justifyContent:'flex-end' }}>
-            <button
-              onClick={() => navigate('/login')}
-              style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#043941', color:'#fff', fontSize:'var(--t-body)', fontWeight:800, padding:'.9rem 1.2rem', borderRadius:100, border:'none', cursor:'pointer', boxShadow:'0 6px 20px rgba(4,57,65,.2)', transition:'all .2s', whiteSpace:'nowrap' }}
-              onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)' }}
-              onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none' }}
-            >
-              <ArrowRight size={14} />
-            </button>
-          </div>
 
         </div>
       </section>
