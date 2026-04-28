@@ -189,7 +189,7 @@ export default function Landing() {
           {/* Subtexto limpio */}
           <p style={{ fontSize:'1rem', color:'rgba(4,57,65,.6)', lineHeight:1.75, fontWeight:450, margin:'0 0 32px', maxWidth:420 }}>
             Una plataforma para docentes, alumnos y directores
-            de talleres EPT — en los 24 departamentos del Perú.
+            de educación técnica — en los 24 departamentos del Perú.
           </p>
 
           {/* CTAs */}
@@ -227,10 +227,10 @@ export default function Landing() {
         {/* ── Stats bar (pegada al fondo del hero) ── */}
         <div style={{ position:'absolute', bottom:0, left:0, right:0, background:'#043941', display:'grid', gridTemplateColumns:'repeat(4,1fr)', zIndex:3 }}>
           {[
-            { n:'9',   hi:'',   label:'Talleres EPT' },
-            { n:'36',  hi:'+',  label:'Docentes capacitados' },
+            { n:'10',  hi:'',   label:'Especialidades' },
+            { n:'3',   hi:'',   label:'Roles en la plataforma' },
             { n:'24',  hi:'',   label:'Departamentos' },
-            { n:'150', hi:'h',  label:'Formación híbrida' },
+            { n:'150', hi:'h',  label:'Por especialidad' },
           ].map((s, i) => (
             <div key={i} style={{ textAlign:'center', padding:'18px 16px', borderLeft: i > 0 ? '1px solid rgba(255,255,255,.06)' : 'none' }}>
               <span style={{ display:'block', fontSize:'clamp(1.4rem,2.5vw,2rem)', fontWeight:800, color:'#02d47e', lineHeight:1, letterSpacing:'-.04em', marginBottom:4 }}>
