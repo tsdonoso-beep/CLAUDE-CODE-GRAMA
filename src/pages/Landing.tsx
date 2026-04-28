@@ -509,55 +509,59 @@ export default function Landing() {
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
           {/* Header — izquierda + bajada derecha */}
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'end', marginBottom:'5rem' }}>
-            <div>
-              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
-                <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
-                Nuestra metodología
-              </span>
-              <h2 style={{ fontSize:'var(--t-display)', fontWeight:800, lineHeight:1.08, color:'#043941', margin:0 }}>
-                Una progresión que{' '}
-                <span style={{ color:'#02d47e' }}>respeta tu recorrido</span>
-              </h2>
-            </div>
-            <p style={{ fontSize:'1rem', color:'rgba(4,57,65,.55)', lineHeight:1.8, margin:0, alignSelf:'end' }}>
-              No empezamos desde un contenido genérico. Cada etapa se construye sobre la anterior — desde quién eres como docente hasta lo que tus alumnos experimentan en el taller.
-            </p>
-          </div>
+          {(() => {
+            const meta = {
+              docente: {
+                h2: <>Una progresión que{' '}<span style={{ color:'#02d47e' }}>respeta tu recorrido</span></>,
+                p: 'No empezamos desde un contenido genérico. Cada etapa se construye sobre la anterior — desde quién eres como docente hasta lo que tus alumnos experimentan en el taller.',
+                stages: [
+                  { n:'01', numColor:'#02d47e', barColor:'#02d47e', title:'Te conocemos antes de enseñarte', copy:'Empezamos por entender tu contexto: qué taller tienes, qué sabes, qué necesitas. Sin supuestos genéricos.' },
+                  { n:'02', numColor:'#7c3aed', barColor:'#d4c4fc', title:'Tu taller es el primer objeto de estudio', copy:'El espacio donde trabajas — sus zonas, su equipamiento — se convierte en el punto de partida del aprendizaje.' },
+                  { n:'03', numColor:'#d97706', barColor:'#f8ee91', title:'Diseñas, no solo aprendes', copy:'Avanzas hacia la práctica pedagógica: cómo organizar una sesión, cómo guiar a tus estudiantes con lo que ya tienes.' },
+                  { n:'04', numColor:'#047857', barColor:'#b8edd0', title:'Una sesión real como cierre', copy:'El cierre no es un examen. Es aplicar lo aprendido con tus alumnos, en tu taller. Eso es lo que se certifica.' },
+                ],
+              },
+              alumno: {
+                h2: <>Aprendes haciendo,{' '}<span style={{ color:'#02d47e' }}>con tu docente al lado</span></>,
+                p: 'Nada empieza con un manual. Cada etapa te acerca a un proyecto real, con el equipamiento de tu taller y la guía directa de quien ya recorrió el camino.',
+                stages: [
+                  { n:'01', numColor:'#02d47e', barColor:'#02d47e', title:'Partimos desde lo que ya haces', copy:'Antes de cualquier contenido, entendemos tu punto de partida — qué conoces, qué tienes entre manos y qué quieres lograr.' },
+                  { n:'02', numColor:'#7c3aed', barColor:'#d4c4fc', title:'Practicas con equipos reales', copy:'El taller es tu aula. Cada actividad está diseñada para que pongas las manos encima — no para que lo veas en una pantalla.' },
+                  { n:'03', numColor:'#d97706', barColor:'#f8ee91', title:'Muestras lo que aprendiste', copy:'No hay examen escrito. Demuestras tu competencia con un proyecto concreto, evaluado por tu propio docente.' },
+                  { n:'04', numColor:'#047857', barColor:'#b8edd0', title:'Tu constancia, en tus manos', copy:'Al terminar tienes un documento que acredita lo que sabes hacer — reconocido por el MINEDU y útil para tu trayectoria.' },
+                ],
+              },
+              director: {
+                h2: <>Visibilidad completa,{' '}<span style={{ color:'#02d47e' }}>sin esperar el informe</span></>,
+                p: 'Seguís el avance de cada docente en tiempo real — desde el diagnóstico inicial hasta la sesión certificada. Datos para decidir, no solo para archivar.',
+                stages: [
+                  { n:'01', numColor:'#02d47e', barColor:'#02d47e', title:'Diagnóstico inicial de brechas', copy:'La plataforma mapea automáticamente el punto de partida de cada docente por especialidad — sin encuestas manuales.' },
+                  { n:'02', numColor:'#7c3aed', barColor:'#d4c4fc', title:'Seguimiento por docente y taller', copy:'Ves quién avanzó, quién se detuvo y en qué módulo. Sin reportes de Excel: el panel lo muestra en tiempo real.' },
+                  { n:'03', numColor:'#d97706', barColor:'#f8ee91', title:'Validás el avance con evidencia', copy:'Cada hito tiene un producto asociado — no solo un clic de "completado". Eso te permite validar con criterio.' },
+                  { n:'04', numColor:'#047857', barColor:'#b8edd0', title:'Reportás con datos reales a UGEL', copy:'Al cierre del ciclo, exportás el resumen de formación con los indicadores que la UGEL y MINEDU solicitan.' },
+                ],
+              },
+            }[activeTab]
+            return (
+              <>
+                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'end', marginBottom:'5rem' }}>
+                  <div>
+                    <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
+                      <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
+                      Nuestra metodología
+                    </span>
+                    <h2 style={{ fontSize:'var(--t-display)', fontWeight:800, lineHeight:1.08, color:'#043941', margin:0 }}>
+                      {meta.h2}
+                    </h2>
+                  </div>
+                  <p style={{ fontSize:'1rem', color:'rgba(4,57,65,.55)', lineHeight:1.8, margin:0, alignSelf:'end' }}>
+                    {meta.p}
+                  </p>
+                </div>
 
-          {/* 4 etapas */}
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:24, position:'relative' }}>
-
-            {([
-              {
-                n: '01',
-                numColor: '#02d47e',
-                barColor: '#02d47e',
-                title: 'Te conocemos antes de enseñarte',
-                copy: 'Empezamos por entender tu contexto: qué taller tienes, qué sabes, qué necesitas. Sin supuestos genéricos.',
-              },
-              {
-                n: '02',
-                numColor: '#7c3aed',
-                barColor: '#d4c4fc',
-                title: 'Tu taller es el primer objeto de estudio',
-                copy: 'El espacio donde trabajas — sus zonas, su equipamiento — se convierte en el punto de partida del aprendizaje.',
-              },
-              {
-                n: '03',
-                numColor: '#d97706',
-                barColor: '#f8ee91',
-                title: 'Diseñas, no solo aprendes',
-                copy: 'Avanzas hacia la práctica pedagógica: cómo organizar una sesión, cómo guiar a tus estudiantes con lo que ya tienes.',
-              },
-              {
-                n: '04',
-                numColor: '#047857',
-                barColor: '#b8edd0',
-                title: 'Una sesión real como cierre',
-                copy: 'El cierre no es un examen. Es aplicar lo aprendido con tus alumnos, en tu taller. Eso es lo que se certifica.',
-              },
-            ]).map((stage, i) => (
+                {/* 4 etapas */}
+                <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:24, position:'relative' }}>
+                  {meta.stages.map((stage, i) => (
               <div key={i} style={{ position:'relative', zIndex:1, background:'#fff', borderRadius:16, overflow:'hidden', boxShadow:'0 4px 20px rgba(4,57,65,.07)', padding:'0 0 28px' }}>
 
                 {/* Barra de color superior */}
@@ -576,10 +580,12 @@ export default function Landing() {
                     {stage.copy}
                   </p>
                 </div>
-              </div>
-            ))}
-          </div>
-
+                  </div>
+                ))}
+                </div>
+              </>
+            )
+          })()}
 
         </div>
       </section>
