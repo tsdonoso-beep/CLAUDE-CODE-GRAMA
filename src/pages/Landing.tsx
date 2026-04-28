@@ -570,11 +570,42 @@ export default function Landing() {
       }}>
 
         {/* ── Formas de fondo ── */}
-        <div style={{ position:'absolute', bottom:-120, left:-80, width:400, height:400, background:'#02d47e', clipPath:'polygon(0 0,100% 0,0 100%)', opacity:.05, pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:-60, right:-60, width:280, height:280, background:'#043941', clipPath:'polygon(100% 0,100% 100%,0 100%)', opacity:.04, borderRadius:'0 0 0 60%', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:'30%', left:'46%', width:120, height:120, background:'#f8ee91', borderRadius:18, opacity:.18, transform:'rotate(22deg)', animation:'heroFf 10s ease-in-out infinite', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:'18%', right:'6%', width:64, height:64, background:'#d4c4fc', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.35, animation:'heroFb 8s ease-in-out infinite 1s', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', bottom:'14%', left:'46%', width:44, height:44, background:'#02d47e', borderRadius:'50%', opacity:.25, animation:'heroFf 7s ease-in-out infinite 2s', pointerEvents:'none' }} />
+        {/* Triángulos grandes de esquina */}
+        <div style={{ position:'absolute', bottom:-140, left:-100, width:420, height:420, background:'#02d47e', clipPath:'polygon(0 0,100% 0,0 100%)', opacity:.06, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:-80, right:-80, width:300, height:300, background:'#043941', clipPath:'polygon(100% 0,100% 100%,0 100%)', opacity:.05, pointerEvents:'none' }} />
+
+        {/* Triángulos medianos flotantes */}
+        <div style={{ position:'absolute', top:'12%', left:'8%', width:52, height:52, background:'#02d47e', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.28, animation:'heroFb 11s ease-in-out infinite', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'22%', right:'8%', width:44, height:44, background:'#d4c4fc', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.5, animation:'heroFb 9s ease-in-out infinite 1.5s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:'22%', left:'8%', width:36, height:36, background:'#f8ee91', clipPath:'polygon(50% 100%,0 0,100% 0)', opacity:.55, animation:'heroFd 13s ease-in-out infinite 1s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:'30%', right:'6%', width:30, height:30, background:'#b8edd0', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.6, animation:'heroFb 10s ease-in-out infinite 3s', pointerEvents:'none' }} />
+
+        {/* Círculos */}
+        <div style={{ position:'absolute', top:'10%', right:'22%', width:56, height:56, borderRadius:'50%', background:'#f8ee91', opacity:.32, animation:'heroFf 8s ease-in-out infinite', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'55%', left:'4%', width:38, height:38, borderRadius:'50%', background:'#d4c4fc', opacity:.4, animation:'heroFf 12s ease-in-out infinite 2s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:'18%', right:'18%', width:26, height:26, borderRadius:'50%', background:'#02d47e', opacity:.35, animation:'heroFf 9s ease-in-out infinite 1s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'38%', left:'28%', width:18, height:18, borderRadius:'50%', background:'#043941', opacity:.12, animation:'heroFf 14s ease-in-out infinite 3s', pointerEvents:'none' }} />
+
+        {/* Cruces / símbolo + (SVG inline) */}
+        <svg style={{ position:'absolute', top:'28%', left:'3%', width:28, height:28, opacity:.35, animation:'heroFe 11s ease-in-out infinite', pointerEvents:'none' }} viewBox="0 0 28 28">
+          <rect x="11" y="2" width="6" height="24" rx="3" fill="#02d47e"/>
+          <rect x="2" y="11" width="24" height="6" rx="3" fill="#02d47e"/>
+        </svg>
+        <svg style={{ position:'absolute', top:'15%', left:'40%', width:22, height:22, opacity:.3, animation:'heroFe 9s ease-in-out infinite 2s', pointerEvents:'none' }} viewBox="0 0 28 28">
+          <rect x="11" y="2" width="6" height="24" rx="3" fill="#d4c4fc"/>
+          <rect x="2" y="11" width="24" height="6" rx="3" fill="#d4c4fc"/>
+        </svg>
+        <svg style={{ position:'absolute', bottom:'28%', right:'4%', width:24, height:24, opacity:.38, animation:'heroFe 13s ease-in-out infinite 1s', pointerEvents:'none' }} viewBox="0 0 28 28">
+          <rect x="11" y="2" width="6" height="24" rx="3" fill="#f8ee91"/>
+          <rect x="2" y="11" width="24" height="6" rx="3" fill="#f8ee91"/>
+        </svg>
+        <svg style={{ position:'absolute', top:'65%', right:'26%', width:18, height:18, opacity:.28, animation:'heroFe 10s ease-in-out infinite 3.5s', pointerEvents:'none' }} viewBox="0 0 28 28">
+          <rect x="11" y="2" width="6" height="24" rx="3" fill="#b8edd0"/>
+          <rect x="2" y="11" width="24" height="6" rx="3" fill="#b8edd0"/>
+        </svg>
+
+        {/* Cuadrado rotado */}
+        <div style={{ position:'absolute', top:'30%', left:'44%', width:100, height:100, background:'#f8ee91', borderRadius:14, opacity:.14, transform:'rotate(22deg)', animation:'heroFf 10s ease-in-out infinite', pointerEvents:'none' }} />
 
         {/* ── Columna izquierda ── */}
         <div style={{ position:'relative', zIndex:2, animation:'heroNavIn .7s ease both' }}>
@@ -620,10 +651,7 @@ export default function Landing() {
               alt="Vista de la plataforma"
               style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }}
             />
-            <div style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, transparent 50%, rgba(4,57,65,.4) 100%)', pointerEvents:'none' }} />
-            <div style={{ position:'absolute', bottom:16, left:16, background:'rgba(4,57,65,.75)', backdropFilter:'blur(6px)', color:'#fff', fontSize:10, fontWeight:700, letterSpacing:'1px', textTransform:'uppercase', padding:'4px 10px', borderRadius:6 }}>
-              Vista de la plataforma
-            </div>
+            <div style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, transparent 55%, rgba(4,57,65,.35) 100%)', pointerEvents:'none' }} />
           </div>
         </div>
 
