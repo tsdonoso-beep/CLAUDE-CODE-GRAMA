@@ -247,7 +247,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                       <button
                         key={s}
                         onClick={() => navigate(`/taller/${s}`)}
-                        className="w-full flex items-center gap-2 pl-10 pr-3 py-1.5 rounded-lg transition-all text-left"
+                        className="w-full flex items-center gap-2.5 pl-6 pr-3 py-2 rounded-lg transition-all text-left"
                         onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
                         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                       >
