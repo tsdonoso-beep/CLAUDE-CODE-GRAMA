@@ -85,7 +85,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
   ]
 
   const perfilNavItems = [
-    { icon: LayoutDashboard, label: 'Dashboard',    to: '/perfil' as string | undefined },
+    { icon: LayoutDashboard, label: 'Mis talleres',  to: '/perfil' as string | undefined },
     { icon: BookOpen,        label: 'Mis módulos',  to: undefined as string | undefined },
     { icon: Trophy,          label: 'Mis logros',   to: undefined as string | undefined },
     { icon: Award,           label: 'Certificados', to: undefined as string | undefined },
