@@ -604,16 +604,19 @@ export default function Landing() {
                             <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.2 7.8L9 2.5" stroke="#02d47e" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
                             Competencias
                           </p>
-                          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:6 }}>
+                          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4px 16px' }}>
                             {t.competencias.slice(0, 4).map((c: string, ci: number) => (
-                              <div key={ci} style={{ display:'flex', alignItems:'flex-start', gap:8, background:'#f0fdf6', borderRadius:10, padding:'8px 10px' }}>
-                                <span style={{ width:6, height:6, borderRadius:'50%', background:'#02d47e', flexShrink:0, marginTop:3 }} />
-                                <span style={{ fontSize:'.78rem', color:'#043941', lineHeight:1.45 }}>{c}</span>
+                              <div key={ci} style={{ display:'flex', alignItems:'flex-start', gap:7, padding:'3px 0' }}>
+                                <span style={{ width:5, height:5, borderRadius:'50%', background:'#02d47e', flexShrink:0, marginTop:5 }} />
+                                <span style={{ fontSize:'.8rem', color:'rgba(4,57,65,.75)', lineHeight:1.5 }}>{c}</span>
                               </div>
                             ))}
                           </div>
                         </div>
                       )}
+
+                      {/* Separador */}
+                      <div style={{ height:1, background:'rgba(4,57,65,.07)' }} />
 
                       {/* Ruta módulos */}
                       <div>
@@ -621,16 +624,19 @@ export default function Landing() {
                           <BookOpen size={11} color="#02d47e" />
                           Ruta · {modulosLXP.length} módulos · 150h
                         </p>
-                        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:5 }}>
+                        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'3px 16px' }}>
                           {modulosLXP.map((m, mi) => (
-                            <div key={m.id} style={{ display:'flex', alignItems:'center', gap:8, background:'#f0fdf6', borderRadius:9, padding:'7px 10px' }}>
+                            <div key={m.id} style={{ display:'flex', alignItems:'baseline', gap:8, padding:'3px 0' }}>
                               <span style={{ fontSize:'.62rem', fontWeight:800, color:'#02d47e', flexShrink:0 }}>M{mi}</span>
-                              <span style={{ flex:1, fontSize:'.78rem', fontWeight:600, color:'#043941', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{m.nombre}</span>
-                              <span style={{ fontSize:'.65rem', color:'rgba(4,57,65,.4)', flexShrink:0 }}>{m.horasTotal}h</span>
+                              <span style={{ flex:1, fontSize:'.8rem', color:'rgba(4,57,65,.75)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{m.nombre}</span>
+                              <span style={{ fontSize:'.65rem', color:'rgba(4,57,65,.35)', flexShrink:0 }}>{m.horasTotal}h</span>
                             </div>
                           ))}
                         </div>
                       </div>
+
+                      {/* Separador */}
+                      <div style={{ height:1, background:'rgba(4,57,65,.07)' }} />
 
                       {/* Equipamiento */}
                       {bienes.length > 0 && (
@@ -639,9 +645,9 @@ export default function Landing() {
                             <Wrench size={11} color="#02d47e" />
                             Equipamiento
                           </p>
-                          <div style={{ display:'flex', flexWrap:'wrap', gap:7 }}>
+                          <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
                             {bienes.map(b => (
-                              <span key={b.nombre} style={{ fontSize:'.75rem', fontWeight:500, background:'#e3f8fb', color:'#045f6c', padding:'.3rem .8rem', borderRadius:100 }}>
+                              <span key={b.nombre} style={{ fontSize:'.75rem', color:'rgba(4,57,65,.65)', borderBottom:'1px solid rgba(4,57,65,.15)', paddingBottom:1 }}>
                                 {b.nombre}
                               </span>
                             ))}
@@ -649,18 +655,6 @@ export default function Landing() {
                         </div>
                       )}
 
-                    </div>
-
-                    {/* Footer CTA */}
-                    <div style={{ padding:'14px 20px', borderTop:'1px solid #f0fdf6', flexShrink:0 }}>
-                      <button
-                        onClick={goToApp}
-                        style={{ width:'100%', display:'flex', alignItems:'center', justifyContent:'center', gap:8, background:'#02d47e', color:'#043941', fontSize:'.88rem', fontWeight:800, padding:'.85rem', borderRadius:14, border:'none', cursor:'pointer', boxShadow:'0 4px 16px rgba(2,212,126,.3)', transition:'all .2s' }}
-                        onMouseEnter={e => { e.currentTarget.style.boxShadow='0 8px 24px rgba(2,212,126,.45)'; e.currentTarget.style.transform='translateY(-1px)' }}
-                        onMouseLeave={e => { e.currentTarget.style.boxShadow='0 4px 16px rgba(2,212,126,.3)'; e.currentTarget.style.transform='none' }}
-                      >
-                        Acceder a la plataforma <ArrowRight size={14} />
-                      </button>
                     </div>
                   </div>
 
