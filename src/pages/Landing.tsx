@@ -772,9 +772,6 @@ export default function Landing() {
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
               {/* Texto */}
               <div>
-                <span style={{ display:'inline-block', fontSize:'.68rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', background:'rgba(4,57,65,.08)', color:'#043941', padding:'.3rem .85rem', borderRadius:100, marginBottom:20 }}>
-                  🔧 Para Docentes EPT
-                </span>
                 <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
                   Domina tu taller,<br />
                   <span style={{ color:'#02d47e' }}>certifícate y enseña</span><br />
@@ -799,14 +796,6 @@ export default function Landing() {
                     </div>
                   ))}
                 </div>
-                <button
-                  onClick={() => navigate('/login')}
-                  style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#043941', color:'#fff', fontSize:'.88rem', fontWeight:800, padding:'1rem 2rem', borderRadius:100, border:'none', cursor:'pointer', boxShadow:'0 6px 20px rgba(4,57,65,.25)', transition:'all .2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 10px 28px rgba(4,57,65,.35)' }}
-                  onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 6px 20px rgba(4,57,65,.25)' }}
-                >
-                  Comenzar mi formación <ArrowRight size={15} />
-                </button>
               </div>
               {/* Imagen */}
               <div style={{ position:'relative', borderRadius:24, overflow:'hidden', boxShadow:'0 24px 64px rgba(4,57,65,.16)' }}>
@@ -816,11 +805,6 @@ export default function Landing() {
                   style={{ width:'100%', aspectRatio:'4/3', objectFit:'cover', display:'block' }}
                 />
                 <div style={{ position:'absolute', inset:0, background:'linear-gradient(160deg, transparent 50%, rgba(4,57,65,.55) 100%)' }} />
-                {/* Badge flotante */}
-                <div style={{ position:'absolute', bottom:20, left:20, background:'rgba(255,255,255,.95)', backdropFilter:'blur(8px)', borderRadius:14, padding:'10px 16px', boxShadow:'0 8px 24px rgba(0,0,0,.12)' }}>
-                  <p style={{ margin:0, fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.5)', letterSpacing:'.06em', textTransform:'uppercase' }}>Talleres disponibles</p>
-                  <p style={{ margin:'2px 0 0', fontSize:'1.3rem', fontWeight:900, color:'#043941' }}>{talleresConfig.length} especialidades</p>
-                </div>
               </div>
             </div>
           )}
@@ -829,9 +813,6 @@ export default function Landing() {
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
               {/* Texto */}
               <div>
-                <span style={{ display:'inline-block', fontSize:'.68rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', background:'rgba(2,212,126,.12)', color:'#047857', padding:'.3rem .85rem', borderRadius:100, marginBottom:20 }}>
-                  ⭐ Para Alumnos
-                </span>
                 <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
                   Aprende haciendo,<br />
                   <span style={{ color:'#02d47e' }}>a tu ritmo</span><br />
@@ -895,9 +876,6 @@ export default function Landing() {
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
               {/* Texto */}
               <div>
-                <span style={{ display:'inline-block', fontSize:'.68rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', background:'rgba(245,158,11,.12)', color:'#92400e', padding:'.3rem .85rem', borderRadius:100, marginBottom:20 }}>
-                  📊 Para Directores
-                </span>
                 <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
                   Monitorea el avance<br />
                   <span style={{ color:'#f59e0b' }}>pedagógico</span><br />
