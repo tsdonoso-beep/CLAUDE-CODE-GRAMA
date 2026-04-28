@@ -95,9 +95,6 @@ export default function Landing() {
 
         {/* Derecha */}
         <div style={{ display:'flex', alignItems:'center', gap:14 }}>
-          <span className="hidden md:block" style={{ fontSize:10, fontWeight:700, letterSpacing:'1.2px', textTransform:'uppercase', color:'rgba(4,57,65,.55)' }}>
-            MINEDU · Perú
-          </span>
           <button
             onClick={isLoggedIn ? goToApp : () => navigate('/login')}
             style={{ background:'#043941', color:'#fff', padding:'9px 22px', borderRadius:8, fontSize:13, fontWeight:700, border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:5, transition:'all .2s' }}
