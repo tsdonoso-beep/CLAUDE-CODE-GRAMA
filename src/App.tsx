@@ -23,7 +23,6 @@ const Repositorio     = lazy(() => import("./pages/Repositorio"))
 const BienDetalle     = lazy(() => import("./pages/BienDetalle"))
 const Admin           = lazy(() => import("./pages/Admin"))
 const Perfil          = lazy(() => import("./pages/Perfil"))
-const MisModulos      = lazy(() => import("./pages/MisModulos"))
 const MisLogros       = lazy(() => import("./pages/MisLogros"))
 const NotFound        = lazy(() => import("./pages/NotFound"))
 
@@ -78,7 +77,6 @@ const App = () => (
                   {/* App con sidebar — incluye perfil */}
                   <Route element={<AppShell />}>
                     <Route path="/perfil"                              element={wrap(Perfil)} />
-                    <Route path="/perfil/modulos"                      element={wrap(MisModulos)} />
                     <Route path="/perfil/logros"                       element={wrap(MisLogros)} />
                     <Route path="/taller/:slug"                        element={wrap(TallerHub)} />
                     <Route path="/taller/:slug/ruta"                   element={wrap(RutaAprendizaje)} />
