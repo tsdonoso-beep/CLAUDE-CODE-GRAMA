@@ -180,7 +180,7 @@ export default function Landing() {
         <div style={{ position:'relative', zIndex:2, animation:'heroNavIn .7s ease both' }}>
 
           {/* H1 */}
-          <h1 style={{ fontSize:'clamp(2.4rem,4.2vw,3.8rem)', fontWeight:900, lineHeight:1.04, letterSpacing:'-1.8px', color:'#043941', marginBottom:20 }}>
+          <h1 style={{ fontSize:'clamp(2.4rem,4.2vw,3.8rem)', fontWeight:800, lineHeight:1.04, letterSpacing:'-1.8px', color:'#043941', marginBottom:20 }}>
             Formación técnica<br />
             que <em style={{ fontStyle:'normal', color:'#02d47e' }}>transforma</em><br />
             la educación
@@ -233,7 +233,7 @@ export default function Landing() {
             { n:'150', hi:'h',  label:'Formación híbrida' },
           ].map((s, i) => (
             <div key={i} style={{ textAlign:'center', padding:'18px 16px', borderLeft: i > 0 ? '1px solid rgba(255,255,255,.06)' : 'none' }}>
-              <span style={{ display:'block', fontSize:'clamp(1.4rem,2.5vw,2rem)', fontWeight:900, color:'#02d47e', lineHeight:1, letterSpacing:'-.04em', marginBottom:4 }}>
+              <span style={{ display:'block', fontSize:'clamp(1.4rem,2.5vw,2rem)', fontWeight:800, color:'#02d47e', lineHeight:1, letterSpacing:'-.04em', marginBottom:4 }}>
                 {s.n}<span style={{ color:'rgba(255,255,255,.6)', fontSize:'.7em' }}>{s.hi}</span>
               </span>
               <span style={{ fontSize:'.6rem', fontWeight:600, color:'rgba(255,255,255,.4)', letterSpacing:'.08em', textTransform:'uppercase' }}>{s.label}</span>
@@ -262,7 +262,7 @@ export default function Landing() {
               <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
               ¿Para quién?
             </span>
-            <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.1, color:'#043941', margin:0 }}>
+            <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:800, lineHeight:1.1, color:'#043941', margin:0 }}>
               Una plataforma,{' '}
               <span style={{ color:'#02d47e' }}>tres experiencias</span>
             </h2>
@@ -304,7 +304,7 @@ export default function Landing() {
                   <span style={{ fontSize:'2rem', marginBottom:10, marginTop:4, display:'block', lineHeight:1 }}>{tab.emoji}</span>
 
                   {/* Rol */}
-                  <span style={{ fontSize:'1.05rem', fontWeight:900, color: isActive ? tab.activeText : '#043941', marginBottom:4, display:'block' }}>
+                  <span style={{ fontSize:'1.05rem', fontWeight:800, color: isActive ? tab.activeText : '#043941', marginBottom:4, display:'block' }}>
                     {tab.label}
                   </span>
 
@@ -340,7 +340,7 @@ export default function Landing() {
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
               {/* Texto */}
               <div>
-                <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
+                <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:800, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
                   Domina tu taller,<br />
                   <span style={{ color:'#02d47e' }}>certifícate y enseña</span><br />
                   con confianza.
@@ -381,7 +381,7 @@ export default function Landing() {
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
               {/* Texto */}
               <div>
-                <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
+                <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:800, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
                   Aprende haciendo,<br />
                   <span style={{ color:'#02d47e' }}>a tu ritmo</span><br />
                   y con tu docente.
@@ -434,7 +434,7 @@ export default function Landing() {
                 <div style={{ position:'absolute', inset:0, background:'linear-gradient(160deg, transparent 50%, rgba(4,57,65,.55) 100%)' }} />
                 <div style={{ position:'absolute', bottom:20, left:20, background:'rgba(255,255,255,.95)', backdropFilter:'blur(8px)', borderRadius:14, padding:'10px 16px', boxShadow:'0 8px 24px rgba(0,0,0,.12)' }}>
                   <p style={{ margin:0, fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.5)', letterSpacing:'.06em', textTransform:'uppercase' }}>Proyectos disponibles</p>
-                  <p style={{ margin:'2px 0 0', fontSize:'1.3rem', fontWeight:900, color:'#043941' }}>2 en proceso</p>
+                  <p style={{ margin:'2px 0 0', fontSize:'1.3rem', fontWeight:800, color:'#043941' }}>2 en proceso</p>
                 </div>
               </div>
             </div>
@@ -444,7 +444,7 @@ export default function Landing() {
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
               {/* Texto */}
               <div>
-                <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
+                <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:800, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
                   Monitorea el avance<br />
                   <span style={{ color:'#f59e0b' }}>pedagógico</span><br />
                   de tu institución.
@@ -484,7 +484,7 @@ export default function Landing() {
                 <div style={{ position:'absolute', inset:0, background:'linear-gradient(160deg, transparent 50%, rgba(4,57,65,.55) 100%)' }} />
                 <div style={{ position:'absolute', bottom:20, left:20, background:'rgba(255,255,255,.95)', backdropFilter:'blur(8px)', borderRadius:14, padding:'10px 16px', boxShadow:'0 8px 24px rgba(0,0,0,.12)' }}>
                   <p style={{ margin:0, fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.5)', letterSpacing:'.06em', textTransform:'uppercase' }}>Módulo de seguimiento</p>
-                  <p style={{ margin:'2px 0 0', fontSize:'1.3rem', fontWeight:900, color:'#043941' }}>En desarrollo</p>
+                  <p style={{ margin:'2px 0 0', fontSize:'1.3rem', fontWeight:800, color:'#043941' }}>En desarrollo</p>
                 </div>
               </div>
             </div>
@@ -511,7 +511,7 @@ export default function Landing() {
               {activeTab === 'alumno'  && 'Proyectos en desarrollo'}
               {activeTab === 'director' && 'Estado por especialidad'}
             </span>
-            <h2 style={{ fontSize:'clamp(1.8rem,3.5vw,2.6rem)', fontWeight:900, lineHeight:1.1, color:'#043941', margin:'0 0 .75rem' }}>
+            <h2 style={{ fontSize:'clamp(1.8rem,3.5vw,2.6rem)', fontWeight:800, lineHeight:1.1, color:'#043941', margin:'0 0 .75rem' }}>
               {activeTab === 'docente' && <>{talleresConfig.length} especialidades <span style={{ color:'#02d47e' }}>técnicas</span></>}
               {activeTab === 'alumno'  && <>Proyectos <span style={{ color:'#02d47e' }}>para alumnos</span></>}
               {activeTab === 'director' && <>Seguimiento <span style={{ color:'#f59e0b' }}>por taller</span></>}
@@ -587,7 +587,7 @@ export default function Landing() {
                       {/* Acento de color en esquina */}
                       <div style={{ position:'absolute', top:0, left:0, right:0, height:4, background:`linear-gradient(90deg, ${accentColor}, ${accentColor}88)` }} />
                       <div style={{ position:'absolute', bottom:22, left:24, right:24 }}>
-                        <h3 style={{ margin:0, fontSize:'clamp(1.3rem,2.5vw,1.75rem)', fontWeight:900, color:'#fff', lineHeight:1.15, letterSpacing:'-.01em' }}>{t.nombre}</h3>
+                        <h3 style={{ margin:0, fontSize:'clamp(1.3rem,2.5vw,1.75rem)', fontWeight:800, color:'#fff', lineHeight:1.15, letterSpacing:'-.01em' }}>{t.nombre}</h3>
                       </div>
                     </div>
 
@@ -657,7 +657,7 @@ export default function Landing() {
                     <div style={{ background:`${p.color}33`, padding:'1.6rem', display:'flex', alignItems:'flex-start', justifyContent:'space-between', borderBottom:`1px solid ${p.color}44` }}>
                       <div>
                         <span style={{ fontSize:'2rem', display:'block', marginBottom:8 }}>{p.emoji}</span>
-                        <h3 style={{ margin:0, fontSize:'1.05rem', fontWeight:900, color:'#043941', lineHeight:1.2 }}>{p.nombre}</h3>
+                        <h3 style={{ margin:0, fontSize:'1.05rem', fontWeight:800, color:'#043941', lineHeight:1.2 }}>{p.nombre}</h3>
                       </div>
                       <span style={{ fontSize:'.65rem', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', background:p.color, color:p.textColor, padding:'.3rem .7rem', borderRadius:100, whiteSpace:'nowrap', flexShrink:0 }}>
                         En proceso
@@ -746,7 +746,7 @@ export default function Landing() {
                 <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
                 Nuestra metodología
               </span>
-              <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.08, color:'#043941', margin:0 }}>
+              <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:800, lineHeight:1.08, color:'#043941', margin:0 }}>
                 Una progresión que{' '}
                 <span style={{ color:'#02d47e' }}>respeta tu recorrido</span>
               </h2>
@@ -788,7 +788,7 @@ export default function Landing() {
 
                 {/* Número grande */}
                 <div style={{ position:'relative', marginBottom:28 }}>
-                  <span style={{ fontSize:'3.5rem', fontWeight:900, lineHeight:1, color: i === 0 ? '#02d47e' : 'rgba(4,57,65,.1)', letterSpacing:'-.03em', display:'block' }}>
+                  <span style={{ fontSize:'3.5rem', fontWeight:800, lineHeight:1, color: i === 0 ? '#02d47e' : 'rgba(4,57,65,.1)', letterSpacing:'-.03em', display:'block' }}>
                     {stage.n}
                   </span>
                   {/* Barra de progreso bajo el número */}
@@ -839,7 +839,7 @@ export default function Landing() {
                 <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
                 Preguntas frecuentes
               </span>
-              <h2 style={{ fontSize:'clamp(1.8rem,3.5vw,2.6rem)', fontWeight:900, lineHeight:1.15, color:'#043941', margin:0 }}>
+              <h2 style={{ fontSize:'clamp(1.8rem,3.5vw,2.6rem)', fontWeight:800, lineHeight:1.15, color:'#043941', margin:0 }}>
                 Todo lo que necesitas<br />
                 <span style={{ color:'#02d47e' }}>saber antes de empezar</span>
               </h2>
@@ -901,7 +901,7 @@ export default function Landing() {
                   🚀
                 </div>
 
-                <h3 style={{ fontSize:'1.15rem', fontWeight:900, color:'#fff', margin:'0 0 10px', lineHeight:1.25 }}>
+                <h3 style={{ fontSize:'1.15rem', fontWeight:800, color:'#fff', margin:'0 0 10px', lineHeight:1.25 }}>
                   ¿Listo para empezar?
                 </h3>
                 <p style={{ fontSize:'.82rem', color:'rgba(255,255,255,.5)', margin:'0 0 1.8rem', lineHeight:1.7 }}>
