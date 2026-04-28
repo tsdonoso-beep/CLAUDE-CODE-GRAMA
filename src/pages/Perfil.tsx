@@ -125,6 +125,22 @@ function Tangram({
 }
 
 // ── Calendario de sesiones (sidebar) ─────────────────────────────────────────
+// Devuelve la sesión en la que el docente está actualmente según contenidos completados
+function getCurrentSession(completados: number) {
+  let remaining = completados
+  for (const mod of modulosLXP) {
+    for (const ses of mod.sesiones) {
+      if (remaining < ses.contenidos.length) {
+        return { mod, ses }
+      }
+      remaining -= ses.contenidos.length
+    }
+  }
+  // Todo completado → última sesión
+  const lastMod = modulosLXP[modulosLXP.length - 1]
+  return { mod: lastMod, ses: lastMod.sesiones[lastMod.sesiones.length - 1] }
+}
+
 const MESES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
 const DIAS_ES  = ['Lu','Ma','Mi','Ju','Vi','Sa','Do']
 
@@ -422,11 +438,11 @@ export default function Perfil() {
                 tallerSlugsAccesibles.map(slug => {
                   const t    = talleresConfig.find(x => x.slug === slug)
                   if (!t) return null
-                  const ta   = TALLER_ACCENTS[slug] ?? '#02d47e'
-                  const p    = getTallerProgreso(slug)
-                  const mIdx = Math.min(Math.floor((p.porcentaje / 100) * modulosLXP.length), modulosLXP.length - 1)
-                  const mod  = modulosLXP[mIdx]
-                  const prox = getProximaSesion(slug)
+                  const ta       = TALLER_ACCENTS[slug] ?? '#02d47e'
+                  const p        = getTallerProgreso(slug)
+                  const current  = getCurrentSession(p.completados)
+                  const mod      = current.mod
+                  const prox     = getProximaSesion(slug)
                   return (
                     <div
                       key={slug}
@@ -453,7 +469,7 @@ export default function Perfil() {
                         </div>
                         <div className="flex items-center justify-between mb-2.5">
                           <p className="text-[11px]" style={{ color: '#94a3b8' }}>
-                            Módulo {mIdx + 1} de {modulosLXP.length} · U{mIdx + 1} en curso
+                            {current.ses.id} · {p.completados} de {p.total} actividades
                           </p>
                           <button
                             onClick={() => navigate(`/taller/${slug}`)}
