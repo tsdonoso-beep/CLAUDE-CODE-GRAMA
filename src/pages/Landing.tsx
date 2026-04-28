@@ -1,10 +1,9 @@
 // src/pages/Landing.tsx
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  BookOpen, Clock,
-  ChevronRight, ChevronLeft, ArrowRight,
-  Menu, X, Wrench,
+  ChevronRight, ArrowRight,
+  Menu, X, Wrench, BookOpen,
 } from 'lucide-react'
 import { GramaLogo } from '@/components/GramaLogo'
 import { useAuth } from '@/contexts/AuthContext'
@@ -19,428 +18,6 @@ const NAV_LINKS = [
   { label: 'Preguntas',     href: '#faq' },
 ]
 
-// ── Tangram decorativo ────────────────────────────────────────────────────────
-// Las 7 piezas del tangram: 2 triángulos grandes, 1 medio, 2 pequeños, 1 cuadrado, 1 paralelogramo
-function Tangram({
-  color = '#02d47e',
-  opacity = 0.12,
-  className = '',
-  rotate = 0,
-}: {
-  color?: string
-  opacity?: number
-  className?: string
-  rotate?: number
-}) {
-  return (
-    <svg
-      viewBox="0 0 160 160"
-      className={`pointer-events-none select-none ${className}`}
-      style={{ transform: `rotate(${rotate}deg)` }}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* Triángulo grande 1 */}
-      <polygon points="0,160 80,80 0,0"         fill={color} fillOpacity={opacity} />
-      {/* Triángulo grande 2 */}
-      <polygon points="160,0 80,80 160,160"     fill={color} fillOpacity={opacity * 0.7} />
-      {/* Triángulo mediano */}
-      <polygon points="0,160 80,160 80,80"      fill={color} fillOpacity={opacity * 1.2} />
-      {/* Cuadrado (rotado 45°) */}
-      <rect x="70" y="30" width="40" height="40" transform="rotate(45 90 50)" fill={color} fillOpacity={opacity * 0.9} />
-      {/* Triángulo pequeño 1 */}
-      <polygon points="80,80 120,80 120,120"    fill={color} fillOpacity={opacity * 0.8} />
-      {/* Triángulo pequeño 2 */}
-      <polygon points="80,80 80,120 120,120"    fill={color} fillOpacity={opacity * 0.6} />
-      {/* Paralelogramo */}
-      <polygon points="120,80 160,80 160,120 120,120" fill={color} fillOpacity={opacity * 0.5} />
-    </svg>
-  )
-}
-
-// ── Hook reveal al hacer scroll ───────────────────────────────────────────────
-function useReveal(threshold = 0.12) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setVisible(true); obs.disconnect() }
-    }, { threshold })
-    if (ref.current) obs.observe(ref.current)
-    return () => obs.disconnect()
-  }, [threshold])
-  return { ref, visible }
-}
-
-// ── Carrusel horizontal de talleres ──────────────────────────────────────────
-function TalleresCarousel({ onOpenModal }: { onOpenModal: (i: number) => void }) {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const speedRef  = useRef(0.8)
-  const pausedRef = useRef(false)
-  const rafRef    = useRef<number>()
-  const items     = [...talleresConfig, ...talleresConfig]
-
-  // Arc transform: cada card recibe scale + rotateY + translateY proporcional a su distancia del centro visible
-  const applyArc = (el: HTMLDivElement) => {
-    const visibleCenter = el.scrollLeft + el.clientWidth / 2
-    const maxDist       = el.clientWidth * 0.5
-    el.querySelectorAll<HTMLElement>('[data-card]').forEach(card => {
-      const dist = (card.offsetLeft + card.offsetWidth / 2) - visibleCenter
-      const n    = Math.max(-1, Math.min(1, dist / maxDist))   // [-1 … 1]
-      const abs  = Math.abs(n)
-      const scale   = 1 - abs * 0.06                           // 1.0 centro → 0.94 bordes (minimal zoom)
-      const rotY    = -n * 8                                    // cards derecha giran suavemente
-      const dropY   = abs * abs * 12                            // caída suave: 0px centro → 12px bordes
-      const opacity = Math.max(0.75, 1 - abs * 0.25)           // menos oscurecimiento en bordes
-      card.style.transform = `perspective(900px) rotateY(${rotY}deg) translateY(${dropY}px) scale(${scale})`
-      card.style.opacity   = String(opacity)
-      card.style.zIndex    = String(Math.round((1 - abs) * 20))
-    })
-  }
-
-  useEffect(() => {
-    const el = scrollRef.current
-    if (!el) return
-    applyArc(el)                                                // render inicial correcto
-    const tick = () => {
-      if (!pausedRef.current) {
-        el.scrollLeft += speedRef.current
-        if (el.scrollLeft >= el.scrollWidth / 2) el.scrollLeft = 0
-        if (el.scrollLeft <= 0 && speedRef.current < 0) el.scrollLeft = el.scrollWidth / 2
-      }
-      applyArc(el)
-      rafRef.current = requestAnimationFrame(tick)
-    }
-    rafRef.current = requestAnimationFrame(tick)
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
-  }, [])
-
-  return (
-    <div style={{ position:'relative' }}>
-      {/* Fade masks — suaves en los bordes */}
-      <div style={{ position:'absolute', left:0, top:0, bottom:0, width:80, zIndex:10, pointerEvents:'none', background:'linear-gradient(to right,#f0fdf6 30%,transparent)' }} />
-      <div style={{ position:'absolute', right:0, top:0, bottom:0, width:80, zIndex:10, pointerEvents:'none', background:'linear-gradient(to left,#f0fdf6 30%,transparent)' }} />
-
-      {/* Flecha izquierda */}
-      <button
-        style={{ position:'absolute', left:20, top:'50%', transform:'translateY(-50%)', zIndex:20, width:42, height:42, borderRadius:'50%', background:'#043941', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 16px rgba(4,57,65,.4)', color:'#02d47e', transition:'transform .2s, box-shadow .2s' }}
-        onMouseEnter={e => { speedRef.current = -5; pausedRef.current = false; e.currentTarget.style.transform='translateY(-50%) scale(1.14)'; e.currentTarget.style.boxShadow='0 6px 24px rgba(4,57,65,.55)' }}
-        onMouseLeave={e => { speedRef.current = 0.8; e.currentTarget.style.transform='translateY(-50%)'; e.currentTarget.style.boxShadow='0 4px 16px rgba(4,57,65,.4)' }}
-      >
-        <ChevronLeft size={18} />
-      </button>
-
-      {/* Flecha derecha */}
-      <button
-        style={{ position:'absolute', right:20, top:'50%', transform:'translateY(-50%)', zIndex:20, width:42, height:42, borderRadius:'50%', background:'#043941', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 16px rgba(4,57,65,.4)', color:'#02d47e', transition:'transform .2s, box-shadow .2s' }}
-        onMouseEnter={e => { speedRef.current = 5; pausedRef.current = false; e.currentTarget.style.transform='translateY(-50%) scale(1.14)'; e.currentTarget.style.boxShadow='0 6px 24px rgba(4,57,65,.55)' }}
-        onMouseLeave={e => { speedRef.current = 0.8; e.currentTarget.style.transform='translateY(-50%)'; e.currentTarget.style.boxShadow='0 4px 16px rgba(4,57,65,.4)' }}
-      >
-        <ChevronRight size={18} />
-      </button>
-
-      {/* Track — position:relative necesario para que card.offsetLeft sea relativo a este contenedor */}
-      <div
-        ref={scrollRef}
-        style={{ position:'relative', display:'flex', gap:18, overflowX:'hidden', padding:'40px 48px 60px', scrollbarWidth:'none' }}
-        onMouseEnter={() => { pausedRef.current = true }}
-        onMouseLeave={() => { pausedRef.current = false; speedRef.current = 0.8 }}
-      >
-        {items.map((t, i) => (
-          <div
-            key={i}
-            data-card="true"
-            onClick={() => onOpenModal(i % talleresConfig.length)}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 20px 48px rgba(4,57,65,.18)' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow='0 4px 20px rgba(4,57,65,.08)' }}
-            style={{
-              width:280, flexShrink:0, borderRadius:20, overflow:'hidden',
-              background:'#fff', cursor:'pointer',
-              boxShadow:'0 4px 20px rgba(4,57,65,.08)',
-              transition:'box-shadow .3s ease',
-              /* sin transition de transform — el arco actualiza cada frame */
-            }}
-          >
-            {/* Franja de color */}
-            <div style={{ height:5, background:`hsl(${t.color})` }} />
-
-            {/* Foto */}
-            <div style={{ height:210, position:'relative', overflow:'hidden' }}>
-              <img src={t.imagen} alt={t.nombre} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.75) saturate(0.85)' }} />
-              <div style={{ position:'absolute', inset:0, background:'linear-gradient(170deg, rgba(4,57,65,0.05) 0%, rgba(4,57,65,0.84) 100%)' }} />
-
-              {/* Badge */}
-              <div style={{ position:'absolute', top:16, left:16, display:'inline-flex', alignItems:'center', gap:6, background:'rgba(4,57,65,0.74)', backdropFilter:'blur(10px)', border:'1px solid rgba(255,255,255,0.16)', borderRadius:100, padding:'.28rem .8rem' }}>
-                <span style={{ width:6, height:6, borderRadius:'50%', background:'#02d47e', display:'inline-block', flexShrink:0 }} />
-                <span style={{ fontSize:'.62rem', fontWeight:800, letterSpacing:'.15em', color:'rgba(255,255,255,.94)' }}>T{String(t.numero).padStart(2,'0')}</span>
-              </div>
-
-              {/* Título */}
-              <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'1.2rem' }}>
-                <h3 style={{ fontSize:'.98rem', fontWeight:900, color:'#fff', lineHeight:1.2, margin:0 }}>{t.nombre}</h3>
-              </div>
-            </div>
-
-            {/* Contenido */}
-            <div style={{ padding:'18px 20px 20px' }}>
-              <p style={{ fontSize:'.78rem', lineHeight:1.7, color:'rgba(4,57,65,.5)', margin:'0 0 14px', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical' as const, overflow:'hidden' }}>{t.descripcion}</p>
-              <div style={{ display:'flex', alignItems:'center', gap:14, marginBottom:14 }}>
-                <span style={{ display:'flex', alignItems:'center', gap:5, fontSize:'.7rem', fontWeight:700, color:'rgba(4,57,65,.55)' }}><BookOpen size={11} /> 7 módulos</span>
-                <span style={{ display:'flex', alignItems:'center', gap:5, fontSize:'.7rem', fontWeight:700, color:'rgba(4,57,65,.55)' }}><Clock size={11} /> 150h</span>
-              </div>
-              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', paddingTop:12, borderTop:'1px solid rgba(4,57,65,0.08)' }}>
-                <span style={{ fontSize:'.72rem', fontWeight:800, color:'#043941' }}>Ver ruta</span>
-                <div style={{ width:28, height:28, borderRadius:'50%', background:`hsl(${t.color})`, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                  <ChevronRight size={13} color="#fff" />
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-// ── Marquee de talleres ───────────────────────────────────────────────────────
-function TalleresMarquee() {
-  const items = [...talleresConfig, ...talleresConfig]
-  return (
-    <div className="overflow-hidden py-3" style={{ borderTop: '1px solid rgba(4,57,65,0.07)' }}>
-      <div className="flex gap-8 animate-marquee whitespace-nowrap">
-        {items.map((t, i) => (
-          <span key={i} className="inline-flex items-center gap-2 shrink-0 text-[11px] font-semibold" style={{ color: 'rgba(4,57,65,0.45)' }}>
-            <span className="h-1 w-1 rounded-full" style={{ background: '#02d47e' }} />
-            {t.nombre}
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-// ── Modal carrusel de taller ──────────────────────────────────────────────────
-function TallerModal({
-  index, dir, onClose, onPrev, onNext, onGoTo,
-}: {
-  index: number
-  dir: 'next' | 'prev'
-  onClose: () => void
-  onPrev: () => void
-  onNext: () => void
-  onGoTo: (i: number) => void
-}) {
-  const taller  = talleresConfig[index]
-  const todosLos = getBienesByTaller(taller.slug)
-  // Equipos representativos: EQUIPOS de INNOVACIÓN primero, luego resto, máx 8
-  const equiposInnov = todosLos.filter(b => b.tipo === 'EQUIPOS' && b.zona.includes('INNOVA'))
-  const equiposResto = todosLos.filter(b => b.tipo === 'EQUIPOS' && !b.zona.includes('INNOVA'))
-  const bienes = [...equiposInnov, ...equiposResto].slice(0, 8)
-  const isFirst = index === 0
-  const isLast  = index === talleresConfig.length - 1
-  const slideClass = dir === 'next' ? 'slide-in-right' : 'slide-in-left'
-
-  // Cerrar con Escape
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [onClose])
-
-  return (
-    <>
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-fade-in-up"
-        style={{ animationDuration: '0.2s' }}
-        onClick={onClose}
-      />
-
-      {/* Panel — 2 columnas en desktop */}
-      <div className="fixed inset-x-0 bottom-0 z-50 flex justify-center md:inset-0 md:items-center md:p-6" onClick={onClose}>
-        <div
-          className="slide-up-modal bg-white w-full md:max-w-2xl rounded-t-3xl md:rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row"
-          style={{ maxHeight: '92vh' }}
-          onClick={e => e.stopPropagation()}
-        >
-          {/* ── Columna izquierda: foto + identidad ── */}
-          <style>{`.modal-photo-col { height: 220px; flex-shrink: 0; } @media (min-width:768px) { .modal-photo-col { height: auto; width: 250px; align-self: stretch; } }`}</style>
-          <div className="modal-photo-col relative overflow-hidden">
-            <div className="relative w-full h-full overflow-hidden">
-              <img
-                key={taller.slug}
-                src={taller.imagen}
-                alt={taller.nombre}
-                className={`absolute inset-0 w-full h-full object-cover ${slideClass}`}
-                style={{ filter: 'brightness(0.65) saturate(0.85)' }}
-              />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, rgba(4,57,65,0.2) 0%, rgba(4,57,65,0.92) 100%)' }} />
-              <Tangram color={`hsl(${taller.color})`} opacity={0.25} rotate={20} className="absolute -bottom-6 -right-6 w-28 h-28" />
-
-              {/* Cerrar — solo visible en móvil en la foto */}
-              <button
-                onClick={onClose}
-                className="absolute top-3 right-3 md:hidden h-8 w-8 rounded-full flex items-center justify-center"
-                style={{ background: 'rgba(0,0,0,0.45)' }}
-              >
-                <X size={14} color="white" />
-              </button>
-
-              {/* Info taller */}
-              <div className={`absolute bottom-4 left-5 right-5 ${slideClass}`} key={`info-${taller.slug}`}>
-                <span
-                  className="text-[10px] font-extrabold px-2.5 py-1 rounded-full inline-block mb-2"
-                  style={{ background: `hsl(${taller.color})`, color: '#fff' }}
-                >
-                  T{String(taller.numero).padStart(2, '0')} · {index + 1} de {talleresConfig.length}
-                </span>
-                <h2 className="font-extrabold text-white leading-tight" style={{ fontSize: 'clamp(1rem,2vw,1.35rem)' }}>{taller.nombre}</h2>
-                <p className="text-[11px] mt-1.5 leading-relaxed" style={{ color: 'rgba(255,255,255,0.62)' }}>{taller.descripcion}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* ── Columna derecha: contenido + footer ── */}
-          <div className="flex flex-col flex-1 overflow-hidden">
-
-            {/* Cerrar — solo en desktop */}
-            <div className="hidden md:flex justify-end px-4 pt-3 shrink-0">
-              <button onClick={onClose} className="h-7 w-7 rounded-full flex items-center justify-center hover:opacity-70 transition-opacity" style={{ background: 'rgba(4,57,65,0.07)' }}>
-                <X size={13} color="#043941" />
-              </button>
-            </div>
-
-            {/* Cuerpo */}
-            <div key={taller.slug} className={`flex-1 overflow-y-auto px-5 pb-2 pt-1 space-y-4 ${slideClass}`}>
-              {taller.slug === 'taller-general-ept' ? (
-                <>
-                  <div>
-                    <p className="overline-label font-extrabold mb-2 flex items-center gap-1.5" style={{ color: '#02d47e' }}>
-                      <Wrench size={11} /> Equipamiento representativo
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {['Impresora 3D FDM','Cortadora Láser CO₂','Escáner 3D','Sublimación','Kit Electrónica','Plotter de Corte'].map(n => (
-                        <span key={n} className="text-[10px] font-medium px-2.5 py-1 rounded-full" style={{ background:'#e3f8fb', color:'#045f6c' }}>{n}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {['Fabricación Digital','Design Thinking','Emprendimiento','Prototipado','Proyectos Productivos'].map(tag => (
-                      <span key={tag} className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ background:'#f0fdf6', color:'#045f6c' }}>{tag}</span>
-                    ))}
-                  </div>
-                </>
-              ) : (
-                <>
-                  {/* Competencias */}
-                  {taller.competencias?.length > 0 && (
-                    <div>
-                      <p className="overline-label font-extrabold mb-2 flex items-center gap-1.5" style={{ color: '#045f6c' }}>
-                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.2 7.8L9 2.5" stroke="#02d47e" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        Competencias
-                      </p>
-                      <div className="grid grid-cols-2 gap-1">
-                        {taller.competencias.slice(0, 4).map((c, i) => (
-                          <div key={i} className="flex items-start gap-1.5 px-2 py-1.5 rounded-lg" style={{ background: '#f0fdf6' }}>
-                            <span className="h-1.5 w-1.5 rounded-full shrink-0 mt-1" style={{ background: '#02d47e' }} />
-                            <span className="text-[10px] leading-snug" style={{ color: 'var(--grama-oscuro)' }}>{c}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Módulos — 2 columnas compactas */}
-                  <div>
-                    <p className="overline-label font-extrabold mb-2 flex items-center gap-1.5" style={{ color: '#02d47e' }}>
-                      <BookOpen size={11} /> Ruta · {modulosLXP.length} módulos · 150h
-                    </p>
-                    <div className="grid grid-cols-2 gap-1">
-                      {modulosLXP.map((m, i) => (
-                        <div key={m.id} className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg" style={{ background: '#f0fdf6' }}>
-                          <span className="text-[9px] font-extrabold shrink-0" style={{ color: '#02d47e' }}>M{i}</span>
-                          <span className="text-[10px] font-semibold truncate" style={{ color: 'var(--grama-oscuro)' }}>{m.nombre}</span>
-                          <span className="text-[9px] ml-auto shrink-0" style={{ color: '#94a3b8' }}>{m.horasTotal}h</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Equipamiento — máx 5 chips */}
-                  {bienes.length > 0 && (
-                    <div>
-                      <p className="overline-label font-extrabold mb-2 flex items-center gap-1.5" style={{ color: '#02d47e' }}>
-                        <Wrench size={11} /> Equipamiento
-                      </p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {bienes.slice(0, 5).map(b => (
-                          <span key={b.nombre} className="text-[10px] font-medium px-2.5 py-1 rounded-full" style={{ background: '#e3f8fb', color: '#045f6c' }}>
-                            {b.nombre}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-
-            {/* Footer */}
-            <div className="px-4 pb-4 pt-2.5 shrink-0 border-t space-y-2.5" style={{ borderColor: '#f0fdf6' }}>
-
-              {/* Nav row: flechas + dots fusionados */}
-              <div className="flex items-center justify-between gap-2">
-                <button
-                  onClick={onPrev}
-                  disabled={isFirst}
-                  className="flex items-center justify-center rounded-full transition-all disabled:opacity-20 hover:scale-110"
-                  style={{ width: 30, height: 30, background: '#f0fdf6', border: 'none', cursor: isFirst ? 'default' : 'pointer', flexShrink: 0 }}
-                >
-                  <ChevronLeft size={15} color="#043941" />
-                </button>
-
-                <div className="flex items-center gap-1.5 flex-1 justify-center">
-                  {talleresConfig.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => i !== index && onGoTo(i)}
-                      className="rounded-full transition-all duration-300"
-                      style={{
-                        width: i === index ? 18 : 5,
-                        height: 5,
-                        background: i === index ? '#02d47e' : '#d1f0e8',
-                        border: 'none',
-                        padding: 0,
-                        cursor: i === index ? 'default' : 'pointer',
-                      }}
-                    />
-                  ))}
-                </div>
-
-                <button
-                  onClick={onNext}
-                  disabled={isLast}
-                  className="flex items-center justify-center rounded-full transition-all disabled:opacity-20 hover:scale-110"
-                  style={{ width: 30, height: 30, background: '#f0fdf6', border: 'none', cursor: isLast ? 'default' : 'pointer', flexShrink: 0 }}
-                >
-                  <ChevronRight size={15} color="#043941" />
-                </button>
-              </div>
-
-              {/* CTA principal */}
-              <a
-                href="mailto:contacto@grama.pe"
-                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-bold transition-all hover:scale-[1.02] hover:shadow-lg"
-                style={{ background: '#02d47e', color: '#043941', boxShadow: '0 4px 18px rgba(2,212,126,.35)' }}
-              >
-                Solicitar información <ArrowRight size={14} />
-              </a>
-            </div>
-        </div>
-      </div>
-    </div>
-    </>
-  )
-}
 
 // ── WhatsApp icon (lucide no lo incluye) ─────────────────────────────────────
 function WhatsAppIcon({ size = 16 }: { size?: number }) {
@@ -485,18 +62,9 @@ export default function Landing() {
 
   const goToApp = () => navigate('/perfil')
 
-  // Modal carrusel
-  const [modalIndex, setModalIndex] = useState<number | null>(null)
-  const [modalDir, setModalDir] = useState<'next' | 'prev'>('next')
-
-  const openModal = (i: number) => { setModalDir('next'); setModalIndex(i) }
-  const closeModal = () => setModalIndex(null)
-  const goPrev = () => { setModalDir('prev'); setModalIndex(i => Math.max(0, i! - 1)) }
-  const goNext = () => { setModalDir('next'); setModalIndex(i => Math.min(talleresConfig.length - 1, i! + 1)) }
-  const goTo   = (i: number) => { setModalDir(i > (modalIndex ?? 0) ? 'next' : 'prev'); setModalIndex(i) }
-
   const [open, setOpen] = useState<number | null>(null)
   const [activeTab, setActiveTab] = useState<'docente' | 'alumno' | 'director'>('docente')
+  const [selectedTaller, setSelectedTaller] = useState(0)
 
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f0fdf6' }}>
@@ -949,58 +517,157 @@ export default function Landing() {
               {activeTab === 'director' && <>Seguimiento <span style={{ color:'#f59e0b' }}>por taller</span></>}
             </h2>
             <p style={{ fontSize:'.875rem', color:'rgba(4,57,65,.5)', lineHeight:1.75, margin:0 }}>
-              {activeTab === 'docente' && 'Haz clic en cualquier taller para ver su ruta de aprendizaje y equipamiento.'}
+              {activeTab === 'docente' && 'Selecciona un taller para explorar su ruta de aprendizaje, competencias y equipamiento.'}
               {activeTab === 'alumno'  && 'Kits de proyectos guiados por tu docente. Más especialidades en camino.'}
               {activeTab === 'director' && 'Vista global del avance de formación docente en tu institución.'}
             </p>
           </div>
 
-          {/* ── DOCENTE: grid de talleres ── */}
-          {activeTab === 'docente' && (
-            <div style={{ animation:'fadeInUp .4s ease both' }}>
-              <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(200px, 1fr))', gap:16, marginBottom:'2.5rem' }}>
-                {talleresConfig.map((t, i) => (
-                  <div
-                    key={t.slug}
-                    onClick={() => openModal(i)}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform='translateY(-6px)'; (e.currentTarget as HTMLElement).style.boxShadow='0 16px 40px rgba(4,57,65,.15)' }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform='none'; (e.currentTarget as HTMLElement).style.boxShadow='0 4px 16px rgba(4,57,65,.07)' }}
-                    style={{ borderRadius:16, overflow:'hidden', background:'#fff', cursor:'pointer', boxShadow:'0 4px 16px rgba(4,57,65,.07)', transition:'transform .25s ease, box-shadow .25s ease' }}
-                  >
-                    {/* Franja color */}
-                    <div style={{ height:4, background:`hsl(${t.color})` }} />
-                    {/* Imagen */}
-                    <div style={{ height:130, position:'relative', overflow:'hidden' }}>
-                      <img src={t.imagen} alt={t.nombre} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(.72) saturate(.85)' }} />
-                      <div style={{ position:'absolute', inset:0, background:'linear-gradient(170deg, rgba(4,57,65,.04) 0%, rgba(4,57,65,.75) 100%)' }} />
-                      <div style={{ position:'absolute', top:10, left:10, display:'inline-flex', alignItems:'center', gap:5, background:'rgba(4,57,65,.7)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,.14)', borderRadius:100, padding:'.22rem .65rem' }}>
-                        <span style={{ width:5, height:5, borderRadius:'50%', background:'#02d47e', display:'inline-block' }} />
-                        <span style={{ fontSize:'.58rem', fontWeight:800, letterSpacing:'.12em', color:'rgba(255,255,255,.92)' }}>T{String(t.numero).padStart(2,'0')}</span>
+          {/* ── DOCENTE: split panel list + detalle ── */}
+          {activeTab === 'docente' && (() => {
+            const t = talleresConfig[selectedTaller]
+            const bienes = (() => {
+              const todos = getBienesByTaller(t.slug)
+              const innov = todos.filter(b => b.tipo === 'EQUIPOS' && b.zona.includes('INNOVA'))
+              const resto = todos.filter(b => b.tipo === 'EQUIPOS' && !b.zona.includes('INNOVA'))
+              return [...innov, ...resto].slice(0, 6)
+            })()
+            return (
+              <div style={{ animation:'fadeInUp .4s ease both' }}>
+                {/* Responsive split */}
+                <style>{`
+                  @media (max-width:768px) {
+                    .talleres-split { flex-direction: column !important; }
+                    .talleres-list  { max-height: 240px !important; overflow-y: auto; }
+                    .talleres-detail{ min-height: 0 !important; }
+                  }
+                `}</style>
+                <div className="talleres-split" style={{ display:'flex', gap:20, alignItems:'flex-start', marginBottom:'2.5rem' }}>
+
+                  {/* ── Lista izquierda ── */}
+                  <div className="talleres-list" style={{ flexShrink:0, width:300, background:'rgba(255,255,255,.55)', borderRadius:20, border:'1px solid rgba(4,57,65,.07)', padding:8, backdropFilter:'blur(6px)', overflowY:'auto', maxHeight:520 }}>
+                    {talleresConfig.map((item, i) => {
+                      const isActive = selectedTaller === i
+                      return (
+                        <div
+                          key={item.slug}
+                          onClick={() => setSelectedTaller(i)}
+                          style={{
+                            display:'flex', alignItems:'center', gap:12,
+                            padding:'10px 14px', borderRadius:13, cursor:'pointer',
+                            background: isActive ? '#fff' : 'transparent',
+                            border: `1.5px solid ${isActive ? '#02d47e' : 'transparent'}`,
+                            boxShadow: isActive ? '0 2px 12px rgba(2,212,126,.12)' : 'none',
+                            transition:'all .18s ease',
+                            marginBottom:2,
+                          }}
+                          onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background='rgba(4,57,65,.04)' }}
+                          onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background='transparent' }}
+                        >
+                          <span style={{ fontSize:'.62rem', fontWeight:800, letterSpacing:'.08em', color: isActive ? '#02d47e' : 'rgba(4,57,65,.3)', width:28, flexShrink:0 }}>
+                            T{String(item.numero).padStart(2,'0')}
+                          </span>
+                          <span style={{ width:8, height:8, borderRadius:'50%', background: isActive ? '#02d47e' : 'rgba(4,57,65,.18)', flexShrink:0, transition:'background .18s' }} />
+                          <span style={{ flex:1, fontSize:'.88rem', fontWeight: isActive ? 800 : 500, color: isActive ? '#043941' : 'rgba(4,57,65,.55)', lineHeight:1.25, transition:'all .18s' }}>
+                            {item.nombre}
+                          </span>
+                          {isActive && <ChevronRight size={13} color="#02d47e" />}
+                        </div>
+                      )
+                    })}
+                  </div>
+
+                  {/* ── Panel detalle derecha ── */}
+                  <div className="talleres-detail" style={{ flex:1, borderRadius:20, overflow:'hidden', background:'#fff', boxShadow:'0 4px 28px rgba(4,57,65,.1)', minHeight:520, display:'flex', flexDirection:'column' }}>
+
+                    {/* Hero imagen */}
+                    <div style={{ height:160, position:'relative', overflow:'hidden', flexShrink:0 }}>
+                      <img key={t.slug} src={t.imagen} alt={t.nombre} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(.62) saturate(.8)', transition:'opacity .3s' }} />
+                      <div style={{ position:'absolute', inset:0, background:'linear-gradient(160deg, rgba(4,57,65,.1) 0%, rgba(4,57,65,.88) 100%)' }} />
+                      {/* Badge T-número */}
+                      <span style={{ position:'absolute', top:14, left:16, fontSize:'.62rem', fontWeight:800, letterSpacing:'.1em', background:`hsl(${t.color})`, color:'#fff', padding:'.25rem .7rem', borderRadius:100 }}>
+                        T{String(t.numero).padStart(2,'0')} · {selectedTaller + 1} de {talleresConfig.length}
+                      </span>
+                      <div style={{ position:'absolute', bottom:14, left:18, right:18 }}>
+                        <h3 style={{ margin:'0 0 4px', fontSize:'clamp(1rem,2vw,1.3rem)', fontWeight:900, color:'#fff', lineHeight:1.2 }}>{t.nombre}</h3>
+                        <p style={{ margin:0, fontSize:'.78rem', color:'rgba(255,255,255,.65)', lineHeight:1.55 }}>{t.descripcion}</p>
                       </div>
-                      <h3 style={{ position:'absolute', bottom:10, left:12, right:12, margin:0, fontSize:'.82rem', fontWeight:900, color:'#fff', lineHeight:1.2 }}>{t.nombre}</h3>
                     </div>
-                    {/* Footer */}
-                    <div style={{ padding:'10px 14px 12px', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-                      <span style={{ fontSize:'.68rem', fontWeight:700, color:'rgba(4,57,65,.45)' }}>7 módulos · 150h</span>
-                      <div style={{ width:24, height:24, borderRadius:'50%', background:`hsl(${t.color})`, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                        <ChevronRight size={11} color="#fff" />
+
+                    {/* Contenido */}
+                    <div style={{ flex:1, overflowY:'auto', padding:'20px 22px', display:'flex', flexDirection:'column', gap:20 }}>
+
+                      {/* Competencias */}
+                      {t.competencias?.length > 0 && (
+                        <div>
+                          <p style={{ margin:'0 0 10px', fontSize:'.68rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', display:'flex', alignItems:'center', gap:6 }}>
+                            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.2 7.8L9 2.5" stroke="#02d47e" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                            Competencias
+                          </p>
+                          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:6 }}>
+                            {t.competencias.slice(0, 4).map((c: string, ci: number) => (
+                              <div key={ci} style={{ display:'flex', alignItems:'flex-start', gap:8, background:'#f0fdf6', borderRadius:10, padding:'8px 10px' }}>
+                                <span style={{ width:6, height:6, borderRadius:'50%', background:'#02d47e', flexShrink:0, marginTop:3 }} />
+                                <span style={{ fontSize:'.78rem', color:'#043941', lineHeight:1.45 }}>{c}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Ruta módulos */}
+                      <div>
+                        <p style={{ margin:'0 0 10px', fontSize:'.68rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', display:'flex', alignItems:'center', gap:6 }}>
+                          <BookOpen size={11} color="#02d47e" />
+                          Ruta · {modulosLXP.length} módulos · 150h
+                        </p>
+                        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:5 }}>
+                          {modulosLXP.map((m, mi) => (
+                            <div key={m.id} style={{ display:'flex', alignItems:'center', gap:8, background:'#f0fdf6', borderRadius:9, padding:'7px 10px' }}>
+                              <span style={{ fontSize:'.62rem', fontWeight:800, color:'#02d47e', flexShrink:0 }}>M{mi}</span>
+                              <span style={{ flex:1, fontSize:'.78rem', fontWeight:600, color:'#043941', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{m.nombre}</span>
+                              <span style={{ fontSize:'.65rem', color:'rgba(4,57,65,.4)', flexShrink:0 }}>{m.horasTotal}h</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
+
+                      {/* Equipamiento */}
+                      {bienes.length > 0 && (
+                        <div>
+                          <p style={{ margin:'0 0 10px', fontSize:'.68rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', display:'flex', alignItems:'center', gap:6 }}>
+                            <Wrench size={11} color="#02d47e" />
+                            Equipamiento
+                          </p>
+                          <div style={{ display:'flex', flexWrap:'wrap', gap:7 }}>
+                            {bienes.map(b => (
+                              <span key={b.nombre} style={{ fontSize:'.75rem', fontWeight:500, background:'#e3f8fb', color:'#045f6c', padding:'.3rem .8rem', borderRadius:100 }}>
+                                {b.nombre}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                    </div>
+
+                    {/* Footer CTA */}
+                    <div style={{ padding:'14px 20px', borderTop:'1px solid #f0fdf6', flexShrink:0 }}>
+                      <button
+                        onClick={goToApp}
+                        style={{ width:'100%', display:'flex', alignItems:'center', justifyContent:'center', gap:8, background:'#02d47e', color:'#043941', fontSize:'.88rem', fontWeight:800, padding:'.85rem', borderRadius:14, border:'none', cursor:'pointer', boxShadow:'0 4px 16px rgba(2,212,126,.3)', transition:'all .2s' }}
+                        onMouseEnter={e => { e.currentTarget.style.boxShadow='0 8px 24px rgba(2,212,126,.45)'; e.currentTarget.style.transform='translateY(-1px)' }}
+                        onMouseLeave={e => { e.currentTarget.style.boxShadow='0 4px 16px rgba(2,212,126,.3)'; e.currentTarget.style.transform='none' }}
+                      >
+                        Acceder a la plataforma <ArrowRight size={14} />
+                      </button>
                     </div>
                   </div>
-                ))}
+
+                </div>
               </div>
-              <div style={{ textAlign:'center' }}>
-                <button
-                  onClick={goToApp}
-                  style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#02d47e', color:'#043941', fontSize:'.9rem', fontWeight:800, padding:'1rem 2.2rem', borderRadius:100, boxShadow:'0 6px 22px rgba(2,212,126,.4)', border:'none', cursor:'pointer', transition:'all .2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.boxShadow='0 10px 32px rgba(2,212,126,.55)'; e.currentTarget.style.transform='translateY(-2px)' }}
-                  onMouseLeave={e => { e.currentTarget.style.boxShadow='0 6px 22px rgba(2,212,126,.4)'; e.currentTarget.style.transform='none' }}
-                >
-                  Acceder a la plataforma completa <ArrowRight size={15} />
-                </button>
-              </div>
-            </div>
-          )}
+            )
+          })()}
 
           {/* ── ALUMNO: proyectos "en proceso" ── */}
           {activeTab === 'alumno' && (
@@ -1311,18 +978,6 @@ export default function Landing() {
 
         </div>
       </section>
-
-      {/* ══ MODAL CARRUSEL ══════════════════════════════════════════════════ */}
-      {modalIndex !== null && (
-        <TallerModal
-          index={modalIndex}
-          dir={modalDir}
-          onClose={closeModal}
-          onPrev={goPrev}
-          onNext={goNext}
-          onGoTo={goTo}
-        />
-      )}
 
       {/* ══ FOOTER ══════════════════════════════════════════════════════════ */}
       <footer style={{ background: '#032e34', position:'relative', overflow:'hidden' }}>
