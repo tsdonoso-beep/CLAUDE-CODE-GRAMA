@@ -252,7 +252,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                       >
                         <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: ta }} />
-                        <span className="flex-1 text-[11px] font-semibold truncate" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                        <span className="flex-1 text-xs font-semibold truncate" style={{ color: 'rgba(255,255,255,0.75)' }}>
                           {t?.nombreCorto ?? s}
                         </span>
                       </button>
