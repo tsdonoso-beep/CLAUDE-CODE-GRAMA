@@ -41,7 +41,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
       : profile?.taller_slug ? [profile.taller_slug] : []
 
   // ── Transición de modo ───────────────────────────────────────────────────
-  const targetMode = (pathname === '/perfil' ? 'perfil' : 'taller') as 'perfil' | 'taller'
+  const targetMode = (pathname.startsWith('/perfil') ? 'perfil' : 'taller') as 'perfil' | 'taller'
   const [shownMode, setShownMode]   = useState<'perfil' | 'taller'>(targetMode)
   const [contentVisible, setContentVisible] = useState(true)
   // up = perfil→taller (drill in), down = taller→perfil (drill out)
