@@ -730,98 +730,93 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ══ CÓMO FUNCIONA (3 pasos) ══════════════════════════════════════════ */}
+      {/* ══ CÓMO FUNCIONA ════════════════════════════════════════════════════ */}
       <section id="como" style={{ background: '#ffffff', padding: '5.5rem 1.5rem', position:'relative', overflow:'hidden' }}>
 
-        {/* Shapes */}
-        <div style={{ position:'absolute', top:-100, right:'5%', width:260, height:260, background:'#02d47e', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.07, pointerEvents:'none', animation:'heroFa 16s ease-in-out infinite' }} />
-        <div style={{ position:'absolute', bottom:-80, left:'6%', width:200, height:200, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.12, pointerEvents:'none', animation:'heroFd 18s ease-in-out infinite 2s' }} />
+        {/* Shape fondo */}
+        <div style={{ position:'absolute', top:0, right:0, width:'40%', height:'100%', background:'linear-gradient(135deg, transparent 60%, rgba(2,212,126,.04) 100%)', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:-120, left:'5%', width:320, height:320, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.08, pointerEvents:'none' }} />
 
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
-          {/* Header */}
-          <div style={{ textAlign:'center', marginBottom:'4rem' }}>
-            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:14 }}>
-              <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
-              Cómo funciona
-            </span>
-            <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.1, color:'#043941', margin:0 }}>
-              Tu formación en{' '}
-              <span style={{ color:'#02d47e' }}>tres pasos</span>
-            </h2>
+          {/* Header — izquierda + bajada derecha */}
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'end', marginBottom:'5rem' }}>
+            <div>
+              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
+                <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
+                Nuestra metodología
+              </span>
+              <h2 style={{ fontSize:'clamp(2rem,4vw,3rem)', fontWeight:900, lineHeight:1.08, color:'#043941', margin:0 }}>
+                Una progresión que{' '}
+                <span style={{ color:'#02d47e' }}>respeta tu recorrido</span>
+              </h2>
+            </div>
+            <p style={{ fontSize:'1rem', color:'rgba(4,57,65,.55)', lineHeight:1.8, margin:0, alignSelf:'end' }}>
+              No empezamos desde un contenido genérico. Cada etapa se construye sobre la anterior — desde quién eres como docente hasta lo que tus alumnos experimentan en el taller.
+            </p>
           </div>
 
-          {/* Steps */}
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:0, position:'relative' }}>
+          {/* 4 etapas */}
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:0, position:'relative' }}>
 
-            {/* Línea conectora */}
-            <div style={{ position:'absolute', top:44, left:'16.66%', right:'16.66%', height:2, background:'linear-gradient(90deg, #02d47e, #b8edd0, #02d47e)', opacity:.35, zIndex:0 }} />
+            {/* Línea conectora entre números */}
+            <div style={{ position:'absolute', top:28, left:'12.5%', right:'12.5%', height:1, background:'linear-gradient(90deg, #02d47e 0%, rgba(2,212,126,.15) 100%)', zIndex:0 }} />
 
             {([
               {
                 n: '01',
-                emoji: '🎯',
-                title: 'Elige tu especialidad',
-                desc: 'Selecciona tu taller EPT — Mecánica, Cocina, Confección y más. Tu ruta de aprendizaje se configura automáticamente.',
-                badges: ['9 especialidades', 'Ruta personalizada'],
-                color: '#02d47e',
-                bg: 'rgba(2,212,126,.08)',
+                title: 'Te conocemos antes de enseñarte',
+                copy: 'Empezamos por entender tu contexto: qué taller tienes, qué sabes, qué necesitas. Sin supuestos genéricos.',
               },
               {
                 n: '02',
-                emoji: '📚',
-                title: 'Aprende a tu ritmo',
-                desc: '7 módulos con video, fichas técnicas descargables y sesiones en vivo. Sin fechas límite — avanza cuando puedas.',
-                badges: ['7 módulos', '150h formación', 'Sin fechas límite'],
-                color: '#5b8def',
-                bg: 'rgba(91,141,239,.08)',
+                title: 'Tu taller es el primer objeto de estudio',
+                copy: 'El espacio donde trabajas — sus zonas, su equipamiento — se convierte en el punto de partida del aprendizaje.',
               },
               {
                 n: '03',
-                emoji: '🏆',
-                title: 'Certifícate y enseña',
-                desc: 'Aprueba la evaluación final, descarga tu certificado reconocido por MINEDU y lleva ese conocimiento al aula.',
-                badges: ['Certificado MINEDU', 'Material permanente'],
-                color: '#f59e0b',
-                bg: 'rgba(245,158,11,.08)',
+                title: 'Diseñas, no solo aprendes',
+                copy: 'Avanzas hacia la práctica pedagógica: cómo organizar una sesión, cómo guiar a tus estudiantes con lo que ya tienes.',
               },
-            ] as const).map((step, i) => (
-              <div key={i} style={{ position:'relative', zIndex:1, display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', padding:'0 2rem' }}>
+              {
+                n: '04',
+                title: 'Una sesión real como cierre',
+                copy: 'El cierre no es un examen. Es aplicar lo aprendido con tus alumnos, en tu taller. Eso es lo que se certifica.',
+              },
+            ]).map((stage, i) => (
+              <div key={i} style={{ position:'relative', zIndex:1, padding:'0 28px 0 0' }}>
 
-                {/* Número + icono */}
-                <div style={{ position:'relative', marginBottom:'1.6rem' }}>
-                  <div style={{ width:88, height:88, borderRadius:'50%', background:step.bg, border:`2px solid ${step.color}30`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'2rem', boxShadow:`0 8px 24px ${step.color}20` }}>
-                    {step.emoji}
-                  </div>
-                  <div style={{ position:'absolute', top:-6, right:-6, width:26, height:26, borderRadius:'50%', background:step.color, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'.62rem', fontWeight:900, color: step.color === '#f59e0b' ? '#92400e' : '#043941', boxShadow:`0 4px 10px ${step.color}55` }}>
-                    {step.n}
-                  </div>
+                {/* Número grande */}
+                <div style={{ position:'relative', marginBottom:28 }}>
+                  <span style={{ fontSize:'3.5rem', fontWeight:900, lineHeight:1, color: i === 0 ? '#02d47e' : 'rgba(4,57,65,.1)', letterSpacing:'-.03em', display:'block' }}>
+                    {stage.n}
+                  </span>
+                  {/* Barra de progreso bajo el número */}
+                  <div style={{ position:'absolute', bottom:-10, left:0, height:2, width: i === 0 ? 40 : 24, background: i === 0 ? '#02d47e' : 'rgba(4,57,65,.12)', borderRadius:2 }} />
                 </div>
 
-                <h3 style={{ fontSize:'1.05rem', fontWeight:900, color:'#043941', margin:'0 0 .75rem', lineHeight:1.25 }}>{step.title}</h3>
-                <p style={{ fontSize:'.84rem', color:'rgba(4,57,65,.6)', lineHeight:1.75, margin:'0 0 1.2rem' }}>{step.desc}</p>
-
-                {/* Badges */}
-                <div style={{ display:'flex', flexWrap:'wrap', gap:6, justifyContent:'center' }}>
-                  {step.badges.map(b => (
-                    <span key={b} style={{ fontSize:'.65rem', fontWeight:700, background:step.bg, color: step.color === '#5b8def' ? '#3b60c4' : step.color === '#f59e0b' ? '#92400e' : '#047857', padding:'.25rem .65rem', borderRadius:100, border:`1px solid ${step.color}25` }}>
-                      {b}
-                    </span>
-                  ))}
-                </div>
+                <h3 style={{ fontSize:'.95rem', fontWeight:800, color:'#043941', margin:'0 0 .75rem', lineHeight:1.35 }}>
+                  {stage.title}
+                </h3>
+                <p style={{ fontSize:'.82rem', color:'rgba(4,57,65,.52)', lineHeight:1.75, margin:0 }}>
+                  {stage.copy}
+                </p>
               </div>
             ))}
           </div>
 
-          {/* CTA central */}
-          <div style={{ textAlign:'center', marginTop:'3.5rem' }}>
+          {/* Nota al pie sutil */}
+          <div style={{ marginTop:'4rem', paddingTop:'2rem', borderTop:'1px solid rgba(4,57,65,.07)', display:'flex', alignItems:'center', justifyContent:'space-between', gap:24 }}>
+            <p style={{ margin:0, fontSize:'.8rem', color:'rgba(4,57,65,.38)', lineHeight:1.6, maxWidth:520 }}>
+              La formación incluye contenido asíncrono, sesiones de acompañamiento en vivo y material descargable permanente — todo diseñado para el ritmo real de un docente en ejercicio.
+            </p>
             <button
               onClick={() => navigate('/login')}
-              style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#043941', color:'#fff', fontSize:'.9rem', fontWeight:800, padding:'1rem 2.4rem', borderRadius:100, border:'none', cursor:'pointer', boxShadow:'0 8px 24px rgba(4,57,65,.25)', transition:'all .2s' }}
-              onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 12px 32px rgba(4,57,65,.35)' }}
-              onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 8px 24px rgba(4,57,65,.25)' }}
+              style={{ flexShrink:0, display:'inline-flex', alignItems:'center', gap:8, background:'#043941', color:'#fff', fontSize:'.85rem', fontWeight:800, padding:'.9rem 2rem', borderRadius:100, border:'none', cursor:'pointer', boxShadow:'0 6px 20px rgba(4,57,65,.2)', transition:'all .2s', whiteSpace:'nowrap' }}
+              onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none' }}
             >
-              Comenzar mi formación — gratis <ArrowRight size={15} />
+              Empezar — es gratis <ArrowRight size={14} />
             </button>
           </div>
 
