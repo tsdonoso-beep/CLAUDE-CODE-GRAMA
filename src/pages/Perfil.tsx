@@ -38,55 +38,6 @@ function getInitials(name: string) {
   return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase() || '?'
 }
 
-// Shapes únicas por taller — composición geométrica que refleja cada especialidad
-function TallerHeroShapes({ slugs }: { slugs: string[] }) {
-  const c1 = TALLER_ACCENTS[slugs[0]] ?? '#02d47e'
-  const c2 = slugs[1] ? (TALLER_ACCENTS[slugs[1]] ?? '#d4c4fc') : '#f8ee91'
-  const p = { position: 'absolute' as const, pointerEvents: 'none' as const }
-
-  // Patrón base compartido — triángulo grande + overlap oscuro + borde derecho
-  const base = (
-    <>
-      <div style={{ ...p, top:-220, right:'-4%', width:540, height:540, background:c1, clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.14, animation:'heroFa 16s ease-in-out infinite' }} />
-      <div style={{ ...p, top:-100, right:'2%', width:260, height:260, background:'#0b4a56', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.22, animation:'heroFa 16s ease-in-out infinite .5s' }} />
-      <div style={{ ...p, top:'15%', right:-160, width:400, height:320, background:c1, clipPath:'polygon(100% 50%,0% 0%,0% 100%)', opacity:.1, animation:'heroFc 14s ease-in-out infinite .5s' }} />
-    </>
-  )
-
-  // Extras diferenciados por categoría de taller
-  const slug = slugs[0]
-  const isIndustrial = ['mecanica-automotriz','electricidad','electronica','computacion'].includes(slug)
-  const isArtesanal  = ['ebanisteria','construccion','agropecuaria'].includes(slug)
-  // resto → servicios (vestido, cocina, comunicaciones)
-
-  const extras = isIndustrial ? (
-    <>
-      <div style={{ ...p, top:-55, right:'27%', width:95, height:250, background:c1, borderRadius:'0 0 48px 48px', opacity:.2, animation:'heroFb 12s ease-in-out infinite 1s' }} />
-      <div style={{ ...p, bottom:'6%', right:'5%', width:58, height:58, background:c1, borderRadius:8, opacity:.28, animation:'heroFf 9s ease-in-out infinite 1.2s' }} />
-      <div style={{ ...p, bottom:'18%', right:'3%', width:48, height:48, background:'#02d47e', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 20s linear infinite' }} />
-    </>
-  ) : isArtesanal ? (
-    <>
-      <div style={{ ...p, top:'42%', right:-90, width:210, height:290, background:c1, clipPath:'polygon(0% 50%,100% 0%,100% 100%)', opacity:.14, animation:'heroFe 13s ease-in-out infinite 2s' }} />
-      <div style={{ ...p, bottom:-80, right:'28%', width:170, height:170, background:c1, transform:'rotate(45deg)', borderRadius:20, opacity:.2, animation:'heroFd 15s ease-in-out infinite 1s' }} />
-      <div style={{ ...p, top:'8%', right:'14%', width:52, height:52, background:'#f8ee91', borderRadius:6, opacity:.3, animation:'heroFf 11s ease-in-out infinite 2s' }} />
-    </>
-  ) : (
-    // Servicios: barras verticales rítmicas
-    <>
-      <div style={{ ...p, top:-65, right:'26%', width:82, height:270, background:c1, borderRadius:'0 0 42px 42px', opacity:.22, animation:'heroFb 11s ease-in-out infinite 1s' }} />
-      <div style={{ ...p, top:-35, right:'19%', width:52, height:190, background:'#f8ee91', borderRadius:'0 0 26px 26px', opacity:.22, animation:'heroFb 14s ease-in-out infinite 2s' }} />
-      <div style={{ ...p, top:'10%', right:'8%', width:44, height:44, background:c1, borderRadius:'50%', opacity:.22, animation:'heroFd 10s ease-in-out infinite .5s' }} />
-    </>
-  )
-
-  const second = slugs.length > 1 ? (
-    <div style={{ ...p, bottom:-160, right:'18%', width:420, height:420, background:c2, clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.1, animation:'heroFd 18s ease-in-out infinite 2s' }} />
-  ) : null
-
-  return <>{base}{extras}{second}</>
-}
-
 // ── Calendario de sesiones (sidebar) ─────────────────────────────────────────
 // Devuelve la sesión en la que el docente está actualmente según contenidos completados
 function getCurrentSession(completados: number) {
@@ -349,6 +300,11 @@ export default function Perfil() {
             Docente EPT · {ieSubhead}
           </p>
         </div>
+        {/* Franja de acento — conecta hero con el contenido */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-0.5"
+          style={{ background: `linear-gradient(90deg, ${primaryAccent}, ${primaryAccent}00 70%)` }}
+        />
       </div>
 
         {/* Content */}
@@ -384,9 +340,13 @@ export default function Perfil() {
                       className="rounded-2xl overflow-hidden"
                       style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 10px rgba(4,57,65,0.07)' }}
                     >
-                      <div className="relative overflow-hidden" style={{ height: 148, background: `linear-gradient(145deg,#043941 0%,${ta}55 100%)` }}>
-                        <div className="absolute inset-0 grama-pattern opacity-20" />
-                        <TallerHeroShapes slugs={[slug]} />
+                      <div className="relative overflow-hidden" style={{ height: 148 }}>
+                        {t.imagen ? (
+                          <img src={t.imagen} alt={t.nombreCorto} className="absolute inset-0 w-full h-full object-cover" />
+                        ) : (
+                          <div className="absolute inset-0" style={{ background: `linear-gradient(145deg,#043941 0%,${ta}55 100%)` }} />
+                        )}
+                        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(4,57,65,0.25) 0%, rgba(4,57,65,0.55) 100%)' }} />
                       </div>
                       <div className="px-4 py-4">
                         <h3 className="text-base font-black mb-0.5" style={{ color: '#043941', letterSpacing: '-0.02em' }}>
