@@ -181,15 +181,15 @@ export default function Landing() {
 
           {/* H1 */}
           <h1 style={{ fontSize:'clamp(2.4rem,4.2vw,3.8rem)', fontWeight:800, lineHeight:1.04, letterSpacing:'-1.8px', color:'#043941', marginBottom:20 }}>
-            Formación técnica<br />
-            que <em style={{ fontStyle:'normal', color:'#02d47e' }}>transforma</em><br />
-            la educación
+            Los talleres técnicos<br />
+            <em style={{ fontStyle:'normal', color:'#02d47e' }}>forman el país.</em><br />
+            GRAMA los acompaña.
           </h1>
 
           {/* Subtexto limpio */}
           <p style={{ fontSize:'1rem', color:'rgba(4,57,65,.6)', lineHeight:1.75, fontWeight:450, margin:'0 0 32px', maxWidth:420 }}>
-            La plataforma LXP para docentes de talleres EPT<br />
-            en los 24 departamentos del Perú.
+            Una plataforma para docentes, alumnos y directores
+            de talleres EPT — en los 24 departamentos del Perú.
           </p>
 
           {/* CTAs */}
@@ -200,7 +200,7 @@ export default function Landing() {
               onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)' }}
               onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none' }}
             >
-              {isLoggedIn ? 'Ir a la plataforma' : 'Comenzar mi formación'} <ArrowRight size={14} />
+              {isLoggedIn ? 'Ir a la plataforma' : 'Conocer la plataforma'} <ArrowRight size={14} />
             </button>
             <a href="#perfiles" style={{ border:'1.5px solid #043941', color:'#043941', padding:'12px 22px', borderRadius:100, fontSize:14, fontWeight:600, textDecoration:'none', display:'flex', alignItems:'center', gap:7, transition:'all .2s' }}
               onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background='#043941'; (e.currentTarget as HTMLAnchorElement).style.color='#fff' }}
