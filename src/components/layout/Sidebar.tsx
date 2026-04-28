@@ -159,7 +159,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
           !collapsed && (
             <div className="px-4 py-3 border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
               <p className="text-[9px] font-extrabold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.28)' }}>
-                Mi capacitación
+                Mi Perfil
               </p>
             </div>
           )
