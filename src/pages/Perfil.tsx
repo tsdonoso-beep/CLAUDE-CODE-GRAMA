@@ -370,23 +370,6 @@ export default function Perfil() {
                 Mis talleres
               </h1>
               <div className="flex flex-wrap gap-2">
-                {tallerSlugsAccesibles.map(slug => {
-                  const t  = talleresConfig.find(x => x.slug === slug)
-                  const ta = TALLER_ACCENTS[slug] ?? '#02d47e'
-                  return (
-                    <button
-                      key={slug}
-                      onClick={() => navigate(`/taller/${slug}`)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all"
-                      style={{ background: `${ta}25`, border: `1px solid ${ta}55`, color: ta }}
-                      onMouseEnter={e => (e.currentTarget.style.background = `${ta}40`)}
-                      onMouseLeave={e => (e.currentTarget.style.background = `${ta}25`)}
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ta }} />
-                      {t?.nombreCorto ?? slug}
-                    </button>
-                  )
-                })}
                 {ie && (
                   <span
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
@@ -455,9 +438,6 @@ export default function Perfil() {
                         <TallerHeroShapes slugs={[slug]} />
                       </div>
                       <div className="px-4 py-4">
-                        <p className="text-[10px] font-extrabold uppercase tracking-widest mb-0.5" style={{ color: ta }}>
-                          Taller EPT · {t.nombre}
-                        </p>
                         <h3 className="text-base font-black mb-0.5" style={{ color: '#043941', letterSpacing: '-0.02em' }}>
                           {t.nombreCorto ?? t.nombre}
                         </h3>
