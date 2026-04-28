@@ -700,35 +700,71 @@ export default function Landing() {
             </h2>
           </div>
 
-          {/* Tab buttons */}
-          <div style={{ display:'flex', justifyContent:'center', gap:10, marginBottom:'3rem', flexWrap:'wrap' }}>
+          {/* Tab selector — cards de rol */}
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:14, marginBottom:'1rem' }}>
             {([
-              { key: 'docente',  emoji: '🔧', label: 'Docente',  activeColor:'#043941', activeBg:'#043941', activeText:'#fff' },
-              { key: 'alumno',   emoji: '⭐', label: 'Alumno',   activeColor:'#02d47e', activeBg:'#e8fff4', activeText:'#043941' },
-              { key: 'director', emoji: '📊', label: 'Director', activeColor:'#f59e0b', activeBg:'#fffbeb', activeText:'#92400e' },
+              { key: 'docente',  emoji: '🔧', label: 'Docente',  tagline:'Capacitación y certificación', activeColor:'#043941', activeBg:'#043941', activeText:'#fff',    accentBar:'#02d47e',  hoverBg:'rgba(4,57,65,.04)' },
+              { key: 'alumno',   emoji: '⭐', label: 'Alumno',   tagline:'Proyectos prácticos guiados',  activeColor:'#02d47e', activeBg:'#e8fff4', activeText:'#043941', accentBar:'#02d47e',  hoverBg:'rgba(2,212,126,.06)' },
+              { key: 'director', emoji: '📊', label: 'Director', tagline:'Seguimiento institucional',     activeColor:'#f59e0b', activeBg:'#fffbeb', activeText:'#92400e', accentBar:'#f59e0b',  hoverBg:'rgba(245,158,11,.06)' },
             ] as const).map(tab => {
               const isActive = activeTab === tab.key
               return (
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
+                  onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background = tab.hoverBg }}
+                  onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background = '#fff' }}
                   style={{
-                    display:'inline-flex', alignItems:'center', gap:8,
-                    padding:'.65rem 1.6rem', borderRadius:100,
-                    fontSize:'.85rem', fontWeight:800,
-                    border: isActive ? `2px solid ${tab.activeColor}` : '2px solid rgba(4,57,65,0.1)',
-                    background: isActive ? (tab.key === 'docente' ? '#043941' : tab.activeBg) : 'transparent',
-                    color: isActive ? tab.activeText : 'rgba(4,57,65,0.5)',
+                    display:'flex', flexDirection:'column', alignItems:'flex-start',
+                    padding:'1.3rem 1.5rem 1.4rem',
+                    borderRadius:16,
+                    border: isActive ? `2px solid ${tab.activeColor}` : '2px solid rgba(4,57,65,.1)',
+                    background: isActive ? tab.activeBg : '#fff',
                     cursor:'pointer',
-                    transition:'all .25s cubic-bezier(.4,0,.2,1)',
-                    boxShadow: isActive ? `0 4px 16px ${tab.activeColor}30` : 'none',
+                    transition:'all .22s cubic-bezier(.4,0,.2,1)',
+                    boxShadow: isActive ? `0 8px 28px ${tab.activeColor}22` : '0 2px 10px rgba(4,57,65,.06)',
+                    textAlign:'left',
+                    position:'relative',
+                    overflow:'hidden',
+                    width:'100%',
                   }}
                 >
-                  <span style={{ fontSize:'1rem' }}>{tab.emoji}</span>
-                  {tab.label}
+                  {/* Barra accent superior */}
+                  <div style={{ position:'absolute', top:0, left:0, right:0, height:4, background: isActive ? tab.accentBar : 'rgba(4,57,65,.07)', borderRadius:'16px 16px 0 0', transition:'background .22s' }} />
+
+                  {/* Emoji */}
+                  <span style={{ fontSize:'2rem', marginBottom:10, marginTop:4, display:'block', lineHeight:1 }}>{tab.emoji}</span>
+
+                  {/* Rol */}
+                  <span style={{ fontSize:'1.05rem', fontWeight:900, color: isActive ? tab.activeText : '#043941', marginBottom:4, display:'block' }}>
+                    {tab.label}
+                  </span>
+
+                  {/* Tagline */}
+                  <span style={{ fontSize:'.75rem', fontWeight:500, lineHeight:1.4, display:'block',
+                    color: isActive ? (tab.key === 'docente' ? 'rgba(255,255,255,.55)' : 'rgba(4,57,65,.5)') : 'rgba(4,57,65,.38)',
+                  }}>
+                    {tab.tagline}
+                  </span>
+
+                  {/* Indicador activo */}
+                  {isActive && (
+                    <div style={{ position:'absolute', bottom:12, right:14, fontSize:'.7rem', fontWeight:800,
+                      color: tab.key === 'docente' ? 'rgba(255,255,255,.4)' : `${tab.activeColor}80`,
+                    }}>
+                      ↓ viendo
+                    </div>
+                  )}
                 </button>
               )
             })}
+          </div>
+
+          {/* Conector visual entre cards y contenido */}
+          <div style={{ textAlign:'center', marginBottom:'2.5rem' }}>
+            <span style={{ fontSize:'.7rem', fontWeight:700, letterSpacing:'.08em', textTransform:'uppercase', color:'rgba(4,57,65,.28)' }}>
+              Tu experiencia como {activeTab === 'docente' ? 'Docente' : activeTab === 'alumno' ? 'Alumno' : 'Director'} ↓
+            </span>
           </div>
 
           {/* Tab content */}
