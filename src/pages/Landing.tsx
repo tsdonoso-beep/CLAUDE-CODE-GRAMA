@@ -498,6 +498,106 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ══ CÓMO FUNCIONA ════════════════════════════════════════════════════ */}
+      <section id="como" style={{ background: 'hsl(54,89%,98%)', padding: '5.5rem 1.5rem', position:'relative', overflow:'hidden' }}>
+
+        {/* Shape fondo — círculo lila top-right, triángulo amarillo bottom-left, círculo verde mid-left */}
+        <div style={{ position:'absolute', top:-100, right:-80, width:340, height:340, borderRadius:'50%', background:'#d4c4fc', opacity:.35, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:-80, left:'3%', width:260, height:260, background:'#f8ee91', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.45, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'45%', left:-40, width:100, height:100, borderRadius:'50%', background:'#02d47e', opacity:.22, pointerEvents:'none' }} />
+
+        <div style={{ maxWidth:1100, margin:'0 auto' }}>
+
+          {/* Header — izquierda + bajada derecha */}
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'end', marginBottom:'5rem' }}>
+            <div>
+              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
+                <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
+                Nuestra metodología
+              </span>
+              <h2 style={{ fontSize:'var(--t-display)', fontWeight:800, lineHeight:1.08, color:'#043941', margin:0 }}>
+                Una progresión que{' '}
+                <span style={{ color:'#02d47e' }}>respeta tu recorrido</span>
+              </h2>
+            </div>
+            <p style={{ fontSize:'1rem', color:'rgba(4,57,65,.55)', lineHeight:1.8, margin:0, alignSelf:'end' }}>
+              No empezamos desde un contenido genérico. Cada etapa se construye sobre la anterior — desde quién eres como docente hasta lo que tus alumnos experimentan en el taller.
+            </p>
+          </div>
+
+          {/* 4 etapas */}
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:24, position:'relative' }}>
+
+            {([
+              {
+                n: '01',
+                numColor: '#02d47e',
+                barColor: '#02d47e',
+                title: 'Te conocemos antes de enseñarte',
+                copy: 'Empezamos por entender tu contexto: qué taller tienes, qué sabes, qué necesitas. Sin supuestos genéricos.',
+              },
+              {
+                n: '02',
+                numColor: '#7c3aed',
+                barColor: '#d4c4fc',
+                title: 'Tu taller es el primer objeto de estudio',
+                copy: 'El espacio donde trabajas — sus zonas, su equipamiento — se convierte en el punto de partida del aprendizaje.',
+              },
+              {
+                n: '03',
+                numColor: '#d97706',
+                barColor: '#f8ee91',
+                title: 'Diseñas, no solo aprendes',
+                copy: 'Avanzas hacia la práctica pedagógica: cómo organizar una sesión, cómo guiar a tus estudiantes con lo que ya tienes.',
+              },
+              {
+                n: '04',
+                numColor: '#047857',
+                barColor: '#b8edd0',
+                title: 'Una sesión real como cierre',
+                copy: 'El cierre no es un examen. Es aplicar lo aprendido con tus alumnos, en tu taller. Eso es lo que se certifica.',
+              },
+            ]).map((stage, i) => (
+              <div key={i} style={{ position:'relative', zIndex:1, background:'#fff', borderRadius:16, overflow:'hidden', boxShadow:'0 4px 20px rgba(4,57,65,.07)', padding:'0 0 28px' }}>
+
+                {/* Barra de color superior */}
+                <div style={{ height:4, background:stage.barColor, borderRadius:'16px 16px 0 0', marginBottom:24 }} />
+
+                <div style={{ padding:'0 24px' }}>
+                  {/* Número grande */}
+                  <span style={{ fontSize:'3.5rem', fontWeight:800, lineHeight:1, color:stage.numColor, letterSpacing:'-.03em', display:'block', marginBottom:20 }}>
+                    {stage.n}
+                  </span>
+
+                  <h3 style={{ fontSize:'var(--t-body-lg)', fontWeight:800, color:'#043941', margin:'0 0 .75rem', lineHeight:1.35 }}>
+                    {stage.title}
+                  </h3>
+                  <p style={{ fontSize:'var(--t-body)', color:'rgba(4,57,65,.52)', lineHeight:1.75, margin:0 }}>
+                    {stage.copy}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Nota al pie sutil */}
+          <div style={{ marginTop:'4rem', paddingTop:'2rem', borderTop:'1px solid rgba(4,57,65,.07)', display:'flex', alignItems:'center', justifyContent:'space-between', gap:24 }}>
+            <p style={{ margin:0, fontSize:'var(--t-body)', color:'rgba(4,57,65,.38)', lineHeight:1.6, maxWidth:520 }}>
+              La formación incluye contenido asíncrono, sesiones de acompañamiento en vivo y material descargable permanente — todo diseñado para el ritmo real de un docente en ejercicio.
+            </p>
+            <button
+              onClick={() => navigate('/login')}
+              style={{ flexShrink:0, display:'inline-flex', alignItems:'center', gap:8, background:'#043941', color:'#fff', fontSize:'var(--t-body)', fontWeight:800, padding:'.9rem 2rem', borderRadius:100, border:'none', cursor:'pointer', boxShadow:'0 6px 20px rgba(4,57,65,.2)', transition:'all .2s', whiteSpace:'nowrap' }}
+              onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none' }}
+            >
+              Empezar — es gratis <ArrowRight size={14} />
+            </button>
+          </div>
+
+        </div>
+      </section>
+
       {/* ══ TALLERES (role-aware) ════════════════════════════════════════════ */}
       <section id="talleres" style={{ background: '#fff', padding: '5rem 1.5rem', position:'relative', overflow:'hidden' }}>
 
@@ -731,106 +831,6 @@ export default function Landing() {
               </div>
             </div>
           )}
-
-        </div>
-      </section>
-
-      {/* ══ CÓMO FUNCIONA ════════════════════════════════════════════════════ */}
-      <section id="como" style={{ background: 'hsl(54,89%,98%)', padding: '5.5rem 1.5rem', position:'relative', overflow:'hidden' }}>
-
-        {/* Shape fondo — círculo lila top-right, triángulo amarillo bottom-left, círculo verde mid-left */}
-        <div style={{ position:'absolute', top:-100, right:-80, width:340, height:340, borderRadius:'50%', background:'#d4c4fc', opacity:.35, pointerEvents:'none' }} />
-        <div style={{ position:'absolute', bottom:-80, left:'3%', width:260, height:260, background:'#f8ee91', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.45, pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:'45%', left:-40, width:100, height:100, borderRadius:'50%', background:'#02d47e', opacity:.22, pointerEvents:'none' }} />
-
-        <div style={{ maxWidth:1100, margin:'0 auto' }}>
-
-          {/* Header — izquierda + bajada derecha */}
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'end', marginBottom:'5rem' }}>
-            <div>
-              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
-                <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
-                Nuestra metodología
-              </span>
-              <h2 style={{ fontSize:'var(--t-display)', fontWeight:800, lineHeight:1.08, color:'#043941', margin:0 }}>
-                Una progresión que{' '}
-                <span style={{ color:'#02d47e' }}>respeta tu recorrido</span>
-              </h2>
-            </div>
-            <p style={{ fontSize:'1rem', color:'rgba(4,57,65,.55)', lineHeight:1.8, margin:0, alignSelf:'end' }}>
-              No empezamos desde un contenido genérico. Cada etapa se construye sobre la anterior — desde quién eres como docente hasta lo que tus alumnos experimentan en el taller.
-            </p>
-          </div>
-
-          {/* 4 etapas */}
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:24, position:'relative' }}>
-
-            {([
-              {
-                n: '01',
-                numColor: '#02d47e',
-                barColor: '#02d47e',
-                title: 'Te conocemos antes de enseñarte',
-                copy: 'Empezamos por entender tu contexto: qué taller tienes, qué sabes, qué necesitas. Sin supuestos genéricos.',
-              },
-              {
-                n: '02',
-                numColor: '#7c3aed',
-                barColor: '#d4c4fc',
-                title: 'Tu taller es el primer objeto de estudio',
-                copy: 'El espacio donde trabajas — sus zonas, su equipamiento — se convierte en el punto de partida del aprendizaje.',
-              },
-              {
-                n: '03',
-                numColor: '#d97706',
-                barColor: '#f8ee91',
-                title: 'Diseñas, no solo aprendes',
-                copy: 'Avanzas hacia la práctica pedagógica: cómo organizar una sesión, cómo guiar a tus estudiantes con lo que ya tienes.',
-              },
-              {
-                n: '04',
-                numColor: '#047857',
-                barColor: '#b8edd0',
-                title: 'Una sesión real como cierre',
-                copy: 'El cierre no es un examen. Es aplicar lo aprendido con tus alumnos, en tu taller. Eso es lo que se certifica.',
-              },
-            ]).map((stage, i) => (
-              <div key={i} style={{ position:'relative', zIndex:1, background:'#fff', borderRadius:16, overflow:'hidden', boxShadow:'0 4px 20px rgba(4,57,65,.07)', padding:'0 0 28px' }}>
-
-                {/* Barra de color superior */}
-                <div style={{ height:4, background:stage.barColor, borderRadius:'16px 16px 0 0', marginBottom:24 }} />
-
-                <div style={{ padding:'0 24px' }}>
-                  {/* Número grande */}
-                  <span style={{ fontSize:'3.5rem', fontWeight:800, lineHeight:1, color:stage.numColor, letterSpacing:'-.03em', display:'block', marginBottom:20 }}>
-                    {stage.n}
-                  </span>
-
-                  <h3 style={{ fontSize:'var(--t-body-lg)', fontWeight:800, color:'#043941', margin:'0 0 .75rem', lineHeight:1.35 }}>
-                    {stage.title}
-                  </h3>
-                  <p style={{ fontSize:'var(--t-body)', color:'rgba(4,57,65,.52)', lineHeight:1.75, margin:0 }}>
-                    {stage.copy}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Nota al pie sutil */}
-          <div style={{ marginTop:'4rem', paddingTop:'2rem', borderTop:'1px solid rgba(4,57,65,.07)', display:'flex', alignItems:'center', justifyContent:'space-between', gap:24 }}>
-            <p style={{ margin:0, fontSize:'var(--t-body)', color:'rgba(4,57,65,.38)', lineHeight:1.6, maxWidth:520 }}>
-              La formación incluye contenido asíncrono, sesiones de acompañamiento en vivo y material descargable permanente — todo diseñado para el ritmo real de un docente en ejercicio.
-            </p>
-            <button
-              onClick={() => navigate('/login')}
-              style={{ flexShrink:0, display:'inline-flex', alignItems:'center', gap:8, background:'#043941', color:'#fff', fontSize:'var(--t-body)', fontWeight:800, padding:'.9rem 2rem', borderRadius:100, border:'none', cursor:'pointer', boxShadow:'0 6px 20px rgba(4,57,65,.2)', transition:'all .2s', whiteSpace:'nowrap' }}
-              onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)' }}
-              onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none' }}
-            >
-              Empezar — es gratis <ArrowRight size={14} />
-            </button>
-          </div>
 
         </div>
       </section>
