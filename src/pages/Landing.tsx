@@ -523,137 +523,118 @@ export default function Landing() {
             </p>
           </div>
 
-          {/* ── DOCENTE: split panel list + detalle ── */}
+          {/* ── DOCENTE: split panel lista + detalle editorial ── */}
           {activeTab === 'docente' && (() => {
             const t = talleresConfig[selectedTaller]
+            const accentColor = `hsl(${t.color})`
             const bienes = (() => {
               const todos = getBienesByTaller(t.slug)
               const innov = todos.filter(b => b.tipo === 'EQUIPOS' && b.zona.includes('INNOVA'))
               const resto = todos.filter(b => b.tipo === 'EQUIPOS' && !b.zona.includes('INNOVA'))
-              return [...innov, ...resto].slice(0, 6)
+              return [...innov, ...resto].slice(0, 4)
             })()
             return (
               <div style={{ animation:'fadeInUp .4s ease both' }}>
-                {/* Responsive split */}
                 <style>{`
                   @media (max-width:768px) {
-                    .talleres-split { flex-direction: column !important; }
-                    .talleres-list  { max-height: 240px !important; overflow-y: auto; }
-                    .talleres-detail{ min-height: 0 !important; }
+                    .talleres-split  { flex-direction: column !important; }
+                    .talleres-list   { width: 100% !important; max-height: 200px !important; flex-direction: row !important; overflow-x: auto; overflow-y: hidden; gap: 4px !important; padding: 6px !important; }
+                    .talleres-detail { min-height: 0 !important; }
                   }
                 `}</style>
-                <div className="talleres-split" style={{ display:'flex', gap:20, alignItems:'flex-start', marginBottom:'2.5rem' }}>
+                <div className="talleres-split" style={{ display:'flex', gap:24, alignItems:'stretch', marginBottom:'2.5rem' }}>
 
                   {/* ── Lista izquierda ── */}
-                  <div className="talleres-list" style={{ flexShrink:0, width:300, background:'rgba(255,255,255,.55)', borderRadius:20, border:'1px solid rgba(4,57,65,.07)', padding:8, backdropFilter:'blur(6px)', overflowY:'auto', maxHeight:520 }}>
+                  <div className="talleres-list" style={{ flexShrink:0, width:260, display:'flex', flexDirection:'column', gap:2, overflowY:'auto', maxHeight:540 }}>
                     {talleresConfig.map((item, i) => {
                       const isActive = selectedTaller === i
+                      const itemAccent = `hsl(${item.color})`
                       return (
                         <div
                           key={item.slug}
                           onClick={() => setSelectedTaller(i)}
                           style={{
-                            display:'flex', alignItems:'center', gap:12,
-                            padding:'10px 14px', borderRadius:13, cursor:'pointer',
-                            background: isActive ? '#fff' : 'transparent',
-                            border: `1.5px solid ${isActive ? '#02d47e' : 'transparent'}`,
-                            boxShadow: isActive ? '0 2px 12px rgba(2,212,126,.12)' : 'none',
-                            transition:'all .18s ease',
-                            marginBottom:2,
+                            display:'flex', alignItems:'center', gap:10,
+                            padding:'9px 12px 9px 14px',
+                            borderRadius:10,
+                            cursor:'pointer',
+                            borderLeft: `3px solid ${isActive ? itemAccent : 'transparent'}`,
+                            background: isActive ? 'rgba(255,255,255,.9)' : 'transparent',
+                            transition:'all .16s ease',
                           }}
-                          onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background='rgba(4,57,65,.04)' }}
-                          onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background='transparent' }}
+                          onMouseEnter={e => { if (!isActive) { const el = e.currentTarget as HTMLElement; el.style.background='rgba(255,255,255,.5)'; el.style.borderLeftColor='rgba(4,57,65,.12)' } }}
+                          onMouseLeave={e => { if (!isActive) { const el = e.currentTarget as HTMLElement; el.style.background='transparent'; el.style.borderLeftColor='transparent' } }}
                         >
-                          <span style={{ fontSize:'.62rem', fontWeight:800, letterSpacing:'.08em', color: isActive ? '#02d47e' : 'rgba(4,57,65,.3)', width:28, flexShrink:0 }}>
+                          <span style={{ fontSize:'.6rem', fontWeight:800, letterSpacing:'.06em', color: isActive ? itemAccent : 'rgba(4,57,65,.28)', width:24, flexShrink:0 }}>
                             T{String(item.numero).padStart(2,'0')}
                           </span>
-                          <span style={{ width:8, height:8, borderRadius:'50%', background: isActive ? '#02d47e' : 'rgba(4,57,65,.18)', flexShrink:0, transition:'background .18s' }} />
-                          <span style={{ flex:1, fontSize:'.88rem', fontWeight: isActive ? 800 : 500, color: isActive ? '#043941' : 'rgba(4,57,65,.55)', lineHeight:1.25, transition:'all .18s' }}>
+                          <span style={{ flex:1, fontSize:'.85rem', fontWeight: isActive ? 700 : 400, color: isActive ? '#043941' : 'rgba(4,57,65,.5)', lineHeight:1.3, transition:'all .16s' }}>
                             {item.nombre}
                           </span>
-                          {isActive && <ChevronRight size={13} color="#02d47e" />}
                         </div>
                       )
                     })}
                   </div>
 
-                  {/* ── Panel detalle derecha ── */}
-                  <div className="talleres-detail" style={{ flex:1, borderRadius:20, overflow:'hidden', background:'#fff', boxShadow:'0 4px 28px rgba(4,57,65,.1)', minHeight:520, display:'flex', flexDirection:'column' }}>
+                  {/* ── Panel detalle editorial ── */}
+                  <div className="talleres-detail" style={{ flex:1, borderRadius:20, overflow:'hidden', background:'#fff', boxShadow:'0 8px 40px rgba(4,57,65,.1)', display:'flex', flexDirection:'column' }}>
 
-                    {/* Hero imagen */}
-                    <div style={{ height:160, position:'relative', overflow:'hidden', flexShrink:0 }}>
-                      <img key={t.slug} src={t.imagen} alt={t.nombre} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(.62) saturate(.8)', transition:'opacity .3s' }} />
-                      <div style={{ position:'absolute', inset:0, background:'linear-gradient(160deg, rgba(4,57,65,.1) 0%, rgba(4,57,65,.88) 100%)' }} />
-                      {/* Badge T-número */}
-                      <span style={{ position:'absolute', top:14, left:16, fontSize:'.62rem', fontWeight:800, letterSpacing:'.1em', background:`hsl(${t.color})`, color:'#fff', padding:'.25rem .7rem', borderRadius:100 }}>
-                        T{String(t.numero).padStart(2,'0')} · {selectedTaller + 1} de {talleresConfig.length}
-                      </span>
-                      <div style={{ position:'absolute', bottom:14, left:18, right:18 }}>
-                        <h3 style={{ margin:'0 0 4px', fontSize:'clamp(1rem,2vw,1.3rem)', fontWeight:900, color:'#fff', lineHeight:1.2 }}>{t.nombre}</h3>
-                        <p style={{ margin:0, fontSize:'.78rem', color:'rgba(255,255,255,.65)', lineHeight:1.55 }}>{t.descripcion}</p>
+                    {/* Hero */}
+                    <div style={{ height:220, position:'relative', overflow:'hidden', flexShrink:0 }}>
+                      <img key={t.slug} src={t.imagen} alt={t.nombre}
+                        style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(.55) saturate(.75)' }} />
+                      <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top, rgba(4,57,65,.95) 0%, rgba(4,57,65,.3) 55%, transparent 100%)' }} />
+                      {/* Acento de color en esquina */}
+                      <div style={{ position:'absolute', top:0, left:0, right:0, height:4, background:`linear-gradient(90deg, ${accentColor}, ${accentColor}88)` }} />
+                      <div style={{ position:'absolute', bottom:22, left:24, right:24 }}>
+                        <h3 style={{ margin:0, fontSize:'clamp(1.3rem,2.5vw,1.75rem)', fontWeight:900, color:'#fff', lineHeight:1.15, letterSpacing:'-.01em' }}>{t.nombre}</h3>
                       </div>
                     </div>
 
-                    {/* Contenido */}
-                    <div style={{ flex:1, overflowY:'auto', padding:'20px 22px', display:'flex', flexDirection:'column', gap:20 }}>
+                    {/* Contenido editorial */}
+                    <div style={{ flex:1, padding:'24px 28px 28px', display:'flex', flexDirection:'column', gap:22 }}>
 
-                      {/* Competencias */}
+                      {/* Descripción */}
+                      <p style={{ margin:0, fontSize:'.95rem', color:'rgba(4,57,65,.6)', lineHeight:1.7, fontWeight:400 }}>
+                        {t.descripcion}
+                      </p>
+
+                      {/* Competencias — sin etiqueta, solo la lista */}
                       {t.competencias?.length > 0 && (
-                        <div>
-                          <p style={{ margin:'0 0 10px', fontSize:'.68rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', display:'flex', alignItems:'center', gap:6 }}>
-                            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.2 7.8L9 2.5" stroke="#02d47e" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                            Competencias
-                          </p>
-                          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4px 16px' }}>
-                            {t.competencias.slice(0, 4).map((c: string, ci: number) => (
-                              <div key={ci} style={{ display:'flex', alignItems:'flex-start', gap:7, padding:'3px 0' }}>
-                                <span style={{ width:5, height:5, borderRadius:'50%', background:'#02d47e', flexShrink:0, marginTop:5 }} />
-                                <span style={{ fontSize:'.8rem', color:'rgba(4,57,65,.75)', lineHeight:1.5 }}>{c}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Separador */}
-                      <div style={{ height:1, background:'rgba(4,57,65,.07)' }} />
-
-                      {/* Ruta módulos */}
-                      <div>
-                        <p style={{ margin:'0 0 10px', fontSize:'.68rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', display:'flex', alignItems:'center', gap:6 }}>
-                          <BookOpen size={11} color="#02d47e" />
-                          Ruta · {modulosLXP.length} módulos · 150h
-                        </p>
-                        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'3px 16px' }}>
-                          {modulosLXP.map((m, mi) => (
-                            <div key={m.id} style={{ display:'flex', alignItems:'baseline', gap:8, padding:'3px 0' }}>
-                              <span style={{ fontSize:'.62rem', fontWeight:800, color:'#02d47e', flexShrink:0 }}>M{mi}</span>
-                              <span style={{ flex:1, fontSize:'.8rem', color:'rgba(4,57,65,.75)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{m.nombre}</span>
-                              <span style={{ fontSize:'.65rem', color:'rgba(4,57,65,.35)', flexShrink:0 }}>{m.horasTotal}h</span>
+                        <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+                          {t.competencias.slice(0, 3).map((c: string, ci: number) => (
+                            <div key={ci} style={{ display:'flex', alignItems:'flex-start', gap:12 }}>
+                              <span style={{ fontSize:'.7rem', fontWeight:800, color: accentColor, marginTop:2, flexShrink:0 }}>
+                                {String(ci + 1).padStart(2, '0')}
+                              </span>
+                              <span style={{ fontSize:'.92rem', color:'#043941', lineHeight:1.5, fontWeight:500 }}>{c}</span>
                             </div>
                           ))}
                         </div>
-                      </div>
+                      )}
 
-                      {/* Separador */}
-                      <div style={{ height:1, background:'rgba(4,57,65,.07)' }} />
-
-                      {/* Equipamiento */}
+                      {/* Separador + equipamiento inline */}
                       {bienes.length > 0 && (
-                        <div>
-                          <p style={{ margin:'0 0 10px', fontSize:'.68rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', display:'flex', alignItems:'center', gap:6 }}>
-                            <Wrench size={11} color="#02d47e" />
-                            Equipamiento
+                        <div style={{ borderTop:'1px solid rgba(4,57,65,.07)', paddingTop:18 }}>
+                          <p style={{ margin:'0 0 6px', fontSize:'.65rem', fontWeight:700, letterSpacing:'.1em', textTransform:'uppercase', color:'rgba(4,57,65,.35)' }}>
+                            Equipamiento del taller
                           </p>
-                          <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
-                            {bienes.map(b => (
-                              <span key={b.nombre} style={{ fontSize:'.75rem', color:'rgba(4,57,65,.65)', borderBottom:'1px solid rgba(4,57,65,.15)', paddingBottom:1 }}>
-                                {b.nombre}
-                              </span>
-                            ))}
-                          </div>
+                          <p style={{ margin:0, fontSize:'.83rem', color:'rgba(4,57,65,.55)', lineHeight:1.6 }}>
+                            {bienes.map(b => b.nombre).join('  ·  ')}
+                          </p>
                         </div>
                       )}
+
+                      {/* Stat line al fondo */}
+                      <div style={{ marginTop:'auto', display:'flex', alignItems:'center', gap:16 }}>
+                        <span style={{ fontSize:'.72rem', fontWeight:700, color:'rgba(4,57,65,.3)', letterSpacing:'.04em' }}>
+                          {modulosLXP.length} módulos · 150h · Certificación MINEDU
+                        </span>
+                        <div style={{ flex:1, height:1, background:'rgba(4,57,65,.07)' }} />
+                        <span style={{ fontSize:'.62rem', fontWeight:800, letterSpacing:'.08em', color: accentColor }}>
+                          T{String(t.numero).padStart(2,'0')}
+                        </span>
+                      </div>
 
                     </div>
                   </div>
