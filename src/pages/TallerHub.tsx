@@ -314,86 +314,123 @@ export default function TallerHub() {
         </div>
       )}
 
-      {/* ══ RUTA + REPOSITORIO ════════════════════════════════════════════════ */}
-      <div className={`px-8 py-10 grid gap-8 items-start ${isGeneralEpt ? '' : 'lg:grid-cols-[3fr_2fr]'}`}>
+      {/* ══ SECUENCIA + SIDEBAR ═══════════════════════════════════════════════ */}
+      <div className={`px-8 py-8 grid gap-6 items-start ${isGeneralEpt ? '' : 'lg:grid-cols-[1fr_320px]'}`}>
 
-        {/* ── RUTA DE APRENDIZAJE ── */}
+        {/* ── SECUENCIA DE MÓDULOS ── */}
         {!isGeneralEpt && (
           <div
             ref={rutaReveal.ref}
-            style={{ opacity: rutaReveal.visible ? 1 : 0, transform: rutaReveal.visible ? 'none' : 'translateY(28px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}
+            style={{ opacity: rutaReveal.visible ? 1 : 0, transform: rutaReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity .5s ease, transform .5s ease' }}
           >
-          <div className="bg-white overflow-hidden"
-            style={{ borderRadius: 20, boxShadow: '0 4px 20px rgba(4,57,65,.08)' }}>
-            <div
-              className="px-6 pt-6 pb-3 flex items-center justify-between cursor-pointer group"
-              onClick={() => navigate(`/taller/${slug}/ruta`)}
-            >
-              <div>
-                <p style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:4 }}>
-                  <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
-                  Tu camino de aprendizaje
-                </p>
-                <h2 className="text-lg font-extrabold" style={{ color: '#043941' }}>
-                  {modulosLXP.length} módulos · {totalHoras}h de formación
-                </h2>
-              </div>
-              <div className="h-8 w-8 rounded-full flex items-center justify-center shrink-0 transition-all group-hover:scale-110"
-                style={{ background: '#02d47e' }}>
-                <ChevronRight size={15} color="#043941" />
-              </div>
-            </div>
+            <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.06)', overflow: 'hidden' }}>
 
-            <div className="px-4 pb-2">
-              {modulosLXP.map((m, i) => (
-                <div key={m.id} className="flex items-center gap-4 px-3 py-3 rounded-xl">
-                  <div className="flex flex-col items-center shrink-0" style={{ width: 32 }}>
-                    {i > 0 && <div className="w-px h-2 mb-1" style={{ background: 'rgba(2,212,126,0.2)' }} />}
-                    <div className="h-8 w-8 rounded-full flex items-center justify-center text-sm"
-                      style={{
-                        background: i === 0 ? '#043941' : 'rgba(4,57,65,0.06)',
-                        border: i === 0 ? 'none' : '1.5px solid rgba(4,57,65,0.1)',
-                      }}>
-                      {m.icon}
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-extrabold"
-                        style={{ color: i === 0 ? '#02d47e' : 'rgba(4,57,65,0.28)' }}>
-                        M{m.numero}
-                      </span>
-                      <span className="text-sm font-bold truncate" style={{ color: '#043941' }}>
-                        {m.nombre}
-                      </span>
-                    </div>
-                    <p className="text-[11px] mt-0.5" style={{ color: '#94a3b8' }}>
-                      {m.horasTotal}h
-                      {m.horasAsincrono > 0 && ' · Virtual'}
-                      {m.horasSincrono > 0 && ' · En vivo'}
-                      {m.horasPresencial > 0 && ' · Presencial'}
-                    </p>
-                  </div>
-                  <span className="text-[11px] font-bold shrink-0 px-2 py-0.5 rounded-full"
-                    style={{ background: 'rgba(4,57,65,0.05)', color: 'rgba(4,57,65,0.35)' }}>
-                    {m.sesiones.length} sesiones
-                  </span>
+              {/* Header */}
+              <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div>
+                  <h2 style={{ fontSize: 15, fontWeight: 800, color: '#043941', margin: '0 0 2px', letterSpacing: '-0.01em' }}>Secuencia de módulos</h2>
+                  <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
+                    {modulosLXP.filter(m => getEstadoModuloLXP(m.id) === 'completado').length} completados
+                    {' · '}
+                    {modulosLXP.filter(m => getEstadoModuloLXP(m.id) !== 'completado').length} pendientes
+                  </p>
                 </div>
-              ))}
-            </div>
+                <button
+                  onClick={() => navigate(`/taller/${slug}/ruta`)}
+                  style={{ background: 'none', border: '1.5px solid rgba(4,57,65,0.12)', borderRadius: 10, padding: '6px 14px', fontSize: 12, fontWeight: 700, color: '#043941', cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 5 }}
+                >
+                  Ver todo <ArrowRight size={11} />
+                </button>
+              </div>
 
-            {/* CTA footer ruta */}
-            <div className="px-6 pb-5 pt-2">
-              <button
-                onClick={() => navigate(`/taller/${slug}/ruta`)}
-                className="w-full flex items-center justify-center gap-2 py-3 text-sm font-bold transition-all hover:opacity-90 active:scale-[0.98]"
-                style={{ background: '#02d47e', color: '#043941', borderRadius: 100, boxShadow: '0 4px 14px rgba(2,212,126,.35)' }}
-              >
-                Ver ruta completa
-                <ArrowRight size={14} />
-              </button>
+              {/* Filas de módulos */}
+              <div>
+                {modulosLXP.map((m, i) => {
+                  const estado = getEstadoModuloLXP(m.id)
+                  const pct    = getModuloProgreso(slug, m.numero).porcentaje
+                  const isCurrent = m.id === currentMod?.id
+                  const bloqueador = i > 0 ? modulosLXP[i - 1] : null
+
+                  // badge config
+                  const badge = {
+                    completado: { label: '✓ Completado', bg: 'rgba(2,212,126,0.1)',  color: '#059669' },
+                    en_curso:   { label: '• En curso',   bg: `${tallerColor}18`,      color: tallerColor },
+                    disponible: { label: '◦ Disponible', bg: 'rgba(14,165,233,0.1)', color: '#0ea5e9' },
+                    bloqueado:  { label: '🔒 Bloqueado', bg: 'rgba(4,57,65,0.05)',   color: 'rgba(4,57,65,0.35)' },
+                  }[estado]
+
+                  return (
+                    <div
+                      key={m.id}
+                      onClick={() => estado !== 'bloqueado' && navigate(`/taller/${slug}/ruta/modulo/${m.numero}`)}
+                      style={{
+                        borderBottom: i < modulosLXP.length - 1 ? '1px solid rgba(4,57,65,0.05)' : 'none',
+                        padding: '12px 24px',
+                        background: isCurrent ? `${tallerColor}06` : 'transparent',
+                        cursor: estado !== 'bloqueado' ? 'pointer' : 'default',
+                        transition: 'background .16s',
+                      }}
+                      onMouseEnter={e => { if (estado !== 'bloqueado') (e.currentTarget as HTMLElement).style.background = `${tallerColor}0a` }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = isCurrent ? `${tallerColor}06` : 'transparent' }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                        {/* Icono */}
+                        <div style={{
+                          width: 36, height: 36, borderRadius: 10, flexShrink: 0,
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          fontSize: 18,
+                          background: estado === 'completado' ? 'rgba(2,212,126,0.12)'
+                            : estado === 'en_curso'  ? `${tallerColor}18`
+                            : estado === 'disponible'? 'rgba(14,165,233,0.1)'
+                            : 'rgba(4,57,65,0.05)',
+                          opacity: estado === 'bloqueado' ? 0.45 : 1,
+                        }}>
+                          {m.icon}
+                        </div>
+
+                        {/* Nombre + meta */}
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 2 }}>
+                            <span style={{ fontSize: 11, fontWeight: 800, color: estado === 'bloqueado' ? 'rgba(4,57,65,0.3)' : '#02d47e', fontVariantNumeric: 'tabular-nums' }}>
+                              M{m.numero}
+                            </span>
+                            <span style={{ fontSize: 14, fontWeight: 700, color: estado === 'bloqueado' ? 'rgba(4,57,65,0.4)' : '#043941', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                              {m.nombre}
+                            </span>
+                            {isCurrent && (
+                              <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: tallerColor, flexShrink: 0 }}>
+                                Quiz requerido
+                              </span>
+                            )}
+                          </div>
+                          {estado === 'bloqueado' && bloqueador ? (
+                            <p style={{ fontSize: 11, color: '#ef4444', margin: 0 }}>
+                              Requiere completar {bloqueador.nombre} al 100%
+                            </p>
+                          ) : (
+                            <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
+                              {m.horasTotal}h · {m.sesiones.length} sesiones
+                              {pct > 0 && pct < 100 ? ` · ${pct}%` : ''}
+                            </p>
+                          )}
+                        </div>
+
+                        {/* Badge + horas */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+                          <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600 }}>{m.horasTotal}h</span>
+                          <span style={{
+                            fontSize: 10, fontWeight: 700, padding: '3px 9px', borderRadius: 100,
+                            background: badge.bg, color: badge.color,
+                          }}>
+                            {badge.label}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
-          </div>
           </div>
         )}
 
