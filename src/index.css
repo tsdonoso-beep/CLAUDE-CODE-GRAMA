@@ -356,7 +356,7 @@
   --t-body:     0.875rem;   /* 14px */
   --t-label:    0.75rem;    /* 12px */
   --t-overline: 0.6875rem;  /* 11px — minimum */
-  --t-hero:     clamp(2.6rem, 5.5vw, 4.4rem); /* Landing hero */
+  --t-hero:     clamp(2.4rem, 4.2vw, 3.8rem); /* Landing hero */
 
   /* Color tokens — light surface */
   --tc-primary:    #043941;

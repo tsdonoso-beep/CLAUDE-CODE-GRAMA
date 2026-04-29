@@ -85,7 +85,7 @@ export default function Landing() {
         {/* Links desktop */}
         <nav className="hidden md:flex" style={{ display:'flex', alignItems:'center', gap:32 }}>
           {NAV_LINKS.map(l => (
-            <a key={l.label} href={l.href} style={{ fontSize:13, fontWeight:500, color:'#043941', textDecoration:'none', opacity:.6, transition:'opacity .2s' }}
+            <a key={l.label} href={l.href} style={{ fontSize:13, fontWeight:500, color:'var(--grama-oscuro)', textDecoration:'none', opacity:.6, transition:'opacity .2s' }}
               onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
               onMouseLeave={e => (e.currentTarget.style.opacity = '.6')}>
               {l.label}
@@ -97,14 +97,14 @@ export default function Landing() {
         <div style={{ display:'flex', alignItems:'center', gap:14 }}>
           <button
             onClick={isLoggedIn ? goToApp : () => navigate('/login')}
-            style={{ background:'#043941', color:'#fff', padding:'9px 22px', borderRadius:8, fontSize:13, fontWeight:700, border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:5, transition:'all .2s' }}
-            onMouseEnter={e => (e.currentTarget.style.background = '#045f6c')}
-            onMouseLeave={e => (e.currentTarget.style.background = '#043941')}
+            style={{ background:'var(--grama-oscuro)', color:'#fff', padding:'9px 22px', borderRadius:8, fontSize:13, fontWeight:700, border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:5, transition:'all .2s' }}
+            onMouseEnter={e => (e.currentTarget.style.background = 'var(--grama-cerceta)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'var(--grama-oscuro)')}
           >
             {isLoggedIn ? 'Ir a la plataforma' : 'Acceder'} <ChevronRight size={13} />
           </button>
           {/* Hamburger mobile */}
-          <button className="md:hidden" onClick={() => setMobileMenuOpen(o => !o)} style={{ background:'none', border:'none', cursor:'pointer', color:'#043941', padding:4 }}>
+          <button className="md:hidden" onClick={() => setMobileMenuOpen(o => !o)} style={{ background:'none', border:'none', cursor:'pointer', color:'var(--grama-oscuro)', padding:4 }}>
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
@@ -113,11 +113,11 @@ export default function Landing() {
         {mobileMenuOpen && (
           <div style={{ position:'absolute', top:60, left:0, right:0, background:'#fff', borderBottom:'1px solid rgba(4,57,65,0.08)', padding:'16px 24px 20px', zIndex:50, display:'flex', flexDirection:'column', gap:12 }}>
             {NAV_LINKS.map(l => (
-              <a key={l.label} href={l.href} style={{ fontSize:14, fontWeight:600, color:'#043941', textDecoration:'none' }} onClick={() => setMobileMenuOpen(false)}>
+              <a key={l.label} href={l.href} style={{ fontSize:14, fontWeight:600, color:'var(--grama-oscuro)', textDecoration:'none' }} onClick={() => setMobileMenuOpen(false)}>
                 {l.label}
               </a>
             ))}
-            <button onClick={() => { navigate('/login'); setMobileMenuOpen(false) }} style={{ marginTop:4, background:'#043941', color:'#fff', padding:'11px', borderRadius:8, fontSize:14, fontWeight:700, border:'none', cursor:'pointer' }}>
+            <button onClick={() => { navigate('/login'); setMobileMenuOpen(false) }} style={{ marginTop:4, background:'var(--grama-oscuro)', color:'#fff', padding:'11px', borderRadius:8, fontSize:14, fontWeight:700, border:'none', cursor:'pointer' }}>
               Acceder →
             </button>
           </div>
@@ -136,11 +136,11 @@ export default function Landing() {
 
         {/* ── Formas de fondo ── */}
         {/* Triángulos grandes de esquina */}
-        <div style={{ position:'absolute', bottom:-160, left:-120, width:520, height:520, background:'#02d47e', clipPath:'polygon(0 0,100% 0,0 100%)', opacity:.07, pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:-100, right:-100, width:400, height:400, background:'#043941', clipPath:'polygon(100% 0,100% 100%,0 100%)', opacity:.06, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:-160, left:-120, width:520, height:520, background:'var(--grama-menta)', clipPath:'polygon(0 0,100% 0,0 100%)', opacity:.07, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:-100, right:-100, width:400, height:400, background:'var(--grama-oscuro)', clipPath:'polygon(100% 0,100% 100%,0 100%)', opacity:.06, pointerEvents:'none' }} />
 
         {/* Triángulos flotantes */}
-        <div style={{ position:'absolute', top:'10%', left:'6%', width:110, height:110, background:'#02d47e', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.28, animation:'heroFb 11s ease-in-out infinite', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'10%', left:'6%', width:110, height:110, background:'var(--grama-menta)', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.28, animation:'heroFb 11s ease-in-out infinite', pointerEvents:'none' }} />
         <div style={{ position:'absolute', top:'20%', right:'6%', width:90, height:90, background:'#d4c4fc', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.45, animation:'heroFb 9s ease-in-out infinite 1.5s', pointerEvents:'none' }} />
         <div style={{ position:'absolute', bottom:'20%', left:'5%', width:80, height:80, background:'#f8ee91', clipPath:'polygon(50% 100%,0 0,100% 0)', opacity:.5, animation:'heroFd 13s ease-in-out infinite 1s', pointerEvents:'none' }} />
         <div style={{ position:'absolute', bottom:'28%', right:'5%', width:70, height:70, background:'#b8edd0', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.55, animation:'heroFb 10s ease-in-out infinite 3s', pointerEvents:'none' }} />
@@ -149,13 +149,13 @@ export default function Landing() {
         {/* Círculos */}
         <div style={{ position:'absolute', top:'8%', right:'20%', width:110, height:110, borderRadius:'50%', background:'#f8ee91', opacity:.3, animation:'heroFf 8s ease-in-out infinite', pointerEvents:'none' }} />
         <div style={{ position:'absolute', top:'52%', left:'2%', width:80, height:80, borderRadius:'50%', background:'#d4c4fc', opacity:.38, animation:'heroFf 12s ease-in-out infinite 2s', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', bottom:'15%', right:'16%', width:60, height:60, borderRadius:'50%', background:'#02d47e', opacity:.3, animation:'heroFf 9s ease-in-out infinite 1s', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:'15%', right:'16%', width:60, height:60, borderRadius:'50%', background:'var(--grama-menta)', opacity:.3, animation:'heroFf 9s ease-in-out infinite 1s', pointerEvents:'none' }} />
         <div style={{ position:'absolute', top:'35%', left:'26%', width:44, height:44, borderRadius:'50%', background:'#b8edd0', opacity:.35, animation:'heroFf 14s ease-in-out infinite 3s', pointerEvents:'none' }} />
 
         {/* Cruces / símbolo + */}
         <svg style={{ position:'absolute', top:'26%', left:'2%', width:64, height:64, opacity:.35, animation:'heroFe 11s ease-in-out infinite', pointerEvents:'none' }} viewBox="0 0 28 28">
-          <rect x="11" y="2" width="6" height="24" rx="3" fill="#02d47e"/>
-          <rect x="2" y="11" width="24" height="6" rx="3" fill="#02d47e"/>
+          <rect x="11" y="2" width="6" height="24" rx="3" fill="var(--grama-menta)"/>
+          <rect x="2" y="11" width="24" height="6" rx="3" fill="var(--grama-menta)"/>
         </svg>
         <svg style={{ position:'absolute', top:'13%', left:'38%', width:52, height:52, opacity:.32, animation:'heroFe 9s ease-in-out infinite 2s', pointerEvents:'none' }} viewBox="0 0 28 28">
           <rect x="11" y="2" width="6" height="24" rx="3" fill="#d4c4fc"/>
@@ -177,9 +177,9 @@ export default function Landing() {
         <div style={{ position:'relative', zIndex:2, animation:'heroNavIn .7s ease both' }}>
 
           {/* H1 */}
-          <h1 style={{ fontSize:'clamp(2.4rem,4.2vw,3.8rem)', fontWeight:800, lineHeight:1.04, letterSpacing:'-1.8px', color:'#043941', marginBottom:20 }}>
+          <h1 style={{ fontSize:'var(--t-hero)', fontWeight:800, lineHeight:1.04, letterSpacing:'-1.8px', color:'var(--grama-oscuro)', marginBottom:20 }}>
             Los talleres técnicos<br />
-            <em style={{ fontStyle:'normal', color:'#02d47e' }}>forman el país.</em><br />
+            <em style={{ fontStyle:'normal', color:'var(--grama-menta)' }}>forman el país.</em><br />
             GRAMA los acompaña.
           </h1>
 
@@ -193,15 +193,15 @@ export default function Landing() {
           <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
             <button
               onClick={isLoggedIn ? goToApp : () => navigate('/login')}
-              style={{ background:'#043941', color:'#fff', padding:'13px 28px', borderRadius:100, fontSize:14, fontWeight:700, border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:7, boxShadow:'0 4px 20px rgba(4,57,65,.25)', transition:'all .2s' }}
-              onMouseEnter={e => { e.currentTarget.style.background='#045f6c'; e.currentTarget.style.transform='translateY(-2px)' }}
-              onMouseLeave={e => { e.currentTarget.style.background='#043941'; e.currentTarget.style.transform='none' }}
+              style={{ background:'var(--grama-oscuro)', color:'#fff', padding:'13px 28px', borderRadius:100, fontSize:14, fontWeight:700, border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:7, boxShadow:'0 4px 20px rgba(4,57,65,.25)', transition:'all .2s' }}
+              onMouseEnter={e => { e.currentTarget.style.background='var(--grama-cerceta)'; e.currentTarget.style.transform='translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.background='var(--grama-oscuro)'; e.currentTarget.style.transform='none' }}
             >
               {isLoggedIn ? 'Ir a la plataforma' : 'Conocer la plataforma'} <ArrowRight size={14} />
             </button>
-            <a href="#perfiles" style={{ border:'1.5px solid #043941', color:'#043941', padding:'12px 22px', borderRadius:100, fontSize:14, fontWeight:600, textDecoration:'none', display:'flex', alignItems:'center', gap:7, transition:'all .2s' }}
-              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background='#043941'; (e.currentTarget as HTMLAnchorElement).style.color='#fff' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background='transparent'; (e.currentTarget as HTMLAnchorElement).style.color='#043941' }}
+            <a href="#perfiles" style={{ border:'1.5px solid var(--grama-oscuro)', color:'var(--grama-oscuro)', padding:'12px 22px', borderRadius:100, fontSize:14, fontWeight:600, textDecoration:'none', display:'flex', alignItems:'center', gap:7, transition:'all .2s' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background='var(--grama-oscuro)'; (e.currentTarget as HTMLAnchorElement).style.color='#fff' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background='transparent'; (e.currentTarget as HTMLAnchorElement).style.color='var(--grama-oscuro)' }}
             >
               <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4" fill="none"/><polygon points="5.5,4.5 10,7 5.5,9.5" fill="currentColor"/></svg>
               Ver cómo funciona
@@ -222,7 +222,7 @@ export default function Landing() {
         </div>
 
         {/* ── Stats bar (pegada al fondo del hero) ── */}
-        <div style={{ position:'absolute', bottom:0, left:0, right:0, background:'#043941', display:'grid', gridTemplateColumns:'repeat(4,1fr)', zIndex:3 }}>
+        <div style={{ position:'absolute', bottom:0, left:0, right:0, background:'var(--grama-oscuro)', display:'grid', gridTemplateColumns:'repeat(4,1fr)', zIndex:3 }}>
           {[
             { n:'10',  hi:'',   label:'Especialidades' },
             { n:'3',   hi:'',   label:'Roles en la plataforma' },
@@ -230,7 +230,7 @@ export default function Landing() {
             { n:'150', hi:'h',  label:'Por especialidad' },
           ].map((s, i) => (
             <div key={i} style={{ textAlign:'center', padding:'18px 16px', borderLeft: i > 0 ? '1px solid rgba(255,255,255,.06)' : 'none' }}>
-              <span style={{ display:'block', fontSize:'clamp(1.4rem,2.5vw,2rem)', fontWeight:800, color:'#02d47e', lineHeight:1, letterSpacing:'-.04em', marginBottom:4 }}>
+              <span style={{ display:'block', fontSize:'clamp(1.4rem,2.5vw,2rem)', fontWeight:800, color:'var(--grama-menta)', lineHeight:1, letterSpacing:'-.04em', marginBottom:4 }}>
                 {s.n}<span style={{ color:'rgba(255,255,255,.6)', fontSize:'.7em' }}>{s.hi}</span>
               </span>
               <span style={{ fontSize:'var(--t-overline)', fontWeight:600, color:'rgba(255,255,255,.4)', letterSpacing:'.08em', textTransform:'uppercase' }}>{s.label}</span>
@@ -255,22 +255,22 @@ export default function Landing() {
 
           {/* Header */}
           <div style={{ textAlign:'center', marginBottom:'2.8rem' }}>
-            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:14 }}>
-              <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
+            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'var(--grama-menta)', marginBottom:14 }}>
+              <span style={{ display:'inline-block', height:1, width:32, background:'var(--grama-menta)' }} />
               ¿Para quién?
             </span>
-            <h2 style={{ fontSize:'var(--t-display)', fontWeight:800, lineHeight:1.1, color:'#043941', margin:0 }}>
+            <h2 style={{ fontSize:'var(--t-display)', fontWeight:800, lineHeight:1.1, color:'var(--grama-oscuro)', margin:0 }}>
               Una plataforma,{' '}
-              <span style={{ color:'#02d47e' }}>tres experiencias</span>
+              <span style={{ color:'var(--grama-menta)' }}>tres experiencias</span>
             </h2>
           </div>
 
           {/* Tab selector — cards de rol */}
           <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:14, marginBottom:'1rem' }}>
             {([
-              { key: 'docente',  emoji: '🔧', label: 'Docente',  tagline:'Capacitación y certificación', activeColor:'#043941', activeBg:'#043941', activeText:'#fff',    accentBar:'#02d47e',  hoverBg:'rgba(4,57,65,.04)' },
-              { key: 'alumno',   emoji: '⭐', label: 'Alumno',   tagline:'Proyectos prácticos guiados',  activeColor:'#02d47e', activeBg:'#e8fff4', activeText:'#043941', accentBar:'#02d47e',  hoverBg:'rgba(2,212,126,.06)' },
-              { key: 'director', emoji: '📊', label: 'Director', tagline:'Seguimiento institucional',     activeColor:'#f59e0b', activeBg:'#fffbeb', activeText:'#92400e', accentBar:'#f59e0b',  hoverBg:'rgba(245,158,11,.06)' },
+              { key: 'docente',  emoji: '🔧', label: 'Docente',  tagline:'Capacitación y certificación', activeColor:'var(--grama-oscuro)', activeBg:'var(--grama-oscuro)', activeText:'#fff',    accentBar:'var(--grama-menta)',  hoverBg:'rgba(4,57,65,.04)',    shadow:'rgba(4,57,65,.13)',    accentIndicator:'rgba(255,255,255,.4)' },
+              { key: 'alumno',   emoji: '⭐', label: 'Alumno',   tagline:'Proyectos prácticos guiados',  activeColor:'var(--grama-menta)', activeBg:'#e8fff4', activeText:'var(--grama-oscuro)', accentBar:'var(--grama-menta)',  hoverBg:'rgba(2,212,126,.06)', shadow:'rgba(2,212,126,.13)',  accentIndicator:'rgba(2,212,126,.5)' },
+              { key: 'director', emoji: '📊', label: 'Director', tagline:'Seguimiento institucional',     activeColor:'#f59e0b', activeBg:'#fffbeb', activeText:'#92400e', accentBar:'#f59e0b',  hoverBg:'rgba(245,158,11,.06)', shadow:'rgba(245,158,11,.13)', accentIndicator:'rgba(245,158,11,.5)' },
             ] as const).map(tab => {
               const isActive = activeTab === tab.key
               return (
@@ -287,7 +287,7 @@ export default function Landing() {
                     background: isActive ? tab.activeBg : '#fff',
                     cursor:'pointer',
                     transition:'all .22s cubic-bezier(.4,0,.2,1)',
-                    boxShadow: isActive ? `0 8px 28px ${tab.activeColor}22` : '0 2px 10px rgba(4,57,65,.06)',
+                    boxShadow: isActive ? `0 8px 28px ${tab.shadow}` : '0 2px 10px rgba(4,57,65,.06)',
                     textAlign:'left',
                     position:'relative',
                     overflow:'hidden',
@@ -301,7 +301,7 @@ export default function Landing() {
                   <span style={{ fontSize:'2rem', marginBottom:10, marginTop:4, display:'block', lineHeight:1 }}>{tab.emoji}</span>
 
                   {/* Rol */}
-                  <span style={{ fontSize:'1.05rem', fontWeight:800, color: isActive ? tab.activeText : '#043941', marginBottom:4, display:'block' }}>
+                  <span style={{ fontSize:'1.05rem', fontWeight:800, color: isActive ? tab.activeText : 'var(--grama-oscuro)', marginBottom:4, display:'block' }}>
                     {tab.label}
                   </span>
 
@@ -315,7 +315,7 @@ export default function Landing() {
                   {/* Indicador activo */}
                   {isActive && (
                     <div style={{ position:'absolute', bottom:12, right:14, fontSize:'var(--t-label)', fontWeight:800,
-                      color: tab.key === 'docente' ? 'rgba(255,255,255,.4)' : `${tab.activeColor}80`,
+                      color: tab.accentIndicator,
                     }}>
                       ↓ viendo
                     </div>
@@ -342,7 +342,7 @@ export default function Landing() {
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
               {/* Texto */}
               <div>
-                <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:800, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
+                <h3 style={{ fontSize:'var(--t-h1)', fontWeight:800, lineHeight:1.15, color:'var(--grama-oscuro)', margin:'0 0 1rem' }}>
                   Domina tu taller,<br />
                   certifícate y enseña<br />
                   con confianza.
@@ -359,10 +359,10 @@ export default function Landing() {
                     'Acceso permanente a todo el material',
                   ].map((feat, i) => (
                     <div key={i} style={{ display:'flex', alignItems:'center', gap:10 }}>
-                      <span style={{ width:20, height:20, borderRadius:'50%', background:'rgba(2,212,126,.15)', border:'1.5px solid #02d47e', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                        <svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="#02d47e" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      <span style={{ width:20, height:20, borderRadius:'50%', background:'rgba(2,212,126,.15)', border:'1.5px solid var(--grama-menta)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                        <svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="var(--grama-menta)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       </span>
-                      <span style={{ fontSize:'var(--t-body)', fontWeight:600, color:'#043941' }}>{feat}</span>
+                      <span style={{ fontSize:'var(--t-body)', fontWeight:600, color:'var(--grama-oscuro)' }}>{feat}</span>
                     </div>
                   ))}
                 </div>
@@ -383,7 +383,7 @@ export default function Landing() {
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
               {/* Texto */}
               <div>
-                <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:800, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
+                <h3 style={{ fontSize:'var(--t-h1)', fontWeight:800, lineHeight:1.15, color:'var(--grama-oscuro)', margin:'0 0 1rem' }}>
                   Aprende haciendo,<br />
                   a tu ritmo<br />
                   y con tu docente.
@@ -399,10 +399,10 @@ export default function Landing() {
                     'Portafolio digital de tus logros',
                   ].map((feat, i) => (
                     <div key={i} style={{ display:'flex', alignItems:'center', gap:10 }}>
-                      <span style={{ width:20, height:20, borderRadius:'50%', background:'rgba(2,212,126,.15)', border:'1.5px solid #02d47e', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                        <svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="#02d47e" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      <span style={{ width:20, height:20, borderRadius:'50%', background:'rgba(2,212,126,.15)', border:'1.5px solid var(--grama-menta)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                        <svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="var(--grama-menta)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       </span>
-                      <span style={{ fontSize:'var(--t-body)', fontWeight:600, color:'#043941' }}>{feat}</span>
+                      <span style={{ fontSize:'var(--t-body)', fontWeight:600, color:'var(--grama-oscuro)' }}>{feat}</span>
                     </div>
                   ))}
                 </div>
@@ -436,7 +436,7 @@ export default function Landing() {
                 <div style={{ position:'absolute', inset:0, background:'linear-gradient(160deg, transparent 50%, rgba(4,57,65,.55) 100%)' }} />
                 <div style={{ position:'absolute', bottom:20, left:20, background:'rgba(255,255,255,.95)', backdropFilter:'blur(8px)', borderRadius:14, padding:'10px 16px', boxShadow:'0 8px 24px rgba(0,0,0,.12)' }}>
                   <p style={{ margin:0, fontSize:'var(--t-overline)', fontWeight:700, color:'rgba(4,57,65,.5)', letterSpacing:'.06em', textTransform:'uppercase' }}>Proyectos disponibles</p>
-                  <p style={{ margin:'2px 0 0', fontSize:'1.3rem', fontWeight:800, color:'#043941' }}>2 en proceso</p>
+                  <p style={{ margin:'2px 0 0', fontSize:'1.3rem', fontWeight:800, color:'var(--grama-oscuro)' }}>2 en proceso</p>
                 </div>
               </div>
             </div>
@@ -446,7 +446,7 @@ export default function Landing() {
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
               {/* Texto */}
               <div>
-                <h3 style={{ fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:800, lineHeight:1.15, color:'#043941', margin:'0 0 1rem' }}>
+                <h3 style={{ fontSize:'var(--t-h1)', fontWeight:800, lineHeight:1.15, color:'var(--grama-oscuro)', margin:'0 0 1rem' }}>
                   Monitorea el avance<br />
                   pedagógico<br />
                   de tu institución.
@@ -465,7 +465,7 @@ export default function Landing() {
                       <span style={{ width:20, height:20, borderRadius:'50%', background:'rgba(245,158,11,.15)', border:'1.5px solid #f59e0b', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
                         <svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="#f59e0b" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       </span>
-                      <span style={{ fontSize:'var(--t-body)', fontWeight:600, color:'#043941' }}>{feat}</span>
+                      <span style={{ fontSize:'var(--t-body)', fontWeight:600, color:'var(--grama-oscuro)' }}>{feat}</span>
                     </div>
                   ))}
                 </div>
@@ -486,7 +486,7 @@ export default function Landing() {
                 <div style={{ position:'absolute', inset:0, background:'linear-gradient(160deg, transparent 50%, rgba(4,57,65,.55) 100%)' }} />
                 <div style={{ position:'absolute', bottom:20, left:20, background:'rgba(255,255,255,.95)', backdropFilter:'blur(8px)', borderRadius:14, padding:'10px 16px', boxShadow:'0 8px 24px rgba(0,0,0,.12)' }}>
                   <p style={{ margin:0, fontSize:'var(--t-overline)', fontWeight:700, color:'rgba(4,57,65,.5)', letterSpacing:'.06em', textTransform:'uppercase' }}>Módulo de seguimiento</p>
-                  <p style={{ margin:'2px 0 0', fontSize:'1.3rem', fontWeight:800, color:'#043941' }}>En desarrollo</p>
+                  <p style={{ margin:'2px 0 0', fontSize:'1.3rem', fontWeight:800, color:'var(--grama-oscuro)' }}>En desarrollo</p>
                 </div>
               </div>
             </div>
@@ -501,7 +501,7 @@ export default function Landing() {
         {/* Shape fondo — círculo lila top-right, triángulo amarillo bottom-left, círculo verde mid-left */}
         <div style={{ position:'absolute', top:-100, right:-80, width:340, height:340, borderRadius:'50%', background:'#d4c4fc', opacity:.35, pointerEvents:'none' }} />
         <div style={{ position:'absolute', bottom:-80, left:'3%', width:260, height:260, background:'#f8ee91', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.45, pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:'45%', left:-40, width:100, height:100, borderRadius:'50%', background:'#02d47e', opacity:.22, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'45%', left:-40, width:100, height:100, borderRadius:'50%', background:'var(--grama-menta)', opacity:.22, pointerEvents:'none' }} />
 
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
@@ -509,30 +509,30 @@ export default function Landing() {
           {(() => {
             const meta = {
               docente: {
-                h2: <>Una progresión que{' '}<span style={{ color:'#02d47e' }}>respeta tu recorrido</span></>,
+                h2: <>Una progresión que{' '}<span style={{ color:'var(--grama-menta)' }}>respeta tu recorrido</span></>,
                 p: 'No empezamos desde un contenido genérico. Cada etapa se construye sobre la anterior — desde quién eres como docente hasta lo que tus alumnos experimentan en el taller.',
                 stages: [
-                  { n:'01', numColor:'#02d47e', barColor:'#02d47e', title:'Te conocemos antes de enseñarte', copy:'Empezamos por entender tu contexto: qué taller tienes, qué sabes, qué necesitas. Sin supuestos genéricos.' },
+                  { n:'01', numColor:'var(--grama-menta)', barColor:'var(--grama-menta)', title:'Te conocemos antes de enseñarte', copy:'Empezamos por entender tu contexto: qué taller tienes, qué sabes, qué necesitas. Sin supuestos genéricos.' },
                   { n:'02', numColor:'#7c3aed', barColor:'#d4c4fc', title:'Tu taller es el primer objeto de estudio', copy:'El espacio donde trabajas — sus zonas, su equipamiento — se convierte en el punto de partida del aprendizaje.' },
                   { n:'03', numColor:'#d97706', barColor:'#f8ee91', title:'Diseñas, no solo aprendes', copy:'Avanzas hacia la práctica pedagógica: cómo organizar una sesión, cómo guiar a tus estudiantes con lo que ya tienes.' },
                   { n:'04', numColor:'#047857', barColor:'#b8edd0', title:'Una sesión real como cierre', copy:'El cierre no es un examen. Es aplicar lo aprendido con tus alumnos, en tu taller. Eso es lo que se certifica.' },
                 ],
               },
               alumno: {
-                h2: <>Aprendes haciendo,{' '}<span style={{ color:'#02d47e' }}>con tu docente al lado</span></>,
+                h2: <>Aprendes haciendo,{' '}<span style={{ color:'var(--grama-menta)' }}>con tu docente al lado</span></>,
                 p: 'Nada empieza con un manual. Cada etapa te acerca a un proyecto real, con el equipamiento de tu taller y la guía directa de quien ya recorrió el camino.',
                 stages: [
-                  { n:'01', numColor:'#02d47e', barColor:'#02d47e', title:'Partimos desde lo que ya haces', copy:'Antes de cualquier contenido, entendemos tu punto de partida — qué conoces, qué tienes entre manos y qué quieres lograr.' },
+                  { n:'01', numColor:'var(--grama-menta)', barColor:'var(--grama-menta)', title:'Partimos desde lo que ya haces', copy:'Antes de cualquier contenido, entendemos tu punto de partida — qué conoces, qué tienes entre manos y qué quieres lograr.' },
                   { n:'02', numColor:'#7c3aed', barColor:'#d4c4fc', title:'Practicas con equipos reales', copy:'El taller es tu aula. Cada actividad está diseñada para que pongas las manos encima — no para que lo veas en una pantalla.' },
                   { n:'03', numColor:'#d97706', barColor:'#f8ee91', title:'Muestras lo que aprendiste', copy:'No hay examen escrito. Demuestras tu competencia con un proyecto concreto, evaluado por tu propio docente.' },
                   { n:'04', numColor:'#047857', barColor:'#b8edd0', title:'Tu constancia, en tus manos', copy:'Al terminar tienes un documento que acredita lo que sabes hacer — reconocido por el MINEDU y útil para tu trayectoria.' },
                 ],
               },
               director: {
-                h2: <>Visibilidad completa,{' '}<span style={{ color:'#02d47e' }}>sin esperar el informe</span></>,
+                h2: <>Visibilidad completa,{' '}<span style={{ color:'var(--grama-menta)' }}>sin esperar el informe</span></>,
                 p: 'Seguís el avance de cada docente en tiempo real — desde el diagnóstico inicial hasta la sesión certificada. Datos para decidir, no solo para archivar.',
                 stages: [
-                  { n:'01', numColor:'#02d47e', barColor:'#02d47e', title:'Diagnóstico inicial de brechas', copy:'La plataforma mapea automáticamente el punto de partida de cada docente por especialidad — sin encuestas manuales.' },
+                  { n:'01', numColor:'var(--grama-menta)', barColor:'var(--grama-menta)', title:'Diagnóstico inicial de brechas', copy:'La plataforma mapea automáticamente el punto de partida de cada docente por especialidad — sin encuestas manuales.' },
                   { n:'02', numColor:'#7c3aed', barColor:'#d4c4fc', title:'Seguimiento por docente y taller', copy:'Ves quién avanzó, quién se detuvo y en qué módulo. Sin reportes de Excel: el panel lo muestra en tiempo real.' },
                   { n:'03', numColor:'#d97706', barColor:'#f8ee91', title:'Validás el avance con evidencia', copy:'Cada hito tiene un producto asociado — no solo un clic de "completado". Eso te permite validar con criterio.' },
                   { n:'04', numColor:'#047857', barColor:'#b8edd0', title:'Reportás con datos reales a UGEL', copy:'Al cierre del ciclo, exportás el resumen de formación con los indicadores que la UGEL y MINEDU solicitan.' },
@@ -543,11 +543,11 @@ export default function Landing() {
               <>
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'end', marginBottom:'5rem' }}>
                   <div>
-                    <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:16 }}>
-                      <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
+                    <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'var(--grama-menta)', marginBottom:16 }}>
+                      <span style={{ display:'inline-block', height:1, width:32, background:'var(--grama-menta)' }} />
                       Nuestra metodología
                     </span>
-                    <h2 style={{ fontSize:'var(--t-display)', fontWeight:800, lineHeight:1.08, color:'#043941', margin:0 }}>
+                    <h2 style={{ fontSize:'var(--t-display)', fontWeight:800, lineHeight:1.08, color:'var(--grama-oscuro)', margin:0 }}>
                       {meta.h2}
                     </h2>
                   </div>
@@ -570,7 +570,7 @@ export default function Landing() {
                     {stage.n}
                   </span>
 
-                  <h3 style={{ fontSize:'var(--t-body-lg)', fontWeight:800, color:'#043941', margin:'0 0 .75rem', lineHeight:1.35 }}>
+                  <h3 style={{ fontSize:'var(--t-body-lg)', fontWeight:800, color:'var(--grama-oscuro)', margin:'0 0 .75rem', lineHeight:1.35 }}>
                     {stage.title}
                   </h3>
                   <p style={{ fontSize:'var(--t-body)', color:'rgba(4,57,65,.52)', lineHeight:1.75, margin:0 }}>
@@ -593,21 +593,21 @@ export default function Landing() {
         {/* Shapes */}
         <div style={{ position:'absolute', top:-70, left:'8%', width:108, height:260, background:'#f8ee91', borderRadius:'0 0 54px 54px', opacity:.32, pointerEvents:'none', animation:'heroFb 13s ease-in-out infinite' }} />
         <div style={{ position:'absolute', bottom:-100, right:'6%', width:300, height:300, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.28, pointerEvents:'none', animation:'heroFd 16s ease-in-out infinite 2s' }} />
-        <div style={{ position:'absolute', top:'14%', left:'5%', width:52, height:52, background:'#02d47e', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 24s linear infinite', pointerEvents:'none', opacity:.45 }} />
+        <div style={{ position:'absolute', top:'14%', left:'5%', width:52, height:52, background:'var(--grama-menta)', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 24s linear infinite', pointerEvents:'none', opacity:.45 }} />
 
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
           {/* Header dinámico */}
           <div style={{ textAlign:'center', maxWidth:640, margin:'0 auto 3.2rem' }}>
-            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:14 }}>
-              <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
+            <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'var(--grama-menta)', marginBottom:14 }}>
+              <span style={{ display:'inline-block', height:1, width:32, background:'var(--grama-menta)' }} />
               {activeTab === 'docente' && 'Especialidades disponibles'}
               {activeTab === 'alumno'  && 'Proyectos en desarrollo'}
               {activeTab === 'director' && 'Estado por especialidad'}
             </span>
-            <h2 style={{ fontSize:'var(--t-display)', fontWeight:800, lineHeight:1.1, color:'#043941', margin:'0 0 .75rem' }}>
-              {activeTab === 'docente' && <>{talleresConfig.length} especialidades <span style={{ color:'#02d47e' }}>técnicas</span></>}
-              {activeTab === 'alumno'  && <>Proyectos <span style={{ color:'#02d47e' }}>para alumnos</span></>}
+            <h2 style={{ fontSize:'var(--t-display)', fontWeight:800, lineHeight:1.1, color:'var(--grama-oscuro)', margin:'0 0 .75rem' }}>
+              {activeTab === 'docente' && <>{talleresConfig.length} especialidades <span style={{ color:'var(--grama-menta)' }}>técnicas</span></>}
+              {activeTab === 'alumno'  && <>Proyectos <span style={{ color:'var(--grama-menta)' }}>para alumnos</span></>}
               {activeTab === 'director' && <>Seguimiento <span style={{ color:'#f59e0b' }}>por taller</span></>}
             </h2>
             <p style={{ fontSize:'var(--t-body)', color:'rgba(4,57,65,.5)', lineHeight:1.75, margin:0 }}>
@@ -662,7 +662,7 @@ export default function Landing() {
                           <span style={{ fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.06em', color: isActive ? itemAccent : 'rgba(4,57,65,.3)', width:28, flexShrink:0 }}>
                             T{String(item.numero).padStart(2,'0')}
                           </span>
-                          <span style={{ flex:1, fontSize:'var(--t-body-lg)', fontWeight: isActive ? 800 : 500, color: isActive ? '#043941' : 'rgba(4,57,65,.6)', lineHeight:1.3, transition:'all .16s' }}>
+                          <span style={{ flex:1, fontSize:'var(--t-body-lg)', fontWeight: isActive ? 800 : 500, color: isActive ? 'var(--grama-oscuro)' : 'rgba(4,57,65,.6)', lineHeight:1.3, transition:'all .16s' }}>
                             {item.nombre}
                           </span>
                         </div>
@@ -701,7 +701,7 @@ export default function Landing() {
                               <span style={{ fontSize:'var(--t-label)', fontWeight:800, color: accentColor, marginTop:2, flexShrink:0 }}>
                                 {String(ci + 1).padStart(2, '0')}
                               </span>
-                              <span style={{ fontSize:'var(--t-body-lg)', color:'#043941', lineHeight:1.5, fontWeight:500 }}>{c}</span>
+                              <span style={{ fontSize:'var(--t-body-lg)', color:'var(--grama-oscuro)', lineHeight:1.5, fontWeight:500 }}>{c}</span>
                             </div>
                           ))}
                         </div>
@@ -751,7 +751,7 @@ export default function Landing() {
                     <div style={{ background:`${p.color}33`, padding:'1.6rem', display:'flex', alignItems:'flex-start', justifyContent:'space-between', borderBottom:`1px solid ${p.color}44` }}>
                       <div>
                         <span style={{ fontSize:'2rem', display:'block', marginBottom:8 }}>{p.emoji}</span>
-                        <h3 style={{ margin:0, fontSize:'1.05rem', fontWeight:800, color:'#043941', lineHeight:1.2 }}>{p.nombre}</h3>
+                        <h3 style={{ margin:0, fontSize:'1.05rem', fontWeight:800, color:'var(--grama-oscuro)', lineHeight:1.2 }}>{p.nombre}</h3>
                       </div>
                       <span style={{ fontSize:'var(--t-overline)', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', background:p.color, color:p.textColor, padding:'.3rem .7rem', borderRadius:100, whiteSpace:'nowrap', flexShrink:0 }}>
                         En proceso
@@ -788,7 +788,7 @@ export default function Landing() {
                 {talleresConfig.map((t, i) => {
                   const semaforos = ['verde','verde','amarillo','rojo','verde','amarillo','verde','rojo','amarillo'] as const
                   const sem = semaforos[i % semaforos.length]
-                  const semColor = sem === 'verde' ? '#02d47e' : sem === 'amarillo' ? '#f59e0b' : '#ef4444'
+                  const semColor = sem === 'verde' ? 'var(--grama-menta)' : sem === 'amarillo' ? '#f59e0b' : '#ef4444'
                   const semLabel = sem === 'verde' ? 'Al día' : sem === 'amarillo' ? 'En progreso' : 'Sin iniciar'
                   const pct = sem === 'verde' ? 78 + (i * 7) % 22 : sem === 'amarillo' ? 30 + (i * 11) % 30 : 0
                   return (
@@ -798,7 +798,7 @@ export default function Landing() {
                       {/* Info */}
                       <div style={{ flex:1, minWidth:0 }}>
                         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:6 }}>
-                          <span style={{ fontSize:'var(--t-body)', fontWeight:800, color:'#043941', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', maxWidth:160 }}>{t.nombre}</span>
+                          <span style={{ fontSize:'var(--t-body)', fontWeight:800, color:'var(--grama-oscuro)', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', maxWidth:160 }}>{t.nombre}</span>
                           <span style={{ fontSize:'var(--t-overline)', fontWeight:700, color:semColor, background:`${semColor}15`, padding:'.2rem .55rem', borderRadius:100, flexShrink:0, marginLeft:8 }}>{semLabel}</span>
                         </div>
                         <div style={{ height:5, borderRadius:100, background:'rgba(4,57,65,.07)', overflow:'hidden' }}>
@@ -836,19 +836,19 @@ export default function Landing() {
           {/* FAQ accordion */}
           <div>
             <div style={{ marginBottom:'2rem' }}>
-              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:14 }}>
-                <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
+              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'var(--grama-menta)', marginBottom:14 }}>
+                <span style={{ display:'inline-block', height:1, width:32, background:'var(--grama-menta)' }} />
                 Preguntas frecuentes
               </span>
-              <h2 style={{ fontSize:'var(--t-display)', fontWeight:800, lineHeight:1.15, color:'#043941', margin:0 }}>
+              <h2 style={{ fontSize:'var(--t-display)', fontWeight:800, lineHeight:1.15, color:'var(--grama-oscuro)', margin:0 }}>
                 Todo lo que necesitas<br />
-                <span style={{ color:'#02d47e' }}>saber antes de empezar</span>
+                <span style={{ color:'var(--grama-menta)' }}>saber antes de empezar</span>
               </h2>
             </div>
 
             <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
               {FAQ_ITEMS.map((item, i) => {
-                const faqColors = ['#02d47e','#5b8def','#d4c4fc','#f59e0b','#b8edd0']
+                const faqColors = ['var(--grama-menta)','#5b8def','#d4c4fc','#f59e0b','#b8edd0']
                 const color = faqColors[i % faqColors.length]
                 const isOpen = open === i
                 return (
@@ -870,7 +870,7 @@ export default function Landing() {
                         <span style={{ fontSize:'1rem', fontWeight:800, color:color, lineHeight:1 }}>+</span>
                       </div>
                       <div style={{ flex:1, minWidth:0 }}>
-                        <p style={{ fontSize:'var(--t-body-lg)', fontWeight:800, color:'#043941', margin:0, lineHeight:1.4 }}>{item.q}</p>
+                        <p style={{ fontSize:'var(--t-body-lg)', fontWeight:800, color:'var(--grama-oscuro)', margin:0, lineHeight:1.4 }}>{item.q}</p>
                         {isOpen && (
                           <p style={{ fontSize:'var(--t-body)', color:'rgba(4,57,65,.5)', lineHeight:1.75, margin:'10px 0 0', paddingTop:10, borderTop:`1px solid ${color}20` }}>
                             {item.a}
@@ -886,7 +886,7 @@ export default function Landing() {
 
           {/* CTA card sticky */}
           <div style={{ position:'sticky', top:100 }}>
-            <div style={{ borderRadius:24, overflow:'hidden', background:'linear-gradient(145deg, #043941 0%, #032e34 100%)', boxShadow:'0 20px 56px rgba(4,57,65,.28)', border:'1px solid rgba(2,212,126,.1)', borderTop:'3px solid #f8ee91', position:'relative' }}>
+            <div style={{ borderRadius:24, overflow:'hidden', background:'linear-gradient(145deg, var(--grama-oscuro) 0%, #032e34 100%)', boxShadow:'0 20px 56px rgba(4,57,65,.28)', border:'1px solid rgba(2,212,126,.1)', borderTop:'3px solid #f8ee91', position:'relative' }}>
               {/* Glow fondo */}
               <div style={{ position:'absolute', bottom:-60, right:-60, width:200, height:200, background:'radial-gradient(circle, rgba(2,212,126,.14) 0%, transparent 70%)', pointerEvents:'none' }} />
 
@@ -928,7 +928,7 @@ export default function Landing() {
         <div style={{ position:'absolute', bottom:-80, right:'10%', width:300, height:300, background:'radial-gradient(circle, rgba(2,212,126,.04) 0%, transparent 70%)', pointerEvents:'none' }} />
 
         {/* Banda superior verde */}
-        <div style={{ height:3, background:'linear-gradient(90deg, #02d47e, #b8edd0 50%, #02d47e)' }} />
+        <div style={{ height:3, background:'linear-gradient(90deg, var(--grama-menta), #b8edd0 50%, var(--grama-menta))' }} />
 
         {/* Contenido principal */}
         <div style={{ maxWidth:1100, margin:'0 auto', padding:'4rem 1.5rem 2.5rem', position:'relative', zIndex:1 }}>
@@ -944,8 +944,8 @@ export default function Landing() {
               </p>
               {/* Badge MINEDU */}
               <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(2,212,126,.1)', border:'1px solid rgba(2,212,126,.18)', borderRadius:100, padding:'.35rem .9rem' }}>
-                <span style={{ width:6, height:6, borderRadius:'50%', background:'#02d47e', display:'inline-block', flexShrink:0 }} />
-                <span style={{ fontSize:'var(--t-overline)', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', color:'#02d47e' }}>Programa TSF · MINEDU Perú</span>
+                <span style={{ width:6, height:6, borderRadius:'50%', background:'var(--grama-menta)', display:'inline-block', flexShrink:0 }} />
+                <span style={{ fontSize:'var(--t-overline)', fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', color:'var(--grama-menta)' }}>Programa TSF · MINEDU Perú</span>
               </div>
             </div>
 
@@ -962,7 +962,7 @@ export default function Landing() {
                 ].map(l => (
                   <a key={l.label} href={l.href}
                     style={{ fontSize:'var(--t-body)', color:'rgba(255,255,255,.45)', textDecoration:'none', transition:'color .2s' }}
-                    onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
+                    onMouseEnter={e => (e.currentTarget.style.color = 'var(--grama-menta)')}
                     onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,.45)')}
                   >{l.label}</a>
                 ))}
@@ -976,7 +976,7 @@ export default function Landing() {
                 {talleresConfig.slice(0, 5).map(t => (
                   <a key={t.slug} href={`#talleres`}
                     style={{ fontSize:'var(--t-body)', color:'rgba(255,255,255,.45)', textDecoration:'none', transition:'color .2s', display:'flex', alignItems:'center', gap:6 }}
-                    onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
+                    onMouseEnter={e => (e.currentTarget.style.color = 'var(--grama-menta)')}
                     onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,.45)')}
                   >
                     <span style={{ width:4, height:4, borderRadius:'50%', background:'rgba(2,212,126,.4)', flexShrink:0 }} />
@@ -1002,7 +1002,7 @@ export default function Landing() {
                 </a>
                 <a href="mailto:contacto@grama.pe"
                   style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-body)', color:'rgba(255,255,255,.45)', textDecoration:'none', transition:'color .2s' }}
-                  onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--grama-menta)')}
                   onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,.45)')}
                 >
                   📧 contacto@grama.pe
