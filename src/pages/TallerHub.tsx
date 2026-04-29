@@ -80,17 +80,22 @@ export default function TallerHub() {
             }}>
               {taller.icon ?? '🔧'}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <h1 style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
-                {taller.nombre}
-              </h1>
-              <span style={{
-                background: tallerColor, color: '#fff',
-                fontSize: 10, fontWeight: 800, padding: '2px 8px',
-                borderRadius: 100, letterSpacing: '.05em', flexShrink: 0,
-              }}>
-                T{String(taller.numero).padStart(2, '0')}
-              </span>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
+                <h1 style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
+                  {taller.nombre}
+                </h1>
+                <span style={{
+                  background: tallerColor, color: '#fff',
+                  fontSize: 10, fontWeight: 800, padding: '2px 8px',
+                  borderRadius: 100, letterSpacing: '.05em', flexShrink: 0,
+                }}>
+                  T{String(taller.numero).padStart(2, '0')}
+                </span>
+              </div>
+              <p style={{ fontSize: 11, color: '#94a3b8', margin: 0, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {taller.competencias.slice(0, 3).map(c => c.split(' ').slice(0, 3).join(' ')).join(' · ')}
+              </p>
             </div>
           </div>
 
@@ -150,42 +155,43 @@ export default function TallerHub() {
 
       {/* ══ BANNER "CONTINÚA DONDE LO DEJASTE" ════════════════════════════════ */}
       {!isGeneralEpt && currentMod && (
-        <div style={{ background: 'linear-gradient(135deg, #032e34 0%, #043941 100%)', borderBottom: '1px solid rgba(2,212,126,0.1)' }}>
+        <div style={{ background: 'rgba(2,212,126,0.05)', borderBottom: '1px solid rgba(2,212,126,0.14)', borderLeft: '3px solid #02d47e' }}>
           <div style={{ padding: '14px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
 
             {/* Izquierda */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
               <div style={{
                 width: 44, height: 44, borderRadius: 12, flexShrink: 0,
-                background: `${tallerColor}20`, border: `1.5px solid ${tallerColor}50`,
+                background: 'rgba(2,212,126,0.12)', border: '1.5px solid rgba(2,212,126,0.3)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22,
               }}>
                 {currentMod.icon}
               </div>
               <div style={{ minWidth: 0 }}>
-                <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.14em', textTransform: 'uppercase', color: 'rgba(2,212,126,0.6)', margin: '0 0 3px' }}>
+                <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.14em', textTransform: 'uppercase', color: '#02d47e', margin: '0 0 3px' }}>
                   Continúa donde lo dejaste
                 </p>
-                <p style={{ fontSize: 15, fontWeight: 900, color: '#fff', margin: '0 0 2px', letterSpacing: '-0.01em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <p style={{ fontSize: 15, fontWeight: 900, color: '#043941', margin: '0 0 2px', letterSpacing: '-0.01em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   M{currentMod.numero} — {currentMod.nombre}
                 </p>
-                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.38)', margin: 0 }}>
-                  {currentMod.horasTotal}h · {currentMod.fase} · {currentMod.sesiones.length} sesiones
+                <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
+                  {currentMod.horasTotal}h · {currentMod.fase} · {currentMod.sesiones.length} secciones en curso
                 </p>
               </div>
             </div>
 
             {/* Derecha */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexShrink: 0 }}>
-              <div style={{ textAlign: 'right' }}>
-                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.38)', margin: '0 0 1px', fontWeight: 600 }}>
-                  Progreso M{currentMod.numero}
-                </p>
-                <p style={{ fontSize: 22, fontWeight: 900, color: '#02d47e', margin: 0, lineHeight: 1 }}>
-                  {currentModPct.porcentaje}%
-                </p>
-                <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', margin: '2px 0 0' }}>
-                  {currentModPct.completados} de {currentModPct.total} actividades
+              <div style={{ textAlign: 'right', minWidth: 140 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                  <p style={{ fontSize: 10, fontWeight: 700, color: '#64748b', margin: 0 }}>Progreso M{currentMod.numero}</p>
+                  <p style={{ fontSize: 14, fontWeight: 900, color: '#043941', margin: 0 }}>{currentModPct.porcentaje}%</p>
+                </div>
+                <div style={{ height: 5, background: 'rgba(4,57,65,0.08)', borderRadius: 4 }}>
+                  <div style={{ height: '100%', width: `${currentModPct.porcentaje}%`, background: '#02d47e', borderRadius: 4, transition: 'width .5s ease' }} />
+                </div>
+                <p style={{ fontSize: 10, color: '#94a3b8', margin: '4px 0 0', textAlign: 'right' }}>
+                  {currentModPct.completados} de {currentModPct.total} secciones
                 </p>
               </div>
               <button
@@ -209,52 +215,50 @@ export default function TallerHub() {
       {/* ══ COMPETENCIAS ══════════════════════════════════════════════════════ */}
       {taller.competencias?.length > 0 && (
         <div style={{ background: '#ffffff', borderBottom: '1px solid rgba(4,57,65,0.06)' }}>
-          <div style={{ padding: '28px 32px 32px', display: 'flex', gap: 48, alignItems: 'start', flexWrap: 'wrap' }}>
+          <div style={{ padding: '24px 32px 28px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'start' }}>
 
-            {/* Texto principal */}
-            <div style={{ flex: 1, minWidth: 260 }}>
-              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:12 }}>
-                <span style={{ display:'inline-block', height:1, width:24, background:'#02d47e' }} />
+            {/* Izquierda: competencias como lista */}
+            <div>
+              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#02d47e', margin: '0 0 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ display: 'inline-block', height: 1, width: 20, background: '#02d47e' }} />
                 Tu valor como docente
-              </span>
-              <p style={{ fontSize: 15, fontWeight: 500, color: 'rgba(4,57,65,0.75)', lineHeight: 1.8, margin: '0 0 14px', maxWidth: 520 }}>
-                A través de esta ruta aprenderás a <strong style={{ color: '#043941', fontWeight: 800 }}>conocer, instalar y operar</strong> el equipamiento de tu taller de {taller.nombreCorto.toLowerCase()}.
-                {' '}Pasarás del dominio técnico al pedagógico — diseñando sesiones reales y evaluando las competencias de tus estudiantes con criterio.
               </p>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '7px 14px', borderRadius: 100, background: 'rgba(4,57,65,0.04)', border: '1px solid rgba(4,57,65,0.1)' }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: tallerColor, flexShrink: 0 }} />
-                <span style={{ fontSize: 12, fontWeight: 700, color: '#043941' }}>Incluye repositorio completo de bienes, fichas y manuales del taller</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {taller.competencias.map((comp, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: tallerColor, flexShrink: 0, marginTop: 5 }} />
+                    <span style={{ fontSize: 13, fontWeight: 600, color: '#043941', lineHeight: 1.5 }}>{comp}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Pilares pequeños */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flexShrink: 0 }}>
-              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:4 }}>
-                <span style={{ display:'inline-block', height:1, width:24, background:'#02d47e' }} />
+            {/* Derecha: logros numerados */}
+            <div>
+              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#02d47e', margin: '0 0 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ display: 'inline-block', height: 1, width: 20, background: '#02d47e' }} />
                 Lo que lograrás
-              </span>
-              {[
-                { n: '01', label: 'Dominio del equipamiento' },
-                { n: '02', label: 'Diseño de sesiones técnicas' },
-                { n: '03', label: 'Evaluación por competencias' },
-                { n: '04', label: 'Certificación docente MINEDU' },
-              ].map(p => (
-                <div key={p.n} style={{
-                  display: 'flex', alignItems: 'center', gap: 10,
-                  padding: '8px 14px 8px 10px',
-                  borderRadius: 10,
-                  background: `${tallerColor}08`,
-                  border: `1px solid ${tallerColor}20`,
-                }}>
-                  <span style={{
-                    fontSize: 10, fontWeight: 800, color: '#fff',
-                    background: tallerColor, borderRadius: 6,
-                    width: 22, height: 22, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    flexShrink: 0, letterSpacing: '0.02em',
-                  }}>{p.n}</span>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: '#043941' }}>{p.label}</span>
-                </div>
-              ))}
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {[
+                  'Dominio del equipamiento',
+                  'Diseño de sesiones técnicas',
+                  'Evaluación por competencias',
+                  'Certificación docente MINEDU',
+                ].map((label, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 14px 9px 10px', borderRadius: 10, background: 'rgba(4,57,65,0.03)', border: '1px solid rgba(4,57,65,0.07)' }}>
+                    <span style={{
+                      fontSize: 10, fontWeight: 800, color: '#fff',
+                      background: '#043941', borderRadius: 6,
+                      width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      flexShrink: 0, letterSpacing: '0.02em',
+                    }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: '#043941' }}>{label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
           </div>
@@ -294,15 +298,20 @@ export default function TallerHub() {
               <div>
                 {modulosLXP.map((m, i) => {
                   const estado = getEstadoModuloLXP(m.id)
-                  const pct    = getModuloProgreso(slug, m.numero).porcentaje
+                  const prog   = getModuloProgreso(slug, m.numero)
+                  const pct    = prog.porcentaje
                   const isCurrent = m.id === currentMod?.id
-                  const bloqueador = i > 0 ? modulosLXP[i - 1] : null
+                  const tieneQuizBloqueante = m.sesiones.some(s => s.contenidos.some(c => c.bloqueaSiguiente))
 
-                  // badge config
+                  // bloqueador: primer módulo anterior que tenga quiz bloqueante
+                  const bloqueadorQuiz = i > 0
+                    ? modulosLXP.slice(0, i).reverse().find(prev => prev.sesiones.some(s => s.contenidos.some(c => c.bloqueaSiguiente)))
+                    : null
+
                   const badge = {
                     completado: { label: '✓ Completado', bg: 'rgba(2,212,126,0.1)',  color: '#059669' },
-                    en_curso:   { label: '• En curso',   bg: `${tallerColor}18`,      color: tallerColor },
-                    disponible: { label: '◦ Disponible', bg: 'rgba(14,165,233,0.1)', color: '#0ea5e9' },
+                    en_curso:   { label: '• En curso',   bg: 'rgba(4,57,65,0.08)',   color: '#043941' },
+                    disponible: { label: '◦ Disponible', bg: 'rgba(14,165,233,0.1)', color: '#0284c7' },
                     bloqueado:  { label: '🔒 Bloqueado', bg: 'rgba(4,57,65,0.05)',   color: 'rgba(4,57,65,0.35)' },
                   }[estado]
 
@@ -312,58 +321,62 @@ export default function TallerHub() {
                       onClick={() => estado !== 'bloqueado' && navigate(`/taller/${slug}/ruta/modulo/${m.numero}`)}
                       style={{
                         borderBottom: i < modulosLXP.length - 1 ? '1px solid rgba(4,57,65,0.05)' : 'none',
-                        padding: '12px 24px',
-                        background: isCurrent ? `${tallerColor}06` : 'transparent',
+                        padding: '11px 24px',
+                        background: isCurrent ? 'rgba(2,212,126,0.04)' : 'transparent',
                         cursor: estado !== 'bloqueado' ? 'pointer' : 'default',
                         transition: 'background .16s',
                       }}
-                      onMouseEnter={e => { if (estado !== 'bloqueado') (e.currentTarget as HTMLElement).style.background = `${tallerColor}0a` }}
-                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = isCurrent ? `${tallerColor}06` : 'transparent' }}
+                      onMouseEnter={e => { if (estado !== 'bloqueado') (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.03)' }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = isCurrent ? 'rgba(2,212,126,0.04)' : 'transparent' }}
                     >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                         {/* Icono */}
                         <div style={{
-                          width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          fontSize: 18,
+                          width: 34, height: 34, borderRadius: 9, flexShrink: 0,
+                          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17,
                           background: estado === 'completado' ? 'rgba(2,212,126,0.12)'
-                            : estado === 'en_curso'  ? `${tallerColor}18`
-                            : estado === 'disponible'? 'rgba(14,165,233,0.1)'
-                            : 'rgba(4,57,65,0.05)',
-                          opacity: estado === 'bloqueado' ? 0.45 : 1,
+                            : estado === 'en_curso'   ? 'rgba(4,57,65,0.08)'
+                            : estado === 'disponible' ? 'rgba(14,165,233,0.1)'
+                            : 'rgba(4,57,65,0.04)',
+                          opacity: estado === 'bloqueado' ? 0.4 : 1,
                         }}>
                           {m.icon}
                         </div>
 
-                        {/* Nombre + meta */}
+                        {/* Centro: nombre + barra + meta */}
                         <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 2 }}>
-                            <span style={{ fontSize: 11, fontWeight: 800, color: estado === 'bloqueado' ? 'rgba(4,57,65,0.3)' : '#02d47e', fontVariantNumeric: 'tabular-nums' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 3 }}>
+                            <span style={{ fontSize: 11, fontWeight: 800, color: estado === 'bloqueado' ? 'rgba(4,57,65,0.25)' : '#02d47e' }}>
                               M{m.numero}
                             </span>
-                            <span style={{ fontSize: 14, fontWeight: 700, color: estado === 'bloqueado' ? 'rgba(4,57,65,0.4)' : '#043941', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            <span style={{ fontSize: 13, fontWeight: 700, color: estado === 'bloqueado' ? 'rgba(4,57,65,0.35)' : '#043941', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                               {m.nombre}
                             </span>
-                            {isCurrent && (
-                              <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: tallerColor, flexShrink: 0 }}>
+                            {estado === 'en_curso' && tieneQuizBloqueante && (
+                              <span style={{ fontSize: 9, fontWeight: 800, color: '#d97706', background: 'rgba(217,119,6,0.1)', padding: '2px 7px', borderRadius: 100, flexShrink: 0 }}>
                                 Quiz requerido
                               </span>
                             )}
                           </div>
-                          {estado === 'bloqueado' && bloqueador ? (
-                            <p style={{ fontSize: 11, color: '#ef4444', margin: 0 }}>
-                              Requiere completar {bloqueador.nombre} al 100%
+                          {/* Barra de progreso inline */}
+                          {estado !== 'bloqueado' ? (
+                            <div style={{ height: 3, background: 'rgba(4,57,65,0.07)', borderRadius: 2, marginBottom: 3 }}>
+                              <div style={{ height: '100%', width: `${pct}%`, background: estado === 'completado' ? '#02d47e' : '#02d47e', borderRadius: 2, transition: 'width .4s ease' }} />
+                            </div>
+                          ) : null}
+                          {estado === 'bloqueado' && bloqueadorQuiz ? (
+                            <p style={{ fontSize: 11, color: '#ef4444', margin: 0, fontStyle: 'italic' }}>
+                              Requiere aprobar Quiz de {bloqueadorQuiz.nombre.split(' ').slice(0, 3).join(' ')} con 80%
                             </p>
                           ) : (
                             <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
-                              {m.horasTotal}h · {m.sesiones.length} sesiones
-                              {pct > 0 && pct < 100 ? ` · ${pct}%` : ''}
+                              {m.horasTotal}h · {prog.completados} de {prog.total} secciones{pct > 0 && pct < 100 ? ` · ${pct}%` : ''}
                             </p>
                           )}
                         </div>
 
-                        {/* Badge + horas */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+                        {/* Badge + horas + chevron */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
                           <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600 }}>{m.horasTotal}h</span>
                           <span style={{
                             fontSize: 10, fontWeight: 700, padding: '3px 9px', borderRadius: 100,
@@ -371,6 +384,9 @@ export default function TallerHub() {
                           }}>
                             {badge.label}
                           </span>
+                          {estado !== 'bloqueado' && (
+                            <span style={{ fontSize: 12, color: 'rgba(4,57,65,0.25)' }}>›</span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -430,17 +446,17 @@ export default function TallerHub() {
 
             {/* ② Próxima sesión */}
             {proximaSesion && (
-              <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.06)', padding: '18px 20px' }}>
+              <div style={{ background: '#fffbeb', borderRadius: 18, border: '1px solid #fde68a', boxShadow: '0 2px 12px rgba(251,191,36,0.1)', padding: '18px 20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
-                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#f97316', flexShrink: 0, boxShadow: '0 0 0 3px rgba(249,115,22,0.2)' }} />
-                  <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: '#f97316', margin: 0 }}>
+                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#f59e0b', flexShrink: 0, boxShadow: '0 0 0 3px rgba(245,158,11,0.25)' }} />
+                  <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: '#b45309', margin: 0 }}>
                     Próxima sesión · en {diasParaSesion(proximaSesion.fecha)}d
                   </p>
                 </div>
-                <p style={{ fontSize: 14, fontWeight: 800, color: '#043941', margin: '0 0 4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <p style={{ fontSize: 14, fontWeight: 800, color: '#78350f', margin: '0 0 4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {proximaSesion.titulo}
                 </p>
-                <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 14px' }}>
+                <p style={{ fontSize: 11, color: '#92400e', opacity: 0.7, margin: '0 0 14px' }}>
                   {formatFechaSesion(proximaSesion.fecha)} · {formatHoraSesion(proximaSesion.fecha)} · {proximaSesion.duracionMin} min
                 </p>
                 {proximaSesion.link ? (
@@ -448,12 +464,12 @@ export default function TallerHub() {
                     href={proximaSesion.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%', background: '#f97316', color: '#fff', border: 'none', borderRadius: 11, padding: '10px', fontSize: 13, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'none', transition: 'opacity .18s', boxSizing: 'border-box' }}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%', background: '#043941', color: '#02d47e', border: 'none', borderRadius: 11, padding: '10px', fontSize: 13, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'none', transition: 'opacity .18s', boxSizing: 'border-box' }}
                   >
-                    <ExternalLink size={13} /> Unirse a la sesión
+                    <ExternalLink size={13} /> Unirse a la sesión →
                   </a>
                 ) : (
-                  <p style={{ fontSize: 11, textAlign: 'center', color: '#94a3b8', margin: 0 }}>Enlace disponible próximamente</p>
+                  <p style={{ fontSize: 11, textAlign: 'center', color: '#92400e', opacity: 0.5, margin: 0 }}>Enlace disponible próximamente</p>
                 )}
               </div>
             )}
