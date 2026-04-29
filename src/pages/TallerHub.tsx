@@ -1,7 +1,11 @@
 // src/pages/TallerHub.tsx
 import { useNavigate } from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
-import { Package, ArrowRight, ExternalLink, GraduationCap, FileText, Users } from 'lucide-react'
+import { Package, ArrowRight, ExternalLink, GraduationCap, FileText, Users, Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench } from 'lucide-react'
+
+const TALLER_ICON_MAP: Record<string, React.ElementType> = {
+  Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench, Package,
+}
 import { useTaller } from '@/hooks/useTaller'
 import { useProgress } from '@/contexts/ProgressContext'
 import { modulosLXP } from '@/data/modulosLXP'
@@ -76,9 +80,9 @@ export default function TallerHub() {
             <div style={{
               width: 52, height: 52, borderRadius: 14, flexShrink: 0,
               background: `${tallerColor}18`, border: `1.5px solid ${tallerColor}30`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              {taller.icon ?? '🔧'}
+              {(() => { const I = TALLER_ICON_MAP[taller.icon] ?? Package; return <I size={24} style={{ color: tallerColor }} /> })()}
             </div>
             <div style={{ minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>

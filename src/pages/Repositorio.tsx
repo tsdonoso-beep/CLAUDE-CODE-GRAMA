@@ -3,8 +3,13 @@ import { useState, useMemo, useEffect } from 'react'
 import {
   Search, X, SlidersHorizontal, Package, Wrench as WrenchLucide, Sofa, BookOpen,
   HardHat, FileText, Video, PlayCircle, ChevronRight, BookMarked,
-  Wrench, GraduationCap,
+  Wrench, GraduationCap, Car, Scissors, ChefHat, Hammer, Monitor, Cpu,
+  UtensilsCrossed, Zap,
 } from 'lucide-react'
+
+const TALLER_ICON_MAP: Record<string, React.ElementType> = {
+  Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench: WrenchLucide, Package,
+}
 import { useTaller } from '@/hooks/useTaller'
 import { RepositorioCard } from '@/components/lxp/RepositorioCard'
 import { useNavigate, useSearchParams } from 'react-router-dom'
@@ -193,8 +198,8 @@ export default function Repositorio() {
         <div style={{ padding: '14px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
           {/* Taller context */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
-            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: `${tallerColor}18`, border: `1.5px solid ${tallerColor}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>
-              {taller.icon ?? '🔧'}
+            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: `${tallerColor}18`, border: `1.5px solid ${tallerColor}30`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {(() => { const I = TALLER_ICON_MAP[taller.icon] ?? Package; return <I size={20} style={{ color: tallerColor }} /> })()}
             </div>
             <div style={{ minWidth: 0 }}>
               <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 2px', fontWeight: 600 }}>{taller.nombre}</p>
