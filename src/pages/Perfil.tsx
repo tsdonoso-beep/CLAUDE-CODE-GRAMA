@@ -283,30 +283,6 @@ export default function Perfil() {
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif" }}>
 
-      {/* Hero */}
-      <div
-        className="relative overflow-hidden"
-        style={{ background: 'linear-gradient(135deg,#043941 0%,#055c6a 60%,#043941 100%)' }}
-      >
-        <div className="absolute inset-0 grama-pattern opacity-20" />
-        <div className="relative z-10 px-8 py-6">
-          <p className="text-[11px] font-bold uppercase tracking-widest mb-1" style={{ color: 'rgba(2,212,126,0.65)' }}>
-            {greeting}
-          </p>
-          <h1 className="text-xl font-black leading-tight" style={{ color: '#d2ffe1', letterSpacing: '-0.02em' }}>
-            {displayName}
-          </h1>
-          <p className="text-xs mt-1.5 font-medium" style={{ color: 'rgba(255,255,255,0.45)' }}>
-            Docente EPT · {ieSubhead}
-          </p>
-        </div>
-        {/* Franja de acento — conecta hero con el contenido */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-0.5"
-          style={{ background: `linear-gradient(90deg, ${primaryAccent}, ${primaryAccent}00 70%)` }}
-        />
-      </div>
-
         {/* Content */}
         <style>{`@media(min-width:1280px){.perfil-content{display:grid;grid-template-columns:1fr 340px;grid-template-areas:"cards calendar";gap:20px;align-items:start}}`}</style>
         <div className="perfil-content flex-1 p-6 space-y-5 xl:space-y-0">

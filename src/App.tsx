@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { lazy, Suspense } from "react"
 import { AppShell } from "@/components/layout/AppShell"
+import { PerfilShell } from "@/components/layout/PerfilShell"
 import { RequireAuth } from "@/components/RequireAuth"
 import { RequireAdmin } from "@/components/RequireAdmin"
 import { AuthProvider } from "@/contexts/AuthContext"
@@ -75,11 +76,15 @@ const App = () => (
                   {/* Hub: sin sidebar */}
                   <Route path="/hub" element={wrap(Bienvenida)} />
 
-                  {/* App con sidebar — incluye perfil */}
+                  {/* Perfil — sin sidebar */}
+                  <Route element={<PerfilShell />}>
+                    <Route path="/perfil"        element={wrap(Perfil)} />
+                    <Route path="/perfil/logros" element={wrap(MisLogros)} />
+                    <Route path="/perfil/ayuda"  element={wrap(CentroAyuda)} />
+                  </Route>
+
+                  {/* App con sidebar */}
                   <Route element={<AppShell />}>
-                    <Route path="/perfil"                              element={wrap(Perfil)} />
-                    <Route path="/perfil/logros"                       element={wrap(MisLogros)} />
-                    <Route path="/perfil/ayuda"                        element={wrap(CentroAyuda)} />
                     <Route path="/taller/:slug"                        element={wrap(TallerHub)} />
                     <Route path="/taller/:slug/ruta"                   element={wrap(RutaAprendizaje)} />
                     <Route path="/taller/:slug/ruta/modulo/:num"       element={wrap(ModuloDetalle)} />
