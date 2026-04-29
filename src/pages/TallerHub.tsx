@@ -7,31 +7,6 @@ import { useProgress } from '@/contexts/ProgressContext'
 import { modulosLXP } from '@/data/modulosLXP'
 import { getBienesByTaller } from '@/data/bienesData'
 import { getProximaSesion, formatFechaSesion, formatHoraSesion, diasParaSesion } from '@/data/sesionesLXP'
-import {
-  SvgAutomotriz,
-  SvgEbanisteria,
-  SvgElectricidad,
-  SvgElectronica,
-  SvgIndustriaAlimentaria,
-  SvgCocinaReposteria,
-  SvgConstruccionesMetalicas,
-  SvgEptGeneral,
-  SvgIndustriaVestido,
-  SvgComputacion,
-} from '@/components/lxp/TallerCardDocente'
-
-const TALLER_SVG: Record<string, React.ReactNode> = {
-  'mecanica-automotriz':      <SvgAutomotriz />,
-  'ebanisteria':              <SvgEbanisteria />,
-  'electricidad':             <SvgElectricidad />,
-  'electronica':              <SvgElectronica />,
-  'industria-alimentaria':    <SvgIndustriaAlimentaria />,
-  'cocina-reposteria':        <SvgCocinaReposteria />,
-  'construcciones-metalicas': <SvgConstruccionesMetalicas />,
-  'taller-general-ept':       <SvgEptGeneral />,
-  'industria-vestido':        <SvgIndustriaVestido />,
-  'computacion-informatica':  <SvgComputacion />,
-}
 
 // ── Scroll reveal ─────────────────────────────────────────────────────────────
 function useReveal(threshold = 0.12) {
@@ -47,52 +22,6 @@ function useReveal(threshold = 0.12) {
   return { ref, visible }
 }
 
-// ── Shapes geométricas por categoría — mismo lenguaje que Perfil hero ─────────
-function TallerHeroShapes({ slug, color }: { slug: string; color: string }) {
-  const p = { position: 'absolute' as const, pointerEvents: 'none' as const }
-  const isIndustrial = ['mecanica-automotriz','electricidad','electronica','computacion-informatica'].includes(slug)
-  const isArtesanal  = ['ebanisteria','construcciones-metalicas','industria-alimentaria'].includes(slug)
-  // resto → servicios
-
-  return (
-    <>
-      {/* Base compartido — triángulo grande derecha */}
-      <div style={{ ...p, top:-220, right:'-4%', width:520, height:520, background: color, clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.11, animation:'heroFa 16s ease-in-out infinite' }} />
-      <div style={{ ...p, top:-90, right:'3%', width:240, height:240, background:'#0b4a56', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.2, animation:'heroFa 16s ease-in-out infinite .5s' }} />
-      <div style={{ ...p, top:'20%', right:-140, width:360, height:300, background: color, clipPath:'polygon(100% 50%,0% 0%,0% 100%)', opacity:.08, animation:'heroFc 14s ease-in-out infinite .5s' }} />
-
-      {isIndustrial && <>
-        {/* Barra vertical + cruz giratoria */}
-        <div style={{ ...p, top:-55, right:'28%', width:90, height:240, background: color, borderRadius:'0 0 45px 45px', opacity:.18, animation:'heroFb 12s ease-in-out infinite 1s' }} />
-        <div style={{ ...p, bottom:'8%', right:'6%', width:52, height:52, background: color, borderRadius:8, opacity:.26, animation:'heroFf 9s ease-in-out infinite 1.2s' }} />
-        <div style={{ ...p, bottom:'20%', right:'4%', width:44, height:44, background:'#02d47e',
-          clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)',
-          animation:'heroSpin 20s linear infinite', opacity:.55 }} />
-      </>}
-
-      {isArtesanal && <>
-        {/* Flecha lateral + diamante */}
-        <div style={{ ...p, top:'38%', right:-80, width:190, height:270, background: color, clipPath:'polygon(0% 50%,100% 0%,100% 100%)', opacity:.12, animation:'heroFe 13s ease-in-out infinite 2s' }} />
-        <div style={{ ...p, bottom:-70, right:'30%', width:150, height:150, background: color, transform:'rotate(45deg)', borderRadius:16, opacity:.18, animation:'heroFd 15s ease-in-out infinite 1s' }} />
-        <div style={{ ...p, top:'10%', right:'15%', width:48, height:48, background:'#f8ee91', borderRadius:6, opacity:.28, animation:'heroFf 11s ease-in-out infinite 2s' }} />
-      </>}
-
-      {!isIndustrial && !isArtesanal && <>
-        {/* Servicios: barras rítmicas + círculo */}
-        <div style={{ ...p, top:-60, right:'27%', width:76, height:250, background: color, borderRadius:'0 0 38px 38px', opacity:.2, animation:'heroFb 11s ease-in-out infinite 1s' }} />
-        <div style={{ ...p, top:-30, right:'20%', width:48, height:175, background:'#f8ee91', borderRadius:'0 0 24px 24px', opacity:.2, animation:'heroFb 14s ease-in-out infinite 2s' }} />
-        <div style={{ ...p, top:'12%', right:'8%', width:40, height:40, background: color, borderRadius:'50%', opacity:.2, animation:'heroFd 10s ease-in-out infinite .5s' }} />
-      </>}
-    </>
-  )
-}
-
-// ── Splitting de nombre: primera palabra + resto ───────────────────────────────
-function splitNombre(nombre: string) {
-  const idx = nombre.indexOf(' ')
-  if (idx === -1) return { head: '', tail: nombre }
-  return { head: nombre.slice(0, idx), tail: nombre.slice(idx + 1) }
-}
 
 export default function TallerHub() {
   const { taller, slug } = useTaller()
@@ -110,7 +39,6 @@ export default function TallerHub() {
   const totalHoras   = modulosLXP.reduce((a, m) => a + m.horasTotal, 0)
   const isGeneralEpt = slug === 'taller-general-ept'
   const tallerColor  = `hsl(${taller.color})`
-  const { head, tail } = splitNombre(taller.nombre)
 
   // Módulo activo: primero en_curso, sino primer disponible
   const currentMod =
@@ -135,16 +63,6 @@ export default function TallerHub() {
       }
     }
   }
-
-  const bienesporZona = taller.zonas.slice(0, 3).map(z => {
-    const items = todosLos
-      .filter(b => b.zona?.toLowerCase().includes(z.id.toLowerCase()) || b.zona?.toLowerCase().includes(z.nombre.toLowerCase().split(' ').pop()!.toLowerCase()))
-      .filter(b => b.tipo === 'EQUIPOS' || b.tipo === 'HERRAMIENTAS')
-      .slice(0, 4)
-    return { zona: z.nombre, items }
-  }).filter(z => z.items.length > 0)
-
-  const bienesFallback = todosLos.filter(b => b.tipo === 'EQUIPOS').slice(0, 8)
 
   return (
     <div style={{ background: '#f0faf5', fontFamily: 'Manrope, sans-serif' }}>
