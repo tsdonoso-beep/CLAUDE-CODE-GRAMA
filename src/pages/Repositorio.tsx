@@ -197,6 +197,7 @@ export default function Repositorio() {
 
   if (!taller) return null
 
+  const tallerColor = `hsl(${taller.color})`
   const hayFiltros = busqueda || filtroZona || filtroArea || filtroSubarea || filtroTipo
   const activeCount = [filtroZona, filtroArea, filtroSubarea, filtroTipo].filter(Boolean).length
 
@@ -218,6 +219,42 @@ export default function Repositorio() {
   return (
     <div style={{ background: 'var(--grama-bg)', minHeight: '100vh' }}>
 
+      {/* ══ WHITE TOP BAR ════════════════════════════════════════════════════ */}
+      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.08)' }}>
+        <div style={{ padding: '14px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
+          {/* Taller context */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: `${tallerColor}18`, border: `1.5px solid ${tallerColor}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>
+              {taller.icon ?? '🔧'}
+            </div>
+            <div style={{ minWidth: 0 }}>
+              <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 2px', fontWeight: 600 }}>{taller.nombre}</p>
+              <h1 style={{ fontSize: 18, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em' }}>Repositorio de Bienes</h1>
+            </div>
+          </div>
+          {/* Stats + nav */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexShrink: 0 }}>
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{totalBienes}</p>
+              <p style={{ fontSize: 10, color: '#94a3b8', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>bienes</p>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{zonas.length}</p>
+              <p style={{ fontSize: 10, color: '#94a3b8', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>zonas</p>
+            </div>
+            <div style={{ width: 1, height: 32, background: 'rgba(4,57,65,0.08)' }} />
+            <button
+              onClick={() => navigate(`/taller/${slug}`)}
+              style={{ background: 'none', color: 'rgba(4,57,65,0.55)', border: '1.5px solid rgba(4,57,65,0.13)', borderRadius: 12, padding: '9px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .18s' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(4,57,65,0.05)'; e.currentTarget.style.color = '#043941' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(4,57,65,0.55)' }}
+            >
+              ← Hub del taller
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
       <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg,#043941 0%,#045f6c 55%,rgba(0,193,110,0.1) 100%)' }}>
         <div className="absolute inset-0 grama-pattern opacity-20" />
@@ -236,15 +273,7 @@ export default function Repositorio() {
           <Tangram />
         </div>
 
-        <div className="relative px-8 pt-10 pb-14">
-          <h1 className="font-extrabold leading-tight mb-2"
-            style={{ fontSize: 'clamp(1.5rem,2.8vw,2.2rem)', letterSpacing: '-0.02em', color: '#ffffff' }}>
-            Repositorio de Bienes
-          </h1>
-          <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.6)' }}>
-            {totalBienes} bienes catalogados · {zonas.length} zonas
-          </p>
-
+        <div className="relative px-8 pt-7 pb-10">
           {/* 1. TABS — primero */}
           <div className="flex gap-2 mb-5">
             {([
@@ -257,8 +286,8 @@ export default function Repositorio() {
                 onClick={() => setTab(t.id)}
                 className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all"
                 style={{
-                  background: tab === t.id ? '#ffffff' : 'rgba(255,255,255,0.1)',
-                  color:      tab === t.id ? '#043941' : 'rgba(255,255,255,0.6)',
+                  background: tab === t.id ? tallerColor : 'rgba(255,255,255,0.1)',
+                  color:      tab === t.id ? '#043941'   : 'rgba(255,255,255,0.7)',
                   border: tab === t.id ? 'none' : '1px solid rgba(255,255,255,0.12)',
                 }}
               >
@@ -271,16 +300,16 @@ export default function Repositorio() {
           {/* 2. BUSCADOR — segundo */}
           {tab === 'bienes' && (
             <div className="relative max-w-xl mb-4">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#02d47e' }} />
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: tallerColor }} />
               <input
                 type="text"
                 placeholder="Busca por nombre, marca, modelo o código…"
                 value={busqueda}
                 onChange={e => setBusqueda(e.target.value)}
                 className="w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm font-medium outline-none"
-                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(2,212,126,0.3)' }}
-                onFocus={e => (e.target.style.borderColor = '#02d47e')}
-                onBlur={e => (e.target.style.borderColor = 'rgba(2,212,126,0.3)')}
+                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(255,255,255,0.18)' }}
+                onFocus={e => (e.target.style.borderColor = tallerColor)}
+                onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.18)')}
               />
               {busqueda && (
                 <button onClick={() => setBusqueda('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }}>
@@ -292,16 +321,16 @@ export default function Repositorio() {
 
           {tab === 'manuales' && (
             <div className="relative max-w-xl mb-4">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#02d47e' }} />
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: tallerColor }} />
               <input
                 type="text"
                 placeholder="Busca manuales por nombre o zona…"
                 value={busquedaManual}
                 onChange={e => setBusquedaManual(e.target.value)}
                 className="w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm font-medium outline-none"
-                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(2,212,126,0.3)' }}
-                onFocus={e => (e.target.style.borderColor = '#02d47e')}
-                onBlur={e => (e.target.style.borderColor = 'rgba(2,212,126,0.3)')}
+                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(255,255,255,0.18)' }}
+                onFocus={e => (e.target.style.borderColor = tallerColor)}
+                onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.18)')}
               />
               {busquedaManual && (
                 <button onClick={() => setBusquedaManual('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }}>
@@ -313,16 +342,16 @@ export default function Repositorio() {
 
           {tab === 'videos' && (
             <div className="relative max-w-xl mb-4">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#02d47e' }} />
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: tallerColor }} />
               <input
                 type="text"
                 placeholder="Busca videos por nombre o zona…"
                 value={busquedaVideo}
                 onChange={e => setBusquedaVideo(e.target.value)}
                 className="w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm font-medium outline-none"
-                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(2,212,126,0.3)' }}
-                onFocus={e => (e.target.style.borderColor = '#02d47e')}
-                onBlur={e => (e.target.style.borderColor = 'rgba(2,212,126,0.3)')}
+                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(255,255,255,0.18)' }}
+                onFocus={e => (e.target.style.borderColor = tallerColor)}
+                onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.18)')}
               />
               {busquedaVideo && (
                 <button onClick={() => setBusquedaVideo('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }}>
@@ -339,9 +368,9 @@ export default function Repositorio() {
                 onClick={() => setFiltroTipo('')}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
                 style={{
-                  background: !filtroTipo ? '#02d47e' : 'rgba(255,255,255,0.08)',
+                  background: !filtroTipo ? tallerColor : 'rgba(255,255,255,0.08)',
                   color: !filtroTipo ? '#043941' : 'rgba(255,255,255,0.7)',
-                  border: `1.5px solid ${!filtroTipo ? '#02d47e' : 'rgba(255,255,255,0.12)'}`,
+                  border: `1.5px solid ${!filtroTipo ? tallerColor : 'rgba(255,255,255,0.12)'}`,
                 }}
               >
                 Todos
@@ -353,9 +382,9 @@ export default function Repositorio() {
                   onClick={() => setFiltroTipo(filtroTipo === tipo ? '' : tipo)}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
                   style={{
-                    background: filtroTipo === tipo ? '#02d47e' : 'rgba(255,255,255,0.08)',
+                    background: filtroTipo === tipo ? tallerColor : 'rgba(255,255,255,0.08)',
                     color: filtroTipo === tipo ? '#043941' : 'rgba(255,255,255,0.7)',
-                    border: `1.5px solid ${filtroTipo === tipo ? '#02d47e' : 'rgba(255,255,255,0.12)'}`,
+                    border: `1.5px solid ${filtroTipo === tipo ? tallerColor : 'rgba(255,255,255,0.12)'}`,
                   }}
                 >
                   <Icon size={11} />
@@ -369,8 +398,8 @@ export default function Repositorio() {
           {tab === 'manuales' && (
             <div className="flex flex-wrap gap-2 pb-5">
               {([
-                { id: 'todos',         label: 'Todos',         count: conteos.total,         color: '#02d47e' },
-                { id: 'uso',           label: 'Uso',           count: conteos.uso,           color: '#02d47e' },
+                { id: 'todos',         label: 'Todos',         count: conteos.total,         color: tallerColor },
+                { id: 'uso',           label: 'Uso',           count: conteos.uso,           color: tallerColor },
                 { id: 'mantenimiento', label: 'Mantenimiento', count: conteos.mantenimiento, color: '#045f6c' },
                 { id: 'pedagogico',    label: 'Pedagógico',    count: conteos.pedagogico,    color: '#043941' },
               ] as const).map(f => (
@@ -380,7 +409,7 @@ export default function Repositorio() {
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
                   style={{
                     background: filtroManual === f.id ? f.color : 'rgba(255,255,255,0.08)',
-                    color: filtroManual === f.id ? '#fff' : 'rgba(255,255,255,0.65)',
+                    color: filtroManual === f.id ? '#043941' : 'rgba(255,255,255,0.65)',
                     border: `1.5px solid ${filtroManual === f.id ? f.color : 'rgba(255,255,255,0.12)'}`,
                   }}
                 >
@@ -410,7 +439,7 @@ export default function Repositorio() {
                 className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-all"
                 style={{
                   background: showFiltros || activeCount > 0 ? '#043941' : '#f0fdf8',
-                  color: showFiltros || activeCount > 0 ? '#02d47e' : '#043941',
+                  color: showFiltros || activeCount > 0 ? tallerColor : '#043941',
                   border: '1.5px solid', borderColor: showFiltros || activeCount > 0 ? '#043941' : '#d1fae5',
                 }}
               >
@@ -418,7 +447,7 @@ export default function Repositorio() {
                 Filtros
                 {activeCount > 0 && (
                   <span className="w-4 h-4 rounded-full text-[10px] font-extrabold flex items-center justify-center"
-                    style={{ background: '#02d47e', color: '#043941' }}>
+                    style={{ background: tallerColor, color: '#043941' }}>
                     {activeCount}
                   </span>
                 )}
@@ -432,7 +461,7 @@ export default function Repositorio() {
                   className="shrink-0 px-3 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap"
                   style={{
                     background: filtroZona === z ? '#043941' : '#f0fdf8',
-                    color: filtroZona === z ? '#02d47e' : '#045f6c',
+                    color: filtroZona === z ? tallerColor : '#045f6c',
                     border: '1.5px solid', borderColor: filtroZona === z ? '#043941' : '#d1fae5',
                   }}
                 >
@@ -505,8 +534,8 @@ export default function Repositorio() {
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-20">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: '#e0fef3' }}>
-                  <Search size={26} style={{ color: '#02d47e' }} />
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: `${tallerColor}18` }}>
+                  <Search size={26} style={{ color: tallerColor }} />
                 </div>
                 <p className="text-base font-bold mb-1" style={{ color: '#043941' }}>Sin resultados</p>
                 <button onClick={resetFiltros} className="mt-4 px-5 py-2.5 rounded-xl text-sm font-bold text-white" style={{ background: '#043941' }}>
