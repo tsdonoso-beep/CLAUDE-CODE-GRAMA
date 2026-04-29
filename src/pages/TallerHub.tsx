@@ -1,8 +1,9 @@
 // src/pages/TallerHub.tsx
 import { useNavigate } from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
-import { BookOpen, Package, ChevronRight, Clock, Award, ArrowRight } from 'lucide-react'
+import { Package, ArrowRight } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
+import { useProgress } from '@/contexts/ProgressContext'
 import { modulosLXP } from '@/data/modulosLXP'
 import { getBienesByTaller } from '@/data/bienesData'
 import {
@@ -95,6 +96,7 @@ function splitNombre(nombre: string) {
 export default function TallerHub() {
   const { taller, slug } = useTaller()
   const navigate = useNavigate()
+  const { getEstadoModuloLXP, getModuloProgreso } = useProgress()
 
   const compHeaderReveal = useReveal()
   const compGridReveal   = useReveal(0.08)
@@ -103,11 +105,18 @@ export default function TallerHub() {
 
   if (!taller || !slug) return null
 
-  const todosLos    = getBienesByTaller(slug)
-  const totalHoras  = modulosLXP.reduce((a, m) => a + m.horasTotal, 0)
+  const todosLos     = getBienesByTaller(slug)
+  const totalHoras   = modulosLXP.reduce((a, m) => a + m.horasTotal, 0)
   const isGeneralEpt = slug === 'taller-general-ept'
   const tallerColor  = `hsl(${taller.color})`
   const { head, tail } = splitNombre(taller.nombre)
+
+  // Módulo activo: primero en_curso, sino primer disponible
+  const currentMod =
+    modulosLXP.find(m => getEstadoModuloLXP(m.id) === 'en_curso') ??
+    modulosLXP.find(m => getEstadoModuloLXP(m.id) === 'disponible') ??
+    modulosLXP[0]
+  const currentModPct = getModuloProgreso(slug, currentMod.numero)
 
   const bienesporZona = taller.zonas.slice(0, 3).map(z => {
     const items = todosLos
@@ -122,121 +131,149 @@ export default function TallerHub() {
   return (
     <div style={{ background: '#f0faf5', fontFamily: 'Manrope, sans-serif' }}>
 
-      {/* ══ HERO ══════════════════════════════════════════════════════════════ */}
-      <div className="relative overflow-hidden" style={{ minHeight: 500 }}>
+      {/* ══ TOP INFO BAR ══════════════════════════════════════════════════════ */}
+      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.08)' }}>
+        <div style={{ padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
 
-        {/* Fondo oscuro gradiente */}
-        <div className="absolute inset-0" style={{
-          background: 'linear-gradient(135deg,#043941 0%,#045f6c 60%,rgba(0,193,110,0.08) 100%)',
-        }} />
-
-        {/* Patrón GRAMA */}
-        <div className="absolute inset-0 grama-pattern opacity-20" />
-
-        {/* SVG ilustración — como watermark al fondo */}
-        {TALLER_SVG[slug] && (
-          <div className="absolute inset-0 pointer-events-none overflow-hidden [&_svg]:w-full [&_svg]:h-full"
-            style={{ opacity: 0.18 }}>
-            {TALLER_SVG[slug]}
-          </div>
-        )}
-
-        {/* Shapes geométricas por categoría */}
-        <TallerHeroShapes slug={slug} color={tallerColor} />
-
-        {/* Gradiente izquierdo para legibilidad */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          background: 'linear-gradient(105deg, rgba(4,57,65,0.98) 0%, rgba(4,57,65,0.90) 40%, rgba(4,57,65,0.55) 70%, rgba(4,57,65,0.05) 100%)',
-        }} />
-
-        {/* Contenido */}
-        <div className="relative z-10 px-8 pt-14 pb-24" style={{ maxWidth: 780 }}>
-
-          {/* Badge taller */}
-          <div className="inline-flex items-center gap-2 mb-8"
-            style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.28)', borderRadius: 100, padding: '6px 14px' }}>
-            <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#02d47e', display: 'inline-block', flexShrink: 0 }} />
-            <span style={{ fontSize: '.65rem', fontWeight: 800, letterSpacing: '.18em', color: '#02d47e', textTransform: 'uppercase' as const }}>
-              T{String(taller.numero).padStart(2, '0')} · Taller EPT
-            </span>
-          </div>
-
-          {/* Título dos líneas */}
-          <h1 className="font-extrabold leading-tight mb-5" style={{ letterSpacing: '-0.02em' }}>
-            {head && (
-              <span className="block" style={{ fontSize: 'clamp(2.2rem,4.5vw,3.4rem)', color: '#ffffff', marginBottom: 8 }}>
-                {head}
-              </span>
-            )}
-            <span className="inline-block" style={{
-              fontSize: 'clamp(2.2rem,4.5vw,3.4rem)',
-              color: '#032e34',
-              background: '#02d47e',
-              padding: '2px 22px 6px',
-              borderRadius: 10,
-              lineHeight: 1.25,
+          {/* Izquierda: icono + nombre + descripción */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 0 }}>
+            <div style={{
+              width: 52, height: 52, borderRadius: 14, flexShrink: 0,
+              background: `${tallerColor}18`, border: `1.5px solid ${tallerColor}30`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26,
             }}>
-              {tail || head}
-            </span>
-          </h1>
-
-          {/* Descripción */}
-          <p className="text-sm leading-relaxed mb-10" style={{ color: 'rgba(255,255,255,0.6)', maxWidth: 480 }}>
-            {taller.descripcion}
-          </p>
-
-          {/* Stats */}
-          <div className="flex flex-wrap gap-6 mb-10">
-            {[
-              !isGeneralEpt && { icon: BookOpen, value: `${modulosLXP.length} módulos`, sub: 'M0 → M6' },
-              !isGeneralEpt && { icon: Clock,    value: `${totalHoras}h`,               sub: 'Virtual + Presencial' },
-              { icon: Package, value: `${todosLos.length} bienes`,     sub: `${taller.zonas.length} zonas` },
-              { icon: Award,   value: 'Constancia',                    sub: 'Inroprin' },
-            ].filter(Boolean).map(s => (
-              <div key={s.value} className="flex items-center gap-2.5">
-                <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: 'rgba(2,212,126,0.1)', border: '1px solid rgba(2,212,126,0.18)' }}>
-                  <s.icon size={15} color="#02d47e" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold" style={{ color: '#ffffff' }}>{s.value}</p>
-                  <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.sub}</p>
-                </div>
+              {taller.icon ?? '🔧'}
+            </div>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <h1 style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
+                  {taller.nombre}
+                </h1>
+                <span style={{
+                  background: tallerColor, color: '#fff',
+                  fontSize: 10, fontWeight: 800, padding: '2px 8px',
+                  borderRadius: 100, letterSpacing: '.05em', flexShrink: 0,
+                }}>
+                  T{String(taller.numero).padStart(2, '0')}
+                </span>
               </div>
-            ))}
+              <p style={{ fontSize: 12, color: '#94a3b8', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 480 }}>
+                {taller.competencias?.slice(0, 3).join(' · ')}
+              </p>
+            </div>
           </div>
 
-          {/* CTAs */}
-          <div className="flex flex-wrap gap-3">
+          {/* Derecha: stats + CTA */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexShrink: 0 }}>
+            {!isGeneralEpt && (
+              <>
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{modulosLXP.length}</p>
+                  <p style={{ fontSize: 10, color: '#94a3b8', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>módulos</p>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{totalHoras}h</p>
+                  <p style={{ fontSize: 10, color: '#94a3b8', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>totales</p>
+                </div>
+              </>
+            )}
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{todosLos.length}</p>
+              <p style={{ fontSize: 10, color: '#94a3b8', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>bienes</p>
+            </div>
+            {/* divider */}
+            <div style={{ width: 1, height: 32, background: 'rgba(4,57,65,0.08)' }} />
             {!isGeneralEpt && (
               <button
                 onClick={() => navigate(`/taller/${slug}/ruta`)}
-                className="flex items-center gap-2 px-6 py-3 text-sm font-bold transition-all hover:opacity-90 active:scale-[0.98]"
-                style={{ background: '#02d47e', color: '#043941', borderRadius: 100, boxShadow: '0 6px 22px rgba(2,212,126,.4)' }}
+                style={{
+                  background: '#043941', color: '#02d47e', border: 'none',
+                  borderRadius: 12, padding: '10px 20px', fontSize: 13, fontWeight: 800,
+                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7,
+                  fontFamily: 'inherit', whiteSpace: 'nowrap',
+                  transition: 'opacity .18s',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = '0.82')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
               >
-                <BookOpen size={14} />
-                Iniciar Ruta de Aprendizaje
-                <ChevronRight size={14} />
+                Ver ruta completa <ArrowRight size={14} />
               </button>
             )}
             <button
               onClick={() => navigate(`/taller/${slug}/repositorio`)}
-              className="flex items-center gap-2 px-6 py-3 text-sm font-bold transition-all active:scale-[0.98]"
-              style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', border: '1.5px solid rgba(255,255,255,0.15)', borderRadius: 100 }}
+              style={{
+                background: 'none', color: 'rgba(4,57,65,0.55)',
+                border: '1.5px solid rgba(4,57,65,0.13)', borderRadius: 12,
+                padding: '10px 16px', fontSize: 13, fontWeight: 700,
+                cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6,
+                fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .18s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(4,57,65,0.05)'; e.currentTarget.style.color = '#043941' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(4,57,65,0.55)' }}
             >
-              <Package size={14} />
-              Ver Repositorio
+              <Package size={13} /> Repositorio
             </button>
           </div>
         </div>
-
-        {/* Transición suave al blanco — hoja redondeada */}
-        <div className="absolute bottom-0 left-0 right-0" style={{
-          height: 48,
-          background: '#ffffff',
-          borderRadius: '32px 32px 0 0',
-        }} />
       </div>
+
+      {/* ══ BANNER "CONTINÚA DONDE LO DEJASTE" ════════════════════════════════ */}
+      {!isGeneralEpt && currentMod && (
+        <div style={{ background: 'linear-gradient(135deg, #032e34 0%, #043941 100%)', borderBottom: '1px solid rgba(2,212,126,0.1)' }}>
+          <div style={{ padding: '14px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
+
+            {/* Izquierda */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
+              <div style={{
+                width: 44, height: 44, borderRadius: 12, flexShrink: 0,
+                background: `${tallerColor}20`, border: `1.5px solid ${tallerColor}50`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22,
+              }}>
+                {currentMod.icon}
+              </div>
+              <div style={{ minWidth: 0 }}>
+                <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.14em', textTransform: 'uppercase', color: 'rgba(2,212,126,0.6)', margin: '0 0 3px' }}>
+                  Continúa donde lo dejaste
+                </p>
+                <p style={{ fontSize: 15, fontWeight: 900, color: '#fff', margin: '0 0 2px', letterSpacing: '-0.01em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  M{currentMod.numero} — {currentMod.nombre}
+                </p>
+                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.38)', margin: 0 }}>
+                  {currentMod.horasTotal}h · {currentMod.fase} · {currentMod.sesiones.length} sesiones
+                </p>
+              </div>
+            </div>
+
+            {/* Derecha */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexShrink: 0 }}>
+              <div style={{ textAlign: 'right' }}>
+                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.38)', margin: '0 0 1px', fontWeight: 600 }}>
+                  Progreso M{currentMod.numero}
+                </p>
+                <p style={{ fontSize: 22, fontWeight: 900, color: '#02d47e', margin: 0, lineHeight: 1 }}>
+                  {currentModPct.porcentaje}%
+                </p>
+                <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', margin: '2px 0 0' }}>
+                  {currentModPct.completados} de {currentModPct.total} actividades
+                </p>
+              </div>
+              <button
+                onClick={() => navigate(`/taller/${slug}/ruta/modulo/${currentMod.numero}`)}
+                style={{
+                  background: '#02d47e', color: '#043941', border: 'none',
+                  borderRadius: 12, padding: '11px 22px', fontSize: 13, fontWeight: 800,
+                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7,
+                  fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'opacity .18s',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+              >
+                Continuar <ArrowRight size={14} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ══ COMPETENCIAS ══════════════════════════════════════════════════════ */}
       {taller.competencias?.length > 0 && (
