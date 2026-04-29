@@ -27,6 +27,7 @@ const Perfil          = lazy(() => import("./pages/Perfil"))
 const MisLogros       = lazy(() => import("./pages/MisLogros"))
 const CentroAyuda     = lazy(() => import("./pages/CentroAyuda"))
 const Configuracion   = lazy(() => import("./pages/Configuracion"))
+const Certificados    = lazy(() => import("./pages/Certificados"))
 const NotFound        = lazy(() => import("./pages/NotFound"))
 
 const queryClient = new QueryClient()
@@ -82,6 +83,7 @@ const App = () => (
                     <Route path="/perfil"                    element={wrap(Perfil)} />
                     <Route path="/perfil/logros"           element={wrap(MisLogros)} />
                     <Route path="/perfil/ayuda"            element={wrap(CentroAyuda)} />
+                    <Route path="/perfil/certificados"     element={wrap(Certificados)} />
                     <Route path="/perfil/configuracion"    element={wrap(Configuracion)} />
                   </Route>
 

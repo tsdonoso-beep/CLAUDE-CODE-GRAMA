@@ -9,6 +9,7 @@ import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
 const TABS = [
   { label: 'Mis talleres',    to: '/perfil',                 end: true  },
   { label: 'Mis logros',      to: '/perfil/logros',          end: false },
+  { label: 'Certificados',    to: '/perfil/certificados',    end: false },
   { label: 'Centro de ayuda', to: '/perfil/ayuda',           end: false },
   { label: 'Configuración',   to: '/perfil/configuracion',   end: false },
 ]
