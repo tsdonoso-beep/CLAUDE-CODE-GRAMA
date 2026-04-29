@@ -1,7 +1,11 @@
 // src/pages/RutaAprendizaje.tsx
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench, Package } from 'lucide-react'
+
+const TALLER_ICON_MAP: Record<string, React.ElementType> = {
+  Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench, Package,
+}
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
 import { ModuloCard } from '@/components/lxp/ModuloCard'
@@ -59,14 +63,25 @@ export default function RutaAprendizaje() {
         <div style={{ padding: '20px 32px 0' }}>
 
           {/* Fila: título + stats */}
-          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24, marginBottom: 16 }}>
-            <div>
-              <p style={{ fontSize: 12, color: '#94a3b8', fontWeight: 600, margin: '0 0 4px' }}>
-                {taller.nombre}
-              </p>
-              <h1 style={{ fontSize: 'clamp(1.4rem,2.4vw,1.9rem)', fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em' }}>
-                Ruta de Aprendizaje
-              </h1>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, marginBottom: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
+              {(() => {
+                const tallerColor = `hsl(${taller.color})`
+                const I = TALLER_ICON_MAP[taller.icon] ?? Package
+                return (
+                  <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: `${tallerColor}18`, border: `1.5px solid ${tallerColor}30`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <I size={20} style={{ color: tallerColor }} />
+                  </div>
+                )
+              })()}
+              <div>
+                <p style={{ fontSize: 12, color: '#94a3b8', fontWeight: 600, margin: '0 0 3px' }}>
+                  {taller.nombre}
+                </p>
+                <h1 style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em' }}>
+                  Ruta de Aprendizaje
+                </h1>
+              </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexShrink: 0, paddingTop: 4 }}>
               {[
