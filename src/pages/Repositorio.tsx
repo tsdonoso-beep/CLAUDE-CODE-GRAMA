@@ -5,11 +5,6 @@ import {
   HardHat, FileText, Video, PlayCircle, ChevronRight, BookMarked,
   Wrench, GraduationCap,
 } from 'lucide-react'
-import {
-  SvgAutomotriz, SvgEbanisteria, SvgElectricidad, SvgElectronica,
-  SvgIndustriaAlimentaria, SvgCocinaReposteria, SvgConstruccionesMetalicas,
-  SvgEptGeneral, SvgIndustriaVestido, SvgComputacion,
-} from '@/components/lxp/TallerCardDocente'
 import { useTaller } from '@/hooks/useTaller'
 import { RepositorioCard } from '@/components/lxp/RepositorioCard'
 import { useNavigate, useSearchParams } from 'react-router-dom'
@@ -20,32 +15,6 @@ import { trackNavegacion } from '@/lib/tracker'
 type Bien = Record<string, any>
 type Tab = 'bienes' | 'manuales' | 'videos'
 
-const TALLER_SVG: Record<string, React.ReactNode> = {
-  'mecanica-automotriz':      <SvgAutomotriz />,
-  'ebanisteria':              <SvgEbanisteria />,
-  'electricidad':             <SvgElectricidad />,
-  'electronica':              <SvgElectronica />,
-  'industria-alimentaria':    <SvgIndustriaAlimentaria />,
-  'cocina-reposteria':        <SvgCocinaReposteria />,
-  'construcciones-metalicas': <SvgConstruccionesMetalicas />,
-  'taller-general-ept':       <SvgEptGeneral />,
-  'industria-vestido':        <SvgIndustriaVestido />,
-  'computacion-informatica':  <SvgComputacion />,
-}
-
-function Tangram() {
-  return (
-    <svg width="160" height="160" viewBox="0 0 160 160" fill="none" style={{ opacity: 0.07 }}>
-      <polygon points="80,8 152,80 80,80" fill="#02d47e" />
-      <polygon points="8,80 80,8 80,80" fill="#02d47e" />
-      <polygon points="80,80 116,116 44,116" fill="#02d47e" />
-      <rect x="44" y="80" width="36" height="36" fill="#02d47e" transform="rotate(45,62,98)" />
-      <polygon points="116,80 152,80 116,116" fill="#02d47e" />
-      <polygon points="8,80 44,116 8,152" fill="#02d47e" />
-      <rect x="8" y="116" width="36" height="36" fill="#02d47e" />
-    </svg>
-  )
-}
 
 const TIPO_ICONS: Record<string, React.ElementType> = {
   EQUIPOS: Package, HERRAMIENTAS: WrenchLucide, MOBILIARIO: Sofa,
@@ -255,178 +224,136 @@ export default function Repositorio() {
         </div>
       </div>
 
-      {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg,#043941 0%,#045f6c 55%,rgba(0,193,110,0.1) 100%)' }}>
-        <div className="absolute inset-0 grama-pattern opacity-20" />
-        <div className="absolute pointer-events-none" style={{
-          width: 400, height: 400, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(2,212,126,0.14) 0%, transparent 65%)',
-          right: -60, top: -80,
-        }} />
-        {TALLER_SVG[slug ?? ''] && (
-          <div className="absolute inset-0 pointer-events-none overflow-hidden [&_svg]:w-full [&_svg]:h-full" style={{ opacity: 0.30 }}>
-            {TALLER_SVG[slug ?? '']}
-          </div>
-        )}
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(100deg, rgba(4,57,65,0.97) 0%, rgba(4,57,65,0.88) 38%, rgba(4,57,65,0.55) 62%, rgba(4,57,65,0.1) 100%)' }} />
-        <div className="absolute bottom-4 right-8 pointer-events-none">
-          <Tangram />
+      {/* ══ TABS + BÚSQUEDA ═════════════════════════════════════════════════ */}
+      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)', padding: '14px 28px 0' }}>
+
+        {/* Tabs */}
+        <div style={{ display: 'flex', gap: 4, marginBottom: 16 }}>
+          {([
+            { id: 'bienes',   label: 'Bienes',   icon: Package  },
+            { id: 'manuales', label: 'Manuales', icon: FileText },
+            { id: 'videos',   label: 'Videos',   icon: Video    },
+          ] as { id: Tab; label: string; icon: React.ElementType }[]).map(t => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 7,
+                padding: '8px 18px', borderRadius: 100,
+                fontSize: 13, fontWeight: 700, cursor: 'pointer',
+                fontFamily: 'inherit', transition: 'all .16s',
+                background: tab === t.id ? '#043941' : 'transparent',
+                color:      tab === t.id ? '#02d47e'  : '#64748b',
+                border: tab === t.id ? 'none' : '1.5px solid rgba(4,57,65,0.1)',
+              }}
+            >
+              <t.icon size={13} />
+              {t.label}
+            </button>
+          ))}
         </div>
 
-        <div className="relative px-8 pt-7 pb-10">
-          {/* 1. TABS — primero */}
-          <div className="flex gap-2 mb-5">
-            {([
-              { id: 'bienes',   label: 'Bienes',   icon: Package  },
-              { id: 'manuales', label: 'Manuales', icon: FileText },
-              { id: 'videos',   label: 'Videos',   icon: Video    },
-            ] as { id: Tab; label: string; icon: React.ElementType }[]).map(t => (
+        {/* Buscador */}
+        {tab === 'bienes' && (
+          <div style={{ position: 'relative', maxWidth: 560, marginBottom: 16 }}>
+            <Search size={15} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+            <input
+              type="text"
+              placeholder="Busca por nombre, marca, modelo o código…"
+              value={busqueda}
+              onChange={e => setBusqueda(e.target.value)}
+              style={{ width: '100%', paddingLeft: 40, paddingRight: busqueda ? 36 : 16, paddingTop: 10, paddingBottom: 10, borderRadius: 12, fontSize: 13, fontWeight: 500, outline: 'none', background: '#f8fafc', color: '#043941', border: '1.5px solid rgba(4,57,65,0.1)', fontFamily: 'inherit', boxSizing: 'border-box' }}
+              onFocus={e => (e.target.style.borderColor = tallerColor)}
+              onBlur={e => (e.target.style.borderColor = 'rgba(4,57,65,0.1)')}
+            />
+            {busqueda && (
+              <button onClick={() => setBusqueda('')} style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: '#94a3b8' }}>
+                <X size={14} />
+              </button>
+            )}
+          </div>
+        )}
+        {tab === 'manuales' && (
+          <div style={{ position: 'relative', maxWidth: 560, marginBottom: 16 }}>
+            <Search size={15} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+            <input
+              type="text"
+              placeholder="Busca manuales por nombre o zona…"
+              value={busquedaManual}
+              onChange={e => setBusquedaManual(e.target.value)}
+              style={{ width: '100%', paddingLeft: 40, paddingRight: busquedaManual ? 36 : 16, paddingTop: 10, paddingBottom: 10, borderRadius: 12, fontSize: 13, fontWeight: 500, outline: 'none', background: '#f8fafc', color: '#043941', border: '1.5px solid rgba(4,57,65,0.1)', fontFamily: 'inherit', boxSizing: 'border-box' }}
+              onFocus={e => (e.target.style.borderColor = tallerColor)}
+              onBlur={e => (e.target.style.borderColor = 'rgba(4,57,65,0.1)')}
+            />
+            {busquedaManual && (
+              <button onClick={() => setBusquedaManual('')} style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: '#94a3b8' }}>
+                <X size={14} />
+              </button>
+            )}
+          </div>
+        )}
+        {tab === 'videos' && (
+          <div style={{ position: 'relative', maxWidth: 560, marginBottom: 16 }}>
+            <Search size={15} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+            <input
+              type="text"
+              placeholder="Busca videos por nombre o zona…"
+              value={busquedaVideo}
+              onChange={e => setBusquedaVideo(e.target.value)}
+              style={{ width: '100%', paddingLeft: 40, paddingRight: busquedaVideo ? 36 : 16, paddingTop: 10, paddingBottom: 10, borderRadius: 12, fontSize: 13, fontWeight: 500, outline: 'none', background: '#f8fafc', color: '#043941', border: '1.5px solid rgba(4,57,65,0.1)', fontFamily: 'inherit', boxSizing: 'border-box' }}
+              onFocus={e => (e.target.style.borderColor = tallerColor)}
+              onBlur={e => (e.target.style.borderColor = 'rgba(4,57,65,0.1)')}
+            />
+            {busquedaVideo && (
+              <button onClick={() => setBusquedaVideo('')} style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: '#94a3b8' }}>
+                <X size={14} />
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Filtros por tipo (tab bienes) */}
+        {tab === 'bienes' && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, paddingBottom: 14 }}>
+            <button
+              onClick={() => setFiltroTipo('')}
+              style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: !filtroTipo ? '#043941' : 'transparent', color: !filtroTipo ? '#02d47e' : '#64748b', border: !filtroTipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
+            >
+              Todos <span style={{ opacity: 0.7 }}>{statsTipo.reduce((acc, s) => acc + s.count, 0)}</span>
+            </button>
+            {statsTipo.map(({ tipo, count, Icon }) => (
               <button
-                key={t.id}
-                onClick={() => setTab(t.id)}
-                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all"
-                style={{
-                  background: tab === t.id ? tallerColor : 'rgba(255,255,255,0.1)',
-                  color:      tab === t.id ? '#043941'   : 'rgba(255,255,255,0.7)',
-                  border: tab === t.id ? 'none' : '1px solid rgba(255,255,255,0.12)',
-                }}
+                key={tipo}
+                onClick={() => setFiltroTipo(filtroTipo === tipo ? '' : tipo)}
+                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: filtroTipo === tipo ? '#043941' : 'transparent', color: filtroTipo === tipo ? '#02d47e' : '#64748b', border: filtroTipo === tipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
               >
-                <t.icon size={13} />
-                {t.label}
+                <Icon size={11} />
+                {tipo.charAt(0) + tipo.slice(1).toLowerCase()}
+                <span style={{ opacity: 0.7 }}>{count}</span>
               </button>
             ))}
           </div>
+        )}
 
-          {/* 2. BUSCADOR — segundo */}
-          {tab === 'bienes' && (
-            <div className="relative max-w-xl mb-4">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: tallerColor }} />
-              <input
-                type="text"
-                placeholder="Busca por nombre, marca, modelo o código…"
-                value={busqueda}
-                onChange={e => setBusqueda(e.target.value)}
-                className="w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm font-medium outline-none"
-                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(255,255,255,0.18)' }}
-                onFocus={e => (e.target.style.borderColor = tallerColor)}
-                onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.18)')}
-              />
-              {busqueda && (
-                <button onClick={() => setBusqueda('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                  <X size={14} />
-                </button>
-              )}
-            </div>
-          )}
-
-          {tab === 'manuales' && (
-            <div className="relative max-w-xl mb-4">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: tallerColor }} />
-              <input
-                type="text"
-                placeholder="Busca manuales por nombre o zona…"
-                value={busquedaManual}
-                onChange={e => setBusquedaManual(e.target.value)}
-                className="w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm font-medium outline-none"
-                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(255,255,255,0.18)' }}
-                onFocus={e => (e.target.style.borderColor = tallerColor)}
-                onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.18)')}
-              />
-              {busquedaManual && (
-                <button onClick={() => setBusquedaManual('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                  <X size={14} />
-                </button>
-              )}
-            </div>
-          )}
-
-          {tab === 'videos' && (
-            <div className="relative max-w-xl mb-4">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: tallerColor }} />
-              <input
-                type="text"
-                placeholder="Busca videos por nombre o zona…"
-                value={busquedaVideo}
-                onChange={e => setBusquedaVideo(e.target.value)}
-                className="w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm font-medium outline-none"
-                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(255,255,255,0.18)' }}
-                onFocus={e => (e.target.style.borderColor = tallerColor)}
-                onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.18)')}
-              />
-              {busquedaVideo && (
-                <button onClick={() => setBusquedaVideo('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                  <X size={14} />
-                </button>
-              )}
-            </div>
-          )}
-
-          {/* 3. SUB-FILTROS — tercero */}
-          {tab === 'bienes' && (
-            <div className="flex flex-wrap gap-2 pb-5">
+        {/* Filtros manuales */}
+        {tab === 'manuales' && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, paddingBottom: 14 }}>
+            {([
+              { id: 'todos',         label: 'Todos',         count: conteos.total         },
+              { id: 'uso',           label: 'Uso',           count: conteos.uso           },
+              { id: 'mantenimiento', label: 'Mantenimiento', count: conteos.mantenimiento },
+              { id: 'pedagogico',    label: 'Pedagógico',    count: conteos.pedagogico    },
+            ] as const).map(f => (
               <button
-                onClick={() => setFiltroTipo('')}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
-                style={{
-                  background: !filtroTipo ? tallerColor : 'rgba(255,255,255,0.08)',
-                  color: !filtroTipo ? '#043941' : 'rgba(255,255,255,0.7)',
-                  border: `1.5px solid ${!filtroTipo ? tallerColor : 'rgba(255,255,255,0.12)'}`,
-                }}
+                key={f.id}
+                onClick={() => setFiltroManual(f.id)}
+                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: filtroManual === f.id ? '#043941' : 'transparent', color: filtroManual === f.id ? '#02d47e' : '#64748b', border: filtroManual === f.id ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
               >
-                Todos
-                <span className="font-extrabold opacity-70">{statsTipo.reduce((acc, s) => acc + s.count, 0)}</span>
+                {f.label} <span style={{ opacity: 0.7 }}>{f.count}</span>
               </button>
-              {statsTipo.map(({ tipo, count, Icon }) => (
-                <button
-                  key={tipo}
-                  onClick={() => setFiltroTipo(filtroTipo === tipo ? '' : tipo)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
-                  style={{
-                    background: filtroTipo === tipo ? tallerColor : 'rgba(255,255,255,0.08)',
-                    color: filtroTipo === tipo ? '#043941' : 'rgba(255,255,255,0.7)',
-                    border: `1.5px solid ${filtroTipo === tipo ? tallerColor : 'rgba(255,255,255,0.12)'}`,
-                  }}
-                >
-                  <Icon size={11} />
-                  {tipo.charAt(0) + tipo.slice(1).toLowerCase()}
-                  <span className="font-extrabold opacity-70">{count}</span>
-                </button>
-              ))}
-            </div>
-          )}
-
-          {tab === 'manuales' && (
-            <div className="flex flex-wrap gap-2 pb-5">
-              {([
-                { id: 'todos',         label: 'Todos',         count: conteos.total,         color: tallerColor },
-                { id: 'uso',           label: 'Uso',           count: conteos.uso,           color: tallerColor },
-                { id: 'mantenimiento', label: 'Mantenimiento', count: conteos.mantenimiento, color: '#045f6c' },
-                { id: 'pedagogico',    label: 'Pedagógico',    count: conteos.pedagogico,    color: '#043941' },
-              ] as const).map(f => (
-                <button
-                  key={f.id}
-                  onClick={() => setFiltroManual(f.id)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
-                  style={{
-                    background: filtroManual === f.id ? f.color : 'rgba(255,255,255,0.08)',
-                    color: filtroManual === f.id ? '#043941' : 'rgba(255,255,255,0.65)',
-                    border: `1.5px solid ${filtroManual === f.id ? f.color : 'rgba(255,255,255,0.12)'}`,
-                  }}
-                >
-                  {f.label}
-                  <span className="font-extrabold opacity-80">{f.count}</span>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Ola de transición hero → contenido */}
-        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ lineHeight: 0 }}>
-          <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 48 }}>
-            <path d="M0,24 C360,52 1080,0 1440,28 L1440,48 L0,48 Z" fill="#f0faf5" />
-          </svg>
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ══ TAB: CATÁLOGO ═══════════════════════════════════════════════════ */}
