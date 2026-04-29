@@ -1,7 +1,7 @@
 // src/pages/TallerHub.tsx
 import { useNavigate } from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
-import { Package, ArrowRight, ExternalLink } from 'lucide-react'
+import { Package, ArrowRight, ExternalLink, GraduationCap, FileText, Users } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { useProgress } from '@/contexts/ProgressContext'
 import { modulosLXP } from '@/data/modulosLXP'
@@ -153,6 +153,59 @@ export default function TallerHub() {
         </div>
       </div>
 
+      {/* ══ COMPETENCIAS ══════════════════════════════════════════════════════ */}
+      {taller.competencias?.length > 0 && (
+        <div style={{ background: '#ffffff', borderBottom: '1px solid rgba(4,57,65,0.06)' }}>
+          <div style={{ padding: '24px 32px 28px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'start' }}>
+
+            {/* Izquierda: valor del programa con iconos */}
+            <div>
+              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#02d47e', margin: '0 0 16px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ display: 'inline-block', height: 1, width: 20, background: '#02d47e' }} />
+                Tu valor como docente
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                {[
+                  { Icon: GraduationCap, title: 'Certificación docente MINEDU', sub: 'Constancia emitida por Inopin al completar el taller' },
+                  { Icon: FileText,      title: 'Sesiones y materiales listos para clase', sub: 'Fichas, guías y recursos descargables por módulo' },
+                  { Icon: Package,       title: 'Repositorio completo del taller', sub: `${todosLos.length} bienes con fichas técnicas y manuales de uso` },
+                  { Icon: Users,         title: 'Comunidad de docentes EPT', sub: 'Red de pares, soporte especializado y sesiones en vivo' },
+                ].map(({ Icon, title, sub }, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                    <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(4,57,65,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Icon size={15} style={{ color: '#043941' }} />
+                    </div>
+                    <div>
+                      <p style={{ fontSize: 13, fontWeight: 700, color: '#043941', margin: '0 0 2px', lineHeight: 1.3 }}>{title}</p>
+                      <p style={{ fontSize: 11, color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>{sub}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Derecha: logros del taller (competencias técnicas) */}
+            <div>
+              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#02d47e', margin: '0 0 16px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ display: 'inline-block', height: 1, width: 20, background: '#02d47e' }} />
+                Lo que lograrás
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {taller.competencias.map((comp, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                    <span style={{ fontSize: 11, fontWeight: 800, color: tallerColor, flexShrink: 0, marginTop: 2 }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span style={{ fontSize: 13, fontWeight: 600, color: '#043941', lineHeight: 1.5 }}>{comp}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
+
       {/* ══ BANNER "CONTINÚA DONDE LO DEJASTE" ════════════════════════════════ */}
       {!isGeneralEpt && currentMod && (
         <div style={{ background: 'rgba(2,212,126,0.05)', borderBottom: '1px solid rgba(2,212,126,0.14)', borderLeft: '3px solid #02d47e' }}>
@@ -208,54 +261,6 @@ export default function TallerHub() {
                 Continuar <ArrowRight size={14} />
               </button>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* ══ COMPETENCIAS ══════════════════════════════════════════════════════ */}
-      {taller.competencias?.length > 0 && (
-        <div style={{ background: '#ffffff', borderBottom: '1px solid rgba(4,57,65,0.06)' }}>
-          <div style={{ padding: '24px 32px 28px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'start' }}>
-
-            {/* Izquierda: competencias como lista */}
-            <div>
-              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#02d47e', margin: '0 0 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ display: 'inline-block', height: 1, width: 20, background: '#02d47e' }} />
-                Tu valor como docente
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {taller.competencias.map((comp, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: tallerColor, flexShrink: 0, marginTop: 5 }} />
-                    <span style={{ fontSize: 13, fontWeight: 600, color: '#043941', lineHeight: 1.5 }}>{comp}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Derecha: logros numerados */}
-            <div>
-              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#02d47e', margin: '0 0 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ display: 'inline-block', height: 1, width: 20, background: '#02d47e' }} />
-                Lo que lograrás
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {[
-                  'Dominio del equipamiento',
-                  'Diseño de sesiones técnicas',
-                  'Evaluación por competencias',
-                  'Certificación docente MINEDU',
-                ].map((label, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                    <span style={{ fontSize: 11, fontWeight: 800, color: tallerColor, flexShrink: 0, marginTop: 2 }}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <span style={{ fontSize: 13, fontWeight: 600, color: '#043941', lineHeight: 1.5 }}>{label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
           </div>
         </div>
       )}
