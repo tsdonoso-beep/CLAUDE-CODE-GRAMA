@@ -475,9 +475,9 @@ export default function TallerHub() {
             )}
 
             {/* ③ Actividad reciente */}
-            {recentCompleted.length > 0 && (
-              <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.06)', padding: '18px 20px' }}>
-                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 12px' }}>Actividad reciente</p>
+            <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.06)', padding: '18px 20px' }}>
+              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 12px' }}>Actividad reciente</p>
+              {recentCompleted.length > 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   {recentCompleted.map((item, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -491,8 +491,12 @@ export default function TallerHub() {
                     </div>
                   ))}
                 </div>
-              </div>
-            )}
+              ) : (
+                <p style={{ fontSize: 12, color: '#94a3b8', margin: 0, textAlign: 'center', padding: '8px 0' }}>
+                  Sin actividad aún
+                </p>
+              )}
+            </div>
 
           </div>
         )}
