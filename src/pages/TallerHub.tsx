@@ -217,10 +217,14 @@ export default function TallerHub() {
                 <span style={{ display:'inline-block', height:1, width:24, background:'#02d47e' }} />
                 Tu valor como docente
               </span>
-              <p style={{ fontSize: 15, fontWeight: 500, color: 'rgba(4,57,65,0.75)', lineHeight: 1.8, margin: 0, maxWidth: 520 }}>
+              <p style={{ fontSize: 15, fontWeight: 500, color: 'rgba(4,57,65,0.75)', lineHeight: 1.8, margin: '0 0 14px', maxWidth: 520 }}>
                 A través de esta ruta aprenderás a <strong style={{ color: '#043941', fontWeight: 800 }}>conocer, instalar y operar</strong> el equipamiento de tu taller de {taller.nombreCorto.toLowerCase()}.
                 {' '}Pasarás del dominio técnico al pedagógico — diseñando sesiones reales y evaluando las competencias de tus estudiantes con criterio.
               </p>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '7px 14px', borderRadius: 100, background: 'rgba(4,57,65,0.04)', border: '1px solid rgba(4,57,65,0.1)' }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: tallerColor, flexShrink: 0 }} />
+                <span style={{ fontSize: 12, fontWeight: 700, color: '#043941' }}>Incluye repositorio completo de bienes, fichas y manuales del taller</span>
+              </div>
             </div>
 
             {/* Pilares pequeños */}
