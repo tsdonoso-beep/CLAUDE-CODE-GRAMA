@@ -130,7 +130,7 @@ export default function Landing() {
         background: 'linear-gradient(135deg, #e8f8f2 0%, #e3f8fb 50%, #edf6ff 100%)',
         display: 'grid', gridTemplateColumns: '1fr 1fr',
         alignItems: 'center', gap: 48,
-        padding: '100px 52px 60px',
+        padding: '76px 52px 80px',
         position: 'relative', overflow: 'hidden',
       }}>
 
