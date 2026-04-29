@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /home/user/CLAUDE-CODE-GRAMA && git pull origin claude/analyze-md-generate-FnRSP 2>/dev/null || true",
+            "statusMessage": "Sincronizando rama FnRSP..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /home/user/CLAUDE-CODE-GRAMA && git push -u origin claude/analyze-md-generate-FnRSP 2>/dev/null || true",
+            "statusMessage": "Subiendo cambios a FnRSP..."
+          }
+        ]
+      }
+    ]
+  }
+}

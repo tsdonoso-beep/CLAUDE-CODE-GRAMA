@@ -1,0 +1,753 @@
+// src/pages/Repositorio.tsx
+import { useState, useMemo, useEffect } from 'react'
+import {
+  Search, X, SlidersHorizontal, Package, Wrench as WrenchLucide, Sofa, BookOpen,
+  HardHat, FileText, Video, PlayCircle, ChevronRight, BookMarked,
+  Wrench, GraduationCap,
+} from 'lucide-react'
+import {
+  SvgAutomotriz, SvgEbanisteria, SvgElectricidad, SvgElectronica,
+  SvgIndustriaAlimentaria, SvgCocinaReposteria, SvgConstruccionesMetalicas,
+  SvgEptGeneral, SvgIndustriaVestido, SvgComputacion,
+} from '@/components/lxp/TallerCardDocente'
+import { useTaller } from '@/hooks/useTaller'
+import { RepositorioCard } from '@/components/lxp/RepositorioCard'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useAuth } from '@/contexts/AuthContext'
+import { trackNavegacion } from '@/lib/tracker'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Bien = Record<string, any>
+type Tab = 'bienes' | 'manuales' | 'videos'
+
+const TALLER_SVG: Record<string, React.ReactNode> = {
+  'mecanica-automotriz':      <SvgAutomotriz />,
+  'ebanisteria':              <SvgEbanisteria />,
+  'electricidad':             <SvgElectricidad />,
+  'electronica':              <SvgElectronica />,
+  'industria-alimentaria':    <SvgIndustriaAlimentaria />,
+  'cocina-reposteria':        <SvgCocinaReposteria />,
+  'construcciones-metalicas': <SvgConstruccionesMetalicas />,
+  'taller-general-ept':       <SvgEptGeneral />,
+  'industria-vestido':        <SvgIndustriaVestido />,
+  'computacion-informatica':  <SvgComputacion />,
+}
+
+function Tangram() {
+  return (
+    <svg width="160" height="160" viewBox="0 0 160 160" fill="none" style={{ opacity: 0.07 }}>
+      <polygon points="80,8 152,80 80,80" fill="#02d47e" />
+      <polygon points="8,80 80,8 80,80" fill="#02d47e" />
+      <polygon points="80,80 116,116 44,116" fill="#02d47e" />
+      <rect x="44" y="80" width="36" height="36" fill="#02d47e" transform="rotate(45,62,98)" />
+      <polygon points="116,80 152,80 116,116" fill="#02d47e" />
+      <polygon points="8,80 44,116 8,152" fill="#02d47e" />
+      <rect x="8" y="116" width="36" height="36" fill="#02d47e" />
+    </svg>
+  )
+}
+
+const TIPO_ICONS: Record<string, React.ElementType> = {
+  EQUIPOS: Package, HERRAMIENTAS: WrenchLucide, MOBILIARIO: Sofa,
+  PEDAGOGICO: BookOpen, SEGURIDAD: HardHat,
+}
+
+// Excluir del catálogo: manuales, videos y USB con manuales (el repositorio web los reemplaza)
+function esExcluidoDeCatalogo(nombre: string): boolean {
+  const n = nombre.toLowerCase()
+  return n.startsWith('manual') || n.startsWith('video') ||
+    (n.includes('usb') && n.includes('manual'))
+}
+
+// ── Clasificadores por nombre ─────────────────────────────────────────────────
+// Regla principal: el nombre DEBE empezar con "manual" (es un documento)
+// "Remachadora manual", "Taladro manual" → NO son manuales (manual es adjetivo al final)
+function esManual(nombre: string) {
+  return nombre.toLowerCase().trimStart().startsWith('manual')
+}
+// Usa "de uso" / "de operación" para identificar el TIPO del manual,
+// no el tema que describe ("equipo de mantenimiento" no lo convierte en manual de mantenimiento)
+function esManualUso(nombre: string) {
+  const n = nombre.toLowerCase()
+  return n.trimStart().startsWith('manual') &&
+    (n.includes('de uso') || n.includes('de operaci') || n.includes('de instalac'))
+}
+function esManualMantenimiento(nombre: string) {
+  const n = nombre.toLowerCase()
+  // Solo si "de mantenimiento" aparece en los primeros 35 caracteres (es el tipo del manual)
+  return n.trimStart().startsWith('manual') &&
+    (n.slice(0, 35).includes('de mantenimiento') || n.slice(0, 35).includes('de mantención'))
+}
+function esManualPedagogico(nombre: string) {
+  const n = nombre.toLowerCase()
+  return n.trimStart().startsWith('manual') &&
+    (n.includes('pedagóg') || n.includes('pedagogic'))
+}
+function esVideo(nombre: string) {
+  const n = nombre.toLowerCase()
+  return n.includes('video') || n.includes('tutorial') || n.includes('audiovisual')
+}
+
+export default function Repositorio() {
+  const { taller, bienes, totalBienes, slug } = useTaller()
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const { user } = useAuth()
+
+  // Registrar visita al repositorio (captura accesos directos sin pasar por ruta de aprendizaje)
+  useEffect(() => {
+    if (!user?.id || !slug) return
+    const referrer = document.referrer.includes('/ruta') ? 'ruta_aprendizaje'
+      : document.referrer.includes('/perfil') ? 'perfil'
+      : 'directo'
+    trackNavegacion(user.id, 'repositorio', slug, referrer)
+  }, [user?.id, slug])
+  const [tab, setTab] = useState<Tab>('bienes')
+
+  // ── Catálogo ──────────────────────────────────────────────────────────────
+  const [busqueda, setBusqueda] = useState('')
+  const [filtroZona, setFiltroZona] = useState(() => searchParams.get('zona') ?? '')
+  const [filtroArea, setFiltroArea] = useState('')
+  const [filtroSubarea, setFiltroSubarea] = useState('')
+  const [filtroTipo, setFiltroTipo] = useState('')
+  const [showFiltros, setShowFiltros] = useState(false)
+
+  // ── Manuales ──────────────────────────────────────────────────────────────
+  const [busquedaManual, setBusquedaManual] = useState('')
+  const [filtroManual, setFiltroManual] = useState<'todos' | 'uso' | 'mantenimiento' | 'pedagogico'>('todos')
+
+  // ── Videos ────────────────────────────────────────────────────────────────
+  const [busquedaVideo, setBusquedaVideo] = useState('')
+
+  const zonas = useMemo(() =>
+    [...new Set(bienes.map((b: Bien) => b.zona).filter(Boolean))].sort() as string[]
+  , [bienes])
+
+  const areas = useMemo(() =>
+    [...new Set(
+      bienes.filter((b: Bien) => !filtroZona || b.zona === filtroZona)
+        .map((b: Bien) => b.area).filter(Boolean)
+    )].sort() as string[]
+  , [bienes, filtroZona])
+
+  const subareas = useMemo(() =>
+    [...new Set(
+      bienes
+        .filter((b: Bien) => (!filtroZona || b.zona === filtroZona) && (!filtroArea || b.area === filtroArea))
+        .map((b: Bien) => b.subarea).filter(Boolean)
+    )].sort() as string[]
+  , [bienes, filtroZona, filtroArea])
+
+  const tipos = useMemo(() =>
+    [...new Set(bienes.map((b: Bien) => b.tipo).filter(Boolean))].sort() as string[]
+  , [bienes])
+
+  const bienesFiltered = useMemo(() =>
+    bienes.filter((b: Bien) => {
+      const q = busqueda.toLowerCase()
+      return (
+        (!q || b.nombre?.toLowerCase().includes(q) || b.marca?.toLowerCase().includes(q) ||
+          b.modelo?.toLowerCase().includes(q) || b.codigoEntidad?.toLowerCase().includes(q)) &&
+        (!filtroZona    || b.zona    === filtroZona) &&
+        (!filtroArea    || b.area    === filtroArea) &&
+        (!filtroSubarea || b.subarea === filtroSubarea) &&
+        (!filtroTipo    || b.tipo    === filtroTipo) &&
+        !esExcluidoDeCatalogo(b.nombre ?? '')
+      )
+    })
+  , [bienes, busqueda, filtroZona, filtroArea, filtroSubarea, filtroTipo])
+
+  // ── Manuales: solo ítems cuyo nombre contiene 'manual' ──────────────────
+  const bienesManual = useMemo(() => {
+    const soloManuales = bienes.filter((b: Bien) => esManual(b.nombre ?? ''))
+    const q = busquedaManual.toLowerCase()
+    return soloManuales.filter((b: Bien) => {
+      const matchQ = !q || b.nombre?.toLowerCase().includes(q) || b.zona?.toLowerCase().includes(q)
+      if (!matchQ) return false
+      if (filtroManual === 'uso')           return esManualUso(b.nombre ?? '')
+      if (filtroManual === 'mantenimiento') return esManualMantenimiento(b.nombre ?? '')
+      if (filtroManual === 'pedagogico')    return esManualPedagogico(b.nombre ?? '')
+      return true // todos
+    })
+  }, [bienes, busquedaManual, filtroManual])
+
+  // Conteos por categoría de manual
+  const conteos = useMemo(() => {
+    const soloManuales = bienes.filter((b: Bien) => esManual(b.nombre ?? ''))
+    return {
+      uso:           soloManuales.filter((b: Bien) => esManualUso(b.nombre ?? '')).length,
+      mantenimiento: soloManuales.filter((b: Bien) => esManualMantenimiento(b.nombre ?? '')).length,
+      pedagogico:    soloManuales.filter((b: Bien) => esManualPedagogico(b.nombre ?? '')).length,
+      total:         soloManuales.length,
+    }
+  }, [bienes])
+
+  // ── Videos: bienes con nombre de video ───────────────────────────────────
+  const bienesVideo = useMemo(() => {
+    const q = busquedaVideo.toLowerCase()
+    return bienes.filter((b: Bien) =>
+      esVideo(b.nombre ?? '') &&
+      (!q || b.nombre?.toLowerCase().includes(q) || b.zona?.toLowerCase().includes(q))
+    )
+  }, [bienes, busquedaVideo])
+
+  const statsTipo = useMemo(() => tipos.map(t => ({
+    tipo: t, count: bienes.filter((b: Bien) => b.tipo === t).length, Icon: TIPO_ICONS[t] ?? Package,
+  })), [tipos, bienes])
+
+  if (!taller) return null
+
+  const hayFiltros = busqueda || filtroZona || filtroArea || filtroSubarea || filtroTipo
+  const activeCount = [filtroZona, filtroArea, filtroSubarea, filtroTipo].filter(Boolean).length
+
+  function resetFiltros() {
+    setBusqueda(''); setFiltroZona(''); setFiltroArea(''); setFiltroSubarea(''); setFiltroTipo('')
+  }
+
+  // Función para obtener ícono y color de categoría de manual
+  function getManualMeta(nombre: string) {
+    if (esManualUso(nombre))
+      return { icon: BookMarked, color: '#02d47e', bg: 'rgba(2,212,126,0.13)', label: 'Uso' }
+    if (esManualMantenimiento(nombre))
+      return { icon: Wrench, color: '#045f6c', bg: 'rgba(4,95,108,0.11)', label: 'Mantenimiento' }
+    if (esManualPedagogico(nombre))
+      return { icon: GraduationCap, color: '#043941', bg: 'rgba(4,57,65,0.08)', label: 'Pedagógico' }
+    return { icon: FileText, color: '#64748b', bg: '#f1f5f9', label: 'Documento' }
+  }
+
+  return (
+    <div style={{ background: 'var(--grama-bg)', minHeight: '100vh' }}>
+
+      {/* ══ HERO ════════════════════════════════════════════════════════════ */}
+      <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg,#043941 0%,#045f6c 55%,rgba(0,193,110,0.1) 100%)' }}>
+        <div className="absolute inset-0 grama-pattern opacity-20" />
+        <div className="absolute pointer-events-none" style={{
+          width: 400, height: 400, borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(2,212,126,0.14) 0%, transparent 65%)',
+          right: -60, top: -80,
+        }} />
+        {TALLER_SVG[slug ?? ''] && (
+          <div className="absolute inset-0 pointer-events-none overflow-hidden [&_svg]:w-full [&_svg]:h-full" style={{ opacity: 0.30 }}>
+            {TALLER_SVG[slug ?? '']}
+          </div>
+        )}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(100deg, rgba(4,57,65,0.97) 0%, rgba(4,57,65,0.88) 38%, rgba(4,57,65,0.55) 62%, rgba(4,57,65,0.1) 100%)' }} />
+        <div className="absolute bottom-4 right-8 pointer-events-none">
+          <Tangram />
+        </div>
+
+        <div className="relative px-8 pt-10 pb-14">
+          <h1 className="font-extrabold leading-tight mb-2"
+            style={{ fontSize: 'clamp(1.5rem,2.8vw,2.2rem)', letterSpacing: '-0.02em', color: '#ffffff' }}>
+            Repositorio de Bienes
+          </h1>
+          <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.6)' }}>
+            {totalBienes} bienes catalogados · {zonas.length} zonas
+          </p>
+
+          {/* 1. TABS — primero */}
+          <div className="flex gap-2 mb-5">
+            {([
+              { id: 'bienes',   label: 'Bienes',   icon: Package  },
+              { id: 'manuales', label: 'Manuales', icon: FileText },
+              { id: 'videos',   label: 'Videos',   icon: Video    },
+            ] as { id: Tab; label: string; icon: React.ElementType }[]).map(t => (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all"
+                style={{
+                  background: tab === t.id ? '#ffffff' : 'rgba(255,255,255,0.1)',
+                  color:      tab === t.id ? '#043941' : 'rgba(255,255,255,0.6)',
+                  border: tab === t.id ? 'none' : '1px solid rgba(255,255,255,0.12)',
+                }}
+              >
+                <t.icon size={13} />
+                {t.label}
+              </button>
+            ))}
+          </div>
+
+          {/* 2. BUSCADOR — segundo */}
+          {tab === 'bienes' && (
+            <div className="relative max-w-xl mb-4">
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#02d47e' }} />
+              <input
+                type="text"
+                placeholder="Busca por nombre, marca, modelo o código…"
+                value={busqueda}
+                onChange={e => setBusqueda(e.target.value)}
+                className="w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm font-medium outline-none"
+                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(2,212,126,0.3)' }}
+                onFocus={e => (e.target.style.borderColor = '#02d47e')}
+                onBlur={e => (e.target.style.borderColor = 'rgba(2,212,126,0.3)')}
+              />
+              {busqueda && (
+                <button onClick={() => setBusqueda('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+          )}
+
+          {tab === 'manuales' && (
+            <div className="relative max-w-xl mb-4">
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#02d47e' }} />
+              <input
+                type="text"
+                placeholder="Busca manuales por nombre o zona…"
+                value={busquedaManual}
+                onChange={e => setBusquedaManual(e.target.value)}
+                className="w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm font-medium outline-none"
+                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(2,212,126,0.3)' }}
+                onFocus={e => (e.target.style.borderColor = '#02d47e')}
+                onBlur={e => (e.target.style.borderColor = 'rgba(2,212,126,0.3)')}
+              />
+              {busquedaManual && (
+                <button onClick={() => setBusquedaManual('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+          )}
+
+          {tab === 'videos' && (
+            <div className="relative max-w-xl mb-4">
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#02d47e' }} />
+              <input
+                type="text"
+                placeholder="Busca videos por nombre o zona…"
+                value={busquedaVideo}
+                onChange={e => setBusquedaVideo(e.target.value)}
+                className="w-full pl-11 pr-10 py-3.5 rounded-2xl text-sm font-medium outline-none"
+                style={{ background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1.5px solid rgba(2,212,126,0.3)' }}
+                onFocus={e => (e.target.style.borderColor = '#02d47e')}
+                onBlur={e => (e.target.style.borderColor = 'rgba(2,212,126,0.3)')}
+              />
+              {busquedaVideo && (
+                <button onClick={() => setBusquedaVideo('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* 3. SUB-FILTROS — tercero */}
+          {tab === 'bienes' && (
+            <div className="flex flex-wrap gap-2 pb-5">
+              <button
+                onClick={() => setFiltroTipo('')}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+                style={{
+                  background: !filtroTipo ? '#02d47e' : 'rgba(255,255,255,0.08)',
+                  color: !filtroTipo ? '#043941' : 'rgba(255,255,255,0.7)',
+                  border: `1.5px solid ${!filtroTipo ? '#02d47e' : 'rgba(255,255,255,0.12)'}`,
+                }}
+              >
+                Todos
+                <span className="font-extrabold opacity-70">{statsTipo.reduce((acc, s) => acc + s.count, 0)}</span>
+              </button>
+              {statsTipo.map(({ tipo, count, Icon }) => (
+                <button
+                  key={tipo}
+                  onClick={() => setFiltroTipo(filtroTipo === tipo ? '' : tipo)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+                  style={{
+                    background: filtroTipo === tipo ? '#02d47e' : 'rgba(255,255,255,0.08)',
+                    color: filtroTipo === tipo ? '#043941' : 'rgba(255,255,255,0.7)',
+                    border: `1.5px solid ${filtroTipo === tipo ? '#02d47e' : 'rgba(255,255,255,0.12)'}`,
+                  }}
+                >
+                  <Icon size={11} />
+                  {tipo.charAt(0) + tipo.slice(1).toLowerCase()}
+                  <span className="font-extrabold opacity-70">{count}</span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {tab === 'manuales' && (
+            <div className="flex flex-wrap gap-2 pb-5">
+              {([
+                { id: 'todos',         label: 'Todos',         count: conteos.total,         color: '#02d47e' },
+                { id: 'uso',           label: 'Uso',           count: conteos.uso,           color: '#02d47e' },
+                { id: 'mantenimiento', label: 'Mantenimiento', count: conteos.mantenimiento, color: '#045f6c' },
+                { id: 'pedagogico',    label: 'Pedagógico',    count: conteos.pedagogico,    color: '#043941' },
+              ] as const).map(f => (
+                <button
+                  key={f.id}
+                  onClick={() => setFiltroManual(f.id)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+                  style={{
+                    background: filtroManual === f.id ? f.color : 'rgba(255,255,255,0.08)',
+                    color: filtroManual === f.id ? '#fff' : 'rgba(255,255,255,0.65)',
+                    border: `1.5px solid ${filtroManual === f.id ? f.color : 'rgba(255,255,255,0.12)'}`,
+                  }}
+                >
+                  {f.label}
+                  <span className="font-extrabold opacity-80">{f.count}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Ola de transición hero → contenido */}
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ lineHeight: 0 }}>
+          <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 48 }}>
+            <path d="M0,24 C360,52 1080,0 1440,28 L1440,48 L0,48 Z" fill="#f0faf5" />
+          </svg>
+        </div>
+      </div>
+
+      {/* ══ TAB: CATÁLOGO ═══════════════════════════════════════════════════ */}
+      {tab === 'bienes' && (
+        <>
+          <div className="sticky top-0 z-20 px-4 py-3 border-b shadow-sm" style={{ background: '#ffffff', borderColor: '#d1fae5' }}>
+            <div className="flex items-center gap-3 overflow-x-auto pb-1">
+              <button
+                onClick={() => setShowFiltros(!showFiltros)}
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-all"
+                style={{
+                  background: showFiltros || activeCount > 0 ? '#043941' : '#f0fdf8',
+                  color: showFiltros || activeCount > 0 ? '#02d47e' : '#043941',
+                  border: '1.5px solid', borderColor: showFiltros || activeCount > 0 ? '#043941' : '#d1fae5',
+                }}
+              >
+                <SlidersHorizontal size={12} />
+                Filtros
+                {activeCount > 0 && (
+                  <span className="w-4 h-4 rounded-full text-[10px] font-extrabold flex items-center justify-center"
+                    style={{ background: '#02d47e', color: '#043941' }}>
+                    {activeCount}
+                  </span>
+                )}
+              </button>
+
+              <div className="w-px h-5 shrink-0" style={{ background: '#d1fae5' }} />
+
+              {zonas.map(z => (
+                <button key={z}
+                  onClick={() => { setFiltroZona(filtroZona === z ? '' : z); setFiltroArea(''); setFiltroSubarea('') }}
+                  className="shrink-0 px-3 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap"
+                  style={{
+                    background: filtroZona === z ? '#043941' : '#f0fdf8',
+                    color: filtroZona === z ? '#02d47e' : '#045f6c',
+                    border: '1.5px solid', borderColor: filtroZona === z ? '#043941' : '#d1fae5',
+                  }}
+                >
+                  {z.replace('ZONA DE ', '').replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'DEPÓSITO').replace('INVESTIGACIÓN, GESTIÓN Y DISEÑO', 'INV. Y DISEÑO')}
+                </button>
+              ))}
+
+              {hayFiltros && (
+                <>
+                  <div className="w-px h-5 shrink-0" style={{ background: '#d1fae5' }} />
+                  <button onClick={resetFiltros}
+                    className="flex items-center gap-1 shrink-0 px-3 py-2 rounded-xl text-xs font-bold"
+                    style={{ color: '#ef4444', background: '#fff1f2', border: '1.5px solid #fecdd3' }}>
+                    <X size={11} /> Limpiar
+                  </button>
+                </>
+              )}
+            </div>
+
+            {showFiltros && filtroZona && (
+              <div className="mt-3 flex flex-wrap gap-2 pt-3 border-t" style={{ borderColor: '#d1fae5' }}>
+                {areas.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 items-center">
+                    <span className="text-xs font-bold" style={{ color: '#94a3b8' }}>Área:</span>
+                    {areas.map(a => (
+                      <button key={a}
+                        onClick={() => { setFiltroArea(filtroArea === a ? '' : a); setFiltroSubarea('') }}
+                        className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
+                        style={{
+                          background: filtroArea === a ? '#e0f2fe' : '#f8fafc',
+                          color: filtroArea === a ? '#0369a1' : '#64748b',
+                          border: `1px solid ${filtroArea === a ? '#bae6fd' : '#e2e8f0'}`,
+                        }}>
+                        {a}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {filtroArea && subareas.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 items-center w-full">
+                    <span className="text-xs font-bold" style={{ color: '#94a3b8' }}>Sub-área:</span>
+                    {subareas.map(s => (
+                      <button key={s}
+                        onClick={() => setFiltroSubarea(filtroSubarea === s ? '' : s)}
+                        className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
+                        style={{
+                          background: filtroSubarea === s ? '#fef3c7' : '#f8fafc',
+                          color: filtroSubarea === s ? '#92400e' : '#64748b',
+                          border: `1px solid ${filtroSubarea === s ? '#fde68a' : '#e2e8f0'}`,
+                        }}>
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <p className="text-xs mt-2 font-semibold" style={{ color: '#64748b' }}>
+              {bienesFiltered.length === totalBienes ? `${totalBienes} bienes` : `${bienesFiltered.length} de ${totalBienes} bienes`}
+            </p>
+          </div>
+
+          <div className="p-4 sm:p-6">
+            {bienesFiltered.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {bienesFiltered.map((bien: Bien) => (
+                  <RepositorioCard key={bien.n} bien={bien} />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-20">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: '#e0fef3' }}>
+                  <Search size={26} style={{ color: '#02d47e' }} />
+                </div>
+                <p className="text-base font-bold mb-1" style={{ color: '#043941' }}>Sin resultados</p>
+                <button onClick={resetFiltros} className="mt-4 px-5 py-2.5 rounded-xl text-sm font-bold text-white" style={{ background: '#043941' }}>
+                  Limpiar filtros
+                </button>
+              </div>
+            )}
+          </div>
+        </>
+      )}
+
+      {/* ══ TAB: MANUALES ═══════════════════════════════════════════════════ */}
+      {tab === 'manuales' && (
+        <div className="p-4 sm:p-6">
+
+          {/* Resumen categórico — tarjetas de acceso rápido */}
+          <div className="grid grid-cols-3 gap-3 mb-6">
+            {([
+              { id: 'uso',           label: 'Manual de Uso',        icon: BookMarked,    color: '#02d47e', bg: 'rgba(2,212,126,0.13)', count: conteos.uso,           desc: 'Operación y manejo seguro del equipo' },
+              { id: 'mantenimiento', label: 'Mantenimiento',        icon: Wrench,        color: '#045f6c', bg: 'rgba(4,95,108,0.11)',  count: conteos.mantenimiento, desc: 'Limpieza, revisión y mantenimiento preventivo' },
+              { id: 'pedagogico',    label: 'Material Pedagógico',  icon: GraduationCap, color: '#043941', bg: 'rgba(4,57,65,0.08)',   count: conteos.pedagogico,    desc: 'Guías y sesiones para el docente' },
+            ] as const).map(cat => {
+              const Icon = cat.icon
+              const active = filtroManual === cat.id
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setFiltroManual(active ? 'todos' : cat.id)}
+                  className="flex flex-col gap-2 p-4 rounded-2xl text-left transition-all"
+                  style={{
+                    background: active ? cat.color : '#ffffff',
+                    border: `2px solid ${active ? cat.color : '#e2e8f0'}`,
+                    boxShadow: active ? `0 4px 16px ${cat.color}33` : 'none',
+                    transform: active ? 'translateY(-2px)' : 'none',
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="h-9 w-9 rounded-xl flex items-center justify-center"
+                      style={{ background: active ? 'rgba(255,255,255,0.2)' : cat.bg }}>
+                      <Icon size={16} style={{ color: active ? '#fff' : cat.color }} />
+                    </div>
+                    <span className="text-xl font-extrabold" style={{ color: active ? '#fff' : cat.color }}>
+                      {cat.count}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold leading-tight" style={{ color: active ? '#fff' : '#0f172a' }}>
+                      {cat.label}
+                    </p>
+                    <p className="text-[10px] mt-0.5 leading-snug" style={{ color: active ? 'rgba(255,255,255,0.7)' : '#94a3b8' }}>
+                      {cat.desc}
+                    </p>
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Resultado: lista de manuales */}
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-xs font-bold" style={{ color: '#64748b' }}>
+              {bienesManual.length} {bienesManual.length === 1 ? 'manual' : 'manuales'}
+              {filtroManual !== 'todos' ? ` · filtro activo` : ''}
+            </p>
+            {(busquedaManual || filtroManual !== 'todos') && (
+              <button
+                onClick={() => { setBusquedaManual(''); setFiltroManual('todos'); }}
+                className="flex items-center gap-1 text-xs font-bold px-2.5 py-1.5 rounded-lg"
+                style={{ color: '#ef4444', background: '#fff1f2', border: '1px solid #fecdd3' }}
+              >
+                <X size={11} /> Limpiar
+              </button>
+            )}
+          </div>
+
+          {bienesManual.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16 rounded-2xl" style={{ background: '#f8fafc' }}>
+              <FileText size={32} style={{ color: '#cbd5e1' }} />
+              <p className="mt-3 text-sm font-bold" style={{ color: '#94a3b8' }}>Sin manuales en esta categoría</p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {bienesManual.map((b: Bien) => {
+                const meta = getManualMeta(b.nombre ?? '')
+                const MetaIcon = meta.icon
+                return (
+                  <button
+                    key={b.n}
+                    onClick={() => navigate(`/taller/${slug}/repositorio/bien/${b.n}`)}
+                    className="flex items-center gap-4 p-4 rounded-2xl text-left transition-all group"
+                    style={{ background: '#ffffff', border: '1.5px solid #e2e8f0' }}
+                    onMouseEnter={e => {
+                      const el = e.currentTarget as HTMLElement
+                      el.style.borderColor = meta.color
+                      el.style.boxShadow = `0 4px 12px ${meta.color}22`
+                    }}
+                    onMouseLeave={e => {
+                      const el = e.currentTarget as HTMLElement
+                      el.style.borderColor = '#e2e8f0'
+                      el.style.boxShadow = 'none'
+                    }}
+                  >
+                    {/* Ícono categoría */}
+                    <div className="h-11 w-11 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ background: meta.bg }}>
+                      <MetaIcon size={18} style={{ color: meta.color }} />
+                    </div>
+
+                    {/* Info */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold leading-snug" style={{ color: '#0f172a' }}>
+                        {b.nombre}
+                      </p>
+                      <div className="flex items-center gap-2 mt-1 flex-wrap">
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md"
+                          style={{ background: meta.bg, color: meta.color }}>
+                          {meta.label}
+                        </span>
+                        {b.zona && (
+                          <span className="text-[10px] font-medium" style={{ color: '#94a3b8' }}>
+                            {b.zona.replace('ZONA DE ', '').replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'DEPÓSITO').replace('INVESTIGACIÓN, GESTIÓN Y DISEÑO', 'INV. Y DISEÑO')}
+                          </span>
+                        )}
+                        {b.cantidad > 1 && (
+                          <span className="text-[10px] font-medium" style={{ color: '#cbd5e1' }}>
+                            ×{b.cantidad}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Descripción truncada */}
+                    {b.descripcion && (
+                      <p className="hidden lg:block text-xs max-w-xs leading-snug line-clamp-2 shrink-0"
+                        style={{ color: '#94a3b8', maxWidth: 280 }}>
+                        {b.descripcion.slice(0, 120)}…
+                      </p>
+                    )}
+
+                    <ChevronRight size={14} className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ color: meta.color }} />
+                  </button>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ══ TAB: VIDEOS ═════════════════════════════════════════════════════ */}
+      {tab === 'videos' && (
+        <div className="p-4 sm:p-6">
+
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-xs font-bold" style={{ color: '#64748b' }}>
+              {bienesVideo.length} {bienesVideo.length === 1 ? 'video' : 'videos'} disponibles
+            </p>
+            {busquedaVideo && (
+              <button
+                onClick={() => setBusquedaVideo('')}
+                className="flex items-center gap-1 text-xs font-bold px-2.5 py-1.5 rounded-lg"
+                style={{ color: '#ef4444', background: '#fff1f2', border: '1px solid #fecdd3' }}
+              >
+                <X size={11} /> Limpiar
+              </button>
+            )}
+          </div>
+
+          {bienesVideo.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20 rounded-2xl" style={{ background: '#f8fafc' }}>
+              <Video size={32} style={{ color: '#cbd5e1' }} />
+              <p className="mt-3 text-sm font-bold" style={{ color: '#94a3b8' }}>No hay videos que coincidan</p>
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {bienesVideo.map((b: Bien) => (
+                <VideoCard key={b.n} bien={b} slug={slug} navigate={navigate} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Video Card ────────────────────────────────────────────────────────────────
+function VideoCard({ bien, slug, navigate }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  bien: any; slug: string; navigate: (path: string) => void
+}) {
+  return (
+    <button
+      onClick={() => navigate(`/taller/${slug}/repositorio/bien/${bien.n}`)}
+      className="w-full text-left rounded-2xl overflow-hidden border-2 transition-all group"
+      style={{ borderColor: '#e2e8f0', background: '#ffffff' }}
+      onMouseEnter={e => {
+        const el = e.currentTarget as HTMLElement
+        el.style.borderColor = '#045f6c'
+        el.style.transform = 'translateY(-2px)'
+        el.style.boxShadow = '0 8px 20px rgba(4,95,108,0.15)'
+      }}
+      onMouseLeave={e => {
+        const el = e.currentTarget as HTMLElement
+        el.style.borderColor = '#e2e8f0'
+        el.style.transform = 'translateY(0)'
+        el.style.boxShadow = 'none'
+      }}
+    >
+      {/* Thumbnail */}
+      <div className="aspect-video flex flex-col items-center justify-center relative overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)' }}>
+        <div className="w-12 h-12 rounded-full flex items-center justify-center transition-transform group-hover:scale-110"
+          style={{ background: 'rgba(255,255,255,0.12)' }}>
+          <PlayCircle size={24} style={{ color: 'rgba(255,255,255,0.7)' }} />
+        </div>
+        {bien.zona && (
+          <span className="absolute bottom-2 left-3 text-[11px] font-semibold px-2 py-0.5 rounded-full"
+            style={{ background: 'rgba(0,0,0,0.4)', color: 'rgba(255,255,255,0.7)' }}>
+            {bien.zona.replace('ZONA DE ', '')}
+          </span>
+        )}
+        <span className="absolute top-2 right-2 text-[11px] font-bold px-2 py-0.5 rounded-full"
+          style={{ background: 'rgba(8,145,178,0.8)', color: '#fff' }}>
+          VIDEO
+        </span>
+      </div>
+
+      {/* Info */}
+      <div className="p-3">
+        <p className="text-xs font-bold leading-snug line-clamp-2 mb-1.5" style={{ color: '#0f172a' }}>
+          {bien.nombre}
+        </p>
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md"
+            style={{ background: 'rgba(4,95,108,0.1)', color: '#045f6c' }}>
+            {bien.cantidad > 1 ? `${bien.cantidad} unidades` : 'Tutorial'}
+          </span>
+          <ChevronRight size={12} style={{ color: '#94a3b8' }} />
+        </div>
+      </div>
+    </button>
+  )
+}
