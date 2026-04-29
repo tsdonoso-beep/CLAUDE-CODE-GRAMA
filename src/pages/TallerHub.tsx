@@ -224,17 +224,27 @@ export default function TallerHub() {
             </div>
 
             {/* Pilares pequeños */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, flexShrink: 0 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flexShrink: 0 }}>
               {[
                 { n: '01', label: 'Dominio del equipamiento' },
                 { n: '02', label: 'Diseño de sesiones técnicas' },
                 { n: '03', label: 'Evaluación por competencias' },
                 { n: '04', label: 'Certificación docente MINEDU' },
               ].map(p => (
-                <div key={p.n} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ fontSize: 10, fontWeight: 800, color: tallerColor, opacity: 0.7, width: 20, textAlign: 'right', flexShrink: 0 }}>{p.n}</span>
-                  <span style={{ width: 1, height: 14, background: 'rgba(4,57,65,0.12)', flexShrink: 0 }} />
-                  <span style={{ fontSize: 12, fontWeight: 600, color: '#043941' }}>{p.label}</span>
+                <div key={p.n} style={{
+                  display: 'flex', alignItems: 'center', gap: 10,
+                  padding: '8px 14px 8px 10px',
+                  borderRadius: 10,
+                  background: `${tallerColor}08`,
+                  border: `1px solid ${tallerColor}20`,
+                }}>
+                  <span style={{
+                    fontSize: 10, fontWeight: 800, color: '#fff',
+                    background: tallerColor, borderRadius: 6,
+                    width: 22, height: 22, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    flexShrink: 0, letterSpacing: '0.02em',
+                  }}>{p.n}</span>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: '#043941' }}>{p.label}</span>
                 </div>
               ))}
             </div>
