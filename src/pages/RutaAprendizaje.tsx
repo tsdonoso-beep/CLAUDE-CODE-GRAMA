@@ -1,234 +1,242 @@
 // src/pages/RutaAprendizaje.tsx
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { BookOpen, Clock, Video, Award } from 'lucide-react'
-import {
-  SvgAutomotriz, SvgEbanisteria, SvgElectricidad, SvgElectronica,
-  SvgIndustriaAlimentaria, SvgCocinaReposteria, SvgConstruccionesMetalicas,
-  SvgEptGeneral, SvgIndustriaVestido, SvgComputacion,
-} from '@/components/lxp/TallerCardDocente'
+import { AlertTriangle } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { modulosLXP } from '@/data/modulosLXP'
-import { mockProximaSesion } from '@/mock/mockEstados'
 import { ModuloCard } from '@/components/lxp/ModuloCard'
-import { LiveSessionCard } from '@/components/lxp/LiveSessionCard'
 import { useProgress } from '@/contexts/ProgressContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { trackNavegacion } from '@/lib/tracker'
-
-const TALLER_SVG: Record<string, React.ReactNode> = {
-  'mecanica-automotriz':      <SvgAutomotriz />,
-  'ebanisteria':              <SvgEbanisteria />,
-  'electricidad':             <SvgElectricidad />,
-  'electronica':              <SvgElectronica />,
-  'industria-alimentaria':    <SvgIndustriaAlimentaria />,
-  'cocina-reposteria':        <SvgCocinaReposteria />,
-  'construcciones-metalicas': <SvgConstruccionesMetalicas />,
-  'taller-general-ept':       <SvgEptGeneral />,
-  'industria-vestido':        <SvgIndustriaVestido />,
-  'computacion-informatica':  <SvgComputacion />,
-}
-
-function Tangram() {
-  return (
-    <svg width="160" height="160" viewBox="0 0 160 160" fill="none" style={{ opacity: 0.07 }}>
-      <polygon points="80,8 152,80 80,80" fill="#02d47e" />
-      <polygon points="8,80 80,8 80,80" fill="#02d47e" />
-      <polygon points="80,80 116,116 44,116" fill="#02d47e" />
-      <rect x="44" y="80" width="36" height="36" fill="#02d47e" transform="rotate(45,62,98)" />
-      <polygon points="116,80 152,80 116,116" fill="#02d47e" />
-      <polygon points="8,80 44,116 8,152" fill="#02d47e" />
-      <rect x="8" y="116" width="36" height="36" fill="#02d47e" />
-    </svg>
-  )
-}
+import { getProximaSesion, formatFechaSesion, formatHoraSesion, diasParaSesion } from '@/data/sesionesLXP'
 
 export default function RutaAprendizaje() {
   const { taller, slug } = useTaller()
-  const { getTallerProgreso, getEstadoModuloLXP } = useProgress()
+  const { getTallerProgreso, getEstadoModuloLXP, getModuloProgreso } = useProgress()
   const { user } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (slug === 'taller-general-ept') {
-      navigate(`/taller/${slug}/repositorio`, { replace: true })
-    }
+    if (slug === 'taller-general-ept') navigate(`/taller/${slug}/repositorio`, { replace: true })
   }, [slug, navigate])
 
   useEffect(() => {
     if (!user?.id || !slug) return
     trackNavegacion(user.id, 'ruta_aprendizaje', slug)
   }, [user?.id, slug])
-  const progresoTaller = getTallerProgreso(slug ?? '')
 
   if (!taller || slug === 'taller-general-ept') return null
 
-  const sesionesEnVivo = modulosLXP.flatMap(m =>
-    m.sesiones.filter(s => s.modalidad === 'sincrono')
-  ).length
+  const progresoTaller  = getTallerProgreso(slug ?? '')
+  const totalHoras      = modulosLXP.reduce((a, m) => a + m.horasTotal, 0)
+  const totalSesiones   = modulosLXP.reduce((a, m) => a + m.sesiones.length, 0)
+  const horasCompletadas = Math.round(progresoTaller.porcentaje * totalHoras / 100)
+  const modCompletados  = modulosLXP.filter(m => getEstadoModuloLXP(m.id) === 'completado').length
 
-  // Módulo actual: el primero en_curso o el primero disponible
   const moduloActual = modulosLXP.find(m => getEstadoModuloLXP(m.id) === 'en_curso')
     ?? modulosLXP.find(m => getEstadoModuloLXP(m.id) === 'disponible')
 
+  const proximaSesion = getProximaSesion(slug ?? '')
+
+  // Quiz pendiente bloqueante (primer contenido con bloqueaSiguiente=true sin completar)
+  let quizBloqueante: { nombre: string; moduloNum: number; contenidoId: string } | null = null
+  outer: for (const mod of modulosLXP) {
+    for (const ses of mod.sesiones) {
+      for (const c of ses.contenidos) {
+        if (c.bloqueaSiguiente && !quizBloqueante) {
+          quizBloqueante = { nombre: c.titulo, moduloNum: mod.numero, contenidoId: c.id }
+          break outer
+        }
+      }
+    }
+  }
+
   return (
-    <div>
-      {/* ── Hero ── */}
-      <div className="px-8 pt-10 pb-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg,#043941 0%,#045f6c 55%,rgba(0,193,110,0.1) 100%)' }}>
-        <div className="absolute inset-0 grama-pattern opacity-20" />
-        <div className="absolute pointer-events-none" style={{
-          width: 400, height: 400, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(2,212,126,0.14) 0%, transparent 65%)',
-          right: -60, top: -80,
-        }} />
-        {TALLER_SVG[slug ?? ''] && (
-          <div className="absolute inset-0 pointer-events-none overflow-hidden [&_svg]:w-full [&_svg]:h-full" style={{ opacity: 0.30 }}>
-            {TALLER_SVG[slug ?? '']}
-          </div>
-        )}
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(100deg, rgba(4,57,65,0.97) 0%, rgba(4,57,65,0.88) 38%, rgba(4,57,65,0.55) 62%, rgba(4,57,65,0.1) 100%)' }} />
-        <div className="absolute bottom-4 right-8 pointer-events-none">
-          <Tangram />
-        </div>
+    <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f8fafc' }}>
 
-        <div className="relative z-10">
-          <div className="grid lg:grid-cols-[3fr_2fr] gap-8 items-center">
+      {/* ── TOP HEADER ─────────────────────────────────────────────────────── */}
+      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)' }}>
+        <div style={{ padding: '20px 32px 0' }}>
 
-          {/* Columna izquierda: info */}
-          <div>
-            <h1 className="font-extrabold leading-tight mb-3"
-              style={{ fontSize: 'clamp(1.5rem,2.8vw,2.2rem)', letterSpacing: '-0.02em', color: '#ffffff' }}>
-              Tu Ruta de Aprendizaje
-            </h1>
-            <p className="text-sm mb-6 max-w-2xl" style={{ color: 'rgba(255,255,255,0.6)' }}>
-              7 módulos secuenciados para dominar el equipamiento y el Programa Formativo EPT
-            </p>
-            <div className="flex flex-wrap gap-5">
+          {/* Fila: título + stats */}
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24, marginBottom: 16 }}>
+            <div>
+              <p style={{ fontSize: 12, color: '#94a3b8', fontWeight: 600, margin: '0 0 4px' }}>
+                {taller.nombre}
+              </p>
+              <h1 style={{ fontSize: 'clamp(1.4rem,2.4vw,1.9rem)', fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em' }}>
+                Ruta de Aprendizaje
+              </h1>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexShrink: 0, paddingTop: 4 }}>
               {[
-                { icon: BookOpen, value: '7 módulos', sub: 'M0 → M6' },
-                { icon: Clock,    value: '150 horas',  sub: 'A + S + Presencial' },
-                { icon: Video,    value: `${sesionesEnVivo} sesiones`, sub: 'en vivo' },
-                { icon: Award,    value: 'Constancia',    sub: 'Inroprin' },
+                { value: modulosLXP.length, label: 'MÓDULOS' },
+                { value: `${totalHoras}h`,  label: 'TOTALES' },
+                { value: totalSesiones,      label: 'SESIONES' },
               ].map(s => (
-                <div key={s.value} className="flex items-center gap-2.5">
-                  <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: 'rgba(2,212,126,0.1)', border: '1px solid rgba(2,212,126,0.18)' }}>
-                    <s.icon size={15} color="#02d47e" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold" style={{ color: '#ffffff' }}>{s.value}</p>
-                    <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.sub}</p>
-                  </div>
+                <div key={s.label} style={{ textAlign: 'center' }}>
+                  <p style={{ fontSize: 22, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{s.value}</p>
+                  <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', color: '#94a3b8', margin: '3px 0 0' }}>{s.label}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Columna derecha: progreso */}
-          <div className="hidden lg:block">
-            <div className="p-5 rounded-2xl" style={{ background: 'rgba(4,57,65,0.55)', border: '1px solid rgba(255,255,255,0.14)', backdropFilter: 'blur(8px)' }}>
-              <p className="overline-label mb-4" style={{ color: 'rgba(2,212,126,0.7)' }}>
-                Tu Progreso
-              </p>
-
-              <div className="flex items-end gap-2 mb-5">
-                <span className="t-display text-white leading-none">
-                  {progresoTaller.porcentaje}
-                </span>
-                <span className="t-h2 font-extrabold mb-1" style={{ color: 'var(--grama-menta)' }}>%</span>
-                <span className="t-body mb-2 ml-1" style={{ color: 'rgba(255,255,255,0.5)' }}>completado</span>
-              </div>
-
-              {/* Módulo actual / siguiente */}
-              {moduloActual && (
-                <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl"
-                  style={{ background: 'rgba(2,212,126,0.12)', border: '1px solid rgba(2,212,126,0.22)' }}>
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[11px] font-extrabold"
-                    style={{ background: 'var(--grama-menta)', color: 'var(--grama-oscuro)' }}>
-                    {String(moduloActual.numero).padStart(2, '0')}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="t-body font-bold text-white truncate">{moduloActual.nombre}</p>
-                    <p className="overline-label mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                      {progresoTaller.porcentaje === 0 ? 'Comienza aquí' : 'Continúa aquí'}
-                    </p>
-                  </div>
-                </div>
-              )}
+          {/* Barra de progreso segmentada */}
+          <div style={{ marginBottom: 6 }}>
+            <div style={{ height: 6, borderRadius: 6, background: 'rgba(4,57,65,0.07)', overflow: 'hidden', display: 'flex' }}>
+              {/* completado */}
+              <div style={{ width: `${progresoTaller.porcentaje}%`, background: 'linear-gradient(90deg,#02d47e,#00c16e)', transition: 'width .6s ease', borderRadius: 6 }} />
             </div>
           </div>
-
-          </div>{/* /grid cols */}
-        </div>{/* /relative z-10 */}
-
-        {/* Ola de transición hero → contenido */}
-        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ lineHeight: 0 }}>
-          <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 48 }}>
-            <path d="M0,24 C360,52 1080,0 1440,28 L1440,48 L0,48 Z" fill="#f0faf5" />
-          </svg>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 16 }}>
+            <p style={{ fontSize: 12, fontWeight: 700, color: '#02d47e', margin: 0 }}>
+              {progresoTaller.porcentaje}%
+            </p>
+            <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
+              {modCompletados}/{modulosLXP.length} módulos · {horasCompletadas}h de {totalHoras}h
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* ── Content ── */}
-      <div className="p-6 grid lg:grid-cols-3 gap-6" style={{ background: 'var(--grama-bg)' }}>
-        {/* Timeline de módulos (2/3) */}
-        <div className="lg:col-span-2">
-          <h2 className="text-h3 font-extrabold mb-6" style={{ color: 'var(--grama-oscuro)' }}>
-            Secuencia de módulos
-          </h2>
+      {/* ── BANNER QUIZ PENDIENTE ──────────────────────────────────────────── */}
+      {quizBloqueante && (
+        <div style={{ background: '#fffbeb', borderBottom: '1px solid #fde68a', padding: '12px 32px', display: 'flex', alignItems: 'center', gap: 10 }}>
+          <AlertTriangle size={15} style={{ color: '#d97706', flexShrink: 0 }} />
+          <p style={{ fontSize: 13, color: '#92400e', margin: 0, flex: 1 }}>
+            <strong>Quiz pendiente en M{quizBloqueante.moduloNum}.</strong>{' '}
+            Aprueba con 80% mínimo para desbloquear los módulos siguientes.
+          </p>
+          <button
+            onClick={() => navigate(`/taller/${slug}/ruta/modulo/${quizBloqueante!.moduloNum}`)}
+            style={{ background: '#d97706', color: '#fff', border: 'none', borderRadius: 9, padding: '7px 16px', fontSize: 12, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0 }}
+          >
+            Ir al quiz →
+          </button>
+        </div>
+      )}
 
-          <div>
-            {modulosLXP.map((modulo, idx) => (
-              <ModuloCard
-                key={modulo.id}
-                modulo={modulo}
-                estado={getEstadoModuloLXP(modulo.id)}
-                isLast={idx === modulosLXP.length - 1}
-              />
-            ))}
+      {/* ── CONTENT ────────────────────────────────────────────────────────── */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 24, padding: '24px 32px', alignItems: 'start' }}>
+
+        {/* ── SECUENCIA DE MÓDULOS ── */}
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+            <h2 style={{ fontSize: 15, fontWeight: 800, color: '#043941', margin: 0 }}>Secuencia de módulos</h2>
+            <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>{modCompletados}/{modulosLXP.length} completados</p>
           </div>
+          {modulosLXP.map((modulo, idx) => (
+            <ModuloCard
+              key={modulo.id}
+              modulo={modulo}
+              estado={getEstadoModuloLXP(modulo.id)}
+              moduloProgreso={getModuloProgreso(slug ?? '', modulo.numero)}
+              isLast={idx === modulosLXP.length - 1}
+            />
+          ))}
         </div>
 
-        {/* Sidebar derecho (1/3) */}
-        <div className="space-y-5">
-          {/* Próxima sesión */}
-          <LiveSessionCard
-            titulo={mockProximaSesion.titulo}
-            moduloNombre={mockProximaSesion.moduloNombre}
-            fecha={mockProximaSesion.fecha}
-            duracionMin={mockProximaSesion.duracionMin}
-            formador={mockProximaSesion.formador}
-            plataforma={mockProximaSesion.plataforma}
-            urlAcceso={mockProximaSesion.urlAcceso}
-            compact
-          />
+        {/* ── SIDEBAR ── */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
-          {/* Resumen de horas */}
-          <div className="p-4 rounded-2xl" style={{ background: '#ffffff', boxShadow: '0 2px 12px rgba(4,57,65,0.07)' }}>
-            <h3 className="text-sm font-extrabold mb-3" style={{ color: 'var(--grama-oscuro)' }}>
-              Desglose de horas
-            </h3>
-            <div className="space-y-2">
-              {[
-                { label: 'Virtual asíncrono', hours: modulosLXP.reduce((a, m) => a + m.horasAsincrono, 0), color: '#e3f8fb', text: '#045f6c' },
-                { label: 'Sincrónico (en vivo)', hours: modulosLXP.reduce((a, m) => a + m.horasSincrono, 0), color: '#fdf8da', text: '#ca8a04' },
-                { label: 'Presencial', hours: modulosLXP.reduce((a, m) => a + m.horasPresencial, 0), color: '#d2ffe1', text: '#00c16e' },
-              ].map(h => (
-                <div key={h.label} className="flex items-center justify-between text-xs">
-                  <span className="font-medium" style={{ color: 'var(--grama-oscuro)' }}>{h.label}</span>
-                  <span className="font-extrabold px-2.5 py-0.5 rounded-full" style={{ background: h.color, color: h.text }}>
-                    {h.hours}h
-                  </span>
+          {/* ① Tu progreso */}
+          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '18px 20px' }}>
+            <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 14px' }}>Tu progreso</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
+              {/* Ring */}
+              <div style={{ position: 'relative', width: 72, height: 72, flexShrink: 0 }}>
+                <svg width={72} height={72} style={{ transform: 'rotate(-90deg)', display: 'block' }}>
+                  <circle cx={36} cy={36} r={29} fill="none" stroke="rgba(4,57,65,0.07)" strokeWidth={6} />
+                  <circle cx={36} cy={36} r={29} fill="none" stroke="#02d47e" strokeWidth={6}
+                    strokeDasharray={`${Math.min(progresoTaller.porcentaje / 100, 1) * 2 * Math.PI * 29} ${2 * Math.PI * 29}`}
+                    strokeLinecap="round" style={{ transition: 'stroke-dasharray .6s ease' }} />
+                </svg>
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 900, color: '#043941' }}>
+                  {progresoTaller.porcentaje}%
                 </div>
-              ))}
-              <div className="flex items-center justify-between text-xs pt-2 border-t" style={{ borderColor: '#e3f8fb' }}>
-                <span className="font-bold" style={{ color: 'var(--grama-oscuro)' }}>Total</span>
-                <span className="font-extrabold" style={{ color: 'var(--grama-menta)' }}>
-                  {modulosLXP.reduce((a, m) => a + m.horasTotal, 0)}h
-                </span>
+              </div>
+              <div>
+                <p style={{ fontSize: 15, fontWeight: 900, color: '#043941', margin: '0 0 2px' }}>
+                  {modCompletados} de {modulosLXP.length} módulos
+                </p>
+                <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
+                  {horasCompletadas}h completadas de {totalHoras}h
+                </p>
               </div>
             </div>
+            {/* Desglose horas */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {[
+                { dot: '#02d47e', label: 'Virtual asíncrono',   h: modulosLXP.reduce((a, m) => a + m.horasAsincrono, 0) },
+                { dot: '#043941', label: 'Sincrónico (en vivo)', h: modulosLXP.reduce((a, m) => a + m.horasSincrono, 0) },
+                { dot: '#059669', label: 'Presencial',           h: modulosLXP.reduce((a, m) => a + m.horasPresencial, 0) },
+                { dot: '#1e293b', label: 'Total',                h: totalHoras },
+              ].map(r => (
+                <div key={r.label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: r.dot, flexShrink: 0 }} />
+                    <span style={{ fontSize: 11, color: '#64748b', fontWeight: 600 }}>{r.label}</span>
+                  </div>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: '#043941' }}>{r.h}h</span>
+                </div>
+              ))}
+            </div>
           </div>
+
+          {/* ② Próxima sesión */}
+          {proximaSesion && (
+            <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '16px 18px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#f97316', flexShrink: 0, boxShadow: '0 0 0 3px rgba(249,115,22,0.18)' }} />
+                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: '#f97316', margin: 0 }}>
+                  Próxima sesión · en {diasParaSesion(proximaSesion.fecha)}d
+                </p>
+              </div>
+              <p style={{ fontSize: 13, fontWeight: 800, color: '#043941', margin: '0 0 3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {proximaSesion.titulo}
+              </p>
+              <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 12px' }}>
+                {formatFechaSesion(proximaSesion.fecha)} · {formatHoraSesion(proximaSesion.fecha)} · {proximaSesion.duracionMin} min
+              </p>
+              {proximaSesion.link ? (
+                <a href={proximaSesion.link} target="_blank" rel="noopener noreferrer"
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%', background: '#f97316', color: '#fff', borderRadius: 10, padding: '9px', fontSize: 13, fontWeight: 800, textDecoration: 'none', boxSizing: 'border-box' }}>
+                  Unirse →
+                </a>
+              ) : (
+                <p style={{ fontSize: 11, textAlign: 'center', color: '#94a3b8', margin: 0 }}>Enlace próximamente</p>
+              )}
+            </div>
+          )}
+
+          {/* ③ Comienza aquí */}
+          {moduloActual && (
+            <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '16px 18px' }}>
+              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 10px' }}>
+                {getEstadoModuloLXP(moduloActual.id) === 'en_curso' ? 'Continúa aquí' : 'Comienza aquí'}
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                <div style={{ width: 38, height: 38, borderRadius: 10, background: 'rgba(4,57,65,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
+                  {moduloActual.icon}
+                </div>
+                <div>
+                  <p style={{ fontSize: 13, fontWeight: 800, color: '#043941', margin: '0 0 2px' }}>
+                    M{moduloActual.numero} — {moduloActual.nombre.split(' ').slice(0, 2).join(' ')}
+                  </p>
+                  <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
+                    {getEstadoModuloLXP(moduloActual.id) === 'en_curso' ? 'En curso' : 'Disponible'} · {getModuloProgreso(slug ?? '', moduloActual.numero).completados}/{getModuloProgreso(slug ?? '', moduloActual.numero).total} secciones
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => navigate(`/taller/${slug}/ruta/modulo/${moduloActual.numero}`)}
+                style={{ width: '100%', background: '#02d47e', color: '#043941', border: 'none', borderRadius: 10, padding: '10px', fontSize: 13, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit' }}>
+                Continuar →
+              </button>
+            </div>
+          )}
+
         </div>
       </div>
     </div>

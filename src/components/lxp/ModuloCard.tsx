@@ -1,6 +1,6 @@
 // src/components/lxp/ModuloCard.tsx
 import { useState } from 'react'
-import { ChevronDown, ChevronRight, Lock, Clock, CheckCircle2, AlertCircle, PlayCircle, Zap } from 'lucide-react'
+import { ChevronRight, Lock } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import type { ModuloLXP } from '@/data/modulosLXP'
 import type { EstadoModulo } from '@/mock/mockEstados'
@@ -8,212 +8,183 @@ import type { EstadoModulo } from '@/mock/mockEstados'
 interface ModuloCardProps {
   modulo: ModuloLXP
   estado: EstadoModulo
+  moduloProgreso?: { porcentaje: number; completados: number; total: number }
   isLast?: boolean
 }
 
-export function ModuloCard({ modulo, estado, isLast = false }: ModuloCardProps) {
-  const [expandido, setExpandido] = useState(estado === 'en_curso' || estado === 'disponible')
+const TIPO_LABEL: Record<string, { label: string; color: string; bg: string }> = {
+  VIDEO:              { label: 'VIDEO',       color: '#0369a1', bg: 'rgba(3,105,161,0.09)'  },
+  QUIZ:               { label: 'QUIZ',        color: '#7c3aed', bg: 'rgba(124,58,237,0.09)' },
+  INTERACTIVO:        { label: 'INTERACTIVO', color: '#059669', bg: 'rgba(5,150,105,0.09)'  },
+  PDF:                { label: 'PDF',         color: '#b45309', bg: 'rgba(180,83,9,0.09)'   },
+  PRESENTACION:       { label: 'PPTX',        color: '#d97706', bg: 'rgba(217,119,6,0.09)'  },
+  EN_VIVO:            { label: 'EN VIVO',     color: '#dc2626', bg: 'rgba(220,38,38,0.09)'  },
+  DESCARGABLE:        { label: 'DESCARGABLE', color: '#0891b2', bg: 'rgba(8,145,178,0.09)'  },
+  ACTIVIDAD_PRACTICA: { label: 'ACTIVIDAD',   color: '#7c3aed', bg: 'rgba(124,58,237,0.09)' },
+}
+
+export function ModuloCard({ modulo, estado, moduloProgreso, isLast = false }: ModuloCardProps) {
+  const [expandido, setExpandido] = useState(estado === 'en_curso' || estado === 'completado')
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
-  const bloqueado = estado === 'bloqueado'
-  const activo    = estado === 'en_curso'
-  const disponible = estado === 'disponible'
+
+  const bloqueado  = estado === 'bloqueado'
+  const activo     = estado === 'en_curso'
   const completado = estado === 'completado'
 
-  const duracionLabel = (min: number) =>
-    min >= 60
-      ? `${Math.floor(min / 60)}h${min % 60 > 0 ? `${min % 60}m` : ''}`
-      : `${min}min`
+  const pct = moduloProgreso?.porcentaje ?? 0
+  const completadosSes = moduloProgreso?.completados ?? 0
+  const totalSes       = moduloProgreso?.total ?? modulo.sesiones.reduce((a, s) => a + s.contenidos.length, 0)
 
-  /* ── Paleta visual por estado ── */
-  const cardStyle: React.CSSProperties = activo ? {
-    background: 'linear-gradient(145deg, #edfff6 0%, #ffffff 100%)',
-    boxShadow: '0 0 0 2px #02d47e, 0 12px 32px rgba(2,212,126,0.14)',
-    borderRadius: 18,
-  } : disponible ? {
-    background: '#ffffff',
-    boxShadow: '0 4px 18px rgba(4,57,65,0.09)',
-    borderRadius: 18,
-  } : completado ? {
-    background: '#f4fdf9',
-    boxShadow: '0 2px 10px rgba(2,212,126,0.07)',
-    borderRadius: 18,
-  } : /* bloqueado */ {
-    background: '#f8fafc',
-    boxShadow: 'none',
-    borderRadius: 18,
-    opacity: 0.72,
+  /* ── borde izquierdo por estado ── */
+  const borderColor = completado ? '#02d47e' : activo ? '#02d47e' : estado === 'disponible' ? '#0ea5e9' : 'transparent'
+
+  /* ── duracion format ── */
+  const fmtMin = (min?: number) => {
+    if (!min) return ''
+    if (min >= 60) return `${Math.floor(min / 60)}h${min % 60 > 0 ? ` ${min % 60}m` : ''}`
+    return `${min} min`
   }
 
-  const dotStyle: React.CSSProperties = activo ? {
-    background: '#043941',
-    border: '2.5px solid #02d47e',
-    color: '#02d47e',
-    boxShadow: '0 0 0 4px rgba(2,212,126,0.18)',
-  } : completado ? {
-    background: '#02d47e',
-    border: '2.5px solid #02d47e',
-    color: '#ffffff',
-    boxShadow: '0 0 0 4px rgba(2,212,126,0.12)',
-  } : disponible ? {
-    background: '#043941',
-    border: '2.5px solid rgba(4,57,65,0.3)',
-    color: '#02d47e',
-    boxShadow: '0 0 0 3px rgba(4,57,65,0.06)',
-  } : {
-    background: '#f1f5f9',
-    border: '2px solid #e2e8f0',
-    color: '#94a3b8',
-  }
-
-  const lineColor = activo || completado ? '#02d47e' : disponible ? 'rgba(4,57,65,0.12)' : '#e2e8f0'
-
-  const badgeConfig = {
-    completado: { label: 'Completado', color: '#02d47e', bg: 'rgba(2,212,126,0.1)' },
-    en_curso:   { label: 'En curso',   color: '#02d47e', bg: 'rgba(2,212,126,0.1)' },
-    disponible: { label: 'Disponible', color: '#045f6c', bg: 'rgba(4,95,108,0.08)' },
-    bloqueado:  { label: 'Bloqueado',  color: '#94a3b8', bg: '#f1f5f9' },
-  }[estado]
-
-  const Icon = activo ? PlayCircle : completado ? CheckCircle2 : disponible ? Zap : Lock
+  const ctaLabel = completado ? 'Repasar módulo' : activo ? 'Continuar módulo' : 'Comenzar módulo'
 
   return (
-    <div className="relative flex gap-4">
-      {/* ── Eje timeline ── */}
-      <div className="flex flex-col items-center shrink-0" style={{ paddingTop: 6 }}>
-        <div
-          className="h-8 w-8 rounded-full flex items-center justify-center text-[13px] font-extrabold shrink-0 z-10 transition-all"
-          style={dotStyle}
-        >
-          {completado
-            ? <CheckCircle2 size={14} />
-            : modulo.numero
-          }
+    <div style={{
+      display: 'flex',
+      marginBottom: isLast ? 0 : 8,
+      position: 'relative',
+    }}>
+      {/* Línea vertical timeline */}
+      {!isLast && (
+        <div style={{
+          position: 'absolute', left: 19, top: 48, bottom: -8,
+          width: 2, background: completado ? '#02d47e' : 'rgba(4,57,65,0.08)',
+          zIndex: 0,
+        }} />
+      )}
+
+      {/* Dot */}
+      <div style={{
+        width: 40, flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 14, zIndex: 1,
+      }}>
+        <div style={{
+          width: 22, height: 22, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800,
+          background: completado ? '#02d47e' : activo ? '#043941' : bloqueado ? '#e2e8f0' : '#e2e8f0',
+          border: activo ? '2.5px solid #02d47e' : 'none',
+          color: completado ? '#fff' : activo ? '#02d47e' : '#94a3b8',
+          boxShadow: activo ? '0 0 0 4px rgba(2,212,126,0.15)' : 'none',
+        }}>
+          {completado ? '✓' : bloqueado ? <Lock size={10} /> : modulo.numero}
         </div>
-        {!isLast && (
-          <div
-            className="w-0.5 flex-1 mt-1.5 transition-colors"
-            style={{ background: lineColor, minHeight: '2rem' }}
-          />
-        )}
       </div>
 
-      {/* ── Card ── */}
-      <div className="flex-1 mb-5 overflow-hidden transition-all" style={cardStyle}>
-
-        {/* Left accent stripe */}
-        {!bloqueado && (
-          <div
-            className="absolute left-0 top-0 bottom-0 w-1 rounded-l-[18px]"
-            style={{
-              background: activo || completado
-                ? 'linear-gradient(to bottom, #02d47e, #00c16e)'
-                : disponible
-                  ? 'linear-gradient(to bottom, #045f6c, #02d47e)'
-                  : 'transparent',
-            }}
-          />
-        )}
+      {/* Card */}
+      <div style={{
+        flex: 1,
+        background: '#fff',
+        borderRadius: 14,
+        border: '1px solid rgba(4,57,65,0.07)',
+        borderLeft: `3px solid ${borderColor}`,
+        boxShadow: activo ? '0 2px 16px rgba(2,212,126,0.1)' : '0 1px 6px rgba(4,57,65,0.05)',
+        overflow: 'hidden',
+        opacity: bloqueado ? 0.6 : 1,
+      }}>
 
         {/* Header */}
         <button
-          onClick={() => setExpandido(!expandido)}
-          className="w-full text-left px-5 py-4 flex items-center gap-3 transition-colors hover:bg-black/[0.015]"
+          onClick={() => !bloqueado && setExpandido(e => !e)}
+          style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: bloqueado ? 'default' : 'pointer', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'inherit' }}
         >
-          <div className="flex-1 min-w-0">
-            <div className="flex flex-wrap items-center gap-2 mb-1">
-              <span className="text-base leading-none" aria-hidden>{modulo.icon}</span>
-              <h3
-                className="font-bold text-sm leading-tight"
-                style={{ color: bloqueado ? '#94a3b8' : '#043941' }}
-              >
-                M{modulo.numero} · {modulo.nombre}
-              </h3>
-              <span
-                className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                style={{ background: badgeConfig.bg, color: badgeConfig.color }}
-              >
-                {badgeConfig.label}
+          {/* Módulo icon */}
+          <div style={{
+            width: 36, height: 36, borderRadius: 10, flexShrink: 0,
+            background: bloqueado ? 'rgba(4,57,65,0.05)' : completado ? 'rgba(2,212,126,0.12)' : activo ? 'rgba(4,57,65,0.1)' : 'rgba(14,165,233,0.1)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
+          }}>
+            {bloqueado ? '🔒' : modulo.icon}
+          </div>
+
+          {/* Info */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3, flexWrap: 'wrap' }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: bloqueado ? '#94a3b8' : '#02d47e' }}>M{modulo.numero}</span>
+              <span style={{ fontSize: 14, fontWeight: 800, color: bloqueado ? '#94a3b8' : '#043941' }}>
+                {modulo.nombre}
               </span>
               {activo && (
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse-soft shrink-0" style={{ background: '#02d47e' }} />
+                <span style={{ fontSize: 10, fontWeight: 700, color: '#02d47e', background: 'rgba(2,212,126,0.1)', padding: '2px 7px', borderRadius: 100 }}>• En curso</span>
+              )}
+              {completado && (
+                <span style={{ fontSize: 10, fontWeight: 700, color: '#059669', background: 'rgba(5,150,105,0.1)', padding: '2px 7px', borderRadius: 100 }}>✓ Completado</span>
+              )}
+              {/* Quiz requerido badge — si el módulo tiene un contenido bloqueante */}
+              {(activo || completado) && modulo.sesiones.some(s => s.contenidos.some(c => c.bloqueaSiguiente)) && (
+                <span style={{ fontSize: 10, fontWeight: 700, color: '#d97706', background: 'rgba(217,119,6,0.1)', padding: '2px 7px', borderRadius: 100 }}>Quiz requerido</span>
               )}
             </div>
-            <p className="text-xs line-clamp-1" style={{ color: bloqueado ? '#cbd5e1' : '#64748b' }}>
-              {modulo.descripcion}
+            <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
+              {bloqueado
+                ? `${modulo.horasTotal}h · ${modulo.fase} · ${modulo.sesiones.length} secciones`
+                : `${completadosSes}/${totalSes} secciones`
+              }
             </p>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="flex items-center gap-1" style={{ color: bloqueado ? '#e2e8f0' : '#94a3b8' }}>
-              <Clock size={11} />
-              <span className="text-xs font-semibold">{modulo.horasTotal}h</span>
-            </div>
-            {expandido
-              ? <ChevronDown size={15} style={{ color: bloqueado ? '#cbd5e1' : '#94a3b8' }} />
-              : <ChevronRight size={15} style={{ color: bloqueado ? '#cbd5e1' : '#94a3b8' }} />
-            }
+          {/* Horas + chevron */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+            <span style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8' }}>{modulo.horasTotal}h</span>
+            <ChevronRight size={14} style={{ color: '#94a3b8', transform: expandido ? 'rotate(90deg)' : 'none', transition: 'transform .2s' }} />
           </div>
         </button>
 
-        {/* Expanded */}
-        {expandido && (
-          <div
-            className="border-t px-5 py-4 space-y-5"
-            style={{ borderColor: activo ? 'rgba(2,212,126,0.15)' : '#f1f5f9', background: 'rgba(255,255,255,0.7)' }}
-          >
-            {modulo.sesiones.map(ses => {
-              const modalidadColor =
-                ses.modalidad === 'sincrono'   ? { bg: 'rgba(2,212,126,0.1)',  text: '#02d47e' } :
-                ses.modalidad === 'presencial' ? { bg: 'rgba(245,158,11,0.1)', text: '#b45309' } :
-                                                  { bg: 'rgba(4,57,65,0.07)',   text: '#045f6c' }
-              return (
-                <div key={ses.id}>
-                  <div className="flex items-center gap-2 mb-2 flex-wrap">
-                    <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md tracking-wide"
-                      style={{ background: modalidadColor.bg, color: modalidadColor.text }}>
-                      {ses.id}
-                    </span>
-                    <span className="text-xs font-bold flex-1 min-w-0 truncate" style={{ color: '#043941' }}>{ses.nombre}</span>
-                    <span className="text-[10px] font-medium tabular-nums shrink-0" style={{ color: '#94a3b8' }}>
-                      {ses.duracionHoras}h
-                    </span>
-                  </div>
-                </div>
-              )
-            })}
-
-            <div className="pt-1">
-              {bloqueado ? (
-                <div className="flex items-center gap-2 px-4 py-2 rounded-xl w-fit" style={{ background: '#f1f5f9' }}>
-                  <Lock size={12} style={{ color: '#cbd5e1' }} />
-                  <span className="text-xs font-semibold" style={{ color: '#94a3b8' }}>
-                    Completa el módulo anterior para acceder
-                  </span>
-                </div>
-              ) : (
-                <button
-                  onClick={() => navigate(`/taller/${slug}/ruta/modulo/${modulo.numero}`)}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:scale-[1.02] hover:opacity-90"
-                  style={{ background: activo ? 'linear-gradient(90deg, #02d47e, #00c16e)' : '#043941' }}
-                >
-                  <Icon size={14} />
-                  {activo ? 'Continuar módulo' : completado ? 'Repasar módulo' : 'Comenzar módulo'}
-                  <ChevronRight size={13} />
-                </button>
-              )}
-            </div>
+        {/* Barra de progreso del módulo */}
+        {!bloqueado && (
+          <div style={{ height: 3, background: 'rgba(4,57,65,0.06)', margin: '0 16px 0' }}>
+            <div style={{ height: '100%', width: `${pct}%`, background: '#02d47e', borderRadius: 3, transition: 'width .5s ease' }} />
           </div>
         )}
 
-        {/* M3 quiz warning */}
-        {modulo.numero === 3 && estado === 'bloqueado' && (
-          <div className="px-5 py-3 border-t flex items-center gap-2"
-            style={{ borderColor: '#fecaca', background: '#fee2e2' }}>
-            <AlertCircle size={13} color="#ef4444" />
-            <p className="text-xs font-semibold" style={{ color: '#ef4444' }}>
-              Debes aprobar el Quiz de Seguridad (80%) para continuar
-            </p>
+        {/* Mensaje bloqueado */}
+        {bloqueado && (
+          <div style={{ padding: '8px 16px 12px', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ fontSize: 12, color: '#ef4444' }}>⊘</span>
+            <span style={{ fontSize: 11, color: '#94a3b8', fontWeight: 600 }}>Completa los módulos anteriores para desbloquear</span>
+          </div>
+        )}
+
+        {/* Expanded: lista de contenidos */}
+        {expandido && !bloqueado && (
+          <div style={{ padding: '8px 16px 14px', borderTop: '1px solid rgba(4,57,65,0.06)' }}>
+            {modulo.sesiones.flatMap((ses, si) =>
+              ses.contenidos.map((c, ci) => {
+                const tipo = TIPO_LABEL[c.tipo] ?? { label: c.tipo, color: '#64748b', bg: 'rgba(100,116,139,0.1)' }
+                const num  = `${modulo.numero}.${si * 10 + ci + 1}`.replace(/^(\d+)\.(\d+)$/, (_, m, n) => `${m}.${parseInt(n)}`)
+                const idx  = modulo.sesiones.slice(0, si).reduce((a, s) => a + s.contenidos.length, 0) + ci
+                return (
+                  <div
+                    key={c.id}
+                    style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: idx < totalSes - 1 ? '1px solid rgba(4,57,65,0.04)' : 'none' }}
+                  >
+                    <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(4,57,65,0.3)', minWidth: 22, flexShrink: 0 }}>
+                      {modulo.numero}.{idx + 1}
+                    </span>
+                    <span style={{ flex: 1, fontSize: 12, fontWeight: 600, color: '#043941' }}>{c.titulo}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0 }}>
+                      <span style={{ fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 5, background: tipo.bg, color: tipo.color }}>{tipo.label}</span>
+                      {c.duracionMin && <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600 }}>{fmtMin(c.duracionMin)}</span>}
+                      {c.bloqueaSiguiente && <span style={{ fontSize: 9, fontWeight: 800, color: '#dc2626', background: 'rgba(220,38,38,0.08)', padding: '2px 6px', borderRadius: 5 }}>🔒 bloquea</span>}
+                    </div>
+                    <ChevronRight size={12} style={{ color: 'rgba(4,57,65,0.2)', flexShrink: 0 }} />
+                  </div>
+                )
+              })
+            )}
+            <button
+              onClick={() => navigate(`/taller/${slug}/ruta/modulo/${modulo.numero}`)}
+              style={{ marginTop: 10, background: activo ? '#043941' : completado ? 'rgba(4,57,65,0.07)' : '#043941', color: activo ? '#02d47e' : completado ? '#043941' : '#02d47e', border: 'none', borderRadius: 10, padding: '9px 18px', fontSize: 12, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit', display: 'inline-flex', alignItems: 'center', gap: 6 }}
+            >
+              {ctaLabel} →
+            </button>
           </div>
         )}
       </div>
