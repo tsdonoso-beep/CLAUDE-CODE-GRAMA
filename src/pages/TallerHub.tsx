@@ -71,7 +71,7 @@ export default function TallerHub() {
       <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.08)' }}>
         <div style={{ padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
 
-          {/* Izquierda: icono + nombre + descripción */}
+          {/* Izquierda: icono + nombre */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 0 }}>
             <div style={{
               width: 52, height: 52, borderRadius: 14, flexShrink: 0,
@@ -80,22 +80,17 @@ export default function TallerHub() {
             }}>
               {taller.icon ?? '🔧'}
             </div>
-            <div style={{ minWidth: 0 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                <h1 style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
-                  {taller.nombre}
-                </h1>
-                <span style={{
-                  background: tallerColor, color: '#fff',
-                  fontSize: 10, fontWeight: 800, padding: '2px 8px',
-                  borderRadius: 100, letterSpacing: '.05em', flexShrink: 0,
-                }}>
-                  T{String(taller.numero).padStart(2, '0')}
-                </span>
-              </div>
-              <p style={{ fontSize: 12, color: '#94a3b8', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 480 }}>
-                {taller.competencias?.slice(0, 3).join(' · ')}
-              </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <h1 style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
+                {taller.nombre}
+              </h1>
+              <span style={{
+                background: tallerColor, color: '#fff',
+                fontSize: 10, fontWeight: 800, padding: '2px 8px',
+                borderRadius: 100, letterSpacing: '.05em', flexShrink: 0,
+              }}>
+                T{String(taller.numero).padStart(2, '0')}
+              </span>
             </div>
           </div>
 
