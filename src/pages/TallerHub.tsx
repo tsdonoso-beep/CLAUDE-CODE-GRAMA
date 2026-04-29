@@ -209,35 +209,33 @@ export default function TallerHub() {
       {/* ══ COMPETENCIAS ══════════════════════════════════════════════════════ */}
       {taller.competencias?.length > 0 && (
         <div style={{ background: '#ffffff', borderBottom: '1px solid rgba(4,57,65,0.06)' }}>
-          <div className="px-8 pb-10 pt-2">
+          <div style={{ padding: '28px 32px 32px', display: 'flex', gap: 48, alignItems: 'start', flexWrap: 'wrap' }}>
 
-            <div
-              ref={compHeaderReveal.ref}
-              className="mb-8"
-              style={{ opacity: compHeaderReveal.visible ? 1 : 0, transform: compHeaderReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity 0.55s ease, transform 0.55s ease' }}
-            >
+            {/* Texto principal */}
+            <div style={{ flex: 1, minWidth: 260 }}>
               <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:12 }}>
-                <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
-                Lo que lograrás
+                <span style={{ display:'inline-block', height:1, width:24, background:'#02d47e' }} />
+                Tu valor como docente
               </span>
-              <h2 className="text-xl font-extrabold mb-2" style={{ color: '#043941' }}>
-                Competencias que desarrollarás
-              </h2>
-              {taller.descripcion && (
-                <p className="text-sm leading-relaxed max-w-2xl" style={{ color: 'rgba(4,57,65,0.5)', lineHeight: 1.75 }}>
-                  {taller.descripcion}
-                </p>
-              )}
+              <p style={{ fontSize: 15, fontWeight: 500, color: 'rgba(4,57,65,0.75)', lineHeight: 1.8, margin: 0, maxWidth: 520 }}>
+                A través de esta ruta aprenderás a <strong style={{ color: '#043941', fontWeight: 800 }}>conocer, instalar y operar</strong> el equipamiento de tu taller de {taller.nombreCorto.toLowerCase()}.
+                {' '}Pasarás del dominio técnico al pedagógico — diseñando sesiones reales y evaluando las competencias de tus estudiantes con criterio.
+              </p>
             </div>
 
-            {/* Grid de competencias con borde de acento */}
-            <div
-              ref={compGridReveal.ref}
-              className="grid sm:grid-cols-2 gap-3"
-              style={{ opacity: compGridReveal.visible ? 1 : 0, transform: compGridReveal.visible ? 'none' : 'translateY(24px)', transition: 'opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s' }}
-            >
-              {taller.competencias.map((c, i) => (
-                <CompetenciaCard key={i} index={i} text={c} color={tallerColor} />
+            {/* Pilares pequeños */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, flexShrink: 0 }}>
+              {[
+                { n: '01', label: 'Dominio del equipamiento' },
+                { n: '02', label: 'Diseño de sesiones técnicas' },
+                { n: '03', label: 'Evaluación por competencias' },
+                { n: '04', label: 'Certificación docente MINEDU' },
+              ].map(p => (
+                <div key={p.n} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ fontSize: 10, fontWeight: 800, color: tallerColor, opacity: 0.7, width: 20, textAlign: 'right', flexShrink: 0 }}>{p.n}</span>
+                  <span style={{ width: 1, height: 14, background: 'rgba(4,57,65,0.12)', flexShrink: 0 }} />
+                  <span style={{ fontSize: 12, fontWeight: 600, color: '#043941' }}>{p.label}</span>
+                </div>
               ))}
             </div>
 
