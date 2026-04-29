@@ -246,16 +246,11 @@ export default function TallerHub() {
                   'Evaluación por competencias',
                   'Certificación docente MINEDU',
                 ].map((label, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 14px 9px 10px', borderRadius: 10, background: 'rgba(4,57,65,0.03)', border: '1px solid rgba(4,57,65,0.07)' }}>
-                    <span style={{
-                      fontSize: 10, fontWeight: 800, color: '#fff',
-                      background: '#043941', borderRadius: 6,
-                      width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      flexShrink: 0, letterSpacing: '0.02em',
-                    }}>
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                    <span style={{ fontSize: 11, fontWeight: 800, color: tallerColor, flexShrink: 0, marginTop: 2 }}>
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: '#043941' }}>{label}</span>
+                    <span style={{ fontSize: 13, fontWeight: 600, color: '#043941', lineHeight: 1.5 }}>{label}</span>
                   </div>
                 ))}
               </div>
