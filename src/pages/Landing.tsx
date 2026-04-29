@@ -639,7 +639,7 @@ export default function Landing() {
                 <div className="talleres-split" style={{ display:'flex', gap:24, alignItems:'stretch', marginBottom:'2.5rem' }}>
 
                   {/* ── Lista izquierda ── */}
-                  <div className="talleres-list" style={{ flexShrink:0, width:260, display:'flex', flexDirection:'column', gap:2, overflowY:'auto', maxHeight:540 }}>
+                  <div className="talleres-list" style={{ flexShrink:0, width:310, display:'flex', flexDirection:'column', gap:2, overflowY:'auto', maxHeight:540 }}>
                     {talleresConfig.map((item, i) => {
                       const isActive = selectedTaller === i
                       const itemAccent = `hsl(${item.color})`
@@ -648,8 +648,8 @@ export default function Landing() {
                           key={item.slug}
                           onClick={() => setSelectedTaller(i)}
                           style={{
-                            display:'flex', alignItems:'center', gap:10,
-                            padding:'9px 12px 9px 14px',
+                            display:'flex', alignItems:'center', gap:12,
+                            padding:'11px 14px 11px 16px',
                             borderRadius:10,
                             cursor:'pointer',
                             borderLeft: `3px solid ${isActive ? itemAccent : 'transparent'}`,
@@ -659,10 +659,10 @@ export default function Landing() {
                           onMouseEnter={e => { if (!isActive) { const el = e.currentTarget as HTMLElement; el.style.background='rgba(255,255,255,.5)'; el.style.borderLeftColor='rgba(4,57,65,.12)' } }}
                           onMouseLeave={e => { if (!isActive) { const el = e.currentTarget as HTMLElement; el.style.background='transparent'; el.style.borderLeftColor='transparent' } }}
                         >
-                          <span style={{ fontSize:'var(--t-overline)', fontWeight:800, letterSpacing:'.06em', color: isActive ? itemAccent : 'rgba(4,57,65,.28)', width:24, flexShrink:0 }}>
+                          <span style={{ fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.06em', color: isActive ? itemAccent : 'rgba(4,57,65,.3)', width:28, flexShrink:0 }}>
                             T{String(item.numero).padStart(2,'0')}
                           </span>
-                          <span style={{ flex:1, fontSize:'var(--t-body)', fontWeight: isActive ? 700 : 400, color: isActive ? '#043941' : 'rgba(4,57,65,.5)', lineHeight:1.3, transition:'all .16s' }}>
+                          <span style={{ flex:1, fontSize:'var(--t-body-lg)', fontWeight: isActive ? 800 : 500, color: isActive ? '#043941' : 'rgba(4,57,65,.6)', lineHeight:1.3, transition:'all .16s' }}>
                             {item.nombre}
                           </span>
                         </div>
