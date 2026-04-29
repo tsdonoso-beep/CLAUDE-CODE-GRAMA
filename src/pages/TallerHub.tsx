@@ -1,11 +1,12 @@
 // src/pages/TallerHub.tsx
 import { useNavigate } from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
-import { Package, ArrowRight } from 'lucide-react'
+import { Package, ArrowRight, ExternalLink } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { useProgress } from '@/contexts/ProgressContext'
 import { modulosLXP } from '@/data/modulosLXP'
 import { getBienesByTaller } from '@/data/bienesData'
+import { getProximaSesion, formatFechaSesion, formatHoraSesion, diasParaSesion } from '@/data/sesionesLXP'
 import {
   SvgAutomotriz,
   SvgEbanisteria,
@@ -96,7 +97,7 @@ function splitNombre(nombre: string) {
 export default function TallerHub() {
   const { taller, slug } = useTaller()
   const navigate = useNavigate()
-  const { getEstadoModuloLXP, getModuloProgreso } = useProgress()
+  const { getEstadoModuloLXP, getModuloProgreso, getTallerProgreso, getContenidoEstado } = useProgress()
 
   const compHeaderReveal = useReveal()
   const compGridReveal   = useReveal(0.08)
@@ -116,7 +117,24 @@ export default function TallerHub() {
     modulosLXP.find(m => getEstadoModuloLXP(m.id) === 'en_curso') ??
     modulosLXP.find(m => getEstadoModuloLXP(m.id) === 'disponible') ??
     modulosLXP[0]
-  const currentModPct = getModuloProgreso(slug, currentMod.numero)
+  const currentModPct  = getModuloProgreso(slug, currentMod.numero)
+  const tallerProgreso = getTallerProgreso(slug)
+  const proximaSesion  = getProximaSesion(slug)
+
+  // Últimos contenidos completados (últimos 3, orden inverso)
+  const recentCompleted: { titulo: string; tipo: string }[] = []
+  for (let mi = modulosLXP.length - 1; mi >= 0 && recentCompleted.length < 3; mi--) {
+    const mod = modulosLXP[mi]
+    for (let si = mod.sesiones.length - 1; si >= 0 && recentCompleted.length < 3; si--) {
+      const ses = mod.sesiones[si]
+      for (let ci = ses.contenidos.length - 1; ci >= 0 && recentCompleted.length < 3; ci--) {
+        const c = ses.contenidos[ci]
+        if (getContenidoEstado(c.id).completed) {
+          recentCompleted.push({ titulo: c.titulo, tipo: c.tipo })
+        }
+      }
+    }
+  }
 
   const bienesporZona = taller.zonas.slice(0, 3).map(z => {
     const items = todosLos
@@ -434,72 +452,105 @@ export default function TallerHub() {
           </div>
         )}
 
-        {/* ── EQUIPAMIENTO DEL TALLER ── */}
-        <div
-          ref={repoReveal.ref}
-          style={{ opacity: repoReveal.visible ? 1 : 0, transform: repoReveal.visible ? 'none' : 'translateY(28px)', transition: 'opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s' }}
-        >
-        <div className="bg-white overflow-hidden"
-          style={{ borderRadius: 20, boxShadow: '0 4px 20px rgba(4,57,65,.08)' }}>
+        {/* ── SIDEBAR DERECHA ── */}
+        {!isGeneralEpt && (
           <div
-            className="px-6 pt-6 pb-4 flex items-center justify-between cursor-pointer group"
-            onClick={() => navigate(`/taller/${slug}/repositorio`)}
+            ref={repoReveal.ref}
+            style={{ display: 'flex', flexDirection: 'column', gap: 14, opacity: repoReveal.visible ? 1 : 0, transform: repoReveal.visible ? 'none' : 'translateY(20px)', transition: 'opacity .5s ease .1s, transform .5s ease .1s' }}
           >
-            <div>
-              <p style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:4 }}>
-                <span style={{ display:'inline-block', height:1, width:32, background:'#02d47e' }} />
-                Con qué trabajarás
-              </p>
-              <h2 className="text-lg font-extrabold" style={{ color: '#043941' }}>
-                Equipamiento del taller
-              </h2>
-            </div>
-            <div className="h-8 w-8 rounded-full flex items-center justify-center shrink-0 transition-all group-hover:scale-110"
-              style={{ background: '#f0faf5', border: '1.5px solid rgba(4,57,65,0.1)' }}>
-              <ChevronRight size={15} color="#043941" />
-            </div>
-          </div>
 
-          <div className="px-6 pb-4 space-y-5">
-            {(bienesporZona.length > 0 ? bienesporZona : [{ zona: 'Equipos representativos', items: bienesFallback }]).map(grupo => (
-              <div key={grupo.zona}>
-                <p className="text-[10px] font-extrabold uppercase tracking-widest mb-2"
-                  style={{ color: 'rgba(4,57,65,0.35)' }}>
-                  {grupo.zona.replace(/seguridad/i, 'Almacén')}
+            {/* ① Progreso global */}
+            <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.06)', padding: '20px' }}>
+              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 14px' }}>Tu progreso global</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+                {/* Ring */}
+                <div style={{ position: 'relative', width: 80, height: 80, flexShrink: 0 }}>
+                  <svg width={80} height={80} style={{ transform: 'rotate(-90deg)', display: 'block' }}>
+                    <circle cx={40} cy={40} r={33} fill="none" stroke="rgba(4,57,65,0.07)" strokeWidth={7} />
+                    <circle cx={40} cy={40} r={33} fill="none" stroke={tallerColor} strokeWidth={7}
+                      strokeDasharray={`${Math.min(tallerProgreso.porcentaje / 100, 1) * 2 * Math.PI * 33} ${2 * Math.PI * 33}`}
+                      strokeLinecap="round" style={{ transition: 'stroke-dasharray .6s ease' }} />
+                  </svg>
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 900, color: '#043941' }}>
+                    {tallerProgreso.porcentaje}%
+                  </div>
+                </div>
+                <div>
+                  <p style={{ fontSize: 15, fontWeight: 900, color: '#043941', margin: '0 0 2px' }}>
+                    {modulosLXP.filter(m => getEstadoModuloLXP(m.id) === 'completado').length} de {modulosLXP.length} módulos
+                  </p>
+                  <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 8px' }}>
+                    {Math.round(tallerProgreso.porcentaje * totalHoras / 100)}h de {totalHoras}h totales
+                  </p>
+                  <p style={{ fontSize: 11, fontWeight: 700, color: tallerColor, margin: 0 }}>{taller.nombreCorto}</p>
+                  {/* barra */}
+                  <div style={{ height: 4, width: 120, background: 'rgba(4,57,65,0.07)', borderRadius: 4, marginTop: 4 }}>
+                    <div style={{ height: '100%', width: `${tallerProgreso.porcentaje}%`, background: tallerColor, borderRadius: 4, transition: 'width .6s ease' }} />
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={() => navigate(`/taller/${slug}/ruta/modulo/${currentMod.numero}`)}
+                style={{ width: '100%', background: '#043941', color: '#02d47e', border: 'none', borderRadius: 12, padding: '11px', fontSize: 13, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, transition: 'opacity .18s' }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = '0.82')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+              >
+                Continuar M{currentMod.numero} — {currentMod.nombre.split(' ').slice(0, 2).join(' ')} <ArrowRight size={13} />
+              </button>
+            </div>
+
+            {/* ② Próxima sesión */}
+            {proximaSesion && (
+              <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.06)', padding: '18px 20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
+                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#f97316', flexShrink: 0, boxShadow: '0 0 0 3px rgba(249,115,22,0.2)' }} />
+                  <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: '#f97316', margin: 0 }}>
+                    Próxima sesión · en {diasParaSesion(proximaSesion.fecha)}d
+                  </p>
+                </div>
+                <p style={{ fontSize: 14, fontWeight: 800, color: '#043941', margin: '0 0 4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {proximaSesion.titulo}
                 </p>
-                <div className="space-y-1.5">
-                  {grupo.items.map((b, bi) => (
-                    <div key={bi} className="flex items-center gap-2.5 py-1.5 px-3 rounded-xl"
-                      style={{ background: '#f4f9f9' }}>
-                      <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ background: tallerColor }} />
-                      <span className="text-xs font-medium leading-snug" style={{ color: '#043941' }}>
-                        {b.nombre}
+                <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 14px' }}>
+                  {formatFechaSesion(proximaSesion.fecha)} · {formatHoraSesion(proximaSesion.fecha)} · {proximaSesion.duracionMin} min
+                </p>
+                {proximaSesion.link ? (
+                  <a
+                    href={proximaSesion.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%', background: '#f97316', color: '#fff', border: 'none', borderRadius: 11, padding: '10px', fontSize: 13, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'none', transition: 'opacity .18s', boxSizing: 'border-box' }}
+                  >
+                    <ExternalLink size={13} /> Unirse a la sesión
+                  </a>
+                ) : (
+                  <p style={{ fontSize: 11, textAlign: 'center', color: '#94a3b8', margin: 0 }}>Enlace disponible próximamente</p>
+                )}
+              </div>
+            )}
+
+            {/* ③ Actividad reciente */}
+            {recentCompleted.length > 0 && (
+              <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.06)', padding: '18px 20px' }}>
+                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 12px' }}>Actividad reciente</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {recentCompleted.map((item, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: tallerColor, flexShrink: 0 }} />
+                      <span style={{ flex: 1, fontSize: 12, fontWeight: 600, color: '#043941', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {item.titulo}
                       </span>
-                      {b.cantidad > 1 && (
-                        <span className="ml-auto text-[10px] font-bold shrink-0"
-                          style={{ color: 'rgba(4,57,65,0.35)' }}>
-                          ×{b.cantidad}
-                        </span>
-                      )}
+                      <span style={{ fontSize: 10, fontWeight: 700, color: item.tipo === 'QUIZ' ? '#059669' : '#0ea5e9', flexShrink: 0 }}>
+                        {item.tipo === 'QUIZ' ? 'Aprobado' : 'Completado'}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
+            )}
 
-          <div className="px-6 pb-5">
-            <button
-              onClick={() => navigate(`/taller/${slug}/repositorio`)}
-              className="w-full flex items-center justify-center gap-2 py-3 text-sm font-bold transition-all hover:opacity-90 active:scale-[0.98]"
-              style={{ background: 'rgba(4,57,65,0.05)', color: '#043941', border: '1.5px solid rgba(4,57,65,0.12)', borderRadius: 100 }}
-            >
-              Ver repositorio completo
-              <ArrowRight size={14} />
-            </button>
           </div>
-        </div>
-        </div>
+        )}
 
       </div>
     </div>
