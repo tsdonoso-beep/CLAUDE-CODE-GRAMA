@@ -152,33 +152,46 @@ export function ModuloCard({ modulo, estado, moduloProgreso, isLast = false }: M
           </div>
         )}
 
-        {/* Expanded: lista de contenidos */}
+        {/* Expanded: secciones + contenidos */}
         {expandido && !bloqueado && (
-          <div style={{ padding: '8px 16px 14px', borderTop: '1px solid rgba(4,57,65,0.06)' }}>
-            {modulo.sesiones.flatMap((ses, si) =>
-              ses.contenidos.map((c, ci) => {
-                const tipo = TIPO_LABEL[c.tipo] ?? { label: c.tipo, color: '#64748b', bg: 'rgba(100,116,139,0.1)' }
-                const num  = `${modulo.numero}.${si * 10 + ci + 1}`.replace(/^(\d+)\.(\d+)$/, (_, m, n) => `${m}.${parseInt(n)}`)
-                const idx  = modulo.sesiones.slice(0, si).reduce((a, s) => a + s.contenidos.length, 0) + ci
-                return (
-                  <div
-                    key={c.id}
-                    style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: idx < totalSes - 1 ? '1px solid rgba(4,57,65,0.04)' : 'none' }}
-                  >
-                    <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(4,57,65,0.3)', minWidth: 22, flexShrink: 0 }}>
-                      {modulo.numero}.{idx + 1}
-                    </span>
-                    <span style={{ flex: 1, fontSize: 12, fontWeight: 600, color: '#043941' }}>{c.titulo}</span>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0 }}>
-                      <span style={{ fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 5, background: tipo.bg, color: tipo.color }}>{tipo.label}</span>
-                      {c.duracionMin && <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600 }}>{fmtMin(c.duracionMin)}</span>}
-                      {c.bloqueaSiguiente && <span style={{ fontSize: 9, fontWeight: 800, color: '#dc2626', background: 'rgba(220,38,38,0.08)', padding: '2px 6px', borderRadius: 5 }}>🔒 bloquea</span>}
-                    </div>
-                    <ChevronRight size={12} style={{ color: 'rgba(4,57,65,0.2)', flexShrink: 0 }} />
+          <div style={{ padding: '0 16px 14px', borderTop: '1px solid rgba(4,57,65,0.06)' }}>
+            {modulo.sesiones.map((ses, si) => {
+              const offsetIdx = modulo.sesiones.slice(0, si).reduce((a, s) => a + s.contenidos.length, 0)
+              return (
+                <div key={ses.id}>
+                  {/* Cabecera de sección */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 0 6px', borderBottom: '1px solid rgba(4,57,65,0.06)', marginTop: si === 0 ? 8 : 4 }}>
+                    <span style={{ fontSize: 10, fontWeight: 800, color: '#02d47e', flexShrink: 0, minWidth: 20 }}>S{si + 1}</span>
+                    <span style={{ fontSize: 11, fontWeight: 800, color: '#043941', flex: 1 }}>{ses.nombre}</span>
+                    {ses.duracionHoras > 0 && (
+                      <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600, flexShrink: 0 }}>{ses.duracionHoras}h</span>
+                    )}
                   </div>
-                )
-              })
-            )}
+                  {/* Contenidos de la sección */}
+                  {ses.contenidos.map((c, ci) => {
+                    const tipo = TIPO_LABEL[c.tipo] ?? { label: c.tipo, color: '#64748b', bg: 'rgba(100,116,139,0.1)' }
+                    const idx  = offsetIdx + ci
+                    return (
+                      <div
+                        key={c.id}
+                        style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 0 6px 10px', borderBottom: ci < ses.contenidos.length - 1 ? '1px solid rgba(4,57,65,0.03)' : 'none' }}
+                      >
+                        <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(4,57,65,0.25)', minWidth: 26, flexShrink: 0 }}>
+                          {modulo.numero}.{idx + 1}
+                        </span>
+                        <span style={{ flex: 1, fontSize: 12, fontWeight: 600, color: '#043941' }}>{c.titulo}</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0 }}>
+                          <span style={{ fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 5, background: tipo.bg, color: tipo.color }}>{tipo.label}</span>
+                          {c.duracionMin && <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600 }}>{fmtMin(c.duracionMin)}</span>}
+                          {c.bloqueaSiguiente && <span style={{ fontSize: 9, fontWeight: 800, color: '#dc2626', background: 'rgba(220,38,38,0.08)', padding: '2px 6px', borderRadius: 5 }}>🔒 bloquea</span>}
+                        </div>
+                        <ChevronRight size={12} style={{ color: 'rgba(4,57,65,0.2)', flexShrink: 0 }} />
+                      </div>
+                    )
+                  })}
+                </div>
+              )
+            })}
             <button
               onClick={() => navigate(`/taller/${slug}/ruta/modulo/${modulo.numero}`)}
               style={{ marginTop: 10, background: activo ? '#043941' : completado ? 'rgba(4,57,65,0.07)' : '#043941', color: activo ? '#02d47e' : completado ? '#043941' : '#02d47e', border: 'none', borderRadius: 10, padding: '9px 18px', fontSize: 12, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit', display: 'inline-flex', alignItems: 'center', gap: 6 }}
