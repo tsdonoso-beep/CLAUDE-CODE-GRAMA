@@ -134,44 +134,25 @@ export default function Landing() {
         position: 'relative', overflow: 'hidden',
       }}>
 
-        {/* ── Formas de fondo ── */}
-        {/* Triángulos grandes de esquina */}
-        <div style={{ position:'absolute', bottom:-160, left:-120, width:520, height:520, background:'var(--grama-menta)', clipPath:'polygon(0 0,100% 0,0 100%)', opacity:.07, pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:-100, right:-100, width:400, height:400, background:'var(--grama-oscuro)', clipPath:'polygon(100% 0,100% 100%,0 100%)', opacity:.06, pointerEvents:'none' }} />
-
-        {/* Triángulos flotantes */}
-        <div style={{ position:'absolute', top:'10%', left:'6%', width:110, height:110, background:'var(--grama-menta)', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.28, animation:'heroFb 11s ease-in-out infinite', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:'20%', right:'6%', width:90, height:90, background:'#d4c4fc', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.45, animation:'heroFb 9s ease-in-out infinite 1.5s', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', bottom:'20%', left:'5%', width:80, height:80, background:'#f8ee91', clipPath:'polygon(50% 100%,0 0,100% 0)', opacity:.5, animation:'heroFd 13s ease-in-out infinite 1s', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', bottom:'28%', right:'5%', width:70, height:70, background:'#b8edd0', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.55, animation:'heroFb 10s ease-in-out infinite 3s', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:'48%', left:'22%', width:60, height:60, background:'#d4c4fc', clipPath:'polygon(50% 100%,0 0,100% 0)', opacity:.3, animation:'heroFa 14s ease-in-out infinite 2s', pointerEvents:'none' }} />
-
-        {/* Círculos */}
-        <div style={{ position:'absolute', top:'8%', right:'20%', width:110, height:110, borderRadius:'50%', background:'#f8ee91', opacity:.3, animation:'heroFf 8s ease-in-out infinite', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:'52%', left:'2%', width:80, height:80, borderRadius:'50%', background:'#d4c4fc', opacity:.38, animation:'heroFf 12s ease-in-out infinite 2s', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', bottom:'15%', right:'16%', width:60, height:60, borderRadius:'50%', background:'var(--grama-menta)', opacity:.3, animation:'heroFf 9s ease-in-out infinite 1s', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:'35%', left:'26%', width:44, height:44, borderRadius:'50%', background:'#b8edd0', opacity:.35, animation:'heroFf 14s ease-in-out infinite 3s', pointerEvents:'none' }} />
-
-        {/* Cruces / símbolo + */}
-        <svg style={{ position:'absolute', top:'26%', left:'2%', width:64, height:64, opacity:.35, animation:'heroFe 11s ease-in-out infinite', pointerEvents:'none' }} viewBox="0 0 28 28">
+        {/* ── Formas de fondo — 6 shapes, todas dentro del área visible ── */}
+        {/* Top-left: triángulo verde */}
+        <div style={{ position:'absolute', top:'10%', left:'5%', width:90, height:90, background:'var(--grama-menta)', clipPath:'polygon(50% 0,100% 100%,0 100%)', opacity:.22, animation:'heroFb 11s ease-in-out infinite', pointerEvents:'none' }} />
+        {/* Top-right: círculo amarillo */}
+        <div style={{ position:'absolute', top:'8%', right:'20%', width:110, height:110, borderRadius:'50%', background:'#f8ee91', opacity:.28, animation:'heroFf 8s ease-in-out infinite', pointerEvents:'none' }} />
+        {/* Bottom-left: triángulo amarillo — echo hacia perfiles */}
+        <div style={{ position:'absolute', bottom:'22%', left:'5%', width:72, height:72, background:'#f8ee91', clipPath:'polygon(50% 100%,0 0,100% 0)', opacity:.38, animation:'heroFd 13s ease-in-out infinite 1s', pointerEvents:'none' }} />
+        {/* Bottom-right: círculo lila — echo hacia perfiles */}
+        <div style={{ position:'absolute', bottom:'20%', right:'7%', width:60, height:60, borderRadius:'50%', background:'#d4c4fc', opacity:.40, animation:'heroFf 12s ease-in-out infinite 2s', pointerEvents:'none' }} />
+        {/* Cruz verde izquierda */}
+        <svg style={{ position:'absolute', top:'28%', left:'2%', width:52, height:52, opacity:.28, animation:'heroFe 11s ease-in-out infinite', pointerEvents:'none' }} viewBox="0 0 28 28">
           <rect x="11" y="2" width="6" height="24" rx="3" fill="var(--grama-menta)"/>
           <rect x="2" y="11" width="24" height="6" rx="3" fill="var(--grama-menta)"/>
         </svg>
-        <svg style={{ position:'absolute', top:'13%', left:'38%', width:52, height:52, opacity:.32, animation:'heroFe 9s ease-in-out infinite 2s', pointerEvents:'none' }} viewBox="0 0 28 28">
+        {/* Cruz lila derecha */}
+        <svg style={{ position:'absolute', top:'14%', right:'5%', width:44, height:44, opacity:.28, animation:'heroFe 9s ease-in-out infinite 2s', pointerEvents:'none' }} viewBox="0 0 28 28">
           <rect x="11" y="2" width="6" height="24" rx="3" fill="#d4c4fc"/>
           <rect x="2" y="11" width="24" height="6" rx="3" fill="#d4c4fc"/>
         </svg>
-        <svg style={{ position:'absolute', bottom:'25%', right:'3%', width:56, height:56, opacity:.38, animation:'heroFe 13s ease-in-out infinite 1s', pointerEvents:'none' }} viewBox="0 0 28 28">
-          <rect x="11" y="2" width="6" height="24" rx="3" fill="#f8ee91"/>
-          <rect x="2" y="11" width="24" height="6" rx="3" fill="#f8ee91"/>
-        </svg>
-        <svg style={{ position:'absolute', top:'62%', right:'24%', width:44, height:44, opacity:.3, animation:'heroFe 10s ease-in-out infinite 3.5s', pointerEvents:'none' }} viewBox="0 0 28 28">
-          <rect x="11" y="2" width="6" height="24" rx="3" fill="#b8edd0"/>
-          <rect x="2" y="11" width="24" height="6" rx="3" fill="#b8edd0"/>
-        </svg>
-
-        {/* Cuadrado rotado */}
-        <div style={{ position:'absolute', top:'28%', left:'43%', width:150, height:150, background:'#f8ee91', borderRadius:20, opacity:.13, transform:'rotate(22deg)', animation:'heroFf 10s ease-in-out infinite', pointerEvents:'none' }} />
 
         {/* ── Columna izquierda ── */}
         <div style={{ position:'relative', zIndex:2, animation:'heroNavIn .7s ease both' }}>
@@ -239,6 +220,9 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── Bridge Hero → Perfiles ── */}
+      <div style={{ height:2, background:'linear-gradient(90deg, transparent, var(--grama-menta) 35%, var(--grama-menta) 65%, transparent)', opacity:.35, flexShrink:0 }} />
+
       {/* ══ PERFILES (TABS) ══════════════════════════════════════════════════ */}
       <section id="perfiles" style={{
         background: '#ffffff',
@@ -246,10 +230,13 @@ export default function Landing() {
         overflow: 'hidden',
         position: 'relative',
       }}>
-        {/* Shapes decorativas */}
-        <div style={{ position:'absolute', top:-80, left:'5%', width:220, height:220, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.4, pointerEvents:'none', animation:'heroFa 16s ease-in-out infinite' }} />
-        <div style={{ position:'absolute', bottom:-120, right:'4%', width:260, height:260, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.4, pointerEvents:'none', animation:'heroFd 18s ease-in-out infinite 2s' }} />
-        <div style={{ position:'absolute', top:'40%', right:-60, width:120, height:96, background:'#f8ee91', borderRadius:'0 0 48px 48px', opacity:.4, pointerEvents:'none', animation:'heroFb 14s ease-in-out infinite 1s' }} />
+        {/* Shapes — echo de lila+amarillo del hero, sin offsets negativos */}
+        <div style={{ position:'absolute', top:'8%', left:'3%', width:180, height:180, background:'#d4c4fc', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.28, pointerEvents:'none', animation:'heroFa 16s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', bottom:'8%', right:'3%', width:220, height:220, background:'#b8edd0', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.22, pointerEvents:'none', animation:'heroFd 18s ease-in-out infinite 2s' }} />
+        <svg style={{ position:'absolute', top:'52%', right:'2%', width:56, height:56, opacity:.20, animation:'heroFe 14s ease-in-out infinite 1s', pointerEvents:'none' }} viewBox="0 0 28 28">
+          <rect x="11" y="2" width="6" height="24" rx="3" fill="#f8ee91"/>
+          <rect x="2" y="11" width="24" height="6" rx="3" fill="#f8ee91"/>
+        </svg>
 
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
@@ -495,13 +482,16 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── Bridge Perfiles → Cómo Funciona ── */}
+      <div style={{ height:2, background:'linear-gradient(90deg, transparent, var(--grama-menta) 35%, var(--grama-menta) 65%, transparent)', opacity:.35, flexShrink:0 }} />
+
       {/* ══ CÓMO FUNCIONA ════════════════════════════════════════════════════ */}
       <section id="como" style={{ background: 'hsl(54,89%,98%)', padding: '5.5rem 1.5rem', position:'relative', overflow:'hidden' }}>
 
-        {/* Shape fondo — círculo lila top-right, triángulo amarillo bottom-left, círculo verde mid-left */}
-        <div style={{ position:'absolute', top:-100, right:-80, width:340, height:340, borderRadius:'50%', background:'#d4c4fc', opacity:.35, pointerEvents:'none' }} />
-        <div style={{ position:'absolute', bottom:-80, left:'3%', width:260, height:260, background:'#f8ee91', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.45, pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:'45%', left:-40, width:100, height:100, borderRadius:'50%', background:'var(--grama-menta)', opacity:.22, pointerEvents:'none' }} />
+        {/* Shapes — echo de b8edd0 (mint claro) de perfiles, todo dentro */}
+        <div style={{ position:'absolute', top:'8%', right:'4%', width:260, height:260, borderRadius:'50%', background:'#b8edd0', opacity:.28, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:'10%', left:'3%', width:200, height:200, background:'#f8ee91', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.28, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:'48%', left:'2%', width:80, height:80, borderRadius:'50%', background:'var(--grama-menta)', opacity:.16, pointerEvents:'none' }} />
 
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
@@ -587,13 +577,16 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── Bridge Cómo Funciona → Talleres ── */}
+      <div style={{ height:2, background:'linear-gradient(90deg, transparent, var(--grama-menta) 35%, var(--grama-menta) 65%, transparent)', opacity:.35, flexShrink:0 }} />
+
       {/* ══ TALLERES (role-aware) ════════════════════════════════════════════ */}
       <section id="talleres" style={{ background: '#fff', padding: '5rem 1.5rem', position:'relative', overflow:'hidden' }}>
 
-        {/* Shapes */}
-        <div style={{ position:'absolute', top:-70, left:'8%', width:108, height:260, background:'#f8ee91', borderRadius:'0 0 54px 54px', opacity:.32, pointerEvents:'none', animation:'heroFb 13s ease-in-out infinite' }} />
-        <div style={{ position:'absolute', bottom:-100, right:'6%', width:300, height:300, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.28, pointerEvents:'none', animation:'heroFd 16s ease-in-out infinite 2s' }} />
-        <div style={{ position:'absolute', top:'14%', left:'5%', width:52, height:52, background:'var(--grama-menta)', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 24s linear infinite', pointerEvents:'none', opacity:.45 }} />
+        {/* Shapes — echo de f8ee91+b8edd0 de cómo funciona, todo dentro */}
+        <div style={{ position:'absolute', top:'8%', left:'5%', width:100, height:240, background:'#f8ee91', borderRadius:'0 0 50px 50px', opacity:.22, pointerEvents:'none', animation:'heroFb 13s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', bottom:'10%', right:'5%', width:240, height:240, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.20, pointerEvents:'none', animation:'heroFd 16s ease-in-out infinite 2s' }} />
+        <div style={{ position:'absolute', top:'14%', left:'5%', width:52, height:52, background:'var(--grama-menta)', clipPath:'polygon(38% 0%,62% 0%,62% 38%,100% 38%,100% 62%,62% 62%,62% 100%,38% 100%,38% 62%,0% 62%,0% 38%,38% 38%)', animation:'heroSpin 24s linear infinite', pointerEvents:'none', opacity:.35 }} />
 
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
@@ -824,12 +817,15 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── Bridge Talleres → FAQ ── */}
+      <div style={{ height:2, background:'linear-gradient(90deg, transparent, var(--grama-menta) 35%, var(--grama-menta) 65%, transparent)', opacity:.35, flexShrink:0 }} />
+
       {/* ══ FAQ + CTA ════════════════════════════════════════════════════════ */}
       <section id="faq" style={{ background: '#f0fdf6', padding: '5.5rem 1.5rem', position:'relative', overflow:'hidden' }}>
 
-        {/* Shapes */}
-        <div style={{ position:'absolute', top:-100, left:'10%', width:280, height:280, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.2, pointerEvents:'none', animation:'heroFa 17s ease-in-out infinite' }} />
-        <div style={{ position:'absolute', bottom:-100, right:'5%', width:240, height:240, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.16, pointerEvents:'none', animation:'heroFd 19s ease-in-out infinite 2s' }} />
+        {/* Shapes — echo de d4c4fc (lila) de talleres, todo dentro */}
+        <div style={{ position:'absolute', top:'10%', left:'6%', width:240, height:240, background:'#d4c4fc', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.20, pointerEvents:'none', animation:'heroFa 17s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', bottom:'10%', right:'4%', width:200, height:200, background:'#b8edd0', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.22, pointerEvents:'none', animation:'heroFd 19s ease-in-out infinite 2s' }} />
 
         <div style={{ maxWidth:1100, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 340px', gap:48, alignItems:'start' }}>
 
