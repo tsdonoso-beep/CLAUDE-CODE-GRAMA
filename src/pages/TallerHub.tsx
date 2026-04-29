@@ -229,6 +229,10 @@ export default function TallerHub() {
 
             {/* Pilares pequeños */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flexShrink: 0 }}>
+              <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'.72rem', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'#02d47e', marginBottom:4 }}>
+                <span style={{ display:'inline-block', height:1, width:24, background:'#02d47e' }} />
+                Lo que lograrás
+              </span>
               {[
                 { n: '01', label: 'Dominio del equipamiento' },
                 { n: '02', label: 'Diseño de sesiones técnicas' },
