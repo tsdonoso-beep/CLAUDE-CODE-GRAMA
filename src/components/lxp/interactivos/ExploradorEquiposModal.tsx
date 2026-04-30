@@ -263,5 +263,6 @@ export function ExploradorEquiposModal({ onClose, onComplete }: Props) {
         </div>
       </div>
     </div>
+    </Portal>
   )
 }

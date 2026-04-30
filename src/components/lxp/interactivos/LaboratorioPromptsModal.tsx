@@ -357,5 +357,6 @@ export function LaboratorioPromptsModal({ onClose, onComplete }: Props) {
         </div>
       </div>
     </div>
+    </Portal>
   )
 }

@@ -337,5 +337,6 @@ export function SimuladorEPPMecaModal({ onClose, onComplete }: Props) {
         </div>
       </div>
     </div>
+    </Portal>
   )
 }

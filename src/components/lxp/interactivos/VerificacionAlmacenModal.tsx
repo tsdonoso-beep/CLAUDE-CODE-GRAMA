@@ -429,5 +429,6 @@ export function VerificacionAlmacenModal({ onClose, onComplete }: Props) {
         </div>
       </div>
     </div>
+    </Portal>
   )
 }

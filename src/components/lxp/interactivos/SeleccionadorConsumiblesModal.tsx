@@ -298,5 +298,6 @@ export function SeleccionadorConsumiblesModal({ zona, onClose, onComplete }: Pro
         </div>
       </div>
     </div>
+    </Portal>
   )
 }

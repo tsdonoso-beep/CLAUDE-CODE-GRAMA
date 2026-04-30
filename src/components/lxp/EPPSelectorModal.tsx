@@ -304,5 +304,6 @@ export function EPPSelectorModal({ tallerSlug, tallerNombre, onClose }: EPPSelec
         </div>
       </div>
     </div>
+    </Portal>
   )
 }

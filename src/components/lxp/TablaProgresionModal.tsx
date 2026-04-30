@@ -295,5 +295,6 @@ export function TablaProgresionModal({ tallerSlug, tallerNombre, onClose }: Tabl
         </div>
       </div>
     </div>
+    </Portal>
   )
 }

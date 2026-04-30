@@ -331,6 +331,8 @@ export function ClasificadorHerramientasModal({ onClose, onComplete }: Props) {
           )}
         </div>
       </div>
+      </div>
     </div>
+    </Portal>
   )
 }

@@ -374,6 +374,8 @@ export function VerificacionFuncionamientoModal({ onClose, onComplete }: Props) 
           )}
         </div>
       </div>
+      </div>
     </div>
+    </Portal>
   )
 }

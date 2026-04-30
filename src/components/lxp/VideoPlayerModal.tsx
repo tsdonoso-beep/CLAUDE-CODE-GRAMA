@@ -141,5 +141,6 @@ export function VideoPlayerModal({
         </div>
       </div>
     </div>
+    </Portal>
   )
 }

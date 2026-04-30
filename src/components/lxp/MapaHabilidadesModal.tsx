@@ -324,5 +324,6 @@ export function MapaHabilidadesModal({ tallerSlug, tallerNombre, onClose }: Mapa
         </div>
       </div>
     </div>
+    </Portal>
   )
 }
