@@ -162,6 +162,7 @@
 
 /* ── GRAMA CSS Variables (direct hex) ── */
 :root {
+  /* Colour palette */
   --grama-oscuro:   #043941;
   --grama-verde:    #00c16e;
   --grama-menta:    #02d47e;
@@ -169,6 +170,29 @@
   --grama-cerceta:  #045f6c;
   --grama-claro2:   #e3f8fb;
   --grama-bg:       #f0faf5;
+
+  /* Icon scale — mirrors ICON constant in src/lib/tokens.ts */
+  --icon-xs:   10px;
+  --icon-sm:   12px;
+  --icon-md:   16px;
+  --icon-lg:   20px;
+  --icon-xl:   24px;
+  --icon-2xl:  32px;
+  --icon-3xl:  40px;
+
+  /* Border-radius scale */
+  --radius-xs:   6px;
+  --radius-sm:   8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-2xl: 24px;
+
+  /* Shadow scale */
+  --shadow-sm: 0 1px 3px rgba(4,57,65,0.06);
+  --shadow-md: 0 2px 16px rgba(4,57,65,0.08);
+  --shadow-lg: 0 4px 24px rgba(4,57,65,0.12);
+  --shadow-xl: 0 8px 32px rgba(4,57,65,0.16);
 }
 
 /* ── Patrón geométrico GRAMA (Tangram) ── */
