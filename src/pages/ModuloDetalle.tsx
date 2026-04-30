@@ -655,7 +655,7 @@ export default function ModuloDetalle() {
               {prevModulo && (
                 <button
                   onClick={() => navigate(`/taller/${slug}/ruta/modulo/${prevModulo.numero}`)}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '9px 14px', borderRadius: 10, border: '1.5px solid rgba(4,57,65,0.1)', background: '#fff', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12, fontWeight: 700, color: 'rgba(4,57,65,0.6)', transition: 'all .16s' }}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '9px 14px', borderRadius: 10, border: '1.5px solid rgba(4,57,65,0.1)', background: '#fff', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12, fontWeight: 700, color: 'rgba(4,57,65,0.6)', transition: 'all .15s' }}
                   onMouseEnter={e => { e.currentTarget.style.background = 'rgba(4,57,65,0.04)'; e.currentTarget.style.color = '#043941' }}
                   onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = 'rgba(4,57,65,0.6)' }}
                 >

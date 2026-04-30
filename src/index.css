@@ -185,6 +185,13 @@
   --border-card:     rgba(4,57,65,0.10);  /* card/container outer border */
   --border-input:    rgba(4,57,65,0.15);  /* input fields, interactive borders */
 
+  /* Button system — mirrors BTN constant in src/lib/tokens.ts */
+  --btn-transition: all .15s;
+  --btn-pad-xs: 4px 10px;
+  --btn-pad-sm: 6px 14px;
+  --btn-pad-md: 9px 16px;
+  --btn-pad-lg: 10px 20px;
+
   /* Border-radius scale */
   --radius-xs:   6px;
   --radius-sm:   8px;

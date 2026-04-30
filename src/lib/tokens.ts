@@ -51,6 +51,28 @@ export const BORDER = {
   input:    'rgba(4,57,65,0.15)',
 } as const
 
+// ── Button system ────────────────────────────────────────────────────────────
+// Canonical padding sizes and transition for interactive buttons.
+//
+//  xs  → micro badges that act as buttons
+//  sm  → filter chips, pill selectors
+//  md  → standard secondary / navigation buttons
+//  lg  → primary CTA buttons
+//
+// CTA colour rule:
+//   - On dark header (#043941): always COLOR.menta (#02d47e), never tallerColor
+//   - On light content area:   tallerColor is intentional (taller-specific theme)
+
+export const BTN = {
+  transition: 'all .15s',
+  padding: {
+    xs: '4px 10px',
+    sm: '6px 14px',
+    md: '9px 16px',
+    lg: '10px 20px',
+  },
+} as const
+
 // ── Border-radius scale ───────────────────────────────────────────────────────
 export const RADIUS = {
   xs:  6,

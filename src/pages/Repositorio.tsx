@@ -219,7 +219,7 @@ export default function Repositorio() {
             <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
             <button
               onClick={() => navigate(`/taller/${slug}`)}
-              style={{ background: 'none', color: 'rgba(255,255,255,0.7)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 12, padding: '9px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .18s' }}
+              style={{ background: 'none', color: 'rgba(255,255,255,0.7)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 12, padding: '9px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .15s' }}
               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
               onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}
             >
@@ -246,7 +246,7 @@ export default function Repositorio() {
                 display: 'flex', alignItems: 'center', gap: 7,
                 padding: '8px 18px', borderRadius: 100,
                 fontSize: 13, fontWeight: 700, cursor: 'pointer',
-                fontFamily: 'inherit', transition: 'all .16s',
+                fontFamily: 'inherit', transition: 'all .15s',
                 background: tab === t.id ? '#043941' : 'transparent',
                 color:      tab === t.id ? '#02d47e'  : '#64748b',
                 border: tab === t.id ? 'none' : '1.5px solid rgba(4,57,65,0.1)',
@@ -513,7 +513,7 @@ export default function Repositorio() {
                   style={{
                     display: 'flex', flexDirection: 'column', gap: 8,
                     padding: 16, borderRadius: 16, textAlign: 'left',
-                    transition: 'all .16s', cursor: 'pointer', fontFamily: 'inherit',
+                    transition: 'all .15s', cursor: 'pointer', fontFamily: 'inherit',
                     background: active ? cat.color : '#ffffff',
                     border: `2px solid ${active ? cat.color : '#e2e8f0'}`,
                     boxShadow: active ? `0 4px 16px ${cat.color}33` : 'none',
@@ -579,7 +579,7 @@ export default function Repositorio() {
                     style={{
                       display: 'flex', alignItems: 'center', gap: 16,
                       padding: 16, borderRadius: 16, textAlign: 'left',
-                      transition: 'all .16s', cursor: 'pointer', fontFamily: 'inherit',
+                      transition: 'all .15s', cursor: 'pointer', fontFamily: 'inherit',
                       width: '100%', background: '#ffffff', border: '1.5px solid #e2e8f0',
                     }}
                     onMouseEnter={e => {
@@ -692,7 +692,7 @@ function VideoCard({ bien, slug, navigate }: {
       style={{
         width: '100%', textAlign: 'left', borderRadius: 16, overflow: 'hidden',
         border: '2px solid #e2e8f0', background: '#ffffff', cursor: 'pointer',
-        transition: 'all .18s', display: 'block',
+        transition: 'all .15s', display: 'block',
       }}
       onMouseEnter={e => {
         const el = e.currentTarget as HTMLElement
