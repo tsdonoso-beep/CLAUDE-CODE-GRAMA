@@ -364,37 +364,45 @@ export default function Repositorio() {
       {/* ══ TAB: CATÁLOGO ═══════════════════════════════════════════════════ */}
       {tab === 'bienes' && (
         <>
-          <div className="sticky top-0 z-20 px-4 py-3 border-b shadow-sm" style={{ background: '#ffffff', borderColor: '#d1fae5' }}>
-            <div className="flex items-center gap-3 overflow-x-auto pb-1">
+          <div style={{ position: 'sticky', top: 0, zIndex: 20, padding: '12px 16px', borderBottom: '1px solid #d1fae5', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', background: '#fff' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, overflowX: 'auto', paddingBottom: 4 }}>
               <button
                 onClick={() => setShowFiltros(!showFiltros)}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-all"
                 style={{
+                  display: 'flex', alignItems: 'center', gap: 6,
+                  padding: '8px 14px', borderRadius: 12,
+                  fontSize: 12, fontWeight: 700, flexShrink: 0,
+                  transition: 'all .15s', fontFamily: 'inherit', cursor: 'pointer',
                   background: showFiltros || activeCount > 0 ? '#043941' : '#f0fdf8',
                   color: showFiltros || activeCount > 0 ? tallerColor : '#043941',
-                  border: '1.5px solid', borderColor: showFiltros || activeCount > 0 ? '#043941' : '#d1fae5',
+                  border: `1.5px solid ${showFiltros || activeCount > 0 ? '#043941' : '#d1fae5'}`,
                 }}
               >
                 <SlidersHorizontal size={12} />
                 Filtros
                 {activeCount > 0 && (
-                  <span className="w-4 h-4 rounded-full text-[10px] font-extrabold flex items-center justify-center"
-                    style={{ background: tallerColor, color: '#043941' }}>
+                  <span style={{
+                    width: 16, height: 16, borderRadius: '50%', fontSize: 10, fontWeight: 800,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    background: tallerColor, color: '#043941',
+                  }}>
                     {activeCount}
                   </span>
                 )}
               </button>
 
-              <div className="w-px h-5 shrink-0" style={{ background: '#d1fae5' }} />
+              <div style={{ width: 1, height: 20, flexShrink: 0, background: '#d1fae5' }} />
 
               {zonas.map(z => (
                 <button key={z}
                   onClick={() => { setFiltroZona(filtroZona === z ? '' : z); setFiltroArea(''); setFiltroSubarea('') }}
-                  className="shrink-0 px-3 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap"
                   style={{
+                    flexShrink: 0, padding: '8px 12px', borderRadius: 12,
+                    fontSize: 12, fontWeight: 600, transition: 'all .15s', whiteSpace: 'nowrap',
+                    cursor: 'pointer', fontFamily: 'inherit',
                     background: filtroZona === z ? '#043941' : '#f0fdf8',
                     color: filtroZona === z ? tallerColor : '#045f6c',
-                    border: '1.5px solid', borderColor: filtroZona === z ? '#043941' : '#d1fae5',
+                    border: `1.5px solid ${filtroZona === z ? '#043941' : '#d1fae5'}`,
                   }}
                 >
                   {z.replace('ZONA DE ', '').replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'DEPÓSITO').replace('INVESTIGACIÓN, GESTIÓN Y DISEÑO', 'INV. Y DISEÑO')}
@@ -403,10 +411,14 @@ export default function Repositorio() {
 
               {hayFiltros && (
                 <>
-                  <div className="w-px h-5 shrink-0" style={{ background: '#d1fae5' }} />
+                  <div style={{ width: 1, height: 20, flexShrink: 0, background: '#d1fae5' }} />
                   <button onClick={resetFiltros}
-                    className="flex items-center gap-1 shrink-0 px-3 py-2 rounded-xl text-xs font-bold"
-                    style={{ color: '#ef4444', background: '#fff1f2', border: '1.5px solid #fecdd3' }}>
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0,
+                      padding: '8px 12px', borderRadius: 12,
+                      fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
+                      color: '#ef4444', background: '#fff1f2', border: '1.5px solid #fecdd3',
+                    }}>
                     <X size={11} /> Limpiar
                   </button>
                 </>
@@ -414,15 +426,16 @@ export default function Repositorio() {
             </div>
 
             {showFiltros && filtroZona && (
-              <div className="mt-3 flex flex-wrap gap-2 pt-3 border-t" style={{ borderColor: '#d1fae5' }}>
+              <div style={{ marginTop: 12, display: 'flex', flexWrap: 'wrap', gap: 8, paddingTop: 12, borderTop: '1px solid #d1fae5' }}>
                 {areas.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 items-center">
-                    <span className="text-xs font-bold" style={{ color: '#94a3b8' }}>Área:</span>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: '#94a3b8' }}>Área:</span>
                     {areas.map(a => (
                       <button key={a}
                         onClick={() => { setFiltroArea(filtroArea === a ? '' : a); setFiltroSubarea('') }}
-                        className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
                         style={{
+                          padding: '4px 10px', borderRadius: 8, fontSize: 12, fontWeight: 600,
+                          transition: 'all .15s', cursor: 'pointer', fontFamily: 'inherit',
                           background: filtroArea === a ? '#e0f2fe' : '#f8fafc',
                           color: filtroArea === a ? '#0369a1' : '#64748b',
                           border: `1px solid ${filtroArea === a ? '#bae6fd' : '#e2e8f0'}`,
@@ -433,13 +446,14 @@ export default function Repositorio() {
                   </div>
                 )}
                 {filtroArea && subareas.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 items-center w-full">
-                    <span className="text-xs font-bold" style={{ color: '#94a3b8' }}>Sub-área:</span>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center', width: '100%' }}>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: '#94a3b8' }}>Sub-área:</span>
                     {subareas.map(s => (
                       <button key={s}
                         onClick={() => setFiltroSubarea(filtroSubarea === s ? '' : s)}
-                        className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
                         style={{
+                          padding: '4px 10px', borderRadius: 8, fontSize: 12, fontWeight: 600,
+                          transition: 'all .15s', cursor: 'pointer', fontFamily: 'inherit',
                           background: filtroSubarea === s ? '#fef3c7' : '#f8fafc',
                           color: filtroSubarea === s ? '#92400e' : '#64748b',
                           border: `1px solid ${filtroSubarea === s ? '#fde68a' : '#e2e8f0'}`,
@@ -452,25 +466,25 @@ export default function Repositorio() {
               </div>
             )}
 
-            <p className="text-xs mt-2 font-semibold" style={{ color: '#64748b' }}>
+            <p style={{ fontSize: 12, margin: '8px 0 0', fontWeight: 600, color: '#64748b' }}>
               {bienesFiltered.length === totalBienes ? `${totalBienes} bienes` : `${bienesFiltered.length} de ${totalBienes} bienes`}
             </p>
           </div>
 
-          <div className="p-4 sm:p-6">
+          <div style={{ padding: 24 }}>
             {bienesFiltered.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
                 {bienesFiltered.map((bien: Bien) => (
                   <RepositorioCard key={bien.n} bien={bien} />
                 ))}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-20">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: `${tallerColor}18` }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingTop: 80, paddingBottom: 80 }}>
+                <div style={{ width: 64, height: 64, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16, background: `${tallerColor}18` }}>
                   <Search size={26} style={{ color: tallerColor }} />
                 </div>
-                <p className="text-base font-bold mb-1" style={{ color: '#043941' }}>Sin resultados</p>
-                <button onClick={resetFiltros} className="mt-4 px-5 py-2.5 rounded-xl text-sm font-bold text-white" style={{ background: '#043941' }}>
+                <p style={{ fontSize: 16, fontWeight: 700, marginBottom: 4, color: '#043941' }}>Sin resultados</p>
+                <button onClick={resetFiltros} style={{ marginTop: 16, padding: '10px 20px', borderRadius: 12, fontSize: 14, fontWeight: 700, color: '#fff', background: '#043941', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
                   Limpiar filtros
                 </button>
               </div>
@@ -481,10 +495,10 @@ export default function Repositorio() {
 
       {/* ══ TAB: MANUALES ═══════════════════════════════════════════════════ */}
       {tab === 'manuales' && (
-        <div className="p-4 sm:p-6">
+        <div style={{ padding: 24 }}>
 
           {/* Resumen categórico — tarjetas de acceso rápido */}
-          <div className="grid grid-cols-3 gap-3 mb-6">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 24 }}>
             {([
               { id: 'uso',           label: 'Manual de Uso',        icon: BookMarked,    color: '#02d47e', bg: 'rgba(2,212,126,0.13)', count: conteos.uso,           desc: 'Operación y manejo seguro del equipo' },
               { id: 'mantenimiento', label: 'Mantenimiento',        icon: Wrench,        color: '#045f6c', bg: 'rgba(4,95,108,0.11)',  count: conteos.mantenimiento, desc: 'Limpieza, revisión y mantenimiento preventivo' },
@@ -496,28 +510,29 @@ export default function Repositorio() {
                 <button
                   key={cat.id}
                   onClick={() => setFiltroManual(active ? 'todos' : cat.id)}
-                  className="flex flex-col gap-2 p-4 rounded-2xl text-left transition-all"
                   style={{
+                    display: 'flex', flexDirection: 'column', gap: 8,
+                    padding: 16, borderRadius: 16, textAlign: 'left',
+                    transition: 'all .16s', cursor: 'pointer', fontFamily: 'inherit',
                     background: active ? cat.color : '#ffffff',
                     border: `2px solid ${active ? cat.color : '#e2e8f0'}`,
                     boxShadow: active ? `0 4px 16px ${cat.color}33` : 'none',
                     transform: active ? 'translateY(-2px)' : 'none',
                   }}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="h-9 w-9 rounded-xl flex items-center justify-center"
-                      style={{ background: active ? 'rgba(255,255,255,0.2)' : cat.bg }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', background: active ? 'rgba(255,255,255,0.2)' : cat.bg }}>
                       <Icon size={16} style={{ color: active ? '#fff' : cat.color }} />
                     </div>
-                    <span className="text-xl font-extrabold" style={{ color: active ? '#fff' : cat.color }}>
+                    <span style={{ fontSize: 20, fontWeight: 800, color: active ? '#fff' : cat.color }}>
                       {cat.count}
                     </span>
                   </div>
                   <div>
-                    <p className="text-xs font-bold leading-tight" style={{ color: active ? '#fff' : '#0f172a' }}>
+                    <p style={{ fontSize: 12, fontWeight: 700, lineHeight: 1.3, color: active ? '#fff' : '#0f172a', margin: '0 0 2px' }}>
                       {cat.label}
                     </p>
-                    <p className="text-[10px] mt-0.5 leading-snug" style={{ color: active ? 'rgba(255,255,255,0.7)' : '#94a3b8' }}>
+                    <p style={{ fontSize: 10, lineHeight: 1.4, color: active ? 'rgba(255,255,255,0.7)' : '#94a3b8', margin: 0 }}>
                       {cat.desc}
                     </p>
                   </div>
@@ -527,16 +542,20 @@ export default function Repositorio() {
           </div>
 
           {/* Resultado: lista de manuales */}
-          <div className="mb-3 flex items-center justify-between">
-            <p className="text-xs font-bold" style={{ color: '#64748b' }}>
+          <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <p style={{ fontSize: 12, fontWeight: 700, color: '#64748b', margin: 0 }}>
               {bienesManual.length} {bienesManual.length === 1 ? 'manual' : 'manuales'}
               {filtroManual !== 'todos' ? ` · filtro activo` : ''}
             </p>
             {(busquedaManual || filtroManual !== 'todos') && (
               <button
                 onClick={() => { setBusquedaManual(''); setFiltroManual('todos'); }}
-                className="flex items-center gap-1 text-xs font-bold px-2.5 py-1.5 rounded-lg"
-                style={{ color: '#ef4444', background: '#fff1f2', border: '1px solid #fecdd3' }}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 4,
+                  fontSize: 12, fontWeight: 700, padding: '6px 10px', borderRadius: 8,
+                  cursor: 'pointer', fontFamily: 'inherit',
+                  color: '#ef4444', background: '#fff1f2', border: '1px solid #fecdd3',
+                }}
               >
                 <X size={11} /> Limpiar
               </button>
@@ -544,12 +563,12 @@ export default function Repositorio() {
           </div>
 
           {bienesManual.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 rounded-2xl" style={{ background: '#f8fafc' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingTop: 64, paddingBottom: 64, borderRadius: 16, background: '#f0faf5' }}>
               <FileText size={32} style={{ color: '#cbd5e1' }} />
-              <p className="mt-3 text-sm font-bold" style={{ color: '#94a3b8' }}>Sin manuales en esta categoría</p>
+              <p style={{ marginTop: 12, fontSize: 14, fontWeight: 700, color: '#94a3b8' }}>Sin manuales en esta categoría</p>
             </div>
           ) : (
-            <div className="flex flex-col gap-2">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {bienesManual.map((b: Bien) => {
                 const meta = getManualMeta(b.nombre ?? '')
                 const MetaIcon = meta.icon
@@ -557,42 +576,48 @@ export default function Repositorio() {
                   <button
                     key={b.n}
                     onClick={() => navigate(`/taller/${slug}/repositorio/bien/${b.n}`)}
-                    className="flex items-center gap-4 p-4 rounded-2xl text-left transition-all group"
-                    style={{ background: '#ffffff', border: '1.5px solid #e2e8f0' }}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 16,
+                      padding: 16, borderRadius: 16, textAlign: 'left',
+                      transition: 'all .16s', cursor: 'pointer', fontFamily: 'inherit',
+                      width: '100%', background: '#ffffff', border: '1.5px solid #e2e8f0',
+                    }}
                     onMouseEnter={e => {
                       const el = e.currentTarget as HTMLElement
                       el.style.borderColor = meta.color
                       el.style.boxShadow = `0 4px 12px ${meta.color}22`
+                      const chevron = el.querySelector('[data-chevron]') as HTMLElement
+                      if (chevron) chevron.style.opacity = '1'
                     }}
                     onMouseLeave={e => {
                       const el = e.currentTarget as HTMLElement
                       el.style.borderColor = '#e2e8f0'
                       el.style.boxShadow = 'none'
+                      const chevron = el.querySelector('[data-chevron]') as HTMLElement
+                      if (chevron) chevron.style.opacity = '0'
                     }}
                   >
                     {/* Ícono categoría */}
-                    <div className="h-11 w-11 rounded-xl flex items-center justify-center shrink-0"
-                      style={{ background: meta.bg }}>
+                    <div style={{ width: 44, height: 44, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, background: meta.bg }}>
                       <MetaIcon size={18} style={{ color: meta.color }} />
                     </div>
 
                     {/* Info */}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold leading-snug" style={{ color: '#0f172a' }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.4, color: '#0f172a', margin: '0 0 4px' }}>
                         {b.nombre}
                       </p>
-                      <div className="flex items-center gap-2 mt-1 flex-wrap">
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md"
-                          style={{ background: meta.bg, color: meta.color }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: 10, fontWeight: 600, padding: '2px 8px', borderRadius: 6, background: meta.bg, color: meta.color }}>
                           {meta.label}
                         </span>
                         {b.zona && (
-                          <span className="text-[10px] font-medium" style={{ color: '#94a3b8' }}>
+                          <span style={{ fontSize: 10, fontWeight: 500, color: '#94a3b8' }}>
                             {b.zona.replace('ZONA DE ', '').replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'DEPÓSITO').replace('INVESTIGACIÓN, GESTIÓN Y DISEÑO', 'INV. Y DISEÑO')}
                           </span>
                         )}
                         {b.cantidad > 1 && (
-                          <span className="text-[10px] font-medium" style={{ color: '#cbd5e1' }}>
+                          <span style={{ fontSize: 10, fontWeight: 500, color: '#cbd5e1' }}>
                             ×{b.cantidad}
                           </span>
                         )}
@@ -601,14 +626,12 @@ export default function Repositorio() {
 
                     {/* Descripción truncada */}
                     {b.descripcion && (
-                      <p className="hidden lg:block text-xs max-w-xs leading-snug line-clamp-2 shrink-0"
-                        style={{ color: '#94a3b8', maxWidth: 280 }}>
+                      <p className="line-clamp-2" style={{ fontSize: 12, maxWidth: 280, lineHeight: 1.4, flexShrink: 0, color: '#94a3b8' }}>
                         {b.descripcion.slice(0, 120)}…
                       </p>
                     )}
 
-                    <ChevronRight size={14} className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{ color: meta.color }} />
+                    <ChevronRight data-chevron="1" size={14} style={{ flexShrink: 0, color: meta.color, opacity: 0, transition: 'opacity .16s' }} />
                   </button>
                 )
               })}
@@ -619,17 +642,21 @@ export default function Repositorio() {
 
       {/* ══ TAB: VIDEOS ═════════════════════════════════════════════════════ */}
       {tab === 'videos' && (
-        <div className="p-4 sm:p-6">
+        <div style={{ padding: 24 }}>
 
-          <div className="mb-3 flex items-center justify-between">
-            <p className="text-xs font-bold" style={{ color: '#64748b' }}>
+          <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <p style={{ fontSize: 12, fontWeight: 700, color: '#64748b', margin: 0 }}>
               {bienesVideo.length} {bienesVideo.length === 1 ? 'video' : 'videos'} disponibles
             </p>
             {busquedaVideo && (
               <button
                 onClick={() => setBusquedaVideo('')}
-                className="flex items-center gap-1 text-xs font-bold px-2.5 py-1.5 rounded-lg"
-                style={{ color: '#ef4444', background: '#fff1f2', border: '1px solid #fecdd3' }}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 4,
+                  fontSize: 12, fontWeight: 700, padding: '6px 10px', borderRadius: 8,
+                  cursor: 'pointer', fontFamily: 'inherit',
+                  color: '#ef4444', background: '#fff1f2', border: '1px solid #fecdd3',
+                }}
               >
                 <X size={11} /> Limpiar
               </button>
@@ -637,12 +664,12 @@ export default function Repositorio() {
           </div>
 
           {bienesVideo.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 rounded-2xl" style={{ background: '#f8fafc' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingTop: 80, paddingBottom: 80, borderRadius: 16, background: '#f0faf5' }}>
               <Video size={32} style={{ color: '#cbd5e1' }} />
-              <p className="mt-3 text-sm font-bold" style={{ color: '#94a3b8' }}>No hay videos que coincidan</p>
+              <p style={{ marginTop: 12, fontSize: 14, fontWeight: 700, color: '#94a3b8' }}>No hay videos que coincidan</p>
             </div>
           ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
               {bienesVideo.map((b: Bien) => (
                 <VideoCard key={b.n} bien={b} slug={slug} navigate={navigate} />
               ))}
@@ -662,48 +689,50 @@ function VideoCard({ bien, slug, navigate }: {
   return (
     <button
       onClick={() => navigate(`/taller/${slug}/repositorio/bien/${bien.n}`)}
-      className="w-full text-left rounded-2xl overflow-hidden border-2 transition-all group"
-      style={{ borderColor: '#e2e8f0', background: '#ffffff' }}
+      style={{
+        width: '100%', textAlign: 'left', borderRadius: 16, overflow: 'hidden',
+        border: '2px solid #e2e8f0', background: '#ffffff', cursor: 'pointer',
+        transition: 'all .18s', display: 'block',
+      }}
       onMouseEnter={e => {
         const el = e.currentTarget as HTMLElement
         el.style.borderColor = '#045f6c'
         el.style.transform = 'translateY(-2px)'
         el.style.boxShadow = '0 8px 20px rgba(4,95,108,0.15)'
+        const playBtn = el.querySelector('[data-play]') as HTMLElement
+        if (playBtn) playBtn.style.transform = 'scale(1.1)'
       }}
       onMouseLeave={e => {
         const el = e.currentTarget as HTMLElement
         el.style.borderColor = '#e2e8f0'
         el.style.transform = 'translateY(0)'
         el.style.boxShadow = 'none'
+        const playBtn = el.querySelector('[data-play]') as HTMLElement
+        if (playBtn) playBtn.style.transform = 'scale(1)'
       }}
     >
       {/* Thumbnail */}
-      <div className="aspect-video flex flex-col items-center justify-center relative overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)' }}>
-        <div className="w-12 h-12 rounded-full flex items-center justify-center transition-transform group-hover:scale-110"
-          style={{ background: 'rgba(255,255,255,0.12)' }}>
+      <div style={{ height: 160, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden', background: 'linear-gradient(135deg, #043941 0%, #045f6c 100%)' }}>
+        <div data-play="1" style={{ width: 48, height: 48, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform .18s', background: 'rgba(255,255,255,0.12)' }}>
           <PlayCircle size={24} style={{ color: 'rgba(255,255,255,0.7)' }} />
         </div>
         {bien.zona && (
-          <span className="absolute bottom-2 left-3 text-[11px] font-semibold px-2 py-0.5 rounded-full"
-            style={{ background: 'rgba(0,0,0,0.4)', color: 'rgba(255,255,255,0.7)' }}>
+          <span style={{ position: 'absolute', bottom: 8, left: 12, fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 100, background: 'rgba(0,0,0,0.4)', color: 'rgba(255,255,255,0.7)' }}>
             {bien.zona.replace('ZONA DE ', '')}
           </span>
         )}
-        <span className="absolute top-2 right-2 text-[11px] font-bold px-2 py-0.5 rounded-full"
-          style={{ background: 'rgba(8,145,178,0.8)', color: '#fff' }}>
+        <span style={{ position: 'absolute', top: 8, right: 8, fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 100, background: 'rgba(8,145,178,0.8)', color: '#fff' }}>
           VIDEO
         </span>
       </div>
 
       {/* Info */}
-      <div className="p-3">
-        <p className="text-xs font-bold leading-snug line-clamp-2 mb-1.5" style={{ color: '#0f172a' }}>
+      <div style={{ padding: 12 }}>
+        <p className="line-clamp-2" style={{ fontSize: 12, fontWeight: 700, lineHeight: 1.4, marginBottom: 6, color: '#0f172a' }}>
           {bien.nombre}
         </p>
-        <div className="flex items-center justify-between">
-          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md"
-            style={{ background: 'rgba(4,95,108,0.1)', color: '#045f6c' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span style={{ fontSize: 10, fontWeight: 600, padding: '2px 8px', borderRadius: 6, background: 'rgba(4,95,108,0.1)', color: '#045f6c' }}>
             {bien.cantidad > 1 ? `${bien.cantidad} unidades` : 'Tutorial'}
           </span>
           <ChevronRight size={12} style={{ color: '#94a3b8' }} />
