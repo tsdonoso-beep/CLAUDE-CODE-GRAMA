@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { X, CheckCircle2, XCircle, ChevronRight, RotateCcw, Layers } from 'lucide-react'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
+import { Portal } from '@/components/Portal'
 
 interface Herramienta {
   nombre: string
@@ -130,6 +131,7 @@ export function ClasificadorHerramientasModal({ onClose, onComplete }: Props) {
   const esCorrecta = herramientaActual && seleccionActual === herramientaActual.categoriaCorrecta
 
   return (
+    <Portal>
     <div
       className="fixed inset-0 z-50 flex items-start justify-center p-4 overflow-y-auto"
       style={{ background: 'rgba(4,57,65,0.65)', backdropFilter: 'blur(4px)' }}

@@ -1,6 +1,7 @@
 // src/components/lxp/VideoPlayerModal.tsx
 import { X, Video, Clock, ExternalLink } from 'lucide-react'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
+import { Portal } from '@/components/Portal'
 
 interface VideoPlayerModalProps {
   titulo: string
@@ -30,6 +31,7 @@ export function VideoPlayerModal({
   const embedUrl = getDriveEmbedUrl(urlVideo)
 
   return (
+    <Portal>
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(4,57,65,0.7)', backdropFilter: 'blur(6px)' }}

@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react'
 import { X, Package, CheckCircle2, AlertCircle, ChevronRight, RotateCcw } from 'lucide-react'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
+import { Portal } from '@/components/Portal'
 
 type Zona = 'investigacion' | 'innovacion' | 'almacen'
 
@@ -79,6 +80,7 @@ export function ExploradorEquiposModal({ onClose, onComplete }: Props) {
   }
 
   return (
+    <Portal>
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(4,57,65,0.65)', backdropFilter: 'blur(4px)' }}

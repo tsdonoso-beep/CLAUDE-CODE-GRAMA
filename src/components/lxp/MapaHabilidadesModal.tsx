@@ -3,6 +3,7 @@ import { useState, useMemo } from 'react'
 import { X, Sparkles, ChevronRight } from 'lucide-react'
 import { getGruposByTaller, HABILIDADES_EPT, type GrupoEquipamiento } from '@/data/habilidadesEPT'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
+import { Portal } from '@/components/Portal'
 
 interface MapaHabilidadesModalProps {
   tallerSlug: string
@@ -56,6 +57,7 @@ export function MapaHabilidadesModal({ tallerSlug, tallerNombre, onClose }: Mapa
   const gruActivo = grupoActivo ? grupos.find(g => g.id === grupoActivo) : null
 
   return (
+    <Portal>
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(4,57,65,0.6)', backdropFilter: 'blur(4px)' }}

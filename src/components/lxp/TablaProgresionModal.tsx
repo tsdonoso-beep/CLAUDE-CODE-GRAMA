@@ -4,6 +4,7 @@ import { X, TrendingUp, BookOpen, Wrench, Target, Package } from 'lucide-react'
 import { getProgresionByTaller, type ItemProgresion } from '@/data/progresionGrados'
 import { HABILIDADES_EPT } from '@/data/habilidadesEPT'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
+import { Portal } from '@/components/Portal'
 
 interface TablaProgresionModalProps {
   tallerSlug: string
@@ -136,6 +137,7 @@ export function TablaProgresionModal({ tallerSlug, tallerNombre, onClose }: Tabl
   const itemActivo = progresion[gradoActivo]
 
   return (
+    <Portal>
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(4,57,65,0.6)', backdropFilter: 'blur(4px)' }}

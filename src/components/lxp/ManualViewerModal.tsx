@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { X, ChevronRight, ChevronDown, AlertTriangle, Info, BookOpen, FileText } from 'lucide-react'
 import type { ManualRuta, SeccionManual } from '@/data/manualesRuta'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
+import { Portal } from '@/components/Portal'
 
 interface ManualViewerModalProps {
   manual: ManualRuta
@@ -121,6 +122,7 @@ function SeccionItem({ seccion, nivel = 0 }: { seccion: SeccionManual; nivel?: n
 export function ManualViewerModal({ manual, onClose }: ManualViewerModalProps) {
   useEscapeKey(onClose)
   return (
+    <Portal>
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(4,57,65,0.6)', backdropFilter: 'blur(4px)' }}
@@ -184,5 +186,6 @@ export function ManualViewerModal({ manual, onClose }: ManualViewerModalProps) {
         </div>
       </div>
     </div>
+    </Portal>
   )
 }

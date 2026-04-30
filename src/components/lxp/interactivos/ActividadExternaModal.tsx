@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { X, ExternalLink, CheckCircle2 } from 'lucide-react'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
+import { Portal } from '@/components/Portal'
 
 export interface ActividadExternaConfig {
   contenidoId: string
@@ -92,6 +93,7 @@ export function ActividadExternaModal({ config, onClose, onComplete }: Props) {
   }
 
   return (
+    <Portal>
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(4,57,65,0.65)', backdropFilter: 'blur(4px)' }}

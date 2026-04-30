@@ -4,6 +4,7 @@ import { X, Download, FileText, Info, AlertTriangle, CheckSquare, ChevronDown, C
 import type { DescargableLXP, SeccionFicha, CampoFicha } from '@/data/descargablesLXP'
 import jsPDF from 'jspdf'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
+import { Portal } from '@/components/Portal'
 
 interface DescargableViewerModalProps {
   descargable: DescargableLXP
@@ -327,6 +328,7 @@ export function DescargableViewerModal({ descargable: d, onClose }: DescargableV
   const badge = TIPO_BADGE[d.tipo]
 
   return (
+    <Portal>
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(4,57,65,0.6)', backdropFilter: 'blur(4px)' }}

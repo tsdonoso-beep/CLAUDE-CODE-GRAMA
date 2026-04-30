@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { X, ShieldCheck, AlertCircle, CheckCircle2, ChevronRight, RotateCcw } from 'lucide-react'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
+import { Portal } from '@/components/Portal'
 
 interface Escenario {
   id: string
@@ -108,6 +109,7 @@ export function SimuladorEPPMecaModal({ onClose, onComplete }: Props) {
   const porcentaje = Math.round((puntaje / total) * 100)
 
   return (
+    <Portal>
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(4,57,65,0.65)', backdropFilter: 'blur(4px)' }}

@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react'
 import { X, Wrench, CheckCircle2, AlertCircle, ChevronRight, RotateCcw } from 'lucide-react'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
+import { Portal } from '@/components/Portal'
 
 type ZonaCtx = 'investigacion' | 'almacen' | 'innovacion'
 
@@ -105,6 +106,7 @@ export function SeleccionadorConsumiblesModal({ zona, onClose, onComplete }: Pro
   const accentColor = ZONA_COLOR[zona]
 
   return (
+    <Portal>
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(4,57,65,0.65)', backdropFilter: 'blur(4px)' }}

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { X, ChevronRight, RotateCcw, ClipboardCheck, CheckCircle2, AlertTriangle, XCircle, Eye } from 'lucide-react'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
+import { Portal } from '@/components/Portal'
 
 type EstadoPaso = 'ok' | 'alerta' | 'falla' | null
 
@@ -211,6 +212,7 @@ export function VerificacionAlmacenModal({ onClose, onComplete }: Props) {
   }
 
   return (
+    <Portal>
     <div className="fixed inset-0 z-50 flex items-start justify-center p-4 overflow-y-auto"
       style={{ background: 'rgba(4,57,65,0.65)', backdropFilter: 'blur(4px)' }}
       onClick={e => { if (e.target === e.currentTarget) onClose() }}>
