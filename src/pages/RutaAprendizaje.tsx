@@ -60,7 +60,7 @@ export default function RutaAprendizaje() {
 
       {/* ── TOP HEADER ─────────────────────────────────────────────────────── */}
       <div style={{ background: '#043941' }}>
-        <div style={{ padding: '20px 32px 0' }}>
+        <div style={{ padding: '16px 32px 0' }}>
 
           {/* Fila: título + stats */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, marginBottom: 16 }}>
