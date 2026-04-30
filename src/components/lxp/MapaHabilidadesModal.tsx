@@ -65,7 +65,7 @@ export function MapaHabilidadesModal({ tallerSlug, tallerNombre, onClose }: Mapa
     >
       <div
         className="relative w-full max-w-5xl max-h-[92vh] rounded-2xl overflow-hidden flex flex-col"
-        style={{ background: '#ffffff', boxShadow: '0 24px 64px rgba(4,57,65,0.25)' }}
+        style={{ background: '#ffffff', boxShadow: '0 24px 64px rgba(4,57,65,0.28)' }}
       >
         {/* Header */}
         <div className="px-6 py-5 flex items-start gap-4 shrink-0" style={{ background: '#043941' }}>

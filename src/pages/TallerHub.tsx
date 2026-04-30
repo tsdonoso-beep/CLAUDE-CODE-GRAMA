@@ -178,7 +178,7 @@ export default function TallerHub() {
 
         {/* ── SECUENCIA DE MÓDULOS ── */}
         {!isGeneralEpt && (
-          <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
+          <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
             <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
                 <h2 style={{ fontSize: 15, fontWeight: 800, color: '#043941', margin: '0 0 2px', letterSpacing: '-0.01em' }}>Secuencia de módulos</h2>
@@ -264,7 +264,7 @@ export default function TallerHub() {
 
         {/* ── SIDEBAR: REPOSITORIO ── */}
         {!isGeneralEpt && (
-          <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
+          <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
 
             {/* Header — mismo estilo que "Secuencia de módulos" */}
             <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

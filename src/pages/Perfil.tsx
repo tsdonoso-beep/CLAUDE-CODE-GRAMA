@@ -314,7 +314,7 @@ export default function Perfil() {
                     <div
                       key={slug}
                       className="rounded-2xl overflow-hidden"
-                      style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 10px rgba(4,57,65,0.07)' }}
+                      style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)' }}
                     >
                       <div className="relative overflow-hidden" style={{ height: 148 }}>
                         {t.imagen ? (

@@ -85,9 +85,14 @@ export const RADIUS = {
 } as const
 
 // ── Shadow scale ──────────────────────────────────────────────────────────────
+//  sm  → card default (list rows, small containers)
+//  md  → elevated card / panel
+//  lg  → large panel / sidebar
+//  xl  → modal / full-screen overlay
+
 export const SHADOW = {
-  sm:  '0 1px 3px rgba(4,57,65,0.06)',
-  md:  '0 2px 16px rgba(4,57,65,0.08)',
-  lg:  '0 4px 24px rgba(4,57,65,0.12)',
-  xl:  '0 8px 32px rgba(4,57,65,0.16)',
+  sm:  '0 2px 12px rgba(4,57,65,0.07)',
+  md:  '0 4px 20px rgba(4,57,65,0.12)',
+  lg:  '0 12px 40px rgba(4,57,65,0.22)',
+  xl:  '0 24px 64px rgba(4,57,65,0.28)',
 } as const

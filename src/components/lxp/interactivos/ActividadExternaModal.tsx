@@ -101,7 +101,7 @@ export function ActividadExternaModal({ config, onClose, onComplete }: Props) {
     >
       <div
         className="relative w-full max-w-lg max-h-[90vh] rounded-2xl overflow-hidden flex flex-col"
-        style={{ background: '#ffffff', boxShadow: '0 24px 64px rgba(4,57,65,0.3)' }}
+        style={{ background: '#ffffff', boxShadow: '0 24px 64px rgba(4,57,65,0.28)' }}
       >
         {/* Header */}
         <div className="px-6 py-5 flex items-start gap-4" style={{ background: '#043941' }}>

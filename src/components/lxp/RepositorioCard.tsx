@@ -68,15 +68,15 @@ export function RepositorioCard({ bien }: RepositorioCardProps) {
         background: '#ffffff',
         borderRadius: '1rem',
         border: '1.5px solid #e2e8f0',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+        boxShadow: '0 2px 12px rgba(4,57,65,0.07)',
       }}
       onMouseEnter={e => {
-        (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 24px rgba(0,0,0,0.10), 0 0 0 2px ${accent}40`
+        (e.currentTarget as HTMLElement).style.boxShadow = `0 4px 20px rgba(4,57,65,0.12), 0 0 0 2px ${accent}40`
         ;(e.currentTarget as HTMLElement).style.borderColor = accent + '60'
         ;(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'
       }}
       onMouseLeave={e => {
-        (e.currentTarget as HTMLElement).style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'
+        (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 12px rgba(4,57,65,0.07)'
         ;(e.currentTarget as HTMLElement).style.borderColor = '#e2e8f0'
         ;(e.currentTarget as HTMLElement).style.transform = 'translateY(0)'
       }}

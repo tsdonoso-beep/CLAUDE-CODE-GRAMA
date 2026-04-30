@@ -51,7 +51,7 @@ export function LiveSessionCard({
         className="rounded-2xl overflow-hidden"
         style={{
           background: 'linear-gradient(145deg, #032e34 0%, #043941 100%)',
-          boxShadow: '0 4px 20px rgba(4,57,65,0.18)',
+          boxShadow: '0 4px 20px rgba(4,57,65,0.12)',
         }}
       >
         {/* Top bar */}

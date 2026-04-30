@@ -364,7 +364,7 @@ export default function Repositorio() {
       {/* ══ TAB: CATÁLOGO ═══════════════════════════════════════════════════ */}
       {tab === 'bienes' && (
         <>
-          <div style={{ position: 'sticky', top: 0, zIndex: 20, padding: '12px 16px', borderBottom: '1px solid #d1fae5', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', background: '#fff' }}>
+          <div style={{ position: 'sticky', top: 0, zIndex: 20, padding: '12px 16px', borderBottom: '1px solid #d1fae5', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', background: '#fff' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, overflowX: 'auto', paddingBottom: 4 }}>
               <button
                 onClick={() => setShowFiltros(!showFiltros)}
