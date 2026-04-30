@@ -668,7 +668,7 @@ export default function ModuloDetalle() {
               {nextModulo && (
                 <button
                   onClick={() => navigate(`/taller/${slug}/ruta/modulo/${nextModulo.numero}`)}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, padding: '9px 14px', borderRadius: 10, border: 'none', background: '#043941', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12, fontWeight: 800, color: tallerColor, transition: 'opacity .16s' }}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, padding: '9px 14px', borderRadius: 10, border: 'none', background: tallerColor, cursor: 'pointer', fontFamily: 'inherit', fontSize: 12, fontWeight: 800, color: '#fff', transition: 'opacity .16s' }}
                   onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
                   onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                 >
