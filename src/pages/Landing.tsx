@@ -111,7 +111,7 @@ export default function Landing() {
 
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div style={{ position:'absolute', top:60, left:0, right:0, background:'#fff', borderBottom:'1px solid rgba(4,57,65,0.08)', padding:'16px 24px 20px', zIndex:50, display:'flex', flexDirection:'column', gap:12 }}>
+          <div style={{ position:'absolute', top:60, left:0, right:0, background:'#fff', borderBottom:'1px solid rgba(4,57,65,0.10)', padding:'16px 24px 20px', zIndex:50, display:'flex', flexDirection:'column', gap:12 }}>
             {NAV_LINKS.map(l => (
               <a key={l.label} href={l.href} style={{ fontSize:14, fontWeight:600, color:'var(--grama-oscuro)', textDecoration:'none' }} onClick={() => setMobileMenuOpen(false)}>
                 {l.label}

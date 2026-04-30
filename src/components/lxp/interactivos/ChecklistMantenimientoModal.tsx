@@ -259,7 +259,7 @@ export function ChecklistMantenimientoModal({ zona, onClose, onComplete }: Props
             </span>
             <span className="text-xs font-extrabold" style={{ color: '#02d47e' }}>{porcentaje}%</span>
           </div>
-          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(4,57,65,0.08)' }}>
+          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(4,57,65,0.10)' }}>
             <div
               className="h-full rounded-full transition-all duration-500"
               style={{ width: `${porcentaje}%`, background: 'linear-gradient(90deg,#02d47e,#00c16e)' }}
@@ -291,7 +291,7 @@ export function ChecklistMantenimientoModal({ zona, onClose, onComplete }: Props
                 className="rounded-xl overflow-hidden"
                 style={{
                   background: '#fff',
-                  border: `1px solid ${allDone ? 'rgba(2,212,126,0.35)' : 'rgba(4,57,65,0.08)'}`,
+                  border: `1px solid ${allDone ? 'rgba(2,212,126,0.35)' : 'rgba(4,57,65,0.10)'}`,
                 }}
               >
                 {/* Header del equipo */}
@@ -317,7 +317,7 @@ export function ChecklistMantenimientoModal({ zona, onClose, onComplete }: Props
 
                 {/* Pasos */}
                 {isOpen && (
-                  <div className="border-t px-4 py-3 space-y-2" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
+                  <div className="border-t px-4 py-3 space-y-2" style={{ borderColor: 'rgba(4,57,65,0.07)' }}>
                     {equipo.pasos.map(paso => {
                       const isChecked = checked.has(paso.id)
                       return (
@@ -327,7 +327,7 @@ export function ChecklistMantenimientoModal({ zona, onClose, onComplete }: Props
                           className="w-full flex items-start gap-3 text-left px-3 py-2.5 rounded-xl transition-all"
                           style={{
                             background: isChecked ? 'rgba(2,212,126,0.06)' : 'rgba(4,57,65,0.02)',
-                            border: `1px solid ${isChecked ? 'rgba(2,212,126,0.2)' : 'rgba(4,57,65,0.06)'}`,
+                            border: `1px solid ${isChecked ? 'rgba(2,212,126,0.2)' : 'rgba(4,57,65,0.07)'}`,
                           }}
                         >
                           {isChecked

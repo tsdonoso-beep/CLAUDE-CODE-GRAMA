@@ -48,8 +48,8 @@ export default function Configuracion() {
   const card: React.CSSProperties = {
     background: '#fff',
     borderRadius: 18,
-    border: '1px solid rgba(4,57,65,0.08)',
-    boxShadow: '0 2px 12px rgba(4,57,65,0.05)',
+    border: '1px solid rgba(4,57,65,0.10)',
+    boxShadow: '0 2px 12px rgba(4,57,65,0.07)',
     padding: '22px 28px',
     marginBottom: 14,
   }
@@ -59,7 +59,7 @@ export default function Configuracion() {
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '13px 0',
-    borderBottom: '1px solid rgba(4,57,65,0.06)',
+    borderBottom: '1px solid rgba(4,57,65,0.07)',
     gap: 16,
     minHeight: 48,
   }
@@ -137,7 +137,7 @@ export default function Configuracion() {
               <button
                 onClick={cancelNombre}
                 style={{
-                  background: 'rgba(4,57,65,0.06)',
+                  background: 'rgba(4,57,65,0.07)',
                   border: 'none',
                   borderRadius: 8,
                   padding: '6px 10px',
@@ -220,7 +220,7 @@ export default function Configuracion() {
         background: '#fff',
         borderRadius: 18,
         border: '1px solid rgba(239,68,68,0.12)',
-        boxShadow: '0 2px 12px rgba(4,57,65,0.05)',
+        boxShadow: '0 2px 12px rgba(4,57,65,0.07)',
         overflow: 'hidden',
       }}>
         <button

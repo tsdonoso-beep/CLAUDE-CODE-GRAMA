@@ -63,13 +63,13 @@ export function AtencionDocente({ userId, tallerSlug, displayName, tallerNombre,
       style={{
         background: '#ffffff',
         border: `1.5px solid ${accent}40`,
-        boxShadow: `0 0 0 4px ${accent}0c, 0 4px 16px rgba(4,57,65,0.06)`,
+        boxShadow: `0 0 0 4px ${accent}0c, 0 4px 16px rgba(4,57,65,0.07)`,
       }}
     >
       {/* ── Header ── */}
       <div
         className="px-5 py-4 border-b flex items-center justify-between"
-        style={{ borderColor: 'rgba(4,57,65,0.08)', background: 'rgba(4,57,65,0.03)' }}
+        style={{ borderColor: 'rgba(4,57,65,0.10)', background: 'rgba(4,57,65,0.03)' }}
       >
         <div className="flex items-center gap-2.5">
           <div className="h-8 w-8 rounded-lg flex items-center justify-center"
@@ -204,7 +204,7 @@ export function AtencionDocente({ userId, tallerSlug, displayName, tallerNombre,
               disabled={mensaje.trim().length < 10 || submitting}
               className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all"
               style={{
-                background: mensaje.trim().length >= 10 && !submitting ? '#043941' : 'rgba(4,57,65,0.08)',
+                background: mensaje.trim().length >= 10 && !submitting ? '#043941' : 'rgba(4,57,65,0.10)',
                 color:      mensaje.trim().length >= 10 && !submitting ? '#02d47e'  : 'rgba(4,57,65,0.3)',
                 cursor:     mensaje.trim().length >= 10 && !submitting ? 'pointer'  : 'not-allowed',
               }}

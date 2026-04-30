@@ -187,7 +187,7 @@ export function SimuladorEPPMecaModal({ onClose, onComplete }: Props) {
               {/* Progress */}
               <div className="flex items-center gap-3 mb-5">
                 <span className="text-xs font-bold" style={{ color: '#045f6c' }}>{escenarioIdx + 1} / {total}</span>
-                <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(4,57,65,0.08)' }}>
+                <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(4,57,65,0.10)' }}>
                   <div
                     className="h-full rounded-full transition-all duration-500"
                     style={{ width: `${((escenarioIdx + 1) / total) * 100}%`, background: 'linear-gradient(90deg,#02d47e,#00c16e)' }}
@@ -199,7 +199,7 @@ export function SimuladorEPPMecaModal({ onClose, onComplete }: Props) {
               {/* Scenario */}
               <div className="p-5 rounded-2xl mb-4" style={{ background: '#fff', border: '1px solid rgba(4,57,65,0.1)' }}>
                 <span className="inline-block text-[10px] font-extrabold px-2.5 py-1 rounded-full mb-2"
-                  style={{ background: 'rgba(4,57,65,0.06)', color: '#043941' }}>
+                  style={{ background: 'rgba(4,57,65,0.07)', color: '#043941' }}>
                   {escenario.equipo}
                 </span>
                 <h3 className="text-base font-extrabold mb-2" style={{ color: '#043941' }}>
@@ -324,7 +324,7 @@ export function SimuladorEPPMecaModal({ onClose, onComplete }: Props) {
 
               <div className="flex justify-center gap-3">
                 <button onClick={reiniciar} className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-bold"
-                  style={{ background: 'rgba(4,57,65,0.06)', color: '#043941' }}>
+                  style={{ background: 'rgba(4,57,65,0.07)', color: '#043941' }}>
                   <RotateCcw size={13} /> Repetir
                 </button>
                 <button onClick={onClose} className="px-5 py-2.5 rounded-xl text-sm font-bold"

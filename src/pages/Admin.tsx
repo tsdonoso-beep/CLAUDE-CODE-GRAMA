@@ -777,7 +777,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
         {/* Top header */}
         <header style={{ height: 56, borderBottom: '1px solid rgba(4,57,65,0.12)', padding: '0 1.75rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#ffffff', position: 'sticky', top: 0, zIndex: 30 }}>
           <h2 style={{ fontSize: '.88rem', fontWeight: 700, color: '#043941' }}>{PAGE_TITLES[tab]}</h2>
-          <button onClick={fetchData} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.35rem .85rem', borderRadius: 8, background: 'rgba(4,57,65,0.05)', color: '#043941', border: '1px solid rgba(4,57,65,0.15)', cursor: 'pointer' }}>
+          <button onClick={fetchData} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.35rem .85rem', borderRadius: 8, background: 'rgba(4,57,65,0.07)', color: '#043941', border: '1px solid rgba(4,57,65,0.15)', cursor: 'pointer' }}>
             <RefreshCw size={12} /> Actualizar
           </button>
         </header>
@@ -1354,7 +1354,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     <span style={{ fontSize: '.65rem', color: '#043941', marginLeft: '.1rem' }}>{quizStats.length} quizzes · tasa = docentes que aprueban / docentes únicos que intentaron</span>
                   </div>
                   {/* column headers */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 130px 70px', gap: 0, padding: '.55rem 1.5rem', background: 'rgba(255,255,255,0.02)',  borderBottom: '1px solid rgba(4,57,65,0.08)' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 130px 70px', gap: 0, padding: '.55rem 1.5rem', background: 'rgba(255,255,255,0.02)',  borderBottom: '1px solid rgba(4,57,65,0.10)' }}>
                     {['Quiz', 'Intentos', 'Docentes', 'Tasa de aprobación', 'Tags'].map(h => (
                       <span key={h} style={{ fontSize: '.6rem', fontWeight: 700, color: '#043941', textTransform: 'uppercase', letterSpacing: '.08em' }}>{h}</span>
                     ))}
@@ -1532,7 +1532,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   </div>
 
                   {/* Summary banner */}
-                  <div style={{ padding: '.7rem 1.5rem', background: inactivos.length > 0 ? 'rgba(245,158,11,0.06)' : 'rgba(2,212,126,0.05)',  borderBottom: '1px solid rgba(4,57,65,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+                  <div style={{ padding: '.7rem 1.5rem', background: inactivos.length > 0 ? 'rgba(245,158,11,0.06)' : 'rgba(2,212,126,0.05)',  borderBottom: '1px solid rgba(4,57,65,0.10)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
                     <p style={{ fontSize: '.78rem', color: inactivos.length > 0 ? '#f59e0b' : '#02d47e', fontWeight: 700 }}>
                       {inactivos.length === 0
                         ? `✓ Todos los docentes activos en los últimos ${filtroInactividad} días`

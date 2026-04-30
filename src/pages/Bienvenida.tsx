@@ -463,7 +463,7 @@ export default function Bienvenida() {
                 {nTalleres} especialidad{nTalleres !== 1 ? 'es' : ''}{ie && !allUnlocked ? ' disponibles en tu IE' : ' técnicas'}
               </h2>
             </div>
-            <div className="hidden sm:block h-px flex-1" style={{ background: 'rgba(4,57,65,0.08)', maxWidth: 300 }} />
+            <div className="hidden sm:block h-px flex-1" style={{ background: 'rgba(4,57,65,0.10)', maxWidth: 300 }} />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

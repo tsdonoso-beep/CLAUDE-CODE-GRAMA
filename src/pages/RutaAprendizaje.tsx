@@ -154,7 +154,7 @@ export default function RutaAprendizaje() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
           {/* ① Tu progreso */}
-          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '18px 20px' }}>
+          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '18px 20px' }}>
             <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 14px' }}>Tu progreso</p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
               {/* Ring */}
@@ -199,7 +199,7 @@ export default function RutaAprendizaje() {
 
           {/* ② Próxima sesión */}
           {proximaSesion && (
-            <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '16px 18px' }}>
+            <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '16px 18px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
                 <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#f97316', flexShrink: 0, boxShadow: '0 0 0 3px rgba(249,115,22,0.18)' }} />
                 <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: '#f97316', margin: 0 }}>
@@ -225,12 +225,12 @@ export default function RutaAprendizaje() {
 
           {/* ③ Comienza aquí */}
           {moduloActual && (
-            <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '16px 18px' }}>
+            <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '16px 18px' }}>
               <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 10px' }}>
                 {getEstadoModuloLXP(moduloActual.id) === 'en_curso' ? 'Continúa aquí' : 'Comienza aquí'}
               </p>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-                <div style={{ width: 38, height: 38, borderRadius: 10, background: 'rgba(4,57,65,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
+                <div style={{ width: 38, height: 38, borderRadius: 10, background: 'rgba(4,57,65,0.10)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
                   {moduloActual.icon}
                 </div>
                 <div>

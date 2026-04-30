@@ -149,7 +149,7 @@ export function ExploradorEquiposModal({ onClose, onComplete }: Props) {
                   border: `1px solid ${
                     verificado
                       ? resultado ? 'rgba(2,212,126,0.4)' : 'rgba(239,68,68,0.3)'
-                      : 'rgba(4,57,65,0.08)'
+                      : 'rgba(4,57,65,0.10)'
                   }`,
                 }}
               >
@@ -175,7 +175,7 @@ export function ExploradorEquiposModal({ onClose, onComplete }: Props) {
                     <button
                       onClick={() => setPistaId(prev => prev === equipo.id ? null : equipo.id)}
                       className="text-[10px] font-semibold px-2 py-0.5 rounded-md shrink-0 transition-colors"
-                      style={{ background: 'rgba(4,57,65,0.06)', color: '#045f6c' }}
+                      style={{ background: 'rgba(4,57,65,0.07)', color: '#045f6c' }}
                     >
                       {pistaId === equipo.id ? 'Ocultar' : '? Pista'}
                     </button>
@@ -192,7 +192,7 @@ export function ExploradorEquiposModal({ onClose, onComplete }: Props) {
                 )}
 
                 {/* Botones de zona */}
-                <div className="flex border-t" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
+                <div className="flex border-t" style={{ borderColor: 'rgba(4,57,65,0.07)' }}>
                   {ZONAS.map((zona, zi) => {
                     const isSelected = asignaciones[equipo.id] === zona.id
                     return (
@@ -203,7 +203,7 @@ export function ExploradorEquiposModal({ onClose, onComplete }: Props) {
                         style={{
                           background: isSelected ? zona.bg : 'transparent',
                           color: isSelected ? zona.color : 'rgba(4,57,65,0.35)',
-                          borderRight: zi < ZONAS.length - 1 ? '1px solid rgba(4,57,65,0.05)' : 'none',
+                          borderRight: zi < ZONAS.length - 1 ? '1px solid rgba(4,57,65,0.07)' : 'none',
                         }}
                       >
                         {isSelected ? '✓ ' : ''}{zona.short}
@@ -250,7 +250,7 @@ export function ExploradorEquiposModal({ onClose, onComplete }: Props) {
               </div>
               <div className="flex gap-2">
                 <button onClick={reiniciar} className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold"
-                  style={{ background: 'rgba(4,57,65,0.06)', color: '#043941' }}>
+                  style={{ background: 'rgba(4,57,65,0.07)', color: '#043941' }}>
                   <RotateCcw size={13} /> Repetir
                 </button>
                 <button onClick={onClose} className="px-4 py-2 rounded-xl text-sm font-bold text-white"

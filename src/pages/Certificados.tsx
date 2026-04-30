@@ -253,8 +253,8 @@ export default function Certificados() {
                 <div key={slug} style={{
                   background: '#fff',
                   borderRadius: 16,
-                  border: '1px solid rgba(4,57,65,0.08)',
-                  boxShadow: '0 2px 10px rgba(4,57,65,0.05)',
+                  border: '1px solid rgba(4,57,65,0.10)',
+                  boxShadow: '0 2px 10px rgba(4,57,65,0.07)',
                   padding: '20px',
                   display: 'flex',
                   alignItems: 'center',

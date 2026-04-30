@@ -38,10 +38,10 @@ function RowCard({ row }: { row: EPPRow }) {
   return (
     <div
       className="rounded-xl overflow-hidden"
-      style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.08)' }}
+      style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.10)' }}
     >
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3" style={{ background: '#f8fcfb', borderBottom: '1px solid rgba(4,57,65,0.06)' }}>
+      <div className="flex items-center gap-3 px-4 py-3" style={{ background: '#f8fcfb', borderBottom: '1px solid rgba(4,57,65,0.07)' }}>
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-sm font-extrabold" style={{ color: '#043941' }}>
@@ -56,7 +56,7 @@ function RowCard({ row }: { row: EPPRow }) {
             {row.noGuantes && (
               <span
                 className="text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1"
-                style={{ background: 'rgba(4,57,65,0.06)', color: '#043941', border: '1px solid rgba(4,57,65,0.12)' }}
+                style={{ background: 'rgba(4,57,65,0.07)', color: '#043941', border: '1px solid rgba(4,57,65,0.12)' }}
               >
                 <AlertTriangle size={9} /> Sin guantes
               </span>
@@ -235,7 +235,7 @@ export function EPPSelectorModal({ tallerSlug, tallerNombre, onClose }: EPPSelec
                   style={
                     zonaFiltro === z
                       ? { background: '#043941', color: '#02d47e' }
-                      : { background: 'rgba(4,57,65,0.06)', color: '#045f6c' }
+                      : { background: 'rgba(4,57,65,0.07)', color: '#045f6c' }
                   }
                 >
                   {z}
@@ -252,7 +252,7 @@ export function EPPSelectorModal({ tallerSlug, tallerNombre, onClose }: EPPSelec
 
         {/* Leyenda */}
         <div className="px-5 py-2 border-b flex items-center gap-5"
-          style={{ background: '#ffffff', borderColor: 'rgba(4,57,65,0.06)' }}>
+          style={{ background: '#ffffff', borderColor: 'rgba(4,57,65,0.07)' }}>
           <div className="flex items-center gap-1.5 text-xs">
             <ShieldAlert size={12} style={{ color: '#043941' }} />
             <span className="font-semibold" style={{ color: '#043941' }}>Obligatorio</span>
@@ -276,7 +276,7 @@ export function EPPSelectorModal({ tallerSlug, tallerNombre, onClose }: EPPSelec
               <button
                 onClick={() => { setQuery(''); setZonaFiltro('Todas') }}
                 className="text-xs font-bold px-3 py-1.5 rounded-lg"
-                style={{ background: 'rgba(4,57,65,0.06)', color: '#045f6c' }}
+                style={{ background: 'rgba(4,57,65,0.07)', color: '#045f6c' }}
               >
                 Limpiar filtros
               </button>

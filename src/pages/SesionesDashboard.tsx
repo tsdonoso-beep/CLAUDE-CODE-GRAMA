@@ -103,7 +103,7 @@ export default function SesionesDashboard() {
 
   const cardStyle: React.CSSProperties = {
     background: "#fff",
-    border: "1.5px solid rgba(4,57,65,0.08)",
+    border: "1.5px solid rgba(4,57,65,0.10)",
     borderRadius: 13,
     padding: "1rem 1.1rem",
     display: "flex",
@@ -178,7 +178,7 @@ export default function SesionesDashboard() {
                 e.currentTarget.style.transform = "translateY(-1px)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(4,57,65,0.08)";
+                e.currentTarget.style.borderColor = "rgba(4,57,65,0.10)";
                 e.currentTarget.style.boxShadow = "none";
                 e.currentTarget.style.transform = "none";
               }}
@@ -235,7 +235,7 @@ export default function SesionesDashboard() {
                       style={{
                         fontSize: "0.65rem",
                         fontWeight: 600,
-                        background: "rgba(4,57,65,0.06)",
+                        background: "rgba(4,57,65,0.07)",
                         color: "#045f6c",
                         borderRadius: 100,
                         padding: "2px 9px",
@@ -289,7 +289,7 @@ export default function SesionesDashboard() {
               {s.status === "recorded" && (
                 <button
                   style={{
-                    background: "rgba(4,57,65,0.06)",
+                    background: "rgba(4,57,65,0.07)",
                     color: "#045f6c",
                     border: "none",
                     borderRadius: 100,

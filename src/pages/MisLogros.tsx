@@ -74,13 +74,13 @@ export default function MisLogros() {
             className="rounded-2xl p-5 flex flex-col gap-3"
             style={{
               background: logro.obtenido ? '#fff' : 'rgba(255,255,255,0.6)',
-              border: `1px solid ${logro.obtenido ? logro.color + '40' : 'rgba(4,57,65,0.08)'}`,
+              border: `1px solid ${logro.obtenido ? logro.color + '40' : 'rgba(4,57,65,0.10)'}`,
               boxShadow: logro.obtenido ? `0 4px 20px ${logro.color}18` : 'none',
               opacity: logro.obtenido ? 1 : 0.6,
             }}
           >
             <div className="h-12 w-12 rounded-2xl flex items-center justify-center"
-              style={{ background: logro.obtenido ? `${logro.color}20` : 'rgba(4,57,65,0.06)' }}
+              style={{ background: logro.obtenido ? `${logro.color}20` : 'rgba(4,57,65,0.07)' }}
             >
               <logro.Icon size={24} style={{ color: logro.obtenido ? logro.color : '#94a3b8' }} />
             </div>

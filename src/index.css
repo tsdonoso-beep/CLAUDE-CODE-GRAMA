@@ -180,6 +180,11 @@
   --icon-2xl:  32px;
   --icon-3xl:  40px;
 
+  /* Border alpha scale — mirrors BORDER constant in src/lib/tokens.ts */
+  --border-hairline: rgba(4,57,65,0.07);  /* row dividers inside cards */
+  --border-card:     rgba(4,57,65,0.10);  /* card/container outer border */
+  --border-input:    rgba(4,57,65,0.15);  /* input fields, interactive borders */
+
   /* Border-radius scale */
   --radius-xs:   6px;
   --radius-sm:   8px;

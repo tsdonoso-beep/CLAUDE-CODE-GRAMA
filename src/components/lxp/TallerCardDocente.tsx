@@ -904,7 +904,7 @@ export function TallerCardDocente({
       <div style={{
         background: '#fff', padding: '10px 14px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8,
-        borderTop: '1px solid rgba(4,57,65,0.06)',
+        borderTop: '1px solid rgba(4,57,65,0.07)',
       }}>
         <div style={{ display: 'flex', gap: 7 }}>
           <button onClick={onRuta}
@@ -925,12 +925,12 @@ export function TallerCardDocente({
             style={{
               display: 'flex', alignItems: 'center', gap: 5,
               padding: '7px 12px', borderRadius: 10, cursor: 'pointer',
-              background: 'rgba(4,57,65,0.05)', border: '1px solid rgba(4,57,65,0.1)',
+              background: 'rgba(4,57,65,0.07)', border: '1px solid rgba(4,57,65,0.1)',
               color: '#043941', fontFamily: "'Manrope',sans-serif", fontSize: 11, fontWeight: 600,
               transition: 'background .2s',
             }}
-            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(4,57,65,0.09)')}
-            onMouseLeave={e => (e.currentTarget.style.background = 'rgba(4,57,65,0.05)')}
+            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(4,57,65,0.10)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'rgba(4,57,65,0.07)')}
           >
             <Package size={11}/> Repositorio
           </button>

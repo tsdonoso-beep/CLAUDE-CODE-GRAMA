@@ -124,7 +124,7 @@ export default function TallerHub() {
 
       {/* ══ COMPETENCIAS ══════════════════════════════════════════════════════ */}
       {taller.competencias?.length > 0 && (
-        <div style={{ background: '#ffffff', borderBottom: '1px solid rgba(4,57,65,0.06)' }}>
+        <div style={{ background: '#ffffff', borderBottom: '1px solid rgba(4,57,65,0.07)' }}>
           <div style={{ padding: '24px 32px 28px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'start' }}>
 
             <div>
@@ -140,7 +140,7 @@ export default function TallerHub() {
                   { Icon: Users,         title: 'Comunidad de docentes EPT', sub: 'Red de pares, soporte especializado y sesiones en vivo' },
                 ].map(({ Icon, title, sub }, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                    <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(4,57,65,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                       <Icon size={15} style={{ color: '#043941' }} />
                     </div>
                     <div>
@@ -178,8 +178,8 @@ export default function TallerHub() {
 
         {/* ── SECUENCIA DE MÓDULOS ── */}
         {!isGeneralEpt && (
-          <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.06)', overflow: 'hidden' }}>
-            <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
+            <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
                 <h2 style={{ fontSize: 15, fontWeight: 800, color: '#043941', margin: '0 0 2px', letterSpacing: '-0.01em' }}>Secuencia de módulos</h2>
                 <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
@@ -209,21 +209,21 @@ export default function TallerHub() {
 
                 const badge = {
                   completado: { label: '✓ Completado', bg: 'rgba(2,212,126,0.1)',  color: '#059669' },
-                  en_curso:   { label: '• En curso',   bg: 'rgba(4,57,65,0.08)',   color: '#043941' },
+                  en_curso:   { label: '• En curso',   bg: 'rgba(4,57,65,0.10)',   color: '#043941' },
                   disponible: { label: '◦ Disponible', bg: 'rgba(14,165,233,0.1)', color: '#0284c7' },
-                  bloqueado:  { label: '🔒 Bloqueado', bg: 'rgba(4,57,65,0.05)',   color: 'rgba(4,57,65,0.35)' },
+                  bloqueado:  { label: '🔒 Bloqueado', bg: 'rgba(4,57,65,0.07)',   color: 'rgba(4,57,65,0.35)' },
                 }[estado]
 
                 return (
                   <div
                     key={m.id}
                     onClick={() => estado !== 'bloqueado' && navigate(`/taller/${slug}/ruta/modulo/${m.numero}`)}
-                    style={{ borderBottom: i < modulosLXP.length - 1 ? '1px solid rgba(4,57,65,0.05)' : 'none', padding: '11px 24px', background: isCurrent ? 'rgba(2,212,126,0.04)' : 'transparent', cursor: estado !== 'bloqueado' ? 'pointer' : 'default', transition: 'background .16s' }}
+                    style={{ borderBottom: i < modulosLXP.length - 1 ? '1px solid rgba(4,57,65,0.07)' : 'none', padding: '11px 24px', background: isCurrent ? 'rgba(2,212,126,0.04)' : 'transparent', cursor: estado !== 'bloqueado' ? 'pointer' : 'default', transition: 'background .16s' }}
                     onMouseEnter={e => { if (estado !== 'bloqueado') (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.03)' }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = isCurrent ? 'rgba(2,212,126,0.04)' : 'transparent' }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <div style={{ width: 34, height: 34, borderRadius: 9, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, background: estado === 'completado' ? 'rgba(2,212,126,0.12)' : estado === 'en_curso' ? 'rgba(4,57,65,0.08)' : estado === 'disponible' ? 'rgba(14,165,233,0.1)' : 'rgba(4,57,65,0.04)', opacity: estado === 'bloqueado' ? 0.4 : 1 }}>
+                      <div style={{ width: 34, height: 34, borderRadius: 9, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, background: estado === 'completado' ? 'rgba(2,212,126,0.12)' : estado === 'en_curso' ? 'rgba(4,57,65,0.10)' : estado === 'disponible' ? 'rgba(14,165,233,0.1)' : 'rgba(4,57,65,0.04)', opacity: estado === 'bloqueado' ? 0.4 : 1 }}>
                         {m.icon}
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
@@ -264,10 +264,10 @@ export default function TallerHub() {
 
         {/* ── SIDEBAR: REPOSITORIO ── */}
         {!isGeneralEpt && (
-          <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.06)', overflow: 'hidden' }}>
+          <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
 
             {/* Header — mismo estilo que "Secuencia de módulos" */}
-            <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
                 <h2 style={{ fontSize: 15, fontWeight: 800, color: '#043941', margin: '0 0 2px', letterSpacing: '-0.01em' }}>Repositorio del taller</h2>
                 <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>{todosLos.length} bienes · {zonas.length} zonas</p>
@@ -294,7 +294,7 @@ export default function TallerHub() {
                 <div
                   key={zona}
                   onClick={() => navigate(`/taller/${slug}/repositorio?zona=${encodeURIComponent(zona)}`)}
-                  style={{ borderBottom: i < zonas.length - 1 ? '1px solid rgba(4,57,65,0.05)' : 'none', padding: '12px 24px', cursor: 'pointer', transition: 'background .16s' }}
+                  style={{ borderBottom: i < zonas.length - 1 ? '1px solid rgba(4,57,65,0.07)' : 'none', padding: '12px 24px', cursor: 'pointer', transition: 'background .16s' }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.03)' }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
                 >

@@ -80,8 +80,8 @@ export default function CentroAyuda() {
         <style>{`@media(max-width:768px){.ayuda-grid{grid-template-columns:1fr!important}}`}</style>
 
         {/* ── Formulario nueva consulta ── */}
-        <div className="ayuda-grid rounded-2xl overflow-hidden" style={{ background: '#fff', border: '1px solid rgba(4,57,65,0.08)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)' }}>
-          <div className="px-5 pt-4 pb-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
+        <div className="ayuda-grid rounded-2xl overflow-hidden" style={{ background: '#fff', border: '1px solid rgba(4,57,65,0.10)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)' }}>
+          <div className="px-5 pt-4 pb-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.07)' }}>
             <p className="text-sm font-black" style={{ color: '#043941' }}>Nueva consulta</p>
             <p className="text-[11px]" style={{ color: '#94a3b8' }}>Selecciona el taller y módulo al que refiere tu duda</p>
           </div>
@@ -191,8 +191,8 @@ export default function CentroAyuda() {
         </div>
 
         {/* ── Historial ── */}
-        <div className="rounded-2xl overflow-hidden" style={{ background: '#fff', border: '1px solid rgba(4,57,65,0.08)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)' }}>
-          <div className="px-5 pt-4 pb-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
+        <div className="rounded-2xl overflow-hidden" style={{ background: '#fff', border: '1px solid rgba(4,57,65,0.10)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)' }}>
+          <div className="px-5 pt-4 pb-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.07)' }}>
             <p className="text-sm font-black" style={{ color: '#043941' }}>Mis consultas</p>
             <p className="text-[11px]" style={{ color: '#94a3b8' }}>{consultas.length === 0 ? 'Aún no has enviado ninguna' : `${consultas.length} consulta${consultas.length !== 1 ? 's' : ''}`}</p>
           </div>
@@ -209,7 +209,7 @@ export default function CentroAyuda() {
                 const t    = talleresConfig.find(x => x.slug === c.tallerSlug)
                 const respondida = c.estado === 'respondida'
                 return (
-                  <div key={c.id} className={i > 0 ? 'border-t' : ''} style={{ borderColor: 'rgba(4,57,65,0.05)', padding: '16px 20px' }}>
+                  <div key={c.id} className={i > 0 ? 'border-t' : ''} style={{ borderColor: 'rgba(4,57,65,0.07)', padding: '16px 20px' }}>
                     <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full shrink-0 mt-0.5" style={{ background: ta }} />

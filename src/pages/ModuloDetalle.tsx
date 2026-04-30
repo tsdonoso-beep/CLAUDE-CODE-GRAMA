@@ -313,7 +313,7 @@ export default function ModuloDetalle() {
     <div style={{ fontFamily: "'Manrope', sans-serif", background: 'var(--grama-bg)' }}>
 
       {/* ── WHITE TOP BAR ── */}
-      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.08)' }}>
+      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.10)' }}>
         <div style={{ padding: '14px 28px' }}>
 
           {/* Fila 1: icono + breadcrumb + título + stats */}
@@ -355,7 +355,7 @@ export default function ModuloDetalle() {
                   <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.08em', color: '#94a3b8', margin: '3px 0 0', textTransform: 'uppercase' }}>{s.label}</p>
                 </div>
               ))}
-              <div style={{ width: 1, height: 28, background: 'rgba(4,57,65,0.08)' }} />
+              <div style={{ width: 1, height: 28, background: 'rgba(4,57,65,0.10)' }} />
               {modulo.horasAsincrono > 0 && (
                 <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: '#e3f8fb', color: '#045f6c' }}>
                   {modulo.horasAsincrono}h Asíncrono
@@ -409,14 +409,14 @@ export default function ModuloDetalle() {
               <div
                 key={ses.id}
                 id={`ses-${ses.id}`}
-                style={{ borderRadius: 14, border: `1px solid ${isOpen ? tallerColor + '40' : 'rgba(4,57,65,0.08)'}`, background: '#fff', overflow: 'hidden', boxShadow: isOpen ? `0 2px 12px ${tallerColor}18` : '0 1px 4px rgba(4,57,65,0.04)', transition: 'border-color .2s, box-shadow .2s' }}
+                style={{ borderRadius: 14, border: `1px solid ${isOpen ? tallerColor + '40' : 'rgba(4,57,65,0.10)'}`, background: '#fff', overflow: 'hidden', boxShadow: isOpen ? `0 2px 12px ${tallerColor}18` : '0 1px 4px rgba(4,57,65,0.04)', transition: 'border-color .2s, box-shadow .2s' }}
               >
                 {/* Accordion header */}
                 <button
                   onClick={() => toggleSub(ses.id)}
                   style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'inherit' }}
                 >
-                  <div style={{ width: 28, height: 28, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, background: isOpen ? tallerColor : 'rgba(4,57,65,0.06)', color: isOpen ? '#fff' : '#94a3b8', transition: 'background .2s, color .2s' }}>
+                  <div style={{ width: 28, height: 28, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, background: isOpen ? tallerColor : 'rgba(4,57,65,0.07)', color: isOpen ? '#fff' : '#94a3b8', transition: 'background .2s, color .2s' }}>
                     S{idx + 1}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -437,7 +437,7 @@ export default function ModuloDetalle() {
 
                 {/* Expanded content */}
                 {isOpen && (
-                  <div style={{ borderTop: '1px solid rgba(4,57,65,0.06)', padding: '14px 16px', background: '#fff', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  <div style={{ borderTop: '1px solid rgba(4,57,65,0.07)', padding: '14px 16px', background: '#fff', display: 'flex', flexDirection: 'column', gap: 6 }}>
                     {ses.descripcion && (
                       <p style={{ fontSize: 12, color: '#64748b', margin: '0 0 4px', lineHeight: 1.6 }}>
                         {ses.descripcion}
@@ -502,7 +502,7 @@ export default function ModuloDetalle() {
                                     : 'Abrir'
                                   return (
                                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 12, border: `1px solid ${est.completed ? tallerColor + '40' : 'rgba(4,57,65,0.07)'}`, background: est.completed ? `${tallerColor}08` : '#fafcff', transition: 'border-color .16s' }}>
-                                    <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: est.completed ? `${tallerColor}18` : 'rgba(4,57,65,0.06)' }}>
+                                    <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: est.completed ? `${tallerColor}18` : 'rgba(4,57,65,0.07)' }}>
                                       {est.completed
                                         ? <CheckCircle2 size={16} style={{ color: tallerColor }} />
                                         : <ContentIcon size={15} style={{ color: '#64748b' }} />}
@@ -533,7 +533,7 @@ export default function ModuloDetalle() {
                                     </div>
                                     <button
                                       onClick={() => handleOpenContent(contenido)}
-                                      style={{ padding: '7px 14px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, minWidth: 100, textAlign: 'center', background: est.completed ? 'rgba(4,57,65,0.06)' : tallerColor, color: est.completed ? '#043941' : '#fff', transition: 'opacity .16s' }}
+                                      style={{ padding: '7px 14px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, minWidth: 100, textAlign: 'center', background: est.completed ? 'rgba(4,57,65,0.07)' : tallerColor, color: est.completed ? '#043941' : '#fff', transition: 'opacity .16s' }}
                                       onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
                                       onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                                     >
@@ -553,7 +553,7 @@ export default function ModuloDetalle() {
                                 onClick={() => setDiagnosticosOpen(o => !o)}
                                 style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: diagnosticosOpen ? 'rgba(4,57,65,0.03)' : '#fafcff', border: 'none', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left' }}
                               >
-                                <div style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(4,57,65,0.06)' }}>
+                                <div style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(4,57,65,0.07)' }}>
                                   <ClipboardList size={14} style={{ color: '#045f6c' }} />
                                 </div>
                                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -562,14 +562,14 @@ export default function ModuloDetalle() {
                                     {diagnosticos.length} evaluaciones · {totalDiagPreg} preguntas · Sin nota mínima
                                   </p>
                                 </div>
-                                <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 100, background: 'rgba(4,57,65,0.06)', color: '#045f6c', flexShrink: 0 }}>
+                                <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 100, background: 'rgba(4,57,65,0.07)', color: '#045f6c', flexShrink: 0 }}>
                                   Calibración
                                 </span>
                                 <ChevronRight size={14} style={{ color: '#94a3b8', transform: diagnosticosOpen ? 'rotate(90deg)' : 'none', transition: 'transform .2s', flexShrink: 0 }} />
                               </button>
 
                               {diagnosticosOpen && (
-                                <div style={{ borderTop: '1px solid rgba(4,57,65,0.06)', padding: '10px 14px', background: '#fff', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                                <div style={{ borderTop: '1px solid rgba(4,57,65,0.07)', padding: '10px 14px', background: '#fff', display: 'flex', flexDirection: 'column', gap: 6 }}>
                                   <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 4px', fontStyle: 'italic' }}>
                                     Estas evaluaciones no tienen nota mínima. Solo sirven para adaptar el programa a tu punto de partida.
                                   </p>
@@ -608,7 +608,7 @@ export default function ModuloDetalle() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, position: 'sticky', top: 20 }}>
 
           {/* Card ① Progreso del módulo */}
-          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '18px 20px' }}>
+          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '18px 20px' }}>
             <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 14px' }}>Progreso</p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
               <div style={{ position: 'relative', width: 64, height: 64, flexShrink: 0 }}>
@@ -630,7 +630,7 @@ export default function ModuloDetalle() {
           </div>
 
           {/* Card ② Índice de sesiones */}
-          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '16px 18px' }}>
+          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '16px 18px' }}>
             <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 10px' }}>Sesiones</p>
             {modulo.sesiones.map((ses, si) => (
               <button
@@ -639,7 +639,7 @@ export default function ModuloDetalle() {
                   setExpandedSubs(new Set([ses.id]))
                   document.getElementById(`ses-${ses.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
                 }}
-                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '7px 0', borderBottom: si < modulo.sesiones.length - 1 ? '1px solid rgba(4,57,65,0.05)' : 'none', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit' }}
+                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '7px 0', borderBottom: si < modulo.sesiones.length - 1 ? '1px solid rgba(4,57,65,0.07)' : 'none', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit' }}
               >
                 <span style={{ fontSize: 10, fontWeight: 800, color: tallerColor, minWidth: 20, flexShrink: 0 }}>S{si + 1}</span>
                 <span style={{ fontSize: 11, fontWeight: 600, color: '#043941', flex: 1, lineHeight: 1.3, textAlign: 'left' }}>
@@ -651,7 +651,7 @@ export default function ModuloDetalle() {
 
           {/* Card ③ Navegación prev / next */}
           {(prevModulo || nextModulo) && (
-            <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
               {prevModulo && (
                 <button
                   onClick={() => navigate(`/taller/${slug}/ruta/modulo/${prevModulo.numero}`)}

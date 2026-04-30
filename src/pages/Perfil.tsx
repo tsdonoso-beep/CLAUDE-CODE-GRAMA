@@ -96,7 +96,7 @@ function CalendarioSidebar({ tallerSlugs, accent, maxSesiones = 4 }: { tallerSlu
       style={{
         background: '#ffffff',
         border: `1.5px solid ${accent}40`,
-        boxShadow: `0 0 0 4px ${accent}0c, 0 4px 16px rgba(4,57,65,0.06)`,
+        boxShadow: `0 0 0 4px ${accent}0c, 0 4px 16px rgba(4,57,65,0.07)`,
       }}
     >
       {/* Header — estático, siempre visible */}
@@ -118,7 +118,7 @@ function CalendarioSidebar({ tallerSlugs, accent, maxSesiones = 4 }: { tallerSlu
       </div>
 
       {/* Navegación de mes */}
-      <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.06)' }}>
+      <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: 'rgba(4,57,65,0.07)' }}>
         <button onClick={prevMonth} className="h-6 w-6 rounded-lg flex items-center justify-center transition-colors hover:bg-black/[0.04]">
           <ChevronRight size={12} style={{ color: 'rgba(4,57,65,0.4)', transform: 'rotate(180deg)' }} />
         </button>

@@ -19,7 +19,7 @@ const TIPO_CONFIG: Record<string, {
   EQUIPOS:      { icon: Package,  color: '#02d47e', bg: 'rgba(2,212,126,0.12)',  label: 'Equipo',      accent: '#02d47e' },
   HERRAMIENTAS: { icon: Wrench,   color: '#045f6c', bg: 'rgba(4,95,108,0.12)',   label: 'Herramienta', accent: '#045f6c' },
   MOBILIARIO:   { icon: Sofa,     color: '#04768a', bg: 'rgba(4,118,138,0.12)',  label: 'Mobiliario',  accent: '#04768a' },
-  PEDAGOGICO:   { icon: BookOpen, color: '#043941', bg: 'rgba(4,57,65,0.09)',    label: 'Pedagógico',  accent: '#043941' },
+  PEDAGOGICO:   { icon: BookOpen, color: '#043941', bg: 'rgba(4,57,65,0.10)',    label: 'Pedagógico',  accent: '#043941' },
   'PRODUCCIÓN': { icon: Factory,  color: '#02a05a', bg: 'rgba(2,160,90,0.12)',   label: 'Producción',  accent: '#02a05a' },
   SEGURIDAD:    { icon: HardHat,  color: '#dc2626', bg: '#fee2e2',              label: 'Seguridad',   accent: '#dc2626' },
   '':           { icon: Package,  color: '#475569', bg: '#f1f5f9',              label: 'Bien',        accent: '#475569' },

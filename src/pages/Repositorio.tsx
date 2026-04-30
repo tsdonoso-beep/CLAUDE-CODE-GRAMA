@@ -186,7 +186,7 @@ export default function Repositorio() {
     if (esManualMantenimiento(nombre))
       return { icon: Wrench, color: '#045f6c', bg: 'rgba(4,95,108,0.11)', label: 'Mantenimiento' }
     if (esManualPedagogico(nombre))
-      return { icon: GraduationCap, color: '#043941', bg: 'rgba(4,57,65,0.08)', label: 'Pedagógico' }
+      return { icon: GraduationCap, color: '#043941', bg: 'rgba(4,57,65,0.10)', label: 'Pedagógico' }
     return { icon: FileText, color: '#64748b', bg: '#f1f5f9', label: 'Documento' }
   }
 
@@ -502,7 +502,7 @@ export default function Repositorio() {
             {([
               { id: 'uso',           label: 'Manual de Uso',        icon: BookMarked,    color: '#02d47e', bg: 'rgba(2,212,126,0.13)', count: conteos.uso,           desc: 'Operación y manejo seguro del equipo' },
               { id: 'mantenimiento', label: 'Mantenimiento',        icon: Wrench,        color: '#045f6c', bg: 'rgba(4,95,108,0.11)',  count: conteos.mantenimiento, desc: 'Limpieza, revisión y mantenimiento preventivo' },
-              { id: 'pedagogico',    label: 'Material Pedagógico',  icon: GraduationCap, color: '#043941', bg: 'rgba(4,57,65,0.08)',   count: conteos.pedagogico,    desc: 'Guías y sesiones para el docente' },
+              { id: 'pedagogico',    label: 'Material Pedagógico',  icon: GraduationCap, color: '#043941', bg: 'rgba(4,57,65,0.10)',   count: conteos.pedagogico,    desc: 'Guías y sesiones para el docente' },
             ] as const).map(cat => {
               const Icon = cat.icon
               const active = filtroManual === cat.id

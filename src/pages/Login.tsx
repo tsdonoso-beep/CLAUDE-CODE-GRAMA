@@ -352,7 +352,7 @@ export default function Login() {
       <button
         onClick={() => navigate('/')}
         className="fixed top-6 left-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold transition-all hover:translate-y-px"
-        style={{ background: '#fff', color: '#043941', boxShadow: '0 2px 8px rgba(4,57,65,0.1)', border: '1px solid rgba(4,57,65,0.08)' }}
+        style={{ background: '#fff', color: '#043941', boxShadow: '0 2px 8px rgba(4,57,65,0.1)', border: '1px solid rgba(4,57,65,0.10)' }}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
           <path d="M19 12H5M12 5l-7 7 7 7" />
@@ -408,7 +408,7 @@ export default function Login() {
                 onClick={() => setTab('login')}
                 className={tabBase}
                 style={tab === 'login'
-                  ? { background: '#ffffff', color: '#043941', boxShadow: '0 2px 8px rgba(4,57,65,0.08)', fontWeight: 800 }
+                  ? { background: '#ffffff', color: '#043941', boxShadow: '0 2px 8px rgba(4,57,65,0.10)', fontWeight: 800 }
                   : { color: '#64748b', fontWeight: 700 }}>
                 Ingresar
               </button>
@@ -416,14 +416,14 @@ export default function Login() {
                 onClick={() => setTab('register')}
                 className={tabBase}
                 style={tab === 'register'
-                  ? { background: '#ffffff', color: '#043941', boxShadow: '0 2px 8px rgba(4,57,65,0.08)', fontWeight: 800 }
+                  ? { background: '#ffffff', color: '#043941', boxShadow: '0 2px 8px rgba(4,57,65,0.10)', fontWeight: 800 }
                   : { color: '#64748b', fontWeight: 700 }}>
                 Regístrate
               </button>
             </div>
 
             {/* Separador */}
-            <div style={{ height: '1px', background: 'rgba(4,57,65,0.06)' }} />
+            <div style={{ height: '1px', background: 'rgba(4,57,65,0.07)' }} />
 
             {/* Formulario */}
             <div className="p-8" style={{ background: '#ffffff' }}>
@@ -443,7 +443,7 @@ export default function Login() {
             </div>
 
             {/* Footer */}
-            <div className="px-8 py-4 text-center text-xs font-medium" style={{ background: 'rgba(4,57,65,0.02)', color: '#64748b', borderTop: '1px solid rgba(4,57,65,0.06)' }}>
+            <div className="px-8 py-4 text-center text-xs font-medium" style={{ background: 'rgba(4,57,65,0.02)', color: '#64748b', borderTop: '1px solid rgba(4,57,65,0.07)' }}>
               ¿Problemas? <button className="text-[#02d47e] font-bold hover:underline" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>Contacta a tu coordinador UGEL</button>
             </div>
           </div>

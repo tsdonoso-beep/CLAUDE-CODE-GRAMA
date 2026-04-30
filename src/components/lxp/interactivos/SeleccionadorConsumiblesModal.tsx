@@ -170,7 +170,7 @@ export function SeleccionadorConsumiblesModal({ zona, onClose, onComplete }: Pro
                   border: `1px solid ${
                     verificado
                       ? resultado ? 'rgba(2,212,126,0.35)' : 'rgba(239,68,68,0.3)'
-                      : 'rgba(4,57,65,0.08)'
+                      : 'rgba(4,57,65,0.10)'
                   }`,
                 }}
               >
@@ -208,10 +208,10 @@ export function SeleccionadorConsumiblesModal({ zona, onClose, onComplete }: Pro
                         ? isSelected && esCorrecto   ? { background: 'rgba(2,212,126,0.1)',  border: '1.5px solid rgba(2,212,126,0.4)', color: '#043941' }
                         : isSelected && !esCorrecto  ? { background: 'rgba(239,68,68,0.07)', border: '1.5px solid rgba(239,68,68,0.3)', color: '#ef4444' }
                         : !isSelected && esCorrecto  ? { background: 'rgba(245,158,11,0.07)',border: '1.5px solid rgba(245,158,11,0.35)',color: '#b45309' }
-                        :                              { background: 'rgba(4,57,65,0.02)', border: '1px solid rgba(4,57,65,0.06)', color: 'rgba(4,57,65,0.3)' }
+                        :                              { background: 'rgba(4,57,65,0.02)', border: '1px solid rgba(4,57,65,0.07)', color: 'rgba(4,57,65,0.3)' }
                         : isSelected
                           ? { background: '#043941', border: '1.5px solid #043941', color: '#02d47e' }
-                          : { background: 'rgba(4,57,65,0.03)', border: '1px solid rgba(4,57,65,0.08)', color: '#043941' }
+                          : { background: 'rgba(4,57,65,0.03)', border: '1px solid rgba(4,57,65,0.10)', color: '#043941' }
 
                       return (
                         <button
@@ -285,7 +285,7 @@ export function SeleccionadorConsumiblesModal({ zona, onClose, onComplete }: Pro
               </div>
               <div className="flex gap-2">
                 <button onClick={reiniciar} className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold"
-                  style={{ background: 'rgba(4,57,65,0.06)', color: '#043941' }}>
+                  style={{ background: 'rgba(4,57,65,0.07)', color: '#043941' }}>
                   <RotateCcw size={13} /> Repetir
                 </button>
                 <button onClick={onClose} className="px-4 py-2 rounded-xl text-sm font-bold text-white"

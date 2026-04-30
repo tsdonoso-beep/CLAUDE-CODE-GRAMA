@@ -18,8 +18,8 @@ export function SectionHeader({
     <div
       className="flex items-center justify-between px-5 py-4 border-b"
       style={{
-        borderColor: 'rgba(4,57,65,0.08)',
-        background: 'rgba(4,57,65,0.05)',
+        borderColor: 'rgba(4,57,65,0.10)',
+        background: 'rgba(4,57,65,0.07)',
         boxShadow: 'var(--sh-brand-sm)',
       }}
     >

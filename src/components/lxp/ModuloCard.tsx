@@ -44,7 +44,7 @@ const ctaLabel = completado ? 'Repasar módulo' : activo ? 'Continuar módulo' :
       {!isLast && (
         <div style={{
           position: 'absolute', left: 19, top: 48, bottom: -8,
-          width: 2, background: completado ? '#02d47e' : 'rgba(4,57,65,0.08)',
+          width: 2, background: completado ? '#02d47e' : 'rgba(4,57,65,0.10)',
           zIndex: 0,
         }} />
       )}
@@ -71,7 +71,7 @@ const ctaLabel = completado ? 'Repasar módulo' : activo ? 'Continuar módulo' :
         borderRadius: 14,
         border: '1px solid rgba(4,57,65,0.07)',
         borderLeft: `3px solid ${borderColor}`,
-        boxShadow: activo ? '0 2px 16px rgba(2,212,126,0.1)' : '0 1px 6px rgba(4,57,65,0.05)',
+        boxShadow: activo ? '0 2px 16px rgba(2,212,126,0.1)' : '0 1px 6px rgba(4,57,65,0.07)',
         overflow: 'hidden',
         opacity: bloqueado ? 0.6 : 1,
       }}>
@@ -84,7 +84,7 @@ const ctaLabel = completado ? 'Repasar módulo' : activo ? 'Continuar módulo' :
           {/* Módulo icon */}
           <div style={{
             width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-            background: bloqueado ? 'rgba(4,57,65,0.05)' : completado ? 'rgba(2,212,126,0.12)' : activo ? 'rgba(4,57,65,0.1)' : 'rgba(14,165,233,0.1)',
+            background: bloqueado ? 'rgba(4,57,65,0.07)' : completado ? 'rgba(2,212,126,0.12)' : activo ? 'rgba(4,57,65,0.1)' : 'rgba(14,165,233,0.1)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
           }}>
             {bloqueado ? '🔒' : modulo.icon}
@@ -125,7 +125,7 @@ const ctaLabel = completado ? 'Repasar módulo' : activo ? 'Continuar módulo' :
 
         {/* Barra de progreso del módulo */}
         {!bloqueado && (
-          <div style={{ height: 3, background: 'rgba(4,57,65,0.06)', margin: '0 16px 0' }}>
+          <div style={{ height: 3, background: 'rgba(4,57,65,0.07)', margin: '0 16px 0' }}>
             <div style={{ height: '100%', width: `${pct}%`, background: '#02d47e', borderRadius: 3, transition: 'width .5s ease' }} />
           </div>
         )}
@@ -140,11 +140,11 @@ const ctaLabel = completado ? 'Repasar módulo' : activo ? 'Continuar módulo' :
 
         {/* Expanded: solo sesiones (sin detalle de contenidos) */}
         {expandido && !bloqueado && (
-          <div style={{ padding: '0 16px 14px', borderTop: '1px solid rgba(4,57,65,0.06)' }}>
+          <div style={{ padding: '0 16px 14px', borderTop: '1px solid rgba(4,57,65,0.07)' }}>
             {modulo.sesiones.map((ses, si) => (
               <div
                 key={ses.id}
-                style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 0', borderBottom: si < modulo.sesiones.length - 1 ? '1px solid rgba(4,57,65,0.05)' : 'none', marginTop: si === 0 ? 8 : 0 }}
+                style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 0', borderBottom: si < modulo.sesiones.length - 1 ? '1px solid rgba(4,57,65,0.07)' : 'none', marginTop: si === 0 ? 8 : 0 }}
               >
                 <span style={{ fontSize: 10, fontWeight: 800, color: '#02d47e', flexShrink: 0, minWidth: 20 }}>S{si + 1}</span>
                 <span style={{ fontSize: 12, fontWeight: 700, color: '#043941', flex: 1 }}>{ses.nombre}</span>

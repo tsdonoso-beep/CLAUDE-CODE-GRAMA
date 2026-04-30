@@ -131,7 +131,7 @@ export default function FormacionTecnicaPage() {
 
   const cardStyle: React.CSSProperties = {
     background: "#fff",
-    border: "1.5px solid rgba(4,57,65,0.08)",
+    border: "1.5px solid rgba(4,57,65,0.10)",
     borderRadius: 13,
     padding: "1rem 1.1rem",
     display: "flex",
@@ -208,7 +208,7 @@ export default function FormacionTecnicaPage() {
               e.currentTarget.style.transform = "translateY(-1px)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(4,57,65,0.08)";
+              e.currentTarget.style.borderColor = "rgba(4,57,65,0.10)";
               e.currentTarget.style.boxShadow = "none";
               e.currentTarget.style.transform = "none";
             }}

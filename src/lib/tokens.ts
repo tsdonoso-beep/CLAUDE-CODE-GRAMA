@@ -38,6 +38,19 @@ export const COLOR = {
   bg:      '#f0faf5',
 } as const
 
+// ── Border alpha scale ────────────────────────────────────────────────────────
+// Use for border and background-tint values built on --grama-oscuro (#043941).
+//
+//  hairline → row dividers inside cards, subtle separators
+//  card     → card/container outer border
+//  input    → input fields, stronger interactive borders
+
+export const BORDER = {
+  hairline: 'rgba(4,57,65,0.07)',
+  card:     'rgba(4,57,65,0.10)',
+  input:    'rgba(4,57,65,0.15)',
+} as const
+
 // ── Border-radius scale ───────────────────────────────────────────────────────
 export const RADIUS = {
   xs:  6,

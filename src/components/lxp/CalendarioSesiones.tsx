@@ -25,7 +25,7 @@ const MODALIDAD_CONFIG: Record<string, { label: string; color: string; icon: typ
 }
 
 const ESTADO_STYLES: Record<string, { bg: string; color: string; border: string; label: string }> = {
-  programada: { bg: 'rgba(4,57,65,0.06)',    color: '#045f6c',  border: 'rgba(4,95,108,0.2)', label: 'Programada'  },
+  programada: { bg: 'rgba(4,57,65,0.07)',    color: '#045f6c',  border: 'rgba(4,95,108,0.2)', label: 'Programada'  },
   'en-vivo':  { bg: 'rgba(239,68,68,0.1)',   color: '#ef4444',  border: 'rgba(239,68,68,0.3)', label: 'En vivo'    },
   finalizada: { bg: 'rgba(100,116,139,0.08)', color: '#64748b', border: 'rgba(100,116,139,0.2)', label: 'Finalizada' },
 }
@@ -169,7 +169,7 @@ export function CalendarioSesiones({ sesiones }: Props) {
                           {/* Módulo badge */}
                           <span
                             className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                            style={{ background: 'rgba(4,57,65,0.08)', color: '#043941' }}
+                            style={{ background: 'rgba(4,57,65,0.10)', color: '#043941' }}
                           >
                             {sesion.modulo}
                           </span>
