@@ -484,7 +484,7 @@ export default function ModuloDetalle() {
                                     </div>
                                     <button
                                       onClick={() => setQuizAbierto({ contenidoId: contenido.id, titulo: contenido.titulo, preguntas: contenido.bancoPreguntas!, puntajeMinimo: contenido.puntajeMinimo ?? 80, bloqueaSiguiente: true })}
-                                      style={{ padding: '7px 16px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', background: tallerColor, color: '#043941', whiteSpace: 'nowrap', flexShrink: 0 }}
+                                      style={{ padding: '7px 16px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', background: tallerColor, color: '#fff', whiteSpace: 'nowrap', flexShrink: 0 }}
                                     >
                                       Iniciar
                                     </button>
@@ -533,7 +533,7 @@ export default function ModuloDetalle() {
                                     </div>
                                     <button
                                       onClick={() => handleOpenContent(contenido)}
-                                      style={{ padding: '7px 14px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, background: est.completed ? 'rgba(4,57,65,0.06)' : tallerColor, color: '#043941', transition: 'opacity .16s' }}
+                                      style={{ padding: '7px 14px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, background: est.completed ? 'rgba(4,57,65,0.06)' : tallerColor, color: est.completed ? '#043941' : '#fff', transition: 'opacity .16s' }}
                                       onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
                                       onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                                     >
@@ -582,7 +582,7 @@ export default function ModuloDetalle() {
                                       </div>
                                       <button
                                         onClick={() => setQuizAbierto({ contenidoId: contenido.id, titulo: contenido.titulo, preguntas: contenido.bancoPreguntas!, puntajeMinimo: 0, bloqueaSiguiente: false })}
-                                        style={{ padding: '6px 12px', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 800, fontFamily: 'inherit', background: tallerColor, color: '#043941', flexShrink: 0 }}
+                                        style={{ padding: '6px 12px', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 800, fontFamily: 'inherit', background: tallerColor, color: '#fff', flexShrink: 0 }}
                                       >
                                         Abrir
                                       </button>
