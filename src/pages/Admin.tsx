@@ -827,7 +827,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(2,212,126,0.3)'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(2,212,126,0.05)' }}
                   onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.08)'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.04)' }}
                 >
-                  <div style={{ width: 32, height: 32, borderRadius: 9, background: 'rgba(2,212,126,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '.75rem' }}>
+                  <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(2,212,126,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '.75rem' }}>
                     <a.icon size={15} color="#02d47e" />
                   </div>
                   <p style={{ fontSize: '.82rem', fontWeight: 700, color: '#043941', marginBottom: '.25rem' }}>{a.label}</p>
@@ -847,7 +847,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 return (
                   <button key={t.slug}
                     onClick={() => navigate(`/taller/${t.slug}`)}
-                    style={{ background: '#ffffff', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 14, padding: '1rem', cursor: 'pointer', textAlign: 'left', transition: 'border-color .15s, background .15s' }}
+                    style={{ background: '#ffffff', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, padding: '1rem', cursor: 'pointer', textAlign: 'left', transition: 'border-color .15s, background .15s' }}
                     onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(2,212,126,0.3)'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(2,212,126,0.06)' }}
                     onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.07)'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.04)' }}
                   >
@@ -869,7 +869,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
             {talleresConfig.map(t => {
               const count = docentes.filter(d => d.taller_slug === t.slug || d.taller_slugs?.includes(t.slug)).length
               return (
-                <div key={t.slug} style={{ background: '#ffffff', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 18, padding: '1.25rem', display: 'flex', flexDirection: 'column' }}>
+                <div key={t.slug} style={{ background: '#ffffff', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, padding: '1.25rem', display: 'flex', flexDirection: 'column' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem', marginBottom: '.85rem' }}>
                     <span style={{ fontSize: '.65rem', fontWeight: 800, background: '#02d47e', color: '#043941', padding: '.22rem .55rem', borderRadius: 7 }}>T{String(t.numero).padStart(2, '0')}</span>
                     <span style={{ fontSize: '.72rem', color: '#043941' }}>{count} docente{count !== 1 ? 's' : ''} asignado{count !== 1 ? 's' : ''}</span>
@@ -931,7 +931,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   {solicitudesPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{solicitudesPendientes} pendientes</span> : 'Sin pendientes'} · {solicitudes.length} en total
                 </p>
               </div>
-              <button onClick={fetchSolicitudes} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: '#ffffff', color: 'rgba(4,57,65,0.7)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
+              <button onClick={fetchSolicitudes} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 8, background: '#ffffff', color: 'rgba(4,57,65,0.7)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
                 <RefreshCw size={12} /> Recargar
               </button>
             </div>
@@ -1092,7 +1092,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     {consultasPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{consultasPendientes} sin responder</span> : 'Todas respondidas'} · {consultasAdmin.length} en total
                   </p>
                 </div>
-                <button onClick={fetchConsultasAdmin} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 9, background: '#ffffff', color: 'rgba(4,57,65,0.7)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
+                <button onClick={fetchConsultasAdmin} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.72rem', fontWeight: 600, padding: '.4rem .9rem', borderRadius: 8, background: '#ffffff', color: 'rgba(4,57,65,0.7)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}>
                   <RefreshCw size={12} /> Recargar
                 </button>
               </div>
@@ -1626,10 +1626,10 @@ Equipo GRAMA · Programa TSF-MINEDU`
             </div>
           </div>
           <div style={{ display: 'flex', gap: '.5rem', flexShrink: 0 }}>
-            <button onClick={abrirModalCrear} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.75rem', fontWeight: 700, padding: '.45rem 1rem', borderRadius: 9, background: 'rgba(2,212,126,0.12)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.25)', cursor: 'pointer' }}>
+            <button onClick={abrirModalCrear} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.75rem', fontWeight: 700, padding: '.45rem 1rem', borderRadius: 8, background: 'rgba(2,212,126,0.12)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.25)', cursor: 'pointer' }}>
               <Users size={13} /> + Nuevo docente
             </button>
-            <button onClick={() => downloadCSV(docentesFiltrados)} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.75rem', fontWeight: 700, padding: '.45rem 1rem', borderRadius: 9, background: '#02d47e', color: '#043941', border: 'none', cursor: 'pointer' }}>
+            <button onClick={() => downloadCSV(docentesFiltrados)} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.75rem', fontWeight: 700, padding: '.45rem 1rem', borderRadius: 8, background: '#02d47e', color: '#043941', border: 'none', cursor: 'pointer' }}>
               <Download size={13} /> CSV
             </button>
           </div>

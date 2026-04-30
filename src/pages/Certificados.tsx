@@ -170,7 +170,7 @@ export default function Certificados() {
                   style={{
                     background: 'none', border: 'none', cursor: 'pointer',
                     display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
-                    padding: '8px 12px', borderRadius: 14,
+                    padding: '8px 12px', borderRadius: 16,
                     transition: 'background .18s',
                   }}
                   onMouseEnter={e => (e.currentTarget.style.background = 'rgba(4,57,65,0.04)')}
@@ -200,7 +200,7 @@ export default function Certificados() {
               background: 'var(--grama-oscuro)',
               color: 'var(--grama-menta)',
               border: 'none',
-              borderRadius: 14,
+              borderRadius: 16,
               padding: '14px 36px',
               fontSize: 14,
               fontWeight: 800,
@@ -283,7 +283,7 @@ export default function Certificados() {
                         background: 'none',
                         border: `1.5px solid ${color}66`,
                         color,
-                        borderRadius: 9,
+                        borderRadius: 8,
                         padding: '5px 13px',
                         fontSize: 11,
                         fontWeight: 700,

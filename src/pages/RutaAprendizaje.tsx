@@ -123,7 +123,7 @@ export default function RutaAprendizaje() {
           </p>
           <button
             onClick={() => navigate(`/taller/${slug}/ruta/modulo/${quizBloqueante!.moduloNum}`)}
-            style={{ background: '#d97706', color: '#fff', border: 'none', borderRadius: 9, padding: '7px 16px', fontSize: 12, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0 }}
+            style={{ background: '#d97706', color: '#fff', border: 'none', borderRadius: 8, padding: '7px 16px', fontSize: 12, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0 }}
           >
             Ir al quiz →
           </button>

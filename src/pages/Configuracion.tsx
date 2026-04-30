@@ -47,7 +47,7 @@ export default function Configuracion() {
   /* ── estilos inline reutilizables ── */
   const card: React.CSSProperties = {
     background: '#fff',
-    borderRadius: 18,
+    borderRadius: 16,
     border: '1px solid rgba(4,57,65,0.10)',
     boxShadow: '0 2px 12px rgba(4,57,65,0.07)',
     padding: '22px 28px',
@@ -218,7 +218,7 @@ export default function Configuracion() {
       {/* ── Cerrar sesión ── */}
       <div style={{
         background: '#fff',
-        borderRadius: 18,
+        borderRadius: 16,
         border: '1px solid rgba(239,68,68,0.12)',
         boxShadow: '0 2px 12px rgba(4,57,65,0.07)',
         overflow: 'hidden',
@@ -234,7 +234,7 @@ export default function Configuracion() {
             fontSize: 14,
             fontWeight: 700,
             color: '#ef4444',
-            borderRadius: 18,
+            borderRadius: 16,
             transition: 'background .18s',
             fontFamily: 'inherit',
           }}

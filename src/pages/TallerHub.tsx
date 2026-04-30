@@ -56,7 +56,7 @@ export default function TallerHub() {
           {/* Izquierda: icono + nombre */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 0 }}>
             <div style={{
-              width: 52, height: 52, borderRadius: 14, flexShrink: 0,
+              width: 52, height: 52, borderRadius: 16, flexShrink: 0,
               background: 'rgba(255,255,255,0.10)', border: '1.5px solid rgba(255,255,255,0.18)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
@@ -178,7 +178,7 @@ export default function TallerHub() {
 
         {/* ── SECUENCIA DE MÓDULOS ── */}
         {!isGeneralEpt && (
-          <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
+          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
             <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
                 <h2 style={{ fontSize: 16, fontWeight: 800, color: '#043941', margin: '0 0 2px', letterSpacing: '-0.01em' }}>Secuencia de módulos</h2>
@@ -223,7 +223,7 @@ export default function TallerHub() {
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = isCurrent ? 'rgba(2,212,126,0.04)' : 'transparent' }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <div style={{ width: 34, height: 34, borderRadius: 9, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, background: estado === 'completado' ? 'rgba(2,212,126,0.12)' : estado === 'en_curso' ? 'rgba(4,57,65,0.10)' : estado === 'disponible' ? 'rgba(14,165,233,0.1)' : 'rgba(4,57,65,0.04)', opacity: estado === 'bloqueado' ? 0.4 : 1 }}>
+                      <div style={{ width: 34, height: 34, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, background: estado === 'completado' ? 'rgba(2,212,126,0.12)' : estado === 'en_curso' ? 'rgba(4,57,65,0.10)' : estado === 'disponible' ? 'rgba(14,165,233,0.1)' : 'rgba(4,57,65,0.04)', opacity: estado === 'bloqueado' ? 0.4 : 1 }}>
                         {m.icon}
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
@@ -264,7 +264,7 @@ export default function TallerHub() {
 
         {/* ── SIDEBAR: REPOSITORIO ── */}
         {!isGeneralEpt && (
-          <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
+          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
 
             {/* Header — mismo estilo que "Secuencia de módulos" */}
             <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -300,7 +300,7 @@ export default function TallerHub() {
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                     {/* Dot de color de zona */}
-                    <div style={{ width: 34, height: 34, borderRadius: 9, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: colores.bg }}>
+                    <div style={{ width: 34, height: 34, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: colores.bg }}>
                       <span style={{ fontSize: 13, fontWeight: 900, color: colores.color }}>{nombre[0]}</span>
                     </div>
 

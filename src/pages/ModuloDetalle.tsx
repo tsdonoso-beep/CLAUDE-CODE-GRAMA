@@ -409,7 +409,7 @@ export default function ModuloDetalle() {
               <div
                 key={ses.id}
                 id={`ses-${ses.id}`}
-                style={{ borderRadius: 14, border: `1px solid ${isOpen ? tallerColor + '40' : 'rgba(4,57,65,0.10)'}`, background: '#fff', overflow: 'hidden', boxShadow: isOpen ? `0 2px 12px ${tallerColor}18` : '0 1px 4px rgba(4,57,65,0.04)', transition: 'border-color .2s, box-shadow .2s' }}
+                style={{ borderRadius: 16, border: `1px solid ${isOpen ? tallerColor + '40' : 'rgba(4,57,65,0.10)'}`, background: '#fff', overflow: 'hidden', boxShadow: isOpen ? `0 2px 12px ${tallerColor}18` : '0 1px 4px rgba(4,57,65,0.04)', transition: 'border-color .2s, box-shadow .2s' }}
               >
                 {/* Accordion header */}
                 <button
@@ -484,7 +484,7 @@ export default function ModuloDetalle() {
                                     </div>
                                     <button
                                       onClick={() => setQuizAbierto({ contenidoId: contenido.id, titulo: contenido.titulo, preguntas: contenido.bancoPreguntas!, puntajeMinimo: contenido.puntajeMinimo ?? 80, bloqueaSiguiente: true })}
-                                      style={{ padding: '7px 16px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', background: tallerColor, color: '#fff', whiteSpace: 'nowrap', flexShrink: 0 }}
+                                      style={{ padding: '7px 16px', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', background: tallerColor, color: '#fff', whiteSpace: 'nowrap', flexShrink: 0 }}
                                     >
                                       Iniciar
                                     </button>
@@ -533,7 +533,7 @@ export default function ModuloDetalle() {
                                     </div>
                                     <button
                                       onClick={() => handleOpenContent(contenido)}
-                                      style={{ padding: '7px 14px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, minWidth: 100, textAlign: 'center', background: est.completed ? 'rgba(4,57,65,0.07)' : tallerColor, color: est.completed ? '#043941' : '#fff', transition: 'opacity .16s' }}
+                                      style={{ padding: '7px 14px', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, minWidth: 100, textAlign: 'center', background: est.completed ? 'rgba(4,57,65,0.07)' : tallerColor, color: est.completed ? '#043941' : '#fff', transition: 'opacity .16s' }}
                                       onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
                                       onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                                     >

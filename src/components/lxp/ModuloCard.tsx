@@ -68,7 +68,7 @@ const ctaLabel = completado ? 'Repasar módulo' : activo ? 'Continuar módulo' :
       <div style={{
         flex: 1,
         background: '#fff',
-        borderRadius: 14,
+        borderRadius: 16,
         border: '1px solid rgba(4,57,65,0.07)',
         borderLeft: `3px solid ${borderColor}`,
         boxShadow: activo ? '0 2px 16px rgba(2,212,126,0.1)' : '0 1px 6px rgba(4,57,65,0.07)',

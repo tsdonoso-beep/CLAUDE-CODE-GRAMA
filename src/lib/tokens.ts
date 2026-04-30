@@ -113,13 +113,14 @@ export const BTN = {
 
 // ── Border-radius scale ───────────────────────────────────────────────────────
 export const RADIUS = {
-  xs:  6,
-  sm:  8,
-  md:  12,
-  lg:  16,
-  xl:  20,
-  '2xl': 24,
-  full: 9999,
+  xs:   6,   // micro tags, tiny progress indicators
+  sm:   8,   // small chips, icon badges
+  base: 10,  // icon containers (36–44px boxes), compact rows
+  md:   12,  // standard buttons, inputs
+  lg:   16,  // cards, content containers, accordions
+  xl:   20,  // large panels
+  '2xl': 24, // modals, full-screen containers
+  full: 9999, // pills
 } as const
 
 // ── Shadow scale ──────────────────────────────────────────────────────────────

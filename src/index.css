@@ -202,12 +202,13 @@
   --btn-pad-md: 9px 16px;
   --btn-pad-lg: 10px 20px;
 
-  /* Border-radius scale */
-  --radius-xs:   6px;
-  --radius-sm:   8px;
-  --radius-md:  12px;
-  --radius-lg:  16px;
-  --radius-xl:  20px;
+  /* Border-radius scale — mirrors RADIUS constant in src/lib/tokens.ts */
+  --radius-xs:    6px;
+  --radius-sm:    8px;
+  --radius-base: 10px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
   --radius-2xl: 24px;
 
   /* Shadow scale — mirrors SHADOW constant in src/lib/tokens.ts */
