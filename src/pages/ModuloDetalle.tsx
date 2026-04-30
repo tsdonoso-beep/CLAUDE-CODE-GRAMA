@@ -416,7 +416,7 @@ export default function ModuloDetalle() {
                   onClick={() => toggleSub(ses.id)}
                   style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'inherit' }}
                 >
-                  <div style={{ width: 28, height: 28, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, background: isOpen ? tallerColor : 'rgba(4,57,65,0.06)', color: isOpen ? '#043941' : '#94a3b8', transition: 'background .2s, color .2s' }}>
+                  <div style={{ width: 28, height: 28, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, background: isOpen ? tallerColor : 'rgba(4,57,65,0.06)', color: isOpen ? '#fff' : '#94a3b8', transition: 'background .2s, color .2s' }}>
                     S{idx + 1}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
