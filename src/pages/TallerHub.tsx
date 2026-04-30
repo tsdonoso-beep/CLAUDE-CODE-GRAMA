@@ -264,25 +264,24 @@ export default function TallerHub() {
 
         {/* ── SIDEBAR: REPOSITORIO ── */}
         {!isGeneralEpt && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 16px rgba(4,57,65,0.06)', overflow: 'hidden' }}>
 
-            {/* Header card */}
-            <div style={{ background: '#fff', borderRadius: 18, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '18px 20px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: 0 }}>Repositorio del taller</p>
-                <button
-                  onClick={() => navigate(`/taller/${slug}/repositorio`)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 700, color: tallerColor, display: 'flex', alignItems: 'center', gap: 3, padding: 0, fontFamily: 'inherit' }}
-                >
-                  Ver todo <ChevronRight size={12} />
-                </button>
+            {/* Header — mismo estilo que "Secuencia de módulos" */}
+            <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <h2 style={{ fontSize: 15, fontWeight: 800, color: '#043941', margin: '0 0 2px', letterSpacing: '-0.01em' }}>Repositorio del taller</h2>
+                <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>{todosLos.length} bienes · {zonas.length} zonas</p>
               </div>
-              <p style={{ fontSize: 28, fontWeight: 900, color: '#043941', margin: '0 0 1px', lineHeight: 1, letterSpacing: '-0.03em' }}>{todosLos.length}</p>
-              <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>bienes catalogados · {zonas.length} zonas</p>
+              <button
+                onClick={() => navigate(`/taller/${slug}/repositorio`)}
+                style={{ background: 'none', border: '1.5px solid rgba(4,57,65,0.12)', borderRadius: 10, padding: '6px 14px', fontSize: 12, fontWeight: 700, color: '#043941', cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 5 }}
+              >
+                Ver todo <ArrowRight size={11} />
+              </button>
             </div>
 
-            {/* Zona cards */}
-            {zonas.map(zona => {
+            {/* Filas de zona — mismo patrón que las filas de módulo */}
+            {zonas.map((zona, i) => {
               const nombre = zonaNombre(zona)
               const bienesZona = getBienesByZona(slug, zona)
               const colores = ZONA_COLORS[nombre] ?? { color: tallerColor, bg: `${tallerColor}10` }
@@ -292,24 +291,33 @@ export default function TallerHub() {
                 .map(b => b.nombre.split(' ').slice(0, 4).join(' '))
 
               return (
-                <button
+                <div
                   key={zona}
                   onClick={() => navigate(`/taller/${slug}/repositorio?zona=${encodeURIComponent(zona)}`)}
-                  style={{ background: '#fff', borderRadius: 16, border: `1.5px solid ${colores.color}20`, boxShadow: '0 2px 10px rgba(4,57,65,0.04)', padding: '14px 16px', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', transition: 'all .16s', width: '100%' }}
-                  onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = colores.color; el.style.background = colores.bg }}
-                  onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = `${colores.color}20`; el.style.background = '#fff' }}
+                  style={{ borderBottom: i < zonas.length - 1 ? '1px solid rgba(4,57,65,0.05)' : 'none', padding: '12px 24px', cursor: 'pointer', transition: 'background .16s' }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.03)' }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <span style={{ fontSize: 12, fontWeight: 800, color: colores.color }}>{nombre}</span>
-                      <span style={{ fontSize: 10, fontWeight: 700, color: '#fff', background: colores.color, padding: '1px 7px', borderRadius: 100 }}>{bienesZona.length}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    {/* Dot de color de zona */}
+                    <div style={{ width: 34, height: 34, borderRadius: 9, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: colores.bg }}>
+                      <span style={{ fontSize: 13, fontWeight: 900, color: colores.color }}>{nombre[0]}</span>
                     </div>
-                    <ChevronRight size={13} style={{ color: colores.color, opacity: 0.5 }} />
+
+                    {/* Centro */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 3 }}>
+                        <span style={{ fontSize: 13, fontWeight: 700, color: '#043941' }}>{nombre}</span>
+                        <span style={{ fontSize: 10, fontWeight: 700, color: '#fff', background: colores.color, padding: '1px 7px', borderRadius: 100, flexShrink: 0 }}>{bienesZona.length}</span>
+                      </div>
+                      <p style={{ fontSize: 11, color: '#94a3b8', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {ejemplos.join(' · ')}
+                      </p>
+                    </div>
+
+                    <ChevronRight size={14} style={{ color: 'rgba(4,57,65,0.25)', flexShrink: 0 }} />
                   </div>
-                  <p style={{ fontSize: 11, color: '#64748b', margin: 0, lineHeight: 1.5 }}>
-                    {ejemplos.join(' · ')}
-                  </p>
-                </button>
+                </div>
               )
             })}
 
