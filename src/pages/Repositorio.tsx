@@ -191,7 +191,7 @@ export default function Repositorio() {
   }
 
   return (
-    <div style={{ background: '#f0faf5', minHeight: '100vh' }}>
+    <div style={{ background: 'var(--grama-bg)', minHeight: '100vh' }}>
 
       {/* ══ TOP BAR ══════════════════════════════════════════════════════════ */}
       <div style={{ background: '#043941' }}>

@@ -47,7 +47,7 @@ export default function TallerHub() {
   const zonas = getZonasUnicasByTaller(slug)
 
   return (
-    <div style={{ background: '#f0faf5', fontFamily: 'Manrope, sans-serif' }}>
+    <div style={{ background: 'var(--grama-bg)', fontFamily: 'Manrope, sans-serif' }}>
 
       {/* ══ TOP INFO BAR ══════════════════════════════════════════════════════ */}
       <div style={{ background: '#043941' }}>
