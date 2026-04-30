@@ -4,6 +4,7 @@ import { ChevronRight, Lock } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import type { ModuloLXP } from '@/data/modulosLXP'
 import type { EstadoModulo } from '@/mock/mockEstados'
+import { getTallerBySlug } from '@/data/talleresConfig'
 
 interface ModuloCardProps {
   modulo: ModuloLXP
@@ -25,6 +26,8 @@ export function ModuloCard({ modulo, estado, moduloProgreso, isLast = false }: M
   const pct = moduloProgreso?.porcentaje ?? 0
   const completadosSes = moduloProgreso?.completados ?? 0
   const totalSes       = moduloProgreso?.total ?? modulo.sesiones.reduce((a, s) => a + s.contenidos.length, 0)
+  const taller = getTallerBySlug(slug ?? '')
+  const tallerColor = taller ? `hsl(${taller.color})` : '#02d47e'
 
   /* ── borde izquierdo por estado ── */
   const borderColor = completado ? '#02d47e' : activo ? '#02d47e' : estado === 'disponible' ? '#0ea5e9' : 'transparent'
@@ -155,7 +158,7 @@ const ctaLabel = completado ? 'Repasar módulo' : activo ? 'Continuar módulo' :
             ))}
             <button
               onClick={() => navigate(`/taller/${slug}/ruta/modulo/${modulo.numero}`)}
-              style={{ marginTop: 10, background: activo ? '#043941' : completado ? 'rgba(4,57,65,0.07)' : '#043941', color: activo ? '#02d47e' : completado ? '#043941' : '#02d47e', border: 'none', borderRadius: 10, padding: '9px 18px', fontSize: 12, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit', display: 'inline-flex', alignItems: 'center', gap: 6 }}
+              style={{ marginTop: 10, background: completado ? 'rgba(4,57,65,0.07)' : tallerColor, color: completado ? '#043941' : '#fff', border: 'none', borderRadius: 10, padding: '9px 18px', fontSize: 12, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit', display: 'inline-flex', alignItems: 'center', gap: 6 }}
             >
               {ctaLabel} →
             </button>
