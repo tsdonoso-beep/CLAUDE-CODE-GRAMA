@@ -1,14 +1,14 @@
 // src/pages/TallerHub.tsx
 import { useNavigate } from 'react-router-dom'
 import { Package, ArrowRight, GraduationCap, FileText, Users, Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench, ChevronRight } from 'lucide-react'
-
-const TALLER_ICON_MAP: Record<string, React.ElementType> = {
-  Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench, Package,
-}
 import { useTaller } from '@/hooks/useTaller'
 import { useProgress } from '@/contexts/ProgressContext'
 import { modulosLXP } from '@/data/modulosLXP'
 import { getBienesByTaller, getBienesByZona, getZonasUnicasByTaller } from '@/data/bienesData'
+
+const TALLER_ICON_MAP: Record<string, React.ElementType> = {
+  Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench, Package,
+}
 
 // Acorta el nombre largo de zona para mostrar en UI
 function zonaNombre(z: string) {
