@@ -215,6 +215,7 @@ export function ActividadExternaModal({ config, onClose, onComplete }: Props) {
           </div>
         )}
       </div>
+    </div>
     </Portal>
   )
 }

@@ -66,6 +66,7 @@ export function QuizModal({
           onReprobado={onReprobado}
         />
       </div>
+    </div>
     </Portal>
   )
 }

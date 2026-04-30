@@ -387,5 +387,6 @@ export function ChecklistMantenimientoModal({ zona, onClose, onComplete }: Props
         </div>
       </div>
     </div>
+    </Portal>
   )
 }
