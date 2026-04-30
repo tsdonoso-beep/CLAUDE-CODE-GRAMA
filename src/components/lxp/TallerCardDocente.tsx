@@ -876,7 +876,7 @@ export function TallerCardDocente({
           </div>
 
           {/* Nombre */}
-          <p style={{ fontSize: 15, fontWeight: 800, color: '#d2ffe1', letterSpacing: '-0.02em', marginBottom: 3 }}>
+          <p style={{ fontSize: 16, fontWeight: 800, color: '#d2ffe1', letterSpacing: '-0.02em', marginBottom: 3 }}>
             {nombre}
           </p>
           <p style={{ fontSize: 10, color: 'rgba(210,255,225,0.4)', marginBottom: 10 }}>

@@ -4,6 +4,44 @@
  * Mirrors the CSS variables in index.css :root
  */
 
+// ── Type scale ────────────────────────────────────────────────────────────────
+// SIZE — px values for fontSize
+//   micro → overline labels, tiny stat captions
+//   xs    → metadata, zone chips
+//   sm    → secondary text, compact rows
+//   md    → compact body, filter chips
+//   base  → standard body text
+//   lg    → card titles, body-large
+//   xl    → section headers (h2)
+//   2xl   → page headers (h1) and large display stats
+//
+// WEIGHT — semantic font-weight mapping
+//   regular   → 500  body prose
+//   semibold  → 600  secondary labels, captions
+//   bold      → 700  body emphasis, card subtitles
+//   extrabold → 800  section headers, card titles
+//   black     → 900  page h1, hero numbers
+
+export const TYPE = {
+  size: {
+    micro:  9,
+    xs:    10,
+    sm:    11,
+    md:    12,
+    base:  13,
+    lg:    16,
+    xl:    18,
+    '2xl': 20,
+  },
+  weight: {
+    regular:   500,
+    semibold:  600,
+    bold:      700,
+    extrabold: 800,
+    black:     900,
+  },
+} as const
+
 // ── Icon scale ────────────────────────────────────────────────────────────────
 // Use these with Lucide <Icon size={ICON.md} /> instead of raw numbers.
 //

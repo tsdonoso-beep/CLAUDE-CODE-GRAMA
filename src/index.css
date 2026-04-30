@@ -171,6 +171,16 @@
   --grama-claro2:   #e3f8fb;
   --grama-bg:       #f0faf5;
 
+  /* Type scale — mirrors TYPE constant in src/lib/tokens.ts */
+  --t-micro:  9px;
+  --t-xs:    10px;
+  --t-sm:    11px;
+  --t-md:    12px;
+  --t-base:  13px;
+  --t-lg:    16px;
+  --t-xl:    18px;
+  --t-2xl:   20px;
+
   /* Icon scale — mirrors ICON constant in src/lib/tokens.ts */
   --icon-xs:   10px;
   --icon-sm:   12px;

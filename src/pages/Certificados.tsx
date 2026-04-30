@@ -324,7 +324,7 @@ const emptyCard: React.CSSProperties = {
 }
 
 const emptyTitle: React.CSSProperties = {
-  fontSize: 22,
+  fontSize: 20,
   fontWeight: 900,
   color: 'var(--grama-oscuro)',
   margin: '0 0 10px',

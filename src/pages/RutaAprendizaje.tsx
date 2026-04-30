@@ -89,7 +89,7 @@ export default function RutaAprendizaje() {
                 { value: totalSesiones,      label: 'SESIONES' },
               ].map(s => (
                 <div key={s.label} style={{ textAlign: 'center' }}>
-                  <p style={{ fontSize: 22, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1 }}>{s.value}</p>
+                  <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1 }}>{s.value}</p>
                   <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', color: 'rgba(255,255,255,0.45)', margin: '3px 0 0' }}>{s.label}</p>
                 </div>
               ))}
@@ -136,7 +136,7 @@ export default function RutaAprendizaje() {
         {/* ── SECUENCIA DE MÓDULOS ── */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-            <h2 style={{ fontSize: 15, fontWeight: 800, color: '#043941', margin: 0 }}>Secuencia de módulos</h2>
+            <h2 style={{ fontSize: 16, fontWeight: 800, color: '#043941', margin: 0 }}>Secuencia de módulos</h2>
             <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>{modCompletados}/{modulosLXP.length} completados</p>
           </div>
           {modulosLXP.map((modulo, idx) => (
@@ -170,7 +170,7 @@ export default function RutaAprendizaje() {
                 </div>
               </div>
               <div>
-                <p style={{ fontSize: 15, fontWeight: 900, color: '#043941', margin: '0 0 2px' }}>
+                <p style={{ fontSize: 16, fontWeight: 900, color: '#043941', margin: '0 0 2px' }}>
                   {modCompletados} de {modulosLXP.length} módulos
                 </p>
                 <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>

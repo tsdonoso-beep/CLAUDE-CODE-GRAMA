@@ -337,7 +337,7 @@ export default function ModuloDetalle() {
                   <span style={{ fontSize: 11, color: '#cbd5e1' }}>›</span>
                   <span style={{ fontSize: 11, fontWeight: 700, color: tallerColor }}>M{modulo.numero}</span>
                 </div>
-                <h1 style={{ fontSize: 19, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <h1 style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {modulo.nombre}
                 </h1>
               </div>
@@ -623,7 +623,7 @@ export default function ModuloDetalle() {
                 </div>
               </div>
               <div>
-                <p style={{ fontSize: 15, fontWeight: 900, color: '#043941', margin: '0 0 2px' }}>{progreso.completados} de {progreso.total}</p>
+                <p style={{ fontSize: 16, fontWeight: 900, color: '#043941', margin: '0 0 2px' }}>{progreso.completados} de {progreso.total}</p>
                 <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>contenidos completados</p>
               </div>
             </div>

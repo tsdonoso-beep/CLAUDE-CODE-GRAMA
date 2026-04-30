@@ -86,7 +86,7 @@ export default function Configuracion() {
 
       {/* ── Datos personales ── */}
       <div style={card}>
-        <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--grama-oscuro)', margin: '0 0 2px' }}>
+        <h2 style={{ fontSize: 16, fontWeight: 800, color: 'var(--grama-oscuro)', margin: '0 0 2px' }}>
           Datos personales
         </h2>
         <p style={{ fontSize: 12, color: '#94a3b8', margin: '0 0 14px' }}>
