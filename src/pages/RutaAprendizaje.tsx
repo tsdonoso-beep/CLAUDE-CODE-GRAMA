@@ -59,26 +59,25 @@ export default function RutaAprendizaje() {
     <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f8fafc' }}>
 
       {/* ── TOP HEADER ─────────────────────────────────────────────────────── */}
-      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)' }}>
+      <div style={{ background: '#043941' }}>
         <div style={{ padding: '20px 32px 0' }}>
 
           {/* Fila: título + stats */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, marginBottom: 16 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
               {(() => {
-                const tallerColor = `hsl(${taller.color})`
                 const I = TALLER_ICON_MAP[taller.icon] ?? Package
                 return (
-                  <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: `${tallerColor}18`, border: `1.5px solid ${tallerColor}30`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <I size={20} style={{ color: tallerColor }} />
+                  <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(255,255,255,0.10)', border: '1.5px solid rgba(255,255,255,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <I size={20} style={{ color: '#02d47e' }} />
                   </div>
                 )
               })()}
               <div>
-                <p style={{ fontSize: 12, color: '#94a3b8', fontWeight: 600, margin: '0 0 3px' }}>
+                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)', fontWeight: 600, margin: '0 0 3px' }}>
                   {taller.nombre}
                 </p>
-                <h1 style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em' }}>
+                <h1 style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em' }}>
                   Ruta de Aprendizaje
                 </h1>
               </div>
@@ -90,25 +89,24 @@ export default function RutaAprendizaje() {
                 { value: totalSesiones,      label: 'SESIONES' },
               ].map(s => (
                 <div key={s.label} style={{ textAlign: 'center' }}>
-                  <p style={{ fontSize: 22, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{s.value}</p>
-                  <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', color: '#94a3b8', margin: '3px 0 0' }}>{s.label}</p>
+                  <p style={{ fontSize: 22, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1 }}>{s.value}</p>
+                  <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', color: 'rgba(255,255,255,0.45)', margin: '3px 0 0' }}>{s.label}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Barra de progreso segmentada */}
+          {/* Barra de progreso */}
           <div style={{ marginBottom: 6 }}>
-            <div style={{ height: 6, borderRadius: 6, background: 'rgba(4,57,65,0.07)', overflow: 'hidden', display: 'flex' }}>
-              {/* completado */}
-              <div style={{ width: `${progresoTaller.porcentaje}%`, background: 'linear-gradient(90deg,#02d47e,#00c16e)', transition: 'width .6s ease', borderRadius: 6 }} />
+            <div style={{ height: 5, borderRadius: 6, background: 'rgba(255,255,255,0.12)', overflow: 'hidden' }}>
+              <div style={{ width: `${progresoTaller.porcentaje}%`, background: '#02d47e', transition: 'width .6s ease', borderRadius: 6, height: '100%' }} />
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 16 }}>
             <p style={{ fontSize: 12, fontWeight: 700, color: '#02d47e', margin: 0 }}>
               {progresoTaller.porcentaje}%
             </p>
-            <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
+            <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', margin: 0 }}>
               {modCompletados}/{modulosLXP.length} módulos · {horasCompletadas}h de {totalHoras}h
             </p>
           </div>

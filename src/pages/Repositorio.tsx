@@ -193,35 +193,35 @@ export default function Repositorio() {
   return (
     <div style={{ background: 'var(--grama-bg)', minHeight: '100vh' }}>
 
-      {/* ══ WHITE TOP BAR ════════════════════════════════════════════════════ */}
-      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.08)' }}>
+      {/* ══ TOP BAR ══════════════════════════════════════════════════════════ */}
+      <div style={{ background: '#043941' }}>
         <div style={{ padding: '14px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
           {/* Taller context */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
-            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: `${tallerColor}18`, border: `1.5px solid ${tallerColor}30`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {(() => { const I = TALLER_ICON_MAP[taller.icon] ?? Package; return <I size={20} style={{ color: tallerColor }} /> })()}
+            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(255,255,255,0.10)', border: '1.5px solid rgba(255,255,255,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {(() => { const I = TALLER_ICON_MAP[taller.icon] ?? Package; return <I size={20} style={{ color: '#02d47e' }} /> })()}
             </div>
             <div style={{ minWidth: 0 }}>
-              <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 2px', fontWeight: 600 }}>{taller.nombre}</p>
-              <h1 style={{ fontSize: 18, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em' }}>Repositorio de Bienes</h1>
+              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)', margin: '0 0 2px', fontWeight: 600 }}>{taller.nombre}</p>
+              <h1 style={{ fontSize: 18, fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em' }}>Repositorio de Bienes</h1>
             </div>
           </div>
           {/* Stats + nav */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexShrink: 0 }}>
             <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{totalBienes}</p>
-              <p style={{ fontSize: 10, color: '#94a3b8', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>bienes</p>
+              <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1 }}>{totalBienes}</p>
+              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>bienes</p>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{zonas.length}</p>
-              <p style={{ fontSize: 10, color: '#94a3b8', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>zonas</p>
+              <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1 }}>{zonas.length}</p>
+              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>zonas</p>
             </div>
-            <div style={{ width: 1, height: 32, background: 'rgba(4,57,65,0.08)' }} />
+            <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
             <button
               onClick={() => navigate(`/taller/${slug}`)}
-              style={{ background: 'none', color: 'rgba(4,57,65,0.55)', border: '1.5px solid rgba(4,57,65,0.13)', borderRadius: 12, padding: '9px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .18s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(4,57,65,0.05)'; e.currentTarget.style.color = '#043941' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(4,57,65,0.55)' }}
+              style={{ background: 'none', color: 'rgba(255,255,255,0.7)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 12, padding: '9px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .18s' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}
             >
               ← Hub del taller
             </button>

@@ -50,32 +50,32 @@ export default function TallerHub() {
     <div style={{ background: '#f0faf5', fontFamily: 'Manrope, sans-serif' }}>
 
       {/* ══ TOP INFO BAR ══════════════════════════════════════════════════════ */}
-      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.08)' }}>
+      <div style={{ background: '#043941' }}>
         <div style={{ padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
 
           {/* Izquierda: icono + nombre */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 0 }}>
             <div style={{
               width: 52, height: 52, borderRadius: 14, flexShrink: 0,
-              background: `${tallerColor}18`, border: `1.5px solid ${tallerColor}30`,
+              background: 'rgba(255,255,255,0.10)', border: '1.5px solid rgba(255,255,255,0.18)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              {(() => { const I = TALLER_ICON_MAP[taller.icon] ?? Package; return <I size={24} style={{ color: tallerColor }} /> })()}
+              {(() => { const I = TALLER_ICON_MAP[taller.icon] ?? Package; return <I size={24} style={{ color: '#02d47e' }} /> })()}
             </div>
             <div style={{ minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
-                <h1 style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
+                <h1 style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
                   {taller.nombre}
                 </h1>
                 <span style={{
-                  background: tallerColor, color: '#fff',
+                  background: '#02d47e', color: '#043941',
                   fontSize: 10, fontWeight: 800, padding: '2px 8px',
                   borderRadius: 100, letterSpacing: '.05em', flexShrink: 0,
                 }}>
                   T{String(taller.numero).padStart(2, '0')}
                 </span>
               </div>
-              <p style={{ fontSize: 11, color: '#94a3b8', margin: 0, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)', margin: 0, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {taller.competencias.slice(0, 3).map(c => c.split(' ').slice(0, 3).join(' ')).join(' · ')}
               </p>
             </div>
@@ -86,25 +86,25 @@ export default function TallerHub() {
             {!isGeneralEpt && (
               <>
                 <div style={{ textAlign: 'center' }}>
-                  <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{modulosLXP.length}</p>
-                  <p style={{ fontSize: 10, color: '#94a3b8', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>módulos</p>
+                  <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1 }}>{modulosLXP.length}</p>
+                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>módulos</p>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{totalHoras}h</p>
-                  <p style={{ fontSize: 10, color: '#94a3b8', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>totales</p>
+                  <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1 }}>{totalHoras}h</p>
+                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>totales</p>
                 </div>
               </>
             )}
             <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{todosLos.length}</p>
-              <p style={{ fontSize: 10, color: '#94a3b8', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>bienes</p>
+              <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1 }}>{todosLos.length}</p>
+              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>bienes</p>
             </div>
-            <div style={{ width: 1, height: 32, background: 'rgba(4,57,65,0.08)' }} />
+            <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
             {!isGeneralEpt && (
               <button
                 onClick={() => navigate(`/taller/${slug}/ruta`)}
-                style={{ background: '#043941', color: '#02d47e', border: 'none', borderRadius: 12, padding: '10px 20px', fontSize: 13, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'opacity .18s' }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = '0.82')}
+                style={{ background: '#02d47e', color: '#043941', border: 'none', borderRadius: 12, padding: '10px 20px', fontSize: 13, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'opacity .18s' }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
                 onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
               >
                 Ver ruta completa <ArrowRight size={14} />
@@ -112,9 +112,9 @@ export default function TallerHub() {
             )}
             <button
               onClick={() => navigate(`/taller/${slug}/repositorio`)}
-              style={{ background: 'none', color: 'rgba(4,57,65,0.55)', border: '1.5px solid rgba(4,57,65,0.13)', borderRadius: 12, padding: '10px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .18s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(4,57,65,0.05)'; e.currentTarget.style.color = '#043941' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(4,57,65,0.55)' }}
+              style={{ background: 'none', color: 'rgba(255,255,255,0.7)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 12, padding: '10px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .18s' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}
             >
               <Package size={13} /> Repositorio
             </button>
