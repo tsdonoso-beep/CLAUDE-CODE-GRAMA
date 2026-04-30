@@ -12,16 +12,6 @@ interface ModuloCardProps {
   isLast?: boolean
 }
 
-const TIPO_LABEL: Record<string, { label: string; color: string; bg: string }> = {
-  VIDEO:              { label: 'VIDEO',       color: '#0369a1', bg: 'rgba(3,105,161,0.09)'  },
-  QUIZ:               { label: 'QUIZ',        color: '#7c3aed', bg: 'rgba(124,58,237,0.09)' },
-  INTERACTIVO:        { label: 'INTERACTIVO', color: '#059669', bg: 'rgba(5,150,105,0.09)'  },
-  PDF:                { label: 'PDF',         color: '#b45309', bg: 'rgba(180,83,9,0.09)'   },
-  PRESENTACION:       { label: 'PPTX',        color: '#d97706', bg: 'rgba(217,119,6,0.09)'  },
-  EN_VIVO:            { label: 'EN VIVO',     color: '#dc2626', bg: 'rgba(220,38,38,0.09)'  },
-  DESCARGABLE:        { label: 'DESCARGABLE', color: '#0891b2', bg: 'rgba(8,145,178,0.09)'  },
-  ACTIVIDAD_PRACTICA: { label: 'ACTIVIDAD',   color: '#7c3aed', bg: 'rgba(124,58,237,0.09)' },
-}
 
 export function ModuloCard({ modulo, estado, moduloProgreso, isLast = false }: ModuloCardProps) {
   const [expandido, setExpandido] = useState(estado === 'en_curso' || estado === 'completado')
@@ -39,14 +29,7 @@ export function ModuloCard({ modulo, estado, moduloProgreso, isLast = false }: M
   /* ── borde izquierdo por estado ── */
   const borderColor = completado ? '#02d47e' : activo ? '#02d47e' : estado === 'disponible' ? '#0ea5e9' : 'transparent'
 
-  /* ── duracion format ── */
-  const fmtMin = (min?: number) => {
-    if (!min) return ''
-    if (min >= 60) return `${Math.floor(min / 60)}h${min % 60 > 0 ? ` ${min % 60}m` : ''}`
-    return `${min} min`
-  }
-
-  const ctaLabel = completado ? 'Repasar módulo' : activo ? 'Continuar módulo' : 'Comenzar módulo'
+const ctaLabel = completado ? 'Repasar módulo' : activo ? 'Continuar módulo' : 'Comenzar módulo'
 
   return (
     <div style={{
@@ -152,46 +135,24 @@ export function ModuloCard({ modulo, estado, moduloProgreso, isLast = false }: M
           </div>
         )}
 
-        {/* Expanded: secciones + contenidos */}
+        {/* Expanded: solo sesiones (sin detalle de contenidos) */}
         {expandido && !bloqueado && (
           <div style={{ padding: '0 16px 14px', borderTop: '1px solid rgba(4,57,65,0.06)' }}>
-            {modulo.sesiones.map((ses, si) => {
-              const offsetIdx = modulo.sesiones.slice(0, si).reduce((a, s) => a + s.contenidos.length, 0)
-              return (
-                <div key={ses.id}>
-                  {/* Cabecera de sección */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 0 6px', borderBottom: '1px solid rgba(4,57,65,0.06)', marginTop: si === 0 ? 8 : 4 }}>
-                    <span style={{ fontSize: 10, fontWeight: 800, color: '#02d47e', flexShrink: 0, minWidth: 20 }}>S{si + 1}</span>
-                    <span style={{ fontSize: 11, fontWeight: 800, color: '#043941', flex: 1 }}>{ses.nombre}</span>
-                    {ses.duracionHoras > 0 && (
-                      <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600, flexShrink: 0 }}>{ses.duracionHoras}h</span>
-                    )}
-                  </div>
-                  {/* Contenidos de la sección */}
-                  {ses.contenidos.map((c, ci) => {
-                    const tipo = TIPO_LABEL[c.tipo] ?? { label: c.tipo, color: '#64748b', bg: 'rgba(100,116,139,0.1)' }
-                    const idx  = offsetIdx + ci
-                    return (
-                      <div
-                        key={c.id}
-                        style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 0 6px 10px', borderBottom: ci < ses.contenidos.length - 1 ? '1px solid rgba(4,57,65,0.03)' : 'none' }}
-                      >
-                        <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(4,57,65,0.25)', minWidth: 26, flexShrink: 0 }}>
-                          {modulo.numero}.{idx + 1}
-                        </span>
-                        <span style={{ flex: 1, fontSize: 12, fontWeight: 600, color: '#043941' }}>{c.titulo}</span>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0 }}>
-                          <span style={{ fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 5, background: tipo.bg, color: tipo.color }}>{tipo.label}</span>
-                          {c.duracionMin && <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600 }}>{fmtMin(c.duracionMin)}</span>}
-                          {c.bloqueaSiguiente && <span style={{ fontSize: 9, fontWeight: 800, color: '#dc2626', background: 'rgba(220,38,38,0.08)', padding: '2px 6px', borderRadius: 5 }}>🔒 bloquea</span>}
-                        </div>
-                        <ChevronRight size={12} style={{ color: 'rgba(4,57,65,0.2)', flexShrink: 0 }} />
-                      </div>
-                    )
-                  })}
+            {modulo.sesiones.map((ses, si) => (
+              <div
+                key={ses.id}
+                style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 0', borderBottom: si < modulo.sesiones.length - 1 ? '1px solid rgba(4,57,65,0.05)' : 'none', marginTop: si === 0 ? 8 : 0 }}
+              >
+                <span style={{ fontSize: 10, fontWeight: 800, color: '#02d47e', flexShrink: 0, minWidth: 20 }}>S{si + 1}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: '#043941', flex: 1 }}>{ses.nombre}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                  <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600 }}>{ses.contenidos.length} items</span>
+                  {ses.duracionHoras > 0 && (
+                    <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600 }}>{ses.duracionHoras}h</span>
+                  )}
                 </div>
-              )
-            })}
+              </div>
+            ))}
             <button
               onClick={() => navigate(`/taller/${slug}/ruta/modulo/${modulo.numero}`)}
               style={{ marginTop: 10, background: activo ? '#043941' : completado ? 'rgba(4,57,65,0.07)' : '#043941', color: activo ? '#02d47e' : completado ? '#043941' : '#02d47e', border: 'none', borderRadius: 10, padding: '9px 18px', fontSize: 12, fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit', display: 'inline-flex', alignItems: 'center', gap: 6 }}
