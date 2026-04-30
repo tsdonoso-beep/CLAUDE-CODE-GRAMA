@@ -6,10 +6,15 @@ import { trackContenido } from '@/lib/tracker'
 import { toast } from 'sonner'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
 import {
-  Clock, ChevronLeft, ChevronDown, ChevronRight,
+  ChevronLeft, ChevronRight,
   FileText, Video, Monitor, Zap, Download, Activity,
-  ExternalLink, Lock, ClipboardList, School, CheckCircle2
+  ExternalLink, Lock, ClipboardList, CheckCircle2,
+  Car, Scissors, ChefHat, Hammer, Cpu, UtensilsCrossed, Wrench, Package,
 } from 'lucide-react'
+
+const TALLER_ICON_MAP: Record<string, React.ElementType> = {
+  Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench, Package,
+}
 import { modulosLXP } from '@/data/modulosLXP'
 import { manualesRuta } from '@/data/manualesRuta'
 import { useProgress } from '@/contexts/ProgressContext'
@@ -56,7 +61,7 @@ export default function ModuloDetalle() {
   const { slug } = useTaller()
   const navigate = useNavigate()
   const { user } = useAuth()
-  const { markContenidoCompleted, markContenidoInProgress, getEstadoModuloLXP, getContenidoEstado } = useProgress()
+  const { markContenidoCompleted, markContenidoInProgress, getEstadoModuloLXP, getContenidoEstado, getModuloProgreso } = useProgress()
   const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set(['0']))
   const [diagnosticosOpen, setDiagnosticosOpen] = useState(false)
   const [conocenosOpen, setConocenosOpen] = useState(false)
@@ -98,10 +103,12 @@ export default function ModuloDetalle() {
     : null
   const taller = getTallerBySlug(slug ?? '')
 
-  const moduloNum = parseInt(num ?? '0', 10)
-  const modulo = modulosLXP.find(m => m.numero === moduloNum)
-  const estado = getEstadoModuloLXP(modulo?.id ?? '')
+  const moduloNum  = parseInt(num ?? '0', 10)
+  const modulo     = modulosLXP.find(m => m.numero === moduloNum)
+  const estado     = getEstadoModuloLXP(modulo?.id ?? '')
   const prevModulo = modulosLXP.find(m => m.numero === moduloNum - 1)
+  const tallerColor  = taller ? `hsl(${taller.color})` : '#02d47e'
+  const TallerIcon: React.ElementType = taller ? (TALLER_ICON_MAP[taller.icon] ?? Package) : Package
 
   if (!modulo) {
     return (
@@ -149,6 +156,13 @@ export default function ModuloDetalle() {
   }
 
   const nextModulo = modulosLXP.find(m => m.numero === moduloNum + 1)
+  const progreso   = getModuloProgreso(slug ?? '', moduloNum)
+
+  // Función para formatear minutos
+  const fmtMin = (min: number) => {
+    if (min >= 60) return `${Math.floor(min / 60)}h${min % 60 > 0 ? ` ${min % 60}m` : ''}`
+    return `${min} min`
+  }
 
   // Manejador para abrir contenidos
   const handleOpenContent = (contenido: any) => {
@@ -296,122 +310,136 @@ export default function ModuloDetalle() {
   }
 
   return (
-    <div>
-      {/* ── Hero ── */}
-      <div className="px-8 py-10 grama-pattern" style={{ background: '#043941' }}>
-        <button
-          onClick={() => navigate(`/taller/${slug}/ruta`)}
-          className="flex items-center gap-1.5 text-xs font-semibold mb-4 transition-colors"
-          style={{ color: 'rgba(255,255,255,0.5)' }}
-          onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.5)')}
-        >
-          <ChevronLeft size={13} />
-          Ruta de Aprendizaje
-        </button>
-        <div className="flex items-start gap-4">
-          <span className="text-4xl">{modulo.icon}</span>
-          <div>
-            <p className="overline-label font-semibold mb-1" style={{ color: 'var(--grama-menta)' }}>
-              M{modulo.numero} · {modulo.fase.charAt(0).toUpperCase() + modulo.fase.slice(1)}
-            </p>
-            <h1 className="t-h1 font-extrabold text-white mb-2">
-              {modulo.nombre}
-            </h1>
-            <p className="text-sm max-w-2xl" style={{ color: 'rgba(255,255,255,0.65)' }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f8fafc' }}>
+
+      {/* ── WHITE TOP BAR ── */}
+      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.08)' }}>
+        <div style={{ padding: '14px 28px' }}>
+
+          {/* Fila 1: icono + breadcrumb + título + stats */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, marginBottom: 10 }}>
+
+            {/* Izquierda */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: `${tallerColor}18`, border: `1.5px solid ${tallerColor}30`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <TallerIcon size={20} style={{ color: tallerColor }} />
+              </div>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
+                  <button
+                    onClick={() => navigate(`/taller/${slug}/ruta`)}
+                    style={{ fontSize: 11, color: '#94a3b8', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit' }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#043941')}
+                    onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')}
+                  >
+                    Ruta de aprendizaje
+                  </button>
+                  <span style={{ fontSize: 11, color: '#cbd5e1' }}>›</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: tallerColor }}>M{modulo.numero}</span>
+                </div>
+                <h1 style={{ fontSize: 19, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {modulo.nombre}
+                </h1>
+              </div>
+            </div>
+
+            {/* Derecha: stats + badges */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexShrink: 0 }}>
+              {[
+                { value: `${modulo.horasTotal}h`, label: 'totales' },
+                { value: modulo.sesiones.length,  label: 'sesiones' },
+                { value: modulo.sesiones.reduce((a, s) => a + s.contenidos.length, 0), label: 'contenidos' },
+              ].map(s => (
+                <div key={s.label} style={{ textAlign: 'center' }}>
+                  <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{s.value}</p>
+                  <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.08em', color: '#94a3b8', margin: '3px 0 0', textTransform: 'uppercase' }}>{s.label}</p>
+                </div>
+              ))}
+              <div style={{ width: 1, height: 28, background: 'rgba(4,57,65,0.08)' }} />
+              {modulo.horasAsincrono > 0 && (
+                <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: '#e3f8fb', color: '#045f6c' }}>
+                  {modulo.horasAsincrono}h Asíncrono
+                </span>
+              )}
+              {modulo.horasSincrono > 0 && (
+                <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: '#fdf8da', color: '#ca8a04' }}>
+                  {modulo.horasSincrono}h En vivo
+                </span>
+              )}
+              {modulo.horasPresencial > 0 && (
+                <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: '#d2ffe1', color: '#059669' }}>
+                  {modulo.horasPresencial}h Presencial
+                </span>
+              )}
+              {modulo.requiereAprobacion && (
+                <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: '#fef3c7', color: '#92400e' }}>
+                  ⚠ Eval. {modulo.puntajeMinimoAcceso}%
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Fila 2: descripción + barra de progreso */}
+          {modulo.descripcion && (
+            <p style={{ fontSize: 12, color: '#64748b', margin: '0 0 8px', maxWidth: 700, lineHeight: 1.6 }}>
               {modulo.descripcion}
             </p>
+          )}
+          <div style={{ height: 4, borderRadius: 4, background: 'rgba(4,57,65,0.07)', maxWidth: 700, marginBottom: 0 }}>
+            <div style={{ height: '100%', width: `${progreso.porcentaje}%`, background: tallerColor, borderRadius: 4, transition: 'width .5s ease' }} />
           </div>
-        </div>
-        <div className="flex flex-wrap gap-4 mt-5">
-          <div className="flex items-center gap-1.5 text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
-            <Clock size={14} />
-            {modulo.horasTotal}h totales
-          </div>
-          {modulo.horasAsincrono > 0 && (
-            <span className="text-xs px-2.5 py-1 rounded-full font-semibold" style={{ background: '#e3f8fb', color: '#045f6c' }}>
-              {modulo.horasAsincrono}h Asíncrono
-            </span>
-          )}
-          {modulo.horasSincrono > 0 && (
-            <span className="text-xs px-2.5 py-1 rounded-full font-semibold" style={{ background: '#fdf8da', color: '#ca8a04' }}>
-              {modulo.horasSincrono}h Sincrónico
-            </span>
-          )}
-          {modulo.horasPresencial > 0 && (
-            <span className="text-xs px-2.5 py-1 rounded-full font-semibold" style={{ background: '#d2ffe1', color: '#00c16e' }}>
-              {modulo.horasPresencial}h Presencial
-            </span>
-          )}
-          {modulo.requiereAprobacion && (
-            <span className="text-xs px-2.5 py-1 rounded-full font-semibold" style={{ background: '#fef3c7', color: '#ca8a04' }}>
-              ⚠ Evaluación obligatoria ({modulo.puntajeMinimoAcceso}%)
-            </span>
-          )}
+
         </div>
       </div>
 
-      {/* ── Sub-secciones (accordion) ── */}
-      <div className="p-6 max-w-4xl">
-        <div className="space-y-3">
+      {/* ── GRID: contenido principal + sidebar ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: 24, padding: '20px 28px', alignItems: 'start' }}>
+
+        {/* ── COLUMNA IZQUIERDA: sesiones ── */}
+        <div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {modulo.sesiones.map((ses, idx) => {
             const isOpen = expandedSubs.has(ses.id) || expandedSubs.has(String(idx))
             const modalidadBadge =
-              ses.esEvaluacion   ? { label: 'EVALUACIÓN', color: '#ca8a04', bg: 'rgba(245,158,11,0.1)' } :
-              ses.modalidad === 'sincrono'   ? { label: 'EN VIVO',    color: '#02d47e', bg: 'rgba(2,212,126,0.1)' } :
+              ses.esEvaluacion             ? { label: 'EVALUACIÓN', color: '#ca8a04', bg: 'rgba(245,158,11,0.1)' } :
+              ses.modalidad === 'sincrono'   ? { label: 'EN VIVO',    color: '#059669', bg: 'rgba(5,150,105,0.1)' } :
               ses.modalidad === 'presencial' ? { label: 'PRESENCIAL', color: '#b45309', bg: 'rgba(245,158,11,0.1)' } :
                                                { label: 'AUTÓNOMO',  color: '#045f6c', bg: 'rgba(4,95,108,0.08)' }
             return (
               <div
                 key={ses.id}
-                className="rounded-2xl border overflow-hidden transition-all"
-                style={{ borderColor: isOpen ? '#02d47e' : '#e3f8fb' }}
+                id={`ses-${ses.id}`}
+                style={{ borderRadius: 14, border: `1px solid ${isOpen ? tallerColor + '40' : 'rgba(4,57,65,0.08)'}`, background: '#fff', overflow: 'hidden', boxShadow: isOpen ? `0 2px 12px ${tallerColor}18` : '0 1px 4px rgba(4,57,65,0.04)', transition: 'border-color .2s, box-shadow .2s' }}
               >
                 {/* Accordion header */}
                 <button
                   onClick={() => toggleSub(ses.id)}
-                  className="w-full text-left px-6 py-4 flex items-center gap-4"
-                  style={{ background: '#ffffff' }}
+                  style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'inherit' }}
                 >
-                  <div
-                    className="h-2 w-2 rounded-full shrink-0 mt-1.5"
-                    style={{ background: isOpen ? '#02d47e' : '#94a3b8' }}
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md"
-                        style={{ background: modalidadBadge.bg, color: modalidadBadge.color }}>
-                        {ses.id}
-                      </span>
-                      <span className="text-sm font-semibold" style={{ color: 'var(--grama-oscuro)' }}>
-                        {ses.nombre}
-                      </span>
-                      <span className="overline-label font-semibold" style={{ color: modalidadBadge.color }}>
-                        · {modalidadBadge.label}
-                      </span>
-                    </div>
-                    {ses.descripcion && !isOpen && (
-                      <p className="text-xs mt-0.5 line-clamp-1" style={{ color: '#045f6c' }}>
-                        {ses.descripcion}
-                      </p>
-                    )}
+                  <div style={{ width: 28, height: 28, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, background: isOpen ? tallerColor : 'rgba(4,57,65,0.06)', color: isOpen ? '#043941' : '#94a3b8', transition: 'background .2s, color .2s' }}>
+                    S{idx + 1}
                   </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-xs" style={{ color: '#045f6c' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p style={{ fontSize: 13, fontWeight: 700, color: '#043941', margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {ses.nombre}
+                    </p>
+                    <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
                       {ses.contenidos.length} contenidos · {ses.duracionHoras}h
+                    </p>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                    <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 100, background: modalidadBadge.bg, color: modalidadBadge.color }}>
+                      {modalidadBadge.label}
                     </span>
-                    {isOpen
-                      ? <ChevronDown size={16} style={{ color: '#045f6c' }} />
-                      : <ChevronRight size={16} style={{ color: '#045f6c' }} />
-                    }
+                    <ChevronRight size={14} style={{ color: '#94a3b8', transform: isOpen ? 'rotate(90deg)' : 'none', transition: 'transform .2s' }} />
                   </div>
                 </button>
 
                 {/* Expanded content */}
                 {isOpen && (
-                  <div className="border-t px-6 py-5 space-y-4" style={{ borderColor: '#f1f5f9', background: '#ffffff' }}>
+                  <div style={{ borderTop: '1px solid rgba(4,57,65,0.06)', padding: '14px 16px', background: '#fff', display: 'flex', flexDirection: 'column', gap: 6 }}>
                     {ses.descripcion && (
-                      <p className="text-sm" style={{ color: '#045f6c' }}>
+                      <p style={{ fontSize: 12, color: '#64748b', margin: '0 0 4px', lineHeight: 1.6 }}>
                         {ses.descripcion}
                       </p>
                     )}
@@ -442,115 +470,74 @@ export default function ModuloDetalle() {
                             return (
                               <div key={contenido.id}>
                                 {isQuizBloqueante ? (
-                                  <button
-                                    onClick={() => setQuizAbierto({
-                                      contenidoId: contenido.id,
-                                      titulo: contenido.titulo,
-                                      preguntas: contenido.bancoPreguntas!,
-                                      puntajeMinimo: contenido.puntajeMinimo ?? 80,
-                                      bloqueaSiguiente: true,
-                                    })}
-                                    className="w-full flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all hover:shadow-md"
-                                    style={{ borderColor: '#02d47e', background: '#f0fdf9' }}
+                                  <div
+                                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 12, border: `1.5px solid ${tallerColor}`, borderLeft: `4px solid ${tallerColor}`, background: `${tallerColor}08` }}
                                   >
-                                    <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(2,212,126,0.15)' }}>
-                                      <span className="text-lg">📝</span>
+                                    <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${tallerColor}20` }}>
+                                      <span style={{ fontSize: 18 }}>📝</span>
                                     </div>
-                                    <div className="flex-1">
-                                      <p className="text-sm font-bold" style={{ color: '#043941' }}>{contenido.titulo}</p>
-                                      <p className="text-xs mt-0.5" style={{ color: '#045f6c' }}>
-                                        {contenido.bancoPreguntas!.length} preguntas · Mínimo {contenido.puntajeMinimo ?? 80}% · Requerido para continuar
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                      <p style={{ fontSize: 13, fontWeight: 700, color: '#043941', margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{contenido.titulo}</p>
+                                      <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>
+                                        {contenido.bancoPreguntas!.length} preguntas · Mín. {contenido.puntajeMinimo ?? 80}% · Requerido para continuar
                                       </p>
                                     </div>
-                                    <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ background: '#043941', color: '#02d47e' }}>Iniciar</span>
-                                  </button>
-                                ) : (() => {
-                                  const estado = getContenidoEstado(contenido.id)
-                                  return (
-                                  <div
-                                    className="flex items-start gap-3 p-4 rounded-xl border transition-all hover:shadow-sm"
-                                    style={{
-                                      borderColor: estado.completed ? '#02d47e' : '#e3f8fb',
-                                      background: estado.completed ? '#f0fdf9' : '#fafffe',
-                                    }}
-                                  >
-                                    <div
-                                      className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0"
-                                      style={{ background: estado.completed ? 'rgba(2,212,126,0.12)' : '#f1f5f9' }}
+                                    <button
+                                      onClick={() => setQuizAbierto({ contenidoId: contenido.id, titulo: contenido.titulo, preguntas: contenido.bancoPreguntas!, puntajeMinimo: contenido.puntajeMinimo ?? 80, bloqueaSiguiente: true })}
+                                      style={{ padding: '7px 16px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', background: tallerColor, color: '#043941', whiteSpace: 'nowrap', flexShrink: 0 }}
                                     >
-                                      {estado.completed
-                                        ? <CheckCircle2 size={16} style={{ color: 'var(--grama-menta)' }} />
-                                        : <ContentIcon size={16} style={{ color: '#64748b' }} />
-                                      }
+                                      Iniciar
+                                    </button>
+                                  </div>
+                                ) : (() => {
+                                  const est = getContenidoEstado(contenido.id)
+                                  const actionLabel = est.completed ? 'Revisar'
+                                    : contenido.tipo === 'DESCARGABLE'        ? 'Descargar'
+                                    : contenido.tipo === 'EN_VIVO'            ? 'Ver enlace'
+                                    : contenido.tipo === 'ACTIVIDAD_PRACTICA' ? 'Ver actividad'
+                                    : contenido.tipo === 'PDF'                ? 'Ver PDF'
+                                    : contenido.tipo === 'VIDEO'              ? 'Ver video'
+                                    : contenido.tipo === 'PRESENTACION'       ? 'Ver slides'
+                                    : contenido.tipo === 'INTERACTIVO'        ? 'Abrir'
+                                    : 'Abrir'
+                                  return (
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 12, border: `1px solid ${est.completed ? tallerColor + '40' : 'rgba(4,57,65,0.07)'}`, background: est.completed ? `${tallerColor}08` : '#fafcff', transition: 'border-color .16s' }}>
+                                    <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: est.completed ? `${tallerColor}18` : 'rgba(4,57,65,0.06)' }}>
+                                      {est.completed
+                                        ? <CheckCircle2 size={16} style={{ color: tallerColor }} />
+                                        : <ContentIcon size={15} style={{ color: '#64748b' }} />}
                                     </div>
-                                    <div className="flex-1 min-w-0">
-                                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
                                         <ContenidoBadge tipo={contenido.tipo} size="sm" />
-                                        <h4 className="text-sm font-bold" style={{ color: 'var(--grama-oscuro)' }}>
+                                        <span style={{ fontSize: 13, fontWeight: 700, color: '#043941', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                           {contenido.titulo}
-                                        </h4>
-                                        {estado.completed && (
-                                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-                                            style={{ background: 'rgba(2,212,126,0.15)', color: 'var(--grama-menta)' }}>
-                                            ✓ Completado
+                                        </span>
+                                        {est.completed && (
+                                          <span style={{ fontSize: 9, fontWeight: 800, padding: '2px 7px', borderRadius: 100, background: `${tallerColor}18`, color: tallerColor, flexShrink: 0 }}>
+                                            ✓ Listo
                                           </span>
                                         )}
-                                        {estado.inProgress && !estado.completed && (
-                                          <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full"
-                                            style={{ background: 'rgba(245,158,11,0.12)', color: '#b45309' }}>
+                                        {est.inProgress && !est.completed && (
+                                          <span style={{ fontSize: 9, fontWeight: 700, padding: '2px 7px', borderRadius: 100, background: 'rgba(245,158,11,0.12)', color: '#b45309', flexShrink: 0 }}>
                                             En progreso
                                           </span>
                                         )}
                                       </div>
-                                      <p className="text-xs mb-2" style={{ color: '#045f6c' }}>
-                                        {contenido.descripcion}
-                                      </p>
-                                      <div className="flex flex-wrap gap-3 text-xs" style={{ color: '#94a3b8' }}>
-                                        {contenido.duracionMin && (
-                                          <span className="flex items-center gap-1">
-                                            <Clock size={11} />
-                                            {contenido.duracionMin >= 60
-                                              ? `${Math.floor(contenido.duracionMin / 60)}h${contenido.duracionMin % 60 > 0 ? ` ${contenido.duracionMin % 60}min` : ''}`
-                                              : `${contenido.duracionMin} min`}
-                                          </span>
-                                        )}
-                                        {contenido.paginas && <span>{contenido.paginas} páginas</span>}
+                                      <div style={{ display: 'flex', gap: 10, fontSize: 11, color: '#94a3b8', flexWrap: 'wrap' }}>
+                                        {contenido.duracionMin && <span>⏱ {fmtMin(contenido.duracionMin)}</span>}
+                                        {contenido.paginas && <span>{contenido.paginas} pág.</span>}
                                         {contenido.preguntas && <span>{contenido.preguntas} preguntas</span>}
-                                        {contenido.puntajeMinimo && (
-                                          <span className="font-semibold" style={{ color: '#ca8a04' }}>
-                                            Mínimo {contenido.puntajeMinimo}%
-                                          </span>
-                                        )}
+                                        {contenido.puntajeMinimo && <span style={{ color: '#ca8a04', fontWeight: 700 }}>Mín. {contenido.puntajeMinimo}%</span>}
                                       </div>
                                     </div>
                                     <button
                                       onClick={() => handleOpenContent(contenido)}
-                                      className="inline-flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold shrink-0 transition-all hover:opacity-90"
-                                      style={{
-                                        background: estado.completed ? 'rgba(2,212,126,0.15)' : contenido.tipo === 'ACTIVIDAD_PRACTICA' ? '#f59e0b' : '#043941',
-                                        color: estado.completed ? '#02d47e' : '#ffffff',
-                                        width: '108px',
-                                      }}
+                                      style={{ padding: '7px 14px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, background: est.completed ? 'rgba(4,57,65,0.06)' : contenido.tipo === 'ACTIVIDAD_PRACTICA' ? '#f59e0b' : '#043941', color: est.completed ? '#043941' : contenido.tipo === 'ACTIVIDAD_PRACTICA' ? '#fff' : tallerColor, transition: 'opacity .16s' }}
+                                      onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
+                                      onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                                     >
-                                      {estado.completed ? (
-                                        <>Revisar <CheckCircle2 size={11} /></>
-                                      ) : contenido.tipo === 'DESCARGABLE' ? (
-                                        <>Descargar <Download size={11} /></>
-                                      ) : contenido.tipo === 'EN_VIVO' ? (
-                                        <>Ver enlace <ExternalLink size={11} /></>
-                                      ) : contenido.tipo === 'ACTIVIDAD_PRACTICA' ? (
-                                        <>Ver actividad <ChevronRight size={11} /></>
-                                      ) : contenido.tipo === 'PDF' ? (
-                                        <>Ver PDF <ChevronRight size={11} /></>
-                                      ) : contenido.tipo === 'VIDEO' ? (
-                                        <>Ver video <ChevronRight size={11} /></>
-                                      ) : contenido.tipo === 'PRESENTACION' ? (
-                                        <>Ver slides <ChevronRight size={11} /></>
-                                      ) : contenido.tipo === 'INTERACTIVO' ? (
-                                        <>Abrir actividad <ChevronRight size={11} /></>
-                                      ) : (
-                                        <>Abrir <ChevronRight size={11} /></>
-                                      )}
+                                      {actionLabel}
                                     </button>
                                   </div>
                                   )
@@ -561,71 +548,45 @@ export default function ModuloDetalle() {
 
                           {/* Bloque colapsable de diagnósticos */}
                           {diagnosticos.length > 0 && (
-                            <div
-                              className="rounded-xl overflow-hidden border"
-                              style={{ borderColor: '#c8f0e8' }}
-                            >
-                              {/* Header del grupo */}
+                            <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(4,57,65,0.07)' }}>
                               <button
                                 onClick={() => setDiagnosticosOpen(o => !o)}
-                                className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors"
-                                style={{ background: diagnosticosOpen ? '#e8faf4' : '#f0fdf9' }}
+                                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: diagnosticosOpen ? 'rgba(4,57,65,0.03)' : '#fafcff', border: 'none', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left' }}
                               >
-                                <div
-                                  className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
-                                  style={{ background: '#d2ffe1' }}
-                                >
-                                  <ClipboardList size={15} style={{ color: '#00c16e' }} />
+                                <div style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(4,57,65,0.06)' }}>
+                                  <ClipboardList size={14} style={{ color: '#045f6c' }} />
                                 </div>
-                                <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-bold" style={{ color: 'var(--grama-oscuro)' }}>
-                                    Diagnósticos de entrada
-                                  </p>
-                                  <p className="text-xs" style={{ color: '#045f6c' }}>
-                                    {diagnosticos.length} evaluaciones · {totalDiagPreg} preguntas · ~{totalDiagMin} min · Sin nota mínima
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                  <p style={{ fontSize: 13, fontWeight: 700, color: '#043941', margin: '0 0 1px' }}>Diagnósticos de entrada</p>
+                                  <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
+                                    {diagnosticos.length} evaluaciones · {totalDiagPreg} preguntas · Sin nota mínima
                                   </p>
                                 </div>
-                                <span
-                                  className="text-xs px-2 py-0.5 rounded-full font-semibold shrink-0"
-                                  style={{ background: '#d2ffe1', color: '#00c16e' }}
-                                >
-                                  Solo calibración
+                                <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 100, background: 'rgba(4,57,65,0.06)', color: '#045f6c', flexShrink: 0 }}>
+                                  Calibración
                                 </span>
-                                {diagnosticosOpen
-                                  ? <ChevronDown size={15} style={{ color: '#045f6c' }} />
-                                  : <ChevronRight size={15} style={{ color: '#045f6c' }} />
-                                }
+                                <ChevronRight size={14} style={{ color: '#94a3b8', transform: diagnosticosOpen ? 'rotate(90deg)' : 'none', transition: 'transform .2s', flexShrink: 0 }} />
                               </button>
 
-                              {/* Quizzes desplegados */}
                               {diagnosticosOpen && (
-                                <div
-                                  className="border-t p-4 space-y-4"
-                                  style={{ borderColor: '#c8f0e8', background: '#fafffd' }}
-                                >
-                                  <p className="text-xs italic" style={{ color: '#045f6c' }}>
-                                    Estas evaluaciones no tienen nota mínima. Solo sirven para que el programa se adapte a tu punto de partida.
+                                <div style={{ borderTop: '1px solid rgba(4,57,65,0.06)', padding: '10px 14px', background: '#fff', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                                  <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 4px', fontStyle: 'italic' }}>
+                                    Estas evaluaciones no tienen nota mínima. Solo sirven para adaptar el programa a tu punto de partida.
                                   </p>
                                   {diagnosticos.map(contenido => (
-                                    <button
-                                      key={contenido.id}
-                                      onClick={() => setQuizAbierto({
-                                        contenidoId: contenido.id,
-                                        titulo: contenido.titulo,
-                                        preguntas: contenido.bancoPreguntas!,
-                                        puntajeMinimo: 0,
-                                        bloqueaSiguiente: false,
-                                      })}
-                                      className="w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-all hover:shadow-sm"
-                                      style={{ borderColor: '#c8f0e8', background: '#ffffff' }}
-                                    >
-                                      <span className="text-base">📝</span>
-                                      <div className="flex-1">
-                                        <p className="text-sm font-semibold" style={{ color: '#043941' }}>{contenido.titulo}</p>
-                                        <p className="text-xs" style={{ color: '#045f6c' }}>{contenido.bancoPreguntas!.length} preguntas · Sin nota mínima</p>
+                                    <div key={contenido.id} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 10, border: '1px solid rgba(4,57,65,0.07)', background: '#fafcff' }}>
+                                      <span style={{ fontSize: 16 }}>📝</span>
+                                      <div style={{ flex: 1, minWidth: 0 }}>
+                                        <p style={{ fontSize: 12, fontWeight: 700, color: '#043941', margin: '0 0 1px' }}>{contenido.titulo}</p>
+                                        <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>{contenido.bancoPreguntas!.length} preguntas · Sin nota mínima</p>
                                       </div>
-                                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: '#e3f8fb', color: '#043941' }}>Abrir</span>
-                                    </button>
+                                      <button
+                                        onClick={() => setQuizAbierto({ contenidoId: contenido.id, titulo: contenido.titulo, preguntas: contenido.bancoPreguntas!, puntajeMinimo: 0, bloqueaSiguiente: false })}
+                                        style={{ padding: '6px 12px', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 800, fontFamily: 'inherit', background: '#043941', color: tallerColor, flexShrink: 0 }}
+                                      >
+                                        Abrir
+                                      </button>
+                                    </div>
                                   ))}
                                 </div>
                               )}
@@ -641,30 +602,89 @@ export default function ModuloDetalle() {
           })}
         </div>
 
-        {/* Navegación entre módulos */}
-        <div className="flex justify-between mt-8 gap-4">
-          {prevModulo ? (
-            <button
-              onClick={() => navigate(`/taller/${slug}/ruta/modulo/${prevModulo.numero}`)}
-              className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold border-2 transition-all"
-              style={{ borderColor: '#e3f8fb', color: 'var(--grama-oscuro)', background: '#ffffff' }}
-            >
-              <ChevronLeft size={15} />
-              {prevModulo.icon} M{prevModulo.numero}
-            </button>
-          ) : <div />}
-          {nextModulo && (
-            <button
-              onClick={() => navigate(`/taller/${slug}/ruta/modulo/${nextModulo.numero}`)}
-              className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold text-white transition-all hover:opacity-90"
-              style={{ background: '#02d47e' }}
-            >
-              M{nextModulo.numero} {nextModulo.icon}
-              <ChevronRight size={15} />
-            </button>
+        </div>{/* fin sesiones */}
+        </div>{/* fin columna izquierda */}
+
+        {/* ── SIDEBAR DERECHA ── */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, position: 'sticky', top: 20 }}>
+
+          {/* Card ① Progreso del módulo */}
+          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '18px 20px' }}>
+            <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 14px' }}>Progreso</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <div style={{ position: 'relative', width: 64, height: 64, flexShrink: 0 }}>
+                <svg width={64} height={64} style={{ transform: 'rotate(-90deg)', display: 'block' }}>
+                  <circle cx={32} cy={32} r={26} fill="none" stroke="rgba(4,57,65,0.07)" strokeWidth={5} />
+                  <circle cx={32} cy={32} r={26} fill="none" stroke={tallerColor} strokeWidth={5}
+                    strokeDasharray={`${(progreso.porcentaje / 100) * 2 * Math.PI * 26} ${2 * Math.PI * 26}`}
+                    strokeLinecap="round" style={{ transition: 'stroke-dasharray .6s ease' }} />
+                </svg>
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 900, color: '#043941' }}>
+                  {progreso.porcentaje}%
+                </div>
+              </div>
+              <div>
+                <p style={{ fontSize: 15, fontWeight: 900, color: '#043941', margin: '0 0 2px' }}>{progreso.completados} de {progreso.total}</p>
+                <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>contenidos completados</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Card ② Índice de sesiones */}
+          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '16px 18px' }}>
+            <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 10px' }}>Sesiones</p>
+            {modulo.sesiones.map((ses, si) => (
+              <button
+                key={ses.id}
+                onClick={() => {
+                  setExpandedSubs(new Set([ses.id]))
+                  document.getElementById(`ses-${ses.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                }}
+                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '7px 0', borderBottom: si < modulo.sesiones.length - 1 ? '1px solid rgba(4,57,65,0.05)' : 'none', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit' }}
+              >
+                <span style={{ fontSize: 10, fontWeight: 800, color: tallerColor, minWidth: 20, flexShrink: 0 }}>S{si + 1}</span>
+                <span style={{ fontSize: 11, fontWeight: 600, color: '#043941', flex: 1, lineHeight: 1.3, textAlign: 'left' }}>
+                  {ses.nombre}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Card ③ Navegación prev / next */}
+          {(prevModulo || nextModulo) && (
+            <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.05)', padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {prevModulo && (
+                <button
+                  onClick={() => navigate(`/taller/${slug}/ruta/modulo/${prevModulo.numero}`)}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '9px 14px', borderRadius: 10, border: '1.5px solid rgba(4,57,65,0.1)', background: '#fff', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12, fontWeight: 700, color: 'rgba(4,57,65,0.6)', transition: 'all .16s' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(4,57,65,0.04)'; e.currentTarget.style.color = '#043941' }}
+                  onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = 'rgba(4,57,65,0.6)' }}
+                >
+                  <ChevronLeft size={13} style={{ flexShrink: 0 }} />
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    M{prevModulo.numero} — {prevModulo.nombre.split(' ').slice(0, 3).join(' ')}
+                  </span>
+                </button>
+              )}
+              {nextModulo && (
+                <button
+                  onClick={() => navigate(`/taller/${slug}/ruta/modulo/${nextModulo.numero}`)}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, padding: '9px 14px', borderRadius: 10, border: 'none', background: '#043941', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12, fontWeight: 800, color: tallerColor, transition: 'opacity .16s' }}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+                >
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    M{nextModulo.numero} — {nextModulo.nombre.split(' ').slice(0, 3).join(' ')}
+                  </span>
+                  <ChevronRight size={13} style={{ flexShrink: 0 }} />
+                </button>
+              )}
+            </div>
           )}
-        </div>
-      </div>
+
+        </div>{/* fin sidebar */}
+
+      </div>{/* fin grid */}
 
       {/* Modal para selección de grado */}
       {showGradeModal && (
