@@ -533,7 +533,7 @@ export default function ModuloDetalle() {
                                     </div>
                                     <button
                                       onClick={() => handleOpenContent(contenido)}
-                                      style={{ padding: '7px 14px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, background: est.completed ? 'rgba(4,57,65,0.06)' : tallerColor, color: est.completed ? '#043941' : '#fff', transition: 'opacity .16s' }}
+                                      style={{ padding: '7px 14px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, minWidth: 100, textAlign: 'center', background: est.completed ? 'rgba(4,57,65,0.06)' : tallerColor, color: est.completed ? '#043941' : '#fff', transition: 'opacity .16s' }}
                                       onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
                                       onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                                     >
