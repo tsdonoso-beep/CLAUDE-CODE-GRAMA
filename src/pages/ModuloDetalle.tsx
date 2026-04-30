@@ -602,7 +602,6 @@ export default function ModuloDetalle() {
           })}
         </div>
 
-        </div>{/* fin sesiones */}
         </div>{/* fin columna izquierda */}
 
         {/* ── SIDEBAR DERECHA ── */}
