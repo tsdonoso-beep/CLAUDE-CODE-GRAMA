@@ -310,7 +310,7 @@ export default function ModuloDetalle() {
   }
 
   return (
-    <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f8fafc' }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f0faf5' }}>
 
       {/* ── WHITE TOP BAR ── */}
       <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.08)' }}>

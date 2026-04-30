@@ -56,7 +56,7 @@ export default function RutaAprendizaje() {
   }
 
   return (
-    <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f8fafc' }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f0faf5' }}>
 
       {/* ── TOP HEADER ─────────────────────────────────────────────────────── */}
       <div style={{ background: '#043941' }}>
