@@ -1,5 +1,5 @@
 // src/components/layout/PerfilShell.tsx
-import { Outlet, NavLink } from 'react-router-dom'
+import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { LogOut } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useProgress } from '@/contexts/ProgressContext'
@@ -16,6 +16,7 @@ const TABS = [
 
 export function PerfilShell() {
   const { profile, user, signOut } = useAuth()
+  const navigate = useNavigate()
   const { getTallerProgreso } = useProgress()
 
   const displayName = profile?.nombre_completo
@@ -119,6 +120,16 @@ export function PerfilShell() {
 
               {/* Divider */}
               <div style={{ width: 1, height: 36, background: 'rgba(255,255,255,0.08)' }} />
+
+              {/* Volver al inicio */}
+              <button
+                onClick={() => navigate(tallerSlugs[0] ? `/taller/${tallerSlugs[0]}` : '/hub')}
+                style={{ background: 'none', color: 'rgba(255,255,255,0.7)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 12, padding: '9px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .15s' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}
+              >
+                ← Inicio
+              </button>
 
               {/* Logout */}
               <button
