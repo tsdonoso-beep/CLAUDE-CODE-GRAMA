@@ -3,11 +3,16 @@ import { useState, useCallback, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
 import {
-  ChevronLeft, FileText, Video, Shield, Package,
+  ChevronLeft, ChevronRight, FileText, Video, Shield, Package,
   Tag, Hash, MapPin, Layers, AlertTriangle, CheckCircle2, XCircle,
   Download, X,
+  Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench,
 } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
+
+const TALLER_ICON_MAP: Record<string, React.ElementType> = {
+  Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench, Package,
+}
 import { eppPorTaller } from '@/data/eppData'
 import type { EPPItem } from '@/data/eppData'
 import { getManualPDF, getVideoOperatividad, getVideoByCodigoInterno, getDriveEmbedUrl, getDriveDownloadUrl, getDriveThumbnailUrl, getVideoEmbedUrl, getVideoSourceLabel } from '@/data/manualesPDF'
@@ -86,41 +91,89 @@ export default function BienDetalle() {
     .slice(0, 4)
 
   const eppResult = getEPPForBien(bien, slug ?? '')
+  const TallerIcon = TALLER_ICON_MAP[taller.icon ?? ''] ?? Package
+  const currentIndex = bienes.findIndex((b: any) => String(b.n) === id)
+  const prevBien = currentIndex > 0 ? bienes[currentIndex - 1] : null
+  const nextBien = currentIndex < bienes.length - 1 ? bienes[currentIndex + 1] : null
 
   return (
-    <div>
-      {/* ── Hero ── */}
-      <div className="px-8 py-10 grama-pattern" style={{ background: '#043941' }}>
-        <div className="flex flex-col sm:flex-row items-start gap-5">
-          <div
-            className="h-16 w-16 rounded-2xl flex items-center justify-center shrink-0"
-            style={{ background: 'rgba(2,212,126,0.15)' }}
-          >
-            <Package size={28} style={{ color: '#02d47e' }} />
-          </div>
-          <div>
-            <h1 className="text-2xl font-extrabold text-white mb-1">
-              {bien.nombre}
-            </h1>
-            <div className="flex flex-wrap gap-2">
-              {bien.marca && (
-                <span className="text-xs px-2.5 py-1 rounded-full font-semibold" style={{ background: 'rgba(2,212,126,0.15)', color: '#02d47e' }}>
-                  {bien.marca} {bien.modelo}
-                </span>
-              )}
-              <span className="text-xs px-2.5 py-1 rounded-full font-semibold" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)' }}>
-                ×{bien.cantidad} unidades
-              </span>
-              <span className="text-xs px-2.5 py-1 rounded-full font-semibold" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)' }}>
-                {bien.tipo}
-              </span>
+    <div style={{ fontFamily: "'Manrope', sans-serif" }}>
+
+      {/* ── Header — igual que Repositorio.tsx ── */}
+      <div style={{ background: '#043941' }}>
+        <div style={{ padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
+
+          {/* Izquierda: icono + breadcrumb + nombre */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(255,255,255,0.10)', border: '1.5px solid rgba(255,255,255,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <TallerIcon size={20} style={{ color: '#02d47e' }} />
             </div>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
+                <button
+                  onClick={() => navigate(`/taller/${slug}/repositorio`)}
+                  style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit', transition: 'color .15s' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
+                >
+                  Repositorio de Bienes
+                </button>
+                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)' }}>›</span>
+                <span style={{ fontSize: 11, fontWeight: 700, color: '#02d47e' }}>
+                  {bien.codigoEntidad || bien.codigoInterno || `#${bien.n}`}
+                </span>
+              </div>
+              <h1 style={{ fontSize: 18, fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 560 }}>
+                {bien.nombre}
+              </h1>
+            </div>
+          </div>
+
+          {/* Derecha: chips + contador + prev/next + volver */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0 }}>
+            {bien.marca && (
+              <span style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 100, background: 'rgba(2,212,126,0.15)', color: '#02d47e' }}>
+                {bien.marca}{bien.modelo ? ` · ${bien.modelo}` : ''}
+              </span>
+            )}
+            <span style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 100, background: 'rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.70)' }}>
+              ×{bien.cantidad}
+            </span>
+            <div style={{ width: 1, height: 28, background: 'rgba(255,255,255,0.15)' }} />
+            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>
+              {currentIndex + 1} / {bienes.length}
+            </span>
+            <div style={{ display: 'flex', gap: 4 }}>
+              <button
+                onClick={() => prevBien && navigate(`/taller/${slug}/repositorio/bien/${(prevBien as any).n}`)}
+                disabled={!prevBien}
+                style={{ width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', background: prevBien ? 'rgba(255,255,255,0.10)' : 'transparent', border: '1px solid rgba(255,255,255,0.15)', cursor: prevBien ? 'pointer' : 'default', color: prevBien ? '#fff' : 'rgba(255,255,255,0.20)' }}
+              >
+                <ChevronLeft size={14} />
+              </button>
+              <button
+                onClick={() => nextBien && navigate(`/taller/${slug}/repositorio/bien/${(nextBien as any).n}`)}
+                disabled={!nextBien}
+                style={{ width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', background: nextBien ? 'rgba(255,255,255,0.10)' : 'transparent', border: '1px solid rgba(255,255,255,0.15)', cursor: nextBien ? 'pointer' : 'default', color: nextBien ? '#fff' : 'rgba(255,255,255,0.20)' }}
+              >
+                <ChevronRight size={14} />
+              </button>
+            </div>
+            <div style={{ width: 1, height: 28, background: 'rgba(255,255,255,0.15)' }} />
+            <button
+              onClick={() => navigate(`/taller/${slug}/repositorio`)}
+              style={{ background: 'none', color: 'rgba(255,255,255,0.7)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 12, padding: '8px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .15s' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.10)'; e.currentTarget.style.color = '#fff' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}
+            >
+              ← Repositorio
+            </button>
           </div>
         </div>
       </div>
 
       {/* ── Content ── */}
-      <div className="p-6 grid lg:grid-cols-3 gap-6">
+      <div className="p-6 grid lg:grid-cols-3 gap-6" style={{ fontFamily: "'Manrope', sans-serif" }}>
         {/* Main */}
         <div className="lg:col-span-2 space-y-6">
           {/* Recursos (tabs) — primero para que el docente los vea sin scroll */}
@@ -131,10 +184,11 @@ export default function BienDetalle() {
                   <button
                     key={tab.id}
                     onClick={() => { setActiveTab(tab.id); if (tab.id === 'video') trackOnce('video') }}
-                    className="flex items-center gap-2 px-5 py-3.5 text-xs font-semibold border-b-2 whitespace-nowrap transition-all"
+                    className="flex items-center gap-2 px-5 py-3.5 border-b-2 whitespace-nowrap transition-all"
                     style={{
+                      fontSize: 13, fontWeight: 700, fontFamily: "'Manrope', sans-serif",
                       borderColor: activeTab === tab.id ? '#02d47e' : 'transparent',
-                      color: activeTab === tab.id ? '#043941' : '#045f6c',
+                      color: activeTab === tab.id ? '#043941' : '#64748b',
                       background: 'transparent',
                     }}
                   >
@@ -284,7 +338,7 @@ export default function BienDetalle() {
           {/* Info técnica / Sobre este manual */}
           <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
             <div className="px-6 py-4 border-b" style={{ borderColor: '#e3f8fb', background: '#fafffe' }}>
-              <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
+              <h2 style={{ fontSize: 13, fontWeight: 800, color: '#043941', margin: 0 }}>
                 {bien.tipo === 'PEDAGOGICO' ? 'Sobre este manual' : 'Información técnica'}
               </h2>
             </div>
@@ -319,7 +373,7 @@ export default function BienDetalle() {
           {bien.tipo !== 'PEDAGOGICO' && (
           <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
             <div className="px-6 py-4 border-b" style={{ borderColor: '#e3f8fb', background: '#fafffe' }}>
-              <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>
+              <h2 style={{ fontSize: 13, fontWeight: 800, color: '#043941', margin: 0 }}>
                 Uso pedagógico
               </h2>
             </div>
@@ -335,7 +389,7 @@ export default function BienDetalle() {
           {bienesRelacionados.length > 0 && (
             <section className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
               <div className="px-6 py-4 border-b" style={{ borderColor: '#e3f8fb', background: '#fafffe' }}>
-                <h2 className="text-sm font-extrabold" style={{ color: '#043941' }}>Bienes relacionados</h2>
+                <h2 style={{ fontSize: 13, fontWeight: 800, color: '#043941', margin: 0 }}>Bienes relacionados</h2>
               </div>
               <div className="p-5" style={{ background: '#ffffff' }}>
                 <div className="flex flex-wrap gap-3">
@@ -364,7 +418,7 @@ export default function BienDetalle() {
         <div className="space-y-5">
           {/* Ficha rápida */}
           <div className="p-5 rounded-2xl border-2" style={{ borderColor: '#e3f8fb', background: '#ffffff' }}>
-            <h3 className="text-sm font-extrabold mb-4" style={{ color: '#043941' }}>
+            <h3 style={{ fontSize: 13, fontWeight: 800, color: '#043941', margin: '0 0 14px' }}>
               Ficha de uso rápido
             </h3>
             <div className="space-y-3 text-xs">
@@ -385,7 +439,7 @@ export default function BienDetalle() {
 
           {/* Ficha de mantenimiento rápido */}
           <div className="p-5 rounded-2xl border-2" style={{ borderColor: '#e3f8fb', background: '#ffffff' }}>
-            <h3 className="text-sm font-extrabold mb-4" style={{ color: '#043941' }}>
+            <h3 style={{ fontSize: 13, fontWeight: 800, color: '#043941', margin: '0 0 14px' }}>
               Ficha de <span style={{ fontWeight: 800 }}>mantenimiento</span> rápido
             </h3>
             <div className="space-y-2">
@@ -403,7 +457,7 @@ export default function BienDetalle() {
             <div className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#fecaca' }}>
               <div className="px-5 py-4 border-b flex items-center gap-2" style={{ borderColor: '#fecaca', background: '#fff5f5' }}>
                 <Shield size={15} style={{ color: '#ef4444' }} />
-                <h3 className="text-sm font-extrabold" style={{ color: '#043941' }}>EPP requerido</h3>
+                <h3 style={{ fontSize: 13, fontWeight: 800, color: '#043941', margin: 0 }}>EPP requerido</h3>
                 <span className="ml-auto text-[10px] font-bold px-2 py-0.5 rounded-md" style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444' }}>
                   {eppResult.tipo === 'especifico' ? 'Específico' : 'Genérico'}
                 </span>
@@ -445,7 +499,7 @@ export default function BienDetalle() {
             <div className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: '#e3f8fb' }}>
               <div className="px-5 py-4 border-b flex items-center gap-2" style={{ borderColor: '#e3f8fb', background: '#f0faf5' }}>
                 <Shield size={15} style={{ color: '#02d47e' }} />
-                <h3 className="text-sm font-extrabold" style={{ color: '#043941' }}>EPP requerido</h3>
+                <h3 style={{ fontSize: 13, fontWeight: 800, color: '#043941', margin: 0 }}>EPP requerido</h3>
               </div>
               <div className="p-4" style={{ background: '#ffffff' }}>
                 <p className="text-xs" style={{ color: '#045f6c' }}>{eppResult.mensaje ?? 'No requiere EPP específico.'}</p>
