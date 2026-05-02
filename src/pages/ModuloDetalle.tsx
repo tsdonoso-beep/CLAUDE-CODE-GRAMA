@@ -401,10 +401,10 @@ export default function ModuloDetalle() {
           {modulo.sesiones.map((ses, idx) => {
             const isOpen = expandedSubs.has(ses.id) || expandedSubs.has(String(idx))
             const modalidadBadge =
-              ses.esEvaluacion             ? { label: 'EVALUACIÓN', color: '#fbbf24', bg: 'rgba(245,158,11,0.22)' } :
-              ses.modalidad === 'sincrono'   ? { label: 'EN VIVO',    color: '#02d47e', bg: 'rgba(2,212,126,0.18)' } :
-              ses.modalidad === 'presencial' ? { label: 'PRESENCIAL', color: '#fb923c', bg: 'rgba(251,146,60,0.18)' } :
-                                               { label: 'AUTÓNOMO',  color: 'rgba(255,255,255,0.70)', bg: 'rgba(255,255,255,0.10)' }
+              ses.esEvaluacion             ? { label: 'EVALUACIÓN', color: '#ca8a04', bg: 'rgba(245,158,11,0.1)' } :
+              ses.modalidad === 'sincrono'   ? { label: 'EN VIVO',    color: '#059669', bg: 'rgba(5,150,105,0.1)' } :
+              ses.modalidad === 'presencial' ? { label: 'PRESENCIAL', color: '#b45309', bg: 'rgba(245,158,11,0.1)' } :
+                                               { label: 'AUTÓNOMO',  color: '#045f6c', bg: 'rgba(4,95,108,0.08)' }
             return (
               <div
                 key={ses.id}
@@ -414,16 +414,16 @@ export default function ModuloDetalle() {
                 {/* Accordion header */}
                 <button
                   onClick={() => toggleSub(ses.id)}
-                  style={{ width: '100%', textAlign: 'left', background: '#043941', border: 'none', cursor: 'pointer', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'inherit' }}
+                  style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'inherit' }}
                 >
-                  <div style={{ width: 28, height: 28, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, background: 'rgba(255,255,255,0.12)', color: '#02d47e', transition: 'background .2s, color .2s' }}>
+                  <div style={{ width: 28, height: 28, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, background: isOpen ? tallerColor : 'rgba(4,57,65,0.07)', color: isOpen ? '#fff' : '#94a3b8', transition: 'background .2s, color .2s' }}>
                     S{idx + 1}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontSize: 13, fontWeight: 700, color: '#fff', margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <p style={{ fontSize: 13, fontWeight: 700, color: '#043941', margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {ses.nombre}
                     </p>
-                    <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.50)', margin: 0 }}>
+                    <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
                       {ses.contenidos.length} contenidos · {ses.duracionHoras}h
                     </p>
                   </div>
@@ -431,7 +431,7 @@ export default function ModuloDetalle() {
                     <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 100, background: modalidadBadge.bg, color: modalidadBadge.color }}>
                       {modalidadBadge.label}
                     </span>
-                    <ChevronRight size={14} style={{ color: 'rgba(255,255,255,0.45)', transform: isOpen ? 'rotate(90deg)' : 'none', transition: 'transform .2s' }} />
+                    <ChevronRight size={14} style={{ color: '#94a3b8', transform: isOpen ? 'rotate(90deg)' : 'none', transition: 'transform .2s' }} />
                   </div>
                 </button>
 
