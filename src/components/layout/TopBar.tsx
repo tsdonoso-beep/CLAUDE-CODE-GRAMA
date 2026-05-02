@@ -4,6 +4,8 @@ import { ChevronRight, LogOut, Bell, Menu } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { getBienesByTaller } from '@/data/bienesData'
 import { useAuth } from '@/contexts/AuthContext'
+import { modulosLXP } from '@/data/modulosLXP'
+import { useProgress } from '@/contexts/ProgressContext'
 
 export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
   const { slug, num, id } = useParams<{ slug: string; num: string; id: string }>()
@@ -11,6 +13,10 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
   const taller = talleresConfig.find(t => t.slug === slug)
   const { profile, signOut, user } = useAuth()
   const navigate = useNavigate()
+  const { getModuloProgreso } = useProgress()
+
+  const currentModulo = num !== undefined ? modulosLXP.find(m => String(m.numero) === num) : undefined
+  const moduloProgreso = slug && num !== undefined ? getModuloProgreso(slug, Number(num)) : null
 
   const displayName =
     profile?.nombre_completo ||
@@ -28,7 +34,11 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
     crumbs.push({ label: taller.nombreCorto, to: location.pathname === `/taller/${slug}` ? undefined : `/taller/${slug}` })
     if (location.pathname.includes('/ruta')) {
       crumbs.push({ label: 'Ruta de Aprendizaje', to: num ? `/taller/${slug}/ruta` : undefined })
-      if (num) crumbs.push({ label: `Módulo ${num}` })
+      if (num) {
+        const mNombre = currentModulo?.nombre ?? ''
+        const shortName = mNombre.length > 22 ? mNombre.slice(0, 22) + '…' : mNombre
+        crumbs.push({ label: mNombre ? `Módulo ${num} · ${shortName}` : `Módulo ${num}` })
+      }
     } else if (location.pathname.includes('/repositorio')) {
       // Si estamos en el detalle de un bien, Repositorio es navegable
       const enDetalle = id !== undefined
@@ -74,12 +84,12 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1 min-w-0 flex-1 overflow-hidden" aria-label="Breadcrumb">
         {crumbs.map((crumb, i) => (
-          <span key={i} className="flex items-center gap-1">
-            {i > 0 && <ChevronRight size={11} style={{ color: 'rgba(2,212,126,0.4)' }} />}
+          <span key={i} className="flex items-center gap-1 min-w-0" style={{ flexShrink: i === crumbs.length - 1 ? 1 : 0 }}>
+            {i > 0 && <ChevronRight size={11} style={{ color: 'rgba(2,212,126,0.4)', flexShrink: 0 }} />}
             {crumb.to ? (
               <Link
                 to={crumb.to}
-                className="text-xs font-semibold transition-colors px-1.5 py-0.5 rounded-md"
+                className="text-xs font-semibold transition-colors px-1.5 py-0.5 rounded-md whitespace-nowrap"
                 style={{ color: 'rgba(255,255,255,0.45)' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#02d47e')}
                 onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
@@ -87,13 +97,42 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
                 {crumb.label}
               </Link>
             ) : (
-              <span className="text-xs font-bold px-1.5 py-0.5 rounded-md"
-                style={{ color: '#ffffff' }}>
+              <span
+                className="text-xs font-bold px-1.5 py-0.5 rounded-md"
+                style={{
+                  color: '#ffffff',
+                  background: 'rgba(2,212,126,0.1)',
+                  border: '1px solid rgba(2,212,126,0.18)',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  maxWidth: '260px',
+                  display: 'inline-block',
+                }}
+              >
                 {crumb.label}
               </span>
             )}
           </span>
         ))}
+
+        {/* Module progress position indicator */}
+        {moduloProgreso && moduloProgreso.total > 0 && (
+          <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            marginLeft: 8, flexShrink: 0,
+            background: 'rgba(2,212,126,0.08)',
+            border: '1px solid rgba(2,212,126,0.18)',
+            borderRadius: 100, padding: '2px 9px',
+          }}>
+            <span style={{ width: 40, height: 2.5, borderRadius: 2, background: 'rgba(255,255,255,0.1)', display: 'inline-block', overflow: 'hidden', flexShrink: 0 }}>
+              <span style={{ display: 'block', width: `${moduloProgreso.porcentaje}%`, height: '100%', background: '#02d47e', borderRadius: 2 }} />
+            </span>
+            <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(2,212,126,0.85)', letterSpacing: '.03em', whiteSpace: 'nowrap' }}>
+              {moduloProgreso.completados}/{moduloProgreso.total}
+            </span>
+          </span>
+        )}
       </nav>
 
       {/* Right side */}
