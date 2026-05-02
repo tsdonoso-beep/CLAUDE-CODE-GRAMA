@@ -1,174 +1,152 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import { getTallerBySlug } from "@/data/talleresConfig";
 import { getBienesByTaller } from "@/data/bienesData";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
-  ArrowLeft, ArrowRight, ChevronLeft, Package, BookOpen,
-  Tag, MapPin, Hash, Layers, Settings, GraduationCap,
-  FileText, Wrench, PlayCircle, Download,
+  ChevronLeft, ChevronRight, Package, BookOpen, Tag, MapPin, Hash,
+  Layers, Settings, GraduationCap, FileText, Wrench, PlayCircle,
+  Download, Car, Scissors, ChefHat, Hammer, Monitor, Cpu,
+  UtensilsCrossed, Zap, HardHat, Sofa,
 } from "lucide-react";
-import jsPDF from 'jspdf';
+import jsPDF from "jspdf";
 
-// ── Colores zona ───────────────────────────────────────────────────────────
-const zonaBadgeColors: Record<string, string> = {
-  "ZONA DE INVESTIGACIÓN, GESTIÓN Y DISEÑO": "bg-g-light text-g-deep",
-  "ZONA DE INNOVACIÓN":                       "bg-tag-vid-bg text-tag-vid-text",
-  "DEPÓSITO / ALMACÉN / SEGURIDAD":           "bg-tag-pdf-bg text-tag-pdf-text",
-};
-
-// ── Componente VideoFrame ──────────────────────────────────────────────────
-function VideoFrame({ nombreBien }: { nombreBien: string }) {
-  return (
-    <div className="border border-border rounded-xl overflow-hidden">
-      <div className="px-4 py-3 border-b border-border flex items-center gap-2">
-        <PlayCircle className="h-4 w-4 text-primary" />
-        <span className="text-sm font-medium text-foreground">Video de Operatividad y Mantenimiento</span>
-      </div>
-      {/* Frame placeholder — reemplazar src cuando tengas el enlace */}
-      <div className="relative bg-gradient-to-br from-dk-base to-dk-surface aspect-video flex flex-col items-center justify-center gap-3">
-        <div className="h-16 w-16 rounded-full bg-white/10 flex items-center justify-center">
-          <PlayCircle className="h-8 w-8 text-white/60" />
-        </div>
-        <p className="text-white/50 text-sm font-medium text-center px-6">{nombreBien}</p>
-        <p className="text-white/30 text-xs">Video disponible próximamente</p>
-        {/* Cuando tengas el enlace, reemplaza este div por:
-            <iframe
-              src="TU_URL_DE_VIDEO"
-              className="w-full h-full absolute inset-0"
-              allow="autoplay; fullscreen"
-              frameBorder="0"
-            />
-        */}
-      </div>
-    </div>
-  );
+const TALLER_ICON_MAP: Record<string, React.ElementType> = {
+  Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench, Package,
 }
 
-// ── Botones PDF ────────────────────────────────────────────────────────────
+// ── Zona color ─────────────────────────────────────────────────────────────
+function zonaColor(zona: string): { color: string; bg: string } {
+  const z = zona?.toUpperCase() ?? ''
+  if (z.includes('INVESTIGAC'))  return { color: '#04768a', bg: 'rgba(4,118,138,0.15)' }
+  if (z.includes('INNOVAC'))     return { color: '#02d47e', bg: 'rgba(2,212,126,0.15)' }
+  if (z.includes('ALMAC') || z.includes('DEPÓSITO')) return { color: '#045f6c', bg: 'rgba(4,95,108,0.15)' }
+  if (z.includes('SEGURIDAD'))   return { color: '#dc2626', bg: 'rgba(220,38,38,0.15)' }
+  return { color: 'rgba(255,255,255,0.60)', bg: 'rgba(255,255,255,0.10)' }
+}
+
+// ── Tipo bien icon ─────────────────────────────────────────────────────────
+const TIPO_ICON: Record<string, React.ElementType> = {
+  EQUIPOS: Package, HERRAMIENTAS: Wrench, MOBILIARIO: Sofa,
+  PEDAGOGICO: BookOpen, SEGURIDAD: HardHat,
+}
+const TIPO_COLOR: Record<string, { color: string; bg: string; label: string }> = {
+  EQUIPOS:      { color: '#02d47e', bg: 'rgba(2,212,126,0.10)',  label: 'Equipo' },
+  HERRAMIENTAS: { color: '#045f6c', bg: 'rgba(4,95,108,0.10)',   label: 'Herramienta' },
+  MOBILIARIO:   { color: '#04768a', bg: 'rgba(4,118,138,0.10)',  label: 'Mobiliario' },
+  PEDAGOGICO:   { color: '#043941', bg: 'rgba(4,57,65,0.08)',    label: 'Pedagógico' },
+  SEGURIDAD:    { color: '#dc2626', bg: 'rgba(220,38,38,0.10)',  label: 'Seguridad' },
+}
+
+// ── VideoFrame ─────────────────────────────────────────────────────────────
+function VideoFrame({ nombreBien }: { nombreBien: string }) {
+  return (
+    <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(4,57,65,0.10)', background: '#fff' }}>
+      <div style={{ padding: '12px 16px', borderBottom: '1px solid rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <PlayCircle size={15} style={{ color: '#02d47e', flexShrink: 0 }} />
+        <span style={{ fontSize: 13, fontWeight: 700, color: '#043941' }}>Video de Operatividad y Mantenimiento</span>
+      </div>
+      <div style={{ background: '#043941', aspectRatio: '16/9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+        <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(255,255,255,0.10)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <PlayCircle size={28} style={{ color: 'rgba(255,255,255,0.50)' }} />
+        </div>
+        <p style={{ color: 'rgba(255,255,255,0.50)', fontSize: 13, fontWeight: 600, textAlign: 'center', padding: '0 24px', margin: 0 }}>{nombreBien}</p>
+        <p style={{ color: 'rgba(255,255,255,0.30)', fontSize: 11, margin: 0 }}>Video disponible próximamente</p>
+      </div>
+    </div>
+  )
+}
+
+// ── PdfButtons ─────────────────────────────────────────────────────────────
 function PdfButtons({ nombreBien }: { nombreBien: string }) {
   const generatePDF = (tipo: "operatividad" | "mantenimiento") => {
     const doc = new jsPDF()
     const pageWidth = doc.internal.pageSize.getWidth()
     const margin = 15
 
-    // Fondo de color para header
-    doc.setFillColor(4, 57, 65) // #043941
+    doc.setFillColor(4, 57, 65)
     doc.rect(0, 0, pageWidth, 40, 'F')
-
-    // Título
     doc.setTextColor(255, 255, 255)
     doc.setFontSize(18)
     doc.setFont('helvetica', 'bold')
-    doc.text(
-      tipo === 'operatividad' ? 'Manual de Operatividad' : 'Manual de Mantenimiento',
-      margin,
-      20
-    )
-
-    // Subtítulo
+    doc.text(tipo === 'operatividad' ? 'Manual de Operatividad' : 'Manual de Mantenimiento', margin, 20)
     doc.setFontSize(10)
     doc.setFont('helvetica', 'normal')
-    doc.setTextColor(2, 212, 126) // verde GRAMA
+    doc.setTextColor(2, 212, 126)
     doc.text(nombreBien, margin, 30)
 
-    // Contenido principal
     doc.setTextColor(0, 0, 0)
     doc.setFontSize(12)
     doc.setFont('helvetica', 'bold')
     doc.text(tipo === 'operatividad' ? 'Guía de Operatividad' : 'Guía de Mantenimiento', margin, 55)
 
-    // Contenido detallado
     doc.setFontSize(11)
     doc.setFont('helvetica', 'normal')
-    
-    const contenido = tipo === 'operatividad' 
-      ? `Este manual contiene las instrucciones y procedimientos necesarios para operar correctamente el equipo denominado "${nombreBien}".
-
-Pasos principales:
-1. Verificar el estado del equipo antes de usar
-2. Revisar todos los mecanismos de seguridad
-3. Seguir los procedimientos de operación establecidos
-4. Usar todos los equipos de protección personal (EPP)
-5. Registrar el uso en la bitácora de actividades
-
-Para más información, consulte con el instructor responsable del taller.`
-      : `Este manual contiene las instrucciones para el mantenimiento preventivo y correctivo del equipo "${nombreBien}".
-
-Procedimientos de mantenimiento:
-1. Limpieza regular del equipo
-2. Lubricación de partes móviles
-3. Inspección de componentes críticos
-4. Reemplazo de piezas desgastadas
-5. Registro de mantenimiento
-
-Frecuencia de mantenimiento:
-- Diario: Limpieza y lubrificación de puntos críticos
-- Semanal: Inspección completa del equipo
-- Mensual: Mantenimiento preventivo profesional
-
-Para reparaciones mayores, contacte técnico especializado.`
+    const contenido = tipo === 'operatividad'
+      ? `Este manual contiene las instrucciones y procedimientos necesarios para operar correctamente el equipo "${nombreBien}".\n\nPasos principales:\n1. Verificar el estado del equipo antes de usar\n2. Revisar todos los mecanismos de seguridad\n3. Seguir los procedimientos de operación establecidos\n4. Usar todos los equipos de protección personal (EPP)\n5. Registrar el uso en la bitácora de actividades\n\nPara más información, consulte con el instructor responsable del taller.`
+      : `Este manual contiene las instrucciones para el mantenimiento preventivo y correctivo del equipo "${nombreBien}".\n\nProcedimientos:\n1. Limpieza regular del equipo\n2. Lubricación de partes móviles\n3. Inspección de componentes críticos\n4. Reemplazo de piezas desgastadas\n5. Registro de mantenimiento\n\nFrecuencia:\n- Diario: Limpieza y lubricación\n- Semanal: Inspección completa\n- Mensual: Mantenimiento preventivo profesional`
 
     const lines = doc.splitTextToSize(contenido, pageWidth - margin * 2)
     doc.text(lines, margin, 65)
-
-    // Footer
-    const pageCount = doc.getNumberOfPages()
     doc.setFontSize(8)
     doc.setTextColor(100, 100, 100)
-    doc.text(
-      `Generado por GRAMA — ${new Date().toLocaleDateString('es-PE')} | Página 1 de ${pageCount}`,
-      margin,
-      doc.internal.pageSize.getHeight() - 10
-    )
-
-    // Guardar el PDF
+    doc.text(`Generado por GRAMA — ${new Date().toLocaleDateString('es-PE')}`, margin, doc.internal.pageSize.getHeight() - 10)
     doc.save(`${nombreBien}_${tipo}.pdf`)
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <button
-        onClick={() => generatePDF('operatividad')}
-        className="flex items-center gap-3 px-4 py-3.5 rounded-xl border-2 border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/60 transition-all group"
-      >
-        <div className="h-10 w-10 rounded-lg flex items-center justify-center shrink-0"
-          style={{ background: "hsl(var(--tag-pdf-bg))" }}>
-          <FileText className="h-5 w-5" style={{ color: "hsl(var(--tag-pdf-text))" }} />
-        </div>
-        <div className="text-left">
-          <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
-            Manual de Operatividad
-          </p>
-          <p className="text-[11px] text-muted-foreground flex items-center gap-1 mt-0.5">
-            <Download className="h-3 w-3" /> Descargar PDF
-          </p>
-        </div>
-      </button>
-
-      <button
-        onClick={() => generatePDF('mantenimiento')}
-        className="flex items-center gap-3 px-4 py-3.5 rounded-xl border-2 border-border hover:border-primary/40 bg-card hover:bg-sidebar-accent transition-all group"
-      >
-        <div className="h-10 w-10 rounded-lg flex items-center justify-center shrink-0"
-          style={{ background: "hsl(var(--tag-video-bg))" }}>
-          <Wrench className="h-5 w-5" style={{ color: "hsl(var(--tag-video-text))" }} />
-        </div>
-        <div className="text-left">
-          <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
-            Manual de Mantenimiento
-          </p>
-          <p className="text-[11px] text-muted-foreground flex items-center gap-1 mt-0.5">
-            <Download className="h-3 w-3" /> Descargar PDF
-          </p>
-        </div>
-      </button>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+      {[
+        { tipo: 'operatividad' as const, label: 'Manual de Operatividad', icon: FileText, color: '#02d47e', bg: 'rgba(2,212,126,0.10)', border: 'rgba(2,212,126,0.30)' },
+        { tipo: 'mantenimiento' as const, label: 'Manual de Mantenimiento', icon: Wrench, color: '#f59e0b', bg: 'rgba(245,158,11,0.10)', border: 'rgba(245,158,11,0.30)' },
+      ].map(({ tipo, label, icon: Icon, color, bg, border }) => (
+        <button
+          key={tipo}
+          onClick={() => generatePDF(tipo)}
+          style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderRadius: 12, border: `1.5px solid ${border}`, background: bg, cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left', transition: 'opacity .15s' }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '0.80')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+        >
+          <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: color + '20' }}>
+            <Icon size={16} style={{ color }} />
+          </div>
+          <div>
+            <p style={{ fontSize: 13, fontWeight: 700, color: '#043941', margin: '0 0 2px' }}>{label}</p>
+            <p style={{ fontSize: 11, color: '#94a3b8', margin: 0, display: 'flex', alignItems: 'center', gap: 4 }}>
+              <Download size={10} /> Descargar PDF
+            </p>
+          </div>
+        </button>
+      ))}
     </div>
-  );
+  )
+}
+
+// ── Fila de spec ───────────────────────────────────────────────────────────
+function SpecRow({ icon: Icon, label, value }: { icon: React.ElementType; label: string; value: string }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8, padding: '7px 0', borderBottom: '1px solid rgba(4,57,65,0.05)' }}>
+      <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#94a3b8', flexShrink: 0 }}>
+        <Icon size={13} />
+        {label}
+      </span>
+      <span style={{ fontSize: 12, fontWeight: 700, color: '#043941', textAlign: 'right', wordBreak: 'break-word', maxWidth: 160 }}>{value}</span>
+    </div>
+  )
+}
+
+// ── Info card ──────────────────────────────────────────────────────────────
+function InfoCard({ title, icon: Icon, iconColor, children }: {
+  title: string; icon: React.ElementType; iconColor: string; children: React.ReactNode
+}) {
+  return (
+    <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 8px rgba(4,57,65,0.05)', padding: '18px 20px' }}>
+      <p style={{ fontSize: 12, fontWeight: 800, color: '#043941', margin: '0 0 12px', display: 'flex', alignItems: 'center', gap: 6 }}>
+        <Icon size={14} style={{ color: iconColor }} />
+        {title}
+      </p>
+      <div style={{ fontSize: 13, color: '#64748b', lineHeight: 1.6 }}>{children}</div>
+    </div>
+  )
 }
 
 // ── Página principal ───────────────────────────────────────────────────────
@@ -178,288 +156,247 @@ const RepoBienDetalle = () => {
 
   const taller = getTallerBySlug(slug || "");
   const bienes = useMemo(() => getBienesByTaller(slug || ""), [slug]);
+  const TallerIcon = taller ? (TALLER_ICON_MAP[taller.icon] ?? Package) : Package
 
   const { bien, prevBien, nextBien, currentIndex } = useMemo(() => {
     const idx = bienes.findIndex((b) => b.n === Number(id));
     return {
-      bien:          bienes[idx]     || null,
-      prevBien:      bienes[idx - 1] || null,
-      nextBien:      bienes[idx + 1] || null,
-      currentIndex:  idx + 1,
+      bien:         bienes[idx]     || null,
+      prevBien:     bienes[idx - 1] || null,
+      nextBien:     bienes[idx + 1] || null,
+      currentIndex: idx + 1,
     };
   }, [bienes, id]);
 
   if (!taller || !bien) {
     return (
-      <>
-        <div style={{ background: "#043941", height: 48, display: "flex", alignItems: "center", padding: "0 24px", gap: 12 }}>
-          <SidebarTrigger className="text-white/50 hover:text-white" />
-          <Link to={`/taller/${slug}/repositorio`} style={{ color: "rgba(255,255,255,0.5)", fontSize: 13, textDecoration: "none" }}>← Repositorio</Link>
-        </div>
-        <div className="flex-1 flex items-center justify-center">
-          <div className="bg-card border border-border p-8 text-center rounded-xl">
-            <Package className="h-12 w-12 text-muted-foreground mx-auto mb-3 opacity-40" />
-            <h2 className="font-bold text-foreground mb-2">Bien no encontrado</h2>
-            <Link to={`/taller/${slug}/repositorio`} className="text-sm text-primary font-semibold hover:underline">
-              ← Volver al Repositorio
-            </Link>
-          </div>
-        </div>
-      </>
+      <div style={{ background: '#043941', padding: '16px 32px' }}>
+        <button
+          onClick={() => navigate(`/taller/${slug}/repositorio`)}
+          style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+        >
+          ← Repositorio
+        </button>
+      </div>
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const area    = (bien as any).area    || "";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const subarea = (bien as any).subarea || "";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const tipo    = (bien as any).tipo    || "";
+  const zColor  = zonaColor(bien.zona ?? '')
+  const tipoConf = TIPO_COLOR[tipo] ?? { color: '#475569', bg: '#f1f5f9', label: 'Bien' }
+  const TipoIcon = TIPO_ICON[tipo] ?? Package
 
   return (
-    <>
-      {/* Barra superior — misma línea visual que el catálogo del Repositorio */}
-      <div
-        style={{
-          background: "#043941",
-          padding: "0 24px",
-          height: 48,
-          display: "flex",
-          alignItems: "center",
-          gap: 12,
-          position: "sticky",
-          top: 0,
-          zIndex: 30,
-          fontFamily: "'Manrope', sans-serif",
-        }}
-      >
-        <SidebarTrigger className="text-white/50 hover:text-white" />
+    <div style={{ fontFamily: "'Manrope', sans-serif", background: 'var(--grama-bg)', minHeight: '100vh' }}>
 
-        <Link
-          to={`/taller/${slug}/repositorio`}
-          style={{
-            background: "none",
-            border: "none",
-            color: "rgba(255,255,255,0.5)",
-            cursor: "pointer",
-            fontSize: 13,
-            fontFamily: "'Manrope', sans-serif",
-            display: "flex",
-            alignItems: "center",
-            gap: 4,
-            textDecoration: "none",
-          }}
-        >
-          <ChevronLeft className="h-4 w-4" />
-          <span>Repositorio</span>
-        </Link>
+      {/* ══ HEADER — mismo estilo que Repositorio.tsx ═══════════════════════ */}
+      <div style={{ background: '#043941' }}>
+        <div style={{ padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
 
-        <span style={{ width: 1, height: 20, background: "rgba(255,255,255,0.12)" }} />
-
-        <span style={{ fontSize: 13, fontWeight: 700, color: "#fff", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" as const, flex: 1 }}>
-          {bien.nombre}
-        </span>
-
-        <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", flexShrink: 0, fontVariantNumeric: "tabular-nums" }}>
-          {currentIndex} / {bienes.length}
-        </span>
-      </div>
-
-      <main className="flex-1 overflow-y-auto">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6 flex-wrap">
-            <Link to="/" className="hover:text-foreground transition-colors">Hub</Link>
-            <span>/</span>
-            <Link to={`/taller/${slug}`} className="hover:text-foreground transition-colors">{taller.nombreCorto}</Link>
-            <span>/</span>
-            <Link to={`/taller/${slug}/repositorio`} className="hover:text-foreground transition-colors">Repositorio</Link>
-            <span>/</span>
-            <span className="text-foreground font-medium truncate max-w-[200px]">{bien.nombre}</span>
-          </nav>
-
-          <div className="grid lg:grid-cols-3 gap-6">
-
-            {/* ── Columna principal ── */}
-            <div className="lg:col-span-2 space-y-5">
-
-              {/* Banner oscuro con nombre y tags */}
-              <div className="bg-gradient-to-br from-dk-base to-dk-surface p-6 rounded-2xl">
-                {/* Tags superiores */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-[10px] font-mono bg-white/10 text-white/60 px-2 py-1 rounded">
-                    EPT-{String(bien.n).padStart(3, "0")}
-                  </span>
-                  <span className={`text-xs font-semibold px-3 py-1 rounded-full ${zonaBadgeColors[bien.zona] || "bg-muted text-muted-foreground"}`}>
-                    {bien.zona}
-                  </span>
-                  {area && (
-                    <span className="text-xs font-medium px-3 py-1 rounded-full bg-white/10 text-white/70">
-                      {area}
-                    </span>
-                  )}
-                  {subarea && (
-                    <span className="text-xs font-medium px-3 py-1 rounded-full bg-white/10 text-white/60">
-                      {subarea}
-                    </span>
-                  )}
-                </div>
-
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-dk-text leading-tight mb-2">
-                  {bien.nombre}
-                </h1>
-                <div className="flex flex-wrap gap-3 text-dk-muted text-sm">
-                  {bien.marca  && <span>· {bien.marca}</span>}
-                  {bien.modelo && <span>· {bien.modelo}</span>}
-                  <span>· Cantidad: {bien.cantidad}</span>
-                  <span>· Ítem #{bien.n}</span>
-                </div>
-              </div>
-
-              {/* Frame de video */}
-              <VideoFrame nombreBien={bien.nombre} />
-
-              {/* Botones PDF */}
-              <PdfButtons nombreBien={bien.nombre} />
-
-              {/* Info cards 2x2 */}
-              <div className="grid sm:grid-cols-2 gap-4">
-                {/* Descripción */}
-                <div className="bg-card border border-border rounded-xl p-5">
-                  <h3 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3">
-                    <Layers className="h-4 w-4 text-primary" /> Descripción
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {bien.descripcion || <span className="italic opacity-50">Sin descripción disponible.</span>}
-                  </p>
-                </div>
-
-                {/* Uso pedagógico */}
-                <div className="bg-card border border-border rounded-xl p-5">
-                  <h3 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3">
-                    <GraduationCap className="h-4 w-4 text-primary" /> Uso Pedagógico
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {bien.usoPedagogico || <span className="italic opacity-50">Sin información disponible.</span>}
-                  </p>
-                </div>
-
-                {/* Mantenimiento */}
-                <div className="bg-card border border-border rounded-xl p-5">
-                  <h3 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3">
-                    <Wrench className="h-4 w-4 text-amber-500" /> Mantenimiento
-                  </h3>
-                  <p className="text-sm text-muted-foreground italic opacity-60">
-                    Información de mantenimiento disponible próximamente.
-                  </p>
-                </div>
-
-                {/* Especificaciones */}
-                <div className="bg-card border border-border rounded-xl p-5">
-                  <h3 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3">
-                    <Tag className="h-4 w-4 text-primary" /> Especificaciones
-                  </h3>
-                  <div className="space-y-2">
-                    {[
-                      { label: "Marca",    value: bien.marca    },
-                      { label: "Modelo",   value: bien.modelo   },
-                      { label: "Cantidad", value: bien.cantidad ? `${bien.cantidad} und.` : null },
-                      { label: "Zona",     value: bien.zona     },
-                      { label: "Área",     value: area || null  },
-                    ].filter(r => r.value).map(row => (
-                      <div key={row.label} className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">{row.label}</span>
-                        <span className="text-foreground font-medium text-right max-w-[180px] truncate">{row.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Navegación prev / next */}
-              <div className="flex items-center justify-between pt-2">
-                {prevBien ? (
-                  <Button variant="outline" className="gap-2" onClick={() => navigate(`/taller/${slug}/repositorio/bien/${prevBien.n}`)}>
-                    <ArrowLeft className="h-4 w-4" /><span className="hidden sm:inline">Anterior</span>
-                  </Button>
-                ) : <div />}
-                <Link to={`/taller/${slug}/repositorio`}>
-                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                    Ver todos los bienes
-                  </Button>
-                </Link>
-                {nextBien ? (
-                  <Button variant="outline" className="gap-2" onClick={() => navigate(`/taller/${slug}/repositorio/bien/${nextBien.n}`)}>
-                    <span className="hidden sm:inline">Siguiente</span><ArrowRight className="h-4 w-4" />
-                  </Button>
-                ) : <div />}
-              </div>
+          {/* Izquierda: icono + breadcrumb + nombre */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(255,255,255,0.10)', border: '1.5px solid rgba(255,255,255,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <TallerIcon size={20} style={{ color: '#02d47e' }} />
             </div>
-
-            {/* ── Sidebar derecho ── */}
-            <div className="space-y-4">
-
-              {/* Ficha técnica */}
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-semibold flex items-center gap-2">
-                    <Settings className="h-4 w-4 text-primary" /> Ficha Técnica
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <SpecRow icon={Hash}    label="N° Bien"   value={`#${bien.n}`} />
-                  <SpecRow icon={Package} label="Cantidad"  value={`${bien.cantidad} unidad(es)`} />
-                  <SpecRow icon={MapPin}  label="Zona"      value={bien.zona} />
-                  {area    && <SpecRow icon={Layers} label="Área"     value={area} />}
-                  {subarea && <SpecRow icon={Layers} label="Sub Área" value={subarea} />}
-                  {bien.marca  && <SpecRow icon={Tag}    label="Marca"  value={bien.marca} />}
-                  {bien.modelo && <SpecRow icon={Layers} label="Modelo" value={bien.modelo} />}
-                </CardContent>
-              </Card>
-
-              {/* Contexto */}
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-semibold flex items-center gap-2">
-                    <BookOpen className="h-4 w-4 text-primary" /> Contexto
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Taller</span>
-                    <Badge variant="secondary" className="font-semibold">T{taller.numero}</Badge>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Programa</span>
-                    <span className="text-foreground text-right text-xs max-w-[140px] truncate" title={taller.nombre}>
-                      {taller.nombreCorto}
-                    </span>
-                  </div>
-                  <Separator />
-                  <div className="text-xs text-muted-foreground">
-                    Este bien forma parte del inventario del {taller.nombre}.
-                  </div>
-                </CardContent>
-              </Card>
-
+            <div style={{ minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
+                <button
+                  onClick={() => navigate(`/taller/${slug}/repositorio`)}
+                  style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit', transition: 'color .15s' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
+                >
+                  Repositorio de Bienes
+                </button>
+                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)' }}>›</span>
+                <span style={{ fontSize: 11, fontWeight: 700, color: '#02d47e' }}>
+                  {bien.codigoEntidad || bien.codigoInterno || `#${bien.n}`}
+                </span>
+              </div>
+              <h1 style={{ fontSize: 18, fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 560 }}>
+                {bien.nombre}
+              </h1>
             </div>
           </div>
-        </div>
-      </main>
-    </>
-  );
-};
 
-function SpecRow({ icon: Icon, label, value }: {
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="flex items-start justify-between text-sm gap-2">
-      <span className="text-muted-foreground flex items-center gap-2 shrink-0">
-        <Icon className="h-3.5 w-3.5" />{label}
-      </span>
-      <span className="text-foreground font-medium text-right break-words max-w-[160px]">{value}</span>
+          {/* Derecha: contador + prev/next + separador + volver */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0 }}>
+            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', fontVariantNumeric: 'tabular-nums', fontWeight: 600 }}>
+              {currentIndex} / {bienes.length}
+            </span>
+            <div style={{ display: 'flex', gap: 4 }}>
+              <button
+                onClick={() => prevBien && navigate(`/taller/${slug}/repositorio/bien/${prevBien.n}`)}
+                disabled={!prevBien}
+                style={{ width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', background: prevBien ? 'rgba(255,255,255,0.10)' : 'transparent', border: '1px solid rgba(255,255,255,0.15)', cursor: prevBien ? 'pointer' : 'default', color: prevBien ? '#fff' : 'rgba(255,255,255,0.20)', transition: 'background .15s' }}
+                onMouseEnter={e => { if (prevBien) e.currentTarget.style.background = 'rgba(255,255,255,0.18)' }}
+                onMouseLeave={e => { if (prevBien) e.currentTarget.style.background = 'rgba(255,255,255,0.10)' }}
+              >
+                <ChevronLeft size={14} />
+              </button>
+              <button
+                onClick={() => nextBien && navigate(`/taller/${slug}/repositorio/bien/${nextBien.n}`)}
+                disabled={!nextBien}
+                style={{ width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', background: nextBien ? 'rgba(255,255,255,0.10)' : 'transparent', border: '1px solid rgba(255,255,255,0.15)', cursor: nextBien ? 'pointer' : 'default', color: nextBien ? '#fff' : 'rgba(255,255,255,0.20)', transition: 'background .15s' }}
+                onMouseEnter={e => { if (nextBien) e.currentTarget.style.background = 'rgba(255,255,255,0.18)' }}
+                onMouseLeave={e => { if (nextBien) e.currentTarget.style.background = 'rgba(255,255,255,0.10)' }}
+              >
+                <ChevronRight size={14} />
+              </button>
+            </div>
+            <div style={{ width: 1, height: 28, background: 'rgba(255,255,255,0.15)' }} />
+            <button
+              onClick={() => navigate(`/taller/${slug}/repositorio`)}
+              style={{ background: 'none', color: 'rgba(255,255,255,0.7)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 12, padding: '8px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .15s' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.10)'; e.currentTarget.style.color = '#fff' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}
+            >
+              ← Repositorio
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ══ CONTENIDO ════════════════════════════════════════════════════════ */}
+      <div style={{ padding: '24px 32px', maxWidth: 1200, margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 24, alignItems: 'start' }}>
+
+          {/* ── Columna principal ─────────────────────────────────────────── */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+
+            {/* Hero del bien */}
+            <div style={{ background: '#043941', borderRadius: 16, padding: '24px 28px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 10, background: 'rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.60)', padding: '3px 8px', borderRadius: 6 }}>
+                  {bien.codigoEntidad || bien.codigoInterno || `EPT-${String(bien.n).padStart(3, "0")}`}
+                </span>
+                {bien.zona && (
+                  <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 100, background: zColor.bg, color: zColor.color }}>
+                    {bien.zona.replace('ZONA DE ', '').split(',')[0].trim()}
+                  </span>
+                )}
+                {area && (
+                  <span style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 100, background: 'rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.65)' }}>
+                    {area}
+                  </span>
+                )}
+                {subarea && (
+                  <span style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 100, background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.50)' }}>
+                    {subarea}
+                  </span>
+                )}
+              </div>
+              <h2 style={{ fontSize: 22, fontWeight: 900, color: '#fff', margin: '0 0 10px', lineHeight: 1.3, letterSpacing: '-0.01em' }}>
+                {bien.nombre}
+              </h2>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, fontSize: 13, color: 'rgba(255,255,255,0.55)' }}>
+                {bien.marca  && <span>Marca: <strong style={{ color: 'rgba(255,255,255,0.80)' }}>{bien.marca}</strong></span>}
+                {bien.modelo && <span>Modelo: <strong style={{ color: 'rgba(255,255,255,0.80)' }}>{bien.modelo}</strong></span>}
+                <span>Cantidad: <strong style={{ color: '#02d47e' }}>×{bien.cantidad}</strong></span>
+              </div>
+            </div>
+
+            {/* Video */}
+            <VideoFrame nombreBien={bien.nombre} />
+
+            {/* PDF buttons */}
+            <PdfButtons nombreBien={bien.nombre} />
+
+            {/* Info grid 2×2 */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <InfoCard title="Descripción" icon={Layers} iconColor="#02d47e">
+                {bien.descripcion
+                  ? bien.descripcion
+                  : <span style={{ fontStyle: 'italic', opacity: 0.5 }}>Sin descripción disponible.</span>}
+              </InfoCard>
+              <InfoCard title="Uso Pedagógico" icon={GraduationCap} iconColor="#02d47e">
+                {bien.usoPedagogico
+                  ? bien.usoPedagogico
+                  : <span style={{ fontStyle: 'italic', opacity: 0.5 }}>Sin información disponible.</span>}
+              </InfoCard>
+              <InfoCard title="Mantenimiento" icon={Wrench} iconColor="#f59e0b">
+                <span style={{ fontStyle: 'italic', opacity: 0.5 }}>Disponible próximamente.</span>
+              </InfoCard>
+              <InfoCard title="Especificaciones" icon={Tag} iconColor="#045f6c">
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  {[
+                    { label: 'Marca',    value: bien.marca },
+                    { label: 'Modelo',   value: bien.modelo },
+                    { label: 'Cantidad', value: bien.cantidad ? `${bien.cantidad} und.` : null },
+                    { label: 'Zona',     value: bien.zona },
+                    { label: 'Área',     value: area || null },
+                  ].filter(r => r.value).map(row => (
+                    <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '5px 0', borderBottom: '1px solid rgba(4,57,65,0.05)' }}>
+                      <span style={{ fontSize: 12, color: '#94a3b8' }}>{row.label}</span>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: '#043941', maxWidth: 160, textAlign: 'right', wordBreak: 'break-word' }}>{row.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </InfoCard>
+            </div>
+
+          </div>
+
+          {/* ── Sidebar derecho ───────────────────────────────────────────── */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, position: 'sticky', top: 20 }}>
+
+            {/* Tipo */}
+            <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '18px 20px' }}>
+              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 12px' }}>Tipo de bien</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <div style={{ width: 40, height: 40, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', background: tipoConf.bg, flexShrink: 0 }}>
+                  <TipoIcon size={18} style={{ color: tipoConf.color }} />
+                </div>
+                <div>
+                  <p style={{ fontSize: 14, fontWeight: 800, color: '#043941', margin: '0 0 2px' }}>{tipoConf.label}</p>
+                  <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>Categoría del bien</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Ficha técnica */}
+            <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '18px 20px' }}>
+              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 4px' }}>Ficha Técnica</p>
+              <SpecRow icon={Hash}    label="N° Bien"   value={`#${bien.n}`} />
+              <SpecRow icon={Package} label="Cantidad"  value={`${bien.cantidad} und.`} />
+              <SpecRow icon={MapPin}  label="Zona"      value={bien.zona ?? '—'} />
+              {area    && <SpecRow icon={Layers} label="Área"    value={area} />}
+              {subarea && <SpecRow icon={Layers} label="Sub Área" value={subarea} />}
+              {bien.marca  && <SpecRow icon={Tag}      label="Marca"   value={bien.marca} />}
+              {bien.modelo && <SpecRow icon={Settings} label="Modelo"  value={bien.modelo} />}
+            </div>
+
+            {/* Contexto taller */}
+            <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '18px 20px' }}>
+              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 12px' }}>Contexto</p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0', borderBottom: '1px solid rgba(4,57,65,0.05)' }}>
+                <span style={{ fontSize: 12, color: '#94a3b8' }}>Taller</span>
+                <span style={{ fontSize: 12, fontWeight: 800, color: '#fff', background: '#043941', padding: '2px 8px', borderRadius: 100 }}>
+                  T{String(taller.numero).padStart(2, '0')}
+                </span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0', borderBottom: '1px solid rgba(4,57,65,0.05)' }}>
+                <span style={{ fontSize: 12, color: '#94a3b8' }}>Programa</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: '#043941', maxWidth: 140, textAlign: 'right', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={taller.nombre}>
+                  {taller.nombreCorto}
+                </span>
+              </div>
+              <p style={{ fontSize: 11, color: '#94a3b8', margin: '10px 0 0', lineHeight: 1.5 }}>
+                Este bien forma parte del inventario del {taller.nombre}.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
   );
-}
+};
 
 export default RepoBienDetalle;
