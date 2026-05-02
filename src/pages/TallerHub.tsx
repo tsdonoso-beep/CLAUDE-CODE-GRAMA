@@ -1,6 +1,6 @@
 // src/pages/TallerHub.tsx
 import { useNavigate } from 'react-router-dom'
-import { Package, ArrowRight, GraduationCap, FileText, Users, Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench, ChevronRight } from 'lucide-react'
+import { Package, ArrowRight, GraduationCap, FileText, Users, Car, Scissors, ChefHat, Hammer, Monitor, Cpu, UtensilsCrossed, Zap, Wrench, ChevronRight, CheckCircle2, PlayCircle } from 'lucide-react'
 import { useTaller } from '@/hooks/useTaller'
 import { useProgress } from '@/contexts/ProgressContext'
 import { modulosLXP } from '@/data/modulosLXP'
@@ -43,6 +43,21 @@ export default function TallerHub() {
     modulosLXP.find(m => getEstadoModuloLXP(m.id) === 'en_curso') ??
     modulosLXP.find(m => getEstadoModuloLXP(m.id) === 'disponible') ??
     modulosLXP[0]
+
+  const allCompleted   = modulosLXP.every(m => getEstadoModuloLXP(m.id) === 'completado')
+  const currentEstado  = currentMod ? getEstadoModuloLXP(currentMod.id) : null
+  const currentProg    = currentMod ? getModuloProgreso(slug, currentMod.numero) : null
+
+  // Primera sesión incompleta dentro del módulo actual
+  const nextSes = (() => {
+    if (!currentMod || !currentProg) return null
+    let remaining = currentProg.completados
+    for (const ses of currentMod.sesiones) {
+      if (remaining < ses.contenidos.length) return ses
+      remaining -= ses.contenidos.length
+    }
+    return null
+  })()
 
   const zonas = getZonasUnicasByTaller(slug)
 
@@ -121,6 +136,67 @@ export default function TallerHub() {
           </div>
         </div>
       </div>
+
+      {/* ══ CTA CONTINÚA ════════════════════════════════════════════════════ */}
+      {!isGeneralEpt && currentMod && (
+        <div style={{
+          background: allCompleted ? 'rgba(2,212,126,0.06)' : 'rgba(4,57,65,0.03)',
+          borderBottom: `1px solid ${allCompleted ? 'rgba(2,212,126,0.18)' : 'rgba(4,57,65,0.08)'}`,
+          padding: '18px 32px',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
+
+            {/* Izquierda: ícono + contexto + progreso */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 0 }}>
+              <div style={{ width: 48, height: 48, borderRadius: 14, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, background: allCompleted ? 'rgba(2,212,126,0.15)' : `${tallerColor}18` }}>
+                {allCompleted ? <CheckCircle2 size={22} style={{ color: '#02d47e' }} /> : currentMod.icon}
+              </div>
+              <div style={{ minWidth: 0 }}>
+                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: allCompleted ? '#02d47e' : tallerColor, margin: '0 0 3px' }}>
+                  {allCompleted
+                    ? '¡Formación completada!'
+                    : currentEstado === 'en_curso'
+                      ? 'Continúa donde lo dejaste'
+                      : 'Comienza tu formación'}
+                </p>
+                <p style={{ fontSize: 15, fontWeight: 800, color: '#043941', margin: '0 0 6px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {allCompleted
+                    ? 'Has completado todos los módulos del taller'
+                    : `M${currentMod.numero} — ${currentMod.nombre}`}
+                </p>
+                {!allCompleted && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{ width: 180, height: 4, borderRadius: 2, background: 'rgba(4,57,65,0.10)', overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${currentProg?.porcentaje ?? 0}%`, background: tallerColor, borderRadius: 2, transition: 'width .4s ease' }} />
+                    </div>
+                    <span style={{ fontSize: 11, color: '#94a3b8', whiteSpace: 'nowrap' }}>
+                      {currentProg?.porcentaje ?? 0}%
+                      {nextSes ? ` · Próximo: ${nextSes.nombre}` : ''}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Derecha: botón CTA */}
+            <button
+              onClick={() => navigate(
+                allCompleted
+                  ? `/taller/${slug}/ruta`
+                  : `/taller/${slug}/ruta/modulo/${currentMod.numero}`
+              )}
+              style={{ background: allCompleted ? '#02d47e' : tallerColor, color: allCompleted ? '#043941' : '#fff', border: 'none', borderRadius: 12, padding: '11px 24px', fontSize: 13, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, transition: 'opacity .18s' }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+              onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+            >
+              <PlayCircle size={15} />
+              {allCompleted
+                ? 'Ver ruta completa'
+                : currentEstado === 'en_curso' ? 'Continuar' : 'Empezar'}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ══ COMPETENCIAS ══════════════════════════════════════════════════════ */}
       {taller.competencias?.length > 0 && (
