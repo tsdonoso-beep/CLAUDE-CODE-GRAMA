@@ -93,6 +93,15 @@ export default function RutaAprendizaje() {
                   <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', color: 'rgba(255,255,255,0.45)', margin: '3px 0 0' }}>{s.label}</p>
                 </div>
               ))}
+              <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
+              <button
+                onClick={() => navigate(`/taller/${slug}`)}
+                style={{ background: 'none', color: 'rgba(255,255,255,0.7)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 12, padding: '9px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .15s' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}
+              >
+                ← Hub del taller
+              </button>
             </div>
           </div>
 
