@@ -60,10 +60,10 @@ export default function RutaAprendizaje() {
 
       {/* ── TOP HEADER ─────────────────────────────────────────────────────── */}
       <div style={{ background: '#043941' }}>
-        <div style={{ padding: '16px 32px 0' }}>
+        <div style={{ padding: '16px 32px' }}>
 
           {/* Fila: título + stats */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, marginBottom: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
               {(() => {
                 const I = TALLER_ICON_MAP[taller.icon] ?? Package
@@ -104,22 +104,18 @@ export default function RutaAprendizaje() {
               </button>
             </div>
           </div>
-
-          {/* Barra de progreso */}
-          <div style={{ marginBottom: 6 }}>
-            <div style={{ height: 5, borderRadius: 6, background: 'rgba(255,255,255,0.12)', overflow: 'hidden' }}>
-              <div style={{ width: `${progresoTaller.porcentaje}%`, background: '#02d47e', transition: 'width .6s ease', borderRadius: 6, height: '100%' }} />
-            </div>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 16 }}>
-            <p style={{ fontSize: 12, fontWeight: 700, color: '#02d47e', margin: 0 }}>
-              {progresoTaller.porcentaje}%
-            </p>
-            <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', margin: 0 }}>
-              {modCompletados}/{modulosLXP.length} módulos · {horasCompletadas}h de {totalHoras}h
-            </p>
-          </div>
         </div>
+      </div>
+
+      {/* Sub-barra de progreso */}
+      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)', padding: '10px 32px', display: 'flex', alignItems: 'center', gap: 16 }}>
+        <div style={{ flex: 1, maxWidth: 560, height: 5, borderRadius: 6, background: 'rgba(4,57,65,0.08)', overflow: 'hidden' }}>
+          <div style={{ width: `${progresoTaller.porcentaje}%`, background: '#02d47e', height: '100%', borderRadius: 6, transition: 'width .6s ease' }} />
+        </div>
+        <p style={{ fontSize: 12, fontWeight: 700, color: '#02d47e', margin: 0, flexShrink: 0 }}>{progresoTaller.porcentaje}%</p>
+        <p style={{ fontSize: 11, color: '#94a3b8', margin: 0, flexShrink: 0 }}>
+          {modCompletados}/{modulosLXP.length} módulos · {horasCompletadas}h de {totalHoras}h
+        </p>
       </div>
 
       {/* ── BANNER QUIZ PENDIENTE ──────────────────────────────────────────── */}

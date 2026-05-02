@@ -314,10 +314,10 @@ export default function ModuloDetalle() {
 
       {/* ── DARK TOP BAR ── */}
       <div style={{ background: '#043941' }}>
-        <div style={{ padding: '16px 32px 0' }}>
+        <div style={{ padding: '16px 32px' }}>
 
-          {/* Fila 1: icono + breadcrumb + título + stats */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, marginBottom: 12 }}>
+          {/* Fila única: icono + breadcrumb + título + stats */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
 
             {/* Izquierda */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
@@ -378,18 +378,23 @@ export default function ModuloDetalle() {
               )}
             </div>
           </div>
-
-          {/* Fila 2: descripción + barra de progreso */}
-          {modulo.descripcion && (
-            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)', margin: '0 0 10px', maxWidth: 700, lineHeight: 1.6 }}>
-              {modulo.descripcion}
-            </p>
-          )}
-          <div style={{ height: 4, borderRadius: 4, background: 'rgba(255,255,255,0.12)', maxWidth: 700, marginBottom: 0 }}>
-            <div style={{ height: '100%', width: `${progreso.porcentaje}%`, background: '#02d47e', borderRadius: 4, transition: 'width .5s ease' }} />
-          </div>
-
         </div>
+      </div>
+
+      {/* Sub-barra: descripción + progreso */}
+      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)', padding: '10px 32px', display: 'flex', alignItems: 'center', gap: 16 }}>
+        {modulo.descripcion && (
+          <p style={{ fontSize: 12, color: '#64748b', margin: 0, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {modulo.descripcion}
+          </p>
+        )}
+        <div style={{ width: 200, height: 5, borderRadius: 6, background: 'rgba(4,57,65,0.08)', overflow: 'hidden', flexShrink: 0 }}>
+          <div style={{ height: '100%', width: `${progreso.porcentaje}%`, background: '#02d47e', borderRadius: 6, transition: 'width .5s ease' }} />
+        </div>
+        <p style={{ fontSize: 12, fontWeight: 700, color: '#02d47e', margin: 0, flexShrink: 0 }}>{progreso.porcentaje}%</p>
+        <p style={{ fontSize: 11, color: '#94a3b8', margin: 0, flexShrink: 0 }}>
+          {progreso.completados}/{progreso.total} contenidos
+        </p>
       </div>
 
       {/* ── GRID: contenido principal + sidebar ── */}
