@@ -62,7 +62,16 @@ export default function ModuloDetalle() {
   const navigate = useNavigate()
   const { user } = useAuth()
   const { markContenidoCompleted, markContenidoInProgress, getEstadoModuloLXP, getContenidoEstado, getModuloProgreso } = useProgress()
-  const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set(['0']))
+
+  // Compute which session is the "next step" before setting default accordion state
+  const _initModuloNum = parseInt(num ?? '0', 10)
+  const _initModulo = modulosLXP.find(m => m.numero === _initModuloNum)
+  const _nextStepSesIdx = _initModulo?.sesiones.findIndex(ses =>
+    ses.contenidos.some(c => !getContenidoEstado(c.id).completed)
+  ) ?? -1
+  const nextStepSesId = _nextStepSesIdx >= 0 ? (_initModulo?.sesiones[_nextStepSesIdx]?.id ?? '') : ''
+
+  const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set(nextStepSesId ? [nextStepSesId] : []))
   const [diagnosticosOpen, setDiagnosticosOpen] = useState(false)
   const [conocenosOpen, setConocenosOpen] = useState(false)
   const [showGradeModal, setShowGradeModal] = useState(false)
@@ -402,9 +411,44 @@ export default function ModuloDetalle() {
 
         {/* ── COLUMNA IZQUIERDA: sesiones ── */}
         <div>
+
+        {/* Tu próximo paso / Empieza aquí — solo cuando hay next step */}
+        {nextStepSesId && (
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 12,
+            padding: '12px 16px', borderRadius: 14, marginBottom: 12,
+            background: `${tallerColor}0d`,
+            border: `1.5px dashed ${tallerColor}70`,
+          }}>
+            <div style={{ width: 32, height: 32, borderRadius: 10, flexShrink: 0, background: tallerColor, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
+              {progreso.porcentaje === 0 ? '🚀' : '▶'}
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <p style={{ fontSize: 10, fontWeight: 800, color: tallerColor, textTransform: 'uppercase', letterSpacing: '.08em', margin: '0 0 2px' }}>
+                {progreso.porcentaje === 0 ? 'Empieza aquí' : 'Tu próximo paso'}
+              </p>
+              <p style={{ fontSize: 13, fontWeight: 700, color: '#043941', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {modulo.sesiones.find(s => s.id === nextStepSesId)?.nombre ?? ''}
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                setExpandedSubs(new Set([nextStepSesId]))
+                setTimeout(() => document.getElementById(`ses-${nextStepSesId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
+              }}
+              style={{ padding: '7px 16px', borderRadius: 10, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit', background: tallerColor, color: '#fff', flexShrink: 0 }}
+            >
+              Ir ↓
+            </button>
+          </div>
+        )}
+
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {modulo.sesiones.map((ses, idx) => {
             const isOpen = expandedSubs.has(ses.id) || expandedSubs.has(String(idx))
+            const completadosEnSes = ses.contenidos.filter(c => getContenidoEstado(c.id).completed).length
+            const sesCompletada = ses.contenidos.length > 0 && completadosEnSes === ses.contenidos.length
+            const esNextStep = ses.id === nextStepSesId && !sesCompletada
             const modalidadBadge =
               ses.esEvaluacion             ? { label: 'EVALUACIÓN', color: '#ca8a04', bg: 'rgba(245,158,11,0.1)' } :
               ses.modalidad === 'sincrono'   ? { label: 'EN VIVO',    color: '#059669', bg: 'rgba(5,150,105,0.1)' } :
@@ -414,28 +458,59 @@ export default function ModuloDetalle() {
               <div
                 key={ses.id}
                 id={`ses-${ses.id}`}
-                style={{ borderRadius: 16, border: `1px solid ${isOpen ? tallerColor + '40' : 'rgba(4,57,65,0.10)'}`, background: '#fff', overflow: 'hidden', boxShadow: isOpen ? `0 2px 12px ${tallerColor}18` : '0 1px 4px rgba(4,57,65,0.04)', transition: 'border-color .2s, box-shadow .2s' }}
+                style={{
+                  borderRadius: 16, overflow: 'hidden', transition: 'border-color .2s, box-shadow .2s',
+                  border: esNextStep
+                    ? `2px solid ${tallerColor}`
+                    : sesCompletada
+                      ? '1px solid rgba(2,212,126,0.22)'
+                      : `1px solid ${isOpen ? tallerColor + '40' : 'rgba(4,57,65,0.10)'}`,
+                  background: sesCompletada ? 'rgba(2,212,126,0.025)' : '#fff',
+                  boxShadow: esNextStep
+                    ? `0 4px 20px ${tallerColor}22`
+                    : isOpen
+                      ? `0 2px 12px ${tallerColor}18`
+                      : '0 1px 4px rgba(4,57,65,0.04)',
+                }}
               >
                 {/* Accordion header */}
                 <button
                   onClick={() => toggleSub(ses.id)}
                   style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'inherit' }}
                 >
-                  <div style={{ width: 28, height: 28, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, background: isOpen ? tallerColor : 'rgba(4,57,65,0.07)', color: isOpen ? '#fff' : '#94a3b8', transition: 'background .2s, color .2s' }}>
-                    S{idx + 1}
+                  <div style={{
+                    width: 28, height: 28, borderRadius: 8, flexShrink: 0,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 11, fontWeight: 800, transition: 'background .2s, color .2s',
+                    background: sesCompletada ? 'rgba(2,212,126,0.15)' : (isOpen || esNextStep) ? tallerColor : 'rgba(4,57,65,0.07)',
+                    color: sesCompletada ? '#059669' : (isOpen || esNextStep) ? '#fff' : '#94a3b8',
+                  }}>
+                    {sesCompletada ? <CheckCircle2 size={14} /> : `S${idx + 1}`}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontSize: 13, fontWeight: 700, color: '#043941', margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <p style={{ fontSize: 13, fontWeight: esNextStep ? 800 : 700, color: sesCompletada ? '#64748b' : '#043941', margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {ses.nombre}
                     </p>
                     <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
-                      {ses.contenidos.length} contenidos · {ses.duracionHoras}h
+                      {completadosEnSes}/{ses.contenidos.length} contenidos · {ses.duracionHoras}h
                     </p>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 100, background: modalidadBadge.bg, color: modalidadBadge.color }}>
-                      {modalidadBadge.label}
-                    </span>
+                    {esNextStep && (
+                      <span style={{ fontSize: 9, fontWeight: 800, padding: '3px 9px', borderRadius: 100, background: tallerColor, color: '#fff', letterSpacing: '.06em', textTransform: 'uppercase' }}>
+                        {progreso.porcentaje === 0 && idx === 0 ? 'Empieza aquí' : 'Próximo paso'}
+                      </span>
+                    )}
+                    {sesCompletada && (
+                      <span style={{ fontSize: 9, fontWeight: 800, padding: '3px 9px', borderRadius: 100, background: 'rgba(2,212,126,0.12)', color: '#059669' }}>
+                        ✓ Lista
+                      </span>
+                    )}
+                    {!esNextStep && !sesCompletada && (
+                      <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 100, background: modalidadBadge.bg, color: modalidadBadge.color }}>
+                        {modalidadBadge.label}
+                      </span>
+                    )}
                     <ChevronRight size={14} style={{ color: '#94a3b8', transform: isOpen ? 'rotate(90deg)' : 'none', transition: 'transform .2s' }} />
                   </div>
                 </button>
@@ -637,21 +712,30 @@ export default function ModuloDetalle() {
           {/* Card ② Índice de sesiones */}
           <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '16px 18px' }}>
             <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 10px' }}>Sesiones</p>
-            {modulo.sesiones.map((ses, si) => (
-              <button
-                key={ses.id}
-                onClick={() => {
-                  setExpandedSubs(new Set([ses.id]))
-                  document.getElementById(`ses-${ses.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                }}
-                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '7px 0', borderBottom: si < modulo.sesiones.length - 1 ? '1px solid rgba(4,57,65,0.07)' : 'none', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit' }}
-              >
-                <span style={{ fontSize: 10, fontWeight: 800, color: tallerColor, minWidth: 20, flexShrink: 0 }}>S{si + 1}</span>
-                <span style={{ fontSize: 11, fontWeight: 600, color: '#043941', flex: 1, lineHeight: 1.3, textAlign: 'left' }}>
-                  {ses.nombre}
-                </span>
-              </button>
-            ))}
+            {modulo.sesiones.map((ses, si) => {
+              const siCompletada = ses.contenidos.length > 0 && ses.contenidos.every(c => getContenidoEstado(c.id).completed)
+              const siEsNext = ses.id === nextStepSesId && !siCompletada
+              return (
+                <button
+                  key={ses.id}
+                  onClick={() => {
+                    setExpandedSubs(new Set([ses.id]))
+                    document.getElementById(`ses-${ses.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  }}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '7px 0', borderBottom: si < modulo.sesiones.length - 1 ? '1px solid rgba(4,57,65,0.07)' : 'none', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit' }}
+                >
+                  <span style={{ fontSize: 10, fontWeight: 800, minWidth: 20, flexShrink: 0, color: siCompletada ? '#02d47e' : siEsNext ? tallerColor : 'rgba(4,57,65,0.35)' }}>
+                    {siCompletada ? '✓' : siEsNext ? '▶' : `S${si + 1}`}
+                  </span>
+                  <span style={{ fontSize: 11, fontWeight: siEsNext ? 700 : 600, color: siCompletada ? '#94a3b8' : siEsNext ? '#043941' : '#64748b', flex: 1, lineHeight: 1.3, textAlign: 'left' }}>
+                    {ses.nombre}
+                  </span>
+                  {siEsNext && (
+                    <span style={{ fontSize: 9, fontWeight: 800, color: tallerColor, flexShrink: 0, whiteSpace: 'nowrap' }}>← aquí</span>
+                  )}
+                </button>
+              )
+            })}
           </div>
 
           {/* Card ③ Navegación prev / next */}
