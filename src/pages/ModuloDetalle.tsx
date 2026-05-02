@@ -99,7 +99,7 @@ export default function ModuloDetalle() {
   const closeGradeModal = useCallback(() => setShowGradeModal(false), [])
   const closeTourSimulator = useCallback(() => {
     setShowTourSimulator(false)
-    markContenidoCompleted('m0-s2-c2')
+    completeContenido('m0-s2-c2')
   }, [markContenidoCompleted])
   useEscapeKey(showGradeModal ? closeGradeModal : showTourSimulator ? closeTourSimulator : () => {})
 
@@ -164,6 +164,42 @@ export default function ModuloDetalle() {
     })
   }
 
+  // Wraps markContenidoCompleted: detects when the last contenido of a session
+  // is completed and fires a celebration toast + auto-advances to the next session.
+  // Function declaration so it's hoisted and usable in useCallback closures above.
+  function completeContenido(contenidoId: string) {
+    const ses = modulo.sesiones.find(s => s.contenidos.some(c => c.id === contenidoId))
+    if (ses && !getContenidoEstado(contenidoId).completed) {
+      const remaining = ses.contenidos.filter(
+        c => c.id !== contenidoId && !getContenidoEstado(c.id).completed
+      ).length
+      if (remaining === 0) {
+        const sesIdx = modulo.sesiones.indexOf(ses)
+        const nextSes = modulo.sesiones[sesIdx + 1]
+        setTimeout(() => {
+          if (nextSes) {
+            toast.success(`✓ Sesión ${sesIdx + 1} completada`, {
+              description: `Siguiente: "${nextSes.nombre}"`,
+              duration: 5000,
+            })
+            setTimeout(() => {
+              setExpandedSubs(new Set([nextSes.id]))
+              document.getElementById(`ses-${nextSes.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }, 700)
+          } else {
+            toast.success('¡Módulo completado! 🎉', {
+              description: nextModulo
+                ? `Continúa con M${nextModulo.numero} — ${nextModulo.nombre}`
+                : '¡Has completado todos los módulos del programa!',
+              duration: 7000,
+            })
+          }
+        }, 350)
+      }
+    }
+    completeContenido(contenidoId)
+  }
+
   const nextModulo = modulosLXP.find(m => m.numero === moduloNum + 1)
   const progreso   = getModuloProgreso(slug ?? '', moduloNum)
 
@@ -205,12 +241,12 @@ export default function ModuloDetalle() {
         doc.save(`${contenido.titulo}.pdf`)
         if (user?.id) trackContenido(user.id, contenido.id, contenido.titulo, 'descarga', 'descargable', slug)
         // Descargable sin visor → completar al descargar
-        markContenidoCompleted(contenido.id)
+        completeContenido(contenido.id)
       }
     } else if (contenido.tipo === 'PRESENTACION') {
       if (contenido.urlInteractivo) {
         window.open(contenido.urlInteractivo, '_blank')
-        markContenidoCompleted(contenido.id)
+        completeContenido(contenido.id)
       } else {
         toast.info('Próximamente disponible', { description: contenido.titulo })
       }
@@ -218,7 +254,7 @@ export default function ModuloDetalle() {
       if (contenido.id === 'm0-s2-c2' && slug === 'mecanica-automotriz') {
         setShowTourSimulator(true)
       } else if (contenido.id === 'm1-s2-c2') {
-        markContenidoCompleted(contenido.id)
+        completeContenido(contenido.id)
         navigate(`/taller/${slug}/repositorio`)
       } else if (contenido.id === 'm1-s3-c2') {
         setShowEPPSelector(true)
@@ -227,7 +263,7 @@ export default function ModuloDetalle() {
       } else if (contenido.id === 'm1-s13-c2') {
         setShowSimuladorEPP(true)
       } else if (contenido.id === 'm2-s4-c1') {
-        markContenidoCompleted(contenido.id)
+        completeContenido(contenido.id)
         navigate(`/taller/${slug}/repositorio?zona=${encodeURIComponent('ZONA DE INVESTIGACIÓN, GESTIÓN Y DISEÑO')}`)
       } else if (contenido.id === 'm2-s19-c3') {
         setShowSelConsumibles('investigacion')
@@ -262,7 +298,7 @@ export default function ModuloDetalle() {
         setShowGradeModal(true)
       } else if (contenido.urlInteractivo) {
         window.open(contenido.urlInteractivo, '_blank')
-        markContenidoCompleted(contenido.id)
+        completeContenido(contenido.id)
       } else {
         toast.info('Próximamente disponible', { description: contenido.titulo })
       }
@@ -278,7 +314,7 @@ export default function ModuloDetalle() {
     } else if (contenido.tipo === 'EN_VIVO') {
       if (contenido.urlVivo) {
         window.open(contenido.urlVivo, '_blank')
-        markContenidoCompleted(contenido.id)
+        completeContenido(contenido.id)
       } else {
         const fechaInfo = contenido.fechaSesion
           ? `Fecha programada: ${new Intl.DateTimeFormat('es-PE', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(contenido.fechaSesion))}`
@@ -292,7 +328,7 @@ export default function ModuloDetalle() {
         setShowVerificacionAlmacen(true)
       } else if (contenido.urlActividad) {
         window.open(contenido.urlActividad, '_blank')
-        markContenidoCompleted(contenido.id)
+        completeContenido(contenido.id)
       } else {
         toast.warning('Actividad en preparación', { description: 'Estará disponible próximamente en este módulo.' })
       }
@@ -303,7 +339,7 @@ export default function ModuloDetalle() {
       } else if (contenido.urlPDF) {
         if (user?.id) trackContenido(user.id, contenido.id, contenido.titulo, 'apertura_manual', 'manual', slug)
         window.open(contenido.urlPDF, '_blank')
-        markContenidoCompleted(contenido.id)
+        completeContenido(contenido.id)
       }
     } else {
       toast('Contenido en revisión', { description: contenido.titulo })
@@ -313,7 +349,7 @@ export default function ModuloDetalle() {
   const handleGradeSelect = (grade: string) => {
     setSelectedGrade(grade)
     localStorage.setItem('selectedGrade', grade)
-    if (currentInteractiveContent?.id) markContenidoCompleted(currentInteractiveContent.id)
+    if (currentInteractiveContent?.id) completeContenido(currentInteractiveContent.id)
     toast.success('Perfil actualizado', { description: `Grado seleccionado: ${grade}` })
     setShowGradeModal(false)
   }
@@ -814,7 +850,7 @@ export default function ModuloDetalle() {
         <ManualViewerModal
           manual={manualActivo}
           onClose={() => {
-            markContenidoCompleted(manualAbierto.contenidoId)
+            completeContenido(manualAbierto.contenidoId)
             setManualAbierto(null)
           }}
         />
@@ -830,7 +866,7 @@ export default function ModuloDetalle() {
           bloqueaSiguiente={quizAbierto.bloqueaSiguiente}
           onClose={() => setQuizAbierto(null)}
           onAprobado={() => {
-            markContenidoCompleted(quizAbierto.contenidoId)
+            completeContenido(quizAbierto.contenidoId)
             toast.success('¡Quiz aprobado!', { description: 'Tu progreso ha sido guardado.' })
             setQuizAbierto(null)
           }}
@@ -842,7 +878,7 @@ export default function ModuloDetalle() {
         <DescargableViewerModal
           descargable={descargableActivo}
           onClose={() => {
-            markContenidoCompleted(descargableAbierto.contenidoId)
+            completeContenido(descargableAbierto.contenidoId)
             setDescargableAbierto(null)
           }}
         />
@@ -854,7 +890,7 @@ export default function ModuloDetalle() {
           tallerSlug={slug ?? ''}
           tallerNombre={taller.nombre}
           onClose={() => {
-            markContenidoCompleted('m1-s3-c2')
+            completeContenido('m1-s3-c2')
             setShowEPPSelector(false)
           }}
         />
@@ -866,7 +902,7 @@ export default function ModuloDetalle() {
           tallerSlug={slug ?? ''}
           tallerNombre={taller.nombre}
           onClose={() => {
-            markContenidoCompleted('m5-s2-c1')
+            completeContenido('m5-s2-c1')
             setShowMapaHabilidades(false)
           }}
         />
@@ -878,7 +914,7 @@ export default function ModuloDetalle() {
           tallerSlug={slug ?? ''}
           tallerNombre={taller.nombre}
           onClose={() => {
-            markContenidoCompleted('m5-s3-c2')
+            completeContenido('m5-s3-c2')
             setShowTablaProgresion(false)
           }}
         />
@@ -893,7 +929,7 @@ export default function ModuloDetalle() {
           urlVideo={videoAbierto.urlVideo}
           onClose={() => setVideoAbierto(null)}
           onComplete={() => {
-            if (videoAbierto?.contenidoId) markContenidoCompleted(videoAbierto.contenidoId)
+            if (videoAbierto?.contenidoId) completeContenido(videoAbierto.contenidoId)
           }}
         />
       )}
@@ -905,7 +941,7 @@ export default function ModuloDetalle() {
           onClose={() => setShowChecklistMant(null)}
           onComplete={() => {
             const id = showChecklistMant === 'investigacion' ? 'm2-s22-c3' : 'm3-s29-c3'
-            markContenidoCompleted(id)
+            completeContenido(id)
           }}
         />
       )}
@@ -914,7 +950,7 @@ export default function ModuloDetalle() {
       {showVerificacion && (
         <VerificacionFuncionamientoModal
           onClose={() => setShowVerificacion(false)}
-          onComplete={() => markContenidoCompleted('m2-s20-c3')}
+          onComplete={() => completeContenido('m2-s20-c3')}
         />
       )}
 
@@ -922,7 +958,7 @@ export default function ModuloDetalle() {
       {showVerificacionAlmacen && (
         <VerificacionAlmacenModal
           onClose={() => setShowVerificacionAlmacen(false)}
-          onComplete={() => markContenidoCompleted('m3-s27-c3')}
+          onComplete={() => completeContenido('m3-s27-c3')}
         />
       )}
 
@@ -930,7 +966,7 @@ export default function ModuloDetalle() {
       {showLaboratorio && (
         <LaboratorioPromptsModal
           onClose={() => setShowLaboratorio(false)}
-          onComplete={() => markContenidoCompleted('m0-s04-c3')}
+          onComplete={() => completeContenido('m0-s04-c3')}
         />
       )}
 
@@ -938,7 +974,7 @@ export default function ModuloDetalle() {
       {showClasificador && (
         <ClasificadorHerramientasModal
           onClose={() => setShowClasificador(false)}
-          onComplete={() => markContenidoCompleted('m0-s02-c3')}
+          onComplete={() => completeContenido('m0-s02-c3')}
         />
       )}
 
@@ -947,7 +983,7 @@ export default function ModuloDetalle() {
         <EscenarioPedagogicoModal
           config={escenarioPedagogico}
           onClose={() => setEscenarioPedagogico(null)}
-          onComplete={() => markContenidoCompleted(escenarioPedagogico.contenidoId)}
+          onComplete={() => completeContenido(escenarioPedagogico.contenidoId)}
         />
       )}
 
@@ -956,7 +992,7 @@ export default function ModuloDetalle() {
         <ActividadExternaModal
           config={actividadExterna}
           onClose={() => setActividadExterna(null)}
-          onComplete={() => markContenidoCompleted(actividadExterna.contenidoId)}
+          onComplete={() => completeContenido(actividadExterna.contenidoId)}
         />
       )}
 
@@ -964,7 +1000,7 @@ export default function ModuloDetalle() {
       {showSimuladorEPP && (
         <SimuladorEPPMecaModal
           onClose={() => setShowSimuladorEPP(false)}
-          onComplete={() => markContenidoCompleted('m1-s13-c2')}
+          onComplete={() => completeContenido('m1-s13-c2')}
         />
       )}
 
@@ -972,7 +1008,7 @@ export default function ModuloDetalle() {
       {showExploradorEquipos && (
         <ExploradorEquiposModal
           onClose={() => setShowExploradorEquipos(false)}
-          onComplete={() => markContenidoCompleted('m1-s11-c2')}
+          onComplete={() => completeContenido('m1-s11-c2')}
         />
       )}
 
@@ -987,7 +1023,7 @@ export default function ModuloDetalle() {
               almacen:       'm3-s26-c3',
               innovacion:    'm4-s34-c3',
             }
-            markContenidoCompleted(ids[showSelConsumibles])
+            completeContenido(ids[showSelConsumibles])
           }}
         />
       )}
