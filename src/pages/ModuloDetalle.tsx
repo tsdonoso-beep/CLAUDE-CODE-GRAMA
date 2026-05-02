@@ -344,7 +344,7 @@ export default function ModuloDetalle() {
             </div>
 
             {/* Derecha: stats + badges */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexShrink: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexShrink: 0 }}>
               {[
                 { value: `${modulo.horasTotal}h`, label: 'totales' },
                 { value: modulo.sesiones.length,  label: 'sesiones' },
@@ -352,7 +352,7 @@ export default function ModuloDetalle() {
               ].map(s => (
                 <div key={s.label} style={{ textAlign: 'center' }}>
                   <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1 }}>{s.value}</p>
-                  <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.08em', color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', textTransform: 'uppercase' }}>{s.label}</p>
+                  <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', textTransform: 'uppercase' }}>{s.label}</p>
                 </div>
               ))}
               <div style={{ width: 1, height: 28, background: 'rgba(255,255,255,0.15)' }} />

@@ -123,7 +123,7 @@ export default function BienDetalle() {
                   {bien.codigoEntidad || bien.codigoInterno || `#${bien.n}`}
                 </span>
               </div>
-              <h1 style={{ fontSize: 18, fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 560 }}>
+              <h1 style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 560 }}>
                 {bien.nombre}
               </h1>
             </div>

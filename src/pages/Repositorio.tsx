@@ -202,19 +202,19 @@ export default function Repositorio() {
               {(() => { const I = TALLER_ICON_MAP[taller.icon] ?? Package; return <I size={20} style={{ color: '#02d47e' }} /> })()}
             </div>
             <div style={{ minWidth: 0 }}>
-              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)', margin: '0 0 2px', fontWeight: 600 }}>{taller.nombre}</p>
-              <h1 style={{ fontSize: 18, fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em' }}>Repositorio de Bienes</h1>
+              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)', margin: '0 0 3px', fontWeight: 600 }}>{taller.nombre}</p>
+              <h1 style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em' }}>Repositorio de Bienes</h1>
             </div>
           </div>
           {/* Stats + nav */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexShrink: 0 }}>
             <div style={{ textAlign: 'center' }}>
               <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1 }}>{totalBienes}</p>
-              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>bienes</p>
+              <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', textTransform: 'uppercase' }}>bienes</p>
             </div>
             <div style={{ textAlign: 'center' }}>
               <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1 }}>{zonas.length}</p>
-              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', fontWeight: 600, letterSpacing: '.04em' }}>zonas</p>
+              <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', textTransform: 'uppercase' }}>zonas</p>
             </div>
             <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
             <button
