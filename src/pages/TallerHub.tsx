@@ -74,7 +74,8 @@ export default function TallerHub() {
           .th-cta-btn       { width: 100% !important; justify-content: center !important; }
           .th-cta-prog-bar  { width: 100% !important; }
           .th-competencias  { padding: 18px 16px 22px !important; grid-template-columns: 1fr !important; gap: 24px !important; }
-          .th-repo          { padding: 16px 16px !important; }
+          .th-repo-wrap     { padding: 14px 14px !important; }
+          .th-repo-header   { padding: 14px 16px 12px !important; flex-wrap: wrap !important; gap: 10px !important; }
         }
       `}</style>
 
@@ -266,10 +267,10 @@ export default function TallerHub() {
 
       {/* ══ REPOSITORIO (full-width) ══════════════════════════════════════════ */}
       {!isGeneralEpt && (
-        <div style={{ padding: '24px 32px' }}>
+        <div className="th-repo-wrap" style={{ padding: '24px 32px' }}>
           <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
 
-            <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div className="th-repo-header" style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
                 <h2 style={{ fontSize: 16, fontWeight: 800, color: '#043941', margin: '0 0 2px', letterSpacing: '-0.01em' }}>Repositorio del taller</h2>
                 <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>{todosLos.length} bienes · {zonas.length} zonas</p>
