@@ -9,6 +9,7 @@ import { INSTITUCIONES_EDUCATIVAS } from '@/data/ieData'
 import { talleresConfig } from '@/data/talleresConfig'
 
 type Tab = 'login' | 'register'
+type Rol = 'docente' | 'estudiante' | 'director'
 
 const INPUT_STYLE = {
   base: 'w-full px-4 py-3.5 rounded-xl border text-sm outline-none transition-all duration-200',
@@ -165,6 +166,7 @@ function LoginForm({ onSuccess }: { onSuccess: (isAdmin: boolean) => void }) {
 function RegisterForm() {
   const [nombre,     setNombre]     = useState('')
   const [email,      setEmail]      = useState('')
+  const [rol,        setRol]        = useState<Rol>('docente')
   const [ieId,       setIeId]       = useState<number | ''>('')
   const [tallerSlug, setTallerSlug] = useState<string>('')
   const [mensaje,    setMensaje]    = useState('')
@@ -200,6 +202,7 @@ function RegisterForm() {
       .insert({
         nombre:      nombre.trim(),
         email:       email.trim().toLowerCase(),
+        rol,
         institucion: ieId
           ? INSTITUCIONES_EDUCATIVAS.find(i => i.id === ieId)?.nombre ?? ''
           : '',
@@ -236,6 +239,30 @@ function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
+      {/* Selector de rol */}
+      <div>
+        <label className="block text-sm font-bold mb-2.5" style={{ color: '#043941', letterSpacing: '-0.3px' }}>
+          Soy...
+        </label>
+        <div className="grid grid-cols-3 gap-2">
+          {([
+            { id: 'docente',     label: 'Docente' },
+            { id: 'estudiante',  label: 'Estudiante' },
+            { id: 'director',    label: 'Director/a' },
+          ] as { id: Rol; label: string }[]).map(r => (
+            <button
+              type="button" key={r.id}
+              onClick={() => setRol(r.id)}
+              className="py-2.5 rounded-xl text-sm font-bold transition-all duration-150"
+              style={rol === r.id
+                ? { background: '#043941', color: '#02d47e', border: '1.5px solid #043941' }
+                : { background: 'rgba(4,57,65,0.04)', color: '#64748b', border: '1.5px solid rgba(4,57,65,0.1)' }
+              }
+            >{r.label}</button>
+          ))}
+        </div>
+      </div>
+
       {/* Aviso informativo */}
       <div className="px-4 py-3.5 rounded-xl text-xs leading-relaxed font-medium"
         style={{ background: 'rgba(2,212,126,0.08)', color: '#043941', border: '1px solid rgba(2,212,126,0.15)' }}>
@@ -364,9 +391,9 @@ export default function Login() {
       <div className="hidden lg:flex flex-col items-center justify-center w-1/2 px-16 py-12 relative overflow-hidden" style={{ background: '#043941' }}>
         {/* Shapes decorativos — más audaces como en landing */}
         <div style={{ position:'absolute', top:-280, left:'20%', transform:'translateX(-50%)', width:560, height:560, background:'#b8edd0', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:0.16, pointerEvents:'none', animation:'heroFa 15s ease-in-out infinite' }} />
-        <div style={{ position:'absolute', bottom:-200, right:'15%', width:420, height:420, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:0.14, pointerEvents:'none', animation:'heroFd 18s ease-in-out infinite 2s' }} />
+        <div style={{ position:'absolute', bottom:-200, right:'15%', width:420, height:420, background:'#d4c4fc', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:0.14, pointerEvents:'none', animation:'heroFb 18s ease-in-out infinite 2s' }} />
         <div style={{ position:'absolute', top:'30%', left:-140, width:240, height:200, background:'#f8ee91', borderRadius:'0 0 120px 120px', opacity:0.2, pointerEvents:'none', animation:'heroFb 14s ease-in-out infinite 1s' }} />
-        <div style={{ position:'absolute', bottom:'15%', right:'-5%', width:180, height:120, background:'#02d47e', clipPath:'polygon(0% 50%,100% 0%,100% 100%)', opacity:0.15, pointerEvents:'none', animation:'heroFe 13s ease-in-out infinite 1.5s' }} />
+        <div style={{ position:'absolute', bottom:'15%', right:'-5%', width:180, height:120, background:'#02d47e', clipPath:'polygon(0% 50%,100% 0%,100% 100%)', opacity:0.15, pointerEvents:'none', animation:'heroFc 13s ease-in-out infinite 1.5s' }} />
 
         <div className="relative z-10 text-center max-w-sm">
           <div className="flex justify-center mb-10 animate-fade-in-up"><GramaLogo variant="light" size="lg" /></div>
@@ -436,7 +463,7 @@ export default function Login() {
               ) : (
                 <>
                   <h1 className="text-xl font-black mb-1.5" style={{ color: '#043941', letterSpacing: '-0.5px' }}>Solicitar acceso</h1>
-                  <p className="text-sm mb-6" style={{ color: '#64748b' }}>Completa el formulario para acceder como docente</p>
+                  <p className="text-sm mb-6" style={{ color: '#64748b' }}>Completa el formulario y validaremos tu acceso en menos de 24h</p>
                   <RegisterForm />
                 </>
               )}
