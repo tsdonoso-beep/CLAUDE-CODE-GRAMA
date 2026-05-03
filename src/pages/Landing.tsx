@@ -70,17 +70,13 @@ export default function Landing() {
   // ── Typewriter H1 ──────────────────────────────────────────────────────────
   const TW_FULL = 'GRAMA los acompaña.'
   const [twText, setTwText] = useState('')
-  const [twDone, setTwDone] = useState(false)
   useEffect(() => {
     let i = 0
     const start = setTimeout(() => {
       const tick = setInterval(() => {
         i++
         setTwText(TW_FULL.slice(0, i))
-        if (i >= TW_FULL.length) {
-          clearInterval(tick)
-          setTimeout(() => setTwDone(true), 900)
-        }
+        if (i >= TW_FULL.length) clearInterval(tick)
       }, 52)
       return () => clearInterval(tick)
     }, 420)
@@ -183,25 +179,14 @@ export default function Landing() {
             Los talleres técnicos<br />
             <em style={{ fontStyle:'normal', color:'var(--grama-menta)' }}>forman el país.</em><br />
             {/* Texto completo siempre en flujo — la parte no tipada es opacity:0.
-                Así el browser ve TW_FULL en todo momento: baseline y métricas idénticas. */}
+                Sin cursor: evita alterar la altura del line box durante la animación. */}
             <span style={{ whiteSpace: 'nowrap' }}>
-              {twDone ? TW_FULL : (
-                <>
-                  {twText}
-                  <span style={{ opacity: 0, userSelect: 'none', pointerEvents: 'none' }}>
-                    {TW_FULL.slice(twText.length)}
-                  </span>
-                  <span style={{
-                    display:'inline-block', width:3, height:'0.82em',
-                    background:'var(--grama-menta)', marginLeft:2,
-                    verticalAlign:'text-bottom', borderRadius:1,
-                    animation:'tw-cursor .7s step-end infinite',
-                  }} />
-                </>
-              )}
+              {twText}
+              <span style={{ opacity: 0, userSelect: 'none', pointerEvents: 'none' }}>
+                {TW_FULL.slice(twText.length)}
+              </span>
             </span>
           </h1>
-          <style>{`@keyframes tw-cursor { 0%,100%{opacity:1} 50%{opacity:0} }`}</style>
 
           {/* Subtexto limpio */}
           <p style={{ fontSize:'1rem', color:'rgba(4,57,65,.6)', lineHeight:1.75, fontWeight:450, margin:'0 0 32px', maxWidth:420 }}>
