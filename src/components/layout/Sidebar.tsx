@@ -1,7 +1,7 @@
 // src/components/layout/Sidebar.tsx
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, useParams, useNavigate, useLocation } from 'react-router-dom'
-import { Package, ChevronLeft, ChevronRight, X, User, Home, LayoutDashboard, Trophy, Award, MessageCircle, CheckCircle2, Circle, Lock, PlayCircle } from 'lucide-react'
+import { Package, ChevronLeft, X, User, Home, LayoutDashboard, Trophy, Award, MessageCircle } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { useProgress } from '@/contexts/ProgressContext'
 import { useAuth } from '@/contexts/AuthContext'
@@ -31,29 +31,12 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
   const { slug, num } = useParams<{ slug: string; num: string }>()
   const activeModuloNum = num !== undefined ? Number(num) : null
   const { pathname } = useLocation()
-  const insideModulo = pathname.includes('/ruta/modulo/')
   const navigate = useNavigate()
   const taller = talleresConfig.find(t => t.slug === slug)
   const accent = TALLER_ACCENTS[slug ?? ''] ?? '#02d47e'
-  const { getTallerProgreso, getEstadoModuloLXP, getModuloProgreso, getContenidoEstado } = useProgress()
+  const { getTallerProgreso, getEstadoModuloLXP, getModuloProgreso } = useProgress()
   const { profile } = useAuth()
   const progreso = slug ? getTallerProgreso(slug) : { porcentaje: 0, completados: 0, total: 0 }
-
-  // Módulos expandidos — auto-abre el módulo activo solo fuera de ModuloDetalle
-  const [expandedModulos, setExpandedModulos] = useState<Set<string>>(() => {
-    if (!insideModulo && activeModuloNum !== null) {
-      const m = modulosLXP.find(m => m.numero === activeModuloNum)
-      return m ? new Set([m.id]) : new Set()
-    }
-    return new Set()
-  })
-
-  // Sync cuando cambia el módulo en la URL (no aplica dentro de ModuloDetalle)
-  useEffect(() => {
-    if (insideModulo || activeModuloNum === null) return
-    const m = modulosLXP.find(m => m.numero === activeModuloNum)
-    if (m) setExpandedModulos(prev => new Set([...prev, m.id]))
-  }, [activeModuloNum, insideModulo])
 
   const enrolledSlugs: string[] =
     profile?.taller_slugs?.length
@@ -358,41 +341,20 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                 </>
               )}
 
-              {/* Árbol de módulos */}
+              {/* Lista plana de módulos */}
               {modulosLXP.map(modulo => {
                 const estado: EstadoModulo = getEstadoModuloLXP(modulo.id)
                 const mp = getModuloProgreso(slug ?? '', modulo.numero)
-                const isCompletado  = estado === 'completado'
-                const isEnCurso     = estado === 'en_curso'
-                const isBloqueado   = estado === 'bloqueado'
+                const isCompletado   = estado === 'completado'
+                const isEnCurso      = estado === 'en_curso'
+                const isBloqueado    = estado === 'bloqueado'
                 const isActiveModulo = activeModuloNum === modulo.numero
-                const isExpanded    = expandedModulos.has(modulo.id)
-
-                const statusColor = isCompletado ? '#02d47e' : isEnCurso ? accent : isBloqueado ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.25)'
                 const badge = `M${modulo.numero}`
-
-                const toggleExpand = () => {
-                  if (isBloqueado) return
-                  setExpandedModulos(prev => {
-                    const next = new Set(prev)
-                    next.has(modulo.id) ? next.delete(modulo.id) : next.add(modulo.id)
-                    return next
-                  })
-                }
-
-                // Estado visual de cada sesión
-                const sesionEstados = modulo.sesiones.map(ses => {
-                  const ids = ses.contenidos.map(c => c.id)
-                  const completados = ids.filter(id => getContenidoEstado(id).completed).length
-                  const enProgreso  = ids.some(id => getContenidoEstado(id).inProgress)
-                  const sesCompletada = completados === ids.length && ids.length > 0
-                  return { ses, completados, total: ids.length, sesCompletada, enProgreso }
-                })
 
                 /* ── Collapsed: anillo SVG de progreso ── */
                 if (collapsed) {
                   const R = 13
-                  const CIRC = 2 * Math.PI * R          // ≈ 81.68
+                  const CIRC = 2 * Math.PI * R
                   const pct  = isCompletado ? 100 : mp.porcentaje
                   const dash = CIRC * (1 - pct / 100)
                   const ringColor = isCompletado ? '#02d47e' : isEnCurso ? accent : 'rgba(255,255,255,0.12)'
@@ -412,33 +374,19 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                       }}
                     >
                       <svg width={32} height={32} viewBox="0 0 32 32" style={{ overflow: 'visible' }}>
-                        {/* Pista de fondo */}
-                        <circle cx={16} cy={16} r={R}
-                          fill="none"
-                          stroke="rgba(255,255,255,0.08)"
-                          strokeWidth={2.5}
-                        />
-                        {/* Arco de progreso */}
+                        <circle cx={16} cy={16} r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={2.5} />
                         {pct > 0 && (
                           <circle cx={16} cy={16} r={R}
-                            fill="none"
-                            stroke={ringColor}
-                            strokeWidth={2.5}
-                            strokeLinecap="round"
-                            strokeDasharray={CIRC}
-                            strokeDashoffset={dash}
+                            fill="none" stroke={ringColor} strokeWidth={2.5} strokeLinecap="round"
+                            strokeDasharray={CIRC} strokeDashoffset={dash}
                             transform="rotate(-90 16 16)"
                             style={{ transition: 'stroke-dashoffset .6s ease' }}
                           />
                         )}
-                        {/* Badge texto */}
                         <text
-                          x={16} y={16}
-                          textAnchor="middle" dominantBaseline="central"
-                          fontSize={isBloqueado ? 7 : 8}
-                          fontWeight={800}
-                          fontFamily="Manrope, sans-serif"
-                          letterSpacing="0.04em"
+                          x={16} y={16} textAnchor="middle" dominantBaseline="central"
+                          fontSize={isBloqueado ? 7 : 8} fontWeight={800}
+                          fontFamily="Manrope, sans-serif" letterSpacing="0.04em"
                           fill={isActiveModulo ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.35)'}
                         >
                           {isBloqueado ? '🔒' : badge}
@@ -448,115 +396,48 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                   )
                 }
 
-                /* ── Expanded ── */
+                /* ── Expanded: fila plana ── */
                 return (
-                  <div key={modulo.id}>
-                    {/* Fila del módulo */}
-                    <button
-                      onClick={toggleExpand}
-                      disabled={isBloqueado}
-                      style={{
-                        display: 'flex', alignItems: 'center', gap: 8,
-                        width: '100%', padding: '7px 8px', borderRadius: 10, textAlign: 'left',
-                        background: isActiveModulo ? `${accent}12` : 'none',
-                        border: isActiveModulo ? `1px solid ${accent}28` : '1px solid transparent',
-                        cursor: isBloqueado ? 'default' : 'pointer',
-                        transition: 'background .15s',
-                        opacity: isBloqueado ? 0.4 : 1,
-                      }}
-                      onMouseEnter={e => { if (!isBloqueado && !isActiveModulo) e.currentTarget.style.background = 'rgba(255,255,255,0.04)' }}
-                      onMouseLeave={e => { if (!isActiveModulo) e.currentTarget.style.background = 'none' }}
-                    >
-                      {/* Badge */}
-                      <span style={{
-                        fontSize: 9, fontWeight: 800, letterSpacing: '0.06em',
-                        minWidth: 24, textAlign: 'center', padding: '2px 4px', borderRadius: 5,
-                        background: isActiveModulo ? `${accent}20` : isCompletado ? 'rgba(2,212,126,0.12)' : 'rgba(255,255,255,0.06)',
-                        color: isActiveModulo ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.3)',
-                      }}>{badge}</span>
+                  <button
+                    key={modulo.id}
+                    onClick={() => !isBloqueado && navigate(`/taller/${slug}/ruta/modulo/${modulo.numero}`)}
+                    disabled={isBloqueado}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 8,
+                      width: '100%', padding: '7px 8px', borderRadius: 10, textAlign: 'left',
+                      background: isActiveModulo ? `${accent}12` : 'none',
+                      border: isActiveModulo ? `1px solid ${accent}28` : '1px solid transparent',
+                      cursor: isBloqueado ? 'default' : 'pointer',
+                      transition: 'background .15s',
+                      opacity: isBloqueado ? 0.4 : 1,
+                    }}
+                    onMouseEnter={e => { if (!isBloqueado && !isActiveModulo) e.currentTarget.style.background = 'rgba(255,255,255,0.04)' }}
+                    onMouseLeave={e => { if (!isActiveModulo) e.currentTarget.style.background = 'none' }}
+                  >
+                    {/* Badge */}
+                    <span style={{
+                      fontSize: 9, fontWeight: 800, letterSpacing: '0.06em',
+                      minWidth: 24, textAlign: 'center', padding: '2px 4px', borderRadius: 5,
+                      background: isActiveModulo ? `${accent}20` : isCompletado ? 'rgba(2,212,126,0.12)' : 'rgba(255,255,255,0.06)',
+                      color: isActiveModulo ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.3)',
+                    }}>{isBloqueado ? '🔒' : badge}</span>
 
-                      {/* Nombre */}
-                      <span style={{
-                        flex: 1, fontSize: 11, fontWeight: isActiveModulo ? 700 : 500,
-                        color: isActiveModulo ? '#fff' : isCompletado ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.38)',
-                        lineHeight: 1.3,
-                      }}>
-                        {modulo.nombre.length > 20 ? modulo.nombre.slice(0, 20) + '…' : modulo.nombre}
+                    {/* Nombre */}
+                    <span style={{
+                      flex: 1, fontSize: 11, fontWeight: isActiveModulo ? 700 : 500,
+                      color: isActiveModulo ? '#fff' : isCompletado ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.38)',
+                      lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                    }}>
+                      {modulo.nombre}
+                    </span>
+
+                    {/* Progreso en curso */}
+                    {isEnCurso && mp.total > 0 && (
+                      <span style={{ fontSize: 9, fontWeight: 700, color: `${accent}80`, flexShrink: 0 }}>
+                        {mp.completados}/{mp.total}
                       </span>
-
-                      {/* Chevron + progreso */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
-                        {isEnCurso && mp.total > 0 && (
-                          <span style={{ fontSize: 9, fontWeight: 700, color: `${accent}80` }}>
-                            {mp.completados}/{mp.total}
-                          </span>
-                        )}
-                        <ChevronRight
-                          size={12}
-                          style={{
-                            color: statusColor,
-                            transform: isExpanded ? 'rotate(90deg)' : 'none',
-                            transition: 'transform .2s',
-                          }}
-                        />
-                      </div>
-                    </button>
-
-                    {/* Sesiones expandidas */}
-                    {isExpanded && (
-                      <div style={{ paddingLeft: 10, paddingBottom: 4 }}>
-                        {sesionEstados.map(({ ses, sesCompletada, enProgreso, completados, total }) => {
-                          const esSesActiva = isActiveModulo
-
-                          const sesColor = sesCompletada
-                            ? '#02d47e'
-                            : enProgreso ? accent
-                            : 'rgba(255,255,255,0.22)'
-
-                          const SesIcon = sesCompletada ? CheckCircle2 : enProgreso ? PlayCircle : Circle
-
-                          return (
-                            <button
-                              key={ses.id}
-                              onClick={() => navigate(`/taller/${slug}/ruta/modulo/${modulo.numero}`)}
-                              style={{
-                                display: 'flex', alignItems: 'flex-start', gap: 7,
-                                width: '100%', padding: '5px 6px', borderRadius: 8,
-                                background: 'none', border: 'none',
-                                cursor: 'pointer', textAlign: 'left',
-                                transition: 'background .12s',
-                              }}
-                              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
-                              onMouseLeave={e => (e.currentTarget.style.background = 'none')}
-                            >
-                              {/* Línea vertical + icono */}
-                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 2, gap: 0 }}>
-                                <SesIcon size={10} style={{ color: sesColor, flexShrink: 0 }} />
-                                <div style={{ width: 1, flex: 1, minHeight: 6, background: sesColor, opacity: 0.2, marginTop: 2 }} />
-                              </div>
-
-                              {/* Nombre + progreso */}
-                              <div style={{ flex: 1, minWidth: 0 }}>
-                                <p style={{
-                                  fontSize: 10, fontWeight: sesCompletada || enProgreso ? 600 : 400,
-                                  color: sesCompletada ? 'rgba(255,255,255,0.5)' : enProgreso ? '#fff' : 'rgba(255,255,255,0.28)',
-                                  lineHeight: 1.35, margin: 0,
-                                  overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                                }}>
-                                  {ses.nombre}
-                                </p>
-                                {esSesActiva && total > 0 && !sesCompletada && (
-                                  <p style={{ fontSize: 9, color: `${accent}66`, margin: '2px 0 0', fontWeight: 600 }}>
-                                    {completados}/{total} contenidos
-                                  </p>
-                                )}
-                              </div>
-                            </button>
-                          )
-                        })}
-                      </div>
                     )}
-                  </div>
+                  </button>
                 )
               })}
             </>
