@@ -31,6 +31,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
   const { slug, num } = useParams<{ slug: string; num: string }>()
   const activeModuloNum = num !== undefined ? Number(num) : null
   const { pathname } = useLocation()
+  const insideModulo = pathname.includes('/ruta/modulo/')
   const navigate = useNavigate()
   const taller = talleresConfig.find(t => t.slug === slug)
   const accent = TALLER_ACCENTS[slug ?? ''] ?? '#02d47e'
@@ -38,21 +39,21 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
   const { profile } = useAuth()
   const progreso = slug ? getTallerProgreso(slug) : { porcentaje: 0, completados: 0, total: 0 }
 
-  // Módulos expandidos — auto-abre el módulo activo según URL
+  // Módulos expandidos — auto-abre el módulo activo solo fuera de ModuloDetalle
   const [expandedModulos, setExpandedModulos] = useState<Set<string>>(() => {
-    if (activeModuloNum !== null) {
+    if (!insideModulo && activeModuloNum !== null) {
       const m = modulosLXP.find(m => m.numero === activeModuloNum)
       return m ? new Set([m.id]) : new Set()
     }
     return new Set()
   })
 
-  // Sync cuando cambia el módulo en la URL
+  // Sync cuando cambia el módulo en la URL (no aplica dentro de ModuloDetalle)
   useEffect(() => {
-    if (activeModuloNum === null) return
+    if (insideModulo || activeModuloNum === null) return
     const m = modulosLXP.find(m => m.numero === activeModuloNum)
     if (m) setExpandedModulos(prev => new Set([...prev, m.id]))
-  }, [activeModuloNum])
+  }, [activeModuloNum, insideModulo])
 
   const enrolledSlugs: string[] =
     profile?.taller_slugs?.length
