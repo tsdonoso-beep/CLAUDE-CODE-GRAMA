@@ -404,7 +404,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                     disabled={isBloqueado}
                     style={{
                       display: 'flex', alignItems: 'center', gap: 8,
-                      width: '100%', padding: '7px 8px', borderRadius: 10, textAlign: 'left',
+                      width: '100%', padding: '8px 8px', borderRadius: 10, textAlign: 'left',
                       background: isActiveModulo ? `${accent}12` : 'none',
                       border: isActiveModulo ? `1px solid ${accent}28` : '1px solid transparent',
                       cursor: isBloqueado ? 'default' : 'pointer',
@@ -416,7 +416,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                   >
                     {/* Badge */}
                     <span style={{
-                      fontSize: 9, fontWeight: 800, letterSpacing: '0.06em',
+                      fontSize: 10, fontWeight: 800, letterSpacing: '0.06em',
                       minWidth: 24, textAlign: 'center', padding: '2px 4px', borderRadius: 5,
                       background: isActiveModulo ? `${accent}20` : isCompletado ? 'rgba(2,212,126,0.12)' : 'rgba(255,255,255,0.06)',
                       color: isActiveModulo ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.3)',
@@ -424,7 +424,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
 
                     {/* Nombre */}
                     <span style={{
-                      flex: 1, fontSize: 11, fontWeight: isActiveModulo ? 700 : 500,
+                      flex: 1, fontSize: 12, fontWeight: isActiveModulo ? 700 : 500,
                       color: isActiveModulo ? '#fff' : isCompletado ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.38)',
                       lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                     }}>
