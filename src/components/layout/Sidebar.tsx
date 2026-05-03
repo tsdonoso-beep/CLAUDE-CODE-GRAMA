@@ -351,7 +351,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                   {/* Label sección TOC */}
                   <div style={{ paddingLeft: 8, marginBottom: 6 }}>
                     <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.22)', textTransform: 'uppercase' }}>
-                      Módulos
+                      Ruta de Aprendizaje
                     </span>
                   </div>
                 </>
