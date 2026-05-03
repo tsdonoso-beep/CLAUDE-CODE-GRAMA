@@ -182,24 +182,23 @@ export default function Landing() {
           <h1 style={{ fontSize:'var(--t-hero)', fontWeight:800, lineHeight:1.04, letterSpacing:'-1.8px', color:'var(--grama-oscuro)', marginBottom:20 }}>
             Los talleres técnicos<br />
             <em style={{ fontStyle:'normal', color:'var(--grama-menta)' }}>forman el país.</em><br />
-            {/* Contenedor con espacio reservado — grid stacking evita desfase por absolute positioning */}
-            <span style={{ display: 'inline-grid' }}>
-              {/* Spacer invisible: reserva el ancho/alto final en el flujo normal */}
-              <span style={{ gridArea: '1/1', visibility: 'hidden', whiteSpace: 'nowrap', userSelect: 'none' }}>
-                {TW_FULL}
-              </span>
-              {/* Texto animado: apilado en la misma celda, alineación perfecta garantizada */}
-              <span style={{ gridArea: '1/1', whiteSpace: 'nowrap' }}>
-                {twDone ? TW_FULL : twText}
-                {!twDone && (
+            {/* Texto completo siempre en flujo — la parte no tipada es opacity:0.
+                Así el browser ve TW_FULL en todo momento: baseline y métricas idénticas. */}
+            <span style={{ whiteSpace: 'nowrap' }}>
+              {twDone ? TW_FULL : (
+                <>
+                  {twText}
+                  <span style={{ opacity: 0, userSelect: 'none', pointerEvents: 'none' }}>
+                    {TW_FULL.slice(twText.length)}
+                  </span>
                   <span style={{
                     display:'inline-block', width:3, height:'0.82em',
                     background:'var(--grama-menta)', marginLeft:2,
                     verticalAlign:'text-bottom', borderRadius:1,
                     animation:'tw-cursor .7s step-end infinite',
                   }} />
-                )}
-              </span>
+                </>
+              )}
             </span>
           </h1>
           <style>{`@keyframes tw-cursor { 0%,100%{opacity:1} 50%{opacity:0} }`}</style>
