@@ -182,15 +182,23 @@ export default function Landing() {
           <h1 style={{ fontSize:'var(--t-hero)', fontWeight:800, lineHeight:1.04, letterSpacing:'-1.8px', color:'var(--grama-oscuro)', marginBottom:20 }}>
             Los talleres técnicos<br />
             <em style={{ fontStyle:'normal', color:'var(--grama-menta)' }}>forman el país.</em><br />
-            {twText}
-            {!twDone && (
-              <span style={{
-                display:'inline-block', width:3, height:'0.82em',
-                background:'var(--grama-menta)', marginLeft:2,
-                verticalAlign:'text-bottom', borderRadius:1,
-                animation:'tw-cursor .7s step-end infinite',
-              }} />
-            )}
+            {/* Contenedor con espacio reservado para evitar layout shift */}
+            <span style={{ position:'relative', display:'inline-block' }}>
+              {/* Texto completo invisible — reserva el ancho final */}
+              <span style={{ visibility:'hidden', whiteSpace:'nowrap' }}>{TW_FULL}</span>
+              {/* Texto animado superpuesto */}
+              <span style={{ position:'absolute', left:0, top:0, whiteSpace:'nowrap' }}>
+                {twText}
+                {!twDone && (
+                  <span style={{
+                    display:'inline-block', width:3, height:'0.82em',
+                    background:'var(--grama-menta)', marginLeft:2,
+                    verticalAlign:'text-bottom', borderRadius:1,
+                    animation:'tw-cursor .7s step-end infinite',
+                  }} />
+                )}
+              </span>
+            </span>
           </h1>
           <style>{`@keyframes tw-cursor { 0%,100%{opacity:1} 50%{opacity:0} }`}</style>
 
