@@ -28,14 +28,31 @@ interface SidebarProps {
 }
 
 export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
-  const { slug } = useParams<{ slug: string }>()
+  const { slug, num } = useParams<{ slug: string; num: string }>()
+  const activeModuloNum = num !== undefined ? Number(num) : null
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const taller = talleresConfig.find(t => t.slug === slug)
   const accent = TALLER_ACCENTS[slug ?? ''] ?? '#02d47e'
-  const { getTallerProgreso, getEstadoModuloLXP, getModuloProgreso } = useProgress()
+  const { getTallerProgreso, getEstadoModuloLXP, getModuloProgreso, getContenidoEstado } = useProgress()
   const { profile } = useAuth()
   const progreso = slug ? getTallerProgreso(slug) : { porcentaje: 0, completados: 0, total: 0 }
+
+  // Módulos expandidos — auto-abre el módulo activo según URL
+  const [expandedModulos, setExpandedModulos] = useState<Set<string>>(() => {
+    if (activeModuloNum !== null) {
+      const m = modulosLXP.find(m => m.numero === activeModuloNum)
+      return m ? new Set([m.id]) : new Set()
+    }
+    return new Set()
+  })
+
+  // Sync cuando cambia el módulo en la URL
+  useEffect(() => {
+    if (activeModuloNum === null) return
+    const m = modulosLXP.find(m => m.numero === activeModuloNum)
+    if (m) setExpandedModulos(prev => new Set([...prev, m.id]))
+  }, [activeModuloNum])
 
   const enrolledSlugs: string[] =
     profile?.taller_slugs?.length
@@ -318,80 +335,166 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
               {modulosLXP.map(modulo => {
                 const estado: EstadoModulo = getEstadoModuloLXP(modulo.id)
                 const mp = getModuloProgreso(slug ?? '', modulo.numero)
-                const isCompletado = estado === 'completado'
-                const isEnCurso   = estado === 'en_curso'
-                const isBloqueado = estado === 'bloqueado'
+                const isCompletado  = estado === 'completado'
+                const isEnCurso     = estado === 'en_curso'
+                const isBloqueado   = estado === 'bloqueado'
+                const isActiveModulo = activeModuloNum === modulo.numero
+                const isExpanded    = expandedModulos.has(modulo.id)
 
-                const StatusIcon = isCompletado ? CheckCircle2 : isEnCurso ? PlayCircle : isBloqueado ? Lock : Circle
                 const statusColor = isCompletado ? '#02d47e' : isEnCurso ? accent : isBloqueado ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.25)'
-
                 const badge = `M${modulo.numero}`
-                const nombreCorto = modulo.nombre.length > 22 ? modulo.nombre.slice(0, 22) + '…' : modulo.nombre
 
+                const toggleExpand = () => {
+                  if (isBloqueado) return
+                  setExpandedModulos(prev => {
+                    const next = new Set(prev)
+                    next.has(modulo.id) ? next.delete(modulo.id) : next.add(modulo.id)
+                    return next
+                  })
+                }
+
+                // Estado visual de cada sesión
+                const sesionEstados = modulo.sesiones.map(ses => {
+                  const ids = ses.contenidos.map(c => c.id)
+                  const completados = ids.filter(id => getContenidoEstado(id).completed).length
+                  const enProgreso  = ids.some(id => getContenidoEstado(id).inProgress)
+                  const sesCompletada = completados === ids.length && ids.length > 0
+                  return { ses, completados, total: ids.length, sesCompletada, enProgreso }
+                })
+
+                /* ── Collapsed ── */
                 if (collapsed) {
                   return (
                     <button
                       key={modulo.id}
                       title={`Módulo ${modulo.numero} · ${modulo.nombre}`}
-                      onClick={() => !isBloqueado && navigate(`/taller/${slug}/ruta/${modulo.numero}`)}
+                      onClick={() => !isBloqueado && navigate(`/taller/${slug}/ruta/modulo/${modulo.numero}`)}
                       disabled={isBloqueado}
                       style={{
                         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
                         width: '100%', padding: '6px 4px', borderRadius: 10,
-                        background: 'none', border: 'none', cursor: isBloqueado ? 'default' : 'pointer',
+                        background: isActiveModulo ? `${accent}15` : 'none',
+                        border: 'none', cursor: isBloqueado ? 'default' : 'pointer',
                       }}
                     >
                       <span style={{
                         fontSize: 9, fontWeight: 800, letterSpacing: '0.06em',
-                        color: isEnCurso ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.25)',
+                        color: isActiveModulo ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.25)',
                       }}>{badge}</span>
                       <span style={{ width: 6, height: 6, borderRadius: '50%', background: statusColor, display: 'block' }} />
                     </button>
                   )
                 }
 
+                /* ── Expanded ── */
                 return (
-                  <button
-                    key={modulo.id}
-                    onClick={() => !isBloqueado && navigate(`/taller/${slug}/ruta/${modulo.numero}`)}
-                    disabled={isBloqueado}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 8,
-                      width: '100%', padding: '7px 8px', borderRadius: 10, textAlign: 'left',
-                      background: isEnCurso ? `${accent}0d` : 'none',
-                      border: isEnCurso ? `1px solid ${accent}22` : '1px solid transparent',
-                      cursor: isBloqueado ? 'default' : 'pointer',
-                      transition: 'background .15s',
-                      opacity: isBloqueado ? 0.4 : 1,
-                    }}
-                    onMouseEnter={e => { if (!isBloqueado && !isEnCurso) e.currentTarget.style.background = 'rgba(255,255,255,0.04)' }}
-                    onMouseLeave={e => { if (!isEnCurso) e.currentTarget.style.background = 'none' }}
-                  >
-                    {/* Badge número */}
-                    <span style={{
-                      fontSize: 9, fontWeight: 800, letterSpacing: '0.06em',
-                      minWidth: 24, textAlign: 'center', padding: '2px 4px', borderRadius: 5,
-                      background: isEnCurso ? `${accent}20` : isCompletado ? 'rgba(2,212,126,0.12)' : 'rgba(255,255,255,0.06)',
-                      color: isEnCurso ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.3)',
-                    }}>{badge}</span>
+                  <div key={modulo.id}>
+                    {/* Fila del módulo */}
+                    <button
+                      onClick={toggleExpand}
+                      disabled={isBloqueado}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 8,
+                        width: '100%', padding: '7px 8px', borderRadius: 10, textAlign: 'left',
+                        background: isActiveModulo ? `${accent}12` : 'none',
+                        border: isActiveModulo ? `1px solid ${accent}28` : '1px solid transparent',
+                        cursor: isBloqueado ? 'default' : 'pointer',
+                        transition: 'background .15s',
+                        opacity: isBloqueado ? 0.4 : 1,
+                      }}
+                      onMouseEnter={e => { if (!isBloqueado && !isActiveModulo) e.currentTarget.style.background = 'rgba(255,255,255,0.04)' }}
+                      onMouseLeave={e => { if (!isActiveModulo) e.currentTarget.style.background = 'none' }}
+                    >
+                      {/* Badge */}
+                      <span style={{
+                        fontSize: 9, fontWeight: 800, letterSpacing: '0.06em',
+                        minWidth: 24, textAlign: 'center', padding: '2px 4px', borderRadius: 5,
+                        background: isActiveModulo ? `${accent}20` : isCompletado ? 'rgba(2,212,126,0.12)' : 'rgba(255,255,255,0.06)',
+                        color: isActiveModulo ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.3)',
+                      }}>{badge}</span>
 
-                    {/* Nombre */}
-                    <span style={{
-                      flex: 1, fontSize: 11, fontWeight: isEnCurso ? 700 : 500,
-                      color: isEnCurso ? '#fff' : isCompletado ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.38)',
-                      lineHeight: 1.3,
-                    }}>{nombreCorto}</span>
+                      {/* Nombre */}
+                      <span style={{
+                        flex: 1, fontSize: 11, fontWeight: isActiveModulo ? 700 : 500,
+                        color: isActiveModulo ? '#fff' : isCompletado ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.38)',
+                        lineHeight: 1.3,
+                      }}>
+                        {modulo.nombre.length > 20 ? modulo.nombre.slice(0, 20) + '…' : modulo.nombre}
+                      </span>
 
-                    {/* Estado icon + progreso */}
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2, flexShrink: 0 }}>
-                      <StatusIcon size={12} style={{ color: statusColor }} />
-                      {isEnCurso && mp.total > 0 && (
-                        <span style={{ fontSize: 9, fontWeight: 700, color: `${accent}99` }}>
-                          {mp.completados}/{mp.total}
-                        </span>
-                      )}
-                    </div>
-                  </button>
+                      {/* Chevron + progreso */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
+                        {isEnCurso && mp.total > 0 && (
+                          <span style={{ fontSize: 9, fontWeight: 700, color: `${accent}80` }}>
+                            {mp.completados}/{mp.total}
+                          </span>
+                        )}
+                        <ChevronRight
+                          size={12}
+                          style={{
+                            color: statusColor,
+                            transform: isExpanded ? 'rotate(90deg)' : 'none',
+                            transition: 'transform .2s',
+                          }}
+                        />
+                      </div>
+                    </button>
+
+                    {/* Sesiones expandidas */}
+                    {isExpanded && (
+                      <div style={{ paddingLeft: 10, paddingBottom: 4 }}>
+                        {sesionEstados.map(({ ses, sesCompletada, enProgreso, completados, total }) => {
+                          const esSesActiva = isActiveModulo
+
+                          const sesColor = sesCompletada
+                            ? '#02d47e'
+                            : enProgreso ? accent
+                            : 'rgba(255,255,255,0.22)'
+
+                          const SesIcon = sesCompletada ? CheckCircle2 : enProgreso ? PlayCircle : Circle
+
+                          return (
+                            <button
+                              key={ses.id}
+                              onClick={() => navigate(`/taller/${slug}/ruta/modulo/${modulo.numero}`)}
+                              style={{
+                                display: 'flex', alignItems: 'flex-start', gap: 7,
+                                width: '100%', padding: '5px 6px', borderRadius: 8,
+                                background: 'none', border: 'none',
+                                cursor: 'pointer', textAlign: 'left',
+                                transition: 'background .12s',
+                              }}
+                              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
+                              onMouseLeave={e => (e.currentTarget.style.background = 'none')}
+                            >
+                              {/* Línea vertical + icono */}
+                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 2, gap: 0 }}>
+                                <SesIcon size={10} style={{ color: sesColor, flexShrink: 0 }} />
+                                <div style={{ width: 1, flex: 1, minHeight: 6, background: sesColor, opacity: 0.2, marginTop: 2 }} />
+                              </div>
+
+                              {/* Nombre + progreso */}
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <p style={{
+                                  fontSize: 10, fontWeight: sesCompletada || enProgreso ? 600 : 400,
+                                  color: sesCompletada ? 'rgba(255,255,255,0.5)' : enProgreso ? '#fff' : 'rgba(255,255,255,0.28)',
+                                  lineHeight: 1.35, margin: 0,
+                                  overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                                }}>
+                                  {ses.nombre}
+                                </p>
+                                {esSesActiva && total > 0 && !sesCompletada && (
+                                  <p style={{ fontSize: 9, color: `${accent}66`, margin: '2px 0 0', fontWeight: 600 }}>
+                                    {completados}/{total} contenidos
+                                  </p>
+                                )}
+                              </div>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
                 )
               })}
             </>
