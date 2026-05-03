@@ -359,13 +359,14 @@ export default function ModuloDetalle() {
 
       {/* ── Mobile styles ── */}
       <style>{`
+        .md-grid { grid-template-columns: 1fr 280px; }
         @media (max-width: 767px) {
           .md-topbar-inner { padding: 14px 16px !important; }
           .md-topbar-row   { gap: 10px !important; }
           .md-topbar-stats { display: none !important; }
           .md-subbar       { padding: 8px 16px !important; }
           .md-prog-bar     { width: 110px !important; }
-          .md-grid         { grid-template-columns: 1fr !important; padding: 14px 14px !important; gap: 16px !important; }
+          .md-grid         { grid-template-columns: 1fr; padding: 14px !important; gap: 16px !important; }
           .md-sidebar      { position: static !important; }
         }
       `}</style>
@@ -453,7 +454,7 @@ export default function ModuloDetalle() {
       </div>
 
       {/* ── GRID: contenido principal + sidebar ── */}
-      <div className="md-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: 24, padding: '20px 28px', alignItems: 'start' }}>
+      <div className="md-grid" style={{ display: 'grid', gap: 24, padding: '20px 28px', alignItems: 'start' }}>
 
         {/* ── COLUMNA IZQUIERDA: sesiones ── */}
         <div>
