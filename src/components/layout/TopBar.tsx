@@ -1,11 +1,10 @@
 // src/components/layout/TopBar.tsx
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
-import { ChevronRight, LogOut, Bell, Menu } from 'lucide-react'
+import { ChevronRight, LogOut, Menu } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { getBienesByTaller } from '@/data/bienesData'
 import { useAuth } from '@/contexts/AuthContext'
 import { modulosLXP } from '@/data/modulosLXP'
-import { useProgress } from '@/contexts/ProgressContext'
 
 export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
   const { slug, num, id } = useParams<{ slug: string; num: string; id: string }>()
@@ -13,10 +12,8 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
   const taller = talleresConfig.find(t => t.slug === slug)
   const { profile, signOut, user } = useAuth()
   const navigate = useNavigate()
-  const { getModuloProgreso } = useProgress()
 
   const currentModulo = num !== undefined ? modulosLXP.find(m => String(m.numero) === num) : undefined
-  const moduloProgreso = slug && num !== undefined ? getModuloProgreso(slug, Number(num)) : null
 
   const displayName =
     profile?.nombre_completo ||
@@ -116,41 +113,10 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
           </span>
         ))}
 
-        {/* Module progress position indicator */}
-        {moduloProgreso && moduloProgreso.total > 0 && (
-          <span style={{
-            display: 'inline-flex', alignItems: 'center', gap: 6,
-            marginLeft: 8, flexShrink: 0,
-            background: 'rgba(2,212,126,0.08)',
-            border: '1px solid rgba(2,212,126,0.18)',
-            borderRadius: 100, padding: '2px 9px',
-          }}>
-            <span style={{ width: 40, height: 2.5, borderRadius: 2, background: 'rgba(255,255,255,0.1)', display: 'inline-block', overflow: 'hidden', flexShrink: 0 }}>
-              <span style={{ display: 'block', width: `${moduloProgreso.porcentaje}%`, height: '100%', background: '#02d47e', borderRadius: 2 }} />
-            </span>
-            <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(2,212,126,0.85)', letterSpacing: '.03em', whiteSpace: 'nowrap' }}>
-              {moduloProgreso.completados}/{moduloProgreso.total}
-            </span>
-          </span>
-        )}
       </nav>
 
       {/* Right side */}
       <div className="flex items-center gap-2">
-        {/* Notification bell */}
-        <button
-          className="relative h-8 w-8 rounded-xl flex items-center justify-center transition-all"
-          style={{ background: 'rgba(255,255,255,0.05)' }}
-          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(2,212,126,0.12)')}
-          onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
-          title="Sin notificaciones nuevas"
-          aria-label="Notificaciones"
-        >
-          <Bell size={14} style={{ color: 'rgba(255,255,255,0.5)' }} />
-        </button>
-
-        {/* Divider */}
-        <div className="w-px h-5" style={{ background: 'rgba(255,255,255,0.1)' }} />
 
         {/* User — click → /perfil */}
         <button
