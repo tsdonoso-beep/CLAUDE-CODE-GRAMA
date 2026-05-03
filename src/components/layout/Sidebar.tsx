@@ -301,13 +301,13 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                         {({ isActive }) => (
                           <span style={{
                             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
-                            padding: '6px 8px', borderRadius: 8, fontSize: 10, fontWeight: 700,
+                            padding: '7px 8px', borderRadius: 8, fontSize: 12, fontWeight: 700,
                             background: isActive ? `${accent}18` : 'rgba(255,255,255,0.05)',
                             color: isActive ? accent : 'rgba(255,255,255,0.38)',
                             border: isActive ? `1px solid ${accent}28` : '1px solid transparent',
                             transition: 'all .15s', cursor: 'pointer',
                           }}>
-                            <Home size={11} />
+                            <Home size={13} />
                             Inicio
                           </span>
                         )}
@@ -319,13 +319,13 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                       {({ isActive }) => (
                         <span style={{
                           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
-                          padding: '6px 8px', borderRadius: 8, fontSize: 10, fontWeight: 700,
+                          padding: '7px 8px', borderRadius: 8, fontSize: 12, fontWeight: 700,
                           background: isActive ? `${accent}18` : 'rgba(255,255,255,0.05)',
                           color: isActive ? accent : 'rgba(255,255,255,0.38)',
                           border: isActive ? `1px solid ${accent}28` : '1px solid transparent',
                           transition: 'all .15s', cursor: 'pointer',
                         }}>
-                          <Package size={11} />
+                          <Package size={13} />
                           Repositorio
                         </span>
                       )}
