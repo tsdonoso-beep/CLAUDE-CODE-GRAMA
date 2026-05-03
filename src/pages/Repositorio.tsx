@@ -248,7 +248,7 @@ export default function Repositorio() {
                 fontSize: 13, fontWeight: 700, cursor: 'pointer',
                 fontFamily: 'inherit', transition: 'all .15s',
                 background: tab === t.id ? '#043941' : 'transparent',
-                color:      tab === t.id ? '#02d47e'  : '#64748b',
+                color:      tab === t.id ? '#fff'  : '#64748b',
                 border: tab === t.id ? 'none' : '1.5px solid rgba(4,57,65,0.1)',
               }}
             >
@@ -322,7 +322,7 @@ export default function Repositorio() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, paddingBottom: 14 }}>
             <button
               onClick={() => setFiltroTipo('')}
-              style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: !filtroTipo ? '#043941' : 'transparent', color: !filtroTipo ? '#02d47e' : '#64748b', border: !filtroTipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
+              style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: !filtroTipo ? '#043941' : 'transparent', color: !filtroTipo ? '#fff' : '#64748b', border: !filtroTipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
             >
               Todos <span style={{ opacity: 0.7 }}>{statsTipo.reduce((acc, s) => acc + s.count, 0)}</span>
             </button>
@@ -330,7 +330,7 @@ export default function Repositorio() {
               <button
                 key={tipo}
                 onClick={() => setFiltroTipo(filtroTipo === tipo ? '' : tipo)}
-                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: filtroTipo === tipo ? '#043941' : 'transparent', color: filtroTipo === tipo ? '#02d47e' : '#64748b', border: filtroTipo === tipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
+                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: filtroTipo === tipo ? '#043941' : 'transparent', color: filtroTipo === tipo ? '#fff' : '#64748b', border: filtroTipo === tipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
               >
                 <Icon size={11} />
                 {tipo.charAt(0) + tipo.slice(1).toLowerCase()}
@@ -352,7 +352,7 @@ export default function Repositorio() {
               <button
                 key={f.id}
                 onClick={() => setFiltroManual(f.id)}
-                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: filtroManual === f.id ? '#043941' : 'transparent', color: filtroManual === f.id ? '#02d47e' : '#64748b', border: filtroManual === f.id ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
+                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: filtroManual === f.id ? '#043941' : 'transparent', color: filtroManual === f.id ? '#fff' : '#64748b', border: filtroManual === f.id ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
               >
                 {f.label} <span style={{ opacity: 0.7 }}>{f.count}</span>
               </button>
