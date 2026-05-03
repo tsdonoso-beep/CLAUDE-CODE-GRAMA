@@ -64,9 +64,23 @@ export default function TallerHub() {
   return (
     <div style={{ background: 'var(--grama-bg)', fontFamily: 'Manrope, sans-serif' }}>
 
+      {/* ── Mobile styles ── */}
+      <style>{`
+        @media (max-width: 767px) {
+          .th-topbar-inner  { padding: 14px 16px !important; }
+          .th-topbar-row    { gap: 10px !important; }
+          .th-topbar-stats  { display: none !important; }
+          .th-cta-inner     { padding: 14px 16px !important; flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+          .th-cta-btn       { width: 100% !important; justify-content: center !important; }
+          .th-cta-prog-bar  { width: 100% !important; }
+          .th-competencias  { padding: 18px 16px 22px !important; grid-template-columns: 1fr !important; gap: 24px !important; }
+          .th-repo          { padding: 16px 16px !important; }
+        }
+      `}</style>
+
       {/* ══ TOP INFO BAR ══════════════════════════════════════════════════════ */}
       <div style={{ background: '#043941' }}>
-        <div style={{ padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
+        <div className="th-topbar-inner" style={{ padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
 
           {/* Izquierda: icono + nombre */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 0 }}>
@@ -97,7 +111,7 @@ export default function TallerHub() {
           </div>
 
           {/* Derecha: stats + CTA */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexShrink: 0 }}>
+          <div className="th-topbar-stats" style={{ display: 'flex', alignItems: 'center', gap: 28, flexShrink: 0 }}>
             {!isGeneralEpt && (
               <>
                 <div style={{ textAlign: 'center' }}>
@@ -144,7 +158,7 @@ export default function TallerHub() {
           borderBottom: `1px solid ${allCompleted ? 'rgba(2,212,126,0.18)' : 'rgba(4,57,65,0.08)'}`,
           padding: '18px 32px',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
+          <div className="th-cta-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
 
             {/* Izquierda: ícono + contexto + progreso */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 0 }}>
@@ -166,7 +180,7 @@ export default function TallerHub() {
                 </p>
                 {!allCompleted && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <div style={{ width: 180, height: 4, borderRadius: 2, background: 'rgba(4,57,65,0.10)', overflow: 'hidden' }}>
+                    <div className="th-cta-prog-bar" style={{ width: 180, height: 4, borderRadius: 2, background: 'rgba(4,57,65,0.10)', overflow: 'hidden' }}>
                       <div style={{ height: '100%', width: `${currentProg?.porcentaje ?? 0}%`, background: tallerColor, borderRadius: 2, transition: 'width .4s ease' }} />
                     </div>
                     <span style={{ fontSize: 11, color: '#94a3b8', whiteSpace: 'nowrap' }}>
@@ -180,6 +194,7 @@ export default function TallerHub() {
 
             {/* Derecha: botón CTA */}
             <button
+              className="th-cta-btn"
               onClick={() => navigate(
                 allCompleted
                   ? `/taller/${slug}/ruta`
@@ -201,7 +216,7 @@ export default function TallerHub() {
       {/* ══ COMPETENCIAS ══════════════════════════════════════════════════════ */}
       {taller.competencias?.length > 0 && (
         <div style={{ background: '#ffffff', borderBottom: '1px solid rgba(4,57,65,0.07)' }}>
-          <div style={{ padding: '24px 32px 28px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'start' }}>
+          <div className="th-competencias" style={{ padding: '24px 32px 28px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'start' }}>
 
             <div>
               <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#02d47e', margin: '0 0 16px', display: 'flex', alignItems: 'center', gap: 8 }}>
