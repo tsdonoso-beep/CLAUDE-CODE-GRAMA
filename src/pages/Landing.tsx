@@ -11,7 +11,6 @@ import { talleresConfig } from '@/data/talleresConfig'
 import { getBienesByTaller } from '@/data/bienesData'
 import { modulosLXP } from '@/data/modulosLXP'
 import { Reveal } from '@/components/Reveal'
-import { TallerMarquee } from '@/components/TallerMarquee'
 // ── Data ──────────────────────────────────────────────────────────────────────
 const NAV_LINKS = [
   { label: '¿Para quién?',  href: '#perfiles' },
@@ -223,7 +222,7 @@ export default function Landing() {
       </section>
 
       {/* ── Bridge Hero → Perfiles ── */}
-      <TallerMarquee />
+      <div style={{ height:2, background:'linear-gradient(90deg, transparent, var(--grama-menta) 35%, var(--grama-menta) 65%, transparent)', opacity:.35, flexShrink:0 }} />
 
       {/* ══ PERFILES (TABS) ══════════════════════════════════════════════════ */}
       <section id="perfiles" style={{
@@ -489,7 +488,7 @@ export default function Landing() {
       </section>
 
       {/* ── Bridge Perfiles → Cómo Funciona ── */}
-      <TallerMarquee reverse />
+      <div style={{ height:2, background:'linear-gradient(90deg, transparent, var(--grama-menta) 35%, var(--grama-menta) 65%, transparent)', opacity:.35, flexShrink:0 }} />
 
       {/* ══ CÓMO FUNCIONA ════════════════════════════════════════════════════ */}
       <section id="como" style={{ background: 'hsl(54,89%,98%)', padding: '5.5rem 1.5rem', position:'relative', overflow:'hidden' }}>
@@ -588,7 +587,7 @@ export default function Landing() {
       </section>
 
       {/* ── Bridge Cómo Funciona → Talleres ── */}
-      <TallerMarquee />
+      <div style={{ height:2, background:'linear-gradient(90deg, transparent, var(--grama-menta) 35%, var(--grama-menta) 65%, transparent)', opacity:.35, flexShrink:0 }} />
 
       {/* ══ TALLERES (role-aware) ════════════════════════════════════════════ */}
       <section id="talleres" style={{ background: '#fff', padding: '5rem 1.5rem', position:'relative', overflow:'hidden' }}>
@@ -830,7 +829,7 @@ export default function Landing() {
       </section>
 
       {/* ── Bridge Talleres → FAQ ── */}
-      <TallerMarquee reverse />
+      <div style={{ height:2, background:'linear-gradient(90deg, transparent, var(--grama-menta) 35%, var(--grama-menta) 65%, transparent)', opacity:.35, flexShrink:0 }} />
 
       {/* ══ FAQ + CTA ════════════════════════════════════════════════════════ */}
       <section id="faq" style={{ background: '#f0fdf6', padding: '5.5rem 1.5rem', position:'relative', overflow:'hidden' }}>
