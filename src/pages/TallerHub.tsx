@@ -249,100 +249,11 @@ export default function TallerHub() {
         </div>
       )}
 
-      {/* ══ SECUENCIA + SIDEBAR ═══════════════════════════════════════════════ */}
-      <div className={`px-8 py-8 grid gap-6 items-start ${isGeneralEpt ? '' : 'lg:grid-cols-[1fr_300px]'}`}>
-
-        {/* ── SECUENCIA DE MÓDULOS ── */}
-        {!isGeneralEpt && (
-          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
-            <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div>
-                <h2 style={{ fontSize: 16, fontWeight: 800, color: '#043941', margin: '0 0 2px', letterSpacing: '-0.01em' }}>Secuencia de módulos</h2>
-                <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
-                  {modulosLXP.filter(m => getEstadoModuloLXP(m.id) === 'completado').length} completados
-                  {' · '}
-                  {modulosLXP.filter(m => getEstadoModuloLXP(m.id) !== 'completado').length} pendientes
-                </p>
-              </div>
-              <button
-                onClick={() => navigate(`/taller/${slug}/ruta`)}
-                style={{ background: 'none', border: '1.5px solid rgba(4,57,65,0.12)', borderRadius: 10, padding: '6px 14px', fontSize: 12, fontWeight: 700, color: '#043941', cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 5 }}
-              >
-                Ver todo <ArrowRight size={11} />
-              </button>
-            </div>
-
-            <div>
-              {modulosLXP.map((m, i) => {
-                const estado = getEstadoModuloLXP(m.id)
-                const prog   = getModuloProgreso(slug, m.numero)
-                const pct    = prog.porcentaje
-                const isCurrent = m.id === currentMod?.id
-                const tieneQuizBloqueante = m.sesiones.some(s => s.contenidos.some(c => c.bloqueaSiguiente))
-                const bloqueadorQuiz = i > 0
-                  ? modulosLXP.slice(0, i).reverse().find(prev => prev.sesiones.some(s => s.contenidos.some(c => c.bloqueaSiguiente)))
-                  : null
-
-                const badge = {
-                  completado: { label: '✓ Completado', bg: 'rgba(2,212,126,0.1)',  color: '#059669' },
-                  en_curso:   { label: '• En curso',   bg: 'rgba(4,57,65,0.10)',   color: '#043941' },
-                  disponible: { label: '◦ Disponible', bg: 'rgba(14,165,233,0.1)', color: '#0284c7' },
-                  bloqueado:  { label: '🔒 Bloqueado', bg: 'rgba(4,57,65,0.07)',   color: 'rgba(4,57,65,0.35)' },
-                }[estado]
-
-                return (
-                  <div
-                    key={m.id}
-                    onClick={() => estado !== 'bloqueado' && navigate(`/taller/${slug}/ruta/modulo/${m.numero}`)}
-                    style={{ borderBottom: i < modulosLXP.length - 1 ? '1px solid rgba(4,57,65,0.07)' : 'none', padding: '11px 24px', background: isCurrent ? 'rgba(2,212,126,0.04)' : 'transparent', cursor: estado !== 'bloqueado' ? 'pointer' : 'default', transition: 'background .16s' }}
-                    onMouseEnter={e => { if (estado !== 'bloqueado') (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.03)' }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = isCurrent ? 'rgba(2,212,126,0.04)' : 'transparent' }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <div style={{ width: 34, height: 34, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, background: estado === 'completado' ? 'rgba(2,212,126,0.12)' : estado === 'en_curso' ? 'rgba(4,57,65,0.10)' : estado === 'disponible' ? 'rgba(14,165,233,0.1)' : 'rgba(4,57,65,0.04)', opacity: estado === 'bloqueado' ? 0.4 : 1 }}>
-                        {m.icon}
-                      </div>
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 3 }}>
-                          <span style={{ fontSize: 11, fontWeight: 800, color: estado === 'bloqueado' ? 'rgba(4,57,65,0.25)' : '#02d47e' }}>M{m.numero}</span>
-                          <span style={{ fontSize: 13, fontWeight: 700, color: estado === 'bloqueado' ? 'rgba(4,57,65,0.35)' : '#043941', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{m.nombre}</span>
-                          {estado === 'en_curso' && tieneQuizBloqueante && (
-                            <span style={{ fontSize: 9, fontWeight: 800, color: '#d97706', background: 'rgba(217,119,6,0.1)', padding: '2px 7px', borderRadius: 100, flexShrink: 0 }}>Quiz requerido</span>
-                          )}
-                        </div>
-                        {estado !== 'bloqueado' && (
-                          <div style={{ height: 3, background: 'rgba(4,57,65,0.07)', borderRadius: 2, marginBottom: 3 }}>
-                            <div style={{ height: '100%', width: `${pct}%`, background: '#02d47e', borderRadius: 2, transition: 'width .4s ease' }} />
-                          </div>
-                        )}
-                        {estado === 'bloqueado' && bloqueadorQuiz ? (
-                          <p style={{ fontSize: 11, color: '#ef4444', margin: 0, fontStyle: 'italic' }}>
-                            Requiere aprobar Quiz de {bloqueadorQuiz.nombre.split(' ').slice(0, 3).join(' ')} con 80%
-                          </p>
-                        ) : (
-                          <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>
-                            {m.horasTotal}h · {prog.completados} de {prog.total} secciones{pct > 0 && pct < 100 ? ` · ${pct}%` : ''}
-                          </p>
-                        )}
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
-                        <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600 }}>{m.horasTotal}h</span>
-                        <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 9px', borderRadius: 100, background: badge.bg, color: badge.color }}>{badge.label}</span>
-                        {estado !== 'bloqueado' && <span style={{ fontSize: 12, color: 'rgba(4,57,65,0.25)' }}>›</span>}
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* ── SIDEBAR: REPOSITORIO ── */}
-        {!isGeneralEpt && (
+      {/* ══ REPOSITORIO (full-width) ══════════════════════════════════════════ */}
+      {!isGeneralEpt && (
+        <div style={{ padding: '24px 32px' }}>
           <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', overflow: 'hidden' }}>
 
-            {/* Header — mismo estilo que "Secuencia de módulos" */}
             <div style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
                 <h2 style={{ fontSize: 16, fontWeight: 800, color: '#043941', margin: '0 0 2px', letterSpacing: '-0.01em' }}>Repositorio del taller</h2>
@@ -356,51 +267,53 @@ export default function TallerHub() {
               </button>
             </div>
 
-            {/* Filas de zona — mismo patrón que las filas de módulo */}
-            {zonas.map((zona, i) => {
-              const nombre = zonaNombre(zona)
-              const bienesZona = getBienesByZona(slug, zona)
-              const colores = ZONA_COLORS[nombre] ?? { color: tallerColor, bg: `${tallerColor}10` }
-              const ejemplos = bienesZona
-                .filter(b => !b.nombre.toLowerCase().startsWith('manual') && !b.nombre.toLowerCase().includes('video'))
-                .slice(0, 3)
-                .map(b => b.nombre.split(' ').slice(0, 4).join(' '))
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
+              {zonas.map((zona, i) => {
+                const nombre     = zonaNombre(zona)
+                const bienesZona = getBienesByZona(slug, zona)
+                const colores    = ZONA_COLORS[nombre] ?? { color: tallerColor, bg: `${tallerColor}10` }
+                const ejemplos   = bienesZona
+                  .filter(b => !b.nombre.toLowerCase().startsWith('manual') && !b.nombre.toLowerCase().includes('video'))
+                  .slice(0, 3)
+                  .map(b => b.nombre.split(' ').slice(0, 4).join(' '))
 
-              return (
-                <div
-                  key={zona}
-                  onClick={() => navigate(`/taller/${slug}/repositorio?zona=${encodeURIComponent(zona)}`)}
-                  style={{ borderBottom: i < zonas.length - 1 ? '1px solid rgba(4,57,65,0.07)' : 'none', padding: '12px 24px', cursor: 'pointer', transition: 'background .16s' }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.03)' }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    {/* Dot de color de zona */}
-                    <div style={{ width: 34, height: 34, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: colores.bg }}>
-                      <span style={{ fontSize: 13, fontWeight: 900, color: colores.color }}>{nombre[0]}</span>
-                    </div>
-
-                    {/* Centro */}
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 3 }}>
-                        <span style={{ fontSize: 13, fontWeight: 700, color: '#043941' }}>{nombre}</span>
-                        <span style={{ fontSize: 10, fontWeight: 700, color: '#fff', background: colores.color, padding: '1px 7px', borderRadius: 100, flexShrink: 0 }}>{bienesZona.length}</span>
+                return (
+                  <div
+                    key={zona}
+                    onClick={() => navigate(`/taller/${slug}/repositorio?zona=${encodeURIComponent(zona)}`)}
+                    style={{
+                      padding: '16px 24px', cursor: 'pointer', transition: 'background .16s',
+                      borderRight: (i + 1) % 2 !== 0 ? '1px solid rgba(4,57,65,0.07)' : 'none',
+                      borderBottom: i < zonas.length - 2 ? '1px solid rgba(4,57,65,0.07)' : 'none',
+                    }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.02)' }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+                      <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: colores.bg }}>
+                        <span style={{ fontSize: 14, fontWeight: 900, color: colores.color }}>{nombre[0]}</span>
                       </div>
-                      <p style={{ fontSize: 11, color: '#94a3b8', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {ejemplos.join(' · ')}
-                      </p>
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                          <span style={{ fontSize: 13, fontWeight: 700, color: '#043941' }}>{nombre}</span>
+                          <span style={{ fontSize: 10, fontWeight: 700, color: '#fff', background: colores.color, padding: '1px 7px', borderRadius: 100 }}>{bienesZona.length}</span>
+                        </div>
+                        <p style={{ fontSize: 11, color: '#94a3b8', margin: '2px 0 0', lineHeight: 1.4 }}>
+                          {ejemplos.join(' · ')}
+                        </p>
+                      </div>
                     </div>
-
-                    <ChevronRight size={14} style={{ color: 'rgba(4,57,65,0.25)', flexShrink: 0 }} />
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      <ChevronRight size={13} style={{ color: 'rgba(4,57,65,0.2)' }} />
+                    </div>
                   </div>
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
 
           </div>
-        )}
-
-      </div>
+        </div>
+      )}
     </div>
   )
 }
