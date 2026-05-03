@@ -374,7 +374,7 @@ export default function Repositorio() {
                   fontSize: 12, fontWeight: 700, flexShrink: 0,
                   transition: 'all .15s', fontFamily: 'inherit', cursor: 'pointer',
                   background: showFiltros || activeCount > 0 ? '#043941' : '#f0fdf8',
-                  color: showFiltros || activeCount > 0 ? tallerColor : '#043941',
+                  color: showFiltros || activeCount > 0 ? '#fff' : '#043941',
                   border: `1.5px solid ${showFiltros || activeCount > 0 ? '#043941' : '#d1fae5'}`,
                 }}
               >
@@ -401,7 +401,7 @@ export default function Repositorio() {
                     fontSize: 12, fontWeight: 600, transition: 'all .15s', whiteSpace: 'nowrap',
                     cursor: 'pointer', fontFamily: 'inherit',
                     background: filtroZona === z ? '#043941' : '#f0fdf8',
-                    color: filtroZona === z ? tallerColor : '#045f6c',
+                    color: filtroZona === z ? '#fff' : '#045f6c',
                     border: `1.5px solid ${filtroZona === z ? '#043941' : '#d1fae5'}`,
                   }}
                 >
