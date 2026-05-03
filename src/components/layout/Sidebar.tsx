@@ -332,11 +332,22 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                     </NavLink>
                   </div>
 
-                  {/* Label sección TOC */}
+                  {/* Label sección TOC — navegable */}
                   <div style={{ paddingLeft: 8, marginBottom: 6 }}>
-                    <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.22)', textTransform: 'uppercase' }}>
-                      Ruta de Aprendizaje
-                    </span>
+                    <NavLink to={`/taller/${slug}/ruta`}>
+                      {({ isActive }) => (
+                        <span style={{
+                          fontSize: 9, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase',
+                          color: isActive ? '#02d47e' : 'rgba(255,255,255,0.22)',
+                          cursor: 'pointer', transition: 'color .15s',
+                        }}
+                          onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.5)' }}
+                          onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.22)' }}
+                        >
+                          Ruta de Aprendizaje ›
+                        </span>
+                      )}
+                    </NavLink>
                   </div>
                 </>
               )}
