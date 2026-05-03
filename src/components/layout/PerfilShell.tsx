@@ -40,31 +40,44 @@ export function PerfilShell() {
 
   const ie = INSTITUCIONES_EDUCATIVAS.find(i => i.id === profile?.ie_id)
 
-  const hour    = new Date().getHours()
+  const hour     = new Date().getHours()
   const greeting = hour < 12 ? 'Buenos días' : hour < 18 ? 'Buenas tardes' : 'Buenas noches'
 
   const badges = [
     'Docente EPT',
     ie?.provincia ? `${ie.provincia}` : null,
-    ie?.nombre    ? `I.E. ${ie.nombre}` : null,
     `Año escolar ${new Date().getFullYear()}`,
   ].filter(Boolean) as string[]
 
   return (
     <div style={{ minHeight: '100vh', background: '#f0faf5', fontFamily: "'Manrope', sans-serif" }}>
 
+      {/* ── Mobile styles ── */}
+      <style>{`
+        @media (max-width: 640px) {
+          .ps-inner    { padding: 20px 18px 0 !important; }
+          .ps-main-row { flex-direction: column !important; align-items: stretch !important; gap: 14px !important; padding-bottom: 16px !important; }
+          .ps-stats-row { width: 100% !important; flex-shrink: 1 !important; gap: 0 !important; justify-content: space-between !important; }
+          .ps-divider  { display: none !important; }
+          .ps-inicio-btn { display: none !important; }
+          .ps-tabs { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; scrollbar-width: none !important; }
+          .ps-tabs::-webkit-scrollbar { display: none !important; }
+          .ps-main     { padding: 20px 16px !important; }
+        }
+      `}</style>
+
       {/* ── Header oscuro ─────────────────────────────────────────────────── */}
       <header style={{
         background: 'linear-gradient(135deg, #032e34 0%, #043941 100%)',
         borderBottom: '1px solid rgba(2,212,126,0.12)',
       }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto', padding: '28px 48px 0' }}>
+        <div className="ps-inner" style={{ maxWidth: 1400, margin: '0 auto', padding: '28px 48px 0' }}>
 
           {/* Fila principal: avatar + info | stats + logout */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 24, gap: 24 }}>
+          <div className="ps-main-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 24, gap: 24 }}>
 
             {/* Avatar + datos */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 20, minWidth: 0 }}>
+            <div className="ps-avatar-info" style={{ display: 'flex', alignItems: 'center', gap: 20, minWidth: 0 }}>
               {/* Avatar */}
               <div style={{
                 width: 68, height: 68, borderRadius: '50%', flexShrink: 0,
@@ -82,7 +95,7 @@ export function PerfilShell() {
                 <p style={{ color: 'rgba(2,212,126,0.65)', fontSize: 11, fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', margin: '0 0 4px' }}>
                   {greeting}
                 </p>
-                <h1 style={{ color: '#fff', fontSize: 'clamp(1.35rem, 2.5vw, 1.8rem)', fontWeight: 800, margin: '0 0 10px', lineHeight: 1.1, letterSpacing: '-0.02em' }}>
+                <h1 style={{ color: '#fff', fontSize: 'clamp(1.2rem, 2.5vw, 1.8rem)', fontWeight: 800, margin: '0 0 10px', lineHeight: 1.1, letterSpacing: '-0.02em' }}>
                   {displayName}
                 </h1>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
@@ -102,7 +115,7 @@ export function PerfilShell() {
             </div>
 
             {/* Stats + logout */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 32, flexShrink: 0 }}>
+            <div className="ps-stats-row" style={{ display: 'flex', alignItems: 'center', gap: 32, flexShrink: 0 }}>
               {[
                 { value: `${totalHoras}h`,            label: 'Completadas' },
                 { value: `${overallPct}%`,             label: 'Progreso'    },
@@ -119,10 +132,11 @@ export function PerfilShell() {
               ))}
 
               {/* Divider */}
-              <div style={{ width: 1, height: 36, background: 'rgba(255,255,255,0.08)' }} />
+              <div className="ps-divider" style={{ width: 1, height: 36, background: 'rgba(255,255,255,0.08)' }} />
 
               {/* Volver al inicio */}
               <button
+                className="ps-inicio-btn"
                 onClick={() => navigate(tallerSlugs[0] ? `/taller/${tallerSlugs[0]}` : '/hub')}
                 style={{ background: 'none', color: 'rgba(255,255,255,0.7)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 12, padding: '9px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .15s' }}
                 onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
@@ -146,7 +160,7 @@ export function PerfilShell() {
           </div>
 
           {/* Tab nav */}
-          <nav style={{ display: 'flex' }}>
+          <nav className="ps-tabs" style={{ display: 'flex' }}>
             {TABS.map(tab => (
               <NavLink
                 key={tab.to}
@@ -172,7 +186,7 @@ export function PerfilShell() {
       </header>
 
       {/* ── Contenido de la página ─────────────────────────────────────────── */}
-      <main style={{ maxWidth: 1400, margin: '0 auto', padding: '32px 48px' }}>
+      <main className="ps-main" style={{ maxWidth: 1400, margin: '0 auto', padding: '32px 48px' }}>
         <Outlet />
       </main>
     </div>
