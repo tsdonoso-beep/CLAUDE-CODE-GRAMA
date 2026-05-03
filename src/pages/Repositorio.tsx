@@ -78,9 +78,17 @@ export default function Repositorio() {
   }, [user?.id, slug])
 
   const tabParam = searchParams.get('tab') as Tab | null
-  const [tab, setTab] = useState<Tab>(() =>
-    (tabParam === 'manuales' || tabParam === 'videos' || tabParam === 'bienes') ? tabParam : 'bienes'
-  )
+  const [tab, setTab] = useState<Tab>(() => {
+    if (tabParam === 'manuales' || tabParam === 'videos' || tabParam === 'bienes') {
+      return tabParam
+    }
+    const saved = localStorage.getItem(`repo-tab-${slug}`)
+    return (saved === 'manuales' || saved === 'videos') ? saved : 'bienes'
+  })
+
+  useEffect(() => {
+    localStorage.setItem(`repo-tab-${slug}`, tab)
+  }, [tab, slug])
 
   // ── Catálogo ──────────────────────────────────────────────────────────────
   const [busqueda, setBusqueda] = useState('')
