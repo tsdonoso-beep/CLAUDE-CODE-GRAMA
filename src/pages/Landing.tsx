@@ -97,6 +97,9 @@ export default function Landing() {
           }
           .lp-hero-image { display: none !important; }
           .lp-stats-bar { grid-template-columns: repeat(2, 1fr) !important; }
+          .lp-tab-selector { gap: 8px !important; }
+          .lp-tab-selector button { padding: 0.75rem 0.6rem 0.85rem !important; }
+          .lp-tab-selector .lp-tab-tagline { display: none !important; }
           .lp-tab-content {
             grid-template-columns: 1fr !important;
             gap: 20px !important;
@@ -318,7 +321,7 @@ export default function Landing() {
 
           {/* Tab selector — cards de rol */}
           <Reveal direction="up" delay={100}>
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:14, marginBottom:'1rem' }}>
+          <div className="lp-tab-selector" style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:14, marginBottom:'1rem' }}>
             {([
               { key: 'docente',  emoji: '🔧', label: 'Docente',  tagline:'Capacitación y certificación', activeColor:'var(--grama-oscuro)', activeBg:'var(--grama-oscuro)', activeText:'#fff',    accentBar:'var(--grama-menta)',  hoverBg:'rgba(4,57,65,.04)',    shadow:'rgba(4,57,65,.13)',    accentIndicator:'rgba(255,255,255,.4)' },
               { key: 'alumno',   emoji: '⭐', label: 'Alumno',   tagline:'Proyectos prácticos guiados',  activeColor:'var(--grama-menta)', activeBg:'#e8fff4', activeText:'var(--grama-oscuro)', accentBar:'var(--grama-menta)',  hoverBg:'rgba(2,212,126,.06)', shadow:'rgba(2,212,126,.13)',  accentIndicator:'rgba(2,212,126,.5)' },
@@ -358,7 +361,7 @@ export default function Landing() {
                   </span>
 
                   {/* Tagline */}
-                  <span style={{ fontSize:'var(--t-label)', fontWeight:500, lineHeight:1.4, display:'block',
+                  <span className="lp-tab-tagline" style={{ fontSize:'var(--t-label)', fontWeight:500, lineHeight:1.4, display:'block',
                     color: isActive ? (tab.key === 'docente' ? 'rgba(255,255,255,.55)' : 'rgba(4,57,65,.5)') : 'rgba(4,57,65,.38)',
                   }}>
                     {tab.tagline}
