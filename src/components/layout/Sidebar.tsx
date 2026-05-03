@@ -120,11 +120,11 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
           title="Mi perfil"
         >
           {collapsed ? (
-            <svg width={18} height={18} viewBox="0 0 24 24" fill="none" aria-hidden>
-              <polygon points="2,22 12,2 12,22" fill="#02d47e" />
-              <polygon points="12,2 22,12 12,12" fill="#ffffff" opacity="0.85" />
-              <rect x="12" y="12" width="10" height="10" fill="#ffffff" opacity="0.5" />
-            </svg>
+            <span style={{
+              fontFamily: 'Manrope, sans-serif', fontWeight: 900,
+              fontSize: 18, lineHeight: 1, color: '#02d47e',
+              letterSpacing: '-0.03em',
+            }}>G</span>
           ) : (
             <GramaLogo variant="light" size="sm" />
           )}
