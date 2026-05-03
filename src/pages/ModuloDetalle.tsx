@@ -426,7 +426,7 @@ export default function ModuloDetalle() {
         </div>
       </div>
 
-      {/* Sub-barra: descripción + progreso */}
+      {/* Sub-barra: descripción + % progreso */}
       <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)', padding: '10px 32px', display: 'flex', alignItems: 'center', gap: 16 }}>
         {modulo.descripcion && (
           <p style={{ fontSize: 12, color: '#64748b', margin: 0, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -437,9 +437,6 @@ export default function ModuloDetalle() {
           <div style={{ height: '100%', width: `${progreso.porcentaje}%`, background: '#02d47e', borderRadius: 6, transition: 'width .5s ease' }} />
         </div>
         <p style={{ fontSize: 12, fontWeight: 700, color: '#02d47e', margin: 0, flexShrink: 0 }}>{progreso.porcentaje}%</p>
-        <p style={{ fontSize: 11, color: '#94a3b8', margin: 0, flexShrink: 0 }}>
-          {progreso.completados}/{progreso.total} contenidos
-        </p>
       </div>
 
       {/* ── GRID: contenido principal + sidebar ── */}
