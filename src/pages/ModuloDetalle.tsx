@@ -745,34 +745,54 @@ export default function ModuloDetalle() {
             </div>
           </div>
 
-          {/* Card ② Índice de sesiones */}
-          <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '16px 18px' }}>
-            <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 10px' }}>Sesiones</p>
-            {modulo.sesiones.map((ses, si) => {
-              const siCompletada = ses.contenidos.length > 0 && ses.contenidos.every(c => getContenidoEstado(c.id).completed)
-              const siEsNext = ses.id === nextStepSesId && !siCompletada
-              return (
-                <button
-                  key={ses.id}
-                  onClick={() => {
-                    setExpandedSubs(new Set([ses.id]))
-                    document.getElementById(`ses-${ses.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                  }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '7px 0', borderBottom: si < modulo.sesiones.length - 1 ? '1px solid rgba(4,57,65,0.07)' : 'none', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit' }}
-                >
-                  <span style={{ fontSize: 10, fontWeight: 800, minWidth: 20, flexShrink: 0, color: siCompletada ? '#02d47e' : siEsNext ? tallerColor : 'rgba(4,57,65,0.35)' }}>
-                    {siCompletada ? '✓' : siEsNext ? '▶' : `S${si + 1}`}
-                  </span>
-                  <span style={{ fontSize: 11, fontWeight: siEsNext ? 700 : 600, color: siCompletada ? '#94a3b8' : siEsNext ? '#043941' : '#64748b', flex: 1, lineHeight: 1.3, textAlign: 'left' }}>
-                    {ses.nombre}
-                  </span>
-                  {siEsNext && (
-                    <span style={{ fontSize: 9, fontWeight: 800, color: tallerColor, flexShrink: 0, whiteSpace: 'nowrap' }}>← aquí</span>
-                  )}
-                </button>
-              )
-            })}
-          </div>
+          {/* Card ② Sesiones sincrónicas del módulo */}
+          {(() => {
+            const sesionesVivo = modulo.sesiones.filter(s => s.modalidad === 'sincrono' || s.modalidad === 'presencial')
+            if (sesionesVivo.length === 0) return null
+            return (
+              <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '16px 18px' }}>
+                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 10px' }}>
+                  Sesiones en vivo
+                </p>
+                {sesionesVivo.map((ses, si) => {
+                  const completada = ses.contenidos.length > 0 && ses.contenidos.every(c => getContenidoEstado(c.id).completed)
+                  const urlVivo = ses.contenidos.find(c => c.tipo === 'EN_VIVO')?.urlVivo
+                  return (
+                    <div
+                      key={ses.id}
+                      style={{
+                        display: 'flex', alignItems: 'flex-start', gap: 10,
+                        padding: '9px 0',
+                        borderBottom: si < sesionesVivo.length - 1 ? '1px solid rgba(4,57,65,0.06)' : 'none',
+                      }}
+                    >
+                      <div style={{
+                        width: 28, height: 28, borderRadius: 8, flexShrink: 0,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        background: completada ? 'rgba(2,212,126,0.1)' : ses.modalidad === 'presencial' ? 'rgba(245,158,11,0.1)' : 'rgba(59,130,246,0.1)',
+                      }}>
+                        <span style={{ fontSize: 13 }}>{completada ? '✓' : ses.modalidad === 'presencial' ? '🏫' : '📡'}</span>
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{ fontSize: 11, fontWeight: 700, color: completada ? '#94a3b8' : '#043941', margin: '0 0 2px', lineHeight: 1.3 }}>
+                          {ses.nombre}
+                        </p>
+                        <p style={{ fontSize: 10, color: '#94a3b8', margin: 0 }}>
+                          {ses.modalidad === 'presencial' ? 'Presencial' : 'En vivo'} · {ses.duracionHoras}h
+                        </p>
+                        {urlVivo && !completada && (
+                          <a href={urlVivo} target="_blank" rel="noopener noreferrer"
+                            style={{ display: 'inline-block', marginTop: 5, fontSize: 10, fontWeight: 700, color: tallerColor, textDecoration: 'none' }}>
+                            Unirse →
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )
+          })()}
 
           {/* Card ③ Navegación prev / next */}
           {(prevModulo || nextModulo) && (
