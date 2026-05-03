@@ -1,5 +1,5 @@
 // src/pages/Landing.tsx
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   ChevronRight, ArrowRight,
@@ -66,6 +66,26 @@ export default function Landing() {
   const [open, setOpen] = useState<number | null>(null)
   const [activeTab, setActiveTab] = useState<'docente' | 'alumno' | 'director'>('docente')
   const [selectedTaller, setSelectedTaller] = useState(0)
+
+  // ── Typewriter H1 ──────────────────────────────────────────────────────────
+  const TW_FULL = 'GRAMA los acompaña.'
+  const [twText, setTwText] = useState('')
+  const [twDone, setTwDone] = useState(false)
+  useEffect(() => {
+    let i = 0
+    const start = setTimeout(() => {
+      const tick = setInterval(() => {
+        i++
+        setTwText(TW_FULL.slice(0, i))
+        if (i >= TW_FULL.length) {
+          clearInterval(tick)
+          setTimeout(() => setTwDone(true), 900)
+        }
+      }, 52)
+      return () => clearInterval(tick)
+    }, 420)
+    return () => clearTimeout(start)
+  }, [])
 
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f0fdf6' }}>
@@ -162,8 +182,17 @@ export default function Landing() {
           <h1 style={{ fontSize:'var(--t-hero)', fontWeight:800, lineHeight:1.04, letterSpacing:'-1.8px', color:'var(--grama-oscuro)', marginBottom:20 }}>
             Los talleres técnicos<br />
             <em style={{ fontStyle:'normal', color:'var(--grama-menta)' }}>forman el país.</em><br />
-            GRAMA los acompaña.
+            {twText}
+            {!twDone && (
+              <span style={{
+                display:'inline-block', width:3, height:'0.82em',
+                background:'var(--grama-menta)', marginLeft:2,
+                verticalAlign:'text-bottom', borderRadius:1,
+                animation:'tw-cursor .7s step-end infinite',
+              }} />
+            )}
           </h1>
+          <style>{`@keyframes tw-cursor { 0%,100%{opacity:1} 50%{opacity:0} }`}</style>
 
           {/* Subtexto limpio */}
           <p style={{ fontSize:'1rem', color:'rgba(4,57,65,.6)', lineHeight:1.75, fontWeight:450, margin:'0 0 32px', maxWidth:420 }}>
