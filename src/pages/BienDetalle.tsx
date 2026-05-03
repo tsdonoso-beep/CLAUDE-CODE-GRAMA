@@ -1,6 +1,6 @@
 // src/pages/BienDetalle.tsx
 import { useState, useCallback, useRef, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
 import {
   ChevronLeft, ChevronRight, FileText, Video, Shield, Package,
@@ -26,6 +26,8 @@ export default function BienDetalle() {
   const { taller, bienes, slug } = useTaller()
   const navigate = useNavigate()
   const { user } = useAuth()
+  const [searchParams] = useSearchParams()
+  const sourceTab = searchParams.get('from')
   const [activeTab, setActiveTab] = useState<TabId>('manual')
   const [showPDFModal, setShowPDFModal] = useState(false)
   const closePDFModal = useCallback(() => setShowPDFModal(false), [])
@@ -50,10 +52,16 @@ export default function BienDetalle() {
     }
   }
 
-  // Auto-select video tab when a video is available, otherwise manual
+  // Auto-select tab based on source, or by available resources
   useEffect(() => {
-    setActiveTab(videoUrl ? 'video' : 'manual')
-  }, [bien?.n, videoUrl])
+    if (sourceTab === 'videos' && videoUrl) {
+      setActiveTab('video')
+    } else if (sourceTab === 'manuales') {
+      setActiveTab('manual')
+    } else {
+      setActiveTab(videoUrl ? 'video' : 'manual')
+    }
+  }, [bien?.n, videoUrl, sourceTab])
 
   // Auto-track view on load
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,7 +75,7 @@ export default function BienDetalle() {
         <Package size={40} style={{ color: '#e3f8fb' }} />
         <p className="font-semibold" style={{ color: '#043941' }}>Bien no encontrado</p>
         <button
-          onClick={() => navigate(`/taller/${slug}/repositorio`)}
+          onClick={() => navigate(sourceTab ? `/taller/${slug}/repositorio?tab=${sourceTab === 'manuales' ? 'manuales' : sourceTab === 'videos' ? 'videos' : 'bienes'}` : `/taller/${slug}/repositorio`)}
           className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold text-white"
           style={{ background: '#043941' }}
         >
@@ -111,7 +119,7 @@ export default function BienDetalle() {
             <div style={{ minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
                 <button
-                  onClick={() => navigate(`/taller/${slug}/repositorio`)}
+                  onClick={() => navigate(sourceTab ? `/taller/${slug}/repositorio?tab=${sourceTab === 'manuales' ? 'manuales' : sourceTab === 'videos' ? 'videos' : 'bienes'}` : `/taller/${slug}/repositorio`)}
                   style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit', transition: 'color .15s' }}
                   onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
                   onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
@@ -161,7 +169,7 @@ export default function BienDetalle() {
             </div>
             <div style={{ width: 1, height: 28, background: 'rgba(255,255,255,0.15)' }} />
             <button
-              onClick={() => navigate(`/taller/${slug}/repositorio`)}
+              onClick={() => navigate(sourceTab ? `/taller/${slug}/repositorio?tab=${sourceTab === 'manuales' ? 'manuales' : sourceTab === 'videos' ? 'videos' : 'bienes'}` : `/taller/${slug}/repositorio`)}
               style={{ background: 'none', color: 'rgba(255,255,255,0.7)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 12, padding: '8px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .15s' }}
               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.10)'; e.currentTarget.style.color = '#fff' }}
               onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}

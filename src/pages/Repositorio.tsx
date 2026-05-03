@@ -76,7 +76,11 @@ export default function Repositorio() {
       : 'directo'
     trackNavegacion(user.id, 'repositorio', slug, referrer)
   }, [user?.id, slug])
-  const [tab, setTab] = useState<Tab>('bienes')
+
+  const tabParam = searchParams.get('tab') as Tab | null
+  const [tab, setTab] = useState<Tab>(() =>
+    (tabParam === 'manuales' || tabParam === 'videos' || tabParam === 'bienes') ? tabParam : 'bienes'
+  )
 
   // ── Catálogo ──────────────────────────────────────────────────────────────
   const [busqueda, setBusqueda] = useState('')
@@ -575,7 +579,7 @@ export default function Repositorio() {
                 return (
                   <button
                     key={b.n}
-                    onClick={() => navigate(`/taller/${slug}/repositorio/bien/${b.n}`)}
+                    onClick={() => navigate(`/taller/${slug}/repositorio/bien/${b.n}?from=manuales`)}
                     style={{
                       display: 'flex', alignItems: 'center', gap: 16,
                       padding: 16, borderRadius: 16, textAlign: 'left',
@@ -688,7 +692,7 @@ function VideoCard({ bien, slug, navigate }: {
 }) {
   return (
     <button
-      onClick={() => navigate(`/taller/${slug}/repositorio/bien/${bien.n}`)}
+      onClick={() => navigate(`/taller/${slug}/repositorio/bien/${bien.n}?from=videos`)}
       style={{
         width: '100%', textAlign: 'left', borderRadius: 16, overflow: 'hidden',
         border: '2px solid #e2e8f0', background: '#ffffff', cursor: 'pointer',
