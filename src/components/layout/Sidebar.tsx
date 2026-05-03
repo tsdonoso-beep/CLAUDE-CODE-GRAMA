@@ -1,7 +1,7 @@
 // src/components/layout/Sidebar.tsx
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, useParams, useNavigate, useLocation } from 'react-router-dom'
-import { Package, ChevronLeft, X, User, Home, LayoutDashboard, Trophy, Award, MessageCircle } from 'lucide-react'
+import { Package, ChevronLeft, ChevronRight, X, User, Home, LayoutDashboard, Trophy, Award, MessageCircle } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { useProgress } from '@/contexts/ProgressContext'
 import { useAuth } from '@/contexts/AuthContext'
