@@ -86,8 +86,46 @@ export default function Landing() {
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", background: '#f0fdf6' }}>
 
+      {/* ── Mobile responsive styles ── */}
+      <style>{`
+        @media (max-width: 767px) {
+          .lp-header { padding: 0 18px !important; }
+          .lp-hero {
+            grid-template-columns: 1fr !important;
+            padding: 80px 18px 128px !important;
+            gap: 20px !important;
+          }
+          .lp-hero-image { display: none !important; }
+          .lp-stats-bar { grid-template-columns: repeat(2, 1fr) !important; }
+          .lp-tab-content {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+          }
+          .lp-como-header {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+            margin-bottom: 2rem !important;
+          }
+          .lp-stages {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 12px !important;
+          }
+          .lp-faq-grid {
+            grid-template-columns: 1fr !important;
+            gap: 28px !important;
+          }
+          .lp-cta-sticky { position: static !important; }
+          .lp-footer-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .lp-footer-bottom { flex-direction: column !important; align-items: flex-start !important; }
+          .lp-footer-bottom-links { flex-wrap: wrap !important; gap: 10px !important; }
+        }
+        @media (max-width: 479px) {
+          .lp-stages { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+
       {/* ══ NAVBAR ══════════════════════════════════════════════════════════ */}
-      <header style={{
+      <header className="lp-header" style={{
         position:'fixed', top:0, left:0, right:0, zIndex:50,
         display:'flex', alignItems:'center', justifyContent:'space-between',
         padding:'0 52px', height:60,
@@ -99,8 +137,8 @@ export default function Landing() {
           <GramaLogo variant="dark" size="sm" />
         </button>
 
-        {/* Links desktop */}
-        <nav className="hidden md:flex" style={{ display:'flex', alignItems:'center', gap:32 }}>
+        {/* Links desktop — inline display removed so Tailwind hidden/md:flex controls visibility */}
+        <nav className="hidden md:flex" style={{ alignItems:'center', gap:32 }}>
           {NAV_LINKS.map(l => (
             <a key={l.label} href={l.href} style={{ fontSize:13, fontWeight:500, color:'var(--grama-oscuro)', textDecoration:'none', opacity:.6, transition:'opacity .2s' }}
               onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
@@ -142,7 +180,7 @@ export default function Landing() {
       </header>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section style={{
+      <section className="lp-hero" style={{
         minHeight: '100vh', paddingTop: 60,
         background: 'linear-gradient(135deg, #e8f8f2 0%, #e3f8fb 50%, #edf6ff 100%)',
         display: 'grid', gridTemplateColumns: '1fr 1fr',
@@ -215,7 +253,7 @@ export default function Landing() {
         </Reveal>
 
         {/* ── Columna derecha — imagen ── */}
-        <Reveal direction="up" delay={180} duration={700} style={{ position:'relative', zIndex:2 }}>
+        <Reveal className="lp-hero-image" direction="up" delay={180} duration={700} style={{ position:'relative', zIndex:2 }}>
           <div style={{ borderRadius:24, overflow:'hidden', boxShadow:'0 32px 80px rgba(4,57,65,.28)', position:'relative', aspectRatio:'4/3' }}>
             <img
               src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=700&q=80"
@@ -227,7 +265,7 @@ export default function Landing() {
         </Reveal>
 
         {/* ── Stats bar (pegada al fondo del hero) ── */}
-        <div style={{ position:'absolute', bottom:0, left:0, right:0, background:'var(--grama-oscuro)', display:'grid', gridTemplateColumns:'repeat(4,1fr)', zIndex:3 }}>
+        <div className="lp-stats-bar" style={{ position:'absolute', bottom:0, left:0, right:0, background:'var(--grama-oscuro)', display:'grid', gridTemplateColumns:'repeat(4,1fr)', zIndex:3 }}>
           {[
             { n:'10',  hi:'',   label:'Especialidades' },
             { n:'3',   hi:'',   label:'Roles en la plataforma' },
@@ -354,7 +392,7 @@ export default function Landing() {
 
           {/* Tab content */}
           {activeTab === 'docente' && (
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
+            <div className="lp-tab-content" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
               {/* Texto */}
               <div>
                 <h3 style={{ fontSize:'var(--t-h1)', fontWeight:800, lineHeight:1.15, color:'var(--grama-oscuro)', margin:'0 0 1rem' }}>
@@ -395,7 +433,7 @@ export default function Landing() {
           )}
 
           {activeTab === 'alumno' && (
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
+            <div className="lp-tab-content" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
               {/* Texto */}
               <div>
                 <h3 style={{ fontSize:'var(--t-h1)', fontWeight:800, lineHeight:1.15, color:'var(--grama-oscuro)', margin:'0 0 1rem' }}>
@@ -422,7 +460,7 @@ export default function Landing() {
                   ))}
                 </div>
                 {/* Proyectos "en proceso" */}
-                <div style={{ display:'flex', gap:10, marginBottom:'1.8rem' }}>
+                <div style={{ display:'flex', gap:10, marginBottom:'1.8rem', flexWrap:'wrap' }}>
                   {[
                     { nombre:'Kit de Robótica', color:'#d4c4fc', textColor:'#5b21b6' },
                     { nombre:'Kit de Matemáticas', color:'#fde68a', textColor:'#92400e' },
@@ -458,7 +496,7 @@ export default function Landing() {
           )}
 
           {activeTab === 'director' && (
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
+            <div className="lp-tab-content" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', animation:'fadeInUp .4s ease both' }}>
               {/* Texto */}
               <div>
                 <h3 style={{ fontSize:'var(--t-h1)', fontWeight:800, lineHeight:1.15, color:'var(--grama-oscuro)', margin:'0 0 1rem' }}>
@@ -560,7 +598,7 @@ export default function Landing() {
             return (
               <>
                 <Reveal direction="up">
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'end', marginBottom:'5rem' }}>
+                <div className="lp-como-header" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'end', marginBottom:'5rem' }}>
                   <div>
                     <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'var(--grama-menta)', marginBottom:16 }}>
                       <span style={{ display:'inline-block', height:1, width:32, background:'var(--grama-menta)' }} />
@@ -577,7 +615,7 @@ export default function Landing() {
                 </Reveal>
 
                 {/* 4 etapas */}
-                <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:24, position:'relative' }}>
+                <div className="lp-stages" style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:24, position:'relative' }}>
                   {meta.stages.map((stage, i) => (
               <Reveal key={i} direction="up" delay={i * 100} threshold={0.08}>
               <div style={{ position:'relative', zIndex:1, background:'#fff', borderRadius:16, overflow:'hidden', boxShadow:'0 4px 20px rgba(4,57,65,.07)', padding:'0 0 28px', height:'100%' }}>
@@ -861,7 +899,7 @@ export default function Landing() {
         <div style={{ position:'absolute', top:'10%', left:'6%', width:240, height:240, background:'#d4c4fc', clipPath:'polygon(50% 0%,100% 100%,0% 100%)', opacity:.20, pointerEvents:'none', animation:'heroFa 17s ease-in-out infinite' }} />
         <div style={{ position:'absolute', bottom:'10%', right:'4%', width:200, height:200, background:'#b8edd0', clipPath:'polygon(50% 100%,0% 0%,100% 0%)', opacity:.22, pointerEvents:'none', animation:'heroFd 19s ease-in-out infinite 2s' }} />
 
-        <div style={{ maxWidth:1100, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 340px', gap:48, alignItems:'start' }}>
+        <div className="lp-faq-grid" style={{ maxWidth:1100, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 340px', gap:48, alignItems:'start' }}>
 
           {/* FAQ accordion */}
           <div>
@@ -920,7 +958,7 @@ export default function Landing() {
 
           {/* CTA card sticky */}
           <Reveal direction="right" delay={150}>
-          <div style={{ position:'sticky', top:100 }}>
+          <div className="lp-cta-sticky" style={{ position:'sticky', top:100 }}>
             <div style={{ borderRadius:24, overflow:'hidden', background:'linear-gradient(145deg, var(--grama-oscuro) 0%, #032e34 100%)', boxShadow:'0 20px 56px rgba(4,57,65,.28)', border:'1px solid rgba(2,212,126,.1)', borderTop:'3px solid #f8ee91', position:'relative' }}>
               {/* Glow fondo */}
               <div style={{ position:'absolute', bottom:-60, right:-60, width:200, height:200, background:'radial-gradient(circle, rgba(2,212,126,.14) 0%, transparent 70%)', pointerEvents:'none' }} />
@@ -970,7 +1008,7 @@ export default function Landing() {
         <div style={{ maxWidth:1100, margin:'0 auto', padding:'4rem 1.5rem 2.5rem', position:'relative', zIndex:1 }}>
 
           {/* Grid 4 columnas */}
-          <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr 1fr 1fr', gap:40, marginBottom:'3rem' }}>
+          <div className="lp-footer-grid" style={{ display:'grid', gridTemplateColumns:'2fr 1fr 1fr 1fr', gap:40, marginBottom:'3rem' }}>
 
             {/* Col 1 — Marca */}
             <div>
@@ -1055,11 +1093,11 @@ export default function Landing() {
           <div style={{ height:1, background:'rgba(255,255,255,.07)', marginBottom:'1.8rem' }} />
 
           {/* Bottom bar */}
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:12 }}>
+          <div className="lp-footer-bottom" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:12 }}>
             <p style={{ fontSize:'var(--t-label)', color:'rgba(255,255,255,.22)', margin:0 }}>
               © {new Date().getFullYear()} GRAMA Proyectos Educativos · Todos los derechos reservados
             </p>
-            <div style={{ display:'flex', gap:20 }}>
+            <div className="lp-footer-bottom-links" style={{ display:'flex', gap:20 }}>
               {NAV_LINKS.map(l => (
                 <a key={l.label} href={l.href}
                   style={{ fontSize:'var(--t-label)', fontWeight:600, color:'rgba(255,255,255,.3)', textDecoration:'none', transition:'color .2s' }}
