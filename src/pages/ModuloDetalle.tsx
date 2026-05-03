@@ -357,12 +357,25 @@ export default function ModuloDetalle() {
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", background: 'var(--grama-bg)' }}>
 
+      {/* ── Mobile styles ── */}
+      <style>{`
+        @media (max-width: 767px) {
+          .md-topbar-inner { padding: 14px 16px !important; }
+          .md-topbar-row   { gap: 10px !important; }
+          .md-topbar-stats { display: none !important; }
+          .md-subbar       { padding: 8px 16px !important; }
+          .md-prog-bar     { width: 110px !important; }
+          .md-grid         { grid-template-columns: 1fr !important; padding: 14px 14px !important; gap: 16px !important; }
+          .md-sidebar      { position: static !important; }
+        }
+      `}</style>
+
       {/* ── DARK TOP BAR ── */}
       <div style={{ background: '#043941' }}>
-        <div style={{ padding: '16px 32px' }}>
+        <div className="md-topbar-inner" style={{ padding: '16px 32px' }}>
 
           {/* Fila única: icono + breadcrumb + título + stats */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
+          <div className="md-topbar-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
 
             {/* Izquierda */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
@@ -389,7 +402,7 @@ export default function ModuloDetalle() {
             </div>
 
             {/* Derecha: stats + badges */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexShrink: 0 }}>
+            <div className="md-topbar-stats" style={{ display: 'flex', alignItems: 'center', gap: 28, flexShrink: 0 }}>
               {[
                 { value: `${modulo.horasTotal}h`, label: 'totales' },
                 { value: modulo.sesiones.length,  label: 'sesiones' },
@@ -427,20 +440,20 @@ export default function ModuloDetalle() {
       </div>
 
       {/* Sub-barra: descripción + % progreso */}
-      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)', padding: '10px 32px', display: 'flex', alignItems: 'center', gap: 16 }}>
+      <div className="md-subbar" style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)', padding: '10px 32px', display: 'flex', alignItems: 'center', gap: 16 }}>
         {modulo.descripcion && (
           <p style={{ fontSize: 12, color: '#64748b', margin: 0, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {modulo.descripcion}
           </p>
         )}
-        <div style={{ width: 200, height: 5, borderRadius: 6, background: 'rgba(4,57,65,0.08)', overflow: 'hidden', flexShrink: 0 }}>
+        <div className="md-prog-bar" style={{ width: 200, height: 5, borderRadius: 6, background: 'rgba(4,57,65,0.08)', overflow: 'hidden', flexShrink: 0 }}>
           <div style={{ height: '100%', width: `${progreso.porcentaje}%`, background: '#02d47e', borderRadius: 6, transition: 'width .5s ease' }} />
         </div>
         <p style={{ fontSize: 12, fontWeight: 700, color: '#02d47e', margin: 0, flexShrink: 0 }}>{progreso.porcentaje}%</p>
       </div>
 
       {/* ── GRID: contenido principal + sidebar ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: 24, padding: '20px 28px', alignItems: 'start' }}>
+      <div className="md-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: 24, padding: '20px 28px', alignItems: 'start' }}>
 
         {/* ── COLUMNA IZQUIERDA: sesiones ── */}
         <div>
@@ -718,7 +731,7 @@ export default function ModuloDetalle() {
         </div>{/* fin columna izquierda */}
 
         {/* ── SIDEBAR DERECHA ── */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, position: 'sticky', top: 20 }}>
+        <div className="md-sidebar" style={{ display: 'flex', flexDirection: 'column', gap: 12, position: 'sticky', top: 20 }}>
 
           {/* Card ① Progreso del módulo */}
           <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', padding: '18px 20px' }}>
