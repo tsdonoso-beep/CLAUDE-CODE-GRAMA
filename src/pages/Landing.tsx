@@ -10,6 +10,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { talleresConfig } from '@/data/talleresConfig'
 import { getBienesByTaller } from '@/data/bienesData'
 import { modulosLXP } from '@/data/modulosLXP'
+import { Reveal } from '@/components/Reveal'
 // ── Data ──────────────────────────────────────────────────────────────────────
 const NAV_LINKS = [
   { label: '¿Para quién?',  href: '#perfiles' },
@@ -155,7 +156,7 @@ export default function Landing() {
         </svg>
 
         {/* ── Columna izquierda ── */}
-        <div style={{ position:'relative', zIndex:2, animation:'heroNavIn .7s ease both' }}>
+        <Reveal direction="up" duration={700} style={{ position:'relative', zIndex:2 }}>
 
           {/* H1 */}
           <h1 style={{ fontSize:'var(--t-hero)', fontWeight:800, lineHeight:1.04, letterSpacing:'-1.8px', color:'var(--grama-oscuro)', marginBottom:20 }}>
@@ -188,10 +189,10 @@ export default function Landing() {
               Ver cómo funciona
             </a>
           </div>
-        </div>
+        </Reveal>
 
         {/* ── Columna derecha — imagen ── */}
-        <div style={{ position:'relative', zIndex:2, animation:'heroNavIn .7s .22s ease both' }}>
+        <Reveal direction="up" delay={180} duration={700} style={{ position:'relative', zIndex:2 }}>
           <div style={{ borderRadius:24, overflow:'hidden', boxShadow:'0 32px 80px rgba(4,57,65,.28)', position:'relative', aspectRatio:'4/3' }}>
             <img
               src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=700&q=80"
@@ -200,7 +201,7 @@ export default function Landing() {
             />
             <div style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, transparent 55%, rgba(4,57,65,.35) 100%)', pointerEvents:'none' }} />
           </div>
-        </div>
+        </Reveal>
 
         {/* ── Stats bar (pegada al fondo del hero) ── */}
         <div style={{ position:'absolute', bottom:0, left:0, right:0, background:'var(--grama-oscuro)', display:'grid', gridTemplateColumns:'repeat(4,1fr)', zIndex:3 }}>
@@ -241,6 +242,7 @@ export default function Landing() {
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
           {/* Header */}
+          <Reveal direction="up">
           <div style={{ textAlign:'center', marginBottom:'2.8rem' }}>
             <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'var(--grama-menta)', marginBottom:14 }}>
               <span style={{ display:'inline-block', height:1, width:32, background:'var(--grama-menta)' }} />
@@ -251,8 +253,10 @@ export default function Landing() {
               <span style={{ color:'var(--grama-menta)' }}>tres experiencias</span>
             </h2>
           </div>
+          </Reveal>
 
           {/* Tab selector — cards de rol */}
+          <Reveal direction="up" delay={100}>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:14, marginBottom:'1rem' }}>
             {([
               { key: 'docente',  emoji: '🔧', label: 'Docente',  tagline:'Capacitación y certificación', activeColor:'var(--grama-oscuro)', activeBg:'var(--grama-oscuro)', activeText:'#fff',    accentBar:'var(--grama-menta)',  hoverBg:'rgba(4,57,65,.04)',    shadow:'rgba(4,57,65,.13)',    accentIndicator:'rgba(255,255,255,.4)' },
@@ -311,6 +315,7 @@ export default function Landing() {
               )
             })}
           </div>
+          </Reveal>
 
           {/* Conector visual entre cards y contenido */}
           <div style={{ textAlign:'center', marginBottom:'2.5rem' }}>
@@ -531,6 +536,7 @@ export default function Landing() {
             }[activeTab]
             return (
               <>
+                <Reveal direction="up">
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'end', marginBottom:'5rem' }}>
                   <div>
                     <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'var(--grama-menta)', marginBottom:16 }}>
@@ -545,11 +551,13 @@ export default function Landing() {
                     {meta.p}
                   </p>
                 </div>
+                </Reveal>
 
                 {/* 4 etapas */}
                 <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:24, position:'relative' }}>
                   {meta.stages.map((stage, i) => (
-              <div key={i} style={{ position:'relative', zIndex:1, background:'#fff', borderRadius:16, overflow:'hidden', boxShadow:'0 4px 20px rgba(4,57,65,.07)', padding:'0 0 28px' }}>
+              <Reveal key={i} direction="up" delay={i * 100} threshold={0.08}>
+              <div style={{ position:'relative', zIndex:1, background:'#fff', borderRadius:16, overflow:'hidden', boxShadow:'0 4px 20px rgba(4,57,65,.07)', padding:'0 0 28px', height:'100%' }}>
 
                 {/* Barra de color superior */}
                 <div style={{ height:4, background:stage.barColor, borderRadius:'16px 16px 0 0', marginBottom:24 }} />
@@ -568,6 +576,7 @@ export default function Landing() {
                   </p>
                 </div>
                   </div>
+              </Reveal>
                 ))}
                 </div>
               </>
@@ -591,6 +600,7 @@ export default function Landing() {
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
           {/* Header dinámico */}
+          <Reveal direction="up">
           <div style={{ textAlign:'center', maxWidth:640, margin:'0 auto 3.2rem' }}>
             <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'var(--grama-menta)', marginBottom:14 }}>
               <span style={{ display:'inline-block', height:1, width:32, background:'var(--grama-menta)' }} />
@@ -609,6 +619,7 @@ export default function Landing() {
               {activeTab === 'director' && 'Vista global del avance de formación docente en tu institución.'}
             </p>
           </div>
+          </Reveal>
 
           {/* ── DOCENTE: split panel lista + detalle editorial ── */}
           {activeTab === 'docente' && (() => {
@@ -831,6 +842,7 @@ export default function Landing() {
 
           {/* FAQ accordion */}
           <div>
+            <Reveal direction="up">
             <div style={{ marginBottom:'2rem' }}>
               <span style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:'var(--t-label)', fontWeight:800, letterSpacing:'.1em', textTransform:'uppercase', color:'var(--grama-menta)', marginBottom:14 }}>
                 <span style={{ display:'inline-block', height:1, width:32, background:'var(--grama-menta)' }} />
@@ -841,6 +853,7 @@ export default function Landing() {
                 <span style={{ color:'var(--grama-menta)' }}>saber antes de empezar</span>
               </h2>
             </div>
+            </Reveal>
 
             <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
               {FAQ_ITEMS.map((item, i) => {
@@ -848,6 +861,7 @@ export default function Landing() {
                 const color = faqColors[i % faqColors.length]
                 const isOpen = open === i
                 return (
+                  <Reveal key={i} direction="up" delay={i * 80} threshold={0.05}>
                   <div
                     key={i}
                     onClick={() => setOpen(isOpen ? null : i)}
@@ -875,12 +889,14 @@ export default function Landing() {
                       </div>
                     </div>
                   </div>
+                  </Reveal>
                 )
               })}
             </div>
           </div>
 
           {/* CTA card sticky */}
+          <Reveal direction="right" delay={150}>
           <div style={{ position:'sticky', top:100 }}>
             <div style={{ borderRadius:24, overflow:'hidden', background:'linear-gradient(145deg, var(--grama-oscuro) 0%, #032e34 100%)', boxShadow:'0 20px 56px rgba(4,57,65,.28)', border:'1px solid rgba(2,212,126,.1)', borderTop:'3px solid #f8ee91', position:'relative' }}>
               {/* Glow fondo */}
@@ -912,6 +928,7 @@ export default function Landing() {
               </div>
             </div>
           </div>
+          </Reveal>
 
         </div>
       </section>
