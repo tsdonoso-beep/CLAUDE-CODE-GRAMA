@@ -1,7 +1,7 @@
 // src/components/layout/Sidebar.tsx
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, useParams, useNavigate, useLocation } from 'react-router-dom'
-import { BookOpen, Package, ChevronLeft, ChevronRight, X, User, Home, LayoutDashboard, Trophy, Award, MessageCircle, CheckCircle2, Circle, Lock, PlayCircle } from 'lucide-react'
+import { Package, ChevronLeft, ChevronRight, X, User, Home, LayoutDashboard, Trophy, Award, MessageCircle, CheckCircle2, Circle, Lock, PlayCircle } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { useProgress } from '@/contexts/ProgressContext'
 import { useAuth } from '@/contexts/AuthContext'
@@ -97,11 +97,6 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
 
   // ── Items de navegación ──────────────────────────────────────────────────
   const isRepoOnly = slug === 'taller-general-ept'
-  const tallerNavItems = [
-    ...(!isRepoOnly ? [{ to: `/taller/${slug}`,          icon: Home,     label: 'Inicio' }] : []),
-    ...(!isRepoOnly ? [{ to: `/taller/${slug}/ruta`,     icon: BookOpen, label: 'Ruta de Aprendizaje' }] : []),
-    { to: `/taller/${slug}/repositorio`, icon: Package, label: 'Repositorio' },
-  ]
 
   const perfilNavItems = [
     { icon: LayoutDashboard, label: 'Mis talleres',  to: '/perfil' as string | undefined },
@@ -282,54 +277,85 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
             })
           ) : (
             <>
-              {/* Nav global */}
-              {tallerNavItems.map(({ to, icon: Icon, label }) => (
-                <NavLink
-                  key={to}
-                  to={to}
-                  end={to === `/taller/${slug}`}
-                  title={collapsed ? label : undefined}
-                  className={({ isActive }) =>
-                    collapsed
-                      ? `flex justify-center p-2.5 rounded-xl transition-all ${isActive ? 'text-white' : 'text-white/40 hover:text-white/70'}`
-                      : `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${isActive ? 'text-white' : 'text-white/40 hover:text-white/70 hover:bg-white/[0.04]'}`
-                  }
-                  style={({ isActive }) => isActive ? {
-                    background: 'rgba(255,255,255,0.08)',
-                    boxShadow: collapsed ? undefined : `inset 3px 0 0 ${accent}`,
-                    backdropFilter: 'blur(4px)',
-                  } : undefined}
-                >
-                  {({ isActive }) => (
-                    <>
-                      <div
-                        className="h-7 w-7 rounded-lg flex items-center justify-center shrink-0 transition-all"
-                        style={{ background: isActive ? `${accent}1c` : 'rgba(255,255,255,0.05)' }}
-                      >
-                        <Icon size={13} style={{ color: isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)' }} />
-                      </div>
-                      {!collapsed && (
-                        <>
-                          <span className="flex-1">{label}</span>
-                          {isActive && (
-                            <span className="w-1.5 h-1.5 rounded-full animate-pulse-soft" style={{ background: accent }} />
-                          )}
-                        </>
+              {/* Nav compacta: Inicio + Repositorio */}
+              {collapsed ? (
+                <>
+                  {!isRepoOnly && (
+                    <NavLink to={`/taller/${slug}`} end title="Inicio"
+                      className={({ isActive }) => `flex justify-center p-2.5 rounded-xl transition-all ${isActive ? 'text-white' : 'text-white/40 hover:text-white/70'}`}
+                      style={({ isActive }) => isActive ? { background: 'rgba(255,255,255,0.08)' } : undefined}
+                    >
+                      {({ isActive }) => (
+                        <div className="h-7 w-7 rounded-lg flex items-center justify-center"
+                          style={{ background: isActive ? `${accent}1c` : 'rgba(255,255,255,0.05)' }}>
+                          <Home size={13} style={{ color: isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)' }} />
+                        </div>
                       )}
-                    </>
+                    </NavLink>
                   )}
-                </NavLink>
-              ))}
+                  <NavLink to={`/taller/${slug}/repositorio`} title="Repositorio"
+                    className={({ isActive }) => `flex justify-center p-2.5 rounded-xl transition-all ${isActive ? 'text-white' : 'text-white/40 hover:text-white/70'}`}
+                    style={({ isActive }) => isActive ? { background: 'rgba(255,255,255,0.08)' } : undefined}
+                  >
+                    {({ isActive }) => (
+                      <div className="h-7 w-7 rounded-lg flex items-center justify-center"
+                        style={{ background: isActive ? `${accent}1c` : 'rgba(255,255,255,0.05)' }}>
+                        <Package size={13} style={{ color: isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)' }} />
+                      </div>
+                    )}
+                  </NavLink>
+                  <div style={{ margin: '4px 0', borderTop: '1px solid rgba(255,255,255,0.06)' }} />
+                </>
+              ) : (
+                <>
+                  {/* Fila de accesos rápidos */}
+                  <div style={{ display: 'flex', gap: 6, padding: '0 4px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)', marginBottom: 10 }}>
+                    {!isRepoOnly && (
+                      <NavLink to={`/taller/${slug}`} end style={{ flex: 1 }}
+                        title="Hub del taller"
+                      >
+                        {({ isActive }) => (
+                          <span style={{
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
+                            padding: '6px 8px', borderRadius: 8, fontSize: 10, fontWeight: 700,
+                            background: isActive ? `${accent}18` : 'rgba(255,255,255,0.05)',
+                            color: isActive ? accent : 'rgba(255,255,255,0.38)',
+                            border: isActive ? `1px solid ${accent}28` : '1px solid transparent',
+                            transition: 'all .15s', cursor: 'pointer',
+                          }}>
+                            <Home size={11} />
+                            Inicio
+                          </span>
+                        )}
+                      </NavLink>
+                    )}
+                    <NavLink to={`/taller/${slug}/repositorio`} style={{ flex: 1 }}
+                      title="Repositorio de bienes"
+                    >
+                      {({ isActive }) => (
+                        <span style={{
+                          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
+                          padding: '6px 8px', borderRadius: 8, fontSize: 10, fontWeight: 700,
+                          background: isActive ? `${accent}18` : 'rgba(255,255,255,0.05)',
+                          color: isActive ? accent : 'rgba(255,255,255,0.38)',
+                          border: isActive ? `1px solid ${accent}28` : '1px solid transparent',
+                          transition: 'all .15s', cursor: 'pointer',
+                        }}>
+                          <Package size={11} />
+                          Repositorio
+                        </span>
+                      )}
+                    </NavLink>
+                  </div>
 
-              {/* Divisor + label módulos */}
-              {!collapsed && (
-                <div style={{ margin: '10px 4px 6px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 10 }}>
-                  <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.22)', textTransform: 'uppercase', paddingLeft: 8 }}>
-                    Módulos
-                  </span>
-                </div>
+                  {/* Label sección TOC */}
+                  <div style={{ paddingLeft: 8, marginBottom: 6 }}>
+                    <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.22)', textTransform: 'uppercase' }}>
+                      Módulos
+                    </span>
+                  </div>
+                </>
               )}
-              {collapsed && <div style={{ margin: '8px 0', borderTop: '1px solid rgba(255,255,255,0.06)' }} />}
 
               {/* Árbol de módulos */}
               {modulosLXP.map(modulo => {
