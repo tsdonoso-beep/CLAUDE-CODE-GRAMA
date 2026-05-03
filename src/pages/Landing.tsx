@@ -182,13 +182,15 @@ export default function Landing() {
           <h1 style={{ fontSize:'var(--t-hero)', fontWeight:800, lineHeight:1.04, letterSpacing:'-1.8px', color:'var(--grama-oscuro)', marginBottom:20 }}>
             Los talleres técnicos<br />
             <em style={{ fontStyle:'normal', color:'var(--grama-menta)' }}>forman el país.</em><br />
-            {/* Contenedor con espacio reservado para evitar layout shift */}
-            <span style={{ position:'relative', display:'inline-block' }}>
-              {/* Texto completo invisible — reserva el ancho final */}
-              <span style={{ visibility:'hidden', whiteSpace:'nowrap' }}>{TW_FULL}</span>
-              {/* Texto animado superpuesto */}
-              <span style={{ position:'absolute', left:0, top:0, whiteSpace:'nowrap' }}>
-                {twText}
+            {/* Contenedor con espacio reservado — grid stacking evita desfase por absolute positioning */}
+            <span style={{ display: 'inline-grid' }}>
+              {/* Spacer invisible: reserva el ancho/alto final en el flujo normal */}
+              <span style={{ gridArea: '1/1', visibility: 'hidden', whiteSpace: 'nowrap', userSelect: 'none' }}>
+                {TW_FULL}
+              </span>
+              {/* Texto animado: apilado en la misma celda, alineación perfecta garantizada */}
+              <span style={{ gridArea: '1/1', whiteSpace: 'nowrap' }}>
+                {twDone ? TW_FULL : twText}
                 {!twDone && (
                   <span style={{
                     display:'inline-block', width:3, height:'0.82em',
