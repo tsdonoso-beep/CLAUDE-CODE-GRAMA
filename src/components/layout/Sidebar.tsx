@@ -388,26 +388,61 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                   return { ses, completados, total: ids.length, sesCompletada, enProgreso }
                 })
 
-                /* ── Collapsed ── */
+                /* ── Collapsed: anillo SVG de progreso ── */
                 if (collapsed) {
+                  const R = 13
+                  const CIRC = 2 * Math.PI * R          // ≈ 81.68
+                  const pct  = isCompletado ? 100 : mp.porcentaje
+                  const dash = CIRC * (1 - pct / 100)
+                  const ringColor = isCompletado ? '#02d47e' : isEnCurso ? accent : 'rgba(255,255,255,0.12)'
+
                   return (
                     <button
                       key={modulo.id}
-                      title={`Módulo ${modulo.numero} · ${modulo.nombre}`}
+                      title={`${badge} · ${modulo.nombre}${pct > 0 ? ` — ${pct}%` : ''}`}
                       onClick={() => !isBloqueado && navigate(`/taller/${slug}/ruta/modulo/${modulo.numero}`)}
                       disabled={isBloqueado}
                       style={{
-                        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
-                        width: '100%', padding: '6px 4px', borderRadius: 10,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        width: '100%', padding: '4px 0', borderRadius: 10,
                         background: isActiveModulo ? `${accent}15` : 'none',
                         border: 'none', cursor: isBloqueado ? 'default' : 'pointer',
+                        opacity: isBloqueado ? 0.35 : 1,
                       }}
                     >
-                      <span style={{
-                        fontSize: 9, fontWeight: 800, letterSpacing: '0.06em',
-                        color: isActiveModulo ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.25)',
-                      }}>{badge}</span>
-                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: statusColor, display: 'block' }} />
+                      <svg width={32} height={32} viewBox="0 0 32 32" style={{ overflow: 'visible' }}>
+                        {/* Pista de fondo */}
+                        <circle cx={16} cy={16} r={R}
+                          fill="none"
+                          stroke="rgba(255,255,255,0.08)"
+                          strokeWidth={2.5}
+                        />
+                        {/* Arco de progreso */}
+                        {pct > 0 && (
+                          <circle cx={16} cy={16} r={R}
+                            fill="none"
+                            stroke={ringColor}
+                            strokeWidth={2.5}
+                            strokeLinecap="round"
+                            strokeDasharray={CIRC}
+                            strokeDashoffset={dash}
+                            transform="rotate(-90 16 16)"
+                            style={{ transition: 'stroke-dashoffset .6s ease' }}
+                          />
+                        )}
+                        {/* Badge texto */}
+                        <text
+                          x={16} y={16}
+                          textAnchor="middle" dominantBaseline="central"
+                          fontSize={isBloqueado ? 7 : 8}
+                          fontWeight={800}
+                          fontFamily="Manrope, sans-serif"
+                          letterSpacing="0.04em"
+                          fill={isActiveModulo ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.35)'}
+                        >
+                          {isBloqueado ? '🔒' : badge}
+                        </text>
+                      </svg>
                     </button>
                   )
                 }
