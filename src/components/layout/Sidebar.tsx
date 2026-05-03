@@ -1,11 +1,13 @@
 // src/components/layout/Sidebar.tsx
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, useParams, useNavigate, useLocation } from 'react-router-dom'
-import { BookOpen, Package, ChevronLeft, ChevronRight, X, User, Home, LayoutDashboard, Trophy, Award, MessageCircle } from 'lucide-react'
+import { BookOpen, Package, ChevronLeft, ChevronRight, X, User, Home, LayoutDashboard, Trophy, Award, MessageCircle, CheckCircle2, Circle, Lock, PlayCircle } from 'lucide-react'
 import { talleresConfig } from '@/data/talleresConfig'
 import { useProgress } from '@/contexts/ProgressContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { GramaLogo } from '@/components/GramaLogo'
+import { modulosLXP } from '@/data/modulosLXP'
+import type { EstadoModulo } from '@/mock/mockEstados'
 
 const TALLER_ACCENTS: Record<string, string> = {
   'mecanica-automotriz':  '#3b82f6',
@@ -31,7 +33,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
   const navigate = useNavigate()
   const taller = talleresConfig.find(t => t.slug === slug)
   const accent = TALLER_ACCENTS[slug ?? ''] ?? '#02d47e'
-  const { getTallerProgreso } = useProgress()
+  const { getTallerProgreso, getEstadoModuloLXP, getModuloProgreso } = useProgress()
   const { profile } = useAuth()
   const progreso = slug ? getTallerProgreso(slug) : { porcentaje: 0, completados: 0, total: 0 }
 
@@ -262,43 +264,137 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
               )
             })
           ) : (
-            tallerNavItems.map(({ to, icon: Icon, label }) => (
-              <NavLink
-                key={to}
-                to={to}
-                end={to === `/taller/${slug}`}
-                title={collapsed ? label : undefined}
-                className={({ isActive }) =>
-                  collapsed
-                    ? `flex justify-center p-2.5 rounded-xl transition-all ${isActive ? 'text-white' : 'text-white/40 hover:text-white/70'}`
-                    : `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${isActive ? 'text-white' : 'text-white/40 hover:text-white/70 hover:bg-white/[0.04]'}`
-                }
-                style={({ isActive }) => isActive ? {
-                  background: 'rgba(255,255,255,0.08)',
-                  boxShadow: collapsed ? undefined : `inset 3px 0 0 ${accent}`,
-                  backdropFilter: 'blur(4px)',
-                } : undefined}
-              >
-                {({ isActive }) => (
-                  <>
-                    <div
-                      className="h-7 w-7 rounded-lg flex items-center justify-center shrink-0 transition-all"
-                      style={{ background: isActive ? `${accent}1c` : 'rgba(255,255,255,0.05)' }}
+            <>
+              {/* Nav global */}
+              {tallerNavItems.map(({ to, icon: Icon, label }) => (
+                <NavLink
+                  key={to}
+                  to={to}
+                  end={to === `/taller/${slug}`}
+                  title={collapsed ? label : undefined}
+                  className={({ isActive }) =>
+                    collapsed
+                      ? `flex justify-center p-2.5 rounded-xl transition-all ${isActive ? 'text-white' : 'text-white/40 hover:text-white/70'}`
+                      : `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${isActive ? 'text-white' : 'text-white/40 hover:text-white/70 hover:bg-white/[0.04]'}`
+                  }
+                  style={({ isActive }) => isActive ? {
+                    background: 'rgba(255,255,255,0.08)',
+                    boxShadow: collapsed ? undefined : `inset 3px 0 0 ${accent}`,
+                    backdropFilter: 'blur(4px)',
+                  } : undefined}
+                >
+                  {({ isActive }) => (
+                    <>
+                      <div
+                        className="h-7 w-7 rounded-lg flex items-center justify-center shrink-0 transition-all"
+                        style={{ background: isActive ? `${accent}1c` : 'rgba(255,255,255,0.05)' }}
+                      >
+                        <Icon size={13} style={{ color: isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)' }} />
+                      </div>
+                      {!collapsed && (
+                        <>
+                          <span className="flex-1">{label}</span>
+                          {isActive && (
+                            <span className="w-1.5 h-1.5 rounded-full animate-pulse-soft" style={{ background: accent }} />
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              ))}
+
+              {/* Divisor + label módulos */}
+              {!collapsed && (
+                <div style={{ margin: '10px 4px 6px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 10 }}>
+                  <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.22)', textTransform: 'uppercase', paddingLeft: 8 }}>
+                    Módulos
+                  </span>
+                </div>
+              )}
+              {collapsed && <div style={{ margin: '8px 0', borderTop: '1px solid rgba(255,255,255,0.06)' }} />}
+
+              {/* Árbol de módulos */}
+              {modulosLXP.map(modulo => {
+                const estado: EstadoModulo = getEstadoModuloLXP(modulo.id)
+                const mp = getModuloProgreso(slug ?? '', modulo.numero)
+                const isCompletado = estado === 'completado'
+                const isEnCurso   = estado === 'en_curso'
+                const isBloqueado = estado === 'bloqueado'
+
+                const StatusIcon = isCompletado ? CheckCircle2 : isEnCurso ? PlayCircle : isBloqueado ? Lock : Circle
+                const statusColor = isCompletado ? '#02d47e' : isEnCurso ? accent : isBloqueado ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.25)'
+
+                const badge = `M${modulo.numero}`
+                const nombreCorto = modulo.nombre.length > 22 ? modulo.nombre.slice(0, 22) + '…' : modulo.nombre
+
+                if (collapsed) {
+                  return (
+                    <button
+                      key={modulo.id}
+                      title={`Módulo ${modulo.numero} · ${modulo.nombre}`}
+                      onClick={() => !isBloqueado && navigate(`/taller/${slug}/ruta/${modulo.numero}`)}
+                      disabled={isBloqueado}
+                      style={{
+                        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
+                        width: '100%', padding: '6px 4px', borderRadius: 10,
+                        background: 'none', border: 'none', cursor: isBloqueado ? 'default' : 'pointer',
+                      }}
                     >
-                      <Icon size={13} style={{ color: isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)' }} />
+                      <span style={{
+                        fontSize: 9, fontWeight: 800, letterSpacing: '0.06em',
+                        color: isEnCurso ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.25)',
+                      }}>{badge}</span>
+                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: statusColor, display: 'block' }} />
+                    </button>
+                  )
+                }
+
+                return (
+                  <button
+                    key={modulo.id}
+                    onClick={() => !isBloqueado && navigate(`/taller/${slug}/ruta/${modulo.numero}`)}
+                    disabled={isBloqueado}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 8,
+                      width: '100%', padding: '7px 8px', borderRadius: 10, textAlign: 'left',
+                      background: isEnCurso ? `${accent}0d` : 'none',
+                      border: isEnCurso ? `1px solid ${accent}22` : '1px solid transparent',
+                      cursor: isBloqueado ? 'default' : 'pointer',
+                      transition: 'background .15s',
+                      opacity: isBloqueado ? 0.4 : 1,
+                    }}
+                    onMouseEnter={e => { if (!isBloqueado && !isEnCurso) e.currentTarget.style.background = 'rgba(255,255,255,0.04)' }}
+                    onMouseLeave={e => { if (!isEnCurso) e.currentTarget.style.background = 'none' }}
+                  >
+                    {/* Badge número */}
+                    <span style={{
+                      fontSize: 9, fontWeight: 800, letterSpacing: '0.06em',
+                      minWidth: 24, textAlign: 'center', padding: '2px 4px', borderRadius: 5,
+                      background: isEnCurso ? `${accent}20` : isCompletado ? 'rgba(2,212,126,0.12)' : 'rgba(255,255,255,0.06)',
+                      color: isEnCurso ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.3)',
+                    }}>{badge}</span>
+
+                    {/* Nombre */}
+                    <span style={{
+                      flex: 1, fontSize: 11, fontWeight: isEnCurso ? 700 : 500,
+                      color: isEnCurso ? '#fff' : isCompletado ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.38)',
+                      lineHeight: 1.3,
+                    }}>{nombreCorto}</span>
+
+                    {/* Estado icon + progreso */}
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2, flexShrink: 0 }}>
+                      <StatusIcon size={12} style={{ color: statusColor }} />
+                      {isEnCurso && mp.total > 0 && (
+                        <span style={{ fontSize: 9, fontWeight: 700, color: `${accent}99` }}>
+                          {mp.completados}/{mp.total}
+                        </span>
+                      )}
                     </div>
-                    {!collapsed && (
-                      <>
-                        <span className="flex-1">{label}</span>
-                        {isActive && (
-                          <span className="w-1.5 h-1.5 rounded-full animate-pulse-soft" style={{ background: accent }} />
-                        )}
-                      </>
-                    )}
-                  </>
-                )}
-              </NavLink>
-            ))
+                  </button>
+                )
+              })}
+            </>
           )}
         </nav>
 
