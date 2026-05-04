@@ -48,14 +48,12 @@ function generatePassword(): string {
 
 // ── Analytics types ────────────────────────────────────────────────────────────
 interface ContenidoCount {
-  bien_nombre: string
-  tipo_contenido: string
-  tipo_evento: string
+  contenido_id: string
+  tipo: string
   count: number
 }
 interface NavegacionCount {
-  pagina: string
-  referrer: string | null
+  path: string
   count: number
 }
 interface AnalyticsData {
@@ -68,17 +66,16 @@ function buildMockAnalytics(): AnalyticsData {
   return {
     totalLogins: 47,
     navegacion: [
-      { pagina: 'taller_hub',       referrer: null,              count: 38 },
-      { pagina: 'ruta_aprendizaje', referrer: null,              count: 31 },
-      { pagina: 'repositorio',      referrer: 'directo',         count: 14 },
-      { pagina: 'repositorio',      referrer: 'ruta_aprendizaje',count: 22 },
-      { pagina: 'perfil',           referrer: null,              count: 29 },
+      { path: 'taller_hub',       count: 38 },
+      { path: 'ruta_aprendizaje', count: 31 },
+      { path: 'repositorio',      count: 36 },
+      { path: 'perfil',           count: 29 },
     ],
     contenidos: [
-      { bien_nombre: 'Manual de uso — Torno',               tipo_contenido: 'manual',      tipo_evento: 'apertura_manual',    count: 18 },
-      { bien_nombre: 'Manual de mantenimiento — Compresor', tipo_contenido: 'manual',      tipo_evento: 'apertura_manual',    count: 12 },
-      { bien_nombre: 'Video: Introducción al taller',       tipo_contenido: 'video',       tipo_evento: 'reproduccion_video', count: 27 },
-      { bien_nombre: 'Ficha técnica EPP',                   tipo_contenido: 'descargable', tipo_evento: 'descarga',           count: 9  },
+      { contenido_id: 'm1-s11-c1', tipo: 'apertura_manual',    count: 18 },
+      { contenido_id: 'm1-s12-c1', tipo: 'apertura_manual',    count: 12 },
+      { contenido_id: 'm0-s2-c2',  tipo: 'reproduccion_video', count: 27 },
+      { contenido_id: 'm1-s13-c4', tipo: 'descarga',           count: 9  },
     ],
   }
 }
@@ -321,12 +318,12 @@ export default function Admin() {
     const [{ data: progresos }, { data: quizResults }] = await Promise.all([
       supabase
         .from('progreso_contenidos')
-        .select('usuario_id, contenido_id, estado')
-        .in('usuario_id', docenteIds),
+        .select('user_id, contenido_id, completado')
+        .in('user_id', docenteIds),
       supabase
         .from('quiz_resultados')
-        .select('usuario_id, contenido_id, aprobado')
-        .in('usuario_id', docenteIds),
+        .select('user_id, modulo_id, score')
+        .in('user_id', docenteIds),
     ])
 
     // 3. Agrupar progreso por usuario
@@ -334,24 +331,24 @@ export default function Admin() {
     const statsPorUsuario: Record<string, UserStats> = {}
 
     progresos?.forEach(p => {
-      if (!statsPorUsuario[p.usuario_id]) {
-        statsPorUsuario[p.usuario_id] = { completados: 0, visualizados: 0, ids: [] }
+      if (!statsPorUsuario[p.user_id]) {
+        statsPorUsuario[p.user_id] = { completados: 0, visualizados: 0, ids: [] }
       }
-      statsPorUsuario[p.usuario_id].visualizados++
-      statsPorUsuario[p.usuario_id].ids.push(p.contenido_id)
-      if (p.estado === 'completado') {
-        statsPorUsuario[p.usuario_id].completados++
+      statsPorUsuario[p.user_id].visualizados++
+      statsPorUsuario[p.user_id].ids.push(p.contenido_id)
+      if (p.completado === true) {
+        statsPorUsuario[p.user_id].completados++
       }
     })
 
-    // 4. Agrupar quiz aprobados por usuario (1 por contenido_id aunque haya reintentos)
+    // 4. Agrupar quiz aprobados por usuario (1 por modulo_id aunque haya reintentos)
     const quizzesAprobadasPorUsuario: Record<string, Set<string>> = {}
     quizResults?.forEach(q => {
-      if (!q.aprobado) return
-      if (!quizzesAprobadasPorUsuario[q.usuario_id]) {
-        quizzesAprobadasPorUsuario[q.usuario_id] = new Set()
+      if ((q.score ?? 0) < 80) return
+      if (!quizzesAprobadasPorUsuario[q.user_id]) {
+        quizzesAprobadasPorUsuario[q.user_id] = new Set()
       }
-      quizzesAprobadasPorUsuario[q.usuario_id].add(q.contenido_id)
+      quizzesAprobadasPorUsuario[q.user_id].add(q.modulo_id)
     })
 
     const totalLXP = getTotalContenidosLXP()
@@ -629,12 +626,12 @@ Equipo GRAMA · Programa TSF-MINEDU`
       return
     }
     let sesionQuery = supabase.from('eventos_sesion').select('*', { count: 'exact', head: true })
-    let navQuery    = supabase.from('eventos_navegacion').select('pagina, referrer')
-    let contQuery   = supabase.from('eventos_contenido').select('bien_nombre, tipo_contenido, tipo_evento')
+    let navQuery    = supabase.from('eventos_navegacion').select('path')
+    let contQuery   = supabase.from('eventos_contenido').select('contenido_id, tipo')
     if (usuarioId) {
-      sesionQuery = sesionQuery.eq('usuario_id', usuarioId)
-      navQuery    = navQuery.eq('usuario_id', usuarioId)
-      contQuery   = contQuery.eq('usuario_id', usuarioId)
+      sesionQuery = sesionQuery.eq('user_id', usuarioId)
+      navQuery    = navQuery.eq('user_id', usuarioId)
+      contQuery   = contQuery.eq('user_id', usuarioId)
     }
     const [{ count: totalLogins }, { data: navRows }, { data: contRows }] = await Promise.all([
       sesionQuery, navQuery, contQuery,
@@ -642,18 +639,16 @@ Equipo GRAMA · Programa TSF-MINEDU`
     // Aggregate navegacion
     const navMap: Record<string, number> = {}
     navRows?.forEach(r => {
-      const key = `${r.pagina}||${r.referrer ?? ''}`
-      navMap[key] = (navMap[key] ?? 0) + 1
+      navMap[r.path] = (navMap[r.path] ?? 0) + 1
     })
-    const navegacion: NavegacionCount[] = Object.entries(navMap).map(([key, count]) => {
-      const [pagina, referrer] = key.split('||')
-      return { pagina, referrer: referrer || null, count }
-    }).sort((a, b) => b.count - a.count)
+    const navegacion: NavegacionCount[] = Object.entries(navMap).map(([path, count]) => ({
+      path, count,
+    })).sort((a, b) => b.count - a.count)
     // Aggregate contenidos
     const contMap: Record<string, ContenidoCount> = {}
     contRows?.forEach(r => {
-      const key = `${r.bien_nombre}||${r.tipo_contenido}||${r.tipo_evento}`
-      if (!contMap[key]) contMap[key] = { bien_nombre: r.bien_nombre, tipo_contenido: r.tipo_contenido, tipo_evento: r.tipo_evento, count: 0 }
+      const key = `${r.contenido_id}||${r.tipo}`
+      if (!contMap[key]) contMap[key] = { contenido_id: r.contenido_id, tipo: r.tipo, count: 0 }
       contMap[key].count++
     })
     const contenidos = Object.values(contMap).sort((a, b) => b.count - a.count)
@@ -1409,9 +1404,9 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {[
                     { label: 'Inicios de sesión', value: analytics.totalLogins, Icon: LogIn, color: '#02d47e' },
-                    { label: 'Visitas al repositorio', value: analytics.navegacion.filter(n => n.pagina === 'repositorio').reduce((a, n) => a + n.count, 0), Icon: Globe, color: '#22d3ee' },
-                    { label: 'Manuales abiertos', value: analytics.contenidos.filter(c => c.tipo_evento === 'apertura_manual').reduce((a, c) => a + c.count, 0), Icon: BookOpen, color: '#a78bfa' },
-                    { label: 'Videos reproducidos', value: analytics.contenidos.filter(c => c.tipo_evento === 'reproduccion_video').reduce((a, c) => a + c.count, 0), Icon: Video, color: '#f59e0b' },
+                    { label: 'Visitas al repositorio', value: analytics.navegacion.filter(n => n.path === 'repositorio').reduce((a, n) => a + n.count, 0), Icon: Globe, color: '#22d3ee' },
+                    { label: 'Manuales abiertos', value: analytics.contenidos.filter(c => c.tipo === 'apertura_manual').reduce((a, c) => a + c.count, 0), Icon: BookOpen, color: '#a78bfa' },
+                    { label: 'Videos reproducidos', value: analytics.contenidos.filter(c => c.tipo === 'reproduccion_video').reduce((a, c) => a + c.count, 0), Icon: Video, color: '#f59e0b' },
                   ].map(({ label, value, Icon, color }) => (
                     <div key={label} className="rounded-2xl p-4" style={{ background: '#ffffff' }}>
                       <div className="flex items-center gap-2 mb-1">
@@ -1432,8 +1427,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                       return (
                         <div key={i} className="flex items-center gap-3">
                           <div className="w-36 text-xs text-right" style={{ color: '#043941' }}>
-                            {n.pagina.replace('_', ' ')}
-                            {n.referrer && <span className="block text-[11px]" style={{ color: '#043941' }}>desde: {n.referrer}</span>}
+                            {n.path.replace(/_/g, ' ')}
                           </div>
                           <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: '#ffffff' }}>
                             <div className="h-full rounded-full transition-all" style={{ width: `${Math.round((n.count / maxCount) * 100)}%`, background: '#02d47e' }} />
@@ -1454,7 +1448,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   <table className="w-full text-sm">
                     <thead>
                       <tr style={{ borderBottom: '1px solid rgba(4,57,65,0.12)' }}>
-                        {['Contenido', 'Tipo', 'Evento', 'Accesos'].map(h => (
+                        {['Contenido ID', 'Evento', 'Accesos'].map(h => (
                           <th key={h} className="text-left px-5 py-3 text-xs font-bold" style={{ color: '#043941' }}>{h}</th>
                         ))}
                       </tr>
@@ -1467,14 +1461,13 @@ Equipo GRAMA · Programa TSF-MINEDU`
                           descarga: '#22d3ee',
                           apertura_ficha: '#02d47e',
                         }
-                        const color = eventoColor[c.tipo_evento] ?? '#ffffff'
+                        const color = eventoColor[c.tipo] ?? '#94a3b8'
                         return (
                           <tr key={i} style={{ borderBottom: i < Math.min(analytics.contenidos.length, 20) - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
-                            <td className="px-5 py-3 text-white text-xs">{c.bien_nombre}</td>
-                            <td className="px-5 py-3 text-xs" style={{ color: '#043941' }}>{c.tipo_contenido}</td>
+                            <td className="px-5 py-3 text-white text-xs">{c.contenido_id}</td>
                             <td className="px-5 py-3">
                               <span className="text-xs font-semibold px-2 py-0.5 rounded-lg" style={{ background: `${color}20`, color }}>
-                                {c.tipo_evento.replace(/_/g, ' ')}
+                                {c.tipo.replace(/_/g, ' ')}
                               </span>
                             </td>
                             <td className="px-5 py-3 text-xs font-bold" style={{ color }}>{c.count}</td>

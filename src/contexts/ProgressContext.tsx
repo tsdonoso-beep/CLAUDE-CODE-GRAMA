@@ -83,16 +83,16 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     setLoading(true)
     supabase
       .from('progreso_contenidos')
-      .select('contenido_id, estado')
-      .eq('usuario_id', user.id)
+      .select('contenido_id, completado')
+      .eq('user_id', user.id)
       .then(({ data }) => {
         // Aunque no haya datos, reemplazamos para limpiar cualquier caché stale
         const fresh = new Map<string, ProgressRecord>()
         if (data) {
-          data.forEach(({ contenido_id, estado }) => {
+          data.forEach(({ contenido_id, completado }) => {
             fresh.set(contenido_id, {
-              completed: estado === 'completado',
-              inProgress: estado === 'en_progreso',
+              completed: completado === true,
+              inProgress: false,
             })
           })
         }
@@ -102,12 +102,15 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       })
   }, [user?.id])
 
-  // Sincronizar a Supabase en background
-  async function syncToSupabase(contenidoId: string, estado: 'completado' | 'en_progreso') {
-    if (!user) return
+  // Sincronizar a Supabase en background — solo al completar (schema no soporta en_progreso)
+  async function syncToSupabase(contenidoId: string, completado: boolean) {
+    if (!user || !completado) return
+    const pathParts = window.location.pathname.split('/')
+    const tallerIdx = pathParts.indexOf('taller')
+    const taller_slug = tallerIdx >= 0 ? (pathParts[tallerIdx + 1] ?? '') : ''
     await supabase.from('progreso_contenidos').upsert(
-      { usuario_id: user.id, contenido_id: contenidoId, estado, updated_at: new Date().toISOString() },
-      { onConflict: 'usuario_id,contenido_id' }
+      { user_id: user.id, taller_slug, contenido_id: contenidoId, tipo: 'contenido', completado: true },
+      { onConflict: 'user_id,contenido_id' }
     )
   }
 
@@ -123,7 +126,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       saveLocalRecords(next)
       return next
     })
-    syncToSupabase(contenidoId, 'completado')
+    syncToSupabase(contenidoId, true)
   }, [user])
 
   const markContenidoInProgress = useCallback((contenidoId: string) => {
@@ -135,7 +138,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       saveLocalRecords(next)
       return next
     })
-    syncToSupabase(contenidoId, 'en_progreso')
+    // en_progreso solo se guarda localmente, el schema solo soporta completado
   }, [user])
 
   /**
