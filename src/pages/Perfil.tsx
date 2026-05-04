@@ -386,7 +386,7 @@ export default function Perfil() {
                       <div
                         className="relative overflow-hidden cursor-pointer"
                         style={{ height: 148 }}
-                        onClick={() => navigate(`/taller/${slug}/ruta`)}
+                        onClick={() => navigate(`/taller/${slug}`)}
                       >
                         {t.imagen ? (
                           <img src={t.imagen} alt={t.nombreCorto} className="absolute inset-0 w-full h-full object-cover" />
@@ -399,7 +399,7 @@ export default function Perfil() {
                         <h3
                           className="text-base font-black mb-0.5 cursor-pointer hover:underline"
                           style={{ color: '#043941', letterSpacing: '-0.02em' }}
-                          onClick={() => navigate(`/taller/${slug}/ruta`)}
+                          onClick={() => navigate(`/taller/${slug}`)}
                         >
                           {t.nombreCorto ?? t.nombre}
                         </h3>
