@@ -496,6 +496,111 @@ export const manualesPDFPorBien: Record<string, Record<number, string>> = {
      37: 'https://drive.google.com/file/d/1xQYyQ9qj5pAnzOanoEh_CosAA60f6xzy/view',  // Juego de bracera rosticera
     140: 'https://drive.google.com/file/d/1UwDbvD9swAi0GR5hcV18Xq1UE87kOsI6/view',  // Juego de fichas
   },
+
+  'industria-alimentaria': {
+    // ── Mobiliario / muebles ───────────────────────────────────────────────
+     12: 'https://drive.google.com/file/d/1hxGdVr95YXwiabAq8td6uXfDTdfKSg4p/view',  // Mesa de Computadora para estudiante
+     13: 'https://drive.google.com/file/d/1FuPaDVqw3os4-VMwRZhaXIbCzvEsvNYS/view',  // Silla para Estudiante
+     19: 'https://drive.google.com/file/d/1LoAZyU0O6SOe0UXfVhYvnA5_jRL57Q2L/view',  // Escritorio para el docente
+     20: 'https://drive.google.com/file/d/1z4DIre01D3XzK8BDD0t4u_FUnCoUSowd/view',  // Silla para el docente
+    185: 'https://drive.google.com/file/d/1WtWe0nzlbxs52qRmZFSbJe3Qt88Wi9YM/view',  // Armario de Metal
+    186: 'https://drive.google.com/file/d/16keCnulL2RQDuflGWhNHAqXQvaLWIGVx/view',  // Funda protectora impermeable
+    187: 'https://drive.google.com/file/d/1P7V9ydAWMFH6DlxV6hk6pb4nYYSBF5Iz/view',  // Mesa de apoyo
+    194: 'https://drive.google.com/file/d/1_rMPjI83mNswCEtOPMXPMrXQ7H4vGLrB/view',  // Anaquel de metal
+    195: 'https://drive.google.com/file/d/1cIY3TVIv0VuG13ea-VWVkTJ_ZhKnn-iW/view',  // Contenedor de basura 50 lt
+
+    // ── Lienzos magnéticos ─────────────────────────────────────────────────
+     14: 'https://drive.google.com/file/d/1UfZFnuEmBhW5qTKUoy-Y2BuVnG5pcQYm/view',  // Lienzo magnético (metodologías diseño)
+     15: 'https://drive.google.com/file/d/1UfZFnuEmBhW5qTKUoy-Y2BuVnG5pcQYm/view',  // Lienzo magnético (modelos de negocios)
+     24: 'https://drive.google.com/file/d/1UfZFnuEmBhW5qTKUoy-Y2BuVnG5pcQYm/view',  // Lienzo magnético (flujogramas)
+
+    // ── EPP y seguridad ────────────────────────────────────────────────────
+    174: 'https://drive.google.com/file/d/10qNEQiSPZBX20GiNI9WnUVc_t473_mOs/view',  // Medidor de Cloro Residual
+    175: 'https://drive.google.com/file/d/1LsBZKBBq-rohMaH0gCnuXvTzHqTlS1Wk/view',  // Escobillón
+    177: 'https://drive.google.com/file/d/1guVe_GgQwYh0coGRRf2WKyjlYa3Yjtjp/view',  // Dispensador de alcohol en gel
+    178: 'https://drive.google.com/file/d/1eHtX2aIDICqHUXt7b3JV4VAiLlY4F8j3/view',  // Guardapolvo
+    179: 'https://drive.google.com/file/d/1-xWC_o_JjFyzvbCAajAIDwbB-tBNAKlE/view',  // Guantes de Silicona (manoplas)
+    180: 'https://drive.google.com/file/d/1ClkXkjeJllhjBfmzoH-c4UtZEopy5lPe/view',  // Guantes Multiuso Antibacterial
+    181: 'https://drive.google.com/file/d/1q59yCYVmmzB4J3zhCNYUvuDk7PJtQfEW/view',  // Escobilla
+    182: 'https://drive.google.com/file/d/1fiVv0QlYL5pdsvteqcF2xQaXiutFVuWe/view',  // Gorros protectores para el cabello
+    183: 'https://drive.google.com/file/d/1WHQ3CRs45w_cwP6yO5Yyzff5zM-HFSw1/view',  // Mascarilla
+    184: 'https://drive.google.com/file/d/1fZiMSZRXTEfxJAAnC22N1fWCCctR1zrJ/view',  // Par de Botas de Jebe
+    188: 'https://drive.google.com/file/d/1sQB_G47qkUBJ5DL3CJwdEfuDjuJdfuc8/view',  // Extintor CO2
+    189: 'https://drive.google.com/file/d/1hHmXTo_f4Q8nmM3FUfrVyyVqeBR6nPd5/view',  // Extintor PQS
+    190: 'https://drive.google.com/file/d/1wKMZ9OEIH_sRhagngsdfEGDmcBm0TEmV/view',  // Botiquín
+
+    // ── Equipos de medición ────────────────────────────────────────────────
+     32: 'https://drive.google.com/file/d/19mnSsLwz2rWemSWB5AFJGLVeKv9Yoxxb/view',  // Balanza 40Kg (zona frutas)
+     33: 'https://drive.google.com/file/d/1-f2BQbG_vpiLQ4Hhefk7By4G97vHRR-m/view',  // Balanza 5Kg
+     34: 'https://drive.google.com/file/d/1gINbclncrB41Bk6qSTpCgfBbaeHmHo5a/view',  // Balanza Gramera 500g
+     35: 'https://drive.google.com/file/d/13jy0-Q5kW7V-kvs0DNJFzWmg23ubQt_I/view',  // Refractometro Manual 0-32
+     36: 'https://drive.google.com/file/d/1LMeuEbEwjSSEhKIIM-SVb880s1UpOK3K/view',  // Refractometro Manual 0-90
+     37: 'https://drive.google.com/file/d/1lzMLZ95bTvkiyxpHEh87XORFh1u6fCrk/view',  // Termómetro digital (zona frutas)
+     38: 'https://drive.google.com/file/d/1JCYr1Oxj3EeIvUPsUJrpg8N1a4qrtJgG/view',  // Ph metro (zona frutas)
+     95: 'https://drive.google.com/file/d/19mnSsLwz2rWemSWB5AFJGLVeKv9Yoxxb/view',  // Balanza 40Kg (zona lácteos)
+     96: 'https://drive.google.com/file/d/1djA8OxEa23Q4fmsBMq8EaBPG0jdBIktr/view',  // Balanza 3Kg
+     97: 'https://drive.google.com/file/d/1JCYr1Oxj3EeIvUPsUJrpg8N1a4qrtJgG/view',  // Ph metro (zona lácteos)
+     98: 'https://drive.google.com/file/d/1lzMLZ95bTvkiyxpHEh87XORFh1u6fCrk/view',  // Termómetro digital (zona lácteos)
+    118: 'https://drive.google.com/file/d/16_6q51zCYBW24lXyz7ehzPwU7iyEiU1k/view',  // Balanza Digital (zona pastelería)
+    164: 'https://drive.google.com/file/d/16_6q51zCYBW24lXyz7ehzPwU7iyEiU1k/view',  // Balanza Digital (zona cacao)
+
+    // ── Procesamiento de frutas y hortalizas ──────────────────────────────
+     31: 'https://drive.google.com/file/d/1E-T1ifqX850I3-VmcEey654mhD_7Pb6Y/view',  // Exprimidora
+     39: 'https://drive.google.com/file/d/1MtZCBllqdWZwjP61KuAVtQgqVQrlleH0/view',  // Despulpadora Manual de Frutas
+     44: 'https://drive.google.com/file/d/1ke-rnLAsLWYX3J5mNPSJPBzVF9Y5Zg2m/view',  // Prensa manual para Frutas y Verduras
+     72: 'https://drive.google.com/file/d/13kGtCqZ_IpR1Kjpc0wMKx798YTL1Ufdv/view',  // Peladora de frutas y hortalizas
+     75: 'https://drive.google.com/file/d/17DRQPx80A23DEByf77u-FhhrKpMW8Wf2/view',  // Exprimidor manual de jugos melaza
+     76: 'https://drive.google.com/file/d/1MfxHwWCuxlmDbTN1RzqDjXKZqSRzBX4D/view',  // Exprimidor de cítricos de 4 tambores
+
+    // ── Procesamiento de lácteos ───────────────────────────────────────────
+     83: 'https://drive.google.com/file/d/1LQt-bxLYIJMdvgckhgQX3NRTrZX9uyn-/view',  // Pala para queso
+     84: 'https://drive.google.com/file/d/1V3iygAEsKo1W0PVcGiJGY4RRdwrAkWXr/view',  // Agitador para Yogurt
+     85: 'https://drive.google.com/file/d/199jbCzQlaX_98HI6k9fG2mFRMGmCRDUN/view',  // Liras de corte de queso
+     93: 'https://drive.google.com/file/d/1sKzqyfaEcYRfgxJJ3k_EO3i9kLCTGnDa/view',  // Prensa para queso
+    108: 'https://drive.google.com/file/d/1TZEeODAHPgIO9WzJLm1DMkZ57RN7C5lE/view',  // Descremadora Manual
+
+    // ── Procesamiento de panadería y pastelería ───────────────────────────
+    120: 'https://drive.google.com/file/d/1SyVH-M_lUaqUvYEqGX9NlSGwUbgT-l7r/view',  // Brocha de silicona
+    124: 'https://drive.google.com/file/d/14wVx8zdhEOPj8QK4adV-XI0s2T2dMpVC/view',  // Rodillo acero, madera, silicona
+    126: 'https://drive.google.com/file/d/16RJtra53PjW2mOxuZIajMWtDx_G7wS9O/view',  // Bailarina Metálica
+    127: 'https://drive.google.com/file/d/1nR5NDg2louSkcLXRLwIGp6RBjo0z0N6M/view',  // Juego de Cucharas medidoras
+    129: 'https://drive.google.com/file/d/1t31WlmPQHA3gmOumQCuERiKou5br4vxM/view',  // Batidor Manual
+    132: 'https://drive.google.com/file/d/1kuV3GxBBTyeC7-HxluNpZEqIG4z9P8NH/view',  // Cuchillo para pastelería
+    122: 'https://drive.google.com/file/d/1XxL65zoQiHBCMr7FwtL9xErvexFK30Me/view',  // Juego de Moldes de cake
+    140: 'https://drive.google.com/file/d/1XO8p4LFQ7Kwe7ep_9J0syoPD0J4atCwY/view',  // Bandeja baguetera
+    141: 'https://drive.google.com/file/d/1s69SjJbkrzRYzlREt84nGO_E6hu50LsE/view',  // Bandeja lisa
+    142: 'https://drive.google.com/file/d/1FoMgMOIWOmpdcXzM7ok8etPP87-XO4tC/view',  // Bandeja perforada
+
+    // ── Procesamiento de cacao, café, quinua ──────────────────────────────
+    161: 'https://drive.google.com/file/d/15YcQK1KcjVuFo9bxnMvv7J7kwdfYYGfk/view',  // Escarificadora de Quinua
+    162: 'https://drive.google.com/file/d/13cbsWvLnzzNgg-3QlLJj8LsTzP9C1kKN/view',  // Descascarillador
+    163: 'https://drive.google.com/file/d/1r_pOJpyDz4iCsm9X-fVlEqWz_S-1NkPh/view',  // Prensa Hidráulica Manual
+
+    // ── Utensilios y herramientas generales ───────────────────────────────
+     47: 'https://drive.google.com/file/d/1q9MN0-MKpTca4qdl85HELBNHPQAnXnao/view',  // Olla 50 Litros
+     48: 'https://drive.google.com/file/d/1zIvlwUDIUB5xm7jKOrOTv1G_Zj0GXWCa/view',  // Olla 10 Litros (zona frutas)
+     49: 'https://drive.google.com/file/d/1iNX8LdANYW8qcV2wyv1x8Wn9oqQ_Vvno/view',  // Olla 5 Litros (zona frutas)
+     50: 'https://drive.google.com/file/d/1bPvqQtupPubDV_wbGYU3dnTsEDrmnru2/view',  // Cilindros de plástico
+     51: 'https://drive.google.com/file/d/1QWqKdXA2UxdYOHk_4UNanET1C1wGioYk/view',  // Tina de plástico de 150 Litros
+     52: 'https://drive.google.com/file/d/11hiM8Dz5JmTjOB_JEmLC995B3w4jpCOg/view',  // Tabla de picar
+     53: 'https://drive.google.com/file/d/1-7id7x1zqUc_P2-n4BM81jYA3pIOvq1c/view',  // Cuchillo de Acero Inoxidable
+     54: 'https://drive.google.com/file/d/1R9D4Hlw72K3ZmGaR3HaxiqRim_qvJV8I/view',  // Coladeras (zona frutas)
+     55: 'https://drive.google.com/file/d/1fspf60jwAfR0ceHGEvba0rMSA5Ea-KN-/view',  // Bandejas de Plástico
+     56: 'https://drive.google.com/file/d/1nNo4XjKBn7DHMGAw1c_C5zf1nGBRqyxP/view',  // Balde de Plástico 20 Litros
+     57: 'https://drive.google.com/file/d/18pBreuz5LO9JivFDJfIg2uTd0zI4lROz/view',  // Balde de Plástico 10 Litros
+     60: 'https://drive.google.com/file/d/1NuxkjmOLtOTZIrEYOY33fs_xtHhxokwU/view',  // Embudo
+     62: 'https://drive.google.com/file/d/17jKrdMFU-kBgSGQ29EROpHBlZoXPfMf9/view',  // Cuchara Grande de Madera
+     63: 'https://drive.google.com/file/d/1C7ECIWvd9GIOpjAFonpdedDmWGS0fUt4/view',  // Tazón Bowl N° 20 (zona frutas)
+     64: 'https://drive.google.com/file/d/1sdE0sGvUXd4CprL5AALgRepGRBkxgQ93/view',  // Tazón Bowl N° 24 (zona frutas)
+     66: 'https://drive.google.com/file/d/17vBhtJ_dT0qXKBl6gTzBE8hiZsqAPEPJ/view',  // Poza de Lavado y Desinfección
+     88: 'https://drive.google.com/file/d/1iNX8LdANYW8qcV2wyv1x8Wn9oqQ_Vvno/view',  // Olla 5 Litros (zona lácteos)
+     89: 'https://drive.google.com/file/d/1zIvlwUDIUB5xm7jKOrOTv1G_Zj0GXWCa/view',  // Olla 10 Litros (zona lácteos)
+     90: 'https://drive.google.com/file/d/1R9D4Hlw72K3ZmGaR3HaxiqRim_qvJV8I/view',  // Coladeras (zona lácteos)
+     92: 'https://drive.google.com/file/d/1qNcyvm2qyHuiGE-t0-zx9NStm1oYMKRw/view',  // Balde de Plástico 5 Litros
+    130: 'https://drive.google.com/file/d/1C7ECIWvd9GIOpjAFonpdedDmWGS0fUt4/view',  // Tazón Bowl N° 20 (zona pastelería)
+    131: 'https://drive.google.com/file/d/1sdE0sGvUXd4CprL5AALgRepGRBkxgQ93/view',  // Tazón Bowl N° 24 (zona pastelería)
+    137: 'https://drive.google.com/file/d/1iNX8LdANYW8qcV2wyv1x8Wn9oqQ_Vvno/view',  // Olla 5 Litros (zona panadería)
+  },
 }
 
 // Busca el manual PDF para un bien específico
