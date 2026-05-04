@@ -371,8 +371,8 @@ export default function ModuloDetalle() {
         }
       `}</style>
 
-      {/* ── DARK TOP BAR ── */}
-      <div style={{ background: '#043941' }}>
+      {/* ── WHITE TOP BAR ── */}
+      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.08)' }}>
         <div className="md-topbar-inner" style={{ padding: '16px 32px' }}>
 
           {/* Fila única: icono + breadcrumb + título + stats */}
@@ -380,23 +380,23 @@ export default function ModuloDetalle() {
 
             {/* Izquierda */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
-              <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(255,255,255,0.10)', border: '1.5px solid rgba(255,255,255,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <TallerIcon size={20} style={{ color: '#02d47e' }} />
+              <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: `${tallerColor}18`, border: `1.5px solid ${tallerColor}30`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <TallerIcon size={20} style={{ color: tallerColor }} />
               </div>
               <div style={{ minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
                   <button
                     onClick={() => navigate(`/taller/${slug}/ruta`)}
-                    style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit', transition: 'color .15s' }}
-                    onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
-                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
+                    style={{ fontSize: 11, color: '#94a3b8', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit', transition: 'color .15s' }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#043941')}
+                    onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')}
                   >
                     Ruta de aprendizaje
                   </button>
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)' }}>›</span>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: '#02d47e' }}>M{modulo.numero}</span>
+                  <span style={{ fontSize: 11, color: '#cbd5e1' }}>›</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: tallerColor }}>M{modulo.numero}</span>
                 </div>
-                <h1 style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <h1 style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {modulo.nombre}
                 </h1>
               </div>
@@ -410,28 +410,28 @@ export default function ModuloDetalle() {
                 { value: modulo.sesiones.reduce((a, s) => a + s.contenidos.length, 0), label: 'contenidos' },
               ].map(s => (
                 <div key={s.label} style={{ textAlign: 'center' }}>
-                  <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: 0, lineHeight: 1 }}>{s.value}</p>
-                  <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', textTransform: 'uppercase' }}>{s.label}</p>
+                  <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>{s.value}</p>
+                  <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', color: '#94a3b8', margin: '3px 0 0', textTransform: 'uppercase' }}>{s.label}</p>
                 </div>
               ))}
-              <div style={{ width: 1, height: 28, background: 'rgba(255,255,255,0.15)' }} />
+              <div style={{ width: 1, height: 28, background: 'rgba(4,57,65,0.08)' }} />
               {modulo.horasAsincrono > 0 && (
-                <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: 'rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.80)', border: '1px solid rgba(255,255,255,0.18)' }}>
+                <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: '#e3f8fb', color: '#045f6c' }}>
                   {modulo.horasAsincrono}h Asíncrono
                 </span>
               )}
               {modulo.horasSincrono > 0 && (
-                <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: 'rgba(2,212,126,0.18)', color: '#02d47e', border: '1px solid rgba(2,212,126,0.30)' }}>
+                <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: '#dcfce7', color: '#059669' }}>
                   {modulo.horasSincrono}h En vivo
                 </span>
               )}
               {modulo.horasPresencial > 0 && (
-                <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: 'rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.80)', border: '1px solid rgba(255,255,255,0.18)' }}>
+                <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: '#fef3c7', color: '#b45309' }}>
                   {modulo.horasPresencial}h Presencial
                 </span>
               )}
               {modulo.requiereAprobacion && (
-                <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: 'rgba(245,158,11,0.18)', color: '#fbbf24', border: '1px solid rgba(245,158,11,0.30)' }}>
+                <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, background: '#fef9c3', color: '#92400e' }}>
                   ⚠ Eval. {modulo.puntajeMinimoAcceso}%
                 </span>
               )}
