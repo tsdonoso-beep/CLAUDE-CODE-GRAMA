@@ -409,6 +409,93 @@ export const manualesPDFPorBien: Record<string, Record<number, string>> = {
     60: 'https://drive.google.com/file/d/1h1GFCRcEBbQF4C79YhXxl_6_VxsDLz7p/view',  // Detector de humos
     61: 'https://drive.google.com/file/d/11I-HnsBvYY50vlsaYQz0284iOI16MOOe/view',  // Botiquín
   },
+
+  'cocina-reposteria': {
+    // ── Mobiliario / muebles ───────────────────────────────────────────────
+     18: 'https://drive.google.com/file/d/1pwxAHD9SQRVfQEtPN_XVSHfzGwd-YvSw/view',  // Escritorio para el docente
+     19: 'https://drive.google.com/file/d/1jQka-4TucweIQyCSqYZbZ93bQI7Hu3XT/view',  // Silla para el docente
+     11: 'https://drive.google.com/file/d/1-y4PSq7uyZdCqvcukN5ZJ5sP50ftdgTK/view',  // Silla para Estudiante
+     20: 'https://drive.google.com/file/d/1aC1YloIcmumZILkUPWHwQOuzw3bXwg2V/view',  // Armario de Metal (zona inv.)
+    124: 'https://drive.google.com/file/d/1aC1YloIcmumZILkUPWHwQOuzw3bXwg2V/view',  // Armario de Metal (zona acces.)
+     28: 'https://drive.google.com/file/d/1-H9TPlQRtovoB_1-p8OIVp3uBFi6CgNa/view',  // Mueble bajo
+     29: 'https://drive.google.com/file/d/1tL-W83bslLoFAw0xqjYzTxb_r6iQwdhK/view',  // Mesa Discapacitado
+     62: 'https://drive.google.com/file/d/1OfPGHHFkWJHgD-vrGriImtBVvz83ykV9/view',  // Mesa de trabajo tipo isla (zona cocción)
+     68: 'https://drive.google.com/file/d/1OfPGHHFkWJHgD-vrGriImtBVvz83ykV9/view',  // Mesa de trabajo tipo isla (zona prep.)
+     64: 'https://drive.google.com/file/d/1Uz2VrFdweO0ekzWbb-x6EQZBAMg-8Uxh/view',  // Mesa de Trabajo Mural
+     69: 'https://drive.google.com/file/d/1AOcivIuVkwUPyE-NS2QnC7BQ1fQ_SjoB/view',  // Mesa baja tipo isla
+    128: 'https://drive.google.com/file/d/1MKfIhq6-0z2tdrwHAy_LEJMpGJ0FpH4z/view',  // Mesa de apoyo para equipos móviles
+     65: 'https://drive.google.com/file/d/18XIixKtmRXB_-1abcaHM282s_bsfQq0a/view',  // Anaqueles con repisa
+    126: 'https://drive.google.com/file/d/1B88cMelqc6vujfIMOVKDQ7R9pAJ6IWJ-/view',  // Anaquel de metal
+     66: 'https://drive.google.com/file/d/1MUBkONJLRXFcgyjqQW_COiN5RPR0kJRH/view',  // Contenedor de basura 50 lt (zona cocción)
+    127: 'https://drive.google.com/file/d/1MUBkONJLRXFcgyjqQW_COiN5RPR0kJRH/view',  // Contenedor de basura 50 lt (zona acces.)
+     67: 'https://drive.google.com/file/d/12wq6ywFlmZryOynXHjCoDRYaMDcB7Cos/view',  // Mueble bajo de acero inoxidable
+
+    // ── EPP y limpieza ─────────────────────────────────────────────────────
+    125: 'https://drive.google.com/file/d/1icD2_ZDv4HFgW8WRjVrn6douD4pHQJTc/view',  // Funda protectora impermeable
+    130: 'https://drive.google.com/file/d/1f4oZ4OfGq5-SybmtycqIByg0kofbDh2W/view',  // Indumentaria
+    131: 'https://drive.google.com/file/d/1GlBrqN1LcR4qRof4gcQ1zGhVd_Egn5B3/view',  // Jalador
+    132: 'https://drive.google.com/file/d/1ZbRyDNjqMKLgUg3ezndI5GIQDsGP0MfR/view',  // Dispensador de alcohol en gel
+    133: 'https://drive.google.com/file/d/1YB0HcrR-7Er7ErQGiBGcBpw6TCkdynOJ/view',  // Par de guantes Multiuso Antibacterial
+    134: 'https://drive.google.com/file/d/1iZKVVYN-UxSAripgfND_7Q_WzAMp5nO8/view',  // Escobilla
+    135: 'https://drive.google.com/file/d/18u90v5Hm-_F9m7oIGeezwOuL809ViB_V/view',  // Gorros protectores para el cabello
+    141: 'https://drive.google.com/file/d/1UsrhOwS0z1W06c-P7iFWn5VNhpI2loqs/view',  // Guantes de silicona resistentes al calor
+    129: 'https://drive.google.com/file/d/1F2NLztXowEFXi_Bzr7o5_WyYuIjwfW20/view',  // Escobillón
+
+    // ── Equipos de preparación ─────────────────────────────────────────────
+     48: 'https://drive.google.com/file/d/1ej4BHBx17GUywQAASrkDl3G-rxSVTkcF/view',  // Balanza Digital
+     49: 'https://drive.google.com/file/d/1Rysy-O_Q3zVe838C2ufPtuYfhrA_YYOY/view',  // Exprimidor de Limón
+     50: 'https://drive.google.com/file/d/1JRJ4cMftCbsW5sjD3lU-Gp33pMNAxC2L/view',  // Cortador de Patatas de Palanca
+     52: 'https://drive.google.com/file/d/179guK8l0V6pvXMuGfvfHo487mPhzYx45/view',  // Cortador de Huevos
+     56: 'https://drive.google.com/file/d/1rCvYuePzhgB-x0bCv77NHbXWWvCYgBT8/view',  // Pelador de papa (eléctrico)
+     75: 'https://drive.google.com/file/d/1PIT9t3nzgCsRUqo29LQX7evnmSwhUiud/view',  // Pelador de Papas manual
+
+    // ── Utensilios de cocina ───────────────────────────────────────────────
+     74: 'https://drive.google.com/file/d/11R2y58vSCPv0o7j3KMa28Hn5dibDIJ29/view',  // Juego de Cuchillos
+     77: 'https://drive.google.com/file/d/10kkCFR487Rpq5Tvs765B6dg_lABSXgAy/view',  // Juego de pinzas de cocina
+     78: 'https://drive.google.com/file/d/1zwneAjiYxgsZ-XtkTXe2WbMmuG5WwVPZ/view',  // Ablandador de carne
+     79: 'https://drive.google.com/file/d/13GytttN9FNkxNbtZCq4x_zZc7xhO_Xos/view',  // Rejillas Escurridoras
+     80: 'https://drive.google.com/file/d/1FHnLimIVSzzi_FWYCJP_WWfzRjVtXe-X/view',  // Juego de Ollas para cocina de inducción
+     82: 'https://drive.google.com/file/d/1DdTvbcQtT10T24dCFA1q2enHYbSeR06G/view',  // Juego de cacerolas para cocina de inducción
+     83: 'https://drive.google.com/file/d/1ZzAfsLyaHBMeYoi9gy164b-IW-7R-WVk/view',  // Juego de coladores y escurridores
+     84: 'https://drive.google.com/file/d/1ItaJ7Q1W0tJU489NE6rsWXipt_-yJ2Ab/view',  // Juegos de bandejas de acero
+     85: 'https://drive.google.com/file/d/1rELgQebDE21nTKS-zhTOApiXtHdiGBqh/view',  // Juego de fuentes de vidrio refractario
+     86: 'https://drive.google.com/file/d/1YxJaZBi034Ur7Jn1iuXo_Uf-ZGEXSmjr/view',  // Juego de tazones
+     87: 'https://drive.google.com/file/d/1fozOWKjZAfgXwq70YCnBvGP9MN94XvmG/view',  // Juego de tablas picadoras
+     88: 'https://drive.google.com/file/d/1H7QvMxpeAM1YGnKyameBUe954djFpwVu/view',  // Juego de Tazas Medidoras
+     89: 'https://drive.google.com/file/d/1sty77bQSAHbCnc1IFmYdF0Jbn50B0e_L/view',  // Juego de cucharas medidoras
+     90: 'https://drive.google.com/file/d/1k1dubfXFDqfoJesg3eBB84NcVkR5oyU4/view',  // Juego de Vajillas para Entrada, Fondo
+     91: 'https://drive.google.com/file/d/1W6Q16JxNyblBisRyUbo1hlhETsz-nfYc/view',  // Espátula de silicona
+     92: 'https://drive.google.com/file/d/1JtAt1wTq7Ra1_1QkBELnfzPGzmqAG43K/view',  // Brocha de silicona
+     93: 'https://drive.google.com/file/d/1xSb3jh6KWCYWfkNRLD4qziWjWChEjkRC/view',  // Juego de boquillas decorativas
+     94: 'https://drive.google.com/file/d/1PE-enn0OIHavrzl0ystMzBINt78e8H9V/view',  // Juego de Moldes de cake
+     95: 'https://drive.google.com/file/d/1VI4xub841QTZ5rFa2wWu3TjRPftUPO8P/view',  // Molde con cono
+     96: 'https://drive.google.com/file/d/1bcM5odBejjjE0NJRg0rLxjfCQk11Nm6K/view',  // Rodillo acero, madera, silicona
+     97: 'https://drive.google.com/file/d/1buOaoSkeAPbEUE4CvEqbxbbSJMgJC4Wf/view',  // Colador tipo embudo
+     98: 'https://drive.google.com/file/d/1t2rssNbJckGXzluolGzd_y2OqbTMUmHk/view',  // Bailarina Metálica
+     99: 'https://drive.google.com/file/d/1Sco5zCkMLrRzUIs6e36ZJFPqTqeir9dq/view',  // Juego de Cortadores
+    105: 'https://drive.google.com/file/d/1MDxd2hHvWMNS5FMTvORjtHNGbljDnuhJ/view',  // Cuchillo carnicero
+    106: 'https://drive.google.com/file/d/1a2icUzRLrrqvgC_BIwLX3Ttpe0u5dJSZ/view',  // Cuchillo corte de huesos y verduras
+    111: 'https://drive.google.com/file/d/1uMssawnsltUcfoF0MV1LD39famfe6cZn/view',  // Cuchara perforada
+
+    // ── Ollas y woks ──────────────────────────────────────────────────────
+    100: 'https://drive.google.com/file/d/1Ha579_hWpyZX4xcVEthFnQ4hZ-AKgNhq/view',  // Wok doble asa
+    101: 'https://drive.google.com/file/d/1IISwf4T5a9uy1HIY0hSjXXge_bytr-OS/view',  // Wok Mango largo
+    102: 'https://drive.google.com/file/d/17QqwPBQePECd9SEN07x1UGyLxMx5Xge9/view',  // Wok Mango largo con tapa
+    103: 'https://drive.google.com/file/d/1XXD7t0wOJOhH05_-T0bZaatddat6vbik/view',  // Wok Sarten paellera
+    104: 'https://drive.google.com/file/d/1n5xagbbQeM3S_LzXvNQPxl0EVNOJwfP_/view',  // Olla para sopas y reserva
+    107: 'https://drive.google.com/file/d/1lDh0wP0MUbz-oNMunH2sFqANx6fjhuHT/view',  // Olla para pastas
+    108: 'https://drive.google.com/file/d/1-in0tsgc-zzbQqvQb2vWdQ6UswTtq1gV/view',  // Juego de vajillas
+    113: 'https://drive.google.com/file/d/1mdsRTqlQ4GOtItH8D7tPiAclsTF-FQsq/view',  // Olla de barro
+
+    // ── Herramientas especiales / técnicas ────────────────────────────────
+    109: 'https://drive.google.com/file/d/15UyvB84VCb9BPcQzEHZ6-LqYKu094uN4/view',  // Soplete de cocina mini
+    110: 'https://drive.google.com/file/d/18ELRm5oFIBsNYx7ncqOqHYl0ECz23kt5/view',  // Termómetro cocina
+    112: 'https://drive.google.com/file/d/1h3b-Ma9TF258CIv0jG5H5fbvdpaIZC6O/view',  // Sifón
+    114: 'https://drive.google.com/file/d/1QzF-xkYbrkKUMVyFrBRyZHdNvPxtoilF/view',  // Mortero
+    115: 'https://drive.google.com/file/d/1xDgLfVoeOBX8e1dAJcJOCjYQKNmCX4w8/view',  // Batán
+     37: 'https://drive.google.com/file/d/1xQYyQ9qj5pAnzOanoEh_CosAA60f6xzy/view',  // Juego de bracera rosticera
+    140: 'https://drive.google.com/file/d/1UwDbvD9swAi0GR5hcV18Xq1UE87kOsI6/view',  // Juego de fichas
+  },
 }
 
 // Busca el manual PDF para un bien específico
