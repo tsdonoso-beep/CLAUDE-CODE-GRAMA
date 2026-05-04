@@ -47,13 +47,16 @@ export function QuizBlock({
 
     // Persistir resultado en Supabase (best-effort, sin bloquear UI)
     if (user) {
+      const pathParts = window.location.pathname.split('/')
+      const tallerIdx = pathParts.indexOf('taller')
+      const taller_slug = tallerIdx >= 0 ? (pathParts[tallerIdx + 1] ?? '') : ''
+      const modulo_id = contenidoId.split('-')[0] ?? ''
       supabase.from('quiz_resultados').insert({
-        usuario_id:   user.id,
-        contenido_id: contenidoId,
-        intento:      nuevoIntento,
-        puntaje,
-        aprobado,
-        respuestas,
+        user_id:     user.id,
+        taller_slug,
+        modulo_id,
+        score:       puntaje,
+        total:       preguntas.length,
       }).then(({ error }) => {
         if (error) console.warn('[QuizBlock] No se pudo guardar resultado:', error.message)
       })
