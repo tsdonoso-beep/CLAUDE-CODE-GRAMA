@@ -89,7 +89,7 @@ export function trackContenido(
       user_id: usuarioId,
       contenido_id: bienId,
       tipo: tipoEvento,
-      taller_slug: tallerSlug ?? null,
+      taller_slug: tallerSlug ?? '',
     })
   )
 }
