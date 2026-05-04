@@ -280,75 +280,12 @@ export default function Perfil() {
     { titulo: 'Multitaller',     subtitulo: '2 talleres al 50%',  Icon: Users2,        color: '#94a3b8',                                      obtenido: tallerSlugsAccesibles.length >= 2 && tallerSlugsAccesibles.every(s => getTallerProgreso(s).porcentaje >= 50) },
   ]
 
-  // Módulo activo para el CTA hero (primer taller accesible)
-  const primarySlug   = tallerSlugsAccesibles[0] ?? null
-  const moduloActivo  = primarySlug
-    ? (modulosLXP.find(m => getEstadoModuloLXP(m.id) === 'en_curso') ??
-       modulosLXP.find(m => getEstadoModuloLXP(m.id) === 'disponible'))
-    : null
-  const mpActivo      = moduloActivo && primarySlug
-    ? getModuloProgreso(primarySlug, moduloActivo.numero)
-    : null
 
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif" }}>
 
-      {/* ── Mobile styles ── */}
-      <style>{`
-        @media (max-width: 540px) {
-          .perfil-hero-wrap { padding: 16px 18px !important; }
-          .perfil-hero-row  { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
-          .perfil-hero-btn  { width: 100% !important; justify-content: center !important; }
-          .perfil-prog-bar  { width: 100% !important; max-width: 220px !important; }
-        }
-      `}</style>
 
-      {/* ── HERO: saludo + CTA directo al módulo activo ─────────────────── */}
-      {moduloActivo && primarySlug && (
-        <div className="perfil-hero-wrap" style={{ background: '#043941', padding: '20px 28px', borderBottom: '1px solid rgba(2,212,126,0.12)' }}>
-          <div className="perfil-hero-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
 
-            <div style={{ minWidth: 0 }}>
-              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', fontWeight: 600, margin: '0 0 2px' }}>
-                {greeting}, {firstName}
-              </p>
-              <p style={{ fontSize: 15, fontWeight: 800, color: '#fff', margin: '0 0 10px', lineHeight: 1.3 }}>
-                {getEstadoModuloLXP(moduloActivo.id) === 'en_curso'
-                  ? `Continúas en M${moduloActivo.numero} · ${moduloActivo.nombre}`
-                  : `Tu próximo paso: M${moduloActivo.numero} · ${moduloActivo.nombre}`}
-              </p>
-              {mpActivo && mpActivo.total > 0 && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <div className="perfil-prog-bar" style={{ width: 160, height: 3, borderRadius: 3, background: 'rgba(255,255,255,0.1)', overflow: 'hidden' }}>
-                    <div style={{ width: `${mpActivo.porcentaje}%`, height: '100%', background: '#02d47e', borderRadius: 3, transition: 'width .5s' }} />
-                  </div>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(2,212,126,0.8)' }}>
-                    {mpActivo.completados}/{mpActivo.total} contenidos
-                  </span>
-                </div>
-              )}
-            </div>
-
-            <button
-              className="perfil-hero-btn"
-              onClick={() => navigate(`/taller/${primarySlug}/ruta/modulo/${moduloActivo.numero}`)}
-              style={{
-                background: '#02d47e', color: '#043941',
-                border: 'none', borderRadius: 12, padding: '11px 22px',
-                fontSize: 13, fontWeight: 800, cursor: 'pointer',
-                fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0,
-                display: 'flex', alignItems: 'center', gap: 7,
-                transition: 'opacity .15s',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-              onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-            >
-              {getEstadoModuloLXP(moduloActivo.id) === 'en_curso' ? 'Continuar' : 'Empezar'}
-              <ChevronRight size={15} />
-            </button>
-          </div>
-        </div>
-      )}
 
         {/* Content */}
         <style>{`@media(min-width:1280px){.perfil-content{display:grid;grid-template-columns:1fr 340px;grid-template-areas:"cards calendar";gap:20px;align-items:start}}`}</style>
