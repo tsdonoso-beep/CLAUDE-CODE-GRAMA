@@ -601,6 +601,46 @@ export const manualesPDFPorBien: Record<string, Record<number, string>> = {
     131: 'https://drive.google.com/file/d/1sdE0sGvUXd4CprL5AALgRepGRBkxgQ93/view',  // Tazón Bowl N° 24 (zona pastelería)
     137: 'https://drive.google.com/file/d/1iNX8LdANYW8qcV2wyv1x8Wn9oqQ_Vvno/view',  // Olla 5 Litros (zona panadería)
   },
+
+  'computacion-informatica': {
+    // ── Mobiliario ────────────────────────────────────────────────────────
+     11: 'https://drive.google.com/file/d/1PTOxC7eIV-Ytrx5r4SEbUYhkNv9luR-w/view',  // Mesa de Computadora para estudiante
+     12: 'https://drive.google.com/file/d/1zjvPTfY_yukWviIOmP0alwldcQeBKLZw/view',  // Mesa Discapacitado
+     13: 'https://drive.google.com/file/d/1DC_m0oMJf-Kd2DaUlF28h9AZ7HvYnAA4/view',  // Silla para Estudiante
+     14: 'https://drive.google.com/file/d/1VuV7st1lIIzkdP8UeRqKVBtCr4u3YzEE/view',  // Escritorio para el docente (zona invest.)
+     15: 'https://drive.google.com/file/d/1E1GcWYGsPCLotBfx2DR8g9fImrF-W0CV/view',  // Mueble bajo
+     19: 'https://drive.google.com/file/d/1iVF6c2qyO9yiGeZjgE8EXzz-k2LwlfsY/view',  // Armario de Metal (zona invest.)
+     51: 'https://drive.google.com/file/d/1D_mG5Y6AbW6MUO98aW3COkP5B_1n1uev/view',  // Mesa de trabajo de videograbación (grande)
+     52: 'https://drive.google.com/file/d/1D_mG5Y6AbW6MUO98aW3COkP5B_1n1uev/view',  // Mesa de trabajo de videograbación (alta)
+     53: 'https://drive.google.com/file/d/1vsH4ieGASCTrrXxnnLYkO2RMzZNYpN2T/view',  // Mesa semicircular para set de radio
+     54: 'https://drive.google.com/file/d/1N_3gRb4K2yX-vJh7s4IAv1hsCOXLjAsp/view',  // Mesa de caseta Set de radio
+     56: 'https://drive.google.com/file/d/12hSxH5T-NA5REbza3NgTtsBRLwTltSWZ/view',  // Sillón para set de grabación y docente
+     57: 'https://drive.google.com/file/d/1iVF6c2qyO9yiGeZjgE8EXzz-k2LwlfsY/view',  // Armario de Metal (zona audiovisual)
+     65: 'https://drive.google.com/file/d/1lKRXmyC6Ol55aWRFOWuORgeCL4d1NBJ6/view',  // Silla para el docente
+     66: 'https://drive.google.com/file/d/1VuV7st1lIIzkdP8UeRqKVBtCr4u3YzEE/view',  // Escritorio para el docente (zona robótica)
+     67: 'https://drive.google.com/file/d/1iVF6c2qyO9yiGeZjgE8EXzz-k2LwlfsY/view',  // Armario de Metal (zona robótica)
+     70: 'https://drive.google.com/file/d/1EzX2Kjs6JcpYeLodvDCaNpKs3b6TllKe/view',  // Mesa para entrenador básico
+
+    // ── Taller de producción audiovisual ──────────────────────────────────
+     48: 'https://drive.google.com/file/d/19i1JQhbG1BLf1ccS6LsmJt2nZ6bj7LEn/view',  // Green Screen
+     50: 'https://drive.google.com/file/d/1vl_f4l-Z0pFAV0ZwXN0BZzZBurgz-wL2/view',  // Kit de iluminación de softbox
+
+    // ── Taller de diseño gráfico ───────────────────────────────────────────
+     35: 'https://drive.google.com/file/d/1xEkLR2r_4v3RHzskEwULHRCU4-eTlFXe/view',  // Cizalla
+
+    // ── Taller de redes y robótica ─────────────────────────────────────────
+     74: 'https://drive.google.com/file/d/1BafBJq5JAJ5s4F9NDRITNn-mKm-UZ27R/view',  // Tenaza con prensa
+     75: 'https://drive.google.com/file/d/1Ni8vkP35E0T_T2jyRyJP8GPZNrjeacTN/view',  // Herramienta de impacto
+     76: 'https://drive.google.com/file/d/1OC5H98TaHTORie7POu0KLEY3-yZIJko4/view',  // Pela cable universal
+     77: 'https://drive.google.com/file/d/1GL3RgWQxeVNxnsTBGJJuYjPDncw6z6JG/view',  // Tijera cortatubo
+     79: 'https://drive.google.com/file/d/1VmzCyHZgPT0aW2gDw5QV3NjG87UBEeHd/view',  // Juego de alicates
+     81: 'https://drive.google.com/file/d/1ZtQGKoy3mMGPt_ZSjnseQz0z9xY4Puo3/view',  // Banner de líneas del tiempo
+     83: 'https://drive.google.com/file/d/136rUngxMYLMCD9FGgzs65Bgv725onojo/view',  // Panel interactivo (magnético)
+     93: 'https://drive.google.com/file/d/1pX3x2S8-bjr4UpplDlWnUSmUU01kN7Yu/view',  // Juego de Fichas
+
+    // ── Seguridad ─────────────────────────────────────────────────────────
+     89: 'https://drive.google.com/file/d/11nvHb56uF7IVYVJ5tb_Puj6cVZ4TRlm4/view',  // Extintor PQS
+  },
 }
 
 // Busca el manual PDF para un bien específico
