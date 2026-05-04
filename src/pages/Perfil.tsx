@@ -383,7 +383,11 @@ export default function Perfil() {
                       className="rounded-2xl overflow-hidden"
                       style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)' }}
                     >
-                      <div className="relative overflow-hidden" style={{ height: 148 }}>
+                      <div
+                        className="relative overflow-hidden cursor-pointer"
+                        style={{ height: 148 }}
+                        onClick={() => navigate(`/taller/${slug}`)}
+                      >
                         {t.imagen ? (
                           <img src={t.imagen} alt={t.nombreCorto} className="absolute inset-0 w-full h-full object-cover" />
                         ) : (
@@ -392,7 +396,11 @@ export default function Perfil() {
                         <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(4,57,65,0.25) 0%, rgba(4,57,65,0.55) 100%)' }} />
                       </div>
                       <div className="px-4 py-4">
-                        <h3 className="text-base font-black mb-0.5" style={{ color: '#043941', letterSpacing: '-0.02em' }}>
+                        <h3
+                          className="text-base font-black mb-0.5 cursor-pointer hover:underline"
+                          style={{ color: '#043941', letterSpacing: '-0.02em' }}
+                          onClick={() => navigate(`/taller/${slug}`)}
+                        >
                           {t.nombreCorto ?? t.nombre}
                         </h3>
                         <p className="text-xs mb-2.5" style={{ color: '#94a3b8' }}>
