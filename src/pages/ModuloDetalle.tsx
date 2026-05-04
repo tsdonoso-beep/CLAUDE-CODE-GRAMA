@@ -1,5 +1,5 @@
 // src/pages/ModuloDetalle.tsx
-import { useState, useCallback } from 'react'
+import { useState, useCallback, lazy, Suspense } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { trackContenido } from '@/lib/tracker'
@@ -19,31 +19,33 @@ import { modulosLXP } from '@/data/modulosLXP'
 import { manualesRuta } from '@/data/manualesRuta'
 import { useProgress } from '@/contexts/ProgressContext'
 import { ContenidoBadge } from '@/components/lxp/ContenidoBadge'
-import { QuizBlock } from '@/components/lxp/QuizBlock'
-import { QuizModal } from '@/components/lxp/QuizModal'
-import { ConocenosForm } from '@/components/lxp/ConocenosForm'
-import { ManualViewerModal } from '@/components/lxp/ManualViewerModal'
-import { EPPSelectorModal } from '@/components/lxp/EPPSelectorModal'
-import { MapaHabilidadesModal } from '@/components/lxp/MapaHabilidadesModal'
-import { TablaProgresionModal } from '@/components/lxp/TablaProgresionModal'
-import { DescargableViewerModal } from '@/components/lxp/DescargableViewerModal'
-import { VideoPlayerModal } from '@/components/lxp/VideoPlayerModal'
-import { SimuladorEPPMecaModal } from '@/components/lxp/interactivos/SimuladorEPPMecaModal'
-import { ExploradorEquiposModal } from '@/components/lxp/interactivos/ExploradorEquiposModal'
-import { SeleccionadorConsumiblesModal } from '@/components/lxp/interactivos/SeleccionadorConsumiblesModal'
-import { ChecklistMantenimientoModal } from '@/components/lxp/interactivos/ChecklistMantenimientoModal'
-import { ActividadExternaModal, ACTIVIDADES_EXTERNAS, type ActividadExternaConfig } from '@/components/lxp/interactivos/ActividadExternaModal'
-import { EscenarioPedagogicoModal, ESCENARIO_COMP1, ESCENARIO_COMP2, ESCENARIO_COMP3, ESCENARIO_COMP4, type EscenarioConfig } from '@/components/lxp/interactivos/EscenarioPedagogicoModal'
-import { ClasificadorHerramientasModal } from '@/components/lxp/interactivos/ClasificadorHerramientasModal'
-import { LaboratorioPromptsModal } from '@/components/lxp/interactivos/LaboratorioPromptsModal'
-import { VerificacionFuncionamientoModal } from '@/components/lxp/interactivos/VerificacionFuncionamientoModal'
-import { VerificacionAlmacenModal } from '@/components/lxp/interactivos/VerificacionAlmacenModal'
+// Data constants needed synchronously in handlers — modules load statically
+import { ACTIVIDADES_EXTERNAS, type ActividadExternaConfig } from '@/components/lxp/interactivos/ActividadExternaModal'
+import { ESCENARIO_COMP1, ESCENARIO_COMP2, ESCENARIO_COMP3, ESCENARIO_COMP4, type EscenarioConfig } from '@/components/lxp/interactivos/EscenarioPedagogicoModal'
 import { descargablesLXP } from '@/data/descargablesLXP'
 import { quizBancosMeca } from '@/data/quizBancosMeca'
 import { descargablesMeca } from '@/data/descargablesMeca'
 import { useTaller } from '@/hooks/useTaller'
 import { getTallerBySlug } from '@/data/talleresConfig'
-import jsPDF from 'jspdf'
+
+// ── Modales lazy — se descargan solo cuando el usuario los abre ───────────
+const QuizModal                     = lazy(() => import('@/components/lxp/QuizModal').then(m => ({ default: m.QuizModal })))
+const ManualViewerModal             = lazy(() => import('@/components/lxp/ManualViewerModal').then(m => ({ default: m.ManualViewerModal })))
+const EPPSelectorModal              = lazy(() => import('@/components/lxp/EPPSelectorModal').then(m => ({ default: m.EPPSelectorModal })))
+const MapaHabilidadesModal          = lazy(() => import('@/components/lxp/MapaHabilidadesModal').then(m => ({ default: m.MapaHabilidadesModal })))
+const TablaProgresionModal          = lazy(() => import('@/components/lxp/TablaProgresionModal').then(m => ({ default: m.TablaProgresionModal })))
+const DescargableViewerModal        = lazy(() => import('@/components/lxp/DescargableViewerModal').then(m => ({ default: m.DescargableViewerModal })))
+const VideoPlayerModal              = lazy(() => import('@/components/lxp/VideoPlayerModal').then(m => ({ default: m.VideoPlayerModal })))
+const SimuladorEPPMecaModal         = lazy(() => import('@/components/lxp/interactivos/SimuladorEPPMecaModal').then(m => ({ default: m.SimuladorEPPMecaModal })))
+const ExploradorEquiposModal        = lazy(() => import('@/components/lxp/interactivos/ExploradorEquiposModal').then(m => ({ default: m.ExploradorEquiposModal })))
+const SeleccionadorConsumiblesModal = lazy(() => import('@/components/lxp/interactivos/SeleccionadorConsumiblesModal').then(m => ({ default: m.SeleccionadorConsumiblesModal })))
+const ChecklistMantenimientoModal   = lazy(() => import('@/components/lxp/interactivos/ChecklistMantenimientoModal').then(m => ({ default: m.ChecklistMantenimientoModal })))
+const ActividadExternaModal         = lazy(() => import('@/components/lxp/interactivos/ActividadExternaModal').then(m => ({ default: m.ActividadExternaModal })))
+const EscenarioPedagogicoModal      = lazy(() => import('@/components/lxp/interactivos/EscenarioPedagogicoModal').then(m => ({ default: m.EscenarioPedagogicoModal })))
+const ClasificadorHerramientasModal = lazy(() => import('@/components/lxp/interactivos/ClasificadorHerramientasModal').then(m => ({ default: m.ClasificadorHerramientasModal })))
+const LaboratorioPromptsModal       = lazy(() => import('@/components/lxp/interactivos/LaboratorioPromptsModal').then(m => ({ default: m.LaboratorioPromptsModal })))
+const VerificacionFuncionamientoModal = lazy(() => import('@/components/lxp/interactivos/VerificacionFuncionamientoModal').then(m => ({ default: m.VerificacionFuncionamientoModal })))
+const VerificacionAlmacenModal      = lazy(() => import('@/components/lxp/interactivos/VerificacionAlmacenModal').then(m => ({ default: m.VerificacionAlmacenModal })))
 
 const CONTENT_ICON: Record<string, React.ElementType> = {
   PDF: FileText,
@@ -210,7 +212,7 @@ export default function ModuloDetalle() {
   }
 
   // Manejador para abrir contenidos
-  const handleOpenContent = (contenido: any) => {
+  const handleOpenContent = async (contenido: any) => {
     // Registrar "en progreso" al abrir cualquier contenido (excepto los que ya completan directo)
     markContenidoInProgress(contenido.id)
 
@@ -220,6 +222,7 @@ export default function ModuloDetalle() {
         setDescargableAbierto({ descargableId: contenido.descargableId, contenidoId: contenido.id })
       } else {
         // Fallback: PDF básico para descargables sin datos ricos
+        const { default: jsPDF } = await import('jspdf')
         const doc = new jsPDF()
         const pageWidth = doc.internal.pageSize.getWidth()
         const margin = 15
@@ -876,188 +879,134 @@ export default function ModuloDetalle() {
         </div>
       )}
 
-      {/* Modal visor de manuales — completa el contenido al cerrar */}
-      {manualActivo && manualAbierto && (
-        <ManualViewerModal
-          manual={manualActivo}
-          onClose={() => {
-            completeContenido(manualAbierto.contenidoId)
-            setManualAbierto(null)
-          }}
-        />
-      )}
-
-      {/* Modal de quiz */}
-      {quizAbierto && (
-        <QuizModal
-          contenidoId={quizAbierto.contenidoId}
-          titulo={quizAbierto.titulo}
-          preguntas={quizAbierto.preguntas}
-          puntajeMinimo={quizAbierto.puntajeMinimo}
-          bloqueaSiguiente={quizAbierto.bloqueaSiguiente}
-          onClose={() => setQuizAbierto(null)}
-          onAprobado={() => {
-            completeContenido(quizAbierto.contenidoId)
-            toast.success('¡Quiz aprobado!', { description: 'Tu progreso ha sido guardado.' })
-            setQuizAbierto(null)
-          }}
-        />
-      )}
-
-      {/* Modal visor de descargables — completa al cerrar */}
-      {descargableActivo && descargableAbierto && (
-        <DescargableViewerModal
-          descargable={descargableActivo}
-          onClose={() => {
-            completeContenido(descargableAbierto.contenidoId)
-            setDescargableAbierto(null)
-          }}
-        />
-      )}
-
-      {/* Modal selector EPP — completa m1-s3-c2 al cerrar */}
-      {showEPPSelector && taller && (
-        <EPPSelectorModal
-          tallerSlug={slug ?? ''}
-          tallerNombre={taller.nombre}
-          onClose={() => {
-            completeContenido('m1-s3-c2')
-            setShowEPPSelector(false)
-          }}
-        />
-      )}
-
-      {/* Modal Mapa Habilidades — completa m5-s2-c1 al cerrar */}
-      {showMapaHabilidades && taller && (
-        <MapaHabilidadesModal
-          tallerSlug={slug ?? ''}
-          tallerNombre={taller.nombre}
-          onClose={() => {
-            completeContenido('m5-s2-c1')
-            setShowMapaHabilidades(false)
-          }}
-        />
-      )}
-
-      {/* Modal Tabla Progresión — completa m5-s3-c2 al cerrar */}
-      {showTablaProgresion && taller && (
-        <TablaProgresionModal
-          tallerSlug={slug ?? ''}
-          tallerNombre={taller.nombre}
-          onClose={() => {
-            completeContenido('m5-s3-c2')
-            setShowTablaProgresion(false)
-          }}
-        />
-      )}
-
-      {/* Modal Video Player */}
-      {videoAbierto && (
-        <VideoPlayerModal
-          titulo={videoAbierto.titulo}
-          descripcion={videoAbierto.descripcion}
-          duracionMin={videoAbierto.duracionMin}
-          urlVideo={videoAbierto.urlVideo}
-          onClose={() => setVideoAbierto(null)}
-          onComplete={() => {
-            if (videoAbierto?.contenidoId) completeContenido(videoAbierto.contenidoId)
-          }}
-        />
-      )}
-
-      {/* Checklist mantenimiento — m2-s22-c3 / m3-s29-c3 */}
-      {showChecklistMant && (
-        <ChecklistMantenimientoModal
-          zona={showChecklistMant}
-          onClose={() => setShowChecklistMant(null)}
-          onComplete={() => {
-            const id = showChecklistMant === 'investigacion' ? 'm2-s22-c3' : 'm3-s29-c3'
-            completeContenido(id)
-          }}
-        />
-      )}
-
-      {/* Verificación de funcionamiento electrónico — m2-s20-c3 (Zona Investigación) */}
-      {showVerificacion && (
-        <VerificacionFuncionamientoModal
-          onClose={() => setShowVerificacion(false)}
-          onComplete={() => completeContenido('m2-s20-c3')}
-        />
-      )}
-
-      {/* Verificación visual herramientas — m3-s27-c3 (Zona Almacén) */}
-      {showVerificacionAlmacen && (
-        <VerificacionAlmacenModal
-          onClose={() => setShowVerificacionAlmacen(false)}
-          onComplete={() => completeContenido('m3-s27-c3')}
-        />
-      )}
-
-      {/* Laboratorio de prompts — m0-s04-c3 */}
-      {showLaboratorio && (
-        <LaboratorioPromptsModal
-          onClose={() => setShowLaboratorio(false)}
-          onComplete={() => completeContenido('m0-s04-c3')}
-        />
-      )}
-
-      {/* Clasificador de herramientas — m0-s02-c3 */}
-      {showClasificador && (
-        <ClasificadorHerramientasModal
-          onClose={() => setShowClasificador(false)}
-          onComplete={() => completeContenido('m0-s02-c3')}
-        />
-      )}
-
-      {/* Escenario pedagógico — m5-s51-c3 y siguientes */}
-      {escenarioPedagogico && (
-        <EscenarioPedagogicoModal
-          config={escenarioPedagogico}
-          onClose={() => setEscenarioPedagogico(null)}
-          onComplete={() => completeContenido(escenarioPedagogico.contenidoId)}
-        />
-      )}
-
-      {/* Actividad externa — m0-s03-c4 / m0-s05-c4 / m0-s06-c4 */}
-      {actividadExterna && (
-        <ActividadExternaModal
-          config={actividadExterna}
-          onClose={() => setActividadExterna(null)}
-          onComplete={() => completeContenido(actividadExterna.contenidoId)}
-        />
-      )}
-
-      {/* Simulador EPP — m1-s13-c2 */}
-      {showSimuladorEPP && (
-        <SimuladorEPPMecaModal
-          onClose={() => setShowSimuladorEPP(false)}
-          onComplete={() => completeContenido('m1-s13-c2')}
-        />
-      )}
-
-      {/* Explorador de Equipos — m1-s11-c2 */}
-      {showExploradorEquipos && (
-        <ExploradorEquiposModal
-          onClose={() => setShowExploradorEquipos(false)}
-          onComplete={() => completeContenido('m1-s11-c2')}
-        />
-      )}
-
-      {/* Seleccionador de Consumibles — m2-s19-c3 / m3-s26-c3 / m4-s34-c3 */}
-      {showSelConsumibles && (
-        <SeleccionadorConsumiblesModal
-          zona={showSelConsumibles}
-          onClose={() => setShowSelConsumibles(null)}
-          onComplete={() => {
-            const ids: Record<string, string> = {
-              investigacion: 'm2-s19-c3',
-              almacen:       'm3-s26-c3',
-              innovacion:    'm4-s34-c3',
-            }
-            completeContenido(ids[showSelConsumibles])
-          }}
-        />
-      )}
+      {/* ── Modales lazy — Suspense único para todos ── */}
+      <Suspense fallback={null}>
+        {manualActivo && manualAbierto && (
+          <ManualViewerModal
+            manual={manualActivo}
+            onClose={() => { completeContenido(manualAbierto.contenidoId); setManualAbierto(null) }}
+          />
+        )}
+        {quizAbierto && (
+          <QuizModal
+            contenidoId={quizAbierto.contenidoId}
+            titulo={quizAbierto.titulo}
+            preguntas={quizAbierto.preguntas}
+            puntajeMinimo={quizAbierto.puntajeMinimo}
+            bloqueaSiguiente={quizAbierto.bloqueaSiguiente}
+            onClose={() => setQuizAbierto(null)}
+            onAprobado={() => {
+              completeContenido(quizAbierto.contenidoId)
+              toast.success('¡Quiz aprobado!', { description: 'Tu progreso ha sido guardado.' })
+              setQuizAbierto(null)
+            }}
+          />
+        )}
+        {descargableActivo && descargableAbierto && (
+          <DescargableViewerModal
+            descargable={descargableActivo}
+            onClose={() => { completeContenido(descargableAbierto.contenidoId); setDescargableAbierto(null) }}
+          />
+        )}
+        {showEPPSelector && taller && (
+          <EPPSelectorModal
+            tallerSlug={slug ?? ''}
+            tallerNombre={taller.nombre}
+            onClose={() => { completeContenido('m1-s3-c2'); setShowEPPSelector(false) }}
+          />
+        )}
+        {showMapaHabilidades && taller && (
+          <MapaHabilidadesModal
+            tallerSlug={slug ?? ''}
+            tallerNombre={taller.nombre}
+            onClose={() => { completeContenido('m5-s2-c1'); setShowMapaHabilidades(false) }}
+          />
+        )}
+        {showTablaProgresion && taller && (
+          <TablaProgresionModal
+            tallerSlug={slug ?? ''}
+            tallerNombre={taller.nombre}
+            onClose={() => { completeContenido('m5-s3-c2'); setShowTablaProgresion(false) }}
+          />
+        )}
+        {videoAbierto && (
+          <VideoPlayerModal
+            titulo={videoAbierto.titulo}
+            descripcion={videoAbierto.descripcion}
+            duracionMin={videoAbierto.duracionMin}
+            urlVideo={videoAbierto.urlVideo}
+            onClose={() => setVideoAbierto(null)}
+            onComplete={() => { if (videoAbierto?.contenidoId) completeContenido(videoAbierto.contenidoId) }}
+          />
+        )}
+        {showChecklistMant && (
+          <ChecklistMantenimientoModal
+            zona={showChecklistMant}
+            onClose={() => setShowChecklistMant(null)}
+            onComplete={() => completeContenido(showChecklistMant === 'investigacion' ? 'm2-s22-c3' : 'm3-s29-c3')}
+          />
+        )}
+        {showVerificacion && (
+          <VerificacionFuncionamientoModal
+            onClose={() => setShowVerificacion(false)}
+            onComplete={() => completeContenido('m2-s20-c3')}
+          />
+        )}
+        {showVerificacionAlmacen && (
+          <VerificacionAlmacenModal
+            onClose={() => setShowVerificacionAlmacen(false)}
+            onComplete={() => completeContenido('m3-s27-c3')}
+          />
+        )}
+        {showLaboratorio && (
+          <LaboratorioPromptsModal
+            onClose={() => setShowLaboratorio(false)}
+            onComplete={() => completeContenido('m0-s04-c3')}
+          />
+        )}
+        {showClasificador && (
+          <ClasificadorHerramientasModal
+            onClose={() => setShowClasificador(false)}
+            onComplete={() => completeContenido('m0-s02-c3')}
+          />
+        )}
+        {escenarioPedagogico && (
+          <EscenarioPedagogicoModal
+            config={escenarioPedagogico}
+            onClose={() => setEscenarioPedagogico(null)}
+            onComplete={() => completeContenido(escenarioPedagogico.contenidoId)}
+          />
+        )}
+        {actividadExterna && (
+          <ActividadExternaModal
+            config={actividadExterna}
+            onClose={() => setActividadExterna(null)}
+            onComplete={() => completeContenido(actividadExterna.contenidoId)}
+          />
+        )}
+        {showSimuladorEPP && (
+          <SimuladorEPPMecaModal
+            onClose={() => setShowSimuladorEPP(false)}
+            onComplete={() => completeContenido('m1-s13-c2')}
+          />
+        )}
+        {showExploradorEquipos && (
+          <ExploradorEquiposModal
+            onClose={() => setShowExploradorEquipos(false)}
+            onComplete={() => completeContenido('m1-s11-c2')}
+          />
+        )}
+        {showSelConsumibles && (
+          <SeleccionadorConsumiblesModal
+            zona={showSelConsumibles}
+            onClose={() => setShowSelConsumibles(null)}
+            onComplete={() => {
+              const ids: Record<string, string> = { investigacion: 'm2-s19-c3', almacen: 'm3-s26-c3', innovacion: 'm4-s34-c3' }
+              completeContenido(ids[showSelConsumibles])
+            }}
+          />
+        )}
+      </Suspense>
 
       {/* Modal Tour 3D — Simulador Taller Automotriz */}
       {showTourSimulator && (
