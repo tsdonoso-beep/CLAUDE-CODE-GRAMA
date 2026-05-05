@@ -921,8 +921,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
             {/* Section header */}
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
               <div>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: '.25rem' }}>Solicitudes de acceso</h3>
-                <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.5)' }}>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#043941', marginBottom: '.25rem' }}>Solicitudes de acceso</h3>
+                <p style={{ fontSize: '.72rem', color: 'rgba(4,57,65,0.55)' }}>
                   {solicitudesPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{solicitudesPendientes} pendientes</span> : 'Sin pendientes'} · {solicitudes.length} en total
                 </p>
               </div>
@@ -972,8 +972,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
             ) : solicitudesFiltradas.length === 0 ? (
               <div className="text-center py-20 rounded-2xl"
                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <Inbox size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.3)' }} />
-                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                <Inbox size={36} className="mx-auto mb-3" style={{ color: 'rgba(4,57,65,0.3)' }} />
+                <p className="text-sm" style={{ color: 'rgba(4,57,65,0.55)' }}>
                   No hay solicitudes en esta categoría.
                 </p>
               </div>
@@ -1082,8 +1082,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
               {/* Section header */}
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
                 <div>
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: '.25rem' }}>Consultas de docentes</h3>
-                  <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.5)' }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#043941', marginBottom: '.25rem' }}>Consultas de docentes</h3>
+                  <p style={{ fontSize: '.72rem', color: 'rgba(4,57,65,0.55)' }}>
                     {consultasPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{consultasPendientes} sin responder</span> : 'Todas respondidas'} · {consultasAdmin.length} en total
                   </p>
                 </div>
@@ -1119,8 +1119,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
               ) : consultasFiltradas.length === 0 ? (
                 <div className="text-center py-20 rounded-2xl"
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                  <MessageCircle size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.3)' }} />
-                  <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>No hay consultas en esta categoría.</p>
+                  <MessageCircle size={36} className="mx-auto mb-3" style={{ color: 'rgba(4,57,65,0.3)' }} />
+                  <p className="text-sm" style={{ color: 'rgba(4,57,65,0.55)' }}>No hay consultas en esta categoría.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -1212,14 +1212,14 @@ Equipo GRAMA · Programa TSF-MINEDU`
             {/* Section header */}
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
               <div>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: '.25rem' }}>Reportes de uso</h3>
-                <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.5)' }}>Actividad de la plataforma · {docentes.length} docentes</p>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#043941', marginBottom: '.25rem' }}>Reportes de uso</h3>
+                <p style={{ fontSize: '.72rem', color: 'rgba(4,57,65,0.55)' }}>Actividad de la plataforma · {docentes.length} docentes</p>
               </div>
             </div>
             {/* Filtro por docente */}
             <div className="mb-6 flex flex-wrap items-end gap-3">
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                <label className="text-xs font-semibold" style={{ color: 'rgba(4,57,65,0.65)' }}>
                   Filtrar por docente
                 </label>
                 <div className="flex gap-2">
@@ -1610,7 +1610,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
         {/* Section header */}
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
           <div>
-            <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: '.25rem' }}>Docentes registrados</h3>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#043941', marginBottom: '.25rem' }}>Docentes registrados</h3>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.25rem', marginTop: '.4rem' }}>
               {[
                 { label: 'Total', value: docentes.length },
@@ -1644,7 +1644,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
               onChange={e => setBusquedaUsuario(e.target.value)}
               placeholder="Buscar por nombre o correo…"
               className="w-full pl-9 pr-4 py-2.5 rounded-xl border-2 text-sm outline-none"
-              style={{ borderColor: busquedaUsuario ? '#02d47e' : 'rgba(255,255,255,0.12)', background: '#ffffff', color: '#ffffff' }}
+              style={{ borderColor: busquedaUsuario ? '#02d47e' : 'rgba(4,57,65,0.15)', background: '#ffffff', color: '#043941' }}
             />
             {busquedaUsuario && (
               <button onClick={() => setBusquedaUsuario('')} className="absolute right-3 top-1/2 -translate-y-1/2 opacity-40 hover:opacity-70 text-white text-sm">✕</button>
