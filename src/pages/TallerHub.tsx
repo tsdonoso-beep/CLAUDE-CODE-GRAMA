@@ -202,28 +202,29 @@ export default function TallerHub() {
 
       {/* ══ MÓDULOS + CTA (fusionados) ═══════════════════════════════════════ */}
       {!isGeneralEpt && currentMod && (
-        <div className="th-modulos-wrap" style={{ padding: '18px 32px 22px', borderBottom: '1px solid rgba(4,57,65,0.07)', background: '#f8fafc' }}>
+        <div className="th-modulos-wrap" style={{ padding: '22px 32px 26px', borderBottom: '1px solid rgba(4,57,65,0.07)', background: '#f8fafc' }}>
           {/* Header: contexto + botón de acción */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginBottom: 14 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
-              <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', margin: 0, whiteSpace: 'nowrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginBottom: 16 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4, minWidth: 0 }}>
+              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', margin: 0 }}>
                 Formación
               </p>
-              <span style={{ fontSize: 9, color: 'rgba(4,57,65,0.2)' }}>·</span>
-              <p style={{ fontSize: 11, fontWeight: 600, color: allCompleted ? '#02d47e' : tallerColor, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                {allCompleted ? '¡Completado!' : currentEstado === 'en_curso'
-                  ? `Continúa en M${currentMod.numero} — ${currentMod.nombre}`
-                  : `Empieza en M${currentMod.numero} — ${currentMod.nombre}`}
-              </p>
-              {!allCompleted && currentProg && currentProg.porcentaje > 0 && (
-                <span style={{ fontSize: 10, color: '#94a3b8', whiteSpace: 'nowrap' }}>
-                  {currentProg.porcentaje}%
-                </span>
-              )}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
+                <p style={{ fontSize: 13, fontWeight: 700, color: allCompleted ? '#02d47e' : '#043941', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {allCompleted ? '¡Completado!' : currentEstado === 'en_curso'
+                    ? `Continúa en M${currentMod.numero} — ${currentMod.nombre}`
+                    : `Empieza en M${currentMod.numero} — ${currentMod.nombre}`}
+                </p>
+                {!allCompleted && currentProg && currentProg.porcentaje > 0 && (
+                  <span style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                    {currentProg.porcentaje}%
+                  </span>
+                )}
+              </div>
             </div>
             <button
               onClick={() => navigate(`/taller/${slug}/ruta/modulo/${currentMod.numero}`)}
-              style={{ background: allCompleted ? '#02d47e' : '#043941', color: allCompleted ? '#043941' : tallerColor, border: 'none', borderRadius: 10, padding: '8px 18px', fontSize: 12, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, transition: 'opacity .18s' }}
+              style={{ background: allCompleted ? '#02d47e' : '#043941', color: allCompleted ? '#043941' : '#ffffff', border: 'none', borderRadius: 10, padding: '9px 20px', fontSize: 12, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, transition: 'opacity .18s' }}
               onMouseEnter={e => (e.currentTarget.style.opacity = '0.82')}
               onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
             >
@@ -311,8 +312,8 @@ export default function TallerHub() {
 
             <div className="th-repo-header" style={{ padding: '18px 24px 14px', borderBottom: '1px solid rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <h2 style={{ fontSize: 16, fontWeight: 800, color: '#043941', margin: '0 0 2px', letterSpacing: '-0.01em' }}>Repositorio del taller</h2>
-                <p style={{ fontSize: 11, color: '#94a3b8', margin: 0 }}>{todosLos.length} bienes · {zonas.length} zonas</p>
+                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', margin: '0 0 4px' }}>Repositorio</p>
+                <p style={{ fontSize: 13, fontWeight: 700, color: '#043941', margin: 0, lineHeight: 1.2 }}>{todosLos.length} bienes · {zonas.length} zonas</p>
               </div>
               <button
                 onClick={() => navigate(`/taller/${slug}/repositorio`)}
