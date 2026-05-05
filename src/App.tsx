@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom"
 import { lazy, Suspense } from "react"
 import { AppShell } from "@/components/layout/AppShell"
 import { PerfilShell } from "@/components/layout/PerfilShell"
@@ -19,7 +19,6 @@ const Landing        = lazy(() => import("./pages/Landing"))
 const Login           = lazy(() => import("./pages/Login"))
 const Bienvenida      = lazy(() => import("./pages/Bienvenida"))
 const TallerHub       = lazy(() => import("./pages/TallerHub"))
-const RutaAprendizaje = lazy(() => import("./pages/RutaAprendizaje"))
 const ModuloDetalle   = lazy(() => import("./pages/ModuloDetalle"))
 const Repositorio     = lazy(() => import("./pages/Repositorio"))
 const BienDetalle     = lazy(() => import("./pages/BienDetalle"))
@@ -31,6 +30,11 @@ const CentroAyuda     = lazy(() => import("./pages/CentroAyuda"))
 const Configuracion   = lazy(() => import("./pages/Configuracion"))
 const Certificados    = lazy(() => import("./pages/Certificados"))
 const NotFound        = lazy(() => import("./pages/NotFound"))
+
+function RutaRedirect() {
+  const { slug } = useParams()
+  return <Navigate to={`/taller/${slug}`} replace />
+}
 
 const queryClient = new QueryClient()
 
@@ -92,7 +96,7 @@ const App = () => (
                   {/* App con sidebar */}
                   <Route element={<AppShell />}>
                     <Route path="/taller/:slug"                        element={wrap(TallerHub)} />
-                    <Route path="/taller/:slug/ruta"                   element={wrap(RutaAprendizaje)} />
+                    <Route path="/taller/:slug/ruta"                   element={<RutaRedirect />} />
                     <Route path="/taller/:slug/ruta/modulo/:num"       element={wrap(ModuloDetalle)} />
                     <Route path="/taller/:slug/repositorio"            element={wrap(Repositorio)} />
                     <Route path="/taller/:slug/repositorio/bien/:id"   element={wrap(BienDetalle)} />

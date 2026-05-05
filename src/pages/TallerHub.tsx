@@ -68,9 +68,11 @@ export default function TallerHub() {
       <style>{`
         @media (max-width: 767px) {
           .th-topbar-inner  { padding: 14px 16px !important; }
-          .th-topbar-row    { gap: 10px !important; }
           .th-topbar-stats  { display: none !important; }
-          .th-ctamod        { grid-template-columns: 1fr !important; padding: 16px 16px !important; gap: 20px !important; }
+          .th-desc-wrap     { padding: 14px 16px !important; }
+          .th-cta-inner     { padding: 14px 16px !important; flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+          .th-cta-btn       { width: 100% !important; justify-content: center !important; }
+          .th-modulos-wrap  { padding: 12px 16px 16px !important; }
           .th-valor-inner   { gap: 10px !important; }
           .th-valor-divider { display: none !important; }
           .th-repo-wrap     { padding: 14px 14px !important; }
@@ -104,8 +106,8 @@ export default function TallerHub() {
                   T{String(taller.numero).padStart(2, '0')}
                 </span>
               </div>
-              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 400, maxWidth: 500, lineHeight: 1.5 }}>
-                {taller.descripcion}
+              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', margin: 0, fontWeight: 500 }}>
+                T{String(taller.numero).padStart(2, '0')} · Educación para el Trabajo
               </p>
             </div>
           </div>
@@ -141,109 +143,114 @@ export default function TallerHub() {
         </div>
       </div>
 
-      {/* ══ CTA + MÓDULOS (2 columnas) ══════════════════════════════════════ */}
+      {/* ══ DESCRIPCIÓN ══════════════════════════════════════════════════════ */}
+      <div className="th-desc-wrap" style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)', padding: '16px 32px' }}>
+        <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.3)', margin: '0 0 6px' }}>
+          Sobre el taller
+        </p>
+        <p style={{ fontSize: 13, fontWeight: 500, color: '#2d4a4e', lineHeight: 1.7, margin: 0, maxWidth: 800 }}>
+          {taller.descripcion}
+        </p>
+      </div>
+
+      {/* ══ CTA CONTINÚA ════════════════════════════════════════════════════ */}
       {!isGeneralEpt && currentMod && (
         <div style={{
-          background: allCompleted ? 'rgba(2,212,126,0.05)' : '#f8fafc',
-          borderBottom: `1px solid ${allCompleted ? 'rgba(2,212,126,0.15)' : 'rgba(4,57,65,0.08)'}`,
+          background: allCompleted ? 'rgba(2,212,126,0.06)' : 'rgba(4,57,65,0.03)',
+          borderBottom: `1px solid ${allCompleted ? 'rgba(2,212,126,0.18)' : 'rgba(4,57,65,0.08)'}`,
+          padding: '18px 32px',
         }}>
-          <div className="th-ctamod" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, padding: '20px 32px', alignItems: 'start' }}>
+          <div className="th-cta-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
 
-            {/* Columna izquierda: CTA */}
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
-              <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, background: allCompleted ? 'rgba(2,212,126,0.15)' : `${tallerColor}18`, marginTop: 2 }}>
-                {allCompleted ? <CheckCircle2 size={20} style={{ color: '#02d47e' }} /> : currentMod.icon}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 0 }}>
+              <div style={{ width: 48, height: 48, borderRadius: 14, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, background: allCompleted ? 'rgba(2,212,126,0.15)' : `${tallerColor}18` }}>
+                {allCompleted ? <CheckCircle2 size={22} style={{ color: '#02d47e' }} /> : currentMod.icon}
               </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: allCompleted ? '#02d47e' : tallerColor, margin: '0 0 4px' }}>
+              <div style={{ minWidth: 0 }}>
+                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: allCompleted ? '#02d47e' : tallerColor, margin: '0 0 3px' }}>
                   {allCompleted ? '¡Formación completada!' : currentEstado === 'en_curso' ? 'Continúa donde lo dejaste' : 'Comienza tu formación'}
                 </p>
-                <p style={{ fontSize: 15, fontWeight: 800, color: '#043941', margin: '0 0 8px', lineHeight: 1.3 }}>
-                  {allCompleted ? 'Todos los módulos completados' : `M${currentMod.numero} — ${currentMod.nombre}`}
+                <p style={{ fontSize: 15, fontWeight: 800, color: '#043941', margin: '0 0 6px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {allCompleted ? 'Has completado todos los módulos del taller' : `M${currentMod.numero} — ${currentMod.nombre}`}
                 </p>
                 {!allCompleted && (
-                  <div style={{ marginBottom: 14 }}>
-                    <div style={{ width: '100%', maxWidth: 220, height: 4, borderRadius: 2, background: 'rgba(4,57,65,0.10)', overflow: 'hidden', marginBottom: 5 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{ width: 180, height: 4, borderRadius: 2, background: 'rgba(4,57,65,0.10)', overflow: 'hidden' }}>
                       <div style={{ height: '100%', width: `${currentProg?.porcentaje ?? 0}%`, background: tallerColor, borderRadius: 2, transition: 'width .4s ease' }} />
                     </div>
-                    <span style={{ fontSize: 11, color: '#94a3b8' }}>
+                    <span style={{ fontSize: 11, color: '#94a3b8', whiteSpace: 'nowrap' }}>
                       {currentProg?.porcentaje ?? 0}%{nextSes ? ` · Próximo: ${nextSes.nombre}` : ''}
                     </span>
                   </div>
                 )}
+              </div>
+            </div>
+
+            <button
+              className="th-cta-btn"
+              onClick={() => navigate(`/taller/${slug}/ruta/modulo/${currentMod.numero}`)}
+              style={{ background: allCompleted ? '#02d47e' : tallerColor, color: allCompleted ? '#043941' : '#fff', border: 'none', borderRadius: 12, padding: '11px 24px', fontSize: 13, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, transition: 'opacity .18s' }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+              onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+            >
+              <PlayCircle size={15} />
+              {allCompleted ? 'Revisar' : currentEstado === 'en_curso' ? 'Continuar' : 'Empezar'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ══ MÓDULOS ══════════════════════════════════════════════════════════ */}
+      {!isGeneralEpt && (
+        <div className="th-modulos-wrap" style={{ padding: '16px 32px', borderBottom: '1px solid rgba(4,57,65,0.07)', background: '#f8fafc' }}>
+          <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', margin: '0 0 10px' }}>
+            Módulos del taller
+          </p>
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            {modulosLXP.map(m => {
+              const estado   = getEstadoModuloLXP(m.id)
+              const prog     = getModuloProgreso(slug, m.numero)
+              const isDone   = estado === 'completado'
+              const isActive = estado === 'en_curso'
+              const isLocked = estado === 'bloqueado'
+              return (
                 <button
-                  onClick={() => navigate(
-                    allCompleted
-                      ? `/taller/${slug}/ruta`
-                      : `/taller/${slug}/ruta/modulo/${currentMod.numero}`
-                  )}
-                  style={{ background: allCompleted ? '#02d47e' : '#043941', color: allCompleted ? '#043941' : tallerColor, border: 'none', borderRadius: 10, padding: '9px 20px', fontSize: 12, fontWeight: 800, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'opacity .18s' }}
-                  onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
-                  onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+                  key={m.id}
+                  disabled={isLocked}
+                  onClick={() => !isLocked && navigate(`/taller/${slug}/ruta/modulo/${m.numero}`)}
+                  style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 3,
+                    padding: '8px 12px', borderRadius: 10, minWidth: 110,
+                    border: isDone
+                      ? `1.5px solid ${tallerColor}50`
+                      : isActive
+                        ? `1.5px solid ${tallerColor}`
+                        : '1.5px solid rgba(4,57,65,0.09)',
+                    background: isDone ? `${tallerColor}08` : isActive ? `${tallerColor}12` : '#fff',
+                    cursor: isLocked ? 'not-allowed' : 'pointer',
+                    opacity: isLocked ? 0.4 : 1,
+                    fontFamily: 'inherit',
+                    transition: 'all .15s',
+                  }}
                 >
-                  <PlayCircle size={14} />
-                  {allCompleted ? 'Ver ruta completa' : currentEstado === 'en_curso' ? 'Continuar' : 'Empezar'}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 5, width: '100%', justifyContent: 'space-between' }}>
+                    <span style={{ fontSize: 9, fontWeight: 800, color: isDone || isActive ? tallerColor : 'rgba(4,57,65,0.35)' }}>
+                      M{m.numero}
+                    </span>
+                    {isDone && <CheckCircle2 size={10} style={{ color: tallerColor }} />}
+                    {isActive && <span style={{ fontSize: 8, fontWeight: 800, color: tallerColor, letterSpacing: '.04em' }}>EN CURSO</span>}
+                  </div>
+                  <span style={{ fontSize: 10, fontWeight: 700, color: isLocked ? '#94a3b8' : '#043941', lineHeight: 1.3, textAlign: 'left' }}>
+                    {m.nombre.split(' ').slice(0, 3).join(' ')}
+                  </span>
+                  {isActive && (
+                    <div style={{ width: '100%', height: 2, borderRadius: 2, background: 'rgba(4,57,65,0.08)', marginTop: 1 }}>
+                      <div style={{ height: '100%', width: `${prog?.porcentaje ?? 0}%`, background: tallerColor, borderRadius: 2 }} />
+                    </div>
+                  )}
                 </button>
-              </div>
-            </div>
-
-            {/* Columna derecha: módulos */}
-            <div>
-              <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.38)', margin: '0 0 10px' }}>
-                Módulos del taller
-              </p>
-              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                {modulosLXP.map(m => {
-                  const estado   = getEstadoModuloLXP(m.id)
-                  const prog     = getModuloProgreso(slug, m.numero)
-                  const isDone   = estado === 'completado'
-                  const isActive = estado === 'en_curso'
-                  const isLocked = estado === 'bloqueado'
-                  return (
-                    <button
-                      key={m.id}
-                      disabled={isLocked}
-                      onClick={() => !isLocked && navigate(`/taller/${slug}/ruta/modulo/${m.numero}`)}
-                      style={{
-                        display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 3,
-                        padding: '8px 11px', borderRadius: 10, minWidth: 95,
-                        border: isDone
-                          ? `1.5px solid ${tallerColor}50`
-                          : isActive
-                            ? `1.5px solid ${tallerColor}`
-                            : '1.5px solid rgba(4,57,65,0.09)',
-                        background: isDone
-                          ? `${tallerColor}08`
-                          : isActive
-                            ? `${tallerColor}12`
-                            : '#fff',
-                        cursor: isLocked ? 'not-allowed' : 'pointer',
-                        opacity: isLocked ? 0.4 : 1,
-                        fontFamily: 'inherit',
-                        transition: 'all .15s',
-                      }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 5, width: '100%', justifyContent: 'space-between' }}>
-                        <span style={{ fontSize: 9, fontWeight: 800, color: isDone || isActive ? tallerColor : 'rgba(4,57,65,0.35)' }}>
-                          M{m.numero}
-                        </span>
-                        {isDone && <CheckCircle2 size={10} style={{ color: tallerColor }} />}
-                        {isActive && <span style={{ fontSize: 8, fontWeight: 800, color: tallerColor, letterSpacing: '.04em' }}>EN CURSO</span>}
-                      </div>
-                      <span style={{ fontSize: 10, fontWeight: 700, color: isLocked ? '#94a3b8' : '#043941', lineHeight: 1.3, textAlign: 'left' }}>
-                        {m.nombre.split(' ').slice(0, 3).join(' ')}
-                      </span>
-                      {isActive && (
-                        <div style={{ width: '100%', height: 2, borderRadius: 2, background: 'rgba(4,57,65,0.08)', marginTop: 1 }}>
-                          <div style={{ height: '100%', width: `${prog?.porcentaje ?? 0}%`, background: tallerColor, borderRadius: 2 }} />
-                        </div>
-                      )}
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-
+              )
+            })}
           </div>
         </div>
       )}
