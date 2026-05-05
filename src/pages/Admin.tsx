@@ -1212,8 +1212,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
             {/* Section header */}
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
               <div>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#043941', marginBottom: '.25rem' }}>Reportes de uso</h3>
-                <p style={{ fontSize: '.72rem', color: 'rgba(4,57,65,0.6)' }}>Actividad de la plataforma · {docentes.length} docentes</p>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: '.25rem' }}>Reportes de uso</h3>
+                <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.5)' }}>Actividad de la plataforma · {docentes.length} docentes</p>
               </div>
             </div>
             {/* Filtro por docente */}
@@ -1251,12 +1251,40 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     style={{ background: 'rgba(2,212,126,0.08)', border: '1px solid rgba(2,212,126,0.2)' }}>
                     <div>
                       <p className="text-sm font-bold text-white">{d.nombre_completo}</p>
-                      <p className="text-xs" style={{ color: '#043941' }}>{ie?.nombre ?? '—'} · {(d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : []).map(s => talleresConfig.find(t => t.slug === s)?.nombreCorto ?? s).join(' · ') || '—'}</p>
+                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{ie?.nombre ?? '—'} · {(d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : []).map(s => talleresConfig.find(t => t.slug === s)?.nombreCorto ?? s).join(' · ') || '—'}</p>
                     </div>
                   </div>
                 ) : null
               })()}
             </div>
+
+            {/* ── KPIs principales (summary) ───────────────────────────────── */}
+            {loadingAnalytics || !analytics ? (
+              <div className="flex items-center justify-center py-20">
+                <div className="h-7 w-7 rounded-full border-2 animate-spin"
+                  style={{ borderColor: '#02d47e', borderTopColor: 'transparent' }} />
+              </div>
+            ) : (
+              <div className="space-y-8 mb-8">
+                {/* KPIs */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { label: 'Inicios de sesión', value: analytics.totalLogins, Icon: LogIn, color: '#02d47e' },
+                    { label: 'Visitas al repositorio', value: analytics.navegacion.filter(n => n.path === 'repositorio').reduce((a, n) => a + n.count, 0), Icon: Globe, color: '#22d3ee' },
+                    { label: 'Manuales abiertos', value: analytics.contenidos.filter(c => c.tipo === 'apertura_manual').reduce((a, c) => a + c.count, 0), Icon: BookOpen, color: '#a78bfa' },
+                    { label: 'Videos reproducidos', value: analytics.contenidos.filter(c => c.tipo === 'reproduccion_video').reduce((a, c) => a + c.count, 0), Icon: Video, color: '#f59e0b' },
+                  ].map(({ label, value, Icon, color }) => (
+                    <div key={label} className="rounded-2xl p-4" style={{ background: '#ffffff' }}>
+                      <div className="flex items-center gap-2 mb-1">
+                        <Icon size={14} style={{ color }} />
+                        <p className="text-xs" style={{ color: '#043941' }}>{label}</p>
+                      </div>
+                      <p className="text-2xl font-extrabold" style={{ color }}>{value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* ── Embudo de progresión por módulo ──────────────────────────── */}
             {(() => {
@@ -1273,11 +1301,11 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 }),
               ]
               return (
-                <div style={{ borderRadius: 16, padding: '1.5rem', marginBottom: '2rem', background: '#ffffff', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <div style={{ borderRadius: 16, padding: '1.5rem', marginBottom: '2rem', background: '#ffffff', border: '1px solid rgba(4,57,65,0.08)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', marginBottom: '1.25rem' }}>
                     <TrendingUp size={14} color="#02d47e" />
                     <h3 style={{ fontSize: '.88rem', fontWeight: 800, color: '#043941' }}>Embudo de progresión</h3>
-                    <span style={{ fontSize: '.65rem', color: '#043941', marginLeft: '.15rem' }}>{total} docente{total !== 1 ? 's' : ''}</span>
+                    <span style={{ fontSize: '.65rem', color: 'rgba(4,57,65,0.5)', marginLeft: '.15rem' }}>{total} docente{total !== 1 ? 's' : ''}</span>
                   </div>
                   {total === 0 ? (
                     <p style={{ fontSize: '.8rem', color: '#043941' }}>Sin datos de docentes</p>
@@ -1296,7 +1324,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                             {/* drop indicator between rows */}
                             {!isBase && drop > 0 && (
                               <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', marginBottom: '.4rem', paddingLeft: 192 }}>
-                                <div style={{ width: 1, height: 10, background: drop >= 30 ? 'rgba(239,68,68,0.35)' : 'rgba(255,255,255,0.1)', marginLeft: 4 }} />
+                                <div style={{ width: 1, height: 10, background: drop >= 30 ? 'rgba(239,68,68,0.35)' : 'rgba(4,57,65,0.12)', marginLeft: 4 }} />
                                 <span style={{ fontSize: '.6rem', fontWeight: 700, color: drop >= 30 ? '#ef4444' : 'rgba(4,57,65,0.5)' }}>
                                   ↓ {drop}% abandonaron aquí
                                 </span>
@@ -1310,7 +1338,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                                     {row.badge}
                                   </span>
                                 ) : (
-                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: '#ffffff', color: 'rgba(4,57,65,0.7)', padding: '.15rem .45rem', borderRadius: 5, flexShrink: 0 }}>ALL</span>
+                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: 'rgba(4,57,65,0.08)', color: 'rgba(4,57,65,0.7)', padding: '.15rem .45rem', borderRadius: 5, flexShrink: 0 }}>ALL</span>
                                 )}
                                 <span style={{ fontSize: '.72rem', color: isBase ? 'rgba(4,57,65,0.35)' : 'rgba(4,57,65,0.65)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                   {row.label}
@@ -1346,7 +1374,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   <div style={{ padding: '1.1rem 1.5rem', background: '#ffffff', borderBottom: '1px solid rgba(4,57,65,0.12)', display: 'flex', alignItems: 'center', gap: '.6rem' }}>
                     <BarChart2 size={14} color="#02d47e" />
                     <h3 style={{ fontSize: '.88rem', fontWeight: 800, color: '#043941' }}>Rendimiento por quiz</h3>
-                    <span style={{ fontSize: '.65rem', color: '#043941', marginLeft: '.1rem' }}>{quizStats.length} quizzes · tasa = docentes que aprueban / docentes únicos que intentaron</span>
+                    <span style={{ fontSize: '.65rem', color: 'rgba(4,57,65,0.5)', marginLeft: '.1rem' }}>{quizStats.length} quizzes · tasa = docentes que aprueban / docentes únicos que intentaron</span>
                   </div>
                   {/* column headers */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 130px 70px', gap: 0, padding: '.55rem 1.5rem', background: 'rgba(4,57,65,0.04)', borderBottom: '1px solid rgba(4,57,65,0.10)' }}>
@@ -1393,31 +1421,9 @@ Equipo GRAMA · Programa TSF-MINEDU`
               )
             })()}
 
-            {loadingAnalytics || !analytics ? (
-              <div className="flex items-center justify-center py-20">
-                <div className="h-7 w-7 rounded-full border-2 animate-spin"
-                  style={{ borderColor: '#02d47e', borderTopColor: 'transparent' }} />
-              </div>
-            ) : (
+            {/* ── Visitas y top contenidos (from analytics) ───────────────── */}
+            {!loadingAnalytics && analytics && (
               <div className="space-y-8">
-                {/* KPIs principales */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {[
-                    { label: 'Inicios de sesión', value: analytics.totalLogins, Icon: LogIn, color: '#02d47e' },
-                    { label: 'Visitas al repositorio', value: analytics.navegacion.filter(n => n.path === 'repositorio').reduce((a, n) => a + n.count, 0), Icon: Globe, color: '#22d3ee' },
-                    { label: 'Manuales abiertos', value: analytics.contenidos.filter(c => c.tipo === 'apertura_manual').reduce((a, c) => a + c.count, 0), Icon: BookOpen, color: '#a78bfa' },
-                    { label: 'Videos reproducidos', value: analytics.contenidos.filter(c => c.tipo === 'reproduccion_video').reduce((a, c) => a + c.count, 0), Icon: Video, color: '#f59e0b' },
-                  ].map(({ label, value, Icon, color }) => (
-                    <div key={label} className="rounded-2xl p-4" style={{ background: '#ffffff' }}>
-                      <div className="flex items-center gap-2 mb-1">
-                        <Icon size={14} style={{ color }} />
-                        <p className="text-xs" style={{ color: '#043941' }}>{label}</p>
-                      </div>
-                      <p className="text-2xl font-extrabold" style={{ color }}>{value}</p>
-                    </div>
-                  ))}
-                </div>
-
                 {/* Visitas por página */}
                 <div className="rounded-2xl p-6" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.08)' }}>
                   <h3 className="text-sm font-bold mb-4 flex items-center gap-2" style={{ color: '#043941' }}><Globe size={15} style={{ color: '#02d47e' }} /> Visitas por sección</h3>
