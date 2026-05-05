@@ -921,8 +921,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
             {/* Section header */}
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
               <div>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#043941', marginBottom: '.25rem' }}>Solicitudes de acceso</h3>
-                <p style={{ fontSize: '.72rem', color: 'rgba(4,57,65,0.6)' }}>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: '.25rem' }}>Solicitudes de acceso</h3>
+                <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.5)' }}>
                   {solicitudesPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{solicitudesPendientes} pendientes</span> : 'Sin pendientes'} · {solicitudes.length} en total
                 </p>
               </div>
@@ -971,9 +971,9 @@ Equipo GRAMA · Programa TSF-MINEDU`
               </div>
             ) : solicitudesFiltradas.length === 0 ? (
               <div className="text-center py-20 rounded-2xl"
-                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <Inbox size={36} className="mx-auto mb-3" style={{ color: 'rgba(4,57,65,0.5)' }} />
-                <p className="text-sm" style={{ color: '#043941' }}>
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <Inbox size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.3)' }} />
+                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
                   No hay solicitudes en esta categoría.
                 </p>
               </div>
@@ -993,7 +993,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1 min-w-0">
                           <div className="flex flex-wrap items-center gap-2 mb-1">
-                            <p className="font-bold text-white">{sol.nombre}</p>
+                            <p className="font-bold" style={{ color: '#043941' }}>{sol.nombre}</p>
                             <span className="text-xs px-2 py-0.5 rounded-lg font-bold"
                               style={sol.estado === 'pendiente'
                                 ? { background: 'rgba(245,158,11,0.15)', color: '#f59e0b' }
@@ -1082,8 +1082,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
               {/* Section header */}
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
                 <div>
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#043941', marginBottom: '.25rem' }}>Consultas de docentes</h3>
-                  <p style={{ fontSize: '.72rem', color: 'rgba(4,57,65,0.6)' }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: '.25rem' }}>Consultas de docentes</h3>
+                  <p style={{ fontSize: '.72rem', color: 'rgba(255,255,255,0.5)' }}>
                     {consultasPendientes > 0 ? <span style={{ color: '#f59e0b', fontWeight: 700 }}>{consultasPendientes} sin responder</span> : 'Todas respondidas'} · {consultasAdmin.length} en total
                   </p>
                 </div>
@@ -1118,9 +1118,9 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 </div>
               ) : consultasFiltradas.length === 0 ? (
                 <div className="text-center py-20 rounded-2xl"
-                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                  <MessageCircle size={36} className="mx-auto mb-3" style={{ color: 'rgba(4,57,65,0.5)' }} />
-                  <p className="text-sm" style={{ color: '#043941' }}>No hay consultas en esta categoría.</p>
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <MessageCircle size={36} className="mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.3)' }} />
+                  <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>No hay consultas en esta categoría.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -1136,7 +1136,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                           style={{ borderBottom: '1px solid rgba(4,57,65,0.12)' }}>
                           <div>
                             <div className="flex flex-wrap items-center gap-2 mb-1">
-                              <p className="font-bold text-white text-sm">{c.nombre ?? 'Docente'}</p>
+                              <p className="font-bold text-sm" style={{ color: '#043941' }}>{c.nombre ?? 'Docente'}</p>
                               <span className="text-xs px-2 py-0.5 rounded-lg font-bold"
                                 style={respondida
                                   ? { background: 'rgba(2,212,126,0.15)', color: '#02d47e' }
@@ -1610,7 +1610,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
         {/* Section header */}
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
           <div>
-            <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#043941', marginBottom: '.25rem' }}>Docentes registrados</h3>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: '.25rem' }}>Docentes registrados</h3>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.25rem', marginTop: '.4rem' }}>
               {[
                 { label: 'Total', value: docentes.length },
@@ -1705,11 +1705,11 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         style={{ borderBottom: i < docentesFiltrados.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none', cursor: 'pointer' }}
                         className="transition-colors hover:bg-white/5">
                         <td className="px-5 py-3.5">
-                          <p className="font-semibold text-white">{d.nombre_completo}</p>
+                          <p className="font-semibold" style={{ color: '#043941' }}>{d.nombre_completo}</p>
                           <p className="text-xs mt-0.5" style={{ color: '#043941' }}>{d.email}</p>
                         </td>
                         <td className="px-5 py-3.5">
-                          <p className="text-white text-xs font-medium">{ie?.nombre ?? '—'}</p>
+                          <p className="text-xs font-medium" style={{ color: '#043941' }}>{ie?.nombre ?? '—'}</p>
                           <p className="text-xs mt-0.5" style={{ color: '#043941' }}>{ie?.distrito}</p>
                         </td>
                         <td className="px-5 py-3.5">
