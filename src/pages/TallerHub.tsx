@@ -367,6 +367,7 @@ export default function TallerHub() {
                       padding: '16px 22px', cursor: 'pointer', transition: 'background .16s',
                       borderRight: (i + 1) % 3 !== 0 ? '1px solid rgba(4,57,65,0.07)' : 'none',
                       borderBottom: i < zonas.length - 3 ? '1px solid rgba(4,57,65,0.07)' : 'none',
+                      minWidth: 0, overflow: 'hidden',
                     }}
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.02)' }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
