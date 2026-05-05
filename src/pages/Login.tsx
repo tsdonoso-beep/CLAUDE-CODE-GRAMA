@@ -40,7 +40,7 @@ function GramaInput({
 // Credenciales de desarrollo — activas cuando Supabase no está configurado
 const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
   import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
-const DEV_USERS: Array<{ email: string; password: string; role: 'admin' | 'docente'; taller_slug?: string; taller_slugs?: string[] }> = [
+const DEV_USERS: Array<{ email: string; password: string; role: 'admin' | 'docente' | 'director'; taller_slug?: string; taller_slugs?: string[]; ie_id?: string }> = [
   { email: 'admin@grama.pe',           password: 'grama2026', role: 'admin' },
   { email: 'roberto@grama.pe',         password: 'grama2026', role: 'admin' },
   { email: 'docente@grama.pe',         password: 'grama2026', role: 'docente' },
@@ -49,6 +49,7 @@ const DEV_USERS: Array<{ email: string; password: string; role: 'admin' | 'docen
   { email: 'automotriz@grama.pe',      password: 'grama2026', role: 'docente', taller_slug: 'mecanica-automotriz', taller_slugs: ['mecanica-automotriz', 'ebanisteria'] },
   { email: 'generalept@grama.pe',      password: 'grama2026', role: 'docente', taller_slug: 'taller-general-ept', taller_slugs: ['taller-general-ept'] },
   { email: 'dostalleres@grama.pe',     password: 'grama2026', role: 'docente', taller_slug: 'mecanica-automotriz', taller_slugs: ['mecanica-automotriz', 'electricidad'] },
+  { email: 'director@grama.pe',        password: 'grama2026', role: 'director', ie_id: '5' },
 ]
 
 // ── Tab: Ingresar ──────────────────────────────────────────────────────────
@@ -81,6 +82,11 @@ function LoginForm({ onSuccess }: { onSuccess: (isAdmin: boolean) => void }) {
           sessionStorage.setItem('grama-dev-tallers', JSON.stringify(validDev.taller_slugs))
         } else {
           sessionStorage.removeItem('grama-dev-tallers')
+        }
+        if (validDev.ie_id) {
+          sessionStorage.setItem('grama-dev-ie', validDev.ie_id)
+        } else {
+          sessionStorage.removeItem('grama-dev-ie')
         }
         refreshDevProfile()
         onSuccess(validDev.role === 'admin')
@@ -458,7 +464,11 @@ export default function Login() {
                 <>
                   <h1 className="text-xl font-black mb-1.5" style={{ color: '#043941', letterSpacing: '-0.5px' }}>Iniciar sesión</h1>
                   <p className="text-sm mb-7" style={{ color: '#64748b' }}>Ingresa tus credenciales para acceder a la plataforma</p>
-                  <LoginForm onSuccess={(adminLogin) => navigate(adminLogin ? '/admin' : '/perfil', { replace: true })} />
+                  <LoginForm onSuccess={(adminLogin) => {
+                    const devRole = sessionStorage.getItem('grama-dev-role')
+                    if (devRole === 'director') { navigate('/director', { replace: true }); return }
+                    navigate(adminLogin ? '/admin' : '/perfil', { replace: true })
+                  }} />
                 </>
               ) : (
                 <>

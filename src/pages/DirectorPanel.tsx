@@ -104,7 +104,7 @@ export default function DirectorPanel() {
   const [copiado, setCopiado] = useState(false)
 
   // IE del director
-  const ieId = profile?.ie_id ? Number(profile.ie_id) : 4 // fallback mock
+  const ieId = profile?.ie_id ? Number(profile.ie_id) : 5 // fallback mock → Billinghurst
   const ie = INSTITUCIONES_EDUCATIVAS.find(i => i.id === ieId)
   const talleresIE = ie?.talleres ?? []
 

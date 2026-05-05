@@ -26,7 +26,7 @@ const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
 /** Construye un perfil mock a partir de sessionStorage (solo DEV_MODE) */
 function buildDevProfile(): Profile | null {
   const email = sessionStorage.getItem('grama-dev-email')
-  const role = sessionStorage.getItem('grama-dev-role') as 'admin' | 'docente' | null
+  const role = sessionStorage.getItem('grama-dev-role') as 'admin' | 'docente' | 'director' | null
   if (!email || !role) return null
   const tallerSlugsRaw = sessionStorage.getItem('grama-dev-tallers')
   const tallerSlugs: string[] | null = tallerSlugsRaw ? JSON.parse(tallerSlugsRaw) : null
@@ -40,9 +40,10 @@ function buildDevProfile(): Profile | null {
       'roberto@grama.pe':       'Roberto Grama',
       'camila.gr@inroprin.com': 'Camila García',
       'admin@grama.pe':         'Administrador',
+      'director@grama.pe':      'Director Billinghurst',
     } as Record<string, string>)[email] ?? email.split('@')[0].replace(/[._]/g, ' '),
     role,
-    ie_id: null,
+    ie_id: sessionStorage.getItem('grama-dev-ie') ?? null,
     taller_slug: sessionStorage.getItem('grama-dev-taller') ?? null,
     taller_slugs: tallerSlugs,
     created_at: new Date().toISOString(),
@@ -126,6 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     sessionStorage.removeItem('grama-dev-email')
     sessionStorage.removeItem('grama-dev-role')
     sessionStorage.removeItem('grama-dev-taller')
+    sessionStorage.removeItem('grama-dev-ie')
     localStorage.removeItem('navigator-progress')
     setProfile(null)
   }
