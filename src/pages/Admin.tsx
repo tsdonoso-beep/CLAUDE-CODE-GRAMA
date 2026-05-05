@@ -1219,7 +1219,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
             {/* Filtro por docente */}
             <div className="mb-6 flex flex-wrap items-end gap-3">
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-semibold" style={{ color: '#043941' }}>
+                <label className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.7)' }}>
                   Filtrar por docente
                 </label>
                 <div className="flex gap-2">
@@ -1227,7 +1227,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     value={filtroAnalyticsDocente}
                     onChange={e => { setFiltroAnalyticsDocente(e.target.value); setBusquedaDocente('') }}
                     className="px-3 py-2 rounded-xl border-2 text-sm outline-none min-w-[260px]"
-                    style={{ borderColor: filtroAnalyticsDocente ? '#02d47e' : 'rgba(255,255,255,0.15)', background: '#ffffff', color: '#ffffff' }}>
+                    style={{ borderColor: filtroAnalyticsDocente ? '#02d47e' : 'rgba(255,255,255,0.15)', background: '#ffffff', color: '#043941' }}>
                     <option value="" style={{ background: '#0d2b31', color: '#ffffff' }}>Todos los docentes (global)</option>
                     {docentes.map(d => (
                       <option key={d.id} value={d.id} style={{ background: '#0d2b31', color: '#ffffff' }}>{d.nombre_completo} — {d.email}</option>
@@ -1306,24 +1306,24 @@ Equipo GRAMA · Programa TSF-MINEDU`
                               {/* label */}
                               <div style={{ display: 'flex', alignItems: 'center', gap: '.45rem', width: 192, flexShrink: 0 }}>
                                 {row.badge ? (
-                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: isBase ? 'rgba(255,255,255,0.12)' : '#02d47e', color: isBase ? 'rgba(255,255,255,0.5)' : '#043941', padding: '.15rem .4rem', borderRadius: 5, flexShrink: 0 }}>
+                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: isBase ? 'rgba(4,57,65,0.08)' : '#02d47e', color: isBase ? 'rgba(4,57,65,0.35)' : '#043941', padding: '.15rem .4rem', borderRadius: 5, flexShrink: 0 }}>
                                     {row.badge}
                                   </span>
                                 ) : (
                                   <span style={{ fontSize: '.58rem', fontWeight: 800, background: '#ffffff', color: 'rgba(4,57,65,0.7)', padding: '.15rem .45rem', borderRadius: 5, flexShrink: 0 }}>ALL</span>
                                 )}
-                                <span style={{ fontSize: '.72rem', color: isBase ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.6)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                <span style={{ fontSize: '.72rem', color: isBase ? 'rgba(4,57,65,0.35)' : 'rgba(4,57,65,0.65)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                   {row.label}
                                 </span>
                               </div>
                               {/* bar */}
-                              <div style={{ flex: 1, height: isBase ? 6 : 8, background: '#ffffff', borderRadius: 8, overflow: 'hidden' }}>
-                                <div style={{ height: '100%', width: `${pct}%`, background: isBase ? 'rgba(255,255,255,0.18)' : barColor, borderRadius: 8, transition: 'width .5s ease' }} />
+                              <div style={{ flex: 1, height: isBase ? 6 : 8, background: 'rgba(4,57,65,0.08)', borderRadius: 8, overflow: 'hidden' }}>
+                                <div style={{ height: '100%', width: `${pct}%`, background: isBase ? 'rgba(4,57,65,0.1)' : barColor, borderRadius: 8, transition: 'width .5s ease' }} />
                               </div>
                               {/* count + pct */}
                               <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', flexShrink: 0 }}>
-                                <span style={{ fontSize: '.78rem', fontWeight: 800, color: isBase ? 'rgba(255,255,255,0.5)' : '#fff', width: 28, textAlign: 'right' }}>{row.count}</span>
-                                <span style={{ fontSize: '.72rem', fontWeight: 700, color: isBase ? 'rgba(255,255,255,0.3)' : barColor, width: 38, textAlign: 'right' }}>{pct}%</span>
+                                <span style={{ fontSize: '.78rem', fontWeight: 800, color: isBase ? 'rgba(4,57,65,0.4)' : '#043941', width: 28, textAlign: 'right' }}>{row.count}</span>
+                                <span style={{ fontSize: '.72rem', fontWeight: 700, color: isBase ? 'rgba(4,57,65,0.3)' : barColor, width: 38, textAlign: 'right' }}>{pct}%</span>
                               </div>
                             </div>
                           </div>
@@ -1341,7 +1341,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 .map(m => ({ modulo: `M${m.numero}`, nombre: m.nombre, items: quizStats.filter(q => q.modulo === `M${m.numero}`) }))
                 .filter(g => g.items.length > 0)
               return (
-                <div style={{ borderRadius: 16, overflow: 'hidden', marginBottom: '2rem', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <div style={{ borderRadius: 16, overflow: 'hidden', marginBottom: '2rem', background: '#ffffff', border: '1px solid rgba(4,57,65,0.08)' }}>
                   {/* header */}
                   <div style={{ padding: '1.1rem 1.5rem', background: '#ffffff', borderBottom: '1px solid rgba(4,57,65,0.12)', display: 'flex', alignItems: 'center', gap: '.6rem' }}>
                     <BarChart2 size={14} color="#02d47e" />
@@ -1349,32 +1349,32 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     <span style={{ fontSize: '.65rem', color: '#043941', marginLeft: '.1rem' }}>{quizStats.length} quizzes · tasa = docentes que aprueban / docentes únicos que intentaron</span>
                   </div>
                   {/* column headers */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 130px 70px', gap: 0, padding: '.55rem 1.5rem', background: 'rgba(255,255,255,0.02)',  borderBottom: '1px solid rgba(4,57,65,0.10)' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 130px 70px', gap: 0, padding: '.55rem 1.5rem', background: 'rgba(4,57,65,0.04)', borderBottom: '1px solid rgba(4,57,65,0.10)' }}>
                     {['Quiz', 'Intentos', 'Docentes', 'Tasa de aprobación', 'Tags'].map(h => (
-                      <span key={h} style={{ fontSize: '.6rem', fontWeight: 700, color: '#043941', textTransform: 'uppercase', letterSpacing: '.08em' }}>{h}</span>
+                      <span key={h} style={{ fontSize: '.6rem', fontWeight: 700, color: 'rgba(4,57,65,0.5)', textTransform: 'uppercase', letterSpacing: '.08em' }}>{h}</span>
                     ))}
                   </div>
                   {grupos.map((g, gi) => (
                     <div key={g.modulo}>
                       {/* group header */}
-                      <div style={{ padding: '.45rem 1.5rem', background: 'rgba(255,255,255,0.03)',  borderBottom: '1px solid rgba(4,57,65,0.07)', borderTop: gi > 0 ? '1px solid rgba(255,255,255,0.06)' : 'none', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+                      <div style={{ padding: '.45rem 1.5rem', background: 'rgba(4,57,65,0.03)', borderBottom: '1px solid rgba(4,57,65,0.07)', borderTop: gi > 0 ? '1px solid rgba(4,57,65,0.06)' : 'none', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
                         <span style={{ fontSize: '.6rem', fontWeight: 800, background: '#02d47e', color: '#043941', padding: '.12rem .38rem', borderRadius: 4 }}>{g.modulo}</span>
-                        <span style={{ fontSize: '.7rem', color: '#043941', fontWeight: 600 }}>{g.nombre}</span>
+                        <span style={{ fontSize: '.7rem', color: 'rgba(4,57,65,0.7)', fontWeight: 600 }}>{g.nombre}</span>
                       </div>
                       {g.items.map((q, qi) => {
                         const tColor = q.tasaAprobacion >= 80 ? '#02d47e' : q.tasaAprobacion >= 60 ? '#22d3ee' : q.tasaAprobacion >= 40 ? '#f59e0b' : '#ef4444'
                         const isLast = qi === g.items.length - 1
                         return (
-                          <div key={q.contenidoId} style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 130px 70px', gap: 0, padding: '.75rem 1.5rem', borderBottom: isLast ? 'none' : '1px solid rgba(255,255,255,0.04)', alignItems: 'center' }}>
+                          <div key={q.contenidoId} style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 130px 70px', gap: 0, padding: '.75rem 1.5rem', background: qi % 2 === 0 ? '#fff' : 'rgba(4,57,65,0.02)', borderBottom: isLast ? 'none' : '1px solid rgba(4,57,65,0.05)', alignItems: 'center' }}>
                             {/* title */}
-                            <p style={{ fontSize: '.78rem', color: 'rgba(255,255,255,0.75)', fontWeight: 500, paddingRight: '1rem' }}>{q.titulo}</p>
+                            <p style={{ fontSize: '.78rem', color: 'rgba(4,57,65,0.8)', fontWeight: 500, paddingRight: '1rem' }}>{q.titulo}</p>
                             {/* intentos */}
                             <p style={{ fontSize: '.78rem', fontWeight: 700, color: '#043941' }}>{q.intentos}</p>
                             {/* docentes */}
                             <p style={{ fontSize: '.78rem', fontWeight: 700, color: '#043941' }}>{q.docentesUnicos}</p>
                             {/* tasa bar */}
                             <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem' }}>
-                              <div style={{ flex: 1, height: 6, background: '#ffffff', borderRadius: 6, overflow: 'hidden' }}>
+                              <div style={{ flex: 1, height: 6, background: 'rgba(4,57,65,0.08)', borderRadius: 6, overflow: 'hidden' }}>
                                 <div style={{ height: '100%', width: `${q.tasaAprobacion}%`, background: tColor, borderRadius: 6, transition: 'width .4s ease' }} />
                               </div>
                               <span style={{ fontSize: '.75rem', fontWeight: 800, color: tColor, width: 32, textAlign: 'right', flexShrink: 0 }}>{q.tasaAprobacion}%</span>
@@ -1419,8 +1419,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 </div>
 
                 {/* Visitas por página */}
-                <div className="rounded-2xl p-6" style={{ background: '#ffffff', border: '1px solid rgba(255,255,255,0.08)' }}>
-                  <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2"><Globe size={15} style={{ color: '#02d47e' }} /> Visitas por sección</h3>
+                <div className="rounded-2xl p-6" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.08)' }}>
+                  <h3 className="text-sm font-bold mb-4 flex items-center gap-2" style={{ color: '#043941' }}><Globe size={15} style={{ color: '#02d47e' }} /> Visitas por sección</h3>
                   <div className="space-y-3">
                     {analytics.navegacion.map((n, i) => {
                       const maxCount = Math.max(...analytics.navegacion.map(x => x.count))
@@ -1429,7 +1429,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                           <div className="w-36 text-xs text-right" style={{ color: '#043941' }}>
                             {n.path.replace(/_/g, ' ')}
                           </div>
-                          <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: '#ffffff' }}>
+                          <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'rgba(4,57,65,0.08)' }}>
                             <div className="h-full rounded-full transition-all" style={{ width: `${Math.round((n.count / maxCount) * 100)}%`, background: '#02d47e' }} />
                           </div>
                           <span className="text-xs font-bold w-8 text-right" style={{ color: '#043941' }}>{n.count}</span>
@@ -1440,10 +1440,10 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 </div>
 
                 {/* Top contenidos abiertos/reproducidos */}
-                <div className="rounded-2xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <div className="rounded-2xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(4,57,65,0.08)' }}>
                   <div className="px-6 py-4 flex items-center gap-2" style={{ borderBottom: '1px solid rgba(4,57,65,0.12)' }}>
                     <FileDown size={15} style={{ color: '#02d47e' }} />
-                    <h3 className="text-sm font-bold text-white">Contenidos más accedidos</h3>
+                    <h3 className="text-sm font-bold" style={{ color: '#043941' }}>Contenidos más accedidos</h3>
                   </div>
                   <table className="w-full text-sm">
                     <thead>
@@ -1463,8 +1463,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         }
                         const color = eventoColor[c.tipo] ?? '#94a3b8'
                         return (
-                          <tr key={i} style={{ borderBottom: i < Math.min(analytics.contenidos.length, 20) - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
-                            <td className="px-5 py-3 text-white text-xs">{c.contenido_id}</td>
+                          <tr key={i} style={{ borderBottom: i < Math.min(analytics.contenidos.length, 20) - 1 ? '1px solid rgba(4,57,65,0.06)' : 'none' }}>
+                            <td className="px-5 py-3 text-xs" style={{ color: '#043941' }}>{c.contenido_id}</td>
                             <td className="px-5 py-3">
                               <span className="text-xs font-semibold px-2 py-0.5 rounded-lg" style={{ background: `${color}20`, color }}>
                                 {c.tipo.replace(/_/g, ' ')}
