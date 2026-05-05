@@ -15,7 +15,7 @@ import { modulosLXP } from '@/data/modulosLXP'
 const DEV_MODE = !import.meta.env.VITE_SUPABASE_URL ||
   import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co'
 
-const MAX_DOCENTES_POR_TALLER = 6
+const MAX_DOCENTES_POR_TALLER = 4
 
 interface DocenteRow {
   id: string
