@@ -1103,8 +1103,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   return (
                     <button key={estado} onClick={() => setFiltroConsultas(estado)}
                       style={{ padding: '.38rem .9rem', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, cursor: 'pointer', border: 'none', transition: 'all .15s',
-                        background: active ? '#02d47e' : 'rgba(255,255,255,0.07)',
-                        color:      active ? '#043941' : 'rgba(255,255,255,0.5)' }}>
+                        background: active ? '#02d47e' : 'rgba(4,57,65,0.07)',
+                        color:      active ? '#043941' : 'rgba(4,57,65,0.55)' }}>
                       {label} <span style={{ opacity: .7 }}>({count})</span>
                     </button>
                   )
@@ -1250,8 +1250,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
                   <div className="flex items-center gap-3 px-4 py-2 rounded-xl"
                     style={{ background: 'rgba(2,212,126,0.08)', border: '1px solid rgba(2,212,126,0.2)' }}>
                     <div>
-                      <p className="text-sm font-bold text-white">{d.nombre_completo}</p>
-                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{ie?.nombre ?? '—'} · {(d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : []).map(s => talleresConfig.find(t => t.slug === s)?.nombreCorto ?? s).join(' · ') || '—'}</p>
+                      <p className="text-sm font-bold" style={{ color: '#043941' }}>{d.nombre_completo}</p>
+                      <p className="text-xs" style={{ color: '#043941' }}>{ie?.nombre ?? '—'} · {(d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : []).map(s => talleresConfig.find(t => t.slug === s)?.nombreCorto ?? s).join(' · ') || '—'}</p>
                     </div>
                   </div>
                 ) : null
@@ -1334,23 +1334,23 @@ Equipo GRAMA · Programa TSF-MINEDU`
                               {/* label */}
                               <div style={{ display: 'flex', alignItems: 'center', gap: '.45rem', width: 192, flexShrink: 0 }}>
                                 {row.badge ? (
-                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: isBase ? 'rgba(4,57,65,0.08)' : '#02d47e', color: isBase ? 'rgba(4,57,65,0.35)' : '#043941', padding: '.15rem .4rem', borderRadius: 5, flexShrink: 0 }}>
+                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: isBase ? 'rgba(4,57,65,0.08)' : '#02d47e', color: isBase ? 'rgba(4,57,65,0.45)' : '#043941', padding: '.15rem .4rem', borderRadius: 5, flexShrink: 0 }}>
                                     {row.badge}
                                   </span>
                                 ) : (
-                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: 'rgba(4,57,65,0.08)', color: 'rgba(4,57,65,0.7)', padding: '.15rem .45rem', borderRadius: 5, flexShrink: 0 }}>ALL</span>
+                                  <span style={{ fontSize: '.58rem', fontWeight: 800, background: 'rgba(4,57,65,0.07)', color: 'rgba(4,57,65,0.7)', padding: '.15rem .45rem', borderRadius: 5, flexShrink: 0 }}>ALL</span>
                                 )}
                                 <span style={{ fontSize: '.72rem', color: isBase ? 'rgba(4,57,65,0.35)' : 'rgba(4,57,65,0.65)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                   {row.label}
                                 </span>
                               </div>
                               {/* bar */}
-                              <div style={{ flex: 1, height: isBase ? 6 : 8, background: 'rgba(4,57,65,0.08)', borderRadius: 8, overflow: 'hidden' }}>
-                                <div style={{ height: '100%', width: `${pct}%`, background: isBase ? 'rgba(4,57,65,0.1)' : barColor, borderRadius: 8, transition: 'width .5s ease' }} />
+                              <div style={{ flex: 1, height: isBase ? 6 : 8, background: 'rgba(4,57,65,0.07)', borderRadius: 8, overflow: 'hidden' }}>
+                                <div style={{ height: '100%', width: `${pct}%`, background: isBase ? 'rgba(4,57,65,0.18)' : barColor, borderRadius: 8, transition: 'width .5s ease' }} />
                               </div>
                               {/* count + pct */}
                               <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', flexShrink: 0 }}>
-                                <span style={{ fontSize: '.78rem', fontWeight: 800, color: isBase ? 'rgba(4,57,65,0.4)' : '#043941', width: 28, textAlign: 'right' }}>{row.count}</span>
+                                <span style={{ fontSize: '.78rem', fontWeight: 800, color: isBase ? 'rgba(4,57,65,0.45)' : '#043941', width: 28, textAlign: 'right' }}>{row.count}</span>
                                 <span style={{ fontSize: '.72rem', fontWeight: 700, color: isBase ? 'rgba(4,57,65,0.3)' : barColor, width: 38, textAlign: 'right' }}>{pct}%</span>
                               </div>
                             </div>
@@ -1369,7 +1369,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                 .map(m => ({ modulo: `M${m.numero}`, nombre: m.nombre, items: quizStats.filter(q => q.modulo === `M${m.numero}`) }))
                 .filter(g => g.items.length > 0)
               return (
-                <div style={{ borderRadius: 16, overflow: 'hidden', marginBottom: '2rem', background: '#ffffff', border: '1px solid rgba(4,57,65,0.08)' }}>
+                <div style={{ borderRadius: 16, overflow: 'hidden', marginBottom: '2rem', border: '1px solid rgba(4,57,65,0.08)' }}>
                   {/* header */}
                   <div style={{ padding: '1.1rem 1.5rem', background: '#ffffff', borderBottom: '1px solid rgba(4,57,65,0.12)', display: 'flex', alignItems: 'center', gap: '.6rem' }}>
                     <BarChart2 size={14} color="#02d47e" />
@@ -1395,7 +1395,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                         return (
                           <div key={q.contenidoId} style={{ display: 'grid', gridTemplateColumns: '1fr 80px 80px 130px 70px', gap: 0, padding: '.75rem 1.5rem', background: qi % 2 === 0 ? '#fff' : 'rgba(4,57,65,0.02)', borderBottom: isLast ? 'none' : '1px solid rgba(4,57,65,0.05)', alignItems: 'center' }}>
                             {/* title */}
-                            <p style={{ fontSize: '.78rem', color: 'rgba(4,57,65,0.8)', fontWeight: 500, paddingRight: '1rem' }}>{q.titulo}</p>
+                            <p style={{ fontSize: '.78rem', color: 'rgba(4,57,65,0.75)', fontWeight: 500, paddingRight: '1rem' }}>{q.titulo}</p>
                             {/* intentos */}
                             <p style={{ fontSize: '.78rem', fontWeight: 700, color: '#043941' }}>{q.intentos}</p>
                             {/* docentes */}
@@ -1521,8 +1521,8 @@ Equipo GRAMA · Programa TSF-MINEDU`
                       {([7, 14, 30] as const).map(d => (
                         <button key={d} onClick={() => setFiltroInactividad(d)}
                           style={{ fontSize: '.68rem', fontWeight: 700, padding: '.28rem .7rem', borderRadius: 20, cursor: 'pointer', border: 'none', transition: 'all .15s',
-                            background: filtroInactividad === d ? '#02d47e' : 'rgba(255,255,255,0.07)',
-                            color: filtroInactividad === d ? '#043941' : 'rgba(255,255,255,0.45)',
+                            background: filtroInactividad === d ? '#02d47e' : 'rgba(4,57,65,0.07)',
+                            color: filtroInactividad === d ? '#043941' : 'rgba(4,57,65,0.55)',
                           }}>
                           +{d}d
                         </button>
@@ -1551,7 +1551,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
                     <div>
                       {inactivos.map((d, i) => {
                         const dias = d.diasSinAcceso
-                        const diasColor = dias === null || dias > 60 ? '#ef4444' : dias > 30 ? '#f59e0b' : dias > 14 ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.35)'
+                        const diasColor = dias === null || dias > 60 ? '#ef4444' : dias > 30 ? '#f59e0b' : dias > 14 ? 'rgba(4,57,65,0.45)' : '#02d47e'
                         const slugs = d.taller_slugs?.length ? d.taller_slugs : d.taller_slug ? [d.taller_slug] : []
                         const initials = (d.nombre_completo ?? d.email ?? '?').split(' ').slice(0, 2).map((w: string) => w[0]).join('').toUpperCase()
                         return (
