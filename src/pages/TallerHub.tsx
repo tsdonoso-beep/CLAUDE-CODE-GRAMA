@@ -349,7 +349,7 @@ export default function TallerHub() {
               </button>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${zonas.length}, 1fr)` }}>
               {zonas.map((zona, i) => {
                 const nombre     = zonaNombre(zona)
                 const bienesZona = getBienesByZona(slug, zona)
