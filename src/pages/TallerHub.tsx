@@ -81,8 +81,6 @@ export default function TallerHub() {
           .th-topbar-stats  { display: none !important; }
           .th-desc-wrap     { padding: 14px 16px 18px !important; }
           .th-value-grid    { grid-template-columns: 1fr 1fr !important; }
-          .th-cta-inner     { padding: 14px 16px !important; flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
-          .th-cta-btn       { width: 100% !important; justify-content: center !important; }
           .th-modulos-wrap  { padding: 14px 16px 18px !important; }
           .th-modulos-wrap .mod-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important; }
           .th-repo-wrap     { padding: 14px 14px !important; }
@@ -202,61 +200,36 @@ export default function TallerHub() {
         </div>
       </div>
 
-      {/* ══ CTA CONTINÚA ════════════════════════════════════════════════════ */}
+      {/* ══ MÓDULOS + CTA (fusionados) ═══════════════════════════════════════ */}
       {!isGeneralEpt && currentMod && (
-        <div style={{
-          background: allCompleted ? 'rgba(2,212,126,0.06)' : 'rgba(4,57,65,0.03)',
-          borderBottom: `1px solid ${allCompleted ? 'rgba(2,212,126,0.18)' : 'rgba(4,57,65,0.08)'}`,
-          padding: '18px 32px',
-        }}>
-          <div className="th-cta-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 0 }}>
-              <div style={{ width: 48, height: 48, borderRadius: 14, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, background: allCompleted ? 'rgba(2,212,126,0.15)' : `${tallerColor}18` }}>
-                {allCompleted ? <CheckCircle2 size={22} style={{ color: '#02d47e' }} /> : currentMod.icon}
-              </div>
-              <div style={{ minWidth: 0 }}>
-                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: allCompleted ? '#02d47e' : tallerColor, margin: '0 0 3px' }}>
-                  {allCompleted ? '¡Formación completada!' : currentEstado === 'en_curso' ? 'Continúa donde lo dejaste' : 'Comienza tu formación'}
-                </p>
-                <p style={{ fontSize: 15, fontWeight: 800, color: '#043941', margin: '0 0 6px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {allCompleted ? 'Has completado todos los módulos del taller' : `M${currentMod.numero} — ${currentMod.nombre}`}
-                </p>
-                {!allCompleted && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <div style={{ width: 180, height: 4, borderRadius: 2, background: 'rgba(4,57,65,0.10)', overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${currentProg?.porcentaje ?? 0}%`, background: tallerColor, borderRadius: 2, transition: 'width .4s ease' }} />
-                    </div>
-                    <span style={{ fontSize: 11, color: '#94a3b8', whiteSpace: 'nowrap' }}>
-                      {currentProg?.porcentaje ?? 0}%{nextSes ? ` · Próximo: ${nextSes.nombre}` : ''}
-                    </span>
-                  </div>
-                )}
-              </div>
+        <div className="th-modulos-wrap" style={{ padding: '18px 32px 22px', borderBottom: '1px solid rgba(4,57,65,0.07)', background: '#f8fafc' }}>
+          {/* Header: contexto + botón de acción */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginBottom: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+              <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', margin: 0, whiteSpace: 'nowrap' }}>
+                Formación
+              </p>
+              <span style={{ fontSize: 9, color: 'rgba(4,57,65,0.2)' }}>·</span>
+              <p style={{ fontSize: 11, fontWeight: 600, color: allCompleted ? '#02d47e' : tallerColor, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {allCompleted ? '¡Completado!' : currentEstado === 'en_curso'
+                  ? `Continúa en M${currentMod.numero} — ${currentMod.nombre}`
+                  : `Empieza en M${currentMod.numero} — ${currentMod.nombre}`}
+              </p>
+              {!allCompleted && currentProg && currentProg.porcentaje > 0 && (
+                <span style={{ fontSize: 10, color: '#94a3b8', whiteSpace: 'nowrap' }}>
+                  {currentProg.porcentaje}%
+                </span>
+              )}
             </div>
-
             <button
-              className="th-cta-btn"
               onClick={() => navigate(`/taller/${slug}/ruta/modulo/${currentMod.numero}`)}
-              style={{ background: allCompleted ? '#02d47e' : tallerColor, color: allCompleted ? '#043941' : '#fff', border: 'none', borderRadius: 12, padding: '11px 24px', fontSize: 13, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, transition: 'opacity .18s' }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+              style={{ background: allCompleted ? '#02d47e' : '#043941', color: allCompleted ? '#043941' : tallerColor, border: 'none', borderRadius: 10, padding: '8px 18px', fontSize: 12, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, transition: 'opacity .18s' }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '0.82')}
               onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
             >
-              <PlayCircle size={15} />
+              <PlayCircle size={13} />
               {allCompleted ? 'Revisar' : currentEstado === 'en_curso' ? 'Continuar' : 'Empezar'}
             </button>
-          </div>
-        </div>
-      )}
-
-      {/* ══ MÓDULOS ══════════════════════════════════════════════════════════ */}
-      {!isGeneralEpt && (
-        <div className="th-modulos-wrap" style={{ padding: '20px 32px 24px', borderBottom: '1px solid rgba(4,57,65,0.07)', background: '#f8fafc' }}>
-          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
-            <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', margin: 0 }}>
-              Módulos del taller
-            </p>
-            <span style={{ fontSize: 10, color: '#94a3b8' }}>{totalHoras}h · {modulosLXP.length} módulos</span>
           </div>
           <div className="mod-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(152px, 1fr))', gap: 8 }}>
             {modulosLXP.map(m => {
