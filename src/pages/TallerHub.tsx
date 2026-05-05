@@ -61,6 +61,16 @@ export default function TallerHub() {
 
   const zonas = getZonasUnicasByTaller(slug)
 
+  const progresoGeneral = (() => {
+    let total = 0, completados = 0
+    for (const m of modulosLXP) {
+      const p = getModuloProgreso(slug, m.numero)
+      total += p.total
+      completados += p.completados
+    }
+    return { total, completados, pct: total > 0 ? Math.round((completados / total) * 100) : 0 }
+  })()
+
   return (
     <div style={{ background: 'var(--grama-bg)', fontFamily: 'Manrope, sans-serif' }}>
 
@@ -69,7 +79,10 @@ export default function TallerHub() {
         @media (max-width: 767px) {
           .th-topbar-inner  { padding: 14px 16px !important; }
           .th-topbar-stats  { display: none !important; }
-          .th-desc-wrap     { padding: 14px 16px !important; }
+          .th-desc-wrap     { padding: 14px 16px 18px !important; }
+          .th-desc-head     { flex-direction: column !important; }
+          .th-desc-ring     { display: none !important; }
+          .th-benefits      { grid-template-columns: 1fr !important; }
           .th-cta-inner     { padding: 14px 16px !important; flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
           .th-cta-btn       { width: 100% !important; justify-content: center !important; }
           .th-modulos-wrap  { padding: 12px 16px 16px !important; }
@@ -106,8 +119,8 @@ export default function TallerHub() {
                   T{String(taller.numero).padStart(2, '0')}
                 </span>
               </div>
-              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', margin: 0, fontWeight: 500 }}>
-                T{String(taller.numero).padStart(2, '0')} · Educación para el Trabajo
+              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', margin: 0, fontWeight: 500 }}>
+                Educación para el Trabajo · EPT
               </p>
             </div>
           </div>
@@ -143,14 +156,71 @@ export default function TallerHub() {
         </div>
       </div>
 
-      {/* ══ DESCRIPCIÓN ══════════════════════════════════════════════════════ */}
-      <div className="th-desc-wrap" style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)', padding: '16px 32px' }}>
-        <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.3)', margin: '0 0 6px' }}>
-          Sobre el taller
-        </p>
-        <p style={{ fontSize: 13, fontWeight: 500, color: '#2d4a4e', lineHeight: 1.7, margin: 0, maxWidth: 800 }}>
-          {taller.descripcion}
-        </p>
+      {/* ══ DESCRIPCIÓN + VALOR ══════════════════════════════════════════════ */}
+      <div className="th-desc-wrap" style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)', padding: '22px 32px 24px' }}>
+
+        {/* Fila superior: descripción + ring de avance */}
+        <div className="th-desc-head" style={{ display: 'flex', alignItems: 'flex-start', gap: 28, marginBottom: 20 }}>
+          <div style={{ flex: 1 }}>
+            <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: tallerColor, margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ display: 'inline-block', width: 18, height: 1.5, background: tallerColor, borderRadius: 2 }} />
+              Por qué vale la pena esta ruta
+            </p>
+            <p style={{ fontSize: 13, fontWeight: 500, color: '#2d4a4e', lineHeight: 1.75, margin: 0 }}>
+              {taller.descripcion}
+            </p>
+          </div>
+
+          {/* Indicador de avance general */}
+          {!isGeneralEpt && (
+            <div className="th-desc-ring" style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, padding: '14px 18px', borderRadius: 16, border: `1px solid ${tallerColor}20`, background: `${tallerColor}06`, minWidth: 110 }}>
+              <svg width={60} height={60} style={{ display: 'block', transform: 'rotate(-90deg)' }}>
+                <circle cx={30} cy={30} r={24} fill="none" stroke="rgba(4,57,65,0.07)" strokeWidth={5} />
+                <circle cx={30} cy={30} r={24} fill="none" stroke={tallerColor} strokeWidth={5}
+                  strokeDasharray={`${(progresoGeneral.pct / 100) * 2 * Math.PI * 24} ${2 * Math.PI * 24}`}
+                  strokeLinecap="round" style={{ transition: 'stroke-dasharray .6s ease' }}
+                />
+              </svg>
+              <p style={{ fontSize: 20, fontWeight: 900, color: '#043941', margin: 0, lineHeight: 1 }}>
+                {progresoGeneral.pct}%
+              </p>
+              <p style={{ fontSize: 10, fontWeight: 700, color: '#94a3b8', margin: 0, textAlign: 'center', lineHeight: 1.4 }}>
+                {progresoGeneral.completados}/{progresoGeneral.total}<br />contenidos
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Cards de valor */}
+        <div className="th-benefits" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+          {[
+            {
+              Icon: Package,
+              title: 'Repositorio del taller',
+              desc: `${todosLos.length} bienes con fichas técnicas y manuales de operación para llevar cada equipo a clase.`,
+            },
+            {
+              Icon: FileText,
+              title: 'Materiales listos para clase',
+              desc: 'Sesiones, guías y recursos descargables por módulo. Planifica y enseña sin empezar desde cero.',
+            },
+            {
+              Icon: GraduationCap,
+              title: 'Certificación docente MINEDU',
+              desc: 'Constancia oficial al completar el programa, válida para tu institución y expediente docente.',
+            },
+          ].map(({ Icon, title, desc }, i) => (
+            <div key={i} style={{ display: 'flex', gap: 12, padding: '14px 16px', borderRadius: 12, background: '#f8fafc', border: '1px solid rgba(4,57,65,0.06)' }}>
+              <div style={{ width: 34, height: 34, borderRadius: 9, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${tallerColor}14` }}>
+                <Icon size={15} style={{ color: tallerColor }} />
+              </div>
+              <div>
+                <p style={{ fontSize: 12, fontWeight: 700, color: '#043941', margin: '0 0 4px', lineHeight: 1.3 }}>{title}</p>
+                <p style={{ fontSize: 11, fontWeight: 500, color: '#64748b', margin: 0, lineHeight: 1.55 }}>{desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* ══ CTA CONTINÚA ════════════════════════════════════════════════════ */}

@@ -332,12 +332,8 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                     </NavLink>
                   </div>
 
-                  {/* Label sección TOC */}
-                  <div style={{ paddingLeft: 8, marginBottom: 6 }}>
-                    <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)' }}>
-                      Módulos
-                    </span>
-                  </div>
+                  {/* Separador sutil antes de módulos */}
+                  <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '4px 0 8px' }} />
                 </>
               )}
 
@@ -419,13 +415,13 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                       fontSize: 10, fontWeight: 800, letterSpacing: '0.06em',
                       minWidth: 24, textAlign: 'center', padding: '2px 4px', borderRadius: 5,
                       background: isActiveModulo ? `${accent}20` : isCompletado ? 'rgba(2,212,126,0.12)' : 'rgba(255,255,255,0.06)',
-                      color: isActiveModulo ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.3)',
+                      color: isActiveModulo ? accent : isCompletado ? '#02d47e' : 'rgba(255,255,255,0.52)',
                     }}>{isBloqueado ? '🔒' : badge}</span>
 
                     {/* Nombre */}
                     <span style={{
                       flex: 1, fontSize: 12, fontWeight: isActiveModulo ? 700 : 500,
-                      color: isActiveModulo ? '#fff' : isCompletado ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.38)',
+                      color: isActiveModulo ? '#fff' : isCompletado ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.62)',
                       lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                     }}>
                       {modulo.nombre}
