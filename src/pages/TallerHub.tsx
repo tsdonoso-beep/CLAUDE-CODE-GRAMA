@@ -349,68 +349,42 @@ export default function TallerHub() {
               </button>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
               {zonas.map((zona, i) => {
                 const nombre     = zonaNombre(zona)
                 const bienesZona = getBienesByZona(slug, zona)
                 const colores    = ZONA_COLORS[nombre] ?? { color: tallerColor, bg: `${tallerColor}10` }
                 const ejemplos   = bienesZona
                   .filter(b => !b.nombre.toLowerCase().startsWith('manual') && !b.nombre.toLowerCase().includes('video'))
-                  .slice(0, 5)
-                  .map(b => b.nombre.split(' ').slice(0, 5).join(' '))
-                const isLast = i === zonas.length - 1
-                const isLastRow = i >= zonas.length - 2
+                  .slice(0, 3)
+                  .map(b => b.nombre.split(' ').slice(0, 4).join(' '))
 
                 return (
                   <div
                     key={zona}
                     onClick={() => navigate(`/taller/${slug}/repositorio?zona=${encodeURIComponent(zona)}`)}
                     style={{
-                      padding: '20px 24px', cursor: 'pointer', transition: 'background .16s',
-                      borderRight: !isLast ? '1px solid rgba(4,57,65,0.07)' : 'none',
-                      borderBottom: !isLastRow ? '1px solid rgba(4,57,65,0.07)' : 'none',
-                      display: 'flex', flexDirection: 'column', gap: 14,
+                      padding: '16px 22px', cursor: 'pointer', transition: 'background .16s',
+                      borderRight: (i + 1) % 3 !== 0 ? '1px solid rgba(4,57,65,0.07)' : 'none',
+                      borderBottom: i < zonas.length - 3 ? '1px solid rgba(4,57,65,0.07)' : 'none',
                     }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.025)' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.02)' }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
                   >
-                    {/* Header zona */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                      <div style={{ width: 46, height: 46, borderRadius: 13, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: colores.bg, border: `1.5px solid ${colores.color}20` }}>
-                        <span style={{ fontSize: 18, fontWeight: 900, color: colores.color }}>{nombre[0]}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 6 }}>
+                      <div style={{ width: 38, height: 38, borderRadius: 11, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: colores.bg }}>
+                        <span style={{ fontSize: 15, fontWeight: 900, color: colores.color }}>{nombre[0]}</span>
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
-                          <span style={{ fontSize: 14, fontWeight: 800, color: '#043941' }}>{nombre}</span>
-                          <span style={{ fontSize: 10, fontWeight: 700, color: '#fff', background: colores.color, padding: '2px 8px', borderRadius: 100 }}>
-                            {bienesZona.length} bienes
-                          </span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
+                          <span style={{ fontSize: 13, fontWeight: 700, color: '#043941' }}>{nombre}</span>
+                          <span style={{ fontSize: 10, fontWeight: 700, color: '#fff', background: colores.color, padding: '1px 7px', borderRadius: 100 }}>{bienesZona.length}</span>
                         </div>
-                        <p style={{ fontSize: 10.5, color: '#94a3b8', margin: 0, fontWeight: 500 }}>
-                          Equipos, manuales y recursos de la zona
+                        <p style={{ fontSize: 11, color: '#94a3b8', margin: 0, lineHeight: 1.4, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {ejemplos.join(' · ')}
                         </p>
                       </div>
-                    </div>
-
-                    {/* Lista de bienes */}
-                    <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 5 }}>
-                      {ejemplos.map((ej, idx) => (
-                        <li key={idx} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-                          <span style={{ width: 5, height: 5, borderRadius: '50%', background: colores.color, flexShrink: 0, opacity: 0.6 }} />
-                          <span style={{ fontSize: 11, color: '#4a6568', lineHeight: 1.35, fontWeight: 500 }}>{ej}</span>
-                        </li>
-                      ))}
-                      {bienesZona.length > 5 && (
-                        <li style={{ fontSize: 10.5, color: colores.color, fontWeight: 700, paddingLeft: 12 }}>
-                          +{bienesZona.length - 5} más…
-                        </li>
-                      )}
-                    </ul>
-
-                    {/* Footer */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 5 }}>
-                      <span style={{ fontSize: 11, fontWeight: 700, color: colores.color }}>Ver equipos</span>
-                      <ChevronRight size={13} style={{ color: colores.color }} />
+                      <ChevronRight size={14} style={{ color: 'rgba(4,57,65,0.2)', flexShrink: 0 }} />
                     </div>
                   </div>
                 )
