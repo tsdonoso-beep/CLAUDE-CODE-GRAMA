@@ -678,7 +678,7 @@ Equipo GRAMA · Programa TSF-MINEDU`
 
   const selectStyle = {
     className: 'px-3 py-2 rounded-xl border-2 text-sm outline-none',
-    style: { borderColor: 'rgba(255,255,255,0.15)', background: '#ffffff', color: '#ffffff' },
+    style: { borderColor: 'rgba(4,57,65,0.15)', background: '#ffffff', color: '#043941' },
   }
 
   // ── helpers de sidebar ──────────────────────────────────────────────────────
