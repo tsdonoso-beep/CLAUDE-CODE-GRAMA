@@ -24,7 +24,7 @@ export const talleresConfig: TallerConfig[] = [
     nombre: "Mecánica Automotriz",
     nombreCorto: "Mecánica Automotriz",
     numero: 1,
-    descripcion: "La ruta de Mecánica Automotriz guía al docente EPT desde los fundamentos del vehículo hasta el diagnóstico de sistemas de motor, transmisión, frenos y suspensión. Seguir esta secuencia modular te da estructura para aprender sin perderte, materiales de sesión listos para usar en el aula, acceso permanente al repositorio del taller con fichas técnicas y manuales de cada equipo, y una progresión clara que culmina con tu certificación MINEDU.",
+    descripcion: "La ruta de Mecánica Automotriz guía al docente EPT desde los fundamentos del vehículo hasta el diagnóstico de sistemas de motor, transmisión, frenos y suspensión. Seguir esta secuencia modular te da estructura para aprender sin perderte, materiales de sesión listos para usar en el aula, acceso permanente al repositorio del taller con fichas técnicas y manuales de cada equipo, y una progresión clara que culmina con tu certificación.",
     competencias: [
       "Diagnóstico de fallas con escáner automotriz",
       "Mantenimiento preventivo y correctivo de vehículos",

@@ -185,7 +185,7 @@ export default function TallerHub() {
 
           {/* Cards de beneficio — orden: meta → práctica diaria → recurso permanente */}
           {[
-            { Icon: GraduationCap, title: 'Certificación docente MINEDU',  desc: 'Constancia oficial al completar el programa, válida para tu institución y expediente docente.' },
+            { Icon: GraduationCap, title: 'Certificación docente',  desc: 'Constancia oficial al completar el programa, válida para tu institución y expediente docente.' },
             { Icon: FileText,      title: 'Materiales listos para clase',  desc: 'Sesiones, guías y recursos descargables por módulo. Planifica y enseña sin empezar desde cero.' },
             { Icon: Package,       title: 'Repositorio del taller',        desc: `${todosLos.length} bienes con fichas técnicas y manuales de operación — acceso permanente, dentro y fuera de la ruta.` },
           ].map(({ Icon, title, desc }, i) => (
