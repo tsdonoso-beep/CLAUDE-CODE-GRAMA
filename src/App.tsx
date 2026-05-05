@@ -9,6 +9,7 @@ import { AppShell } from "@/components/layout/AppShell"
 import { PerfilShell } from "@/components/layout/PerfilShell"
 import { RequireAuth } from "@/components/RequireAuth"
 import { RequireAdmin } from "@/components/RequireAdmin"
+import { RequireDirector } from "@/components/RequireDirector"
 import { AuthProvider } from "@/contexts/AuthContext"
 import { ProgressProvider } from "@/contexts/ProgressContext"
 import { ErrorBoundary } from "@/components/ErrorBoundary"
@@ -23,6 +24,7 @@ const ModuloDetalle   = lazy(() => import("./pages/ModuloDetalle"))
 const Repositorio     = lazy(() => import("./pages/Repositorio"))
 const BienDetalle     = lazy(() => import("./pages/BienDetalle"))
 const Admin           = lazy(() => import("./pages/Admin"))
+const DirectorPanel   = lazy(() => import("./pages/DirectorPanel"))
 const Perfil          = lazy(() => import("./pages/Perfil"))
 const MisLogros       = lazy(() => import("./pages/MisLogros"))
 const CentroAyuda     = lazy(() => import("./pages/CentroAyuda"))
@@ -99,6 +101,11 @@ const App = () => (
                   {/* ── Solo admin ── */}
                   <Route element={<RequireAdmin />}>
                     <Route path="/admin" element={wrap(Admin)} />
+                  </Route>
+
+                  {/* ── Solo director ── */}
+                  <Route element={<RequireDirector />}>
+                    <Route path="/director" element={wrap(DirectorPanel)} />
                   </Route>
                 </Route>
 
