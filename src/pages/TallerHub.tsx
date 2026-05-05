@@ -73,7 +73,9 @@ export default function TallerHub() {
           .th-cta-inner     { padding: 14px 16px !important; flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
           .th-cta-btn       { width: 100% !important; justify-content: center !important; }
           .th-cta-prog-bar  { width: 100% !important; }
-          .th-competencias  { padding: 18px 16px 22px !important; grid-template-columns: 1fr !important; gap: 24px !important; }
+          .th-modulos-wrap  { padding: 14px 16px 18px !important; }
+          .th-valor-inner   { gap: 10px !important; }
+          .th-valor-divider { display: none !important; }
           .th-repo-wrap     { padding: 14px 14px !important; }
           .th-repo-header   { padding: 14px 16px 12px !important; flex-wrap: wrap !important; gap: 10px !important; }
         }
@@ -130,16 +132,6 @@ export default function TallerHub() {
               <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', color: 'rgba(255,255,255,0.45)', margin: '3px 0 0', textTransform: 'uppercase' }}>bienes</p>
             </div>
             <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
-            {!isGeneralEpt && (
-              <button
-                onClick={() => navigate(`/taller/${slug}/ruta`)}
-                style={{ background: '#02d47e', color: '#043941', border: 'none', borderRadius: 12, padding: '10px 20px', fontSize: 13, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'opacity .18s' }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-              >
-                Ver ruta completa <ArrowRight size={14} />
-              </button>
-            )}
             <button
               onClick={() => navigate(`/taller/${slug}/repositorio`)}
               style={{ background: 'none', color: 'rgba(255,255,255,0.7)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 12, padding: '10px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'all .15s' }}
@@ -214,56 +206,85 @@ export default function TallerHub() {
         </div>
       )}
 
-      {/* ══ COMPETENCIAS ══════════════════════════════════════════════════════ */}
-      {taller.competencias?.length > 0 && (
-        <div style={{ background: '#ffffff', borderBottom: '1px solid rgba(4,57,65,0.07)' }}>
-          <div className="th-competencias" style={{ padding: '24px 32px 28px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'start' }}>
-
-            <div>
-              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#02d47e', margin: '0 0 16px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ display: 'inline-block', height: 1, width: 20, background: '#02d47e' }} />
-                Tu valor como docente
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                {[
-                  { Icon: GraduationCap, title: 'Certificación docente MINEDU', sub: 'Constancia emitida por Inopin al completar el taller' },
-                  { Icon: FileText,      title: 'Sesiones y materiales listos para clase', sub: 'Fichas, guías y recursos descargables por módulo' },
-                  { Icon: Package,       title: 'Repositorio completo del taller', sub: `${todosLos.length} bienes con fichas técnicas y manuales de uso` },
-                  { Icon: Users,         title: 'Comunidad de docentes EPT', sub: 'Red de pares, soporte especializado y sesiones en vivo' },
-                ].map(({ Icon, title, sub }, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                    <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(4,57,65,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <Icon size={15} style={{ color: '#043941' }} />
-                    </div>
-                    <div>
-                      <p style={{ fontSize: 13, fontWeight: 700, color: '#043941', margin: '0 0 2px', lineHeight: 1.3 }}>{title}</p>
-                      <p style={{ fontSize: 11, color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>{sub}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#02d47e', margin: '0 0 16px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ display: 'inline-block', height: 1, width: 20, background: '#02d47e' }} />
-                Lo que lograrás
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {taller.competencias.map((comp, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                    <span style={{ fontSize: 11, fontWeight: 800, color: tallerColor, flexShrink: 0, marginTop: 2 }}>
-                      {String(i + 1).padStart(2, '0')}
+      {/* ══ MÓDULOS (compact chips) ══════════════════════════════════════════ */}
+      {!isGeneralEpt && (
+        <div className="th-modulos-wrap" style={{ padding: '20px 32px', borderBottom: '1px solid rgba(4,57,65,0.07)', background: '#f8fafc' }}>
+          <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.4)', margin: '0 0 12px' }}>
+            Módulos del taller
+          </p>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {modulosLXP.map(m => {
+              const estado   = getEstadoModuloLXP(m.id)
+              const prog     = getModuloProgreso(slug, m.numero)
+              const isDone   = estado === 'completado'
+              const isActive = estado === 'en_curso'
+              const isLocked = estado === 'bloqueado'
+              return (
+                <button
+                  key={m.id}
+                  disabled={isLocked}
+                  onClick={() => !isLocked && navigate(`/taller/${slug}/ruta/modulo/${m.numero}`)}
+                  style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 4,
+                    padding: '10px 14px', borderRadius: 12, minWidth: 130,
+                    border: isDone
+                      ? `1.5px solid ${tallerColor}50`
+                      : isActive
+                        ? `1.5px solid ${tallerColor}`
+                        : '1.5px solid rgba(4,57,65,0.09)',
+                    background: isDone
+                      ? `${tallerColor}08`
+                      : isActive
+                        ? `${tallerColor}12`
+                        : '#fff',
+                    cursor: isLocked ? 'not-allowed' : 'pointer',
+                    opacity: isLocked ? 0.4 : 1,
+                    fontFamily: 'inherit',
+                    transition: 'all .15s',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, width: '100%', justifyContent: 'space-between' }}>
+                    <span style={{ fontSize: 10, fontWeight: 800, color: isDone || isActive ? tallerColor : 'rgba(4,57,65,0.35)' }}>
+                      M{m.numero}
                     </span>
-                    <span style={{ fontSize: 13, fontWeight: 600, color: '#043941', lineHeight: 1.5 }}>{comp}</span>
+                    {isDone && <CheckCircle2 size={11} style={{ color: tallerColor }} />}
+                    {isActive && <span style={{ fontSize: 9, fontWeight: 800, color: tallerColor, letterSpacing: '.05em' }}>EN CURSO</span>}
                   </div>
-                ))}
-              </div>
-            </div>
-
+                  <span style={{ fontSize: 11, fontWeight: 700, color: isLocked ? '#94a3b8' : '#043941', lineHeight: 1.3, textAlign: 'left' }}>
+                    {m.nombre.split(' ').slice(0, 4).join(' ')}
+                  </span>
+                  {isActive && (
+                    <div style={{ width: '100%', height: 3, borderRadius: 2, background: 'rgba(4,57,65,0.08)', marginTop: 2 }}>
+                      <div style={{ height: '100%', width: `${prog?.porcentaje ?? 0}%`, background: tallerColor, borderRadius: 2, transition: 'width .4s ease' }} />
+                    </div>
+                  )}
+                </button>
+              )
+            })}
           </div>
         </div>
       )}
+
+      {/* ══ VALOR DOCENTE (compact strip) ════════════════════════════════════ */}
+      <div style={{ background: '#fff', borderBottom: '1px solid rgba(4,57,65,0.07)', padding: '13px 32px' }}>
+        <div className="th-valor-inner" style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: '#02d47e', whiteSpace: 'nowrap' }}>
+            Tu valor como docente
+          </span>
+          <div className="th-valor-divider" style={{ width: 1, height: 20, background: 'rgba(4,57,65,0.1)', flexShrink: 0 }} />
+          {[
+            { Icon: GraduationCap, label: 'Certificación MINEDU' },
+            { Icon: FileText,      label: 'Materiales para clase' },
+            { Icon: Package,       label: `${todosLos.length} bienes en repositorio` },
+            { Icon: Users,         label: 'Comunidad docente' },
+          ].map(({ Icon, label }, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '5px 10px', borderRadius: 8, background: 'rgba(4,57,65,0.04)' }}>
+              <Icon size={13} style={{ color: '#043941' }} />
+              <span style={{ fontSize: 12, fontWeight: 600, color: '#043941', whiteSpace: 'nowrap' }}>{label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* ══ REPOSITORIO (full-width) ══════════════════════════════════════════ */}
       {!isGeneralEpt && (
