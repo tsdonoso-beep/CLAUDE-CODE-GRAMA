@@ -83,7 +83,8 @@ export default function TallerHub() {
           .th-value-grid    { grid-template-columns: 1fr 1fr !important; }
           .th-cta-inner     { padding: 14px 16px !important; flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
           .th-cta-btn       { width: 100% !important; justify-content: center !important; }
-          .th-modulos-wrap  { padding: 12px 16px 16px !important; }
+          .th-modulos-wrap  { padding: 14px 16px 18px !important; }
+          .th-modulos-wrap .mod-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important; }
           .th-repo-wrap     { padding: 14px 14px !important; }
           .th-repo-header   { padding: 14px 16px 12px !important; flex-wrap: wrap !important; gap: 10px !important; }
         }
@@ -184,11 +185,11 @@ export default function TallerHub() {
             </div>
           )}
 
-          {/* Cards de beneficio */}
+          {/* Cards de beneficio — orden: meta → práctica diaria → recurso permanente */}
           {[
-            { Icon: Package,       title: 'Repositorio del taller',       desc: `${todosLos.length} bienes con fichas técnicas y manuales de operación para llevar cada equipo a clase.` },
-            { Icon: FileText,      title: 'Materiales listos para clase',  desc: 'Sesiones, guías y recursos descargables por módulo. Planifica y enseña sin empezar desde cero.' },
             { Icon: GraduationCap, title: 'Certificación docente MINEDU',  desc: 'Constancia oficial al completar el programa, válida para tu institución y expediente docente.' },
+            { Icon: FileText,      title: 'Materiales listos para clase',  desc: 'Sesiones, guías y recursos descargables por módulo. Planifica y enseña sin empezar desde cero.' },
+            { Icon: Package,       title: 'Repositorio del taller',        desc: `${todosLos.length} bienes con fichas técnicas y manuales de operación — acceso permanente, dentro y fuera de la ruta.` },
           ].map(({ Icon, title, desc }, i) => (
             <div key={i} style={{ padding: '16px', borderRadius: 12, background: '#f8fafc', border: '1px solid rgba(4,57,65,0.06)' }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, background: `${tallerColor}12`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
@@ -250,11 +251,14 @@ export default function TallerHub() {
 
       {/* ══ MÓDULOS ══════════════════════════════════════════════════════════ */}
       {!isGeneralEpt && (
-        <div className="th-modulos-wrap" style={{ padding: '16px 32px', borderBottom: '1px solid rgba(4,57,65,0.07)', background: '#f8fafc' }}>
-          <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', margin: '0 0 10px' }}>
-            Módulos del taller
-          </p>
-          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+        <div className="th-modulos-wrap" style={{ padding: '20px 32px 24px', borderBottom: '1px solid rgba(4,57,65,0.07)', background: '#f8fafc' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
+            <p style={{ fontSize: 9, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', margin: 0 }}>
+              Módulos del taller
+            </p>
+            <span style={{ fontSize: 10, color: '#94a3b8' }}>{totalHoras}h · {modulosLXP.length} módulos</span>
+          </div>
+          <div className="mod-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(152px, 1fr))', gap: 8 }}>
             {modulosLXP.map(m => {
               const estado   = getEstadoModuloLXP(m.id)
               const prog     = getModuloProgreso(slug, m.numero)
@@ -267,33 +271,56 @@ export default function TallerHub() {
                   disabled={isLocked}
                   onClick={() => !isLocked && navigate(`/taller/${slug}/ruta/modulo/${m.numero}`)}
                   style={{
-                    display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 3,
-                    padding: '8px 12px', borderRadius: 10, minWidth: 110,
+                    display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6,
+                    padding: '12px 14px', borderRadius: 12, textAlign: 'left',
                     border: isDone
-                      ? `1.5px solid ${tallerColor}50`
+                      ? `1.5px solid ${tallerColor}45`
                       : isActive
                         ? `1.5px solid ${tallerColor}`
                         : '1.5px solid rgba(4,57,65,0.09)',
-                    background: isDone ? `${tallerColor}08` : isActive ? `${tallerColor}12` : '#fff',
+                    background: isDone ? `${tallerColor}07` : isActive ? `${tallerColor}10` : '#fff',
                     cursor: isLocked ? 'not-allowed' : 'pointer',
-                    opacity: isLocked ? 0.4 : 1,
+                    opacity: isLocked ? 0.38 : 1,
                     fontFamily: 'inherit',
                     transition: 'all .15s',
+                    boxShadow: isActive ? `0 0 0 3px ${tallerColor}18` : 'none',
                   }}
+                  onMouseEnter={e => { if (!isLocked) (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)' }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'none' }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 5, width: '100%', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: 9, fontWeight: 800, color: isDone || isActive ? tallerColor : 'rgba(4,57,65,0.35)' }}>
+                  {/* Fila superior: icono + badge estado */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                    <span style={{ fontSize: 20, lineHeight: 1 }}>{m.icon}</span>
+                    {isDone && <CheckCircle2 size={14} style={{ color: tallerColor }} />}
+                    {isActive && (
+                      <span style={{ fontSize: 7.5, fontWeight: 900, color: '#fff', background: tallerColor, padding: '2px 6px', borderRadius: 100, letterSpacing: '.06em' }}>
+                        EN CURSO
+                      </span>
+                    )}
+                    {isLocked && (
+                      <span style={{ fontSize: 8, color: 'rgba(4,57,65,0.25)', fontWeight: 700 }}>🔒</span>
+                    )}
+                  </div>
+
+                  {/* Número + nombre */}
+                  <div style={{ flex: 1 }}>
+                    <span style={{ fontSize: 9, fontWeight: 800, color: isDone || isActive ? tallerColor : 'rgba(4,57,65,0.3)', letterSpacing: '.07em', display: 'block', marginBottom: 2 }}>
                       M{m.numero}
                     </span>
-                    {isDone && <CheckCircle2 size={10} style={{ color: tallerColor }} />}
-                    {isActive && <span style={{ fontSize: 8, fontWeight: 800, color: tallerColor, letterSpacing: '.04em' }}>EN CURSO</span>}
+                    <span style={{ fontSize: 11.5, fontWeight: 700, color: isLocked ? '#94a3b8' : '#043941', lineHeight: 1.3, display: 'block' }}>
+                      {m.nombre}
+                    </span>
                   </div>
-                  <span style={{ fontSize: 10, fontWeight: 700, color: isLocked ? '#94a3b8' : '#043941', lineHeight: 1.3, textAlign: 'left' }}>
-                    {m.nombre.split(' ').slice(0, 3).join(' ')}
+
+                  {/* Horas */}
+                  <span style={{ fontSize: 10, fontWeight: 600, color: isDone ? tallerColor : '#94a3b8', background: isDone ? `${tallerColor}12` : 'rgba(4,57,65,0.05)', borderRadius: 6, padding: '2px 7px' }}>
+                    {m.horasTotal}h
                   </span>
+
+                  {/* Barra progreso si activo */}
                   {isActive && (
-                    <div style={{ width: '100%', height: 2, borderRadius: 2, background: 'rgba(4,57,65,0.08)', marginTop: 1 }}>
-                      <div style={{ height: '100%', width: `${prog?.porcentaje ?? 0}%`, background: tallerColor, borderRadius: 2 }} />
+                    <div style={{ width: '100%', height: 3, borderRadius: 2, background: 'rgba(4,57,65,0.08)', marginTop: 2 }}>
+                      <div style={{ height: '100%', width: `${prog?.porcentaje ?? 0}%`, background: tallerColor, borderRadius: 2, transition: 'width .4s' }} />
                     </div>
                   )}
                 </button>
@@ -322,44 +349,68 @@ export default function TallerHub() {
               </button>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
               {zonas.map((zona, i) => {
                 const nombre     = zonaNombre(zona)
                 const bienesZona = getBienesByZona(slug, zona)
                 const colores    = ZONA_COLORS[nombre] ?? { color: tallerColor, bg: `${tallerColor}10` }
                 const ejemplos   = bienesZona
                   .filter(b => !b.nombre.toLowerCase().startsWith('manual') && !b.nombre.toLowerCase().includes('video'))
-                  .slice(0, 3)
-                  .map(b => b.nombre.split(' ').slice(0, 4).join(' '))
+                  .slice(0, 5)
+                  .map(b => b.nombre.split(' ').slice(0, 5).join(' '))
+                const isLast = i === zonas.length - 1
+                const isLastRow = i >= zonas.length - 2
 
                 return (
                   <div
                     key={zona}
                     onClick={() => navigate(`/taller/${slug}/repositorio?zona=${encodeURIComponent(zona)}`)}
                     style={{
-                      padding: '16px 24px', cursor: 'pointer', transition: 'background .16s',
-                      borderRight: (i + 1) % 2 !== 0 ? '1px solid rgba(4,57,65,0.07)' : 'none',
-                      borderBottom: i < zonas.length - 2 ? '1px solid rgba(4,57,65,0.07)' : 'none',
+                      padding: '20px 24px', cursor: 'pointer', transition: 'background .16s',
+                      borderRight: !isLast ? '1px solid rgba(4,57,65,0.07)' : 'none',
+                      borderBottom: !isLastRow ? '1px solid rgba(4,57,65,0.07)' : 'none',
+                      display: 'flex', flexDirection: 'column', gap: 14,
                     }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.02)' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(4,57,65,0.025)' }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                      <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: colores.bg }}>
-                        <span style={{ fontSize: 14, fontWeight: 900, color: colores.color }}>{nombre[0]}</span>
+                    {/* Header zona */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                      <div style={{ width: 46, height: 46, borderRadius: 13, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: colores.bg, border: `1.5px solid ${colores.color}20` }}>
+                        <span style={{ fontSize: 18, fontWeight: 900, color: colores.color }}>{nombre[0]}</span>
                       </div>
-                      <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                          <span style={{ fontSize: 13, fontWeight: 700, color: '#043941' }}>{nombre}</span>
-                          <span style={{ fontSize: 10, fontWeight: 700, color: '#fff', background: colores.color, padding: '1px 7px', borderRadius: 100 }}>{bienesZona.length}</span>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
+                          <span style={{ fontSize: 14, fontWeight: 800, color: '#043941' }}>{nombre}</span>
+                          <span style={{ fontSize: 10, fontWeight: 700, color: '#fff', background: colores.color, padding: '2px 8px', borderRadius: 100 }}>
+                            {bienesZona.length} bienes
+                          </span>
                         </div>
-                        <p style={{ fontSize: 11, color: '#94a3b8', margin: '2px 0 0', lineHeight: 1.4 }}>
-                          {ejemplos.join(' · ')}
+                        <p style={{ fontSize: 10.5, color: '#94a3b8', margin: 0, fontWeight: 500 }}>
+                          Equipos, manuales y recursos de la zona
                         </p>
                       </div>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <ChevronRight size={13} style={{ color: 'rgba(4,57,65,0.2)' }} />
+
+                    {/* Lista de bienes */}
+                    <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 5 }}>
+                      {ejemplos.map((ej, idx) => (
+                        <li key={idx} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                          <span style={{ width: 5, height: 5, borderRadius: '50%', background: colores.color, flexShrink: 0, opacity: 0.6 }} />
+                          <span style={{ fontSize: 11, color: '#4a6568', lineHeight: 1.35, fontWeight: 500 }}>{ej}</span>
+                        </li>
+                      ))}
+                      {bienesZona.length > 5 && (
+                        <li style={{ fontSize: 10.5, color: colores.color, fontWeight: 700, paddingLeft: 12 }}>
+                          +{bienesZona.length - 5} más…
+                        </li>
+                      )}
+                    </ul>
+
+                    {/* Footer */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 5 }}>
+                      <span style={{ fontSize: 11, fontWeight: 700, color: colores.color }}>Ver equipos</span>
+                      <ChevronRight size={13} style={{ color: colores.color }} />
                     </div>
                   </div>
                 )
