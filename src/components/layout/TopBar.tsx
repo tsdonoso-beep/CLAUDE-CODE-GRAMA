@@ -54,17 +54,12 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
 
   return (
     <header
-      className="flex items-center justify-between h-12 px-5 shrink-0 relative"
+      className="flex items-center justify-between h-12 px-5 shrink-0"
       style={{
-        background: 'linear-gradient(90deg, #032e34 0%, #043941 60%, #045258 100%)',
-        borderBottom: '1px solid rgba(2,212,126,0.15)',
+        background: '#043941',
+        borderBottom: '1px solid rgba(255,255,255,0.09)',
       }}
     >
-      {/* Shimmer accent line */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, #02d47e 40%, #02d47e 60%, transparent)' }}
-      />
 
       {/* Hamburger — mobile only */}
       {onMenuClick && (
