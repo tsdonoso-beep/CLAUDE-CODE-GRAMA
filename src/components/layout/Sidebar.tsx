@@ -98,7 +98,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
       className="flex flex-col h-full shrink-0 relative overflow-hidden transition-all duration-300"
       style={{
         width: collapsed ? 56 : 240,
-        background: 'linear-gradient(180deg, #030e12 0%, #043941 40%, #032e34 100%)',
+        background: '#043941',
       }}
     >
       {/* Orb acento — color transiciona suavemente entre modos */}
