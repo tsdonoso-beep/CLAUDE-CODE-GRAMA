@@ -112,8 +112,8 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
 
       {/* ── Logo — siempre visible, sin fade ── */}
       <div
-        className="relative z-10 flex items-center justify-between px-4 py-3 border-b shrink-0"
-        style={{ borderColor: 'rgba(255,255,255,0.07)' }}
+        className="relative z-10 flex items-center justify-between px-4 shrink-0"
+        style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.09)' }}
       >
         <button
           onClick={() => navigate('/perfil')}
