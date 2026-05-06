@@ -521,7 +521,7 @@ export default function Repositorio() {
               <p style={{ marginTop: 12, fontSize: 14, fontWeight: 700, color: '#94a3b8' }}>Sin manuales en esta categoría</p>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 12 }}>
               {bienesManual.map((b: Bien) => {
                 const meta = getManualMeta(b.nombre ?? '')
                 const MetaIcon = meta.icon
@@ -530,61 +530,49 @@ export default function Repositorio() {
                     key={b.n}
                     onClick={() => navigate(`/taller/${slug}/repositorio/bien/${b.n}?from=manuales`)}
                     style={{
-                      display: 'flex', alignItems: 'center', gap: 16,
+                      display: 'flex', flexDirection: 'column', gap: 10,
                       padding: 16, borderRadius: 16, textAlign: 'left',
                       transition: 'all .15s', cursor: 'pointer', fontFamily: 'inherit',
-                      width: '100%', background: '#ffffff', border: '1.5px solid #e2e8f0',
+                      background: '#ffffff', border: `1.5px solid ${meta.color}22`,
+                      borderTop: `3px solid ${meta.color}`,
                     }}
                     onMouseEnter={e => {
                       const el = e.currentTarget as HTMLElement
-                      el.style.borderColor = meta.color
-                      el.style.boxShadow = `0 4px 12px ${meta.color}22`
-                      const chevron = el.querySelector('[data-chevron]') as HTMLElement
-                      if (chevron) chevron.style.opacity = '1'
+                      el.style.boxShadow = `0 4px 16px ${meta.color}28`
+                      el.style.transform = 'translateY(-2px)'
                     }}
                     onMouseLeave={e => {
                       const el = e.currentTarget as HTMLElement
-                      el.style.borderColor = '#e2e8f0'
                       el.style.boxShadow = 'none'
-                      const chevron = el.querySelector('[data-chevron]') as HTMLElement
-                      if (chevron) chevron.style.opacity = '0'
+                      el.style.transform = 'translateY(0)'
                     }}
                   >
-                    {/* Ícono categoría */}
-                    <div style={{ width: 44, height: 44, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, background: meta.bg }}>
-                      <MetaIcon size={18} style={{ color: meta.color }} />
-                    </div>
-
-                    {/* Info */}
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <p style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.4, color: '#0f172a', margin: '0 0 4px' }}>
-                        {b.nombre}
-                      </p>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                        <span style={{ fontSize: 10, fontWeight: 600, padding: '2px 8px', borderRadius: 6, background: meta.bg, color: meta.color }}>
-                          {meta.label}
-                        </span>
-                        {b.zona && (
-                          <span style={{ fontSize: 10, fontWeight: 500, color: '#94a3b8' }}>
-                            {b.zona.replace('ZONA DE ', '').replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'DEPÓSITO').replace('INVESTIGACIÓN, GESTIÓN Y DISEÑO', 'INV. Y DISEÑO')}
-                          </span>
-                        )}
-                        {b.cantidad > 1 && (
-                          <span style={{ fontSize: 10, fontWeight: 500, color: '#cbd5e1' }}>
-                            ×{b.cantidad}
-                          </span>
-                        )}
+                    {/* Ícono + badge categoría */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ width: 38, height: 38, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', background: meta.bg }}>
+                        <MetaIcon size={17} style={{ color: meta.color }} />
                       </div>
+                      {b.cantidad > 1 && (
+                        <span style={{ fontSize: 10, fontWeight: 700, color: '#94a3b8' }}>×{b.cantidad}</span>
+                      )}
                     </div>
 
-                    {/* Descripción truncada */}
-                    {b.descripcion && (
-                      <p className="line-clamp-2" style={{ fontSize: 12, maxWidth: 280, lineHeight: 1.4, flexShrink: 0, color: '#94a3b8' }}>
-                        {b.descripcion.slice(0, 120)}…
-                      </p>
-                    )}
+                    {/* Título */}
+                    <p className="line-clamp-3" style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.4, color: '#0f172a', margin: 0, flex: 1 }}>
+                      {b.nombre}
+                    </p>
 
-                    <ChevronRight data-chevron="1" size={14} style={{ flexShrink: 0, color: meta.color, opacity: 0, transition: 'opacity .16s' }} />
+                    {/* Footer: tipo + zona */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, alignItems: 'center' }}>
+                      <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 6, background: meta.bg, color: meta.color }}>
+                        {meta.label}
+                      </span>
+                      {b.zona && (
+                        <span style={{ fontSize: 10, fontWeight: 500, color: '#94a3b8' }}>
+                          {b.zona.replace('ZONA DE ', '').replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'Depósito').replace('INVESTIGACIÓN, GESTIÓN Y DISEÑO', 'Inv. y Diseño').replace('INNOVACIÓN', 'Innovación')}
+                        </span>
+                      )}
+                    </div>
                   </button>
                 )
               })}
