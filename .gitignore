@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# USB export artifacts
+export-usb/
+GRAMA-USB-*.zip
