@@ -71,14 +71,6 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
     willChange: 'opacity, transform',
   }
 
-  // ── Orb: transición de color cuando cambia el accent ────────────────────
-  const orbStyle: React.CSSProperties = {
-    width: 200, height: 200,
-    background: `radial-gradient(circle, ${shownMode === 'perfil' ? '#02d47e' : accent}12 0%, transparent 65%)`,
-    bottom: 50, right: -50,
-    transition: 'background 400ms ease',
-  }
-
   // ── Items de navegación ──────────────────────────────────────────────────
   const isRepoOnly = slug === 'taller-general-ept'
 
@@ -102,17 +94,9 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
         borderRight: '1px solid rgba(255,255,255,0.09)',
       }}
     >
-      {/* Orb acento — color transiciona suavemente entre modos */}
-      <div className="absolute pointer-events-none animate-aurora-slow" style={orbStyle} />
-      <div className="absolute pointer-events-none" style={{
-        width: 140, height: 140,
-        background: 'radial-gradient(circle, rgba(2,212,126,0.06) 0%, transparent 65%)',
-        top: -20, left: -30,
-      }} />
-
       {/* ── Logo — siempre visible, sin fade ── */}
       <div
-        className="relative z-10 flex items-center justify-between px-4 shrink-0"
+        className="relative z-10 flex items-center justify-center shrink-0"
         style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.09)' }}
       >
         <button
@@ -133,7 +117,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
 
         <button
           onClick={onCollapse}
-          className="hidden md:flex text-white/25 hover:text-white/60 transition-colors ml-1"
+          className="hidden md:flex absolute right-3 text-white/25 hover:text-white/60 transition-colors"
           aria-label={collapsed ? 'Expandir sidebar' : 'Colapsar sidebar'}
         >
           {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
@@ -142,7 +126,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
         {onClose && (
           <button
             onClick={onClose}
-            className="md:hidden text-white/25 hover:text-white/60 transition-colors ml-1"
+            className="md:hidden absolute right-3 text-white/25 hover:text-white/60 transition-colors"
             aria-label="Cerrar menú"
           >
             <X size={14} />
@@ -303,7 +287,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                           <span style={{
                             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
                             padding: '7px 8px', borderRadius: 8, fontSize: 12, fontWeight: 700,
-                            background: isActive ? `${accent}18` : 'rgba(255,255,255,0.05)',
+                            background: isActive ? `${accent}18` : 'transparent',
                             color: isActive ? accent : 'rgba(255,255,255,0.38)',
                             border: isActive ? `1px solid ${accent}28` : '1px solid transparent',
                             transition: 'all .15s', cursor: 'pointer',
