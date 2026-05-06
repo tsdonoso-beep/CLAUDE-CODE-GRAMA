@@ -334,25 +334,24 @@ export default function Repositorio() {
 
             {/* Fila 1: Categoría */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 7 }}>
-              <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', width: 72, flexShrink: 0 }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#64748b', width: 72, flexShrink: 0 }}>
                 Categoría
               </span>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                 <button
                   onClick={() => setFiltroTipo('')}
-                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: !filtroTipo ? '#043941' : 'transparent', color: !filtroTipo ? '#fff' : '#64748b', border: !filtroTipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5, padding: '5px 0', minWidth: 110, borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: !filtroTipo ? '#043941' : 'transparent', color: !filtroTipo ? '#fff' : '#64748b', border: !filtroTipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
                 >
-                  Todos <span style={{ opacity: 0.7 }}>{statsTipo.reduce((acc, s) => acc + s.count, 0)}</span>
+                  Todos
                 </button>
-                {statsTipo.map(({ tipo, count, Icon }) => (
+                {statsTipo.map(({ tipo, count: _count, Icon }) => (
                   <button
                     key={tipo}
                     onClick={() => setFiltroTipo(filtroTipo === tipo ? '' : tipo)}
-                    style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: filtroTipo === tipo ? '#043941' : 'transparent', color: filtroTipo === tipo ? '#fff' : '#64748b', border: filtroTipo === tipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5, padding: '5px 0', minWidth: 110, borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: filtroTipo === tipo ? '#043941' : 'transparent', color: filtroTipo === tipo ? '#fff' : '#64748b', border: filtroTipo === tipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
                   >
                     <Icon size={11} />
                     {tipo.charAt(0) + tipo.slice(1).toLowerCase()}
-                    <span style={{ opacity: 0.7 }}>{count}</span>
                   </button>
                 ))}
               </div>
@@ -360,20 +359,20 @@ export default function Repositorio() {
 
             {/* Fila 2: Zona */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-              <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', width: 72, flexShrink: 0 }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#64748b', width: 72, flexShrink: 0 }}>
                 Zona
               </span>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                 <button
                   onClick={() => { setFiltroZona(''); setFiltroArea(''); setFiltroSubarea('') }}
-                  style={{ padding: '5px 12px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: !filtroZona ? '#043941' : 'transparent', color: !filtroZona ? '#fff' : '#64748b', border: !filtroZona ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
+                  style={{ padding: '5px 0', minWidth: 100, borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: !filtroZona ? '#043941' : 'transparent', color: !filtroZona ? '#fff' : '#64748b', border: !filtroZona ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
                 >
                   Todas
                 </button>
                 {zonas.map(z => (
                   <button key={z}
                     onClick={() => { setFiltroZona(filtroZona === z ? '' : z); setFiltroArea(''); setFiltroSubarea('') }}
-                    style={{ padding: '5px 12px', borderRadius: 100, fontSize: 12, fontWeight: 700, transition: 'all .15s', whiteSpace: 'nowrap', cursor: 'pointer', fontFamily: 'inherit', background: filtroZona === z ? '#043941' : 'transparent', color: filtroZona === z ? '#fff' : '#64748b', border: filtroZona === z ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
+                    style={{ padding: '5px 0', minWidth: 100, borderRadius: 100, fontSize: 12, fontWeight: 700, transition: 'all .15s', whiteSpace: 'nowrap', cursor: 'pointer', fontFamily: 'inherit', background: filtroZona === z ? '#043941' : 'transparent', color: filtroZona === z ? '#fff' : '#64748b', border: filtroZona === z ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
                   >
                     {z.replace('ZONA DE ', '').replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'Depósito').replace('INVESTIGACIÓN, GESTIÓN Y DISEÑO', 'Inv. y Diseño').replace('INNOVACIÓN', 'Innovación')}
                   </button>
@@ -386,7 +385,7 @@ export default function Repositorio() {
               <div style={{ marginBottom: 8, display: 'flex', flexWrap: 'wrap', gap: 8, paddingTop: 8, borderTop: '1px solid rgba(4,57,65,0.06)' }}>
                 {areas.length > 0 && (
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
-                    <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', width: 72, flexShrink: 0 }}>Área</span>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#64748b', width: 72, flexShrink: 0 }}>Área</span>
                     {areas.map(a => (
                       <button key={a}
                         onClick={() => { setFiltroArea(filtroArea === a ? '' : a); setFiltroSubarea('') }}
@@ -398,7 +397,7 @@ export default function Repositorio() {
                 )}
                 {filtroArea && subareas.length > 0 && (
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center', width: '100%' }}>
-                    <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', width: 72, flexShrink: 0 }}>Sub-área</span>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#64748b', width: 72, flexShrink: 0 }}>Sub-área</span>
                     {subareas.map(s => (
                       <button key={s}
                         onClick={() => setFiltroSubarea(filtroSubarea === s ? '' : s)}
