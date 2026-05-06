@@ -521,7 +521,7 @@ export default function Repositorio() {
               <p style={{ marginTop: 12, fontSize: 14, fontWeight: 700, color: '#94a3b8' }}>Sin manuales en esta categoría</p>
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 12 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
               {bienesManual.map((b: Bien) => {
                 const meta = getManualMeta(b.nombre ?? '')
                 const MetaIcon = meta.icon
