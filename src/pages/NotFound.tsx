@@ -1,0 +1,30 @@
+// src/pages/NotFound.tsx
+import { Link } from 'react-router-dom'
+import { Home } from 'lucide-react'
+import { LogoGramaIcon } from '@/assets/LogoGrama'
+
+export default function NotFound() {
+  return (
+    <div
+      className="min-h-screen flex flex-col items-center justify-center grama-pattern"
+      style={{ background: '#043941' }}
+    >
+      <LogoGramaIcon className="mb-8 opacity-60" style={{ width: 64, height: 64 }} />
+      <h1 className="text-7xl font-extrabold mb-4" style={{ color: '#02d47e' }}>
+        404
+      </h1>
+      <p className="text-xl font-bold text-white mb-2">Página no encontrada</p>
+      <p className="text-sm mb-8 text-center max-w-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
+        Esta ruta no existe en la plataforma GRAMA.
+      </p>
+      <Link
+        to="/"
+        className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white transition-all hover:opacity-90"
+        style={{ background: '#02d47e' }}
+      >
+        <Home size={16} />
+        Volver al inicio
+      </Link>
+    </div>
+  )
+}
