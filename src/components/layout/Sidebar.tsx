@@ -305,7 +305,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
                         <span style={{
                           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
                           padding: '7px 8px', borderRadius: 8, fontSize: 12, fontWeight: 700,
-                          background: isActive ? `${accent}18` : 'rgba(255,255,255,0.05)',
+                          background: isActive ? `${accent}18` : 'transparent',
                           color: isActive ? accent : 'rgba(255,255,255,0.38)',
                           border: isActive ? `1px solid ${accent}28` : '1px solid transparent',
                           transition: 'all .15s', cursor: 'pointer',
