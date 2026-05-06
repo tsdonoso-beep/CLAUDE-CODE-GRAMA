@@ -325,25 +325,6 @@ export default function Repositorio() {
         )}
 
 
-        {/* Filtros manuales */}
-        {tab === 'manuales' && (
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, paddingBottom: 14 }}>
-            {([
-              { id: 'todos',         label: 'Todos',         count: conteos.total         },
-              { id: 'uso',           label: 'Uso',           count: conteos.uso           },
-              { id: 'mantenimiento', label: 'Mantenimiento', count: conteos.mantenimiento },
-              { id: 'pedagogico',    label: 'Pedagógico',    count: conteos.pedagogico    },
-            ] as const).map(f => (
-              <button
-                key={f.id}
-                onClick={() => setFiltroManual(f.id)}
-                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: filtroManual === f.id ? '#043941' : 'transparent', color: filtroManual === f.id ? '#fff' : '#64748b', border: filtroManual === f.id ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
-              >
-                {f.label} <span style={{ opacity: 0.7 }}>{f.count}</span>
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* ══ TAB: CATÁLOGO ═══════════════════════════════════════════════════ */}
