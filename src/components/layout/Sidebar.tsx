@@ -99,6 +99,7 @@ export function Sidebar({ collapsed, onCollapse, onClose }: SidebarProps) {
       style={{
         width: collapsed ? 56 : 240,
         background: '#043941',
+        borderRight: '1px solid rgba(255,255,255,0.09)',
       }}
     >
       {/* Orb acento — color transiciona suavemente entre modos */}
