@@ -1,7 +1,7 @@
 // src/pages/Repositorio.tsx
 import { useState, useMemo, useEffect } from 'react'
 import {
-  Search, X, SlidersHorizontal, Package, Wrench as WrenchLucide, Sofa, BookOpen,
+  Search, X, Package, Wrench as WrenchLucide, Sofa, BookOpen,
   HardHat, FileText, Video, PlayCircle, ChevronRight, BookMarked,
   Wrench, GraduationCap, Car, Scissors, ChefHat, Hammer, Monitor, Cpu,
   UtensilsCrossed, Zap,
@@ -93,7 +93,6 @@ export default function Repositorio() {
   const [filtroArea, setFiltroArea] = useState('')
   const [filtroSubarea, setFiltroSubarea] = useState('')
   const [filtroTipo, setFiltroTipo] = useState('')
-  const [showFiltros, setShowFiltros] = useState(false)
 
   // ── Manuales ──────────────────────────────────────────────────────────────
   const [busquedaManual, setBusquedaManual] = useState('')
@@ -182,7 +181,6 @@ export default function Repositorio() {
 
   const tallerColor = `hsl(${taller.color})`
   const hayFiltros = busqueda || filtroZona || filtroArea || filtroSubarea || filtroTipo
-  const activeCount = [filtroZona, filtroArea, filtroSubarea, filtroTipo].filter(Boolean).length
 
   function resetFiltros() {
     setBusqueda(''); setFiltroZona(''); setFiltroArea(''); setFiltroSubarea(''); setFiltroTipo('')
@@ -326,28 +324,6 @@ export default function Repositorio() {
           </div>
         )}
 
-        {/* Filtros por tipo (tab bienes) */}
-        {tab === 'bienes' && (
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, paddingBottom: 14 }}>
-            <button
-              onClick={() => setFiltroTipo('')}
-              style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: !filtroTipo ? '#043941' : 'transparent', color: !filtroTipo ? '#fff' : '#64748b', border: !filtroTipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
-            >
-              Todos <span style={{ opacity: 0.7 }}>{statsTipo.reduce((acc, s) => acc + s.count, 0)}</span>
-            </button>
-            {statsTipo.map(({ tipo, count, Icon }) => (
-              <button
-                key={tipo}
-                onClick={() => setFiltroTipo(filtroTipo === tipo ? '' : tipo)}
-                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: filtroTipo === tipo ? '#043941' : 'transparent', color: filtroTipo === tipo ? '#fff' : '#64748b', border: filtroTipo === tipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
-              >
-                <Icon size={11} />
-                {tipo.charAt(0) + tipo.slice(1).toLowerCase()}
-                <span style={{ opacity: 0.7 }}>{count}</span>
-              </button>
-            ))}
-          </div>
-        )}
 
         {/* Filtros manuales */}
         {tab === 'manuales' && (
@@ -373,82 +349,67 @@ export default function Repositorio() {
       {/* ══ TAB: CATÁLOGO ═══════════════════════════════════════════════════ */}
       {tab === 'bienes' && (
         <>
-          <div style={{ position: 'sticky', top: 0, zIndex: 20, padding: '12px 16px', borderBottom: '1px solid #d1fae5', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', background: '#fff' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, overflowX: 'auto', paddingBottom: 4 }}>
-              <button
-                onClick={() => setShowFiltros(!showFiltros)}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 6,
-                  padding: '8px 14px', borderRadius: 12,
-                  fontSize: 12, fontWeight: 700, flexShrink: 0,
-                  transition: 'all .15s', fontFamily: 'inherit', cursor: 'pointer',
-                  background: showFiltros || activeCount > 0 ? '#043941' : '#f0fdf8',
-                  color: showFiltros || activeCount > 0 ? '#fff' : '#043941',
-                  border: `1.5px solid ${showFiltros || activeCount > 0 ? '#043941' : '#d1fae5'}`,
-                }}
-              >
-                <SlidersHorizontal size={12} />
-                Filtros
-                {activeCount > 0 && (
-                  <span style={{
-                    width: 16, height: 16, borderRadius: '50%', fontSize: 10, fontWeight: 800,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    background: tallerColor, color: '#043941',
-                  }}>
-                    {activeCount}
-                  </span>
-                )}
-              </button>
+          <div style={{ position: 'sticky', top: 0, zIndex: 20, padding: '10px 16px 8px', borderBottom: '1px solid rgba(4,57,65,0.07)', boxShadow: '0 2px 12px rgba(4,57,65,0.07)', background: '#fff' }}>
 
-              <div style={{ width: 1, height: 20, flexShrink: 0, background: '#d1fae5' }} />
-
-              {zonas.map(z => (
-                <button key={z}
-                  onClick={() => { setFiltroZona(filtroZona === z ? '' : z); setFiltroArea(''); setFiltroSubarea('') }}
-                  style={{
-                    flexShrink: 0, padding: '8px 12px', borderRadius: 12,
-                    fontSize: 12, fontWeight: 600, transition: 'all .15s', whiteSpace: 'nowrap',
-                    cursor: 'pointer', fontFamily: 'inherit',
-                    background: filtroZona === z ? '#043941' : '#f0fdf8',
-                    color: filtroZona === z ? '#fff' : '#045f6c',
-                    border: `1.5px solid ${filtroZona === z ? '#043941' : '#d1fae5'}`,
-                  }}
+            {/* Fila 1: Categoría */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 7 }}>
+              <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', width: 72, flexShrink: 0 }}>
+                Categoría
+              </span>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                <button
+                  onClick={() => setFiltroTipo('')}
+                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: !filtroTipo ? '#043941' : 'transparent', color: !filtroTipo ? '#fff' : '#64748b', border: !filtroTipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
                 >
-                  {z.replace('ZONA DE ', '').replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'DEPÓSITO').replace('INVESTIGACIÓN, GESTIÓN Y DISEÑO', 'INV. Y DISEÑO')}
+                  Todos <span style={{ opacity: 0.7 }}>{statsTipo.reduce((acc, s) => acc + s.count, 0)}</span>
                 </button>
-              ))}
-
-              {hayFiltros && (
-                <>
-                  <div style={{ width: 1, height: 20, flexShrink: 0, background: '#d1fae5' }} />
-                  <button onClick={resetFiltros}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0,
-                      padding: '8px 12px', borderRadius: 12,
-                      fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
-                      color: '#ef4444', background: '#fff1f2', border: '1.5px solid #fecdd3',
-                    }}>
-                    <X size={11} /> Limpiar
+                {statsTipo.map(({ tipo, count, Icon }) => (
+                  <button
+                    key={tipo}
+                    onClick={() => setFiltroTipo(filtroTipo === tipo ? '' : tipo)}
+                    style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: filtroTipo === tipo ? '#043941' : 'transparent', color: filtroTipo === tipo ? '#fff' : '#64748b', border: filtroTipo === tipo ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
+                  >
+                    <Icon size={11} />
+                    {tipo.charAt(0) + tipo.slice(1).toLowerCase()}
+                    <span style={{ opacity: 0.7 }}>{count}</span>
                   </button>
-                </>
-              )}
+                ))}
+              </div>
             </div>
 
-            {showFiltros && filtroZona && (
-              <div style={{ marginTop: 12, display: 'flex', flexWrap: 'wrap', gap: 8, paddingTop: 12, borderTop: '1px solid #d1fae5' }}>
+            {/* Fila 2: Zona */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+              <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', width: 72, flexShrink: 0 }}>
+                Zona
+              </span>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                <button
+                  onClick={() => { setFiltroZona(''); setFiltroArea(''); setFiltroSubarea('') }}
+                  style={{ padding: '5px 12px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', background: !filtroZona ? '#043941' : 'transparent', color: !filtroZona ? '#fff' : '#64748b', border: !filtroZona ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
+                >
+                  Todas
+                </button>
+                {zonas.map(z => (
+                  <button key={z}
+                    onClick={() => { setFiltroZona(filtroZona === z ? '' : z); setFiltroArea(''); setFiltroSubarea('') }}
+                    style={{ padding: '5px 12px', borderRadius: 100, fontSize: 12, fontWeight: 700, transition: 'all .15s', whiteSpace: 'nowrap', cursor: 'pointer', fontFamily: 'inherit', background: filtroZona === z ? '#043941' : 'transparent', color: filtroZona === z ? '#fff' : '#64748b', border: filtroZona === z ? 'none' : '1.5px solid rgba(4,57,65,0.1)' }}
+                  >
+                    {z.replace('ZONA DE ', '').replace('DEPÓSITO / ALMACÉN / SEGURIDAD', 'Depósito').replace('INVESTIGACIÓN, GESTIÓN Y DISEÑO', 'Inv. y Diseño').replace('INNOVACIÓN', 'Innovación')}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Fila 3: Área + Sub-área (cuando hay zona seleccionada) */}
+            {filtroZona && (
+              <div style={{ marginBottom: 8, display: 'flex', flexWrap: 'wrap', gap: 8, paddingTop: 8, borderTop: '1px solid rgba(4,57,65,0.06)' }}>
                 {areas.length > 0 && (
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: '#94a3b8' }}>Área:</span>
+                    <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', width: 72, flexShrink: 0 }}>Área</span>
                     {areas.map(a => (
                       <button key={a}
                         onClick={() => { setFiltroArea(filtroArea === a ? '' : a); setFiltroSubarea('') }}
-                        style={{
-                          padding: '4px 10px', borderRadius: 8, fontSize: 12, fontWeight: 600,
-                          transition: 'all .15s', cursor: 'pointer', fontFamily: 'inherit',
-                          background: filtroArea === a ? '#e0f2fe' : '#f8fafc',
-                          color: filtroArea === a ? '#0369a1' : '#64748b',
-                          border: `1px solid ${filtroArea === a ? '#bae6fd' : '#e2e8f0'}`,
-                        }}>
+                        style={{ padding: '4px 10px', borderRadius: 8, fontSize: 12, fontWeight: 600, transition: 'all .15s', cursor: 'pointer', fontFamily: 'inherit', background: filtroArea === a ? '#e0f2fe' : '#f8fafc', color: filtroArea === a ? '#0369a1' : '#64748b', border: `1px solid ${filtroArea === a ? '#bae6fd' : '#e2e8f0'}` }}>
                         {a}
                       </button>
                     ))}
@@ -456,17 +417,11 @@ export default function Repositorio() {
                 )}
                 {filtroArea && subareas.length > 0 && (
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center', width: '100%' }}>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: '#94a3b8' }}>Sub-área:</span>
+                    <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(4,57,65,0.35)', width: 72, flexShrink: 0 }}>Sub-área</span>
                     {subareas.map(s => (
                       <button key={s}
                         onClick={() => setFiltroSubarea(filtroSubarea === s ? '' : s)}
-                        style={{
-                          padding: '4px 10px', borderRadius: 8, fontSize: 12, fontWeight: 600,
-                          transition: 'all .15s', cursor: 'pointer', fontFamily: 'inherit',
-                          background: filtroSubarea === s ? '#fef3c7' : '#f8fafc',
-                          color: filtroSubarea === s ? '#92400e' : '#64748b',
-                          border: `1px solid ${filtroSubarea === s ? '#fde68a' : '#e2e8f0'}`,
-                        }}>
+                        style={{ padding: '4px 10px', borderRadius: 8, fontSize: 12, fontWeight: 600, transition: 'all .15s', cursor: 'pointer', fontFamily: 'inherit', background: filtroSubarea === s ? '#fef3c7' : '#f8fafc', color: filtroSubarea === s ? '#92400e' : '#64748b', border: `1px solid ${filtroSubarea === s ? '#fde68a' : '#e2e8f0'}` }}>
                         {s}
                       </button>
                     ))}
@@ -475,9 +430,18 @@ export default function Repositorio() {
               </div>
             )}
 
-            <p style={{ fontSize: 12, margin: '8px 0 0', fontWeight: 600, color: '#64748b' }}>
-              {bienesFiltered.length === totalBienes ? `${totalBienes} bienes` : `${bienesFiltered.length} de ${totalBienes} bienes`}
-            </p>
+            {/* Resultados + Limpiar */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <p style={{ fontSize: 12, margin: 0, fontWeight: 600, color: '#64748b' }}>
+                {bienesFiltered.length === totalBienes ? `${totalBienes} bienes` : `${bienesFiltered.length} de ${totalBienes} bienes`}
+              </p>
+              {hayFiltros && (
+                <button onClick={resetFiltros}
+                  style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '5px 10px', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', color: '#ef4444', background: '#fff1f2', border: '1px solid #fecdd3' }}>
+                  <X size={11} /> Limpiar todo
+                </button>
+              )}
+            </div>
           </div>
 
           <div style={{ padding: 24 }}>
