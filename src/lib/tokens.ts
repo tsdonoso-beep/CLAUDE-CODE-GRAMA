@@ -1,0 +1,137 @@
+/**
+ * GRAMA Design Tokens
+ * Single source of truth for all visual constants.
+ * Mirrors the CSS variables in index.css :root
+ */
+
+// ── Type scale ────────────────────────────────────────────────────────────────
+// SIZE — px values for fontSize
+//   micro → overline labels, tiny stat captions
+//   xs    → metadata, zone chips
+//   sm    → secondary text, compact rows
+//   md    → compact body, filter chips
+//   base  → standard body text
+//   lg    → card titles, body-large
+//   xl    → section headers (h2)
+//   2xl   → page headers (h1) and large display stats
+//
+// WEIGHT — semantic font-weight mapping
+//   regular   → 500  body prose
+//   semibold  → 600  secondary labels, captions
+//   bold      → 700  body emphasis, card subtitles
+//   extrabold → 800  section headers, card titles
+//   black     → 900  page h1, hero numbers
+
+export const TYPE = {
+  size: {
+    micro:  9,
+    xs:    10,
+    sm:    11,
+    md:    12,
+    base:  13,
+    lg:    16,
+    xl:    18,
+    '2xl': 20,
+  },
+  weight: {
+    regular:   500,
+    semibold:  600,
+    bold:      700,
+    extrabold: 800,
+    black:     900,
+  },
+} as const
+
+// ── Icon scale ────────────────────────────────────────────────────────────────
+// Use these with Lucide <Icon size={ICON.md} /> instead of raw numbers.
+//
+//  xs  → micro indicators, dot icons inside badges
+//  sm  → chips, filter pills, compact list rows
+//  md  → standard buttons, tabs, navigation items  ← default
+//  lg  → card/section headers, sidebar items
+//  xl  → page headers, empty-state illustrations
+// 2xl  → large feature icons, modal headers
+// 3xl  → hero / display icons
+
+export const ICON = {
+  xs:   10,
+  sm:   12,
+  md:   16,
+  lg:   20,
+  xl:   24,
+  '2xl': 32,
+  '3xl': 40,
+} as const
+
+export type IconSize = typeof ICON[keyof typeof ICON]
+
+// ── Colour palette ────────────────────────────────────────────────────────────
+export const COLOR = {
+  oscuro:  '#043941',
+  cerceta: '#045f6c',
+  menta:   '#02d47e',
+  verde:   '#00c16e',
+  claro:   '#d2ffe1',
+  claro2:  '#e3f8fb',
+  bg:      '#f0faf5',
+} as const
+
+// ── Border alpha scale ────────────────────────────────────────────────────────
+// Use for border and background-tint values built on --grama-oscuro (#043941).
+//
+//  hairline → row dividers inside cards, subtle separators
+//  card     → card/container outer border
+//  input    → input fields, stronger interactive borders
+
+export const BORDER = {
+  hairline: 'rgba(4,57,65,0.07)',
+  card:     'rgba(4,57,65,0.10)',
+  input:    'rgba(4,57,65,0.15)',
+} as const
+
+// ── Button system ────────────────────────────────────────────────────────────
+// Canonical padding sizes and transition for interactive buttons.
+//
+//  xs  → micro badges that act as buttons
+//  sm  → filter chips, pill selectors
+//  md  → standard secondary / navigation buttons
+//  lg  → primary CTA buttons
+//
+// CTA colour rule:
+//   - On dark header (#043941): always COLOR.menta (#02d47e), never tallerColor
+//   - On light content area:   tallerColor is intentional (taller-specific theme)
+
+export const BTN = {
+  transition: 'all .15s',
+  padding: {
+    xs: '4px 10px',
+    sm: '6px 14px',
+    md: '9px 16px',
+    lg: '10px 20px',
+  },
+} as const
+
+// ── Border-radius scale ───────────────────────────────────────────────────────
+export const RADIUS = {
+  xs:   6,   // micro tags, tiny progress indicators
+  sm:   8,   // small chips, icon badges
+  base: 10,  // icon containers (36–44px boxes), compact rows
+  md:   12,  // standard buttons, inputs
+  lg:   16,  // cards, content containers, accordions
+  xl:   20,  // large panels
+  '2xl': 24, // modals, full-screen containers
+  full: 9999, // pills
+} as const
+
+// ── Shadow scale ──────────────────────────────────────────────────────────────
+//  sm  → card default (list rows, small containers)
+//  md  → elevated card / panel
+//  lg  → large panel / sidebar
+//  xl  → modal / full-screen overlay
+
+export const SHADOW = {
+  sm:  '0 2px 12px rgba(4,57,65,0.07)',
+  md:  '0 4px 20px rgba(4,57,65,0.12)',
+  lg:  '0 12px 40px rgba(4,57,65,0.22)',
+  xl:  '0 24px 64px rgba(4,57,65,0.28)',
+} as const

@@ -1,0 +1,1858 @@
+import type { PreguntaQuiz } from './modulosLXP'
+
+export const quizBancosMeca: Record<string, PreguntaQuiz[]> = {
+
+  // M0-S05 — Gamma, Teachy, Polypad, Meshy (6 preguntas)
+  'm0-s05-c5': [
+    {
+      id: 'm0-s05-c5-q1',
+      enunciado: 'El docente quiere que sus estudiantes visualicen en 3D cómo funciona el sistema de transmisión antes de la práctica con el vehículo real. ¿Qué herramienta es la más adecuada?',
+      opciones: [
+        'Gamma — para crear una presentación con imágenes del sistema de transmisión',
+        'Teachy — para generar una guía de estudio del tema',
+        'Meshy — permite generar o explorar modelos 3D de componentes mecánicos que los estudiantes pueden rotar y analizar antes de la práctica',
+        'Polypad — para visualizar las ecuaciones de la relación de transmisión'
+      ],
+      correcta: 2,
+      explicacion: 'Meshy genera modelos 3D a partir de texto o imágenes. Para el taller automotriz, permite que los estudiantes "vean por dentro" piezas que en el vehículo real están ensambladas y son difíciles de observar, antes de manipularlas físicamente.'
+    },
+    {
+      id: 'm0-s05-c5-q2',
+      enunciado: 'El docente necesita preparar una presentación pedagógica del sistema de frenos ABS con diseño profesional en menos de 10 minutos. ¿Qué herramienta usa?',
+      opciones: [
+        'Google Slides — más confiable para presentaciones técnicas',
+        'Gamma — genera presentaciones completas con diseño visual a partir de un prompt o esquema de contenido',
+        'Meshy — para crear diagramas 3D del sistema ABS',
+        'Teachy — genera presentaciones automáticamente con actividades incluidas'
+      ],
+      correcta: 1,
+      explicacion: 'Gamma usa IA para generar presentaciones visualmente atractivas desde un prompt o esquema en segundos. El docente describe el tema ("sistema de frenos ABS para estudiantes de secundaria") y Gamma produce slides con estructura, imágenes y texto.'
+    },
+    {
+      id: 'm0-s05-c5-q3',
+      enunciado: 'El docente quiere crear un quiz de 10 preguntas sobre diagnóstico de fallas en el sistema eléctrico del vehículo en menos de 5 minutos. ¿Qué herramienta es la más directa?',
+      opciones: [
+        'Gamma — tiene generador de preguntas integrado en las presentaciones',
+        'Meshy — puede generar ejercicios interactivos de diagnóstico',
+        'Teachy — genera actividades, evaluaciones y organizadores visuales a partir del tema y grado indicados',
+        'Polypad — tiene banco de ejercicios técnicos automotrices'
+      ],
+      correcta: 2,
+      explicacion: 'Teachy está diseñado específicamente para crear recursos pedagógicos: quizzes, listas de cotejo, organizadores visuales, planes de sesión. Con indicar el tema, el grado y el tipo de instrumento, genera el recurso en segundos.'
+    },
+    {
+      id: 'm0-s05-c5-q4',
+      enunciado: 'Un docente quiere usar Polypad en su taller automotriz. ¿Cuál es el uso más apropiado?',
+      opciones: [
+        'Modelar en 3D el motor del vehículo para que los estudiantes lo exploren',
+        'Generar una presentación visual del sistema de suspensión',
+        'Visualizar conceptos matemáticos relacionados al taller: calcular relaciones de transmisión, ángulos de inclinación de ruedas (camber/caster) o proporciones de mezcla aire-combustible',
+        'Crear actividades de evaluación sobre diagnóstico de fallas'
+      ],
+      correcta: 2,
+      explicacion: 'Polypad es una pizarra matemática interactiva. En el taller automotriz su valor está en visualizar y calcular conceptos técnicos con base matemática: relaciones de engranajes, proporciones, ángulos de geometría de dirección, conversiones de unidades.'
+    },
+    {
+      id: 'm0-s05-c5-q5',
+      enunciado: '¿Cuál es la diferencia principal entre Gamma y Teachy para el trabajo docente del taller automotriz?',
+      opciones: [
+        'Gamma es de pago y Teachy es gratuito — la diferencia es solo económica',
+        'Gamma crea presentaciones visuales para exponer contenido; Teachy crea actividades pedagógicas para que los estudiantes practiquen o sean evaluados',
+        'Son herramientas idénticas — solo cambia la interfaz de usuario',
+        'Gamma es para docentes de primaria y Teachy para secundaria técnica'
+      ],
+      correcta: 1,
+      explicacion: 'Gamma resuelve el problema del docente expositor (preparar materiales visuales para presentar). Teachy resuelve el problema del docente evaluador (crear actividades, quizzes, organizadores para los estudiantes). Son complementarias, no equivalentes.'
+    },
+    {
+      id: 'm0-s05-c5-q6',
+      enunciado: 'El docente quiere que los estudiantes vean el motor de un Toyota Corolla en 3D antes de desarmarlo. No tiene modelo 3D previo. ¿Qué puede hacer con Meshy?',
+      opciones: [
+        'Nada — Meshy solo trabaja con modelos 3D ya existentes en su biblioteca',
+        'Generar un modelo 3D del motor escribiendo una descripción textual o subiendo una foto de referencia, y luego compartirlo para que los estudiantes lo exploren desde sus dispositivos',
+        'Descargar el plano técnico oficial de Toyota y convertirlo en 3D automáticamente',
+        'Meshy solo genera objetos decorativos, no piezas técnicas mecánicas'
+      ],
+      correcta: 1,
+      explicacion: 'Meshy genera modelos 3D a partir de texto (text-to-3D) o imágenes (image-to-3D). Un docente puede describir "motor de 4 cilindros en línea, vista explodida" y obtener un modelo navegable. No es un plano técnico certificado, pero es una herramienta de exploración visual muy potente antes de la práctica.'
+    }
+  ],
+
+  // M0-S04 — IA generativa: GPT, Claude, Gemini (6 preguntas)
+  'm0-s04-c4': [
+    {
+      id: 'm0-s04-c4-q1',
+      enunciado: 'Un docente quiere generar una rúbrica para evaluar el "cambio de pastillas de freno". ¿Cuál prompt produce el resultado más útil?',
+      opciones: [
+        '"Hazme una rúbrica de mecánica"',
+        '"Crea una rúbrica básica para evaluar estudiantes de taller"',
+        '"Crea una rúbrica analítica con 4 criterios (seguridad EPP, procedimiento técnico, calidad del resultado, orden del área) y 4 niveles (inicio, proceso, logrado, destacado) para evaluar: cambio de pastillas de freno en vehículo real. Contexto: estudiantes de 4° secundaria, taller automotriz EPT-MINEDU."',
+        '"Dame una rúbrica para mecánica automotriz con niveles"'
+      ],
+      correcta: 2,
+      explicacion: 'Un prompt efectivo especifica el tipo de instrumento, los criterios exactos, los niveles de desempeño, la tarea concreta y el contexto del grupo. Cuanto más específico, más útil el resultado y menos revisión requiere.'
+    },
+    {
+      id: 'm0-s04-c4-q2',
+      enunciado: 'Un estudiante verifica en ChatGPT si el código OBD-II P0301 corresponde a "fallo de encendido en cilindro 1". La IA responde correctamente. ¿Qué precaución debe tomar el docente?',
+      opciones: [
+        'Ninguna — si la IA responde correctamente, la información es confiable para diagnóstico',
+        'Verificar siempre en el manual técnico oficial del fabricante del vehículo, ya que la IA puede tener datos desactualizados o imprecisos para modelos específicos',
+        'Prohibir el uso de IA para diagnóstico — solo el escáner físico es válido en el taller',
+        'Pedir al estudiante que use Gemini en lugar de ChatGPT para tener una segunda opinión'
+      ],
+      correcta: 1,
+      explicacion: 'La IA puede ser un punto de partida útil, pero no reemplaza la fuente técnica oficial. Los manuales de fabricante tienen información específica por año/modelo/motor que la IA puede no tener actualizada o puede generalizar incorrectamente.'
+    },
+    {
+      id: 'm0-s04-c4-q3',
+      enunciado: 'El docente tiene un manual técnico de 120 páginas en PDF del escáner nuevo del taller. ¿Qué herramienta de IA es más adecuada para extraer información específica de ese documento?',
+      opciones: [
+        'ChatGPT — tiene más conocimiento técnico automotriz en su entrenamiento',
+        'Gemini — está integrado con Google Drive y puede leer el PDF directamente',
+        'NotebookLM — permite subir el PDF y hacerle preguntas específicas basadas exclusivamente en el contenido del documento',
+        'Claude — genera respuestas más largas y detalladas sobre documentos técnicos'
+      ],
+      correcta: 2,
+      explicacion: 'NotebookLM está diseñado específicamente para analizar documentos que el usuario sube. Sus respuestas se basan en el contenido del documento, no en conocimiento general de entrenamiento, lo que lo hace ideal para manuales técnicos específicos.'
+    },
+    {
+      id: 'm0-s04-c4-q4',
+      enunciado: '¿Cuál es la limitación más importante a considerar al usar IA generativa para planificar sesiones de aprendizaje del taller automotriz?',
+      opciones: [
+        'La IA solo puede generar texto, no imágenes de procedimientos técnicos',
+        'Las herramientas de IA son de pago y no están disponibles para docentes públicos',
+        'La IA puede generar contenido plausible pero incorrecto técnicamente — todo lo generado debe ser revisado por el docente antes de usarlo con estudiantes',
+        'La IA no conoce el currículo peruano y sus sugerencias siempre son de otros países'
+      ],
+      correcta: 2,
+      explicacion: 'Las IAs generativas pueden "alucinar" — producir información técnica que suena correcta pero es errónea. En un taller automotriz, un procedimiento incorrecto puede causar accidentes. El docente es el filtro de calidad técnica indispensable.'
+    },
+    {
+      id: 'm0-s04-c4-q5',
+      enunciado: 'El docente quiere usar IA para adaptar una explicación del sistema ABS para estudiantes de 3° de secundaria que nunca han visto el interior de un freno. ¿Cuál prompt es más efectivo?',
+      opciones: [
+        '"Explícame el sistema ABS"',
+        '"¿Cómo funciona el ABS en los autos modernos?"',
+        '"Explica cómo funciona el sistema ABS usando una analogía simple, para estudiantes de 15 años sin conocimiento previo de frenos. Usa máximo 3 párrafos cortos y termina con una pregunta de reflexión para el aula."',
+        '"Dame información técnica del sistema ABS para enseñar en el taller"'
+      ],
+      correcta: 2,
+      explicacion: 'Un buen prompt pedagógico especifica el nivel del público, pide una estrategia didáctica concreta (analogía), limita la extensión y solicita un elemento de cierre (pregunta de reflexión). El resultado es directamente usable en el aula.'
+    },
+    {
+      id: 'm0-s04-c4-q6',
+      enunciado: '¿En qué se diferencia usar Claude de usar ChatGPT para preparar materiales del taller automotriz?',
+      opciones: [
+        'Claude solo funciona en inglés — para español es mejor ChatGPT',
+        'ChatGPT es gratuito, Claude siempre es de pago',
+        'Son herramientas similares en propósito; la diferencia principal está en el estilo de respuesta, los límites de contexto y las capacidades específicas de cada versión — lo más importante es aprender a escribir buenos prompts independientemente de la herramienta',
+        'Claude no puede generar rúbricas ni listas de cotejo como ChatGPT'
+      ],
+      correcta: 2,
+      explicacion: 'GPT, Claude y Gemini son todas IAs generativas de texto con capacidades similares para el trabajo docente. La habilidad clave es el diseño de prompts — un buen prompt produce buenos resultados en cualquiera de ellas. Ninguna reemplaza el juicio técnico del docente.'
+    }
+  ],
+
+  // M0-S03 — Google Workspace para docentes (8 preguntas)
+  'm0-s03-c5': [
+    {
+      id: 'm0-s03-c5-q1',
+      enunciado: 'El docente necesita coordinar el horario de uso del foso de reparación entre 3 secciones distintas. ¿Qué herramienta de Google Workspace es la más adecuada?',
+      opciones: [
+        'Google Docs — para escribir el horario en un documento compartido',
+        'Google Calendar — permite crear eventos por bloque horario, asignarlos a cada sección y enviar invitaciones automáticas',
+        'Google Forms — para que cada sección solicite su turno',
+        'Google Chat — para coordinar informalmente por mensajes'
+      ],
+      correcta: 1,
+      explicacion: 'Google Calendar permite visualizar disponibilidad en tiempo real, crear eventos recurrentes por sección y enviar recordatorios automáticos. Es la herramienta ideal para gestionar recursos compartidos con restricción de horario.'
+    },
+    {
+      id: 'm0-s03-c5-q2',
+      enunciado: 'El docente quiere llevar el inventario de insumos del taller (aceites, filtros, bujías) con control de cantidades y alertas de stock mínimo. ¿Qué herramienta usa?',
+      opciones: [
+        'Google Docs — para listar los insumos en una tabla de texto',
+        'Google Slides — para crear una presentación visual del inventario',
+        'Google Sheets — permite tablas, fórmulas de cálculo y formato condicional para alertas de stock',
+        'Google Keep — para anotar los insumos como lista de tareas'
+      ],
+      correcta: 2,
+      explicacion: 'Google Sheets es la herramienta de datos de Google Workspace. Con fórmulas básicas y formato condicional se puede calcular stock disponible y resaltar automáticamente los insumos que deben reponerse.'
+    },
+    {
+      id: 'm0-s03-c5-q3',
+      enunciado: '¿Cuál es la principal ventaja pedagógica de usar Google Docs frente al papel para que los estudiantes redacten su informe de diagnóstico de fallas?',
+      opciones: [
+        'Google Docs tiene corrector ortográfico en terminología automotriz',
+        'El docente puede agregar comentarios directamente en el texto del estudiante sin necesidad de reimprimir, en tiempo real',
+        'El informe queda guardado automáticamente sin que el estudiante tenga que hacerlo',
+        'Google Docs genera el informe con inteligencia artificial sin que el estudiante tenga que escribir'
+      ],
+      correcta: 1,
+      explicacion: 'La retroalimentación en tiempo real con comentarios contextuales es el diferenciador clave. El docente señala exactamente qué parte del diagnóstico está incompleta o incorrecta, y el estudiante corrige sin reiniciar el documento.'
+    },
+    {
+      id: 'm0-s03-c5-q4',
+      enunciado: 'Google Tasks integrado con Google Calendar sirve principalmente para:',
+      opciones: [
+        'Chatear con otros docentes en tiempo real sobre el estado del taller',
+        'Almacenar manuales técnicos de los fabricantes de equipos',
+        'Registrar tareas pendientes con fechas límite y vincularlas al calendario de actividades del taller',
+        'Crear formularios de diagnóstico de vehículos para los estudiantes'
+      ],
+      correcta: 2,
+      explicacion: 'Tasks + Calendar es la combinación de productividad personal: Tasks captura la tarea (ej: "revisar extintor antes del lunes"), Calendar la ubica en el tiempo. Para el docente de mecánica: mantenimientos programados, entregas de fichas técnicas, revisiones de equipos.'
+    },
+    {
+      id: 'm0-s03-c5-q5',
+      enunciado: 'El docente quiere que sus estudiantes completen una ficha de evaluación de cada práctica y que los resultados se organicen automáticamente en una hoja de cálculo. ¿Qué flujo de trabajo usa?',
+      opciones: [
+        'Google Docs → copiar y pegar manualmente en Sheets',
+        'Google Forms (para capturar respuestas) + Google Sheets (las respuestas se vuelcan automáticamente en una hoja vinculada)',
+        'Google Slides con preguntas de opción múltiple y pantalla compartida',
+        'Google Chat con una encuesta rápida al final de la sesión'
+      ],
+      correcta: 1,
+      explicacion: 'Google Forms genera automáticamente una hoja de respuestas en Sheets. El docente diseña la ficha de evaluación una sola vez y todas las respuestas de los estudiantes se registran sin intervención manual.'
+    },
+    {
+      id: 'm0-s03-c5-q6',
+      enunciado: 'Un docente quiere compartir los manuales técnicos de los equipos del taller con todos sus estudiantes y que siempre tengan la versión más actualizada. ¿Qué hace?',
+      opciones: [
+        'Envía el PDF por WhatsApp cada vez que hay una actualización',
+        'Sube los manuales a Google Drive en una carpeta compartida — cualquier actualización del archivo es inmediatamente visible para todos los que tienen el enlace',
+        'Publica los manuales en Google Sites pero solo pueden verlos con cuenta Google',
+        'Los guarda en Google Photos para que sean fáciles de buscar'
+      ],
+      correcta: 1,
+      explicacion: 'Google Drive con carpeta compartida es el repositorio centralizado de Google Workspace. Un solo enlace, acceso controlado por el docente, y cualquier actualización del archivo (nueva versión del manual) es inmediatamente visible sin reenviar nada.'
+    },
+    {
+      id: 'm0-s03-c5-q7',
+      enunciado: 'Al final del ciclo, el docente necesita consolidar las notas de práctica de 28 estudiantes que cada uno ingresó en su propia hoja de Google Sheets. ¿Cuál es la forma más eficiente?',
+      opciones: [
+        'Copiar y pegar manualmente las notas de cada hoja en una hoja maestra',
+        'Usar la función IMPORTRANGE de Google Sheets para traer los datos de cada hoja de estudiante a una hoja maestra de consolidación automáticamente',
+        'Pedirle a cada estudiante que envíe su nota por correo',
+        'No es posible consolidar hojas separadas en Google Workspace'
+      ],
+      correcta: 1,
+      explicacion: 'IMPORTRANGE conecta hojas de Sheets entre sí. La hoja maestra del docente puede importar automáticamente los datos de cada estudiante, eliminando la consolidación manual y reduciendo errores de transcripción.'
+    },
+    {
+      id: 'm0-s03-c5-q8',
+      enunciado: 'Un colega docente no puede asistir a la reunión de coordinación. El docente quiere que pueda ver la presentación, hacer preguntas y revisarla después. ¿Qué herramienta de Google Workspace cubre las tres necesidades?',
+      opciones: [
+        'Google Slides (presentación) + Google Meet (reunión en vivo con grabación) + Google Drive (acceso posterior a la grabación y slides)',
+        'Solo Google Meet — es suficiente para todo',
+        'Google Docs para escribir los puntos de la reunión y enviárselos después',
+        'WhatsApp para la reunión y Google Drive solo para guardar el archivo'
+      ],
+      correcta: 0,
+      explicacion: 'La combinación Slides + Meet + Drive cubre los tres momentos: la presentación en vivo (Slides compartido en Meet), la participación remota (Meet con audio/video), y el acceso posterior (grabación de Meet y Slides guardados en Drive).'
+    }
+  ],
+
+  // M1-S11 — Metrado de equipos automotriz (10 preguntas)
+  'm1-s11-c3': [
+    {
+      id: 'm1-s11-c3-q1',
+      enunciado: '¿Qué es el "metrado" de equipos en el contexto del taller TSF-MINEDU?',
+      opciones: [
+        'El peso total de los equipos instalados en el taller',
+        'El registro sistemático de todos los bienes del taller con sus características, estado y zona asignada',
+        'El presupuesto anual para mantenimiento de equipos',
+        'El conteo rápido de cuántos equipos llegaron en el despacho'
+      ],
+      correcta: 1,
+      explicacion: 'El metrado es el inventario técnico oficial: identifica cada bien, lo ubica en una zona pedagógica, registra su estado y asigna el código MINEDU. Sin metrado, el equipo no existe oficialmente para efectos de garantía y soporte.'
+    },
+    {
+      id: 'm1-s11-c3-q2',
+      enunciado: 'El escáner OBD-II/CAN del taller de mecánica pertenece a la Zona de Investigación porque:',
+      opciones: [
+        'Es el equipo más caro y debe estar protegido en la zona más segura',
+        'Se usa solo al inicio del año escolar para diagnóstico general',
+        'Permite diagnosticar fallas del vehículo antes de intervenir — es el punto de partida del proceso técnico',
+        'Es demasiado delicado para usarlo en la Zona de Innovación'
+      ],
+      correcta: 2,
+      explicacion: 'La Zona de Investigación alberga equipos que permiten diagnosticar e investigar el problema antes de actuar. El escáner es la herramienta de diagnóstico por excelencia: primero investigo, luego intervengo en Innovación.'
+    },
+    {
+      id: 'm1-s11-c3-q3',
+      enunciado: 'Revisas el metrado anterior y ves que el multímetro digital está registrado en "Zona de Almacén — herramienta de mano". ¿Es correcto?',
+      opciones: [
+        'Sí — es una herramienta de mano y el almacén es el lugar correcto',
+        'No — el multímetro es un instrumento de diagnóstico y pertenece a la Zona de Investigación',
+        'Sí — el almacén guarda todos los equipos cuando no se usan',
+        'Depende — si se usa con frecuencia puede estar en cualquier zona'
+      ],
+      correcta: 1,
+      explicacion: 'El multímetro automotriz diagnostica problemas eléctricos del vehículo — misma función pedagógica que el escáner. Su zona es Investigación, no Almacén. Clasificarlo por tamaño físico confunde función pedagógica con forma.'
+    },
+    {
+      id: 'm1-s11-c3-q4',
+      enunciado: 'El taller recibe: 1 elevador tipo tijera, 2 pistolas de impacto neumáticas y 1 escáner LAUNCH X431. ¿Cómo se distribuyen por zona?',
+      opciones: [
+        'Todos en Zona de Innovación — son equipos de trabajo activo',
+        'Elevador e Innovación; escáner → Investigación; pistolas → Innovación',
+        'Elevador → Almacén (es pesado); escáner → Investigación; pistolas → Innovación',
+        'Escáner e Innovación comparten zona; elevador va donde haya espacio'
+      ],
+      correcta: 1,
+      explicacion: 'El escáner diagnostica → Investigación. El elevador y las pistolas son herramientas de trabajo activo sobre el vehículo → Innovación. El peso del elevador no determina su zona: su función pedagógica sí.'
+    },
+    {
+      id: 'm1-s11-c3-q5',
+      enunciado: 'La ficha de metrado requiere registrar torquímetros: el taller tiene 3 de ½" y 2 de 3/8". ¿Cómo se registran correctamente?',
+      opciones: [
+        'Como un solo ítem "Torquímetro — 5 unidades"',
+        'Como dos ítems separados: "Torquímetro ½\\" — 3 u." y "Torquímetro 3/8\\" — 2 u."',
+        'Solo se registra el más grande — el pequeño es accesorio',
+        'El torquímetro no se metrada — es herramienta de mano menor'
+      ],
+      correcta: 1,
+      explicacion: 'Cada especificación técnica diferente es un ítem de metrado independiente. El torquímetro ½" y el 3/8" tienen rangos de torque distintos y se usan en operaciones diferentes. Agruparlos impide conocer la capacidad real del taller.'
+    },
+    {
+      id: 'm1-s11-c3-q6',
+      enunciado: '¿Qué campo de la ficha técnica determina si el equipo puede usarse en la sesión de hoy?',
+      opciones: [
+        'El nombre del fabricante y el país de origen',
+        'La fecha de compra y el número de factura',
+        'El estado operativo actual y la fecha de la última revisión de seguridad',
+        'El código de bien asignado por el MINEDU'
+      ],
+      correcta: 2,
+      explicacion: 'El estado operativo ("Operativo", "Operativo con restricción", "En reparación — NO USAR") es el campo que autoriza o bloquea el uso del equipo. Sin esa información actualizada, no se puede tomar la decisión correcta.'
+    },
+    {
+      id: 'm1-s11-c3-q7',
+      enunciado: 'Al registrar la prensa hidráulica del taller, un docente la ubica en "Zona de Almacén" porque "es grande y pesada". ¿Qué error cometió?',
+      opciones: [
+        'Ninguno — los equipos pesados siempre van en almacén por seguridad',
+        'Confundió la función pedagógica del equipo con su tamaño físico. La prensa hidráulica es un equipo de trabajo activo → Zona de Innovación',
+        'Debería ir en Investigación porque se usa para medir presiones',
+        'El error es no haber consultado al director antes de ubicarla'
+      ],
+      correcta: 1,
+      explicacion: 'La zona se asigna por función pedagógica, no por tamaño ni peso. La prensa hidráulica se usa para operaciones mecánicas activas (desmontar rodamientos, alinear piezas) → Innovación.'
+    },
+    {
+      id: 'm1-s11-c3-q8',
+      enunciado: '¿Por qué es obligatorio registrar el código de bien MINEDU en la ficha de metrado?',
+      opciones: [
+        'Para que el director pueda auditar el taller anualmente',
+        'Porque sin ese código el equipo no existe oficialmente para efectos de garantía, soporte técnico y seguimiento patrimonial',
+        'Es solo un requisito burocrático sin impacto real en el funcionamiento del taller',
+        'Para poder vender el equipo al final de su vida útil'
+      ],
+      correcta: 1,
+      explicacion: 'El código de bien MINEDU es el identificador oficial del activo. Sin él, el equipo no puede ser incluido en garantías, no puede reportarse como falla al sistema y no puede darse de baja formalmente.'
+    },
+    {
+      id: 'm1-s11-c3-q9',
+      enunciado: 'El taller recibe 3 equipos nuevos el mismo día: compresor, soldadora MIG y banco de trabajo. ¿En qué momento deben registrarse en el metrado?',
+      opciones: [
+        'Después de instalarlos y probarlos — así se registra el estado real',
+        'Antes de ser instalados o usados — el registro previo es condición para que el bien exista oficialmente',
+        'Al finalizar el trimestre en el informe de gestión',
+        'Cuando llegue el técnico de la UGEL a verificarlos'
+      ],
+      correcta: 1,
+      explicacion: 'El metrado se hace al momento de recepción, antes de instalación. Registrar después de usar implica operar bienes sin identidad oficial, lo que invalida la garantía desde el primer uso.'
+    },
+    {
+      id: 'm1-s11-c3-q10',
+      enunciado: 'Durante el metrado, ¿qué acción es correcta al encontrar un equipo sin placa de código de bien ni documentación?',
+      opciones: [
+        'Instalarlo de todas formas y buscar el código después',
+        'Descartarlo — si no tiene código, no sirve',
+        'Separarlo, registrarlo como "bien sin identificar", reportar a la UGEL para regularización antes de usarlo',
+        'Asignarle un código interno del taller y continuar'
+      ],
+      correcta: 2,
+      explicacion: 'Un bien sin código oficial no puede incorporarse al taller directamente. Debe separarse, registrarse como pendiente de regularización y reportarse a la UGEL. Usarlo sin código pone en riesgo la garantía y el control patrimonial.'
+    }
+  ],
+
+  // M1-S12 — Instalación y softwares automotrices (10 preguntas)
+  'm1-s12-c2': [
+    {
+      id: 'm1-s12-c2-q1',
+      enunciado: 'Al instalar el software LAUNCH X431 en el equipo del taller, el sistema pide activación en línea pero no hay internet. ¿Cuál es la acción correcta?',
+      opciones: [
+        'Cancelar la instalación y esperar hasta tener internet para instalar desde cero',
+        'Completar la instalación sin activar, guardar las credenciales en lugar seguro y activar cuando haya conexión disponible',
+        'Instalar en modo demo indefinidamente — con demo es suficiente para el taller',
+        'Pedir credenciales prestadas a otro docente para activar el equipo'
+      ],
+      correcta: 1,
+      explicacion: 'La mayoría de softwares de diagnóstico permiten instalación sin activación inmediata con funciones básicas disponibles. Pedir credenciales ajenas viola los términos de licencia y puede invalidar la garantía del software.'
+    },
+    {
+      id: 'm1-s12-c2-q2',
+      enunciado: 'El taller tiene vehículos de distintas marcas: Toyota, Hyundai, Volkswagen y Ford. ¿Qué tipo de escáner es más adecuado para el trabajo pedagógico?',
+      opciones: [
+        'Un escáner OEM dedicado a Toyota, ya que es la marca más común en Perú',
+        'Un escáner multimarca (LAUNCH, Autel, Snap-on) con actualización anual de protocolos',
+        'Cuatro escáneres OEM diferentes, uno por marca',
+        'El multímetro — es suficiente para diagnosticar cualquier vehículo'
+      ],
+      correcta: 1,
+      explicacion: 'Un escáner multimarca cubre múltiples fabricantes con un solo equipo y presupuesto. Los escáneres OEM son más precisos pero inviables económicamente para un taller pedagógico con parque vehicular diverso.'
+    },
+    {
+      id: 'm1-s12-c2-q3',
+      enunciado: '¿Por qué es importante actualizar la base de datos del escáner antes de usarlo con vehículos nuevos del taller?',
+      opciones: [
+        'Para que el escáner funcione más rápido',
+        'Porque sin actualización el escáner no enciende',
+        'Porque los vehículos nuevos tienen protocolos y códigos que versiones antiguas del software no reconocen',
+        'La actualización es opcional — los códigos OBD-II son estándar y no cambian'
+      ],
+      correcta: 2,
+      explicacion: 'Cada año se lanzan nuevos modelos con variantes de protocolos. Un escáner desactualizado puede no reconocer el vehículo o entregar diagnósticos incompletos. La actualización anual es parte del mantenimiento preventivo del equipo.'
+    },
+    {
+      id: 'm1-s12-c2-q4',
+      enunciado: 'Al instalar el elevador hidráulico, ¿cuál es el primer paso ANTES de comenzar el montaje?',
+      opciones: [
+        'Conectar el sistema hidráulico y probar si sube y baja',
+        'Verificar que el piso soporte la carga del elevador más el peso máximo del vehículo',
+        'Anclar la base con pernos para asegurar estabilidad',
+        'Leer el manual de instalación en caso de dudas durante el proceso'
+      ],
+      correcta: 1,
+      explicacion: 'Un elevador de 3.5 ton más un vehículo puede superar las 5 toneladas en un punto. Si el piso no tiene la resistencia adecuada, el equipo puede hundirse o colapsar. La verificación estructural es siempre el primer paso.'
+    },
+    {
+      id: 'm1-s12-c2-q5',
+      enunciado: 'El driver del escáner no se instala en Windows 11. ¿Cuál es la acción correcta?',
+      opciones: [
+        'Bajar a Windows 7 donde el driver sí funciona',
+        'Buscar en el sitio oficial del fabricante un driver actualizado compatible con Windows 11',
+        'Usar el escáner sin driver — igual conecta por OBD',
+        'Reportar el equipo como defectuoso a la UGEL'
+      ],
+      correcta: 1,
+      explicacion: 'Los fabricantes publican actualizaciones de drivers para nuevos sistemas operativos. Antes de declarar incompatibilidad, siempre revisar el sitio oficial del fabricante. Bajar el sistema operativo solo como último recurso y con el área técnica de la IE.'
+    },
+    {
+      id: 'm1-s12-c2-q6',
+      enunciado: '¿Qué es el protocolo CAN (Controller Area Network) en el contexto del diagnóstico automotriz?',
+      opciones: [
+        'Una marca de escáner automotriz profesional',
+        'El conector de 16 pines donde se conecta el escáner',
+        'Una red de comunicación interna del vehículo que permite que los módulos electrónicos se comuniquen entre sí',
+        'El software de actualización del escáner LAUNCH'
+      ],
+      correcta: 2,
+      explicacion: 'CAN es el bus de comunicación estándar en vehículos modernos. Permite que el módulo del motor, ABS, airbags y otros se comuniquen. El escáner "escucha" esta red para leer parámetros y códigos de falla.'
+    },
+    {
+      id: 'm1-s12-c2-q7',
+      enunciado: 'El taller solo tiene tomacorrientes de 110V pero el elevador requiere 220V. ¿Qué hace el docente?',
+      opciones: [
+        'Conectar con un adaptador de voltaje para poder probar el equipo',
+        'No conectar el elevador bajo ninguna circunstancia y gestionar la instalación eléctrica correcta con dirección antes del primer uso',
+        'Conectarlo brevemente para ver si funciona sin problemas',
+        'Usar el elevador de forma manual sin motor mientras se resuelve el tema eléctrico'
+      ],
+      correcta: 1,
+      explicacion: 'Conectar un equipo de 220V a 110V puede dañar el motor irreparablemente y anular la garantía. La instalación eléctrica adecuada es prerequisito no negociable para la puesta en marcha del elevador.'
+    },
+    {
+      id: 'm1-s12-c2-q8',
+      enunciado: '¿Quién debe realizar la calibración inicial del elevador hidráulico después de la instalación?',
+      opciones: [
+        'El docente, siguiendo las instrucciones del manual paso a paso',
+        'El técnico autorizado del fabricante o distribuidor, con el acta de calibración como documento de respaldo',
+        'Un estudiante avanzado bajo supervisión del docente',
+        'No requiere calibración — los elevadores vienen calibrados de fábrica'
+      ],
+      correcta: 1,
+      explicacion: 'La calibración inicial debe realizarla el técnico autorizado. El acta de calibración es documento de respaldo para la garantía y certifica que el equipo opera dentro de los parámetros de seguridad del fabricante.'
+    },
+    {
+      id: 'm1-s12-c2-q9',
+      enunciado: 'Al completar la instalación, ¿qué prueba es obligatoria antes de autorizar el primer uso pedagógico del elevador?',
+      opciones: [
+        'Solo verificar visualmente que esté bien anclado',
+        'Ciclo completo de subida y bajada sin carga, luego con carga nominal, verificando seguros mecánicos en ambas pruebas',
+        'Levantar un vehículo directamente en la primera sesión con estudiantes presentes',
+        'Encenderlo y apagarlo tres veces para asentar el sistema hidráulico'
+      ],
+      correcta: 1,
+      explicacion: 'La prueba funcional debe ir de menos a más: primero sin carga para verificar el ciclo hidráulico y los seguros, luego con carga nominal para certificar que opera de forma segura. Sin esta prueba, no hay autorización de uso.'
+    },
+    {
+      id: 'm1-s12-c2-q10',
+      enunciado: 'El software de diagnóstico del taller requiere una suscripción anual para actualizar protocolos. Un docente propone no renovarla para ahorrar. ¿Cuál es el impacto pedagógico?',
+      opciones: [
+        'Ninguno — los códigos OBD básicos no cambian y cubren el 90% de los diagnósticos',
+        'El escáner dejará de funcionar completamente sin suscripción activa',
+        'Los vehículos de años recientes no serán reconocidos y los estudiantes no podrán practicar diagnóstico en equipos modernos',
+        'Solo afecta la impresión de reportes, el diagnóstico en pantalla sigue funcionando'
+      ],
+      correcta: 2,
+      explicacion: 'Sin actualización, el escáner trabaja con una base de datos antigua. Los vehículos de los últimos 2-3 años pueden no ser reconocidos o mostrar parámetros incompletos. En un taller pedagógico, esto limita directamente las competencias que se pueden desarrollar.'
+    }
+  ],
+
+  // M1-S14 — Garantías y do's/don'ts (8 preguntas)
+  'm1-s14-c2': [
+    {
+      id: 'm1-s14-c2-q1',
+      enunciado: 'El escáner del taller falla a los 8 meses (garantía de 12). El técnico del taller ya lo abrió "para ver qué tiene". ¿Cuál es el problema?',
+      opciones: [
+        'Ninguno — el técnico tiene derecho a revisar el equipo del taller',
+        'Abrir el equipo sin autorización del fabricante probablemente anuló la garantía. El paso correcto es reportar al proveedor sin intervenir',
+        'El problema es que la garantía ya venció',
+        'Debería haberlo abierto antes para hacer mantenimiento preventivo'
+      ],
+      correcta: 1,
+      explicacion: 'Cualquier intervención no autorizada en el interior del equipo puede ser causal de anulación de garantía según el contrato. Ante cualquier falla en período de garantía: documentar y reportar al proveedor antes de tocar el equipo.'
+    },
+    {
+      id: 'm1-s14-c2-q2',
+      enunciado: '¿Por qué registrar el mantenimiento preventivo realizado es requisito para hacer valer la garantía?',
+      opciones: [
+        'Porque el MINEDU lo exige para auditorías anuales',
+        'Porque demuestra que el equipo fue operado dentro de las condiciones del fabricante y no por mal uso',
+        'Para calcular cuánto tiempo falta de garantía',
+        'Para evitar que el técnico realice mantenimiento no autorizado'
+      ],
+      correcta: 1,
+      explicacion: 'Sin registro, el fabricante puede argumentar que la falla se debe a mal uso o falta de mantenimiento, no a un defecto del equipo. El registro es la prueba de que se cumplieron las condiciones de la garantía.'
+    },
+    {
+      id: 'm1-s14-c2-q3',
+      enunciado: 'Un repuesto de la pistola de impacto neumática se desgastó. El docente compra un repuesto genérico de ferretería por ser más económico. ¿Qué riesgo asume?',
+      opciones: [
+        'Ninguno — los repuestos genéricos son iguales a los originales',
+        'Anulación de la garantía del equipo por uso de repuestos no autorizados por el fabricante',
+        'Solo pierde el descuento de cliente frecuente del proveedor',
+        'El repuesto genérico podría no ajustar correctamente pero la garantía no se ve afectada'
+      ],
+      correcta: 1,
+      explicacion: 'El uso de repuestos no originales o no aprobados es causal de anulación de garantía en la mayoría de contratos. Además, un repuesto de calidad inferior puede dañar otros componentes del equipo.'
+    },
+    {
+      id: 'm1-s14-c2-q4',
+      enunciado: 'El equipo falla claramente dentro del período de garantía. ¿Cuál es el orden correcto de acciones?',
+      opciones: [
+        'Intentar repararlo primero; si no se puede, llamar al proveedor',
+        'Documentar la falla con fotos y descripción → reportar al proveedor/empresa prestadora → esperar respuesta antes de cualquier intervención',
+        'Llamar a un técnico externo para tener un diagnóstico independiente primero',
+        'Reportar a la UGEL directamente sin pasar por el proveedor'
+      ],
+      correcta: 1,
+      explicacion: 'El protocolo correcto preserva los derechos de garantía: documentar, reportar al canal oficial y no intervenir. Actuar antes de reportar puede ser interpretado como aceptación de la falla y anular el derecho a garantía.'
+    },
+    {
+      id: 'm1-s14-c2-q5',
+      enunciado: 'La empresa prestadora del servicio no responde el reporte de falla después de 5 días hábiles. ¿Qué hace el docente?',
+      opciones: [
+        'Esperar indefinidamente — las empresas tienen sus propios tiempos',
+        'Reparar el equipo por cuenta propia para no perder tiempo pedagógico',
+        'Escalar el caso a la UGEL con copia del reporte inicial y el registro de los días transcurridos sin respuesta',
+        'Comprar un equipo nuevo de emergencia con fondos del taller'
+      ],
+      correcta: 2,
+      explicacion: 'Los contratos con proveedores MINEDU establecen tiempos máximos de respuesta. Si se incumplen, el canal de escalamiento es la UGEL, que tiene la relación contractual con el proveedor y puede exigir cumplimiento.'
+    },
+    {
+      id: 'm1-s14-c2-q6',
+      enunciado: '¿Cuál de estas acciones PRESERVA la garantía del elevador hidráulico?',
+      opciones: [
+        'Lubricar las guías con cualquier aceite disponible en el taller cuando se escucha ruido',
+        'Realizar el mantenimiento preventivo según el calendario del fabricante y registrarlo en la bitácora',
+        'Ajustar la presión hidráulica manualmente si el elevador sube muy lento',
+        'Usar el elevador con vehículos que excedan ligeramente la capacidad nominal si es solo por un momento'
+      ],
+      correcta: 1,
+      explicacion: 'El mantenimiento preventivo programado y registrado es la acción más importante para mantener la garantía vigente. Las otras opciones constituyen intervenciones no autorizadas o uso fuera de especificaciones.'
+    },
+    {
+      id: 'm1-s14-c2-q7',
+      enunciado: '¿Qué diferencia hay entre la garantía del fabricante y la garantía del proveedor/distribuidor MINEDU?',
+      opciones: [
+        'Son exactamente lo mismo — el proveedor solo revende lo que el fabricante garantiza',
+        'La garantía del fabricante cubre defectos de fabricación; la del proveedor puede incluir servicio técnico, tiempos de respuesta y reposición — revisa el contrato específico',
+        'La garantía MINEDU siempre es mayor que la del fabricante',
+        'Solo aplica una de las dos — no pueden coexistir'
+      ],
+      correcta: 1,
+      explicacion: 'Son garantías distintas que pueden complementarse. El fabricante cubre el equipo en sí; el proveedor puede añadir condiciones de servicio, tiempos de atención y procedimientos de reposición. El contrato específico con el proveedor MINEDU es el documento clave.'
+    },
+    {
+      id: 'm1-s14-c2-q8',
+      enunciado: '¿Por qué es importante conservar el manual técnico original y los accesorios en su empaque durante el período de garantía?',
+      opciones: [
+        'Para revenderlos si el equipo se da de baja antes de que venza la garantía',
+        'Porque sin el manual y accesorios originales el técnico del proveedor puede negarse a atender la garantía o cobrar por materiales que deberían estar incluidos',
+        'Es solo una buena práctica de orden, no tiene impacto real en la garantía',
+        'Para poder verificar el precio original del equipo en caso de robo'
+      ],
+      correcta: 1,
+      explicacion: 'El manual original acredita las condiciones de uso y el técnico del proveedor lo necesita para verificar si el equipo fue operado correctamente. Los accesorios originales evitan discusiones sobre si la falla se debe a uso de accesorios no autorizados.'
+    }
+  ],
+
+  // M1-RA2 — Evaluación M1 global (20 preguntas — mín 80%)
+  'm1-ra2-c1': [
+    // Arquitectura y distribución del taller (4)
+    {
+      id: 'm1-ra2-c1-q1',
+      enunciado: 'El flujo de trabajo pedagógico correcto en el taller automotriz es:',
+      opciones: [
+        'Innovación → Investigación → Almacén',
+        'Almacén → Innovación → Investigación',
+        'Investigación → Innovación → Almacén (cuando aplica)',
+        'El orden no importa si el docente supervisa bien'
+      ],
+      correcta: 2,
+      explicacion: 'Primero se investiga y diagnostica (Investigación), luego se interviene el vehículo (Innovación), y el Almacén provee herramientas y consumibles a ambas zonas. Este flujo simula el proceso real de un taller profesional.'
+    },
+    {
+      id: 'm1-ra2-c1-q2',
+      enunciado: '¿Por qué el taller automotriz debe tener circuitos eléctricos separados por zona?',
+      opciones: [
+        'Por estética — cada zona tiene su propio panel de colores',
+        'Para aislar fallas eléctricas y manejar cargas diferenciadas sin afectar otras zonas',
+        'Es un requisito burocrático sin impacto técnico real',
+        'Solo si el taller tiene más de 3 equipos trifásicos'
+      ],
+      correcta: 1,
+      explicacion: 'Un elevador trifásico (220V) y un escáner (110V) tienen demandas eléctricas muy distintas. Circuitos separados evitan que una falla o sobrecarga en una zona afecte el funcionamiento de otra, mejorando seguridad y disponibilidad.'
+    },
+    {
+      id: 'm1-ra2-c1-q3',
+      enunciado: 'El taller no tiene ventilación adecuada. ¿Cuál es el riesgo principal al encender un vehículo dentro?',
+      opciones: [
+        'El ruido del motor molestará a las aulas vecinas',
+        'Intoxicación por monóxido de carbono — gas inodoro y mortal que se acumula en espacios cerrados',
+        'El calor del motor puede dañar el escáner si está cerca',
+        'La humedad del escape puede oxidar las herramientas del almacén'
+      ],
+      correcta: 1,
+      explicacion: 'El monóxido de carbono (CO) es inodoro, incoloro y mortal en concentraciones bajas. En un taller cerrado sin extracción forzada, encender un motor puede ser fatal. La ventilación activa es condición de seguridad no negociable.'
+    },
+    {
+      id: 'm1-ra2-c1-q4',
+      enunciado: '¿Cuántas salidas de aire comprimido se recomienda como mínimo en la Zona de Innovación de un taller automotriz?',
+      opciones: [
+        'Una central — con manguera larga alcanza a todos los puntos',
+        'Al menos una por cada puesto de trabajo activo para evitar mangueras cruzadas que generen riesgo de tropiezo',
+        'No se necesitan salidas fijas — el compresor con manguera es suficiente',
+        'Dos: una para neumáticos y otra para pistolas'
+      ],
+      correcta: 1,
+      explicacion: 'Las mangueras largas cruzando el piso son riesgo de tropiezo y accidente. Una salida por puesto de trabajo es la configuración segura, aunque en la práctica se adapta al número real de equipos neumáticos del taller.'
+    },
+    // Metrado (4)
+    {
+      id: 'm1-ra2-c1-q5',
+      enunciado: 'El osciloscopio automotriz del taller llegó sin código de bien MINEDU. ¿Qué hace el docente?',
+      opciones: [
+        'Instalarlo de inmediato y buscar el código después',
+        'Asignarle un código interno y usarlo normalmente',
+        'Separarlo, registrarlo como "bien sin identificar" y reportar a la UGEL antes de usarlo',
+        'Devolverlo al proveedor — sin código no puede ingresar al taller'
+      ],
+      correcta: 2,
+      explicacion: 'Un bien sin código oficial no puede incorporarse al inventario del taller ni usarse pedagógicamente. Debe regularizarse a través de la UGEL. Usarlo sin código pone en riesgo la garantía y el control patrimonial.'
+    },
+    {
+      id: 'm1-ra2-c1-q6',
+      enunciado: 'Un metrado incompleto (faltan equipos registrados) tiene como consecuencia principal:',
+      opciones: [
+        'Una observación menor en la auditoría anual',
+        'Los equipos no registrados no existen oficialmente: sin garantía, sin soporte y sin posibilidad de reposición',
+        'El taller pierde puntos en el ranking de talleres de la UGEL',
+        'Solo afecta si hay una inspección sorpresa del MINEDU'
+      ],
+      correcta: 1,
+      explicacion: 'El metrado es la existencia oficial del bien. Un equipo no registrado no puede reclamar garantía, no aparece en los sistemas de seguimiento del MINEDU y no puede reponerse formalmente si se daña o pierde.'
+    },
+    {
+      id: 'm1-ra2-c1-q7',
+      enunciado: 'En la ficha de metrado, el estado "Operativo con restricción" significa:',
+      opciones: [
+        'El equipo está dañado y no puede usarse',
+        'El equipo funciona pero solo puede usarse con limitaciones específicas documentadas (ej: carga máxima reducida)',
+        'El equipo está en garantía y no puede modificarse',
+        'Solo puede usarlo el docente, no los estudiantes'
+      ],
+      correcta: 1,
+      explicacion: '"Operativo con restricción" indica que el equipo funciona pero con condiciones de uso limitadas que deben estar documentadas. Sin documentar la restricción, el usuario no sabe qué puede y qué no puede hacer con él.'
+    },
+    {
+      id: 'm1-ra2-c1-q8',
+      enunciado: 'Un equipo se clasifica en una zona pedagógica según:',
+      opciones: [
+        'Su tamaño y peso — los pesados van en almacén',
+        'Su precio — los más caros en zonas más seguras',
+        'Su función pedagógica en el proceso de aprendizaje del taller',
+        'La preferencia del docente titular'
+      ],
+      correcta: 2,
+      explicacion: 'La zona refleja el rol del equipo en el proceso pedagógico: Investigación (diagnosticar), Innovación (intervenir/construir), Almacén (gestionar herramientas e insumos). El tamaño o precio no son criterios válidos.'
+    },
+    // Instalación (4)
+    {
+      id: 'm1-ra2-c1-q9',
+      enunciado: '¿Cuál es el prerequisito obligatorio antes de instalar cualquier equipo en el taller?',
+      opciones: [
+        'Que el director haya firmado el acta de recepción',
+        'Verificar que el espacio cumpla los requisitos del fabricante: eléctricos, estructurales, de ventilación y de acceso',
+        'Tener a los estudiantes presentes para que aprendan el proceso de instalación',
+        'Que el equipo haya sido activado en línea por el proveedor'
+      ],
+      correcta: 1,
+      explicacion: 'Instalar sin verificar requisitos puede resultar en daño al equipo (voltaje incorrecto), accidentes (piso sin resistencia) o anulación de garantía (condiciones de instalación no cumplidas). La verificación previa es la base de una instalación segura.'
+    },
+    {
+      id: 'm1-ra2-c1-q10',
+      enunciado: 'El software de diagnóstico instalado en el equipo del taller tiene 2 años sin actualizar. ¿Cuál es el impacto pedagógico?',
+      opciones: [
+        'Ninguno — los vehículos que existen en el mercado peruano ya están en la base de datos',
+        'Los vehículos de los últimos 2 años pueden no ser reconocidos, limitando las competencias que los estudiantes pueden desarrollar',
+        'Solo afecta la velocidad de conexión con el vehículo',
+        'El software desactualizado es más estable y confiable'
+      ],
+      correcta: 1,
+      explicacion: 'Cada año se fabrican vehículos con nuevos protocolos y sistemas. Un software desactualizado deja a los estudiantes sin herramientas para trabajar con equipos modernos, que son exactamente los que encontrarán en el mercado laboral.'
+    },
+    {
+      id: 'm1-ra2-c1-q11',
+      enunciado: '¿Qué documento certifica que el elevador quedó correctamente instalado y listo para uso pedagógico?',
+      opciones: [
+        'La factura de compra del elevador',
+        'El acta de instalación firmada por el técnico instalador y el docente responsable, con resultado de prueba funcional',
+        'El manual del fabricante con fecha de llegada anotada',
+        'Una fotografía del elevador instalado en el taller'
+      ],
+      correcta: 1,
+      explicacion: 'El acta de instalación con prueba funcional aprobada es el documento que certifica que el equipo fue instalado correctamente, respalda la garantía y autoriza el primer uso pedagógico.'
+    },
+    {
+      id: 'm1-ra2-c1-q12',
+      enunciado: '¿Por qué activar la garantía del equipo en el momento de la instalación y no después?',
+      opciones: [
+        'Para empezar a contar el período de garantía desde el primer día de uso real',
+        'Porque el proveedor puede negar la garantía si el equipo se activó tarde, argumentando daños durante el almacenamiento previo',
+        'Es solo un trámite administrativo sin consecuencias reales',
+        'Para que el MINEDU libere el siguiente desembolso al proveedor'
+      ],
+      correcta: 1,
+      explicacion: 'Activar tardíamente la garantía puede dejar sin cobertura el período entre la recepción y la activación. Si el equipo sufrió algún daño en ese intervalo, el proveedor puede rechazar el reclamo argumentando que ocurrió antes de la activación.'
+    },
+    // Seguridad (4)
+    {
+      id: 'm1-ra2-c1-q13',
+      enunciado: '¿Cuál es el EPP mínimo para ingresar a la Zona de Innovación del taller automotriz, incluso sin realizar trabajo directo?',
+      opciones: [
+        'Ninguno si solo se va a observar',
+        'Lentes de seguridad, overol o ropa de trabajo y calzado cerrado como mínimo',
+        'Solo calzado de seguridad',
+        'El mismo EPP completo que para trabajo activo'
+      ],
+      correcta: 1,
+      explicacion: 'En un espacio con equipos en operación, incluso los observadores están expuestos a proyecciones, derrames y riesgos de tropiezo. El EPP básico de ingreso protege ante lo imprevisible, no solo ante el trabajo propio.'
+    },
+    {
+      id: 'm1-ra2-c1-q14',
+      enunciado: 'El docente no revisa el estado de los extintores antes de iniciar una sesión práctica. ¿Qué riesgo asume?',
+      opciones: [
+        'Una observación administrativa en caso de inspección',
+        'Responsabilidad legal y riesgo real de no poder controlar un conato de incendio durante la sesión',
+        'Ninguno si los estudiantes ya conocen el protocolo de evacuación',
+        'Solo un riesgo menor si la sesión no involucra trabajo con combustibles'
+      ],
+      correcta: 1,
+      explicacion: 'Un extintor descargado o vencido es equivalente a no tener extintor. El docente tiene responsabilidad legal sobre la seguridad de la sesión. Verificar el extintor antes de cada sesión práctica es parte del checklist de apertura del taller.'
+    },
+    {
+      id: 'm1-ra2-c1-q15',
+      enunciado: 'Un estudiante va a conectar un cargador de batería sin verificar la ventilación del espacio. ¿Cuál es el riesgo específico?',
+      opciones: [
+        'La batería puede sobrecargarse y dañarse',
+        'El cargador puede causar un cortocircuito si hay humedad',
+        'La carga de una batería produce hidrógeno — gas inflamable que en espacios sin ventilación puede explotar ante una chispa',
+        'No hay riesgo si el cargador es de marca reconocida'
+      ],
+      correcta: 2,
+      explicacion: 'Durante la carga, las baterías de plomo-ácido liberan hidrógeno gaseoso. En un espacio cerrado, la concentración puede alcanzar niveles explosivos. La ventilación activa es obligatoria antes de iniciar la carga.'
+    },
+    {
+      id: 'm1-ra2-c1-q16',
+      enunciado: '¿Con qué frecuencia debe revisarse el protocolo de seguridad con los estudiantes del taller automotriz?',
+      opciones: [
+        'Una vez al año en la primera sesión del ciclo',
+        'Al inicio de cada ciclo y cada vez que ingrese un estudiante nuevo al taller',
+        'Solo cuando haya un accidente o incidente',
+        'No es necesario si los estudiantes ya cursaron el módulo anterior'
+      ],
+      correcta: 1,
+      explicacion: 'El protocolo se revisa al inicio de cada ciclo (porque el taller puede haber cambiado) y ante el ingreso de nuevos participantes (porque cada persona debe conocer las normas antes de su primera práctica). La seguridad no se presupone, se verifica.'
+    },
+    // Garantías (4)
+    {
+      id: 'm1-ra2-c1-q17',
+      enunciado: 'Un equipo falla a los 10 meses con garantía de 12. El docente lo repara con un técnico externo por urgencia pedagógica. ¿Qué ocurre con la garantía?',
+      opciones: [
+        'La garantía sigue vigente — la urgencia justifica la intervención',
+        'La garantía probablemente quedó anulada al intervenir el equipo sin autorización del proveedor',
+        'La garantía se extiende por el tiempo que el equipo estuvo fuera de servicio',
+        'Solo se anula si el técnico externo causó un daño adicional'
+      ],
+      correcta: 1,
+      explicacion: 'La urgencia pedagógica no es causal de excepción en los contratos de garantía. Intervenir el equipo sin autorización del proveedor es la causal más común de anulación. La alternativa correcta era reportar la falla y gestionar un equipo sustituto mientras se esperaba la atención en garantía.'
+    },
+    {
+      id: 'm1-ra2-c1-q18',
+      enunciado: 'No existe registro del mantenimiento preventivo del compresor. Ahora el compresor falla. ¿Qué dificultad enfrenta el docente al reclamar la garantía?',
+      opciones: [
+        'Ninguna — si el equipo está en período de garantía, el proveedor debe atenderlo sin condiciones',
+        'El proveedor puede argumentar que la falla se debe a falta de mantenimiento y rechazar el reclamo',
+        'Debe pagar una multa administrativa por no haber registrado el mantenimiento',
+        'La garantía se reduce proporcionalmente a los mantenimientos no registrados'
+      ],
+      correcta: 1,
+      explicacion: 'Sin registro de mantenimiento, el docente no puede demostrar que cumplió con las condiciones de la garantía. El proveedor tiene base para rechazar el reclamo argumentando mal uso por omisión de mantenimiento preventivo.'
+    },
+    {
+      id: 'm1-ra2-c1-q19',
+      enunciado: 'La empresa prestadora no atiende la falla reportada en 7 días hábiles (el contrato establece 5 días máximo). ¿Cuál es el paso correcto?',
+      opciones: [
+        'Esperar — pueden tener una emergencia interna',
+        'Escalar a la UGEL adjuntando el reporte inicial, fechas y el incumplimiento documentado del plazo contractual',
+        'Reparar el equipo por cuenta propia y descontar el costo al proveedor',
+        'Comprar un equipo nuevo y gestionar el reembolso después'
+      ],
+      correcta: 1,
+      explicacion: 'El incumplimiento del plazo contractual debe documentarse y escalarse a la UGEL, que tiene la relación contractual formal con el proveedor. La documentación (reporte inicial + fechas) es la prueba del incumplimiento.'
+    },
+    {
+      id: 'm1-ra2-c1-q20',
+      enunciado: '¿Cuál de estas acciones forma parte de las buenas prácticas para mantener las garantías vigentes de todos los equipos del taller?',
+      opciones: [
+        'Revisar los contratos de garantía solo cuando hay una falla',
+        'Llevar una bitácora unificada con fechas de garantía, contactos del proveedor, mantenimientos realizados y reportes de falla de todos los equipos',
+        'Delegar el seguimiento de garantías al auxiliar del taller',
+        'Guardar los contratos en un archivador y revisarlos anualmente'
+      ],
+      correcta: 1,
+      explicacion: 'Una bitácora unificada y actualizada permite actuar a tiempo: saber cuándo vence cada garantía, quién atiende cada equipo y cuáles mantenimientos están pendientes. Es la herramienta de gestión que convierte el conocimiento en acción.'
+    }
+  ],
+
+  // M1-S13 — Seguridad EPP (BLOQUEANTE — mín 80%)
+  'm1-s13-c3': [
+    {
+      id: 'm1-s13-c3-q1',
+      enunciado: 'Un estudiante va a trabajar bajo un vehículo levantado con elevador tipo tijera. ¿Cuál es el EPP mínimo OBLIGATORIO antes de entrar al espacio de trabajo?',
+      opciones: [
+        'Lentes de seguridad y guantes de trabajo',
+        'Lentes, casco, overol y verificación de que el elevador esté bloqueado mecánicamente con los seguros de seguridad',
+        'Overol y zapatos de seguridad — los lentes no son necesarios bajo el vehículo',
+        'El docente supervisa — el estudiante decide su EPP'
+      ],
+      correcta: 1,
+      explicacion: 'Trabajar bajo un vehículo elevado es el mayor riesgo del taller. EPP mínimo: lentes (caída de partículas desde arriba), casco, overol sin partes sueltas. CRÍTICO: verificar visualmente que todos los seguros mecánicos del elevador estén activados antes de entrar.'
+    },
+    {
+      id: 'm1-s13-c3-q2',
+      enunciado: '¿Por qué está PROHIBIDO usar guantes de tela al trabajar con equipos rotativos (taladro, esmeril angular)?',
+      opciones: [
+        'Porque los guantes de tela no son impermeables al aceite',
+        'Porque el movimiento rotativo puede atrapar el tejido y jalar la mano hacia el elemento rotante, causando fractura o amputación',
+        'Porque no tienen certificación ANSI para taller automotriz',
+        'Porque se ensucian demasiado rápido con grasa'
+      ],
+      correcta: 1,
+      explicacion: 'El tejido de un guante ordinario puede ser atrapado por el giro del equipo en milisegundos. Con equipos rotativos, usar guante de cuero corto o directamente mano desnuda con buena técnica. Nunca tela.'
+    },
+    {
+      id: 'm1-s13-c3-q3',
+      enunciado: 'Durante la sesión, el elevador hidráulico cede inesperadamente 5 cm con un estudiante trabajando cerca. ¿Cuál es la acción INMEDIATA correcta del docente?',
+      opciones: [
+        'Pedir al estudiante que sostenga el vehículo mientras llaman al técnico',
+        'Bajar el vehículo rápidamente y continuar el trabajo',
+        'Despejar el área inmediatamente, bajar el vehículo completamente a tierra, poner el elevador fuera de servicio y no usarlo hasta revisión técnica',
+        'Colocar un gato de botella como soporte adicional y continuar'
+      ],
+      correcta: 2,
+      explicacion: 'Un descenso inesperado del elevador indica falla del sistema. La prioridad es alejar a las personas del vehículo, bajarlo a tierra de forma controlada y retirar el equipo de servicio. Ninguna solución provisional es aceptable.'
+    },
+    {
+      id: 'm1-s13-c3-q4',
+      enunciado: 'Un estudiante empieza a desconectar la batería sin guantes diciendo "solo es el cable negativo, no hay riesgo". ¿Cuál es la respuesta correcta del docente?',
+      opciones: [
+        'Permitirlo — el cable negativo es tierra y no tiene corriente activa',
+        'Detener la actividad inmediatamente, explicar el riesgo y no continuar hasta que el estudiante tenga los guantes puestos',
+        'Supervisarlo de cerca para actuar si algo sale mal',
+        'Pedirle que sea rápido para minimizar el tiempo de exposición'
+      ],
+      correcta: 1,
+      explicacion: 'La batería puede generar corriente residual suficiente para quemaduras ante un cortocircuito accidental. El principio del taller automotriz: los protocolos de seguridad eléctrica no se relajan. El docente tiene responsabilidad legal y pedagógica de detener la actividad insegura.'
+    },
+    {
+      id: 'm1-s13-c3-q5',
+      enunciado: 'Un estudiante va a drenar el aceite del motor recién apagado. ¿Qué combinación de EPP es obligatoria?',
+      opciones: [
+        'Solo guantes de látex y gafas simples',
+        'Guantes de nitrilo resistentes al calor, lentes tipo antiparra, overol o delantal resistente a hidrocarburos y calzado cerrado antideslizante',
+        'Cualquier guante disponible — el aceite no quema lo suficiente como para ser peligroso',
+        'Guantes de PVC y careta de soldador'
+      ],
+      correcta: 1,
+      explicacion: 'El aceite de motor recién apagado puede superar los 80°C. Los guantes de látex no resisten calor ni hidrocarburos. Las lentes tipo antiparra (no montura abierta) protegen de salpicaduras. El calzado antideslizante evita caídas por derrames.'
+    },
+    {
+      id: 'm1-s13-c3-q6',
+      enunciado: 'Al revisar el extintor del taller antes de la sesión, el docente nota que el manómetro está en la zona roja. ¿Qué debe hacer?',
+      opciones: [
+        'Usarlo igual — el manómetro puede estar descalibrado',
+        'Marcarlo con cinta y dejarlo como respaldo por si acaso',
+        'Retirar el extintor del servicio, reportar a dirección y no iniciar la sesión hasta tener un extintor operativo disponible',
+        'Agitarlo para ver si se normaliza la presión'
+      ],
+      correcta: 2,
+      explicacion: 'Zona roja en el manómetro indica presión insuficiente — el extintor no funcionará en una emergencia. No es negociable: sin extintor operativo no hay sesión práctica en el taller automotriz.'
+    },
+    {
+      id: 'm1-s13-c3-q7',
+      enunciado: 'Los estudiantes van a trabajar cerca del sistema de combustible del vehículo. ¿Cuál es el riesgo principal y la medida preventiva más importante?',
+      opciones: [
+        'Riesgo de derrame — colocar trapos absorbentes debajo del vehículo',
+        'Riesgo de incendio/explosión — zona libre de fuentes de ignición, no encender el motor, extintor CO2 a mano y ventilación activa',
+        'Riesgo de intoxicación — abrir una ventana del taller',
+        'Riesgo de corrosión — usar guantes de látex gruesos'
+      ],
+      correcta: 1,
+      explicacion: 'Los vapores de gasolina son altamente inflamables y se acumulan a nivel del piso. Una chispa, encendedor o celular puede provocar explosión. Medidas: zona libre de ignición, extintor CO2 accesible (no polvo seco cerca del vehículo), ventilación forzada activa.'
+    },
+    {
+      id: 'm1-s13-c3-q8',
+      enunciado: 'Un estudiante dice: "Ya sé cómo hacer este procedimiento, no necesito ponerme el EPP para esta práctica". ¿Cuál es la respuesta pedagógica correcta del docente?',
+      opciones: [
+        'Permitirlo si el estudiante demuestra que conoce el procedimiento',
+        'Pedirle que se lo ponga solo si el docente está mirando',
+        'Explicar que el EPP no es opcional: protege de lo que NO se puede predecir, no solo de los errores. Quien no lo usa no inicia la práctica',
+        'Negociarlo — si es un procedimiento simple, puede omitir algunos elementos del EPP'
+      ],
+      correcta: 2,
+      explicacion: 'El EPP protege de fallas inesperadas del equipo, errores de otros, y condiciones imprevistas — no solo del propio descuido. "Saber el procedimiento" no elimina el riesgo mecánico. En el taller, el EPP es condición no negociable para participar en cualquier práctica.'
+    }
+  ],
+
+  // M0-S06 — Miró, Mural, Figma: ideación colaborativa (6 preguntas)
+  'm0-s06-c5': [
+    {
+      id: 'm0-s06-c5-q1',
+      enunciado: 'Quieres que tus estudiantes de automotriz mapeen visualmente la secuencia de diagnóstico de un motor, trabajando en grupos desde sus tablets en tiempo real. ¿Qué herramienta usarías?',
+      opciones: [
+        'Miró — pizarra colaborativa infinita, ideal para diagramas de proceso en tiempo real',
+        'Google Docs — permite edición simultánea y tiene plantillas de diagramas',
+        'Gamma — genera presentaciones visuales rápidamente con IA',
+        'Teachy — crea actividades pedagógicas estructuradas para el aula'
+      ],
+      correcta: 0,
+      explicacion: 'Miró ofrece pizarra infinita con sticky notes, conectores y plantillas de mapas mentales. Es la opción más adecuada para mapeo de procesos colaborativo en tiempo real. Google Docs tiene edición simultánea pero no está diseñado para diagramas de flujo visual.'
+    },
+    {
+      id: 'm0-s06-c5-q2',
+      enunciado: 'Tu equipo de docentes necesita planificar juntos las 4 sesiones del módulo de instalación de equipos automotrices, distribuyendo responsabilidades y fechas. ¿Cuál herramienta facilita mejor esta coordinación visual?',
+      opciones: [
+        'Figma — permite diseñar wireframes de las sesiones con componentes reutilizables',
+        'Mural — tablero colaborativo con sticky notes, votación y temporizador para talleres de planificación',
+        'Miró — pizarra libre sin estructura de taller facilitada',
+        'Polypad — especializado en visualizaciones matemáticas, no en planificación'
+      ],
+      correcta: 1,
+      explicacion: 'Mural está diseñado específicamente para talleres de facilitación: incluye plantillas de planificación, votación anónima, temporizador y zonas estructuradas. Es la mejor opción cuando hay un facilitador guiando el proceso grupal.'
+    },
+    {
+      id: 'm0-s06-c5-q3',
+      enunciado: 'Quieres crear una guía visual del taller automotriz — plano de zonas, rutas de evacuación e identificación de equipos — que puedas entregar a estudiantes nuevos como material institucional. ¿Qué herramienta usarías?',
+      opciones: [
+        'Miró — porque tiene plantillas de planos y es fácil exportar como imagen',
+        'Figma — diseño vectorial profesional con capas, componentes y exportación en múltiples formatos',
+        'Mural — tablero colaborativo con mayor énfasis en facilitación que en diseño final',
+        'Gamma — genera documentos con IA, pero no permite edición precisa de planos'
+      ],
+      correcta: 1,
+      explicacion: 'Figma es software de diseño vectorial profesional. Para un material institucional (plano del taller, señalética) que necesita precisión, capas y exportación en alta calidad (PDF, PNG, SVG), Figma es la herramienta correcta. Miró y Mural son mejores para procesos colaborativos informales.'
+    },
+    {
+      id: 'm0-s06-c5-q4',
+      enunciado: 'Un colega diseñó en Figma el protocolo de seguridad del taller automotriz. Tú necesitas adaptarlo para tu institución cambiando logos y colores. ¿Qué implica trabajar en Figma para esta tarea?',
+      opciones: [
+        'No es posible — Figma solo permite ver diseños, no editarlos',
+        'Necesitas acceso al archivo Figma; con permiso de edición puedes modificar textos, colores y componentes directamente',
+        'Debes exportar a PDF y editar con Adobe Acrobat para cambiar contenido',
+        'Figma convierte automáticamente el diseño a Word para que puedas editarlo'
+      ],
+      correcta: 1,
+      explicacion: 'Figma es colaborativo: con el enlace y permiso de edición, puedes modificar cualquier elemento del diseño. Cambiar logos (reemplazar imagen), colores (paleta de estilos) y textos es directo en la interfaz. Es la ventaja clave sobre herramientas como PowerPoint o PDF.'
+    },
+    {
+      id: 'm0-s06-c5-q5',
+      enunciado: 'Estás facilitando una sesión de lluvia de ideas con 8 docentes para diseñar la zona de innovación del taller. La sesión dura 45 minutos. ¿Cuál característica de Mural es más valiosa en este contexto?',
+      opciones: [
+        'La capacidad de exportar el tablero a PowerPoint al terminar',
+        'El temporizador integrado y la votación anónima para priorizar ideas sin sesgo de autoridad',
+        'Los widgets de diseño profesional para crear entregables listos para imprimir',
+        'La integración directa con Google Drive para guardar automáticamente'
+      ],
+      correcta: 1,
+      explicacion: 'En sesiones de facilitación con jerarquía (hay jefes y docentes), el sesgo de autoridad puede inhibir ideas. El temporizador mantiene el ritmo, y la votación anónima permite que todos expresen preferencias sin presión social. Estas funciones son el diferenciador de Mural frente a una pizarra común.'
+    },
+    {
+      id: 'm0-s06-c5-q6',
+      enunciado: 'Comparando Miró y Mural para uso en el taller automotriz: ¿cuál es la distinción más relevante para decidir cuál usar?',
+      opciones: [
+        'Miró es de pago y Mural es gratuito, por lo que Mural siempre es mejor para instituciones educativas',
+        'Miró es más flexible y libre (ideal para diagramas técnicos por docentes), Mural incluye más herramientas de facilitación estructurada (ideal para talleres con múltiples participantes)',
+        'Son idénticos en funcionalidades; la elección depende solo de la preferencia personal',
+        'Miró funciona solo en computadora; Mural funciona en tablets y móviles'
+      ],
+      correcta: 1,
+      explicacion: 'Miró es excelente para trabajo individual o en equipo pequeño creando diagramas libres. Mural está más orientado a facilitación: tiene plantillas de Design Sprint, Retrospectiva, y herramientas de moderación. La decisión correcta depende de si hay un facilitador guiando o si el trabajo es más autónomo.'
+    }
+  ],
+
+  // M0-RA1 — Evaluación M0 global (15 preguntas, puntajeMinimo: 70)
+  'm0-ra1-c1': [
+    {
+      id: 'm0-ra1-c1-q1',
+      enunciado: 'Necesitas registrar el estado de 12 equipos del taller automotriz con sus fechas de mantenimiento y compartirlo con todo el equipo docente. ¿Qué herramienta de Google Workspace usarías y por qué?',
+      opciones: [
+        'Google Docs — permite texto libre y tablas para cualquier registro',
+        'Google Sheets — tabla estructurada, filtros, ordenamiento y edición simultánea ideal para inventarios',
+        'Google Calendar — para registrar las fechas de mantenimiento directamente',
+        'Google Tasks — para asignar a cada docente la revisión de un equipo'
+      ],
+      correcta: 1,
+      explicacion: 'Google Sheets es la herramienta correcta para inventarios: columnas fijas, filtros por estado, fórmulas de conteo y edición simultánea. Docs es para texto narrativo; Calendar para eventos; Tasks para pendientes individuales — cada herramienta tiene su rol.'
+    },
+    {
+      id: 'm0-ra1-c1-q2',
+      enunciado: 'Quieres que la IA te ayude a redactar el protocolo de uso seguro del elevador tipo tijera. ¿Cuál es el prompt más efectivo?',
+      opciones: [
+        '"Escribe un protocolo de seguridad"',
+        '"Redacta un protocolo de seguridad para elevador tipo tijera en taller automotriz escolar, incluyendo EPP obligatorio, pasos de verificación pre-uso y protocolo de emergencia por falla hidráulica. Extensión: 1 página A4."',
+        '"Hazme un texto sobre elevadores"',
+        '"¿Qué es un elevador tipo tijera?"'
+      ],
+      correcta: 1,
+      explicacion: 'Un prompt efectivo tiene: contexto específico (elevador tipo tijera, taller escolar), tarea clara (protocolo de seguridad), estructura requerida (EPP, verificación, emergencia) y restricción de formato (1 página A4). Prompts vagos producen respuestas genéricas inutilizables.'
+    },
+    {
+      id: 'm0-ra1-c1-q3',
+      enunciado: 'Un docente usa Google Calendar para el taller. Crea el evento "Práctica motor" pero no agrega participantes ni sala. ¿Qué consecuencia real tiene este error?',
+      opciones: [
+        'El evento igual aparece en los calendarios de todos los docentes del taller',
+        'Ninguna — Calendar es solo un recordatorio personal',
+        'Los otros docentes no saben de la práctica y el espacio puede estar ocupado por otra sección ese día',
+        'Calendar envía notificación automática a todos de todas formas'
+      ],
+      correcta: 2,
+      explicacion: 'Sin invitados ni recurso de sala, el evento es invisible para los demás. Resultado: conflictos de horario, docentes sin aviso y estudiantes sin espacio. La coordinación efectiva del taller requiere invitar a colegas y reservar el espacio físico desde el mismo Calendar.'
+    },
+    {
+      id: 'm0-ra1-c1-q4',
+      enunciado: 'Quieres crear una presentación sobre el ciclo Otto para tus estudiantes de automotriz. Tienes 20 minutos. ¿Qué herramienta produce el resultado más rápido con calidad visual aceptable?',
+      opciones: [
+        'Google Slides — conocida y confiable, aunque requiere diseñar diapositiva por diapositiva',
+        'Gamma — genera una presentación completa desde un prompt en menos de 2 minutos, con diseño automático',
+        'Figma — diseño profesional pero requiere más tiempo de configuración',
+        'Polypad — visualizaciones interactivas pero no genera presentaciones de diapositivas'
+      ],
+      correcta: 1,
+      explicacion: 'Gamma genera presentaciones completas desde texto en segundos. Para 20 minutos, es la única opción que deja tiempo para revisar y ajustar. Google Slides es más control pero mucho más lento. Figma y Polypad no son herramientas de presentación de diapositivas.'
+    },
+    {
+      id: 'm0-ra1-c1-q5',
+      enunciado: 'Quieres que tus estudiantes practiquen identificar ángulos en los componentes de la dirección del vehículo. ¿Qué herramienta digital es más adecuada para esta actividad?',
+      opciones: [
+        'Gamma — genera una presentación visual de los componentes de dirección',
+        'Polypad — permite construir visualizaciones geométricas interactivas con ángulos y medidas reales',
+        'Miró — pizarra colaborativa donde los estudiantes pueden dibujar libremente',
+        'Teachy — genera actividades de quiz sobre componentes de dirección'
+      ],
+      correcta: 1,
+      explicacion: 'Polypad es una herramienta de matemáticas visuales: transportadores, geoplanos, geometría dinámica. Para trabajar ángulos de dirección (camber, caster, convergencia) con precisión visual e interactividad, Polypad es la opción correcta.'
+    },
+    {
+      id: 'm0-ra1-c1-q6',
+      enunciado: 'Tu equipo de 6 docentes necesita decidir colectivamente qué zona del taller remodelar primero. Tienes 30 minutos de reunión. ¿Qué herramienta y técnica usarías?',
+      opciones: [
+        'Google Sheets compartido — cada docente vota en su celda',
+        'Mural con tablero de lluvia de ideas + votación anónima por puntos, facilitado con temporizador',
+        'WhatsApp — encuesta rápida en el grupo del taller',
+        'Figma — diseñar una propuesta visual de cada zona para votar'
+      ],
+      correcta: 1,
+      explicacion: 'Mural combina generación de ideas (sticky notes), votación anónima (elimina sesgo de autoridad) y temporizador (respeta los 30 minutos). WhatsApp no es colaborativo ni anónimo. Google Sheets es técnicamente posible pero no tiene las herramientas de facilitación integradas.'
+    },
+    {
+      id: 'm0-ra1-c1-q7',
+      enunciado: 'Usas Claude (IA) para diseñar una rúbrica de evaluación de diagnóstico automotriz. El resultado tiene criterios muy genéricos. ¿Cuál es la causa más probable?',
+      opciones: [
+        'Claude no puede crear rúbricas de evaluación técnica',
+        'El prompt no especificó el nivel educativo, la competencia específica ni los indicadores esperados del estudiante',
+        'Las rúbricas de automotriz son demasiado técnicas para cualquier IA',
+        'Hay que usar GPT en lugar de Claude para tareas pedagógicas'
+      ],
+      correcta: 1,
+      explicacion: 'La calidad del output de IA es directamente proporcional a la especificidad del prompt. Una rúbrica genérica proviene de un prompt genérico. Para obtener criterios específicos de automotriz, el prompt debe incluir: nivel (secundaria técnica), competencia (diagnóstico de motor), indicadores observables y escala.'
+    },
+    {
+      id: 'm0-ra1-c1-q8',
+      enunciado: 'Tienes el manual de instalación del escáner LAUNCH en PDF (en inglés). ¿Cómo usarías IA para aprovechar este documento en tu planificación?',
+      opciones: [
+        'No es posible — la IA no puede procesar documentos técnicos en inglés',
+        'Subir el PDF a Claude o ChatGPT y pedir: "Resume los pasos de instalación, tradúcelos al español y genera una lista de verificación imprimible"',
+        'Traducir manualmente el PDF y luego pedirle a la IA que lo resuma',
+        'Usar Google Translate en el PDF y guardar el resultado como está'
+      ],
+      correcta: 1,
+      explicacion: 'Las IAs modernas (Claude, GPT-4) pueden procesar PDFs directamente. Un solo prompt puede: traducir, resumir y reformatear en lista de verificación. Hacerlo manualmente en pasos separados es ineficiente. Esta capacidad es uno de los usos más valiosos de IA para docentes técnicos.'
+    },
+    {
+      id: 'm0-ra1-c1-q9',
+      enunciado: 'Quieres visualizar en 3D el sistema de frenos ABS para mostrarlo en clase. ¿Cuál es la ruta más directa?',
+      opciones: [
+        'Buscar en YouTube un video del sistema ABS y proyectarlo',
+        'Usar Meshy con el prompt "sistema de frenos ABS automotriz, vista explodida, componentes etiquetados" para generar un modelo 3D',
+        'Dibujar el sistema en Figma con formas vectoriales',
+        'Pedirle a Gamma que genere una presentación con imágenes del ABS'
+      ],
+      correcta: 1,
+      explicacion: 'Meshy es una herramienta de generación de modelos 3D por texto (text-to-3D). Permite rotar, explorar y exportar. Para visualización técnica de sistemas mecánicos en clase, un modelo 3D interactivo es más didáctico que un video o imagen estática.'
+    },
+    {
+      id: 'm0-ra1-c1-q10',
+      enunciado: 'Google Tasks y Google Calendar: ¿cuándo usas cada uno en la gestión del taller automotriz?',
+      opciones: [
+        'Son la misma herramienta — Tasks es la versión móvil de Calendar',
+        'Tasks para pendientes personales y listas de verificación (ej: "completar metrado"); Calendar para eventos con hora, lugar y participantes (ej: "Práctica elevador — Sección B — Sala 3")',
+        'Calendar es solo para reuniones; Tasks para todo lo demás',
+        'Tasks para el equipo docente; Calendar solo para uso personal'
+      ],
+      correcta: 1,
+      explicacion: 'Tasks y Calendar tienen funciones complementarias distintas: Tasks es lista de pendientes sin fecha/hora fija, ideal para to-do lists personales. Calendar es para compromisos con tiempo definido, espacio y participantes. Usar ambos correctamente evita que los pendientes se mezclen con los eventos programados.'
+    },
+    {
+      id: 'm0-ra1-c1-q11',
+      enunciado: 'Un colega diseñó en Miró el mapa de procesos del taller. Tú necesitas convertirlo en un documento institucional para entregar a la UGEL. ¿Cuál es el flujo correcto?',
+      opciones: [
+        'Exportar el tablero Miró como imagen PNG e insertarlo en Google Docs con texto explicativo',
+        'Recrear todo el mapa en Figma desde cero para mayor calidad',
+        'Enviar el enlace de Miró directamente a la UGEL',
+        'Imprimir una captura de pantalla del tablero'
+      ],
+      correcta: 0,
+      explicacion: 'El flujo correcto es: Miró para ideación/mapeo → exportar como imagen de alta resolución → insertar en Google Docs → agregar contexto textual → entregar como documento formal. Cada herramienta tiene su etapa: Miró para pensar, Docs para documentar.'
+    },
+    {
+      id: 'm0-ra1-c1-q12',
+      enunciado: 'Teachy generó una actividad de "identificar herramientas del taller" para tus estudiantes. Al revisarla, ves que incluye herramientas de carpintería. ¿Cuál es la causa y solución?',
+      opciones: [
+        'Teachy no puede crear actividades específicas de automotriz — hay que hacerlo manualmente',
+        'El prompt no especificó el contexto automotriz. Solución: regenerar indicando "taller de mecánica automotriz, herramientas de diagnóstico y reparación de vehículos"',
+        'Hay un error en Teachy que mezcla talleres — reportar al soporte',
+        'Aceptar la actividad y corregir manualmente cada herramienta incorrecta'
+      ],
+      correcta: 1,
+      explicacion: 'Las IAs generativas no asumen contexto que no se les da. "Taller" sin calificativo genera contenido de cualquier taller. La solución siempre es mejorar el prompt, no corregir el output manualmente — eso es ineficiente. Buen prompt = buen output desde el inicio.'
+    },
+    {
+      id: 'm0-ra1-c1-q13',
+      enunciado: '¿Cuál es la diferencia clave entre usar GPT-4, Claude y Gemini para preparar materiales del taller automotriz?',
+      opciones: [
+        'Son idénticos — producen exactamente el mismo resultado con el mismo prompt',
+        'GPT-4 tiene mejor razonamiento técnico; Claude es mejor para documentos largos y análisis; Gemini se integra nativamente con Google Workspace',
+        'Solo GPT-4 puede trabajar con contenido técnico automotriz',
+        'Claude no puede procesar imágenes; los otros dos sí'
+      ],
+      correcta: 1,
+      explicacion: 'Cada modelo tiene fortalezas: GPT-4 destacó históricamente en razonamiento técnico y código; Claude en análisis de documentos largos y redacción matizada; Gemini en integración con Google Workspace (Docs, Sheets, Drive). Para un docente, conocer esto permite elegir la herramienta correcta según la tarea.'
+    },
+    {
+      id: 'm0-ra1-c1-q14',
+      enunciado: 'Quieres crear un diagrama del flujo de trabajo del taller (recepción del vehículo → diagnóstico → reparación → entrega) para mostrar en la sesión de inducción. ¿Qué herramienta usarías?',
+      opciones: [
+        'Google Sheets — con celdas formateadas como cajas del proceso',
+        'Miró — pizarra con conectores de flechas y sticky notes para el flujo de proceso',
+        'Teachy — genera diagramas de flujo automáticamente desde texto',
+        'Google Calendar — para visualizar el tiempo de cada etapa'
+      ],
+      correcta: 1,
+      explicacion: 'Miró tiene herramientas nativas para diagramas de flujo: figuras geométricas, conectores con flechas, etiquetas y colores por zona. Para un docente que necesita un diagrama visual rápido y editable, Miró es la opción más directa. Teachy no genera diagramas de flujo.'
+    },
+    {
+      id: 'm0-ra1-c1-q15',
+      enunciado: 'Tienes 3 semanas para dominar las herramientas digitales del módulo 0. ¿Cuál es la estrategia de aprendizaje más efectiva?',
+      opciones: [
+        'Ver todos los tutoriales de YouTube disponibles antes de usar cualquier herramienta',
+        'Usar cada herramienta en una tarea real del taller: crear el metrado en Sheets, el protocolo en Docs, planificar la instalación en Calendar — aprender haciendo con propósito real',
+        'Practicar primero con ejemplos genéricos hasta dominarlos, luego aplicar al taller',
+        'Elegir solo 1 herramienta por semana y dominarla completamente antes de seguir'
+      ],
+      correcta: 1,
+      explicacion: 'El aprendizaje más efectivo para docentes adultos es el aprendizaje situado: usar la herramienta para una tarea real e inmediata del taller. El propósito real genera motivación intrínseca y retención duradera. Los tutoriales sin aplicación inmediata se olvidan en días.'
+    }
+  ],
+
+  // M2-RA2 — Zona Investigación: scanner OBD, multímetro, osciloscopio, códigos de falla (20 preguntas)
+  'm2-ra2-c1': [
+    {
+      id: 'm2-ra2-c1-q1',
+      enunciado: 'Conectas el escáner OBD-II al vehículo y aparece el código P0300. ¿Qué indica este código y cuál es el primer paso de diagnóstico?',
+      opciones: [
+        'Falla en el sensor de oxígeno — reemplazar el sensor O2 inmediatamente',
+        'Falla de encendido aleatoria/múltiple — registrar en qué cilindros ocurre con datos en tiempo real antes de intervenir',
+        'Presión de aceite baja — verificar nivel de aceite del motor',
+        'Falla en el sistema de combustible — revisar la bomba de combustible'
+      ],
+      correcta: 1,
+      explicacion: 'P0300 es "Random/Multiple Cylinder Misfire Detected". No indica un cilindro específico, por lo que el primer paso es usar los datos en tiempo real del escáner para identificar el patrón (¿ocurre en frío/caliente? ¿a cierta RPM?) antes de abrir el motor. Reemplazar piezas sin diagnóstico previo es el error más costoso en automotriz.'
+    },
+    {
+      id: 'm2-ra2-c1-q2',
+      enunciado: 'Un estudiante borra los códigos de falla con el escáner sin registrarlos primero. ¿Cuál es la consecuencia técnica de esta acción?',
+      opciones: [
+        'Ninguna — los códigos reaparecerán si la falla persiste',
+        'Se pierden los datos de freeze frame que registran las condiciones exactas del motor cuando ocurrió la falla, dificultando el diagnóstico',
+        'El escáner queda bloqueado y no puede volver a leer códigos',
+        'El vehículo entra en modo de emergencia limitando la velocidad'
+      ],
+      correcta: 1,
+      explicacion: 'El freeze frame captura: RPM, temperatura, carga del motor, presión de combustible en el momento exacto de la falla. Esta información es crítica para reproducir la condición de falla en el diagnóstico. Borrar sin registrar es destruir evidencia — práctica que los docentes deben corregir firmemente.'
+    },
+    {
+      id: 'm2-ra2-c1-q3',
+      enunciado: 'Al medir la resistencia de un inyector con el multímetro, obtienes 2.5 Ω. El manual especifica 11-15 Ω. ¿Qué conclusión técnica extraes?',
+      opciones: [
+        'El inyector está en perfecto estado — la resistencia baja indica mejor conductividad',
+        'El multímetro está descalibrado — repetir la medición con otro equipo',
+        'El inyector tiene un cortocircuito interno — la resistencia muy por debajo del rango indica devanado dañado',
+        'La medición es normal para inyectores diesel — los valores varían por tecnología'
+      ],
+      correcta: 2,
+      explicacion: 'Una resistencia de 2.5 Ω vs especificación de 11-15 Ω indica cortocircuito en el devanado del solenoides del inyector. Un inyector con cortocircuito consume corriente excesiva y puede dañar el módulo de control. Nunca interpretes una resistencia baja como "mejor" — en inductancias, significa daño.'
+    },
+    {
+      id: 'm2-ra2-c1-q4',
+      enunciado: 'El escáner muestra que el sensor MAP está enviando 4.8V de manera constante. El rango normal es 1.0-4.5V. ¿Qué indica esto?',
+      opciones: [
+        'El motor está funcionando a plena carga — lectura normal en aceleración',
+        'El sensor MAP probablemente tiene circuito abierto o está atascado en valor máximo — señal fuera de rango',
+        'Hay exceso de combustible en el múltiple — limpiar el sistema de admisión',
+        'La presión de sobrealimentación es demasiado alta — revisar la turbina'
+      ],
+      correcta: 1,
+      explicacion: 'Una señal constante en 4.8V (por encima del rango máximo) indica que el sensor está atascado o hay un cortocircuito a voltaje de referencia. El MAP debe variar con las condiciones del motor. Una señal plana y fuera de rango siempre apunta a falla del sensor o su circuito.'
+    },
+    {
+      id: 'm2-ra2-c1-q5',
+      enunciado: 'Usas el osciloscopio para medir la señal del sensor CKP (cigüeñal). La forma de onda muestra un diente faltante en el patrón. ¿Qué significa?',
+      opciones: [
+        'El osciloscopio está mal configurado — ajustar la escala de tiempo',
+        'Es la referencia del sensor — todos los sensores CKP tienen un espacio intencional para marcar el punto de referencia del ciclo',
+        'El sensor CKP está fallando — reemplazarlo inmediatamente',
+        'El cigüeñal tiene un diente físicamente roto — requiere reparación mayor'
+      ],
+      correcta: 1,
+      explicacion: 'El diente faltante (o grupo de dientes faltantes) en la rueda fónica es intencional: es la referencia absoluta que le indica al ECU cuándo empieza el ciclo. El sistema lo interpreta como la posición 0° del cigüeñal. Si el estudiante lo reporta como falla, no comprende el diseño del sensor.'
+    },
+    {
+      id: 'm2-ra2-c1-q6',
+      enunciado: 'Un escáner genérico OBD-II lee los códigos del sistema de motor. El técnico necesita también leer los módulos ABS y airbag. ¿Qué tipo de escáner necesita?',
+      opciones: [
+        'El mismo escáner OBD-II genérico — todos los módulos usan el mismo protocolo',
+        'Un escáner multimarca o de fabricante específico que acceda a protocolos propietarios (CAN, K-Line) de cada módulo',
+        'Dos escáneres diferentes — uno para ABS y otro para airbag',
+        'No es posible leer ABS y airbag con ningún escáner — requieren diagnóstico mecánico'
+      ],
+      correcta: 1,
+      explicacion: 'El protocolo OBD-II estándar solo accede al sistema de motor (Powertrain). ABS, airbag, transmisión y otros módulos usan protocolos propietarios del fabricante. Para diagnóstico completo se necesita un escáner que soporte los protocolos específicos de la marca del vehículo.'
+    },
+    {
+      id: 'm2-ra2-c1-q7',
+      enunciado: 'Mides la tensión de una batería de 12V con el multímetro en reposo y obtienes 11.8V. Con el motor encendido obtienes 12.1V. ¿Qué conclusión sacas?',
+      opciones: [
+        'Todo está correcto — 12V es el valor nominal esperado en ambas condiciones',
+        'La batería está en estado aceptable pero el alternador no está cargando correctamente — con motor en marcha debería entregar 13.8-14.4V',
+        'La batería está completamente descargada — cambiarla inmediatamente',
+        'El multímetro está midiendo mal — un alternador siempre entrega 12V exactos'
+      ],
+      correcta: 1,
+      explicacion: 'Una batería sana en reposo mide 12.6V (llena) o mínimo 12.4V. 11.8V indica descarga parcial. Con motor encendido, el alternador debe elevar a 13.8-14.4V. Si solo llega a 12.1V, el alternador no está cargando — puede fallar el regulador, el diodo o las escobillas. Diagnóstico en dos pasos: batería + sistema de carga.'
+    },
+    {
+      id: 'm2-ra2-c1-q8',
+      enunciado: 'El escáner muestra el código P0171 "System too lean Bank 1". ¿Cuáles son las causas más probables a investigar PRIMERO?',
+      opciones: [
+        'Reemplazar los inyectores — el código lean siempre indica inyectores obstruidos',
+        'Verificar entradas de aire no medidas (fugas de vacío, MAF sucio) y sensor O2 antes de revisar el sistema de combustible',
+        'Cambiar la sonda lambda — P0171 siempre es falla del sensor de oxígeno',
+        'Revisar la presión de combustible — lean siempre significa bomba débil'
+      ],
+      correcta: 1,
+      explicacion: 'P0171 (mezcla pobre banco 1) puede tener múltiples causas. El orden correcto: 1° fugas de vacío (aire no medido engaña al MAF), 2° MAF sucio (subestima el aire real), 3° sensor O2 defectuoso, 4° sistema de combustible. Comenzar reemplazando inyectores es el diagnóstico más costoso y menos probable de resolver el problema.'
+    },
+    {
+      id: 'm2-ra2-c1-q9',
+      enunciado: 'Al medir con osciloscopio la señal del sensor de oxígeno (O2) de banda estrecha, observas que la señal es plana en 0.45V. ¿Qué indica?',
+      opciones: [
+        'La mezcla es perfectamente estequiométrica — 0.45V es el valor ideal',
+        'El sensor está muerto o envenenado — una señal plana sin oscilación indica que no responde a cambios de mezcla',
+        'El motor está en mezcla rica — 0.45V indica exceso de combustible',
+        'Es normal durante el arranque en frío — esperar que el sensor alcance temperatura'
+      ],
+      correcta: 1,
+      explicacion: 'Un sensor O2 sano oscila continuamente entre 0.1V (lean) y 0.9V (rich) a una frecuencia visible en el osciloscopio. Una señal plana en cualquier voltaje significa que el sensor no responde — puede estar envenenado por silicio, viejo, o el circuito calefactor (HO2S) está fallando.'
+    },
+    {
+      id: 'm2-ra2-c1-q10',
+      enunciado: 'El manual del vehículo especifica que la compresión de cada cilindro debe ser 175 PSI ±10%. Un cilindro mide 120 PSI. ¿Qué diagnóstico es correcto?',
+      opciones: [
+        'El manómetro de compresión está descalibrado — repetir la prueba',
+        'Compresión baja severa (31% por debajo del mínimo). Realizar prueba de fuga para identificar si es válvulas, aros o juntas de culata',
+        'Es normal — los cilindros centrales siempre tienen menor compresión',
+        'Problema menor — agregar aceite de motor para aumentar la compresión'
+      ],
+      correcta: 1,
+      explicacion: '175 PSI ±10% = rango aceptable 157.5-192.5 PSI. 120 PSI está 37.5 PSI por debajo del mínimo — falla crítica. El siguiente paso es la prueba de fuga de cilindros (cylinder leak-down test) que identifica dónde escapa la compresión: si sale por el escape son válvulas; por el Carter son aros; por el radiador es junta de culata.'
+    },
+    {
+      id: 'm2-ra2-c1-q11',
+      enunciado: 'Un estudiante mide la resistencia de un cable de bujía con el multímetro y obtiene OL (overload/infinito). ¿Qué indica?',
+      opciones: [
+        'El cable tiene resistencia correcta — los cables de bujía de alta tensión tienen resistencia infinita por diseño',
+        'El cable tiene circuito abierto (rotura interna del conductor) — debe reemplazarse',
+        'El multímetro está en la escala incorrecta — cambiar a escala de megaohmios',
+        'OL significa "óptimo" en multímetros digitales modernos'
+      ],
+      correcta: 1,
+      explicacion: 'OL (Over Limit) en medición de resistencia significa circuito abierto — resistencia infinita. Un cable de bujía sano tiene entre 5,000-25,000 Ω (5-25 kΩ) de resistencia interna (supresora de interferencias). OL indica rotura del conductor interno, causa directa de falla de encendido.'
+    },
+    {
+      id: 'm2-ra2-c1-q12',
+      enunciado: 'El escáner muestra que el sensor de temperatura del motor (ECT) reporta -40°C con el motor caliente. ¿Cuál es el diagnóstico más probable?',
+      opciones: [
+        'El refrigerante está extremadamente frío — añadir anticongelante',
+        'Circuito abierto en el sensor ECT o su cableado — -40°C es el valor de falla por defecto cuando no hay señal',
+        'El sensor funciona bien — -40°C indica que el termostato está atascado abierto',
+        'El escáner tiene un error de comunicación — reiniciar el equipo'
+      ],
+      correcta: 1,
+      explicacion: '-40°C es el valor de falla por defecto (default value) que el ECU asigna cuando no recibe señal del sensor ECT. Causas: circuito abierto en el sensor, conector suelto o cable cortado. Con esta lectura, el ECU usa tablas de mapas abiertos y enriquece la mezcla innecesariamente, afectando consumo y emisiones.'
+    },
+    {
+      id: 'm2-ra2-c1-q13',
+      enunciado: 'Al interpretar datos en tiempo real del escáner, el valor de "Long Term Fuel Trim (LTFT)" muestra +22%. ¿Qué significa esto para el diagnóstico?',
+      opciones: [
+        'El sistema de combustible está funcionando perfectamente — LTFT positivo es lo esperado',
+        'El ECU está agregando 22% más de combustible para corregir una mezcla persistentemente pobre — indica fuga de vacío, MAF sucio o presión de combustible baja',
+        'El motor está usando 22% más de combustible que en condiciones normales — problema de consumo',
+        'LTFT de +22% indica que la sonda lambda está invertida — revisar el cableado'
+      ],
+      correcta: 1,
+      explicacion: 'LTFT (Long Term Fuel Trim) muestra la corrección acumulada de combustible del ECU. +22% significa que el ECU ha aprendido a agregar 22% más de combustible de forma persistente para mantener la mezcla estequiométrica — evidencia de que algo está causando mezcla pobre de manera crónica. Valor aceptable: ±10%.'
+    },
+    {
+      id: 'm2-ra2-c1-q14',
+      enunciado: 'Con el osciloscopio mides la señal de inyección de un inyector. El pulso de inyección muestra una duración de 8ms a ralentí. ¿Qué factor no afecta directamente este valor?',
+      opciones: [
+        'La temperatura del motor',
+        'La presión del riel de combustible',
+        'El color del vehículo',
+        'La carga del motor (posición del acelerador)'
+      ],
+      correcta: 2,
+      explicacion: 'El tiempo de apertura del inyector (ancho de pulso) es calculado por el ECU basándose en: temperatura del motor (más frío = más combustible), carga (más aceleración = más combustible), presión del riel (menor presión = pulso más largo), entre otros. El color del vehículo no tiene ningún efecto en los parámetros del motor.'
+    },
+    {
+      id: 'm2-ra2-c1-q15',
+      enunciado: 'Un estudiante afirma que "si el escáner no muestra códigos, el vehículo está en perfecto estado". ¿Es correcta esta afirmación?',
+      opciones: [
+        'Sí — el OBD-II monitorea todos los sistemas del vehículo',
+        'No — el OBD-II no monitorea: desgaste de frenos, holguras mecánicas, estado de amortiguadores, presión de neumáticos (salvo TPMS), ni muchas fallas intermitentes que aún no alcanzaron el umbral de código',
+        'Sí — si hubiera algún problema, el sistema lo detectaría automáticamente',
+        'No — pero solo porque los escáneres genéricos no leen todos los módulos'
+      ],
+      correcta: 1,
+      explicacion: 'El OBD-II monitorea principalmente emisiones y el tren motriz. No cubre: desgaste mecánico (frenos, amortiguadores, rodamientos), fallas eléctricas que aún no llegaron al umbral, ni muchos sistemas mecánicos. "Sin códigos" significa sin fallas registradas en los monitores del ECU — no equivale a vehículo perfecto.'
+    },
+    {
+      id: 'm2-ra2-c1-q16',
+      enunciado: 'Al medir continuidad con el multímetro entre masa del motor y carrocería, el resultado es OL. ¿Qué problema indica?',
+      opciones: [
+        'El motor está correctamente aislado de la carrocería — OL es el valor normal',
+        'Hay una falla en el cable de masa (ground strap) entre motor y carrocería — genera voltajes flotantes y fallas eléctricas intermitentes',
+        'El multímetro necesita calibración — repetir con un nuevo equipo',
+        'El motor tiene demasiada masa — instalar un condensador'
+      ],
+      correcta: 1,
+      explicacion: 'El motor debe tener continuidad directa (resistencia cercana a 0Ω) con la carrocería a través del cable de masa. OL (circuito abierto) indica que ese cable está cortado, corroído o mal conectado. Una masa deficiente es la causa de decenas de fallas eléctricas aparentemente inexplicables: actuadores que no responden, sensores con lecturas erráticas, luces que parpadean.'
+    },
+    {
+      id: 'm2-ra2-c1-q17',
+      enunciado: 'El escáner indica que el monitor de catalizador (Catalyst Monitor) muestra estado "Not Ready". ¿Qué significa para la inspección técnica vehicular?',
+      opciones: [
+        'El catalizador está en perfectas condiciones — "Not Ready" indica que no necesita ser revisado',
+        'El monitor no ha completado su ciclo de diagnóstico — el vehículo no pasará la inspección de emisiones hasta que todos los monitores estén "Ready"',
+        'El catalizador está dañado y debe reemplazarse antes de la inspección',
+        '"Not Ready" es el estado permanente en vehículos modernos con Euro 6'
+      ],
+      correcta: 1,
+      explicacion: '"Not Ready" significa que el ECU no ha podido ejecutar la prueba interna de ese monitor (generalmente porque los códigos fueron borrados recientemente o la batería fue desconectada). Para inspección técnica de emisiones, todos los monitores aplicables deben estar en "Complete/Ready". El vehículo necesita un ciclo de conducción completo para que los monitores se completen.'
+    },
+    {
+      id: 'm2-ra2-c1-q18',
+      enunciado: 'Con el osciloscopio comparas las señales de los sensores CMP (árbol de levas) y CKP (cigüeñal) en un motor con código P0016. ¿Qué buscas en las formas de onda?',
+      opciones: [
+        'Que ambas señales tengan la misma amplitud de voltaje',
+        'La correlación de fase entre ambas señales — P0016 indica que el árbol de levas y el cigüeñal están desfasados más allá de lo permitido',
+        'Que ambas señales sean senoidales perfectas sin ruido',
+        'Que la frecuencia de CMP sea exactamente el doble que la de CKP'
+      ],
+      correcta: 1,
+      explicacion: 'P0016 es "Camshaft/Crankshaft Position Correlation". Con el osciloscopio verificas la fase relativa entre CMP y CKP: deben tener una relación temporal específica definida por el fabricante. Un desfase excesivo indica: cadena de distribución estirada, actuador de árbol de levas (VVT) atascado, o sensor con señal errática.'
+    },
+    {
+      id: 'm2-ra2-c1-q19',
+      enunciado: 'Un docente enseña a sus estudiantes a medir voltaje en un circuito de 12V. Un estudiante conecta el multímetro en modo amperímetro (mA) directamente en paralelo al circuito. ¿Qué ocurre?',
+      opciones: [
+        'El multímetro muestra el voltaje correctamente — amperímetro y voltímetro funcionan igual',
+        'El multímetro crea un cortocircuito de baja resistencia, puede dañar el equipo, fundir el fusible interno del multímetro o dañar el circuito del vehículo',
+        'El multímetro simplemente no muestra lectura — no hay daño posible',
+        'El circuito se desconecta automáticamente por protección'
+      ],
+      correcta: 1,
+      explicacion: 'El amperímetro tiene resistencia interna casi nula (para no afectar el circuito en serie). Conectarlo en paralelo crea un cortocircuito directo: la corriente del circuito pasa completa por el multímetro. Resultado: funde el fusible interno del multímetro, puede dañar el equipo permanentemente o quemar cableado del vehículo. Error crítico de seguridad que los docentes deben prevenir activamente.'
+    },
+    {
+      id: 'm2-ra2-c1-q20',
+      enunciado: 'Al finalizar una sesión de diagnóstico con el escáner, ¿cuál es la práctica correcta antes de desconectarlo del vehículo?',
+      opciones: [
+        'Desconectarlo directamente — los puertos OBD-II soportan conexión/desconexión en caliente sin problemas',
+        'Con el motor apagado y llave fuera, salir del menú del escáner correctamente, esperar que la pantalla muestre estado de reposo y luego desconectar — evita corrupción de datos del ECU',
+        'Dejar el escáner conectado siempre — no hay razón para desconectarlo',
+        'Apagar el escáner con el botón de encendido mientras está conectado al puerto OBD'
+      ],
+      correcta: 1,
+      explicacion: 'El puerto OBD-II está conectado directamente al bus CAN del vehículo. Una desconexión abrupta durante comunicación activa puede interrumpir tramas de datos que el ECU está procesando. La práctica correcta: finalizar sesión en el software, apagar llave, desconectar. Parece menor pero protege la integridad del ECU, especialmente en vehículos modernos con múltiples módulos.'
+    }
+  ],
+
+  // M5-S51 — Competencia docente 1: planificación por competencias en el taller automotriz (8 preguntas)
+  'm5-s51-c4': [
+    {
+      id: 'm5-s51-c4-q1',
+      enunciado: 'Planificas una sesión donde los estudiantes diagnostican una falla en el sistema de frenos. ¿Cuál es la diferencia entre un objetivo de aprendizaje y una competencia?',
+      opciones: [
+        'Son lo mismo — competencia y objetivo son sinónimos en el currículo técnico',
+        'El objetivo describe qué hará el estudiante en la sesión; la competencia describe el desempeño integrado (saber + hacer + ser) que el estudiante desarrolla a lo largo del módulo',
+        'La competencia es más específica que el objetivo — se redacta para cada actividad',
+        'El objetivo es para el docente; la competencia es para el estudiante'
+      ],
+      correcta: 1,
+      explicacion: 'Un objetivo es puntual ("al terminar la sesión, el estudiante identificará los componentes del sistema de frenos"). Una competencia es integral y se construye en el tiempo ("diagnostica fallas en sistemas automotrices aplicando procedimientos técnicos con responsabilidad"). La planificación por competencias exige que cada sesión contribuya a esa competencia mayor.'
+    },
+    {
+      id: 'm5-s51-c4-q2',
+      enunciado: 'Diseñas la sesión de instalación del elevador tipo tijera. ¿Qué elemento de la planificación garantiza que los estudiantes sepan QUÉ se espera de ellos antes de empezar?',
+      opciones: [
+        'La lista de materiales y herramientas a usar en la sesión',
+        'Los criterios de evaluación compartidos con anticipación — los estudiantes deben conocer los indicadores de logro antes de la actividad',
+        'El tiempo asignado a cada actividad en la sesión',
+        'La biografía del docente que muestra su experiencia técnica'
+      ],
+      correcta: 1,
+      explicacion: 'Compartir los criterios de evaluación antes de la actividad (no después) es un principio clave de la evaluación formativa. En el taller automotriz, los estudiantes necesitan saber: ¿qué pasos deben seguir?, ¿qué nivel de precisión se espera?, ¿cuándo está "bien hecho"? Esto reduce la ansiedad y orienta el esfuerzo.'
+    },
+    {
+      id: 'm5-s51-c4-q3',
+      enunciado: 'Tu sesión tiene 90 minutos. Planificas: 30 min teoría + 45 min práctica + 15 min evaluación. Un colega sugiere invertir a 10 min teoría + 65 min práctica + 15 min evaluación. ¿Cuál es más coherente con la formación técnica por competencias?',
+      opciones: [
+        'La primera — sin base teórica sólida los estudiantes no pueden practicar correctamente',
+        'La segunda — en formación técnica el hacer es el centro; la teoría mínima necesaria se da justo antes de la práctica (just-in-time)',
+        'Son equivalentes — lo importante es cubrir el contenido, no el tiempo',
+        'Ninguna — la evaluación siempre debe ir al inicio para activar conocimientos previos'
+      ],
+      correcta: 1,
+      explicacion: 'La formación por competencias prioriza el saber-hacer. La teoría "just-in-time" (mínima, justo antes de necesitarla) es más efectiva que 30 minutos de exposición frontal. Los estudiantes técnicos aprenden haciendo — el taller automotriz debe ser zona de práctica, no aula extendida.'
+    },
+    {
+      id: 'm5-s51-c4-q4',
+      enunciado: 'Al planificar la secuencia de sesiones del módulo de instalación, ¿cuál orden es pedagógicamente correcto?',
+      opciones: [
+        'Instalación del elevador → Metrado de equipos → Normas de seguridad → Prueba funcional',
+        'Metrado de equipos → Normas de seguridad → Instalación del elevador → Prueba funcional',
+        'Normas de seguridad → Prueba funcional → Metrado de equipos → Instalación del elevador',
+        'Prueba funcional → Instalación del elevador → Metrado → Seguridad'
+      ],
+      correcta: 1,
+      explicacion: 'La secuencia correcta sigue la lógica técnica real: primero conocer qué hay (metrado), luego establecer las condiciones seguras (seguridad), luego instalar, luego verificar que funciona (prueba funcional). Este orden no es arbitrario — refleja el proceso real del técnico automotriz y da sentido a cada sesión.'
+    },
+    {
+      id: 'm5-s51-c4-q5',
+      enunciado: 'Tienes 28 estudiantes y solo 1 elevador tipo tijera. ¿Cómo planificas la práctica para que todos logren la competencia?',
+      opciones: [
+        'Solo 2-3 estudiantes usan el elevador — los demás observan y toman apuntes',
+        'Diseñar estaciones rotativas: grupo A en elevador, grupo B en diagnóstico con escáner, grupo C en ficha de metrado — todos rotan cada 20 minutos',
+        'Dividir el grupo en 14 pares y que cada par use el elevador 5 minutos',
+        'Solicitar a la UGEL más elevadores antes de dar la sesión práctica'
+      ],
+      correcta: 1,
+      explicacion: 'Las estaciones rotativas son la solución estándar para talleres con equipos únicos o escasos. Cada estación trabaja una competencia diferente pero complementaria — no hay tiempo muerto ni estudiantes pasivos. Cinco minutos por par no es suficiente para desarrollar competencia. Esperar más equipos paraliza el aprendizaje.'
+    },
+    {
+      id: 'm5-s51-c4-q6',
+      enunciado: 'Un colega planifica todas sus sesiones con la misma estructura: "explico → demuestro → replican". ¿Cuál es la limitación pedagógica de este modelo?',
+      opciones: [
+        'Ninguna — es el modelo más efectivo para formación técnica probado históricamente',
+        'Solo desarrolla el nivel más bajo de competencia (replicar procedimientos). No desarrolla autonomía, resolución de problemas ni transferencia a situaciones nuevas',
+        'Es demasiado complejo para estudiantes de secundaria técnica',
+        'El problema es la demostración — los estudiantes aprenden mejor solo leyendo el manual'
+      ],
+      correcta: 1,
+      explicacion: '"Explico → demuestro → replican" (modelado directo) es válido para introducir procedimientos nuevos, pero si es el ÚNICO método, los estudiantes solo aprenden a imitar — no a diagnosticar, decidir ni transferir. Una planificación competente varía las estrategias: resolución de casos, práctica autónoma, peer teaching, situaciones imprevistas.'
+    },
+    {
+      id: 'm5-s51-c4-q7',
+      enunciado: 'Redactas el indicador de logro: "El estudiante sabe sobre el sistema de frenos". ¿Cuál es el problema con este indicador?',
+      opciones: [
+        'Es muy técnico para el nivel del estudiante',
+        'No es observable ni medible — "saber sobre" no indica qué acción concreta realiza el estudiante ni en qué condiciones',
+        'Debería incluir el nombre de los componentes específicos',
+        'El indicador está bien — "saber" es el verbo adecuado para el nivel conceptual'
+      ],
+      correcta: 1,
+      explicacion: 'Los indicadores de logro deben ser observables y medibles. "Saber sobre" es invisible — no puedes ver ni medir si alguien "sabe sobre" algo. Un indicador correcto usa verbos de acción: "diagnostica fallas en el sistema de frenos siguiendo el protocolo OBD-II" — puedes observarlo, medirlo y dar retroalimentación específica.'
+    },
+    {
+      id: 'm5-s51-c4-q8',
+      enunciado: 'Al cierre de la planificación anual del taller, ¿qué pregunta verifica mejor que la planificación es coherente con el enfoque por competencias?',
+      opciones: [
+        '"¿Cubrí todos los contenidos del currículo?"',
+        '"¿Cada sesión contribuye a una competencia mayor que el estudiante puede demostrar al final del módulo en una situación real del taller?"',
+        '"¿Usé variedad de herramientas digitales en cada sesión?"',
+        '"¿Los estudiantes aprobaron las evaluaciones escritas?"'
+      ],
+      correcta: 1,
+      explicacion: 'La pregunta central del enfoque por competencias es sobre transferencia: ¿el estudiante puede actuar competentemente en una situación real? "Cubrir contenidos" es el enfoque tradicional. "Aprobar evaluaciones escritas" mide conocimiento declarativo. La competencia se demuestra haciendo, no recordando.'
+    }
+  ],
+
+  // M5-S53 — Competencia docente 2: metodologías activas ABP/ABPr en el taller automotriz (8 preguntas)
+  'm5-s53-c4': [
+    {
+      id: 'm5-s53-c4-q1',
+      enunciado: 'La diferencia clave entre Aprendizaje Basado en Problemas (ABP) y Aprendizaje Basado en Proyectos (ABPr) en el taller automotriz es:',
+      opciones: [
+        'ABP usa más tecnología; ABPr es más manual',
+        'ABP parte de un problema abierto para construir conocimiento; ABPr culmina en un producto o entregable concreto que resuelve una necesidad real',
+        'ABP es para estudiantes avanzados; ABPr para principiantes',
+        'Son idénticos — el nombre varía según la institución'
+      ],
+      correcta: 1,
+      explicacion: 'En ABP el problema es el detonante del aprendizaje — los estudiantes investigan para entender. En ABPr el proyecto es el eje — los estudiantes crean algo real (un protocolo, una instalación, un diagnóstico documentado). En automotriz: ABP = "¿por qué falla este motor?"; ABPr = "instala y certifica el equipo de diagnóstico del taller".'
+    },
+    {
+      id: 'm5-s53-c4-q2',
+      enunciado: 'Diseñas un ABP para el módulo de diagnóstico. El problema detonador es: "Un vehículo llega al taller con el testigo del motor encendido y el dueño no quiere gastar más de S/200". ¿Por qué este problema es pedagógicamente efectivo?',
+      opciones: [
+        'Porque menciona una cantidad de dinero que motiva a los estudiantes',
+        'Porque es auténtico, tiene restricciones reales (presupuesto), requiere integrar diagnóstico técnico y toma de decisiones — simula una situación real del oficio',
+        'Porque es simple y los estudiantes pueden resolverlo en una sola sesión',
+        'Porque el testigo del motor es el contenido más importante del módulo'
+      ],
+      correcta: 1,
+      explicacion: 'Un buen problema ABP tiene: autenticidad (ocurre en la vida real del técnico), complejidad suficiente (no tiene respuesta única), restricciones reales (presupuesto, tiempo) e integra múltiples saberes. La restricción de S/200 obliga a priorizar el diagnóstico antes de intervenir — exactamente lo que hace un buen técnico.'
+    },
+    {
+      id: 'm5-s53-c4-q3',
+      enunciado: 'Durante un ABPr de instalación de equipos, un grupo de estudiantes está atascado en la conexión eléctrica del compresor. ¿Cuál es el rol correcto del docente?',
+      opciones: [
+        'Explicar inmediatamente la solución para no perder tiempo de la sesión',
+        'Hacer preguntas que guíen el razonamiento: "¿Qué voltaje requiere el compresor? ¿Qué dice el manual sobre el calibre del cable? ¿Qué pasaría si usas un cable más delgado?"',
+        'Dejar que el grupo resuelva solo — la intervención del docente invalida el ABPr',
+        'Reasignar esa tarea a otro grupo que ya terminó'
+      ],
+      correcta: 1,
+      explicacion: 'En metodologías activas el docente es facilitador, no transmisor. Las preguntas socráticas mantienen el protagonismo del estudiante mientras los desbloquean. Dar la respuesta directa cancela el aprendizaje; ignorarlos completamente los frustra. El arte está en la pregunta correcta en el momento correcto.'
+    },
+    {
+      id: 'm5-s53-c4-q4',
+      enunciado: 'Quieres implementar ABPr en el módulo de seguridad del taller. ¿Cuál es el proyecto más adecuado?',
+      opciones: [
+        'Hacer un examen escrito sobre las normas de seguridad del taller',
+        'Diseñar, producir e instalar el panel de seguridad real del taller: protocolo EPP por zona, ruta de evacuación, ubicación del extintor — entregable que queda en el taller',
+        'Ver un documental sobre accidentes en talleres automotrices internacionales',
+        'Copiar el protocolo de seguridad de otro taller y adaptarlo teóricamente'
+      ],
+      correcta: 1,
+      explicacion: 'El ABPr requiere un producto real con destinatario real. Un panel de seguridad que queda instalado en el taller es el proyecto ideal: es auténtico, tiene impacto real, integra diseño + contenido técnico + trabajo colaborativo, y los estudiantes ven su trabajo usado por otros. Un examen escrito no es un proyecto.'
+    },
+    {
+      id: 'm5-s53-c4-q5',
+      enunciado: 'Al evaluar un ABP, un colega solo califica el informe escrito final. ¿Qué dimensión importante está ignorando?',
+      opciones: [
+        'La ortografía y redacción del informe',
+        'El proceso: la calidad del razonamiento durante la investigación, las decisiones tomadas, la colaboración y la metacognición — no solo el producto final',
+        'La extensión del informe — los mejores ABP producen informes más largos',
+        'La presentación visual del informe'
+      ],
+      correcta: 1,
+      explicacion: 'En ABP el aprendizaje ocurre en el proceso, no solo en el producto. Evaluar solo el informe final es como juzgar un partido de fútbol solo por el marcador final. Los instrumentos de evaluación ABP deben capturar: calidad de las preguntas que se hicieron, cómo buscaron información, cómo tomaron decisiones y qué aprendieron del error.'
+    },
+    {
+      id: 'm5-s53-c4-q6',
+      enunciado: 'Implementas ABP por primera vez en tu taller. Los estudiantes dicen: "profe, díganos qué hacer". ¿Cómo interpretas esta reacción y qué haces?',
+      opciones: [
+        'Es señal de que el ABP no es adecuado para este grupo — volver al método tradicional',
+        'Es una reacción normal al cambio de rol: los estudiantes están acostumbrados a recibir instrucciones. Responder con una pregunta que los reencamine: "¿Qué información necesitan para poder decidir el primer paso?"',
+        'Darles una guía paso a paso detallada para que puedan avanzar',
+        'Ignorar el comentario y esperar que el grupo se organice solo'
+      ],
+      correcta: 1,
+      explicacion: 'La dependencia del docente es un hábito adquirido en años de educación frontal. No indica que el grupo sea incapaz — indica que necesitan andamiaje para desarrollar autonomía progresivamente. La pregunta de reencaminamiento ("¿qué necesitan saber?") es más poderosa que dar la respuesta o la guía, porque activa el proceso metacognitivo.'
+    },
+    {
+      id: 'm5-s53-c4-q7',
+      enunciado: 'En un ABPr de diagnóstico automotriz, un grupo llega a una conclusión técnicamente incorrecta. ¿Cuál es la respuesta pedagógica correcta?',
+      opciones: [
+        'Corregir inmediatamente frente al grupo para que no aprendan lo incorrecto',
+        'Pedirles que expliquen su razonamiento paso a paso — el error se convierte en oportunidad de aprendizaje cuando el grupo lo descubre a través de sus propias preguntas',
+        'Ignorar el error y esperar que lo descubran solos cuando apliquen en la práctica',
+        'Reducir la calificación del grupo por llegar a una conclusión incorrecta'
+      ],
+      correcta: 1,
+      explicacion: 'El error en ABP/ABPr tiene valor pedagógico cuando se procesa. Pedir que expliquen el razonamiento ("¿cómo llegaron a esa conclusión?") permite identificar dónde está la falla lógica. El grupo que descubre su propio error aprende más profundamente que el que recibe la corrección externamente. El docente no debe robar ese momento de descubrimiento.'
+    },
+    {
+      id: 'm5-s53-c4-q8',
+      enunciado: '¿Cuál es la condición mínima para que una actividad en el taller automotriz sea genuinamente ABP o ABPr?',
+      opciones: [
+        'Que los estudiantes trabajen en grupos y entreguen un informe al final',
+        'Que exista un problema o desafío auténtico sin respuesta única predeterminada, que requiera investigar, decidir y actuar — no seguir pasos dados por el docente',
+        'Que el docente no intervenga durante toda la actividad',
+        'Que use tecnología digital como apoyo pedagógico'
+      ],
+      correcta: 1,
+      explicacion: 'La condición esencial del ABP/ABPr es la autenticidad del problema y la apertura de la solución. Si el docente ya sabe exactamente qué pasos seguirán los estudiantes, no es ABP — es una práctica guiada disfrazada. El verdadero ABP implica incertidumbre, investigación real y decisiones genuinas del estudiante.'
+    }
+  ],
+
+  // M5-S55 — Competencia docente 3: evaluación por competencias, rúbricas, listas de cotejo (8 preguntas)
+  'm5-s55-c4': [
+    {
+      id: 'm5-s55-c4-q1',
+      enunciado: 'Un estudiante instala correctamente el elevador pero no verifica los seguros de seguridad al terminar. La rúbrica tiene el criterio "Sigue el protocolo de seguridad completo". ¿Qué calificación corresponde?',
+      opciones: [
+        'Logrado — instaló correctamente, el olvido de los seguros es un detalle menor',
+        'No logrado en ese criterio — omitir los seguros de seguridad es incumplimiento del protocolo, independientemente de la calidad técnica de la instalación',
+        'Logrado parcialmente — la rúbrica debe reconocer el trabajo técnico realizado',
+        'Depende del criterio del docente en el momento de la evaluación'
+      ],
+      correcta: 1,
+      explicacion: 'La rúbrica evalúa criterios específicos, no la impresión general. "Protocolo de seguridad completo" incluye explícitamente los seguros — omitirlos es No logrado en ese criterio. Esto no invalida el resto de la evaluación, pero sí ese criterio. La consistencia en seguridad es no negociable en el taller automotriz.'
+    },
+    {
+      id: 'm5-s55-c4-q2',
+      enunciado: '¿Cuál es la diferencia entre una lista de cotejo y una rúbrica en el contexto del taller automotriz?',
+      opciones: [
+        'Son equivalentes — ambas tienen criterios y niveles de desempeño',
+        'La lista de cotejo registra si algo ocurrió o no (sí/no); la rúbrica describe niveles cualitativos de desempeño (excelente/logrado/en proceso/no logrado)',
+        'La rúbrica es para evaluación sumativa; la lista de cotejo solo para formativa',
+        'La lista de cotejo la usa el docente; la rúbrica la usa el estudiante'
+      ],
+      correcta: 1,
+      explicacion: 'Lista de cotejo: binaria (¿verificó la presión del aceite? Sí/No). Rúbrica: descriptiva y graduada ("verifica la presión del aceite, registra el valor y lo compara con el manual" vs. "verifica la presión pero no registra"). Para procedimientos de seguridad, la lista de cotejo es ideal. Para competencias complejas, la rúbrica permite feedback más rico.'
+    },
+    {
+      id: 'm5-s55-c4-q3',
+      enunciado: 'Diseñas una rúbrica para evaluar el diagnóstico con escáner OBD-II. El descriptor del nivel "Logrado" dice: "Usa el escáner correctamente". ¿Cuál es el problema?',
+      opciones: [
+        'El nivel debería llamarse "Competente" en lugar de "Logrado"',
+        '"Correctamente" es ambiguo — no describe qué acciones concretas y observables definen ese nivel, haciendo la evaluación subjetiva e inconsistente entre docentes',
+        'El descriptor está bien — la subjetividad es parte de la evaluación por competencias',
+        'Debería incluir una calificación numérica junto al descriptor'
+      ],
+      correcta: 1,
+      explicacion: 'Los descriptores de rúbrica deben ser observables y específicos. "Usa correctamente" es opinable. Un descriptor útil dice: "Conecta el escáner al puerto OBD, lee los códigos activos, registra el freeze frame y borra solo tras anotar los datos." Cualquier docente que lea ese descriptor evaluará igual al mismo estudiante — eso es consistencia.'
+    },
+    {
+      id: 'm5-s55-c4-q4',
+      enunciado: 'Un estudiante solicita ver su rúbrica DESPUÉS de ser evaluado. ¿Cuándo debería haber accedido a ella?',
+      opciones: [
+        'La rúbrica es herramienta del docente — el estudiante no necesita verla',
+        'Antes de la actividad — la rúbrica compartida anticipadamente orienta el aprendizaje y permite la autoevaluación durante el proceso',
+        'Durante la evaluación para que pueda seguir los criterios en tiempo real',
+        'La rúbrica se entrega con la calificación para que el estudiante entienda su nota'
+      ],
+      correcta: 1,
+      explicacion: 'Compartir la rúbrica antes transforma la evaluación: el estudiante sabe exactamente qué se espera, puede autoevaluarse mientras practica y orienta su esfuerzo. Una rúbrica entregada solo al calificar es solo una herramienta de justificación de nota — pierde todo su potencial formativo.'
+    },
+    {
+      id: 'm5-s55-c4-q5',
+      enunciado: 'Tres docentes evalúan al mismo estudiante realizando el diagnóstico con multímetro. Docente A da 18/20, Docente B da 12/20, Docente C da 15/20. ¿Qué problema revela esto?',
+      opciones: [
+        'Los docentes tienen diferente nivel de exigencia — es normal y esperado',
+        'La rúbrica tiene baja confiabilidad — los criterios no son suficientemente claros para que diferentes evaluadores lleguen a resultados consistentes',
+        'El estudiante actuó diferente ante cada docente',
+        'Hay que promediar las tres notas — 15/20 es la calificación correcta'
+      ],
+      correcta: 1,
+      explicacion: 'La confiabilidad de un instrumento de evaluación se mide por la consistencia entre evaluadores (inter-rater reliability). Una variación de 6 puntos sobre 20 indica que los descriptores son demasiado vagos. La solución no es promediar — es revisar y precisar los criterios hasta que distintos docentes lleguen a calificaciones similares evaluando el mismo desempeño.'
+    },
+    {
+      id: 'm5-s55-c4-q6',
+      enunciado: 'Quieres que los estudiantes se autoevalúen después de la práctica de instalación del compresor. ¿Cuál es el mayor beneficio pedagógico de la autoevaluación?',
+      opciones: [
+        'Reduce la carga de trabajo del docente al compartir la evaluación',
+        'Desarrolla metacognición — el estudiante aprende a reconocer qué sabe, qué le falta y cómo mejorar, habilidad esencial para el aprendizaje autónomo en el oficio',
+        'Da una segunda calificación que se promedia con la del docente para mayor objetividad',
+        'Motiva a los estudiantes porque generalmente se ponen notas más altas'
+      ],
+      correcta: 1,
+      explicacion: 'La autoevaluación bien implementada desarrolla metacognición — la capacidad de monitorear el propio aprendizaje. Un técnico automotriz que sabe reconocer sus propios límites ("no tengo experiencia suficiente con este sistema — debo consultar") es más seguro y más competente. Ese hábito se construye desde la formación con autoevaluación honesta y frecuente.'
+    },
+    {
+      id: 'm5-s55-c4-q7',
+      enunciado: 'Al finalizar el módulo de seguridad, aplicas una prueba escrita con 20 preguntas de opción múltiple. Un estudiante obtiene 16/20. ¿Esto es suficiente evidencia de que logró la competencia de seguridad en el taller?',
+      opciones: [
+        'Sí — 80% en la prueba demuestra que el estudiante conoce las normas de seguridad',
+        'No — saber la norma en papel no equivale a aplicarla en el taller. La competencia de seguridad requiere evidencia de desempeño observable en situación real',
+        'Sí — si el examen incluye casos prácticos, es evidencia suficiente',
+        'Depende — si el estudiante estudió mucho, la prueba escrita es válida'
+      ],
+      correcta: 1,
+      explicacion: 'La competencia es saber actuar en contexto real, no recordar información. Un estudiante puede responder correctamente "¿cuál es el EPP para trabajar con fluidos?" y no usarlo en el taller. La evidencia de competencia en seguridad debe incluir observación directa del desempeño: ¿se pone los guantes antes de manipular el aceite? ¿Verifica los seguros del elevador? La prueba escrita evalúa conocimiento declarativo, no competencia.'
+    },
+    {
+      id: 'm5-s55-c4-q8',
+      enunciado: 'Diseñas la evaluación del módulo de instalación de equipos. ¿Qué combinación de instrumentos da la evidencia más completa de competencia?',
+      opciones: [
+        'Dos pruebas escritas — al inicio y al final del módulo',
+        'Lista de cotejo de procedimientos (observación directa) + rúbrica de producto (calidad de la instalación) + autoevaluación del estudiante',
+        'Una rúbrica muy detallada aplicada solo al producto final',
+        'Examen oral donde el estudiante explica los pasos de instalación'
+      ],
+      correcta: 1,
+      explicacion: 'La triangulación de evidencias da la imagen más completa: la lista de cotejo captura si siguió el proceso correcto (seguridad, pasos), la rúbrica evalúa la calidad del resultado (instalación funcional, acabados), y la autoevaluación revela la conciencia del propio aprendizaje. Ningún instrumento solo es suficiente para declarar competencia en un oficio técnico.'
+    }
+  ],
+
+  // M5-S57 — Competencia docente 4: gestión pedagógica del taller automotriz (8 preguntas)
+  'm5-s57-c4': [
+    {
+      id: 'm5-s57-c4-q1',
+      enunciado: 'Tienes 28 estudiantes en el taller y 3 zonas activas simultáneamente (investigación, innovación, almacén). ¿Cuál es la estrategia de gestión más efectiva?',
+      opciones: [
+        'Supervisar solo la zona más peligrosa (innovación) y dejar las otras sin monitoreo',
+        'Designar un estudiante líder por zona con checklist de responsabilidades, establecer señales visuales de avance y hacer recorridos cortos cada 10 minutos entre zonas',
+        'Trabajar una zona a la vez para mantener el control total del docente',
+        'Dividir el grupo en días distintos para que el docente pueda atender a todos'
+      ],
+      correcta: 1,
+      explicacion: 'La gestión de taller con múltiples zonas simultáneas requiere: líderes estudiantiles que asuman responsabilidad (desarrollan competencia de liderazgo), checklists visuales que hacen visible el avance sin que el docente pregunte constantemente, y recorridos cortos pero frecuentes. Trabajar una zona a la vez desaprovecha la capacidad instalada del taller.'
+    },
+    {
+      id: 'm5-s57-c4-q2',
+      enunciado: 'Al iniciar la sesión práctica, ¿cuál es el protocolo mínimo de gestión antes de que los estudiantes toquen cualquier equipo?',
+      opciones: [
+        'Pasar lista y comenzar directamente para aprovechar el tiempo',
+        'Verificar EPP de todos los estudiantes, confirmar que los equipos están en estado operativo y repasar en 3 minutos el objetivo de la sesión y las normas de seguridad específicas de hoy',
+        'Hacer una prueba oral de los conocimientos previos antes de permitir el acceso a los equipos',
+        'El protocolo de inicio lo decide cada estudiante según su nivel de experiencia'
+      ],
+      correcta: 1,
+      explicacion: 'Los primeros 3-5 minutos de gestión preventiva evitan el 80% de los incidentes y confusiones de la sesión. Verificar EPP (no negociable), confirmar estado de equipos (un equipo "en reparación" que se usa genera accidentes) y orientar el objetivo (los estudiantes saben hacia dónde van) es la base de toda sesión de taller bien gestionada.'
+    },
+    {
+      id: 'm5-s57-c4-q3',
+      enunciado: 'Un estudiante llega sin sus lentes de seguridad el día de la práctica con el elevador. ¿Cuál es la respuesta de gestión correcta?',
+      opciones: [
+        'Permitirle participar con la condición de que tenga más cuidado',
+        'No puede ingresar a la zona de práctica hasta tener el EPP completo — ofrecerle actividades alternativas (análisis de datos, fichas de metrado) mientras espera o gestiona conseguirlos',
+        'Prestarle los lentes del docente para que no pierda la sesión',
+        'Anotarlo en el registro pero permitirle participar porque es solo una vez'
+      ],
+      correcta: 1,
+      explicacion: 'El EPP no es opcional ni negociable en ninguna circunstancia — esta postura protege al estudiante y establece la cultura de seguridad del taller. La alternativa pedagógica (actividades fuera de zona de riesgo) impide que pierda completamente la sesión. Hacer excepciones "una vez" destruye la norma para todos.'
+    },
+    {
+      id: 'm5-s57-c4-q4',
+      enunciado: 'El compresor del taller hace un ruido inusual al iniciar la sesión. ¿Qué decisión de gestión tomas?',
+      opciones: [
+        'Usarlo con precaución — probablemente es algo menor que no afecta el funcionamiento',
+        'Detener su uso inmediatamente, etiquetarlo como "NO USAR — en revisión", registrar la anomalía en la bitácora del equipo y planificar la sesión sin él',
+        'Pedir a un estudiante técnico avanzado que lo revise durante la sesión',
+        'Continuar la sesión y reportar el ruido al director después de clases'
+      ],
+      correcta: 1,
+      explicacion: 'Un equipo con comportamiento inusual es equipo fuera de servicio hasta que se diagnostique. La etiqueta visible evita que otro docente lo use sin saber. El registro en bitácora es la evidencia para la garantía o el mantenimiento. Operar un equipo sospechoso pone en riesgo a los estudiantes y puede invalidar la garantía del bien.'
+    },
+    {
+      id: 'm5-s57-c4-q5',
+      enunciado: 'Al cierre de cada sesión del taller, ¿qué práctica de gestión tiene mayor impacto en la siguiente sesión?',
+      opciones: [
+        'Calificar los trabajos del día antes de que los estudiantes se retiren',
+        'Aplicar 5S: cada equipo y herramienta a su lugar, zona limpia, anomalías registradas y checklist de cierre firmado — el taller debe quedar listo para quien llegue mañana',
+        'Hacer una evaluación oral rápida de lo aprendido en la sesión',
+        'Guardar solo los equipos más caros y dejar las herramientas menores donde están'
+      ],
+      correcta: 1,
+      explicacion: 'El cierre con 5S (Seiri, Seiton, Seiso, Seiketsu, Shitsuke) es el hábito de gestión de mayor retorno: el docente del día siguiente encuentra el taller operativo sin perder 15 minutos buscando herramientas o limpiando. En el taller automotriz real, este hábito separa a los técnicos profesionales de los improvisados — enseñarlo desde la formación es enseñar cultura de trabajo.'
+    },
+    {
+      id: 'm5-s57-c4-q6',
+      enunciado: 'Tienes que demostrar a la UGEL que el taller está siendo usado pedagógicamente. ¿Qué evidencias de gestión son más sólidas?',
+      opciones: [
+        'Fotos de los estudiantes en el taller tomadas durante las sesiones',
+        'Bitácora de uso del taller firmada por fecha y sesión, registros de estado de equipos, fichas de metrado actualizadas y portafolios de evaluación de estudiantes con retroalimentación',
+        'El número de estudiantes que aprobaron las evaluaciones escritas del módulo',
+        'Un informe narrativo del docente describiendo las actividades realizadas'
+      ],
+      correcta: 1,
+      explicacion: 'Las evidencias sólidas son sistemáticas y verificables, no narrativas. La bitácora (quién, cuándo, qué equipo, estado) demuestra uso real. Las fichas de metrado actualizadas demuestran gestión patrimonial. Los portafolios con retroalimentación demuestran evaluación formativa. Las fotos y narrativas son complementarias pero no suficientes por sí solas.'
+    },
+    {
+      id: 'm5-s57-c4-q7',
+      enunciado: 'Un estudiante termina su tarea 15 minutos antes que el resto del grupo. ¿Cuál es la mejor respuesta pedagógica de gestión?',
+      opciones: [
+        'Permitirle descansar — ya cumplió con la tarea asignada',
+        'Tener preparadas tareas de extensión: documentar el proceso realizado en la ficha técnica, revisar el manual del equipo para la siguiente sesión, o apoyar a un compañero como monitor técnico',
+        'Pedirle que repita la tarea para ganar más práctica',
+        'Asignarle tareas administrativas del taller como limpiar o ordenar'
+      ],
+      correcta: 1,
+      explicacion: 'El tiempo libre en taller es tiempo desperdiciado o tiempo de riesgo (el estudiante desocupado puede interferir en otras zonas). Las tareas de extensión bien diseñadas profundizan el aprendizaje: documentar refuerza la comprensión, leer el manual prepara la siguiente sesión, y el rol de monitor técnico desarrolla liderazgo y consolida lo aprendido enseñándolo.'
+    },
+    {
+      id: 'm5-s57-c4-q8',
+      enunciado: 'El director te pide abrir el taller para que otro docente use los equipos para una actividad no curricular. ¿Cuál es la respuesta de gestión correcta?',
+      opciones: [
+        'Autorizar inmediatamente — el director tiene autoridad sobre todos los espacios',
+        'Explicar que los equipos del taller TSF tienen protocolo de uso: requieren capacitación específica, registro en bitácora y supervisión de personal habilitado — ofrecer coordinar una sesión con las condiciones correctas',
+        'Negarse definitivamente — el taller es exclusivo para las clases del programa',
+        'Autorizar solo si el otro docente firma una carta de responsabilidad'
+      ],
+      correcta: 1,
+      explicacion: 'Los equipos del taller TSF-MINEDU tienen valor patrimonial, protocolos de uso y garantías que dependen del uso correcto. Autorizar uso sin protocolo puede dañar equipos, invalidar garantías o generar accidentes. La respuesta profesional no es negarse — es proponer las condiciones mínimas que protegen el bien y la seguridad: habilitación, registro y supervisión adecuada.'
+    }
+  ],
+
+}
